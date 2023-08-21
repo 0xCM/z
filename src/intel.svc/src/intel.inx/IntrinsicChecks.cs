@@ -170,31 +170,31 @@ namespace Z0
         public void CheckSigs()
         {
             var specs = new Operand[3];
-            using var dispenser = CompositeBuffers.create();
+            using var alloc = Alloc.create();
 
             var intrinsics = new Sigs();
             var f0 = intrinsics._mm_add_epi8();
             Channel.Write(f0.Format(SigFormatStyle.C));
 
-            var f0x = dispenser.Sig(f0);
+            var f0x = alloc.Sig(f0);
             Channel.Write(f0x.Format(SigFormatStyle.C));
 
             var f1 = intrinsics._mm_add_epi16();
             Channel.Write(f1.Format(SigFormatStyle.C));
 
-            var f1x = dispenser.Sig(f1);
+            var f1x = alloc.Sig(f1);
             Channel.Write(f1x.Format(SigFormatStyle.C));
 
             var f2 = intrinsics._mm_add_epi32();
             Channel.Write(f2.Format(SigFormatStyle.C));
 
-            var f2x = dispenser.Sig(f2);
+            var f2x = alloc.Sig(f2);
             Channel.Write(f2x.Format(SigFormatStyle.C));
 
             var f3 = intrinsics._mm_add_epi64();
             Channel.Write(f3.Format(SigFormatStyle.C));
 
-            var f3x = dispenser.Sig(f3);
+            var f3x = alloc.Sig(f3);
             Channel.Write(f3x.Format(SigFormatStyle.C));
 
             seek(specs,0) = NativeSigs.op("op0", NativeSigs.u8());

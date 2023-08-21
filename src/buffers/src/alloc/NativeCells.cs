@@ -6,9 +6,11 @@ namespace Z0
 {
     using static sys;
 
+
     public sealed class NativeCells
     {
         public static NativeCells<T> alloc<T>(uint count, out long id)
+            where T : unmanaged
         {
             id = inc(ref Allocation);
             var sz = count * size<T>();

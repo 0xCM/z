@@ -38,7 +38,7 @@ namespace Z0.Asm
         public byte Size;
 
         [Render(W.EncodedHex)]
-        public HexRef Encoded;
+        public MemRef Encoded;
 
         [Render(W.AsmExpr)]
         public SourceText Asm;

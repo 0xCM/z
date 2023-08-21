@@ -16,22 +16,6 @@ namespace Z0
 
             var t1 = DataTypes.seg(NativeSegKind.Seg16u);
             Channel.Write(t1.Format());
-            CheckNativeAlloc();
-        }
-
-        void CheckNativeAlloc()
-        {
-            var n = n16;
-            var count = Numbers.count(n);
-            byte length = (byte)n;
-            var result = Outcome.Success;
-            using var native = NativeCells.alloc<string>(count, out var id);
-            var bits = PolyBits.bitstrings(n);
-            for(var i=0u; i<count; i++)
-            {
-                var offset = i*n;
-                native[i] = new string(slice(bits, offset, n));
-            }
         }
 
         [CmdOp("check/parsers")]

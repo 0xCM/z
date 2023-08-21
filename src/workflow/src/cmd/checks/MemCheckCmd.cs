@@ -45,27 +45,11 @@ namespace Z0
             var src = sys.alloc<string>(count);
             for(uint i=0; i<count; i++)
                 seek(src,i) = BitRender.format8((byte)i);
+                
+            using var alloc = Alloc.create();
+            for(var i=0; i<src.Length; i++)
+                Require.equal(skip(src,i), alloc.Label(skip(src,i)).Format());
 
-            using var allocation = LabelAllocation.alloc(src);
-            var labels = allocation.Cells;
-            if(labels.Length != count)
-                result = (false, string.Format("{0} != {1}", labels.Length, count));
-            else
-            {
-                for(var i=0; i<count; i++)
-                {
-                    ref readonly var label = ref skip(labels,i);
-                    ref readonly var input = ref skip(src,i);
-                    var same = label.Format() == input;
-                    if(!same)
-                    {
-                        channel.Error($"{label} != {input}");
-                        break;
-                    }
-                }
-            }
-            if(result)
-                channel.Status($"Verified {count} label allocations");
         }
     }
 }

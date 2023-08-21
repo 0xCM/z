@@ -24,10 +24,8 @@ namespace Z0
             iter(Allocators.Values, a => a.Dispose());
         }
 
-        public SourceLine SourceLine(TextLine src)
-            => new (src.LineNumber, SourceText(src.Content));
 
-        public SourceText SourceText(string src)
+        public SourceText SourceText(ReadOnlySpan<char> src)
         {
             var dst = Z0.SourceText.Empty;
             lock(Locker)
@@ -42,6 +40,9 @@ namespace Z0
             }
             return dst;
         }
+
+        public SourceText SourceText(string src)
+            => SourceText(span(src));
 
         public SourceText SourceText(ReadOnlySpan<string> src)
         {

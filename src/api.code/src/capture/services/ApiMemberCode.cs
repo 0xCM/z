@@ -85,7 +85,7 @@ namespace Z0
         {
             public ICompositeDispenser Symbols;
 
-            public IAllocation<byte> CodeBuffer;
+            public ManagedBuffer CodeBuffer;
 
             public Index<EncodedMember> Members;
 

@@ -1,77 +1,76 @@
-//-----------------------------------------------------------------------------
-// Copyright   :  (c) Chris Moore, 2020
-// License     :  MIT
-//-----------------------------------------------------------------------------
-namespace Z0
-{
-    using static sys;
+// //-----------------------------------------------------------------------------
+// // Copyright   :  (c) Chris Moore, 2020
+// // License     :  MIT
+// //-----------------------------------------------------------------------------
+// namespace Z0;
 
-    public readonly record struct HexRef
-    {
-        readonly MemorySegment Seg;
+// using static sys;
 
-        [MethodImpl(Inline)]
-        public HexRef(MemorySegment seg)
-        {
-            Seg = seg;
-            Require.invariant(seg.IsNonEmpty);
-        }
+// public readonly record struct HexRef
+// {
+//     readonly MemorySegment Seg;
 
-        public MemoryAddress BaseAddress
-        {
-            [MethodImpl(Inline)]
-            get => Seg.BaseAddress;
-        }
+//     [MethodImpl(Inline)]
+//     public HexRef(MemorySegment seg)
+//     {
+//         Seg = seg;
+//         Require.invariant(seg.IsNonEmpty);
+//     }
 
-        public ReadOnlySpan<byte> View
-        {
-            [MethodImpl(Inline)]
-            get => Seg.View;
-        }
+//     public MemoryAddress BaseAddress
+//     {
+//         [MethodImpl(Inline)]
+//         get => Seg.BaseAddress;
+//     }
 
-        public Span<byte> Edit
-        {
-            [MethodImpl(Inline)]
-            get => Seg.Edit;
-        }
+//     public ReadOnlySpan<byte> View
+//     {
+//         [MethodImpl(Inline)]
+//         get => Seg.View;
+//     }
 
-        public Hash32 Hash
-        {
-            [MethodImpl(Inline)]
-            get => sys.hash(View);
-        }
+//     public Span<byte> Edit
+//     {
+//         [MethodImpl(Inline)]
+//         get => Seg.Edit;
+//     }
 
-        public byte Size
-        {
-            [MethodImpl(Inline)]
-            get => (byte)Seg.Size;
-        }
+//     public Hash32 Hash
+//     {
+//         [MethodImpl(Inline)]
+//         get => sys.hash(View);
+//     }
 
-        public string Format()
-            => View.FormatHex();
+//     public byte Size
+//     {
+//         [MethodImpl(Inline)]
+//         get => (byte)Seg.Size;
+//     }
 
-        public override string ToString()
-            => Format();
+//     public string Format()
+//         => View.FormatHex();
 
-        [MethodImpl(Inline)]
-        public bool Equals(HexRef src)
-        {
-            var size = src.Size;
-            if(size != Size)
-                return false;
-            var lhs = View;
-            var rhs = src.View;
-            var result = true;
-            for(var i=0; i<size; i++)
-                result &= skip(lhs,i) == skip(rhs,i);
-            return result;
-        }
+//     public override string ToString()
+//         => Format();
 
-        public override int GetHashCode()
-            => Hash;
+//     [MethodImpl(Inline)]
+//     public bool Equals(HexRef src)
+//     {
+//         var size = src.Size;
+//         if(size != Size)
+//             return false;
+//         var lhs = View;
+//         var rhs = src.View;
+//         var result = true;
+//         for(var i=0; i<size; i++)
+//             result &= skip(lhs,i) == skip(rhs,i);
+//         return result;
+//     }
 
-        [MethodImpl(Inline)]
-        public static implicit operator HexRef(MemorySegment src)
-            => new HexRef(src);
-    }
-}
+//     public override int GetHashCode()
+//         => Hash;
+
+//     [MethodImpl(Inline)]
+//     public static implicit operator HexRef(MemorySegment src)
+//         => new HexRef(src);
+// }

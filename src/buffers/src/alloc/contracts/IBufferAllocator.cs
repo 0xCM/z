@@ -3,25 +3,20 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+
+[Free]
+public interface IStringAllocator<T> : IAllocation
+    where T : IMemoryString
 {
-    [Free]
-    public interface IBufferAllocator : IDisposable
-    {
-        MemoryAddress BaseAddress {get;}
+    bool Alloc(ReadOnlySpan<char> src, out T dst);
+}
 
-        ByteSize Size {get;}
-    }
+[Free]
+public interface IPageAllocator : IAllocation
+{
+    uint PageCount {get;}
 
-    [Free]
-    public interface IBufferAllocator<T> : IBufferAllocator
-    {
-        bool Alloc(out T dst);
-    }
-
-    [Free]
-    public interface IBufferAllocator<S,T> : IBufferAllocator
-    {
-        bool Alloc(S src, out T dst);
-    }
+    MemoryAddress Alloc();
 }

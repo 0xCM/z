@@ -520,7 +520,7 @@ c5 f8 99 c8";
         [CmdOp("asm/check/sigs")]
         Outcome CheckSigs(CmdArgs args)
         {
-            using var dispenser = CompositeBuffers.create();
+            using var dispenser = Alloc.create();
             var specs = new Operand[3];
             seek(specs,0) = NativeSigs.ptr("op0", NativeSigs.u8());
             seek(specs,1) = NativeSigs.@const("op1", NativeSigs.i16());
@@ -550,7 +550,7 @@ c5 f8 99 c8";
             var @case = AsmCaseAssets.create().Branches();
             Utf8.decode(@case.ResBytes, out var doc);
 
-            using var buffers = CompositeBuffers.create();
+            using var buffers = Alloc.create();
             var parser = DecodedAsmParser.create(buffers.Composite());
             var result = parser.ParseBlocks(doc);
             var blocks = parser.Parsed();

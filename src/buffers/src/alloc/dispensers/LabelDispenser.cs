@@ -2,40 +2,43 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using static sys;
+
+public class LabelDispenser : Dispenser<LabelDispenser>, ILabelDispenser
 {
-    using static sys;
+    public const uint DefaultCapacity = Pow2.T12*4;
 
-    public class LabelDispenser : Dispenser<LabelDispenser>, ILabelDispenser
+    readonly Dictionary<long,LabelAllocator> Allocators;
+
+    public LabelDispenser(uint capacity = DefaultCapacity)
+        : base(true)
     {
-        public const uint DefaultCapacity = Pow2.T12*4;
-
-        readonly Dictionary<long,LabelAllocator> Allocators;
-
-        public LabelDispenser(uint capacity = DefaultCapacity)
-            : base(true)
-        {
-            Allocators = new();
-            Allocators[Seq] = LabelAllocator.alloc(DefaultCapacity);
-        }
-
-        public Label Label(string content)
-        {
-            var label = Z0.Label.Empty;
-            lock(Locker)
-            {
-                var alloc = Allocators[Seq];
-                if(!alloc.Alloc(content, out label))
-                {
-                    alloc = LabelAllocator.alloc(DefaultCapacity);
-                    alloc.Alloc(content, out label);
-                    Allocators[next()] = alloc;
-                }
-            }
-            return label;
-        }
-
-        protected override void Dispose()
-            => iter(Allocators.Values, a => a.Dispose());
+        Allocators = new();
+        Allocators[Seq] = LabelAllocator.alloc(DefaultCapacity);
     }
+
+    public Label Label(ReadOnlySpan<char> content)
+    {
+        var label = Z0.Label.Empty;
+        lock(Locker)
+        {
+            var alloc = Allocators[Seq];
+            if(!alloc.Alloc(content, out label))
+            {
+                alloc = LabelAllocator.alloc(DefaultCapacity);
+                alloc.Alloc(content, out label);
+                Allocators[next()] = alloc;
+            }
+        }
+        return label;
+
+    }
+
+    public Label Label(string content)
+        => Label(span(content));
+
+    protected override void Dispose()
+        => iter(Allocators.Values, a => a.Dispose());
 }

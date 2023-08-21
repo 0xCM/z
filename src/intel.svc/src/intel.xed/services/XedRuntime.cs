@@ -18,7 +18,7 @@ public class XedRuntime : WfSvc<XedRuntime>
 
     readonly object StartLocker = new();
 
-    public ref readonly CompositeBuffers Alloc => ref _Alloc;
+    public ref readonly Alloc Alloc => ref _Alloc;
 
     public XedPaths Paths => XedPaths.Service;
 
@@ -32,13 +32,13 @@ public class XedRuntime : WfSvc<XedRuntime>
 
     public XedFlows XedImport => Wf.XedFlows();
 
-    readonly CompositeBuffers _Alloc;
+    readonly Alloc _Alloc;
 
     public XedTables Views => Channel.XedViews();
 
     public XedRuntime()
     {
-        _Alloc = CompositeBuffers.create();
+        _Alloc = Z0.Alloc.create();
         Disposing += HandleDispose;
     }
 
