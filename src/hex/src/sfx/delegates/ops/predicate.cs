@@ -8,10 +8,10 @@ namespace Z0
     {
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static UnaryPredicate<T> predicate<T>(System.Func<T,bit> f)
-            => new UnaryPredicate<T>(f);
+            => new (f);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static Z0.BinaryPredicate<T> predicate<T>(System.Func<T,T,bit> f)
-            => new Z0.BinaryPredicate<T>(f);
+            => new (f);
     }
 }

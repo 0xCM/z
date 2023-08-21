@@ -10,14 +10,24 @@ namespace Z0
     using System.Linq.Expressions;
     using System.Runtime.CompilerServices;
 
-    using static Root;
-    using static core;
+    using static sys;
 
     using LX = System.Linq.Expressions.Expression;
     using PX = System.Linq.Expressions.ParameterExpression;
 
     public partial class LinqXPress
     {
+        /// <summary>
+        /// Evaluates a function over a value if the value is not null; otherwise, returns the default result value
+        /// </summary>
+        /// <typeparam name="X">The operand type</typeparam>
+        /// <typeparam name="Y">The return type</typeparam>
+        /// <param name="x">The operand</param>
+        /// <param name="f1">The function to potentially evaluate</param>
+        [MethodImpl(Inline)]
+        static Y coalesce<X,Y>(X x, Func<X,Y> f1, Y @default = default)
+            => x != null ? f1(x) : @default;
+
         /// <summary>
         /// Creates an expression from an emitter
         /// </summary>
@@ -109,7 +119,7 @@ namespace Z0
             var typeDef = typeof(Func<,>).GetGenericTypeDefinition();
             var type = typeDef.MakeGenericType(array(paramInfo.ParameterType, method.ReturnType));
             var args = paramX(paramInfo.ParameterType, paramInfo.Name);
-            var call = Expression.Call(core.coalesce(host, x => constant(x)), method, args);
+            var call = Expression.Call(coalesce(host, x => constant(x)), method, args);
             var l = Expression.Lambda(type, call, args);
             var del = l.Compile();
             return x => del.DynamicInvoke(x);
@@ -134,7 +144,7 @@ namespace Z0
                 paramX(parameters[1].ParameterType, parameters[1].Name)
                 };
 
-            var call = Expression.Call(core.coalesce(host, x => constant(x)), method, args);
+            var call = Expression.Call(coalesce(host, x => constant(x)), method, args);
             var l = Expression.Lambda(type, call, args);
             var del = l.Compile();
             return (x,y) => del.DynamicInvoke(x,y);

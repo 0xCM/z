@@ -6,12 +6,12 @@ namespace Z0.Asm;
 
 using TK = AsmSigTokenKind;
 
-[LiteralProvider(Group)]
+[LiteralProvider(GroupName)]
 public class AsmSigTokens
 {
-    const string Group = "asm.sigs";
+    public const string GroupName = "asm.sigs";
 
-    [SymSource(Group), TokenKind(TK.IntLiteral)]
+    [SymSource(GroupName), TokenKind(TK.IntLiteral)]
     public enum IntLiteral : byte
     {
         [Symbol("0")]
@@ -21,21 +21,21 @@ public class AsmSigTokens
         n1,
     }
 
-    [SymSource(Group), TokenKind(TK.GpRegTriple)]
+    [SymSource(GroupName), TokenKind(TK.GpRegTriple)]
     public enum GpRegTriple : byte
     {
         [Symbol("r16/r32/r64")]
         r16r32r64,
     }
 
-    [SymSource(Group), TokenKind(TK.GpRmTriple)]
+    [SymSource(GroupName), TokenKind(TK.GpRmTriple)]
     public enum GpRmTriple : byte
     {
         [Symbol("r16/r32/m16")]
         r16r32m16,
     }
 
-    [SymSource(Group), TokenKind(TK.GpRm)]
+    [SymSource(GroupName), TokenKind(TK.GpRm)]
     public enum GpRmToken : byte
     {
         [Symbol("r/m8", "A byte operand that is either the contents of a byte general-purpose register: {AL CL DL BL AH CH DH BH BPL SPL DIL SIL}; or a byte from memory. Byte registers R8L - R15L are available using REX.R in 64-bit mode")]
@@ -78,7 +78,7 @@ public class AsmSigTokens
         regm16,
     }
 
-    [SymSource(Group), TokenKind(TK.VecRm)]
+    [SymSource(GroupName), TokenKind(TK.VecRm)]
     public enum VecRmToken : byte
     {
         [Symbol("xmm/m8", "An XMM register or an 8-bit memory operand")]
@@ -103,7 +103,7 @@ public class AsmSigTokens
         zmm512,
     }
 
-    [SymSource(Group), TokenKind(TK.KRm)]
+    [SymSource(GroupName), TokenKind(TK.KRm)]
     public enum KRmToken : byte
     {
         [Symbol("k/m8")]
@@ -119,7 +119,7 @@ public class AsmSigTokens
         km64,
     }
 
-    [SymSource(Group), TokenKind(TK.SysReg)]
+    [SymSource(GroupName), TokenKind(TK.SysReg)]
     public enum SysRegToken : byte
     {
         [Symbol("BND", "A 128-bit bounds register. BND0 through BND3")]
@@ -138,7 +138,7 @@ public class AsmSigTokens
         CR8,
     }
 
-    [SymSource(Group), TokenKind(TK.RegLiteral)]
+    [SymSource(GroupName), TokenKind(TK.RegLiteral)]
     public enum RegLiteralToken : byte
     {
         [Symbol("AL")]
@@ -181,7 +181,7 @@ public class AsmSigTokens
         CL,
     }
 
-    [SymSource(Group), TokenKind(TK.GpReg)]
+    [SymSource(GroupName), TokenKind(TK.GpReg)]
     public enum GpRegToken : byte
     {
         /// <summary>
@@ -209,14 +209,14 @@ public class AsmSigTokens
         r64,
     }
 
-    [SymSource(Group), TokenKind(TK.MmxReg)]
+    [SymSource(GroupName), TokenKind(TK.MmxReg)]
     public enum MmxRegToken : byte
     {
         [Symbol("mm")]
         mm,
     }
 
-    [SymSource(Group), TokenKind(TK.MmxRm)]
+    [SymSource(GroupName), TokenKind(TK.MmxRm)]
     public enum MmxRmToken : byte
     {
         [Symbol("mm/m32", "The low-order bits of an mmx register or a 32-bit memory operand; The contents of memory are found at the address provided by the effective address computation")]
@@ -226,7 +226,7 @@ public class AsmSigTokens
         mm64,
     }
 
-    [SymSource(Group), TokenKind(TK.KReg)]
+    [SymSource(GroupName), TokenKind(TK.KReg)]
     public enum KRegToken : byte
     {
         [Symbol("rK", "A mask register used as a regular operand (either destination or source)")]
@@ -242,7 +242,7 @@ public class AsmSigTokens
         k2
     }
 
-    [SymSource(Group), TokenKind(TK.VReg)]
+    [SymSource(GroupName), TokenKind(TK.VReg)]
     public enum VRegToken : byte
     {
         [Symbol("xmm", "An XMM register")]
@@ -255,7 +255,7 @@ public class AsmSigTokens
         zmm,
     }
 
-    [SymSource(Group), TokenKind(TK.FpuReg)]
+    [SymSource(GroupName), TokenKind(TK.FpuReg)]
     public enum FpuRegToken : byte
     {
         [Symbol("ST(0)", "The top element of the FPU register stack")]
@@ -283,7 +283,7 @@ public class AsmSigTokens
         ST7,
     }
 
-    [SymSource(Group), TokenKind(TK.FpuInt)]
+    [SymSource(GroupName), TokenKind(TK.FpuInt)]
     public enum FpuIntToken : byte
     {
         [Symbol("m16int", "Indicates a 16-bit integer memory operand in the context of an FPU integer instruction")]
@@ -296,7 +296,7 @@ public class AsmSigTokens
         m64int = NativeSizeCode.W64,
     }
 
-    [SymSource(Group), TokenKind(TK.FpuMem)]
+    [SymSource(GroupName), TokenKind(TK.FpuMem)]
     public enum FpuMemToken : byte
     {
         [Symbol("m32fp", "A single-precision floating-point operand in memory")]
@@ -309,7 +309,7 @@ public class AsmSigTokens
         m80fp,
     }
 
-    [SymSource(Group), TokenKind(TK.Imm)]
+    [SymSource(GroupName), TokenKind(TK.Imm)]
     public enum ImmToken : byte
     {
         [Symbol("imm8", "An immediate 8-bit value in the inclusive range [–128, 127]. For instructions in which imm8 is combined with a word or doubleword operand, the immediate value is sign-extended to form a word or doubleword. The upper byte of the word is filled with the topmost bit of the immediate value")]
@@ -325,7 +325,7 @@ public class AsmSigTokens
         imm64,
     }
 
-    [SymSource(Group), TokenKind(TK.Mem)]
+    [SymSource(GroupName), TokenKind(TK.Mem)]
     public enum MemToken : byte
     {
         [Symbol("m8", "A byte operand in memory ( usually expressed as a variable or array name) but pointed to by the DS:(E)SI or ES:(E)DI registers. In 64-bit mode, it is pointed to by the RSI or RDI registers")]
@@ -356,7 +356,7 @@ public class AsmSigTokens
     /// <summary>
     /// "Identifies a variable that represents a memory offset, used by some variants of the MOV instruction. The actual address is given by a simple offset relative to the segment base. No ModR/M byte is used in the instruction. The number shown with moffs indicates its size, which is determined by the address-size attribute of the instruction "
     /// </summary>
-    [SymSource(Group), TokenKind(TK.Moffs)]
+    [SymSource(GroupName), TokenKind(TK.Moffs)]
     public enum MoffsToken : byte
     {
         [Symbol("moffs8", "A segbase-relative address of width 8")]
@@ -372,7 +372,7 @@ public class AsmSigTokens
         moffs64,
     }
 
-    [SymSource(Group), TokenKind(TK.Rel)]
+    [SymSource(GroupName), TokenKind(TK.Rel)]
     public enum RelToken: byte
     {
         [Symbol("rel8", "A relative address in the range from 128 bytes before the end of the instruction to 127 bytes after the end of the instruction")]
@@ -385,7 +385,7 @@ public class AsmSigTokens
         rel32,
     }
 
-    [SymSource(Group), TokenKind(TK.MemPair)]
+    [SymSource(GroupName), TokenKind(TK.MemPair)]
     public enum MemPairToken : byte
     {
         [Symbol("m16&16", "A memory operand that defines a 16-bit x 16-bit pair")]
@@ -401,7 +401,7 @@ public class AsmSigTokens
         m16x64,
     }
 
-    [SymSource(Group), TokenKind(TK.MemPtr)]
+    [SymSource(GroupName), TokenKind(TK.MemPtr)]
     public enum MemPtrToken
     {
         [Symbol("m16:16", "A far pointer defined by a 16-bit segment selector an 16-bit offset")]
@@ -414,7 +414,7 @@ public class AsmSigTokens
         mp16x64
     }
 
-    [SymSource(Group), TokenKind(TK.Ptr)]
+    [SymSource(GroupName), TokenKind(TK.Ptr)]
     public enum PtrToken : byte
     {
         [Symbol("ptr16:16", "A far pointer typically to a code segment different from that of the instruction. The notation 16:16 indicates that the value of the pointer has two parts. The value to the left of the colon is a 16- bit selector or value destined for the code segment register. The value to the right corresponds to the offset within the destination segment. The ptr16:16 symbol is used when the instruction's operand-size attribute is 16 bits E.G, CALL ptr16:16 (Call far, absolute, address given in operand")]
@@ -424,7 +424,7 @@ public class AsmSigTokens
         p16x32,
     }
 
-    [SymSource(Group), TokenKind(TK.OpMask)]
+    [SymSource(GroupName), TokenKind(TK.OpMask)]
     public enum OpMaskToken : byte
     {
         [Symbol("{k1}", "A mask register used as instruction writemask for instructions that do not allow zeroing-masking but support merging-masking")]
@@ -440,7 +440,7 @@ public class AsmSigTokens
         k2,
     }
 
-    [SymSource(Group), TokenKind(TK.BCastMem)]
+    [SymSource(GroupName), TokenKind(TK.BCastMem)]
     public enum BCastMem : byte
     {
         [Symbol("m32bcst", "Represents a 32-bit memory location that defines a scalar to broadcast to vector operands")]
@@ -450,7 +450,7 @@ public class AsmSigTokens
         m64bcst,
     }
 
-    [SymSource(Group), TokenKind(TK.BCastComposite)]
+    [SymSource(GroupName), TokenKind(TK.BCastComposite)]
     public enum BCastComposite : byte
     {
         [Symbol("xmm/m128/m32bcst")]
@@ -472,7 +472,7 @@ public class AsmSigTokens
         z512x64bcst,
     }
 
-    [SymSource(Group), TokenKind(TK.Rounding)]
+    [SymSource(GroupName), TokenKind(TK.Rounding)]
     public enum RoundingToken : byte
     {
         [Symbol("{sae}")]
@@ -482,7 +482,7 @@ public class AsmSigTokens
         er,
     }
 
-    [SymSource(Group), TokenKind(TK.Modifier)]
+    [SymSource(GroupName), TokenKind(TK.Modifier)]
     public enum ModifierToken : byte
     {
         [Symbol("m8 {k1}{z}")]
@@ -582,7 +582,7 @@ public class AsmSigTokens
         m64bcst_sae,
     }
 
-    [SymSource(Group), TokenKind(TK.Vsib)]
+    [SymSource(GroupName), TokenKind(TK.Vsib)]
     public enum VsibToken : byte
     {
         [Symbol("vm32x", "A vector array of memory operands specified using VSIB memory addressing. The array of memory addresses are specified using a common base register, a constant scale factor, and a vector index register with individual elements of 32-bit index value in an XMM register")]
@@ -604,7 +604,7 @@ public class AsmSigTokens
         vm64z
     }
 
-    [SymSource(Group), TokenKind(TK.Dependent)]
+    [SymSource(GroupName), TokenKind(TK.Dependent)]
     public enum DependentToken : byte
     {
         [Symbol("/r", "Indicates that the ModR/M byte of the instruction contains a register operand and an r/m operand")]

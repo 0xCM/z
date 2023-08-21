@@ -4,13 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Linq;
-    using System.Reflection.Emit;
-    using System.Reflection;
-
-    using static Root;
-    using static core;
+    using static sys;
 
     /// <summary>
     /// Generates an implementation of a specified interface type that delegates to an implementation

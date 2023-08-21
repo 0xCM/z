@@ -2,12 +2,10 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0;
-
-using Asm;
+namespace Z0.Asm;
 
 [StructLayout(LayoutKind.Sequential, Size=2, Pack=1)]
-public readonly record struct AsmOcToken : IDataType<AsmOcToken>
+public readonly record struct AsmOcToken : IKindedToken<AsmOcTokenKind,byte>
 {
     public readonly AsmOcTokenKind Kind;
 
@@ -19,6 +17,13 @@ public readonly record struct AsmOcToken : IDataType<AsmOcToken>
         Value = value;
         Kind = kind;
     }
+
+    AsmOcTokenKind IKinded<AsmOcTokenKind>.Kind
+        => Kind;
+    
+    byte IValued<byte>.Value
+        => Value;
+
 
     public uint Id
     {
@@ -69,6 +74,14 @@ public readonly record struct AsmOcToken : IDataType<AsmOcToken>
     [MethodImpl(Inline)]
     public static explicit operator byte(AsmOcToken src)
         => src.Value;
+
+    [MethodImpl(Inline)]
+    public static implicit operator KindedToken<AsmOcTokenKind,byte>(AsmOcToken src)
+        => Tokens.token(src.Kind, src.Value);
+
+    [MethodImpl(Inline)]
+    public static implicit operator AsmOcToken  (KindedToken<AsmOcTokenKind,byte> src)
+        => new(src.Kind,src.Value);
 
     public static AsmOcToken Empty => default;
 }

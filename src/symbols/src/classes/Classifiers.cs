@@ -8,11 +8,7 @@ namespace Z0
 
     public readonly struct Classifiers
     {
-        public static void render<K,V>(ValueClassifier<K,V> src, ITextEmitter dst)
-            where K : unmanaged, Enum
-            where V : unmanaged
-                => CsvTables.emit(src.Classes, dst);
-
+ 
         const NumericKind Closure = UnsignedInts;
 
         public static ValueClassifier classifier(Type src)
@@ -110,14 +106,6 @@ namespace Z0
                 seek(classes,i) = new ValueClass(sym.Key, sym.Group, sym.Name, sym.Expr.Text, values[i].Value);
             }
 
-            // for(var i=0u; i<symbols.Count; i++)
-            // {
-            //     ref readonly var sym = ref symbols[i];
-            //     dst.Sym(i) = sym;
-            //     dst.SymName(i) = sym.Name;
-            //     dst.Value(i) = (sym.Name,sym.Value);
-            //     dst.Class(i) = new ValueClass(sym.Key, sym.Group, sym.Name, sym.Expr.Text, sym.Value);
-            // }
             return dst;
         }
 

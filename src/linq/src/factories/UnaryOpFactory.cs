@@ -9,15 +9,16 @@ namespace Z0
 
     using static LinqXPress;
 
-    public readonly struct TernaryOpFactory<T> : ITernaryOpFactory<T>
+    public readonly struct UnaryOpFactory<T> : IUnaryOpFactory<T>
     {
-        public static ITernaryOpFactory<T> Service => default(TernaryOpFactory<T>);
+        public static IUnaryOpFactory<T> Service
+            => default(UnaryOpFactory<T>);
 
-        public Func<T,T,T,T> Create(MethodInfo method, object instance = null)
+        public Func<T,T> Create(MethodInfo method, object instance = null)
         {
-            var args = core.array(paramX<T,T,T>());
+            var args = sys.array(paramX<T>());
             var callExpr = call(instance, method, args);
-            var f = lambda<T,T,T,T>(args, callExpr).Compile();
+            var f = lambda<T,T>(args, callExpr).Compile();
             return f;
         }
     }

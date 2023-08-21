@@ -1,6 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(SlnProps)\usings.props"/>
-  <Import Project="imports.props"/>
+  <ItemGroup>
+    <ProjectReference Include="$(Events)" />
+    <ProjectReference Include="$(Cells)" />
+    <ProjectReference Include="$(VCpu)" />
+    <ProjectReference Include="$(ApiV1)" />
+  </ItemGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
   </PropertyGroup>

@@ -4,12 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Reflection;
-    using System.Linq.Expressions;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
 
     using LX = System.Linq.Expressions.Expression;
     using PX = System.Linq.Expressions.ParameterExpression;
@@ -24,7 +18,7 @@ namespace Z0
         /// <param name="args">The arguments supplied to the method when invoked</param>
         [MethodImpl(Inline), Op]
         public static MethodCallExpression call(object Host, MethodInfo m, params PX[] args)
-            => LX.Call(core.coalesce(Host, h => constant(h)), m, args);
+            => LX.Call(coalesce(Host, h => constant(h)), m, args);
 
         /// <summary>
         /// Creates an expression that invokes a static method

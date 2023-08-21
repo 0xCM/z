@@ -2,12 +2,10 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0;
-
-using Asm;
+namespace Z0.Asm;
 
 [StructLayout(LayoutKind.Sequential, Size=2, Pack =1)]
-public readonly record struct AsmSigToken : IDataType<AsmSigToken>
+public readonly record struct AsmSigToken : IKindedToken<AsmSigTokenKind,byte>
 {
     public readonly AsmSigTokenKind Kind;
 
@@ -25,6 +23,12 @@ public readonly record struct AsmSigToken : IDataType<AsmSigToken>
         [MethodImpl(Inline)]
         get => bits.join((byte)Value, (byte)Kind);
     }
+
+    AsmSigTokenKind IKinded<AsmSigTokenKind>.Kind
+        => Kind;
+    
+    byte IValued<byte>.Value
+        => Value;
 
     [MethodImpl(Inline)]
     public int CompareTo(AsmSigToken src)
@@ -65,6 +69,14 @@ public readonly record struct AsmSigToken : IDataType<AsmSigToken>
 
     public override string ToString()
         => Format();
+
+    [MethodImpl(Inline)]
+    public static implicit operator KindedToken<AsmSigTokenKind,byte>(AsmSigToken src)
+        => Tokens.token(src.Kind, src.Value);
+
+    [MethodImpl(Inline)]
+    public static implicit operator AsmSigToken(KindedToken<AsmSigTokenKind,byte> src)
+        => new(src.Kind,src.Value);
 
     public static AsmSigToken Empty => default;
 }

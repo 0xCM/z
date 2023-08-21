@@ -4,12 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
     using System.Linq.Expressions;
-    using System.Reflection;
 
-    using static Root;
-    using static core;
+    using static sys;
     using static LinqXPress;
     using static LinqXFunc;
 

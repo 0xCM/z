@@ -4,11 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Linq.Expressions;
-    using System.Reflection;
 
-    using static Z0.LinqXPress;
+    using static LinqXPress;
 
     partial struct ModelsDynamic
     {

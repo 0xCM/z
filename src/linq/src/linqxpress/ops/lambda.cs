@@ -42,7 +42,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static Expression<T> lambda<T>((PX p1, PX p2) parameters, Expression body)
             where T : Delegate
-                => LX.Lambda<T>(body, core.array(parameters.p1, parameters.p2));
+                => LX.Lambda<T>(body, sys.array(parameters.p1, parameters.p2));
 
         /// <summary>
         /// Defines a lambda expression
@@ -53,7 +53,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static Expression<T> lambda<T>((PX p1, PX p2, PX p3) parameters, Expression body)
             where T : Delegate
-                => LX.Lambda<T>(body, core.array(parameters.p1, parameters.p2, parameters.p3));
+                => LX.Lambda<T>(body, sys.array(parameters.p1, parameters.p2, parameters.p3));
 
         /// <summary>
         /// Creates a an emitter expression
@@ -109,7 +109,7 @@ namespace Z0
         {
             var p1 = paramX<X>();
             var eval = f(p1);
-            return lambda<Func<X,Y>>(core.array(p1), eval);
+            return lambda<Func<X,Y>>(sys.array(p1), eval);
         }
 
         /// <summary>

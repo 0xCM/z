@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="imports.props"/>
   <Import Project="$(ProjectProps)\usings.props"/>
+  <ItemGroup>
+    <ProjectReference Include="$(Native)" />
+  </ItemGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
   </PropertyGroup>

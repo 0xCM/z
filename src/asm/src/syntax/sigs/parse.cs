@@ -65,7 +65,6 @@ namespace Z0.Asm
                         break;
                     }
 
-
                     dst = new AsmSig(mnemonic, op0, op1);
                 }
                 break;

@@ -1,9 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(ProjectProps)\usings.props"/>
   <ItemGroup>
-    <ProjectReference Include="$(Diagnostics)"/>
     <ProjectReference Include="$(ClrCil)"/>
-    <ProjectReference Include="$(Binary)"/>
     <ProjectReference Include="$(Process)"/>
     <ProjectReference Include="$(Assets)"/>
   </ItemGroup>

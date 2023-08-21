@@ -10,16 +10,36 @@ namespace Z0.Asm
 
     class AsmCmd : WfAppCmd<AsmCmd>
     {
+        public static void ExportTokens(IWfChannel channel, SymbolGroup group, IDbArchive dst)
+        {
+            const string MemberPattern = "{0}:{1},";
+            var emitter = text.emitter();
+            group.EmitTokens(emitter);
+            channel.FileEmit(emitter.Emit(), dst.Path(group.GroupName, FS.ext("ts")));
+        }
+
         IDbArchive Db => EnvDb.Scoped("asm.db");
 
         AsmRegSets Regs => Service(AsmRegSets.create);
 
         PolyBits PolyBits => Wf.PolyBits();
-
         
         void EmitPatterns()
         {
             PolyBits.EmitPatterns(typeof(AsmBitPatterns), Db.Scoped("patterns"));
+        }
+
+        [CmdOp("asm/tokens")]
+        void EmitTokenGroups()
+        {
+            var groups = AsmTokens.groups();
+            iter(groups, g => {
+                iter(g.Partitions(), p => {
+                    iter(p.Symbols, s => {
+                        Channel.Row($"{s.GroupName}::{s.GroupClass}:{s.Identifier}[{s.Seq}]=({s.Value},{text.squote(s.Expresson)})");
+                    });
+                });
+            });
         }
 
         void EmitTokens()
@@ -27,7 +47,7 @@ namespace Z0.Asm
             var groups = AsmTokens.groups();
             var dst = Db.Scoped("tokens");
             foreach(var g in groups)
-                g.ExportTokens(Channel, dst);
+                ExportTokens(Channel, g, dst);
 
             var jcc = Tokens.tokenize(typeof(Jcc32Code), typeof(Jcc8Code), typeof(Jcc32AltCode), typeof(Jcc8AltCode));
             var path = dst.Path("jcc.codes",FS.ext("ts"));
@@ -57,6 +77,7 @@ namespace Z0.Asm
             }
         }
 
+        
 
         [CmdOp("asm/emit/docs")]
         void EmitDocs()

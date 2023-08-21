@@ -7,12 +7,12 @@ namespace Z0.Asm;
 using TK = AsmOcTokenKind;
 using T = AsmOcSymbols;
 
-[LiteralProvider(Group)]
+[LiteralProvider(GroupName)]
 public class AsmOcTokens
 {
-    const string Group = "asm.opcodes";
+    public const string GroupName = "asm.opcodes";
 
-    [SymSource(Group), TokenKind(TK.Hex16)]
+    [SymSource(GroupName), TokenKind(TK.Hex16)]
     public enum Hex16Token : byte
     {
         [Symbol(T.x0F38)]
@@ -22,7 +22,7 @@ public class AsmOcTokens
         x0F3A,
     }
 
-    [SymSource(Group), TokenKind(TK.Integer)]
+    [SymSource(GroupName), TokenKind(TK.Integer)]
     public enum IntegerToken : byte
     {
         [Symbol(T.n0)]
@@ -47,7 +47,7 @@ public class AsmOcTokens
         n6,
     }
 
-    [SymSource(Group), TokenKind(TK.Rex)]
+    [SymSource(GroupName), TokenKind(TK.Rex)]
     public enum RexToken : byte
     {
         [Symbol(T.Rex, "Indicates the presence of a REX prefix")]
@@ -60,7 +60,7 @@ public class AsmOcTokens
         RexR,
     }
 
-    [SymSource(Group), TokenKind(TK.Vex)]
+    [SymSource(GroupName), TokenKind(TK.Vex)]
     public enum VexToken : byte
     {
         [Symbol(T.W, "Opcode extension field")]
@@ -124,7 +124,7 @@ public class AsmOcTokens
     /// <summary>
     /// Table 2-30, EVEX Prefix Bit Field Functional Grouping
     /// </summary>
-    [SymSource(Group), TokenKind(TK.Evex)]
+    [SymSource(GroupName), TokenKind(TK.Evex)]
     public enum EvexToken : byte
     {
         [Symbol(T.mmmm, "Access to up to eight decoding maps")]
@@ -177,7 +177,7 @@ public class AsmOcTokens
 
     }
 
-    [SymSource(Group), TokenKind(TK.Disp)]
+    [SymSource(GroupName), TokenKind(TK.Disp)]
     public enum DispToken : byte
     {
         [Symbol(T.cb, "Indicates a 1-byte value follows the opcode to specify a code offset and/or new value for the code segment register")]
@@ -199,7 +199,7 @@ public class AsmOcTokens
         ct,
     }
 
-    [SymSource(Group), TokenKind(TK.SegOverride)]
+    [SymSource(GroupName), TokenKind(TK.SegOverride)]
     public enum SegOverrideToken : byte
     {
         [Symbol(T.cs, "CS segment override")]
@@ -221,7 +221,7 @@ public class AsmOcTokens
         GS,
     }
 
-    [SymSource(Group), TokenKind(TK.RegDigit)]
+    [SymSource(GroupName), TokenKind(TK.RegDigit)]
     public enum RegDigitToken : byte
     {
         [Symbol(T.rd0, "The ModR/M byte of the instruction uses only the r/m operand; The register field digit 0 provides an extension to the instruction's opcode")]
@@ -253,7 +253,7 @@ public class AsmOcTokens
     /// Specifies a '/r' token where r = 0..7. A digit between 0 and 7 indicates that the ModR/M byte of the instruction
     /// uses only the r/m (register or memory) operand. The reg field contains the digit that provides an extension to the instruction's opcode.
     /// </summary>
-    [SymSource(Group), TokenKind(TK.ModRm)]
+    [SymSource(GroupName), TokenKind(TK.ModRm)]
     public enum ModRmToken : byte
     {
         [Symbol(T.RRM, "The ModR/M byte of the instruction contains a register operand and an r/m operand")]
@@ -263,7 +263,7 @@ public class AsmOcTokens
     /// <summary>
     /// Indicates the lower 3 bits of the opcode byte is used to encode the register operand without a modR/M byte Represents one of ['+rb', '+rw', '+rd', '+ro']
     /// </summary>
-    [SymSource(Group), TokenKind(TK.RexB)]
+    [SymSource(GroupName), TokenKind(TK.RexB)]
     public enum RexBToken : byte
     {
         [Symbol(T.rb, "For an 8-bit register, indicates the four bit field of REX.b and opcode[2:0] field encodes the register operand of the instruction")]
@@ -282,7 +282,7 @@ public class AsmOcTokens
     /// <summary>
     /// "Specifies the size of an immediate operand in the context of an opcode specification"
     /// </summary>
-    [SymSource(Group), TokenKind(TK.ImmSize)]
+    [SymSource(GroupName), TokenKind(TK.ImmSize)]
     public enum ImmSizeToken : byte
     {
         [Symbol(T.ib, "Indicates a 1-byte immediate operand to the instruction that follows the opcode or ModR/M bytes or scale-indexing bytes.")]
@@ -298,7 +298,7 @@ public class AsmOcTokens
         io,
     }
 
-    [SymSource(Group), TokenKind(TK.FpuDigit)]
+    [SymSource(GroupName), TokenKind(TK.FpuDigit)]
     public enum FpuDigitToken : byte
     {
         [Symbol(T.ST0)]
@@ -326,7 +326,7 @@ public class AsmOcTokens
         st7,
     }
 
-    [SymSource(Group), TokenKind(TK.Exclusion)]
+    [SymSource(GroupName), TokenKind(TK.Exclusion)]
     public enum ExclusionToken
     {
         [Symbol(T.NP, "Indicates the use of 66/F2/F3 prefixes are not allowed with the instruction")]
@@ -339,7 +339,7 @@ public class AsmOcTokens
         NDS,
     }
 
-    [SymSource(Group), TokenKind(TK.Mask)]
+    [SymSource(GroupName), TokenKind(TK.Mask)]
     public enum MaskToken : byte
     {
         [Symbol(T.k1, "Indicates a mask register used as instruction writemask for instructions that do not allow zeroing-masking but support merging-masking")]
@@ -352,7 +352,7 @@ public class AsmOcTokens
         WriteMask,
     }
 
-    [SymSource(Group), TokenKind(TK.Operator)]
+    [SymSource(GroupName), TokenKind(TK.Operator)]
     public enum OperatorToken : byte
     {
         [Symbol(T.Plus)]
@@ -362,14 +362,14 @@ public class AsmOcTokens
         Dot,
     }
 
-    [SymSource(Group), TokenKind(TK.Sep)]
+    [SymSource(GroupName), TokenKind(TK.Sep)]
     public enum SeparatorToken : byte
     {
         [Symbol(T.Sep)]
         Sep,
     }
 
-    [SymSource(Group), TokenKind(TK.Hex8)]
+    [SymSource(GroupName), TokenKind(TK.Hex8)]
     public enum Hex8Kind : byte
     {
         [Symbol("00")]

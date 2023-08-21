@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Reflection;
-    using System.Linq;
-
     using static LinqXPress;
 
     public readonly struct BinaryOpFactory<T> : IBinaryOpFactory<T>

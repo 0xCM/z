@@ -22,12 +22,12 @@ namespace Z0
                 => _OPSafe.Require();
 
             static Option<Func<T,T>> TryConstruct()
-                => core.@try(() =>
+                => @try(() =>
                 {
                     switch (sys.typecode<T>())
                     {
                         case TypeCode.Byte:
-                            return cast<Func<T,T>>(Ops8u.Inc.Compile());
+                            return Option.some(cast<Func<T,T>>(Ops8u.Inc.Compile()));
                         case TypeCode.SByte:
                             return cast<Func<T,T>>(Ops8i.Inc.Compile());
                         case TypeCode.UInt16:

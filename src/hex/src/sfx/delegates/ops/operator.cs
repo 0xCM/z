@@ -8,14 +8,14 @@ namespace Z0
     {
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static UnaryOp<T> @operator<T>(System.Func<T,T> f)
-            => new UnaryOp<T>(f);
+            => new (f);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static BinaryOp<T> @operator<T>(System.Func<T,T,T> f)
-            => new BinaryOp<T>(f);
+            => new (f);
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static TernaryOp<T> @operator<T>(System.Func<T,T,T,T> f)
-            => new TernaryOp<T>(f);
+            => new (f);
     }
 }

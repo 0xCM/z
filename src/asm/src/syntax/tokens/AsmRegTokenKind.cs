@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-[SymSource(AsmRegTokens.Group)]
+[LiteralProvider(AsmRegTokens.GroupName)]
 public enum AsmRegTokenKind
 {
     None,

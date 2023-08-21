@@ -9,6 +9,7 @@ using static Asm.AsmOcTokens;
 /// <summary>
 /// Classifes <see cref='AsmOcTokenTokenGroup'/> members
 /// </summary>
+[LiteralProvider(GroupName)]
 public enum AsmOcTokenKind : byte
 {
     None = 0,

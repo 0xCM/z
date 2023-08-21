@@ -14,21 +14,23 @@ namespace Z0.Asm
 
         public static bool operand(AsmSigOpExpr src, out AsmSigOp dst)
         {
-            if(AsmSigs.opmask(src, out var op, out var mask))
-            {
-                if(_Datasets.OpsByExpression.Find(op, out dst))
-                {
-                    dst = dst.WithModifier(modifier(mask));
-                    return true;
-                }
-                else
-                {
-                    Errors.Throw(string.Format("Token not found for <{0}>", src));
-                    return false;
-                }
-            }
-            else
-                return _Datasets.OpsByExpression.Find(src.Text, out dst);
+            dst = AsmSigOp.Empty;
+            return true;
+            //if(opmask(src, out var op, out var mask))
+            // {
+            //     if(_Datasets.OpsByExpression.Find(op, out dst))
+            //     {
+            //         dst = dst.WithModifier(modifier(mask));
+            //         return true;
+            //     }
+            //     else
+            //     {
+            //         Errors.Throw(string.Format("Token not found for <{0}>", src));
+            //         return false;
+            //     }
+            // }
+            // else
+            //     return _Datasets.OpsByExpression.Find(src.Text, out dst);
         }
 
         [MethodImpl(Inline), Op, Closures(Closure)]

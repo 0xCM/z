@@ -10,8 +10,6 @@ using static sys;
 
 public class SymbolGroup
 {
-    public readonly Type GroupType;
-
     public readonly string GroupName;
 
     readonly Type[] _SymbolTypes;
@@ -22,29 +20,37 @@ public class SymbolGroup
 
     readonly Dictionary<Type,string> _ClassName = new();
 
-    public SymbolGroup(Type group, Type classifier)
+    uint Seq;
+
+    public SymbolGroup(Type classifier, Type[] symtypes)
     {
         ClassType = classifier;
-        GroupType = group;
-        _SymbolTypes = group.GetNestedTypes().Enums();
+        _SymbolTypes = symtypes;
         var indices = Z0.Symbols.indices(_SymbolTypes);
         foreach(var index in indices)
             _IndexLookup[index.RuntimeType] = index;
         foreach(var type in _SymbolTypes)
             _ClassName[type] = type.Tag<TokenKindAttribute>().MapValueOrElse(a => a.Kind.ToString(), () => EmptyString);
-        GroupName = group.Tag<LiteralProviderAttribute>().MapValueOrElse(a => a.Group, () => EmptyString);
+        GroupName = classifier.Tag<LiteralProviderAttribute>().MapValueOrDefault(a => a.Group, classifier.Name);
+    }
+
+    public SymbolGroup(Type classifier, Type group)
+        : this(classifier, group.GetNestedTypes().Enums())
+    {
     }
 
     public IEnumerable<Type> SymbolTypes => _SymbolTypes;
 
-    public IEnumerable<Symbol> Symbols(Type type)
+    IEnumerable<Symbol> Symbols(Type type)
     {
         var index = _IndexLookup[type];
         for(var j=0u; j<index.Count; j++)
         {
             var symbol = index[j];
             yield return new Symbol{
+                Seq = Seq++,
                 Ordinal = j,
+                Value = symbol.Value,
                 GroupName = GroupName,
                 GroupClass = _ClassName[type],
                 Identifier = symbol.Name,
@@ -53,11 +59,10 @@ public class SymbolGroup
         }
     }
 
-    public Partition GroupPartition(Type type)
+    Partition GroupPartition(Type type)
     {
         var members = Symbols(type).ToSeq();
         return new Partition{
-            GroupType = GroupType.Name,
             LiteralType = type.Name,
             GroupName = members.First.GroupName,
             GroupClass = members.First.GroupClass,
@@ -66,16 +71,24 @@ public class SymbolGroup
     }
 
     public IEnumerable<Partition> Partitions()
-        => from t in _SymbolTypes  select GroupPartition(t);
-
-    public IEnumerable<Symbol> Literals()
-        => from type in _SymbolTypes
-            from member in Symbols(type)
-            select member;
-
-    public record struct Symbol
     {
+        Seq = 0;
+        return from t in _SymbolTypes
+             select GroupPartition(t);
+    }
+
+    // public IEnumerable<Symbol> Literals()
+    //     => from type in _SymbolTypes
+    //         from member in Symbols(type)
+    //         select member;
+
+    public record struct Symbol : ISequential<Symbol>, IComparable<Symbol>
+    {
+        public uint Seq;
+
         public uint Ordinal;
+
+        public ulong Value;
 
         public string GroupName;
 
@@ -84,12 +97,24 @@ public class SymbolGroup
         public string Identifier;
 
         public string Expresson;
+
+        uint ISequential.Seq {get => Seq; set => Seq = value; }
+
+        public int CompareTo(Symbol src)
+        {
+            var result = GroupName.CompareTo(src.GroupName);
+            if(result == 0)
+            {
+                result = GroupClass.CompareTo(src.GroupClass);
+                if(result == 0)
+                    result = Ordinal.CompareTo(src.Ordinal);
+            }
+            return result;
+        }
     }
 
     public record struct Partition
     {
-        public string GroupType;
-
         public string GroupName;
 
         public string LiteralType;
@@ -99,23 +124,13 @@ public class SymbolGroup
         public ReadOnlySeq<Symbol> Symbols;
     }
 
-    /*
-export const Hex16Symbols:Array<Hex16> = ['0F38', '0F3A']
-
-export const Hex16:Record<string,Hex16> = {
-"0F38":'0F38',
-'0F3A':'0F3A'
-}
-
-    */
-    public void ExportTokens(IWfChannel channel, IDbArchive dst)
+    public void EmitTokens(ITextEmitter dst)
     {
         const string MemberPattern = "{0}:{1},";
         var indent = 0u;
         var emitter = text.emitter();
         EmitTypeLiterals(ref indent, emitter);
         EmitMembers(ref indent, emitter);
-        channel.FileEmit(emitter.Emit(), dst.Path(GroupName, FS.ext("ts")));
     }
 
     public void EmitTypeLiterals(ref uint indent, ITextEmitter dst)

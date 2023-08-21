@@ -99,42 +99,11 @@ namespace Z0
         [CmdOp("asm/check/tokens")]
         void CheckAsmTokens()
         {
-            AsmSigs.parse("adc r16, r16", out var sig);
-            Channel.Row(sig);
-            // SdmOpCodes.parse("11 /r", out var oc1);
-            // Channel.Row(oc1);
-            // SdmOpCodes.parse("13 /r", out var oc2);
-            // Channel.Row(oc2);
-            // var count = min(oc1.TokenCount, oc2.TokenCount);
-            // var token = AsmOcToken.Empty;
-            // for(var i=0; i<count; i++)
-            // {
-            //     ref readonly var ta = ref oc1[i];
-            //     ref readonly var tb = ref oc2[i];
-            //     if(ta.Kind == AsmOcTokenKind.Sep && tb.Kind == AsmOcTokenKind.Sep)
-            //         continue;
-
-            //     if(ta != tb)
-            //     {
-            //         token = tb;
-            //         break;
-            //     }
-            // }
-
-            // if(SdmOpCodes.diff(oc1, oc2, out token))
-            //     Write(token.Format());
-
-            // var sigs = AsmSigTokenGroup.create();
-            // var src = sigs;
-            // var types = src.TokenTypes;
-            // for(var i=0; i<types.Length; i++)
-            // {
-            //     var sigTokens = src.TokensByType(skip(types,i));
-            //     for(var j=0;j<sigTokens.Count; j++)
-            //     {
-            //         Write(sigTokens[j].Format());
-            //     }
-            // }
+            var result = AsmSigs.parse("adc r16, r16", out var sig);
+            if(result.Fail)
+                Channel.Error(result.Message);
+            else
+                Channel.Row(sig);
         }
 
         [CmdOp("hex/gen/blocks")]
@@ -221,30 +190,6 @@ namespace Z0
             return true;
         }
 
-        public static Index<ushort> serialize(PointMapper<K,P> src)
-        {
-            var dst = alloc<ushort>(src.PointCount);
-            serialize(src,dst);
-            return dst;
-        }
-
-        [Op]
-        public static uint serialize(PointMapper<K,P> src, Span<ushort> dst)
-        {
-            var points = src.Points;
-            var count = points.Length;
-            var j=0;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var point = ref seek(points,i);
-                ref var t0 = ref @as<byte>(seek(dst,i));
-                ref var t1 = ref @as<Log2x32>(seek(t0,1));
-                t0 = u8(point.Left);
-                t1 = Pow2.log(point.Right);
-            }
-
-            return 0;
-        }
 
         [Free]
         public interface ICalc64

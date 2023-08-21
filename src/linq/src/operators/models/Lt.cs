@@ -8,8 +8,7 @@ namespace Z0
     using System;
     using System.Linq.Expressions;
 
-    using static Root;
-    using static core;
+    using static sys;
     using static LinqXPress;
 
     partial struct ModelsDynamic
@@ -23,18 +22,18 @@ namespace Z0
                 => _OPSafe.Require();
 
             static Option<Func<T,T,bool>> TryConstruct()
-                => core.@try(() =>
+                => sys.@try(() =>
                 {
                     switch (sys.typecode<T>())
                     {
                         case TypeCode.Byte:
-                            return cast<Func<T,T,bool>>(Ops8u.LT.Compile());
+                            return Option.some(cast<Func<T,T,bool>>(Ops8u.LT.Compile()));
                         case TypeCode.SByte:
-                            return cast<Func<T,T,bool>>(Ops8i.Lt.Compile());
+                            return Option.some(cast<Func<T,T,bool>>(Ops8i.Lt.Compile()));
                         case TypeCode.UInt16:
-                            return cast<Func<T,T,bool>>(Ops16u.LT.Compile());
+                            return Option.some(cast<Func<T,T,bool>>(Ops16u.LT.Compile()));
                         default:
-                            return lambda<T,T,bool>(Expression.LessThan).Compile();
+                            return Option.some(lambda<T,T,bool>(Expression.LessThan).Compile());
                     }
                 });
 

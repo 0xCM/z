@@ -113,17 +113,17 @@ namespace Z0.Asm
                 dst.Add(src);
             else
             {
-                if(_Datasets.Nonterminals.Find(src.Id, out var y))
-                {
-                    if(y.Term1.IsNonEmpty)
-                        dst.Add(operand(y.Term1, src.Modifier));
+                // if(_Datasets.Nonterminals.Find(src.Id, out var y))
+                // {
+                //     if(y.Term1.IsNonEmpty)
+                //         dst.Add(operand(y.Term1, src.Modifier));
 
-                    if(y.Term1.IsNonEmpty)
-                        dst.Add(operand(y.Term2, src.Modifier));
+                //     if(y.Term1.IsNonEmpty)
+                //         dst.Add(operand(y.Term2, src.Modifier));
 
-                    if(y.Term3.IsNonEmpty)
-                        dst.Add(operand(y.Term3, src.Modifier));
-                }
+                //     if(y.Term3.IsNonEmpty)
+                //         dst.Add(operand(y.Term3, src.Modifier));
+                // }
             }
 
             return dst.ToArray();

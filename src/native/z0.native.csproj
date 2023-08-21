@@ -2,10 +2,8 @@
   <Import Project="$(ProjectProps)\usings.props"/>
   <ItemGroup>
     <ProjectReference Include="$(Numbers)" />
-    <ProjectReference Include="$(EMath)" />
     <ProjectReference Include="$(Dynamic)" />
     <ProjectReference Include="$(Buffers)" />
-    <ProjectReference Include="$(BitFields)" />
     <ProjectReference Include="$(Asm)" />
   </ItemGroup>
   <PropertyGroup>

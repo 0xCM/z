@@ -5,7 +5,8 @@
 namespace Z0
 {
     using static sys;
-
+    using System.Linq;
+    
     [ApiHost]
     public class Literals
     {
@@ -14,7 +15,7 @@ namespace Z0
         public static Index<ClrLiteralInfo> runtimelits(Index<LiteralProvider> src)
         {
             var providers = src.Select(provider => (Provider: provider, Fields: provider.Type.LiteralFields().Index()));
-            var count = providers.Storage.Select(x => x.Fields.Count).Sum();
+            var count = providers.Storage.Select(x => (int)x.Fields.Count).Sum();
             var dst = sys.alloc<ClrLiteralInfo>(count);
             var k=0u;
             for(var i=0; i<providers.Count; i++)
@@ -29,7 +30,7 @@ namespace Z0
                     var host = field.DeclaringType;
                     var lk = ClrLiteralKind.None;
                     if(datatype.IsEnum)
-                        lk = (ClrLiteralKind)Enums.@base(datatype);
+                        lk = (ClrLiteralKind)ClrEnums.@base(datatype);
                     else
                         lk = (ClrLiteralKind)PrimalBits.kind(datatype);
                     seek(dst,k) = new (host.Assembly.PartName(), provider.Group, ClrLiterals.name(host), ClrLiterals.name(field), field.GetRawConstantValue(), lk);
@@ -88,16 +89,16 @@ namespace Z0
             where T : IEquatable<T>, IComparable<T>
                 => new LiteralSeq<T>(name, literals(src));
 
-        public static LiteralSeq<E> seq<E>(string name, LiteralNameSource ns)
-            where E : unmanaged, Enum, IComparable<E>, IEquatable<E>
-        {
-            var src = Symbols.index<E>();
-            var count = src.Count;
-            var dst = sys.alloc<Literal<E>>(count);
-            for(var i=0; i<count; i++)
-                seek(dst,i) = literal<E>(Literals.name(src[i], ns), src[i].Kind);
-            return new LiteralSeq<E>(name, dst);
-        }
+        // public static LiteralSeq<E> seq<E>(string name, LiteralNameSource ns)
+        //     where E : unmanaged, Enum, IComparable<E>, IEquatable<E>
+        // {
+        //     var src = Symbols.index<E>();
+        //     var count = src.Count;
+        //     var dst = sys.alloc<Literal<E>>(count);
+        //     for(var i=0; i<count; i++)
+        //         seek(dst,i) = literal<E>(Literals.name(src[i], ns), src[i].Kind);
+        //     return new LiteralSeq<E>(name, dst);
+        // }
 
         static Index<Literal<T>> literals<T>(ReadOnlySpan<T> src)
         {
@@ -118,12 +119,12 @@ namespace Z0
             return literals;
         }
 
-        static string name<E>(Sym<E> sym, LiteralNameSource src)
-            where E : unmanaged
-            => src switch{
-                LiteralNameSource.Expression => sym.Expr.Text,
-                LiteralNameSource.Identifier => sym.Name,
-                _ => sym.Name
-            };
+        // static string name<E>(Sym<E> sym, LiteralNameSource src)
+        //     where E : unmanaged
+        //     => src switch{
+        //         LiteralNameSource.Expression => sym.Expr.Text,
+        //         LiteralNameSource.Identifier => sym.Name,
+        //         _ => sym.Name
+        //     };
     }
 }

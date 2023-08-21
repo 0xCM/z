@@ -5,7 +5,6 @@
     <ProjectReference Include="../symbols/z0.symbols.csproj" />
     <ProjectReference Include="../math/z0.math.csproj" />
   </ItemGroup>
-
   <PropertyGroup>
     <OutputType>Library</OutputType>
   </PropertyGroup>

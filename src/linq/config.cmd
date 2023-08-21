@@ -1,3 +1,3 @@
 @echo off
-set ProjectName=assets
+set ProjectName=linq
 call %~dp0..\config.cmd

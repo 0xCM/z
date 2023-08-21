@@ -34,7 +34,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static System.Func<T,bit> func<T>(UnaryPredicate<T> f)
-            => new System.Func<T,bit>(f);
+            => new (f);
 
         /// <summary>
         /// Creates a function delegate of generic arity 1 from a static method

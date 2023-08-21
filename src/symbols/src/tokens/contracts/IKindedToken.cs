@@ -2,13 +2,11 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    public class AsmSigTokenGroup : TokenGroup<AsmSigTokenGroup,AsmSigTokenKind>
-    {
-        const string Group = "asm.sigs";
+namespace Z0;
 
-        public override string GroupName
-            => Group;
-    }
+public interface IKindedToken<K,V> : IKinded<K>, IValued<V>, INullity
+    where K : unmanaged
+    where V : unmanaged
+{
+    
 }

@@ -3,7 +3,6 @@
   <ItemGroup>
     <ProjectReference Include="$(Math)" />
     <ProjectReference Include="$(ClrQuery)" />
-    <ProjectReference Include="$(ClrCil)" />
     <ProjectReference Include="$(Events)" />
     <ProjectReference Include="$(Asci)" />
     <ProjectReference Include="$(Files)" />

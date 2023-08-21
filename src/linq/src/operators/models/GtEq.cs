@@ -4,13 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Reflection;
-    using System.Runtime.CompilerServices;
-
-    using static Root;
-    using static core;
-
     partial struct ModelsDynamic
     {
         public readonly struct GtEq<T> : IFunc<T,T,bool>

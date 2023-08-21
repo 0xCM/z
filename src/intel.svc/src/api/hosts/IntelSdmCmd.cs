@@ -15,13 +15,13 @@ namespace Z0
 
         IntelSdmPaths SdmPaths => Wf.SdmPaths();
 
-        [CmdOp("intel/sdm/etl")]
-        void RunEtl()
-        {
-            var groups = AsmTokens.groups();
-            foreach(var g in groups)
-                g.ExportTokens(Channel, SdmPaths.Targets());
-        }
+        // [CmdOp("intel/sdm/etl")]
+        // void RunEtl()
+        // {
+        //     var groups = AsmTokens.groups();
+        //     foreach(var g in groups)
+        //         g.ExportTokens(Channel, SdmPaths.Targets());
+        // }
 
 
         [CmdOp("sdm/export/charmaps")]

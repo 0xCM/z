@@ -13,6 +13,27 @@ namespace Z0
     [ApiHost]
     public class Tokens
     {
+        [MethodImpl(Inline)]
+        public static KindedToken<K,V> token<K,V>(K kind, V value)
+            where K : unmanaged
+            where V : unmanaged
+                => new(kind,value);
+
+        public static ReadOnlySeq<KindedToken<K,V>> tokenize<K,V>(K kind)
+            where K : unmanaged, Enum
+            where V : unmanaged
+        {
+            var symbols = Symbols.index<K>();
+            var count = symbols.Length;
+            var dst = alloc<KindedToken<K,V>>(count);
+            for(var i=0u; i<count; i++)
+            {
+                ref readonly var symbol = ref symbols[i];
+                seek(dst,i) = token(kind, generic<V>(symbol.Value.Value));
+            }
+            return dst;
+        }
+
         public static ReadOnlySeq<Type> types(params Assembly[] src)
             => src.Enums().NonGeneric();
 

@@ -9,36 +9,31 @@ namespace Z0.Asm
     partial class AsmSigs
     {
         public static AsmSigOpExpr expression(in AsmSigOp src)
-        {
-            var dst = format(src.Token);
-            if(src.Modifier != 0)
-            {
-                if(_Datasets.Modifers.MapKind(src.Modifier, out var mod))
-                    dst = $"{dst} {mod.Expr}";
-            }
+            => AsmSigOpExpr.Empty;
+        // {
+        //     var dst = format(src.Token);
+        //     if(src.Modifier != 0)
+        //     {
+        //         if(_Datasets.Modifers.MapKind(src.Modifier, out var mod))
+        //             dst = $"{dst} {mod.Expr}";
+        //     }
 
-            if(_Datasets.Expressions.Find(src.Token.Id, out var xpr))
-            {
-                if(src.Modifier != 0)
-                {
-                    if(_Datasets.Modifers.MapKind(src.Modifier, out var mod))
-                        return string.Format("{0} {1}", xpr, mod.Expr);
-                    else
-                        return RP.Error;
-                }
-                else
-                    return xpr;
-            }
-            else
-                return RP.Error;
-        }
+        //     if(_Datasets.Expressions.Find(src.Token.Id, out var xpr))
+        //     {
+        //         if(src.Modifier != 0)
+        //         {
+        //             if(_Datasets.Modifers.MapKind(src.Modifier, out var mod))
+        //                 return string.Format("{0} {1}", xpr, mod.Expr);
+        //             else
+        //                 return RP.Error;
+        //         }
+        //         else
+        //             return xpr;
+        //     }
+        //     else
+        //         return RP.Error;
+        // }
 
-        public static AsmSigOpExpr expression(in AsmSigToken src)
-        {
-            if(_Datasets.Expressions.Find(src.Id, out var x))
-                return x;
-            return RP.Error;
-        }
 
         public static AsmSigExpr expression(string src)
         {

@@ -4,12 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Reflection;
-
-    using static core;
+    using static sys;
     using static Z0.LinqXPress;
     using static Z0.LinqXFunc;
 
@@ -24,23 +19,23 @@ namespace Z0
                 => _OPSafe.Require();
 
             static Option<Func<T,T,T>> TryConstruct()
-                => core.@try(() =>
+                => sys.@try(() =>
                 {
                     switch (sys.typecode<T>())
                     {
 
                         case TypeCode.String:
-                            return fx(LinqDynamic.method<T,T,T>("Concat").Require().Func<T,T,T>()).Compile();
+                            return Option.some(fx(LinqDynamic.method<T,T,T>("Concat").Require().Func<T,T,T>()).Compile());
                         case TypeCode.Byte:
-                            return cast<Func<T,T,T>>(Ops8u.Add.Compile());
+                            return Option.some(cast<Func<T,T,T>>(Ops8u.Add.Compile()));
                         case TypeCode.SByte:
-                            return cast<Func<T,T,T>>(Ops8i.Add.Compile());
+                            return Option.some(cast<Func<T,T,T>>(Ops8i.Add.Compile()));
                         case TypeCode.Int16:
-                            return cast<Func<T,T,T>>(Ops16i.Add.Compile());
+                            return Option.some(cast<Func<T,T,T>>(Ops16i.Add.Compile()));
                         case TypeCode.UInt16:
-                            return cast<Func<T,T,T>>(Ops16u.Add.Compile());
+                            return Option.some(cast<Func<T,T,T>>(Ops16u.Add.Compile()));
                         default:
-                            return lambda<T,T,T>(Expression.Add).Compile();
+                            return Option.some(lambda<T,T,T>(Expression.Add).Compile());
                     }
                 });
 

@@ -1,8 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(Events)" />
-    <ProjectReference Include="$(Cells)" />
-    <ProjectReference Include="$(VCpu)" />
-    <ProjectReference Include="$(ApiV1)" />
-  </ItemGroup>
-</Project>

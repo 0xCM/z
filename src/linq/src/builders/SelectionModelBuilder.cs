@@ -32,7 +32,7 @@ namespace Z0.DynamicModels
                       ? Option.some(new MemberOrdering(builder.orders))
                       : Option.none<MemberOrdering>();
 
-            core.iter(builder.junctions, j => j.Flatten());
+            iter(builder.junctions, j => j.Flatten());
             var model = new SelectionModel(X, selection, order, builder.junctions , facets);
             return model;
         }
@@ -181,7 +181,7 @@ namespace Z0.DynamicModels
 
             var subject = X.Type.GetGenericArguments()[1];
             var members = subject.GetProperties().Cast<MemberInfo>().Union(subject.GetFields());
-            selections.AddRange(core.mapi(members, (i, m) => new SelectedMember(m, i)));
+            selections.AddRange(mapi(members, (i, m) => new SelectedMember(m, i)));
         }
 
         void Traversed(MethodCallExpression X)

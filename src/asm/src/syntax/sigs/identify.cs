@@ -8,17 +8,17 @@ partial class AsmSigs
 {
     public static string identify(in AsmSigOp src)
     {
-        if(_Datasets.Names.Find(src.Id, out var id))
-        {
-            if(src.Modifier != 0)
-            {
-                if(_Datasets.Modifers.MapKind(src.Modifier, out var mod))
-                    return string.Format("{0}_{1}", id, mod.Kind);
-            }
+        // if(_Datasets.Names.Find(src.Id, out var id))
+        // {
+        //     if(src.Modifier != 0)
+        //     {
+        //         if(_Datasets.Modifers.MapKind(src.Modifier, out var mod))
+        //             return string.Format("{0}_{1}", id, mod.Kind);
+        //     }
 
-            return id;
-        }
-        Errors.Throw(string.Format("{0} is unidentifiable", src));
+        //     return id;
+        // }
+        // Errors.Throw(string.Format("{0} is unidentifiable", src));
         return EmptyString;
     }
 
