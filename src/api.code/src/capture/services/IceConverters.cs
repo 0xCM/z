@@ -99,6 +99,7 @@ namespace Z0.Asm
             return new IceInstruction
             {
                 Decoded = decoded,
+                TargetAddress = TargetAddress(src),
                 UsedMemory = UsedMemory(info),
                 UsedRegisters = UsedRegisters(info),
                 Access = OpAccessDefer(info),

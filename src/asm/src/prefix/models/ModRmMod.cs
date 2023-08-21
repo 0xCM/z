@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-public readonly struct ModRmMod
+public readonly record struct ModRmMod
 {
     readonly uint4 Data;
 

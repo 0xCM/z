@@ -122,7 +122,7 @@ public readonly struct AsmRel
 
     [MethodImpl(Inline), Op]
     public static AsmOpKind kind(NativeSize size)
-        => AsmOps.kind(AsmOpClass.Rel, size);
+        => asm.opkind(AsmOpClass.Rel, size);
 
     [MethodImpl(Inline), Op]
     public static JmpRel32 jmp32(AsmRip src, MemoryAddress dst)

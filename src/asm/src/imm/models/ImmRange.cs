@@ -2,67 +2,65 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0.Asm;
+
+public record struct ImmRange
 {
-    public struct ImmOpRange
+    readonly Imm Min;
+
+    readonly Imm Max;
+
+    Imm Current;
+
+    [MethodImpl(Inline)]
+    public ImmRange(Imm min, Imm max)
     {
-        readonly Imm Min;
+        Min = min;
+        Max = max;
+        Current = min;
+    }
 
-        readonly Imm Max;
+    [MethodImpl(Inline)]
+    public Imm Next()
+    {
+        Next(out var dst);
+        return dst;
+    }
 
-        Imm Current;
+    [MethodImpl(Inline)]
+    public Imm Prior()
+    {
+        Next(out var dst);
+        return dst;
+    }
 
-        [MethodImpl(Inline)]
-        public ImmOpRange(Imm min, Imm max)
+    [MethodImpl(Inline)]
+    public bool Next(out Imm dst)
+    {
+        if(Current < Max)
         {
-            Min = min;
-            Max = max;
-            Current = min;
+            dst = Current++;
+            return true;
         }
-
-        [MethodImpl(Inline)]
-        public Imm Next()
+        else
         {
-            Next(out var dst);
-            return dst;
+            dst = Imm.Empty;
+            return false;
         }
+    }
 
-        [MethodImpl(Inline)]
-        public Imm Prior()
+    [MethodImpl(Inline)]
+    public bool Prior(out Imm dst)
+    {
+        if(Current > Min)
         {
-            Next(out var dst);
-            return dst;
+            dst = Current--;
+            return true;
         }
-
-        [MethodImpl(Inline)]
-        public bool Next(out Imm dst)
+        else
         {
-            if(Current < Max)
-            {
-                dst = Current++;
-                return true;
-            }
-            else
-            {
-                dst = Imm.Empty;
-                return false;
-            }
+            dst = Imm.Empty;
+            return false;
         }
-
-        [MethodImpl(Inline)]
-        public bool Prior(out Imm dst)
-        {
-            if(Current > Min)
-            {
-                dst = Current--;
-                return true;
-            }
-            else
-            {
-                dst = Imm.Empty;
-                return false;
-            }
-        }
-
     }
 }

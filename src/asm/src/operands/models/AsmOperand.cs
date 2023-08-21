@@ -11,7 +11,7 @@ using static sys;
 using B = ByteBlock16;
 
 [StructLayout(LayoutKind.Sequential,Pack=1), ApiComplete]
-public struct AsmOperand : IAsmOp
+public record struct AsmOperand : IAsmOp
 {
     public readonly AsmOpClass OpClass;
 

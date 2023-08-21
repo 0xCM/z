@@ -470,20 +470,27 @@ namespace Z0.Asm
         // Summary:
         //     Gets the CPU or CPUID feature flags
         public IceCpuidFeature[] CpuidFeatures {get; set;}
+
         //
         // Summary:
         //     Flow control info
         public IceFlowControl FlowControl {get; set;}
+
         //
         // Summary:
         //     VSIB instructions only (Iced.Intel.Instruction.IsVsib): true if it's using 64-bit
         //     indexes, false if it's using 32-bit indexes
         public bool IsVsib64 {get; set;}
+
         //
         // Summary:
         //     Checks if it's a call far [mem] instruction
         public bool IsCallFarIndirect {get; set;}
 
+        public bool IsIndirect
+            => IsCallFarIndirect || IsCallNearIndirect || IsJmpFarIndirect || IsJmpNearIndirect;
+
+        public MemoryAddress TargetAddress {get;set;}
         public override string ToString()
             => FormattedInstruction;
     }

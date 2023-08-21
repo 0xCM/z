@@ -14,7 +14,7 @@ using static AsmPrefixCodes;
 /// REX = [0100 | W:4 | R:3 | X:2 | B:1]
 /// </summary>
 [ApiComplete]
-public struct RexPrefix : IAsmPrefix<RexPrefix>, IAsmByte<RexPrefix>
+public record struct RexPrefix : IAsmPrefix<RexPrefix>, IAsmByte<RexPrefix>
 {
     [MethodImpl(Inline)]
     public static RexPrefix init()

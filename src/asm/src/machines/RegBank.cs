@@ -2,42 +2,41 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+public class RegBank : IDisposable
 {
-    public class RegBank : IDisposable
+    public readonly RegFile File;
+
+    readonly NativeBuffer Buffer;
+
+    readonly Seq<RegAlloc> Allocated;
+
+    public RegBank(RegFile file, NativeBuffer buffer, RegAlloc[] allocs)
     {
-        public readonly RegFile File;
+        File = file;
+        Buffer = buffer;
+        Allocated = allocs;
+    }
 
-        readonly NativeBuffer Buffer;
+    [MethodImpl(Inline)]
+    public ref RegAlloc Allocation(uint seq)
+        => ref Allocated[seq];
 
-        readonly Seq<RegAlloc> Allocated;
+    public void Dispose()
+    {
+        Buffer.Dispose();
+    }
 
-        public RegBank(RegFile file, NativeBuffer buffer, RegAlloc[] allocs)
-        {
-            File = file;
-            Buffer = buffer;
-            Allocated = allocs;
-        }
-
+    public ref RegAlloc this[uint seq]
+    {
         [MethodImpl(Inline)]
-        public ref RegAlloc Allocation(uint seq)
-            => ref Allocated[seq];
+        get => ref Allocation(seq);
+    }
 
-        public void Dispose()
-        {
-            Buffer.Dispose();
-        }
-
-        public ref RegAlloc this[uint seq]
-        {
-            [MethodImpl(Inline)]
-            get => ref Allocation(seq);
-        }
-
-        public Span<RegAlloc> Allocations
-        {
-            [MethodImpl(Inline)]
-            get => Allocated.Edit;
-        }
+    public Span<RegAlloc> Allocations
+    {
+        [MethodImpl(Inline)]
+        get => Allocated.Edit;
     }
 }

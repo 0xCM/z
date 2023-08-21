@@ -26,14 +26,14 @@ public readonly struct RelAddress<T> : IDataType<RelAddress<T>>
 
     public bool IsEmpty
     {
-            [MethodImpl(Inline)]
-            get => Offset.Equals(default);
+        [MethodImpl(Inline)]
+        get => Offset.Equals(default);
     }
 
     public bool IsNonEmpty
     {
-            [MethodImpl(Inline)]
-            get => !Offset.Equals(default);
+        [MethodImpl(Inline)]
+        get => !Offset.Equals(default);
     }
 
     public Hash32 Hash

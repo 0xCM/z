@@ -2,61 +2,60 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0.Asm;
+
+using E = ConditionExpressions;
+
+using static JccNames;
+
+[SymSource("asm.cc")]
+public enum Jcc8Code : byte
 {
-    using E = ConditionExpressions;
+    [Symbol(jo, "Jump short if overflow", E.O)]
+    JO = 0x70,
 
-    using static JccNames;
+    [Symbol(jno, "Jump short if not overflow", E.NO)]
+    JNO = 0x71,
 
-    [SymSource("asm.cc")]
-    public enum Jcc8Code : byte
-    {
-        [Symbol(jo, "Jump short if overflow", E.O)]
-        JO = 0x70,
+    [Symbol(jb, "Jump short if below", E.B)]
+    JB = 0x72,
 
-        [Symbol(jno, "Jump short if not overflow", E.NO)]
-        JNO = 0x71,
+    [Symbol(jnb, "Jump short if not below", E.NB)]
+    JNB = 0x73,
 
-        [Symbol(jb, "Jump short if below", E.B)]
-        JB = 0x72,
+    [Symbol(jz, "Jump short if zero", E.Z)]
+    JZ = 0x74,
 
-        [Symbol(jnb, "Jump short if not below", E.NB)]
-        JNB = 0x73,
+    [Symbol(jnz, "Jump short if not zero", E.NZ)]
+    JNZ = 0x75,
 
-        [Symbol(jz, "Jump short if zero", E.Z)]
-        JZ = 0x74,
+    [Symbol(jna, "Jump short if not above", E.NA)]
+    JNA = 0x76,
 
-        [Symbol(jnz, "Jump short if not zero", E.NZ)]
-        JNZ = 0x75,
+    [Symbol(ja, "Jump short if above", E.A)]
+    JA = 0x77,
 
-        [Symbol(jna, "Jump short if not above", E.NA)]
-        JNA = 0x76,
+    [Symbol(js, "Jump short if sign", E.S)]
+    JS = 0x78,
 
-        [Symbol(ja, "Jump short if above", E.A)]
-        JA = 0x77,
+    [Symbol(jns, "Jump short if not sign", E.NS)]
+    JNS = 0x79,
 
-        [Symbol(js, "Jump short if sign", E.S)]
-        JS = 0x78,
+    [Symbol(jpe, "Jump short if parity even", E.PE)]
+    JPE = 0x7A,
 
-        [Symbol(jns, "Jump short if not sign", E.NS)]
-        JNS = 0x79,
+    [Symbol(jpo, "Jump short if parity odd", E.PO)]
+    JPO = 0x7B,
 
-        [Symbol(jpe, "Jump short if parity even", E.PE)]
-        JPE = 0x7A,
+    [Symbol(jl, "Jump short if less", E.L)]
+    JL = 0x7C,
 
-        [Symbol(jpo, "Jump short if parity odd", E.PO)]
-        JPO = 0x7B,
+    [Symbol(jnl, "Jump short if not less", E.NL)]
+    JNL = 0x7D,
 
-        [Symbol(jl, "Jump short if less", E.L)]
-        JL = 0x7C,
+    [Symbol(jng, "Jump short if not greater", E.NG)]
+    JNG = 0x7E,
 
-        [Symbol(jnl, "Jump short if not less", E.NL)]
-        JNL = 0x7D,
-
-        [Symbol(jng, "Jump short if not greater", E.NG)]
-        JNG = 0x7E,
-
-        [Symbol(jnle, "Jump short if not less or equal", E.NLE)]
-        JNLE = 0x7F,
-    }
+    [Symbol(jnle, "Jump short if not less or equal", E.NLE)]
+    JNLE = 0x7F,
 }

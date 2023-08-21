@@ -163,7 +163,7 @@ partial class XedDisasm
 
         }
         else if(state.VEXVALID == (byte)XedVexClass.EVV)
-            dst.Evex = EvexPrefix.define(slice(prefix,legacyskip));
+            dst.Evex = AsmPrefix.evex(slice(prefix,legacyskip));
 
         if(state.IMM0)
             dst.Imm = asm.imm(code, state.POS_IMM, state.IMM0SIGNED, Sizes.native(state.IMM_WIDTH));

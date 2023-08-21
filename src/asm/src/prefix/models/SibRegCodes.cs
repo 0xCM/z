@@ -5,7 +5,7 @@
 namespace Z0;
 
 [Record(TableId)]
-public struct SibRegCodes
+public record struct SibRegCodes
 {
     const string TableId = "sib.regcodes";
 

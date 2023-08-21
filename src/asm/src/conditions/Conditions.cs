@@ -13,7 +13,6 @@ public sealed class Conditions
 {
     const NumericKind Closure = UnsignedInts;
 
-
     [MethodImpl(Inline), Op, Closures(Closure)]
     public static JccInfo<K> jcc<K>(K kind, asci8 name, NativeSize size)
         where K : unmanaged

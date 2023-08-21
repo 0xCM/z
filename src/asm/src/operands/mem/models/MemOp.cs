@@ -59,7 +59,7 @@ public readonly struct MemOp : IMemOp
     public AsmOpKind OpKind
     {
         [MethodImpl(Inline)]
-        get => AsmOps.kind(OpClass, Size);
+        get => asm.opkind(OpClass, Size);
     }
 
     public string Format()

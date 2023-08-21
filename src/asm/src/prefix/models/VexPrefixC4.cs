@@ -8,7 +8,7 @@ namespace Z0.Asm
     using static sys;
 
     [DataWidth(24), ApiComplete]
-    public struct VexPrefixC4
+    public record struct VexPrefixC4
     {
         // ~ RXB
         const byte RXB_Mask = 0b1110_0000;

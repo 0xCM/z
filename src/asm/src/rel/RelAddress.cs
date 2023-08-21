@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-
 [StructLayout(LayoutKind.Sequential,Pack=1)]
 public readonly struct RelAddress : IDataType<RelAddress>
 {
@@ -21,14 +20,14 @@ public readonly struct RelAddress : IDataType<RelAddress>
 
     public bool IsEmpty
     {
-            [MethodImpl(Inline)]
-            get => Base == 0u && Offset == 0u;
+        [MethodImpl(Inline)]
+        get => Base == 0u && Offset == 0u;
     }
 
     public bool IsNonEmpty
     {
-            [MethodImpl(Inline)]
-            get => !IsEmpty;
+        [MethodImpl(Inline)]
+        get => !IsEmpty;
     }
 
     public Hash32 Hash

@@ -7,8 +7,8 @@ namespace Z0.Asm
     partial struct asm
     {
         [MethodImpl(Inline)]
-        public static ImmOpRange range(Imm min, Imm max)
-            => new ImmOpRange(min,max);
+        public static ImmRange range(Imm min, Imm max)
+            => new ImmRange(min,max);
 
         [MethodImpl(Inline)]
         public static RegOpRange range(RegClass @class, NativeSize size, RegIndex min, RegIndex max)

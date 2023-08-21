@@ -6,7 +6,7 @@ namespace Z0.Asm;
 
 using static AsmPrefixCodes;
 
-public struct RepPrefix : IAsmPrefix<RepPrefixCode>, IAsmByte<RepPrefix>
+public record struct RepPrefix : IAsmPrefix<RepPrefixCode>, IAsmByte<RepPrefix>
 {
     public RepPrefixCode _Code;
 

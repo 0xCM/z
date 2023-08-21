@@ -7,9 +7,9 @@ namespace Z0.Asm;
 /// <summary>
 /// Represents the content of a 64-bit opmask regigers
 /// </summary>
-public struct EvexPredicate
+public readonly record struct EvexPredicate
 {
-    ulong Data;
+    readonly ulong Data;
 
     [MethodImpl(Inline)]
     public EvexPredicate(ulong src)

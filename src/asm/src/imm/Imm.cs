@@ -183,7 +183,7 @@ namespace Z0.Asm
         public AsmOpKind OpKind
         {
             [MethodImpl(Inline)]
-            get => AsmOps.kind(AsmOpClass.Imm, Size);
+            get => asm.opkind(AsmOpClass.Imm, Size);
         }
 
         public NativeSize Size

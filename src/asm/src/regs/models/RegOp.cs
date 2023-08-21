@@ -74,7 +74,7 @@ public readonly struct RegOp : IRegOp
     public AsmOpKind OpKind
     {
         [MethodImpl(Inline)]
-        get => AsmOps.kind(AsmOpClass.Reg, Size);
+        get => asm.opkind(AsmOpClass.Reg, Size);
     }
 
     public AsmRegName Name

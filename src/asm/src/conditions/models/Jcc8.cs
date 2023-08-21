@@ -5,7 +5,7 @@
 namespace Z0.Asm;
 
 [StructLayout(LayoutKind.Sequential, Pack=1)]
-public readonly struct Jcc8 : IAsmInstruction<Jcc8>
+public readonly record struct Jcc8 : IAsmInstruction<Jcc8>
 {
    readonly byte Data;
 

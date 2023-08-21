@@ -4,14 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Collections.Generic;
-
-    using static Root;
-
     public readonly struct IceInstructions
     {
+
         readonly List<IceInstruction> Data;
 
         public CodeBlock Encoded {get;}

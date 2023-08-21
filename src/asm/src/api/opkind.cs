@@ -4,20 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-[SymSource("asm.cc")]
-public enum JccKind : byte
+partial struct asm
 {
-    None,
-
-    Jcc8,
-
-    Jcc8Alt,
-
-    Jcc16,
-
-    Jcc16Alt,
-
-    Jcc32,
-
-    Jcc32Alt,
+    [MethodImpl(Inline), Op]
+    public static AsmOpKind opkind(AsmOpClass @class, NativeSize size)
+        => (AsmOpKind)math.or((ushort)@class, math.sll((ushort)size,8));
 }

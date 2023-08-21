@@ -30,7 +30,7 @@ public readonly struct RegMask : IRegMask
     public AsmOpKind OpKind
     {
         [MethodImpl(Inline)]
-        get => AsmOps.kind(AsmOpClass.RegMask, Size);
+        get => asm.opkind(AsmOpClass.RegMask, Size);
     }
 
     public AsmOpClass OpClass

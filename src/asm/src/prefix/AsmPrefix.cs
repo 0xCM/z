@@ -7,13 +7,27 @@ namespace Z0.Asm;
 using static sys;
 using static AsmPrefixCodes;
 
-using C = AsmPrefixCode;
-using K = AsmPrefixKind;
-using L = AsmPrefixClass;
+using Code = AsmPrefixCode;
+using Kind = AsmPrefixKind;
+using Class = AsmPrefixClass;
 
 [ApiHost, Free]
 public class AsmPrefix
 {        
+    [MethodImpl(Inline)]
+    public static EvexPrefix evex(byte b0, byte b1, byte b2, byte b3)
+        => new (Bytes.join(b0,b1,b2,b3));
+
+    [MethodImpl(Inline)]
+    public static EvexPrefix evex(ReadOnlySpan<byte> src)
+    {
+        var count = min(src.Length,4);
+        var data = 0u;
+        for(var i=0; i<count; i++)
+            data |= (uint)skip(src,i) << (i*8);
+        return new EvexPrefix(data);
+    }
+
     [MethodImpl(Inline), Op]
     public static SizeOverride opsz()
         => SizeOverrideCode.OPSZ;
@@ -47,10 +61,10 @@ public class AsmPrefix
         => new (w,r,x,b);
 
     [Op]
-    public static AsmPrefixKind kinds(ReadOnlySpan<byte> src)
+    public static Kind kinds(ReadOnlySpan<byte> src)
     {
         var count = src.Length;
-        var result = AsmPrefixKind.None;
+        var result = Kind.None;
         for(var i=0; i<count; i++)
         {
             var c = code(skip(src,i));
@@ -61,132 +75,125 @@ public class AsmPrefix
     }
 
     [Op]
-    public static AsmPrefixClass @class(AsmPrefixCode src)
+    public static Class @class(Code src)
         => src switch
         {
-            C.SsSegOverride => L.Legacy,
-            C.EsSegOverride => L.Legacy,
-            C.FsSegOverride => L.Legacy,
-            C.GsSegOverride => L.Legacy,
-            C.OSZ => L.Legacy,
-            C.ASZ => L.Legacy,
-            C.BranchTaken => L.Legacy,
-
-            C.BranchNotTaken => L.Legacy,
-
-            C.Lock => L.Legacy,
-
-            C.RepF2 => L.Legacy,
-
-            C.RepF3 => L.Legacy,
-
-            C.Rex => L.REX,
-
-            C.VexC4 => L.VEX,
-
-            C.VexC5 => L.VEX,
-            _ => L.None,
+            Code.SsSegOverride => Class.Legacy,
+            Code.EsSegOverride => Class.Legacy,
+            Code.FsSegOverride => Class.Legacy,
+            Code.GsSegOverride => Class.Legacy,
+            Code.OSZ => Class.Legacy,
+            Code.ASZ => Class.Legacy,
+            Code.BranchTaken => Class.Legacy,
+            Code.BranchNotTaken => Class.Legacy,
+            Code.Lock => Class.Legacy,
+            Code.RepF2 => Class.Legacy,
+            Code.RepF3 => Class.Legacy,
+            Code.Rex => Class.REX,
+            Code.VexC4 => Class.VEX,
+            Code.VexC5 => Class.VEX,
+            _ => Class.None,
         };
 
     [Op]
-    public static AsmPrefixClass @class(AsmPrefixKind src)
+    public static Class @class(Kind src)
         => src switch
         {
-            K.SsSegOverride => L.Legacy,
+            Kind.SsSegOverride => Class.Legacy,
 
-            K.EsSegOverride => L.Legacy,
+            Kind.EsSegOverride => Class.Legacy,
 
-            K.FsSegOverride => L.Legacy,
+            Kind.FsSegOverride => Class.Legacy,
 
-            K.GsSegOverride => L.Legacy,
+            Kind.GsSegOverride => Class.Legacy,
 
-            K.OSZ => L.Legacy,
+            Kind.OSZ => Class.Legacy,
 
-            K.ASZ => L.Legacy,
+            Kind.ASZ => Class.Legacy,
 
-            K.BranchTaken => L.Legacy,
+            Kind.BranchTaken => Class.Legacy,
 
-            K.BranchNotTaken => L.Legacy,
+            Kind.BranchNotTaken => Class.Legacy,
 
-            K.Lock => L.Legacy,
+            Kind.Lock => Class.Legacy,
 
-            K.RepF2 => L.Legacy,
+            Kind.RepF2 => Class.Legacy,
 
-            K.RepF3 => L.Legacy,
+            Kind.RepF3 => Class.Legacy,
 
-            K.Rex => L.REX,
+            Kind.Rex => Class.REX,
 
-            K.VexC4 => L.VEX,
+            Kind.VexC4 => Class.VEX,
 
-            K.VexC5 => L.VEX,
-            _ => L.None,
+            Kind.VexC5 => Class.VEX,
+            _ => Class.None,
         };
 
     [Op]
-    public static AsmPrefixKind kind(AsmPrefixCode code)
+    public static Kind kind(Code code)
         => code switch
         {
-            C.CsSegOverride => K.CsSegOverride,
+            Code.CsSegOverride => Kind.CsSegOverride,
 
-            C.SsSegOverride => K.SsSegOverride,
+            Code.SsSegOverride => Kind.SsSegOverride,
 
-            C.EsSegOverride => K.EsSegOverride,
+            Code.EsSegOverride => Kind.EsSegOverride,
 
-            C.FsSegOverride => K.FsSegOverride,
+            Code.FsSegOverride => Kind.FsSegOverride,
 
-            C.GsSegOverride => K.GsSegOverride,
+            Code.GsSegOverride => Kind.GsSegOverride,
 
-            C.DsSegOverride => K.DsSegOverride,
+            Code.DsSegOverride => Kind.DsSegOverride,
 
-            C.Rex => K.Rex,
+            Code.Rex => Kind.Rex,
 
-            C.OSZ => K.OSZ,
+            Code.OSZ => Kind.OSZ,
 
-            C.ASZ => K.ASZ,
+            Code.ASZ => Kind.ASZ,
 
-            C.Lock => K.Lock,
+            Code.Lock => Kind.Lock,
 
-            C.RepF2 => K.RepF2,
+            Code.RepF2 => Kind.RepF2,
 
-            C.RepF3 => K.RepF3,
+            Code.RepF3 => Kind.RepF3,
 
-            C.VexC4 => K.VexC4,
+            Code.VexC4 => Kind.VexC4,
 
-            C.VexC5 => K.VexC5,
+            Code.VexC5 => Kind.VexC5,
 
-            _ => K.None,
+            _ => Kind.None,
         };
 
     [Op]
-    public static AsmPrefixCode code(byte src)
+    public static Code code(byte src)
         => src switch
         {
-            0x0F => C.Escape,
+            0x0F => Code.Escape,
 
-            0x36 => C.SsSegOverride,
+            0x36 => Code.SsSegOverride,
 
-            0x26 => C.EsSegOverride,
+            0x26 => Code.EsSegOverride,
 
-            0x64 => C.FsSegOverride,
+            0x64 => Code.FsSegOverride,
 
-            0x65 => C.GsSegOverride,
+            0x65 => Code.GsSegOverride,
 
-            0x40 => C.Rex,
+            0x40 => Code.Rex,
 
-            0x66 => C.OSZ,
+            0x66 => Code.OSZ,
 
-            0x67 => C.ASZ,
+            0x67 => Code.ASZ,
 
-            0xF0 => C.Lock,
+            0xF0 => Code.Lock,
 
-            0xF2 => C.RepF2,
+            0xF2 => Code.RepF2,
 
-            0xF3 => C.RepF3,
+            0xF3 => Code.RepF3,
 
-            0xC4 => C.VexC4,
+            0xC4 => Code.VexC4,
 
-            0xC5 => C.VexC5,
+            0xC5 => Code.VexC5,
 
-            _ => C.None,
+            _ => Code.None,
         };            
 }

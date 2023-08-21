@@ -30,7 +30,7 @@ using K = AsmPrefixCodes.VexPrefixKind;
 /// 11 => F2
 /// </remarks>
 [ApiHost]
-public struct VexPrefix
+public record struct VexPrefix
 {
     [MethodImpl(Inline), Op]
     public static VexPrefix define(K kind, byte b1)

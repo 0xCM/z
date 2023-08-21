@@ -9,7 +9,7 @@ public class AsmGenContext
 
     RegOpRange RegOps;
 
-    ImmOpRange ImmOps;
+    ImmRange ImmOps;
 
     public readonly SdmForm Form;
 
@@ -18,7 +18,7 @@ public class AsmGenContext
 
     }
 
-    AsmGenContext(SdmForm form, RegOpRange regs, ImmOpRange imm)
+    AsmGenContext(SdmForm form, RegOpRange regs, ImmRange imm)
     {
         Form = form;
         RegOps = regs;

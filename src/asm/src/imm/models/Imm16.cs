@@ -4,73 +4,51 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using W = W64;
-using I = Imm64;
+using W = W16;
+using I = Imm16;
 
 /// <summary>
-/// Defines a 64-bit immediate value
+/// Defines a 16-bit immediate value
 /// </summary>
-public readonly struct Imm64 : IImm<Imm64,ulong>
+public readonly struct Imm16 : IImm<I,ushort>
 {
-    [Parser]
-    public static bool parse(string src, out Imm64 dst)
-    {
-        var result = Outcome.Success;
-        dst = default;
-        var i = text.index(src,HexFormatSpecs.PreSpec);
-        var imm = 0ul;
-        if(i>=0)
-        {
-            result = Hex.parse64u(src, out imm);
-            if(result)
-                dst = imm;
-        }
-        else
-        {
-            result = DataParser.parse(src, out imm);
-            if(result)
-                dst = imm;
-        }
-        return result;
-    }
-
-    public const ImmKind Kind = ImmKind.Imm64u;
-
-    public ulong Value {get;}
+    public ushort Value {get;}
 
     public static W W => default;
 
     [MethodImpl(Inline)]
-    public Imm64(ulong src)
+    public Imm16(ushort src)
         => Value = src;
 
-    public ImmKind ImmKind
-        => Kind;
-
     public AsmOpClass OpClass
-        => AsmOpClass.Imm;
-
-    public AsmOpKind OpKind
-        => AsmOpKind.Imm64;
-
-    public NativeSize Size
-        => NativeSizeCode.W64;
-
-    public Hash32 Hash
     {
         [MethodImpl(Inline)]
-        get => sys.hash(Value);
+        get => AsmOpClass.Imm;
     }
 
+    public ImmKind ImmKind
+        => ImmKind.Imm16u;
 
-    public override int GetHashCode()
-        => Hash;
+    public AsmOpKind OpKind
+        => AsmOpKind.Imm16;
+
+    public NativeSize Size
+        => NativeSizeCode.W16;
 
     public string Format()
         => Imm.format(this);
 
     public override string ToString()
         => Format();
+
+    public Hash32 Hash
+    {
+        [MethodImpl(Inline)]
+        get => Value;
+    }
+
+    public override int GetHashCode()
+        => (int)Hash;
 
     [MethodImpl(Inline)]
     public int CompareTo(I src)
@@ -82,10 +60,6 @@ public readonly struct Imm64 : IImm<Imm64,ulong>
 
     public override bool Equals(object src)
         => src is I x && Equals(x);
-
-    [MethodImpl(Inline)]
-    public Address64 ToAddress()
-        => Value;
 
     [MethodImpl(Inline)]
     public static bool operator <(I a, I b)
@@ -112,26 +86,18 @@ public readonly struct Imm64 : IImm<Imm64,ulong>
         => a.Value != b.Value;
 
     [MethodImpl(Inline)]
-    public static implicit operator ulong(I src)
+    public static implicit operator ushort(I src)
         => src.Value;
 
     [MethodImpl(Inline)]
-    public static implicit operator Imm<ulong>(I src)
-        => new Imm<ulong>(src);
+    public static implicit operator Imm<ushort>(I src)
+        => new (src);
 
     [MethodImpl(Inline)]
-    public static implicit operator I(ulong src)
-        => new I(src);
-
-    [MethodImpl(Inline)]
-    public static implicit operator MemoryAddress(I src)
-        => src.Value;
-
-    [MethodImpl(Inline)]
-    public static implicit operator I(MemoryAddress src)
-        => new I(src);
+    public static implicit operator I(ushort src)
+        => new (src);
 
     [MethodImpl(Inline)]
     public static implicit operator Imm(I src)
-        => new Imm(src.ImmKind, src.Value);
-}
+        => new (src.ImmKind, src.Value);
+    }

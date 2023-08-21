@@ -2,65 +2,64 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0.Asm;
+
+public struct RegOpRange : IAsmOpSource<RegOp>
 {
-    public struct RegOpRange : IAsmOpSource<RegOp>
+    readonly RegClass Class;
+
+    readonly NativeSize Size;
+
+    readonly byte Min;
+
+    readonly byte Max;
+
+    byte Current;
+
+    [MethodImpl(Inline)]
+    public RegOpRange(RegClass @class, NativeSize size, RegIndex min, RegIndex max)
     {
-        readonly RegClass Class;
+        Class = @class;
+        Size = size;
+        Min = (byte)min;
+        Max = (byte)max;
+        Current = 0;
+        OpCount = (byte)((byte)max - (byte)min + 1);
+    }
 
-        readonly NativeSize Size;
+    public byte OpCount {get;}
 
-        readonly byte Min;
-
-        readonly byte Max;
-
-        byte Current;
-
+    public AsmOpClass OpClass
+    {
         [MethodImpl(Inline)]
-        public RegOpRange(RegClass @class, NativeSize size, RegIndex min, RegIndex max)
-        {
-            Class = @class;
-            Size = size;
-            Min = (byte)min;
-            Max = (byte)max;
-            Current = 0;
-            OpCount = (byte)((byte)max - (byte)min + 1);
-        }
+        get => AsmOpClass.Reg;
+    }
 
-        public byte OpCount {get;}
-
-        public AsmOpClass OpClass
-        {
-            [MethodImpl(Inline)]
-            get => AsmOpClass.Reg;
-        }
-
-        public AsmOpKind OpKind
-        {
-            [MethodImpl(Inline)]
-            get => AsmOps.kind(AsmOpClass.Reg,Size);
-        }
-
+    public AsmOpKind OpKind
+    {
         [MethodImpl(Inline)]
-        public RegOp Next()
-        {
-            Next(out var dst);
-            return dst;
-        }
+        get => asm.opkind(AsmOpClass.Reg,Size);
+    }
 
-        [MethodImpl(Inline)]
-        public bool Next(out RegOp dst)
+    [MethodImpl(Inline)]
+    public RegOp Next()
+    {
+        Next(out var dst);
+        return dst;
+    }
+
+    [MethodImpl(Inline)]
+    public bool Next(out RegOp dst)
+    {
+        if(Current < Max)
         {
-            if(Current < Max)
-            {
-                dst = AsmRegBits.reg(Size, Class, Current++);
-                return true;
-            }
-            else
-            {
-                dst = RegOp.Empty;
-                return false;
-            }
+            dst = AsmRegBits.reg(Size, Class, Current++);
+            return true;
+        }
+        else
+        {
+            dst = RegOp.Empty;
+            return false;
         }
     }
 }

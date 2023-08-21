@@ -8,7 +8,7 @@ namespace Z0.Asm
     using static sys;
 
     [DataWidth(16), ApiComplete]
-    public struct VexPrefixC5
+    public record struct VexPrefixC5
     {
         [MethodImpl(Inline)]
         public static VexPrefixC5 init()

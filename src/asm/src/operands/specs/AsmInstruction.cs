@@ -2,9 +2,7 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0;
-
-using Asm;
+namespace Z0.Asm;
 
 [StructLayout(LayoutKind.Sequential,Pack=1)]
 public struct AsmInstruction : IAsmSourcePart

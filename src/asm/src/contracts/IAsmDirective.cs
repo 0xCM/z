@@ -2,24 +2,23 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0.Asm;
+
+public interface IAsmDirective : IAsmSourcePart
 {
-    public interface IAsmDirective : IAsmSourcePart
-    {
-        asci16 Name {get;}
+    asci16 Name {get;}
 
-        AsmDirectiveOp Op0 {get;}
+    AsmDirectiveOp Op0 {get;}
 
-        AsmDirectiveOp Op1 {get;}
+    AsmDirectiveOp Op1 {get;}
 
-        AsmDirectiveOp Op2 {get;}
+    AsmDirectiveOp Op2 {get;}
 
-        AsmDirectiveOp Op3 {get;}
+    AsmDirectiveOp Op3 {get;}
 
-        bool INullity.IsEmpty
-            => Name.IsEmpty;
+    bool INullity.IsEmpty
+        => Name.IsEmpty;
 
-        bool INullity.IsNonEmpty
-            => Name.IsEmpty;
-    }
+    bool INullity.IsNonEmpty
+        => Name.IsEmpty;
 }
