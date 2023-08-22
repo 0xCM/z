@@ -2,53 +2,52 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using static sys;
+
+public class SourceDispenser : Dispenser<SourceDispenser>, ISourceDispenser
 {
-    using static sys;
+    public const uint DefaultCapacity = Pow2.T12*8;
 
-    public class SourceDispenser : Dispenser<SourceDispenser>, ISourceDispenser
+    readonly Dictionary<long,SourceAllocator> Allocators;
+
+    public SourceDispenser(uint capacity = DefaultCapacity)
+        : base(true)
     {
-        public const uint DefaultCapacity = Pow2.T12*8;
+        Allocators = new();
+        Allocators[Seq] = SourceAllocator.alloc(DefaultCapacity);
+    }
 
-        readonly Dictionary<long,SourceAllocator> Allocators;
+    protected override void Dispose()
+    {
+        iter(Allocators.Values, a => a.Dispose());
+    }
 
-        public SourceDispenser(uint capacity = DefaultCapacity)
-            : base(true)
+
+    public SourceText SourceText(ReadOnlySpan<char> src)
+    {
+        var dst = Z0.SourceText.Empty;
+        lock(Locker)
         {
-            Allocators = new();
-            Allocators[Seq] = SourceAllocator.alloc(DefaultCapacity);
-        }
-
-        protected override void Dispose()
-        {
-            iter(Allocators.Values, a => a.Dispose());
-        }
-
-
-        public SourceText SourceText(ReadOnlySpan<char> src)
-        {
-            var dst = Z0.SourceText.Empty;
-            lock(Locker)
+            var alloc = Allocators[Seq];
+            if(!alloc.Alloc(src, out dst))
             {
-                var alloc = Allocators[Seq];
-                if(!alloc.Alloc(src, out dst))
-                {
-                    alloc = SourceAllocator.alloc(DefaultCapacity);
-                    alloc.Alloc(src, out dst);
-                    Allocators[next()] = alloc;
-                }
+                alloc = SourceAllocator.alloc(DefaultCapacity);
+                alloc.Alloc(src, out dst);
+                Allocators[next()] = alloc;
             }
-            return dst;
         }
+        return dst;
+    }
 
-        public SourceText SourceText(string src)
-            => SourceText(span(src));
+    public SourceText SourceText(string src)
+        => SourceText(span(src));
 
-        public SourceText SourceText(ReadOnlySpan<string> src)
-        {
-            var dst = text.buffer();
-            iter(src, x => dst.AppendLine(x));
-            return SourceText(dst.Emit());
-        }
-   }
+    public SourceText SourceText(ReadOnlySpan<string> src)
+    {
+        var dst = text.buffer();
+        iter(src, x => dst.AppendLine(x));
+        return SourceText(dst.Emit());
+    }
 }

@@ -10,7 +10,7 @@ public readonly struct Ancestors
 {
     [MethodImpl(Inline)]
     public static Ancestors create(LabelDispenser dispenser)
-        => new Ancestors(dispenser);
+        => new (dispenser);
 
     readonly LabelDispenser Dispenser;
 

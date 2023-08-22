@@ -15,9 +15,9 @@ public class StringAllocator : IStringAllocator<StringRef>
     public static StringAllocator from(StringBuffer src)
         => new (src);
 
-    StringBuffer Buffer;
+    readonly StringBuffer Buffer;
 
-    MemoryAddress MaxAddress;
+    readonly MemoryAddress MaxAddress;
 
     uint Position;
 

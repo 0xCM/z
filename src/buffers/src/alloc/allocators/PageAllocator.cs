@@ -9,7 +9,7 @@ using static sys;
 public unsafe class PageAllocator : IPageAllocator
 {
     public static PageAllocator alloc(uint count)
-        => new PageAllocator(count);
+        => new (count);
 
     readonly NativeBuffer Buffer;
 

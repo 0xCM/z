@@ -8,6 +8,8 @@
     <ProjectReference Include="../xml/z0.xml.csproj" />
     <ProjectReference Include="../containers/z0.containers.csproj" />
     <ProjectReference Include="../bits/z0.bits.csproj" />
+    <ProjectReference Include="../process/z0.process.csproj" />
+    <ProjectReference Include="../native/z0.native.csproj" />
     <ProjectReference Include="../stitch/z0.stitch.csproj" />
     <ProjectReference Include="../markdown/z0.markdown.csproj" />
   </ItemGroup>

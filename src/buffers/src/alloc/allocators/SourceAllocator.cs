@@ -12,9 +12,9 @@ public class SourceAllocator : IStringAllocator<SourceText>
     public static SourceAllocator from(StringBuffer src)
         => new (src);
 
-    StringBuffer Buffer;
+    readonly StringBuffer Buffer;
 
-    MemoryAddress MaxAddress;
+    readonly MemoryAddress MaxAddress;
 
     uint Position;
 

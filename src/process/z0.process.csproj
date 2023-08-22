@@ -2,8 +2,6 @@
   <Import Project="$(ProjectProps)\usings.props"/>
   <ItemGroup>
     <ProjectReference Include="$(Events)" />
-    <ProjectReference Include="$(ZEnv)" />
-    <ProjectReference Include="$(Asci)" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>

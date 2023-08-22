@@ -2,6 +2,8 @@
   <Import Project="$(ProjectProps)\usings.props"/>
   <ItemGroup>
     <ProjectReference Include="$(Polyrand)" />
+    <ProjectReference Include="$(Native)" />
+    <ProjectReference Include="$(Process)" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>

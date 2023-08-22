@@ -50,7 +50,7 @@ namespace Z0
             => Run(Channel.Running($"Executing {Process.ProcessName}:{Process.Id}"));            
     }
 
-    partial class XTend
+    public static partial class XTend
     {
         public static ChanneledProcess ChannelProcess(this IWfChannel src, Process process, ToolCmdSpec context)
             => ChanneledProcess.create(src, x => x.Init(process,context));

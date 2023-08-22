@@ -1,4 +1,3 @@
-
 //-----------------------------------------------------------------------------
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
@@ -6,16 +5,17 @@
 namespace Z0;
 
 [Free]
-public interface IStringAllocator<T> : IAllocation
-    where T : IMemoryString
+public interface IImageRef
 {
-    bool Alloc(ReadOnlySpan<char> src, out T dst);
-}
+    string ImageName {get;}
 
-[Free]
-public interface IPageAllocator : IAllocation
-{
-    uint PageCount {get;}
+    FilePath ResolvedPath {get;}
 
-    MemoryAddress Alloc();
+    MemoryAddress BaseAddress {get;}
+
+    ImageHandle Handle {get;}
+
+    MemoryAddress GetProcAddress(string name);
+
+    NativeExport GetExport(Label name);
 }

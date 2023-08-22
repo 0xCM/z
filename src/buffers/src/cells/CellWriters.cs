@@ -8,6 +8,6 @@ namespace Z0
     {
         public static CellWriter<T> wrap<T>(BinaryWriter writer)
             where T : unmanaged
-                => new CellWriter<T>(writer,false);
+                => new (writer,false);
     }
 }

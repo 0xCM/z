@@ -2,46 +2,45 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+public unsafe readonly struct PinnedPtr : IDisposable
 {
-    public unsafe readonly struct PinnedPtr : IDisposable
+    readonly object Origin;
+
+    readonly GCHandle Handle;
+
+    readonly void* Pointer;
+
+    [MethodImpl(Inline)]
+    internal PinnedPtr(object origin, GCHandle handle, void* ptr)
     {
-        readonly object Origin;
+        Origin = origin;
+        Handle = handle;
+        Pointer = ptr;
+    }
 
-        readonly GCHandle Handle;
+    public void Dispose()
+    {
+        if(Handle.IsAllocated)
+            Handle.Free();
+    }
 
-        readonly void* Pointer;
-
+    public bool IsEmpty
+    {
         [MethodImpl(Inline)]
-        internal PinnedPtr(object origin, GCHandle handle, void* ptr)
-        {
-            Origin = origin;
-            Handle = handle;
-            Pointer = ptr;
-        }
+        get => !Handle.IsAllocated;
+    }
 
-        public void Dispose()
-        {
-            if(Handle.IsAllocated)
-                Handle.Free();
-        }
+    public bool IsNonEmpty
+    {
+        [MethodImpl(Inline)]
+        get => Handle.IsAllocated;
+    }
 
-        public bool IsEmpty
-        {
-            [MethodImpl(Inline)]
-            get => !Handle.IsAllocated;
-        }
-
-        public bool IsNonEmpty
-        {
-            [MethodImpl(Inline)]
-            get => Handle.IsAllocated;
-        }
-
-        public static PinnedPtr Empty
-        {
-            [MethodImpl(Inline)]
-            get => new PinnedPtr(null, default, null);
-        }
+    public static PinnedPtr Empty
+    {
+        [MethodImpl(Inline)]
+        get => new PinnedPtr(null, default, null);
     }
 }

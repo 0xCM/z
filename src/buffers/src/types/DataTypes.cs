@@ -13,7 +13,7 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public static NativeType seg(NativeSegKind kind)
-            => new NativeType(kind);
+            => new (kind);
 
         public static DataSize measure(Type src)
         {
