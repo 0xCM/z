@@ -23,7 +23,7 @@ namespace Z0
             dst.MethodName = String(src.Name);
             dst.Library = String(moduleRef.Name);
             dst.DeclaringType = $"{String(declaringType.Namespace)}.{String(declaringType.Name)}";
-            dst.MethodSignature = src.DecodeSignature<string, GenericContext>(GSTP, null);
+            dst.MethodSignature = src.DecodeSignature<string, GenericContext>(_GSTP, null);
             return dst;            
         }
     }

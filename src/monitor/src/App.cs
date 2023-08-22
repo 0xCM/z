@@ -22,8 +22,8 @@ namespace Z0
 
         static IServiceCollection configure(HostBuilderContext context, IServiceCollection services, string[] args)
         {
-            AppController AddController(IServiceProvider provider)
-                => new (provider.GetService<ILogger<AppController>>(), args);
+            AgentController AddController(IServiceProvider provider)
+                => new (provider.GetService<ILogger<AgentController>>(), args);
 
             return services.AddHostedService(AddController);
         }

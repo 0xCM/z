@@ -8,6 +8,7 @@ using Microsoft.Diagnostics.Tracing.Parsers;
 using Microsoft.Diagnostics.Tracing.Parsers.Kernel;
 using Microsoft.Diagnostics.Tracing.Session;
 
+[Agent]
 public class ProcessTracer : IAgent
 {
     const string Name = nameof(ProcessTracer);

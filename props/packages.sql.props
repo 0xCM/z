@@ -8,5 +8,7 @@
     <PackageReference Include="Microsoft.SqlServer.Server" Version="1.0.0" />
     <PackageReference Include="Microsoft.SqlServer.TransactSql.ScriptDom" Version="161.8817.2" />
     <PackageReference Include="Microsoft.SqlServer.XEvent.XELite" Version="2023.1.30.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+    <PackageReference Include="Microsoft.SqlServer.Types" Version="160.1000.6" />
   </ItemGroup>
 </Project>

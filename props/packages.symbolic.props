@@ -1,0 +1,10 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.DiaSymReader" Version="2.1.0-dev" />
+    <PackageReference Include="Microsoft.DiaSymReader.Converter" Version="1.1.0-dev" />
+    <PackageReference Include="Microsoft.DiaSymReader.Pdb2Pdb" Version="1.1.0-dev" />
+    <PackageReference Include="Microsoft.DiaSymReader.PortablePdb" Version="1.7.0-dev" />
+    <PackageReference Include="Microsoft.FileFormats" Version="1.0.442201" />
+    <PackageReference Include="Microsoft.SymbolStore" Version="1.0.442201" />    
+  </ItemGroup>
+</Project>

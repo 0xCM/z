@@ -1,0 +1,14 @@
+<Project>
+    <ItemGroup>    
+        <PackageReference Include="ilcompiler.compiler" Version="$(ClrRuntimeVersion)"/>
+        <PackageReference Include="ilcompiler.dependencyanalysisframework" Version="$(ClrRuntimeVersion)"/>
+        <PackageReference Include="ilcompiler.diagnostics" Version="$(ClrRuntimeVersion)"/>
+        <PackageReference Include="ilcompiler.metadatatransform" Version="$(ClrRuntimeVersion)"/>
+        <PackageReference Include="ilcompiler.readytorun" Version="$(ClrRuntimeVersion)"/>
+        <PackageReference Include="ilcompiler.reflection.readytorun.experimental" Version="$(ClrRuntimeVersion)"/>
+        <PackageReference Include="ilcompiler.typesystem" Version="$(ClrRuntimeVersion)"/>
+        <PackageReference Include="ilcompiler.ryujit" Version="$(ClrRuntimeVersion)"/>
+        <PackageReference Include="runtime.win-x64.microsoft.dotnet.ilcompiler" Version="$(ClrRuntimeVersion)"/>
+        <PackageReference Include="microsoft.netcore.dotnetapphost" Version="$(ClrRuntimeVersion)"/>
+    </ItemGroup>
+</Project>

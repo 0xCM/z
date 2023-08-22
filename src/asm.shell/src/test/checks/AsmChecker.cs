@@ -6,7 +6,7 @@ namespace Z0
 {
     public interface IAsmChecker
     {
-        ExecToken RunCheck(string name, EventReceiver dst);
+        ExecToken RunCheck(string name, EventHandler dst);
     }
 
     class AsmChecker : IAsmChecker
@@ -27,21 +27,21 @@ namespace Z0
             Host = host;
         }
 
-        RunningEvent<string> Running(string name, EventReceiver dst)
+        RunningEvent<string> Running(string name, EventHandler dst)
         {
             var e = Events.running(Host, $"Running {text.squote(name)}");
             dst(e);
             return e;
         }
 
-        RanEvent<string> Ran(RunningEvent<string> running, string name, EventReceiver dst)
+        RanEvent<string> Ran(RunningEvent<string> running, string name, EventHandler dst)
         {
             var e = Events.ran(running, $"Ran {text.squote(name)}");
             dst(e);
             return e;
         }
 
-        public ExecToken RunCheck(string name, EventReceiver dst)
+        public ExecToken RunCheck(string name, EventHandler dst)
         {
             var running = Running(name,dst);
             var token = Runner.RunCommand(name);

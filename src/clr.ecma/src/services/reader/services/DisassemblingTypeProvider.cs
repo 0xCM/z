@@ -5,19 +5,6 @@ namespace Z0;
 
 partial class EcmaReader
 {
-    public class DisassemblingGenericContext
-    {
-        public DisassemblingGenericContext(ImmutableArray<string> typeParameters, ImmutableArray<string> methodParameters)
-        {
-            MethodParameters = methodParameters;
-            TypeParameters = typeParameters;
-        }
-
-        public ImmutableArray<string> MethodParameters { get; }
-        
-        public ImmutableArray<string> TypeParameters { get; }
-    }
-
     public class DisassemblingTypeProvider : ISignatureTypeProvider<string, DisassemblingGenericContext>
     {
         public virtual string GetPrimitiveType(PrimitiveTypeCode typeCode)

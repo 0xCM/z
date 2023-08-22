@@ -9,6 +9,6 @@
         <PackageReference Include="AsmResolver.Pe.File" Version="$(AsmResolverVersion)"/>
         <PackageReference Include="AsmResolver.Pe.Win32Resources" Version="$(AsmResolverVersion)"/>
         <PackageReference Include="AsmResolver.symbols.pdb" Version="$(AsmResolverVersion)"/>
-
+        <PackageReference Include="Microsoft.Deployment.DotNet.Releases" Version="1.0.0" />
     </ItemGroup>
 </Project>

@@ -1,0 +1,19 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Include="xunit.core" Version="$(XunitVersion)" />  
+    <PackageReference Include="xunit.extensibility.core" Version="$(XunitVersion)" />    
+    <PackageReference Include="xunit.extensibility.execution" Version="$(XunitVersion)" />    
+    <PackageReference Include="xunit.runner.utility" Version="$(XunitVersion)" />    
+    <PackageReference Include="xunit.runner.visualstudio" Version="$(XunitVersion)">    
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>  
+    <PackageReference Include="xunit.runner.console" Version="$(XunitVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>    
+
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.1" />    
+
+</ItemGroup>
+</Project>

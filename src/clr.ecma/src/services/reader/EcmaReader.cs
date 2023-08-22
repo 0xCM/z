@@ -12,6 +12,10 @@ namespace Z0
     [ApiHost]
     public unsafe partial class EcmaReader : IEcmaReader
     {
+        static readonly GenericSigTypeProvider _GSTP = new ();
+
+        static readonly DisassemblingTypeProvider _DTP = new ();
+
         public static unsafe EcmaReader create(MemoryAddress @base, ByteSize size)
             => new (new PEReader(@base.Pointer<byte>(), size).GetMetadata());
 
@@ -62,8 +66,6 @@ namespace Z0
         }
 
         readonly MemorySegment Segment;
-
-        GenericSignatureTypeProvider GSTP = new GenericSignatureTypeProvider();
 
         [MethodImpl(Inline)]
         public EcmaReader(Assembly src)

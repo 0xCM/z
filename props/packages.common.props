@@ -1,6 +1,2 @@
 <Project>
-  <Import Project="packages.codeanalysis.props" />
-  <Import Project="packages.nuget.props" />
-  <Import Project="packages.msbuild.props" />
-  <Import Project="packages.microsoft.extensions.props" />
 </Project>

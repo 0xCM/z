@@ -1,8 +1,8 @@
 <Project>
   <PropertyGroup>
     <ZSysVer>0.0.155</ZSysVer>
-    <ZVer>0.0.537</ZVer>
-    <ZFxVer>0.0.1022</ZFxVer>
+    <ZVer>0.0.540</ZVer>
+    <ZFxVer>0.0.1023</ZFxVer>
     <ClrRuntimeVersion>8.0.0-dev</ClrRuntimeVersion>
     <LLVMToolsVersion>16</LLVMToolsVersion>
     <AsmResolverVersion>5.4.0</AsmResolverVersion>
@@ -33,6 +33,8 @@
     <MarkdigVersion>0.31.0</MarkdigVersion>
     <EtwVesion>1.11.109</EtwVesion>
     <MessagePackVersion>2.5.108</MessagePackVersion>
+
+    <XunitVersion>2.5.0</XunitVersion>
   </PropertyGroup>
 </Project>
 

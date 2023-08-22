@@ -9,10 +9,10 @@ namespace Z0
     /// </summary>
     public readonly struct HubRelay : IEventSink
     {
-        readonly EventReceiver Receiver;
+        readonly EventHandler Receiver;
 
         [MethodImpl(Inline)]
-        public HubRelay(EventReceiver receiver)
+        public HubRelay(EventHandler receiver)
             => Receiver = receiver;
 
         [MethodImpl(Inline)]

@@ -60,6 +60,32 @@ public class MetadataVisualizer
     {
     }
 
+    public static string format(MethodSignature<string> signature)
+    {
+        var builder = new StringBuilder();
+        builder.Append(signature.ReturnType);
+        builder.Append(' ');
+        builder.Append('(');
+
+        for (int i = 0; i < signature.ParameterTypes.Length; i++)
+        {
+            if (i > 0)
+            {
+                builder.Append(", ");
+
+                if (i == signature.RequiredParameterCount)
+                {
+                    builder.Append("... ");
+                }
+            }
+
+            builder.Append(signature.ParameterTypes[i]);
+        }
+
+        builder.Append(')');
+        return builder.ToString();
+    }
+
     public void VisualizeAllGenerations()
     {
         for (int i = 0; i<_readers.Count; i++)
@@ -2421,7 +2447,7 @@ public class MetadataVisualizer
                     return decoder.DecodeFieldSignature(ref sigReader);
 
                 case BlobKind.MethodSignature:
-                    return MethodSignature(decoder.DecodeMethodSignature(ref sigReader));
+                    return format(decoder.DecodeMethodSignature(ref sigReader));
 
                 case BlobKind.StandAloneSignature:
                     return string.Join(", ", decoder.DecodeLocalSignature(ref sigReader));
@@ -2435,7 +2461,7 @@ public class MetadataVisualizer
                             return decoder.DecodeFieldSignature(ref sigReader);
 
                         case SignatureKind.Method:
-                            return MethodSignature(decoder.DecodeMethodSignature(ref sigReader));
+                            return format(decoder.DecodeMethodSignature(ref sigReader));
                     }
 
                     throw new BadImageFormatException();
@@ -2456,31 +2482,6 @@ public class MetadataVisualizer
         }
     }
 
-    static string MethodSignature(MethodSignature<string> signature)
-    {
-        var builder = new StringBuilder();
-        builder.Append(signature.ReturnType);
-        builder.Append(' ');
-        builder.Append('(');
-
-        for (int i = 0; i < signature.ParameterTypes.Length; i++)
-        {
-            if (i > 0)
-            {
-                builder.Append(", ");
-
-                if (i == signature.RequiredParameterCount)
-                {
-                    builder.Append("... ");
-                }
-            }
-
-            builder.Append(signature.ParameterTypes[i]);
-        }
-
-        builder.Append(')');
-        return builder.ToString();
-    }
 
     // Test implementation of ISignatureTypeProvider<TType, TGenericContext> that uses strings in ilasm syntax as TType.
     // A real provider in any sort of perf constraints would not want to allocate strings freely like this, but it keeps test code simple.
@@ -2590,7 +2591,7 @@ public class MetadataVisualizer
         }
 
         public string GetFunctionPointerType(MethodSignature<string> signature)
-            => $"methodptr({MethodSignature(signature)})";
+            => $"methodptr({format(signature)})";
     }
 
     public virtual string VisualizeLocalType(object type)

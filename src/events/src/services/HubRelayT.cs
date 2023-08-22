@@ -8,12 +8,12 @@ namespace Z0
     /// Defines a sink that forwards deposits to a receiver
     /// </summary>
     public readonly struct HubRelay<E> : IEventSink<E>
-        where E : struct, IEvent
+        where E : IEvent<E>, new()
     {
-        readonly EventReceiver<E> Receiver;
+        readonly EventHandler<E> Receiver;
 
         [MethodImpl(Inline)]
-        internal HubRelay(EventReceiver<E> receiver)
+        internal HubRelay(EventHandler<E> receiver)
             => Receiver = receiver;
 
         [MethodImpl(Inline)]

@@ -15,20 +15,20 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static EventHubClient client(IEventHub hub, IEventSink sink, Action connect, Action exec)
-            => new EventHubClient(hub, sink, connect, exec);
+            => new (hub, sink, connect, exec);
 
         [MethodImpl(Inline)]
-        public static HubRelay relay(EventReceiver receiver)
-            => new HubRelay(receiver);
+        public static HubRelay relay(EventHandler receiver)
+            => new (receiver);
 
         [MethodImpl(Inline)]
-        public static HubRelay<E> relay<E>(EventReceiver<E> receiver)
-            where E : struct, IEvent
-                => new HubRelay<E>(receiver);
+        public static HubRelay<E> relay<E>(EventHandler<E> receiver)
+            where E : IEvent<E>, new()
+                => new (receiver);
 
         [MethodImpl(Inline)]
         public static ref readonly E broadcast<E>(EventHub hub, in E e)
-            where E : struct, IEvent
+            where E : IEvent<E>, new()
         {
             if(hub.Index.TryGetValue(e.GetType(), out var sink))
                 sink.Deposit(e);
@@ -36,12 +36,12 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public static bool subscribe<E>(EventHub hub, EventReceiver receiver, E model = default)
+        public static bool subscribe<E>(EventHub hub, EventHandler receiver, E model = default)
             where E : struct, IEvent
                 => subscribe(hub, new HubRelay(receiver), model);
 
         [MethodImpl(Inline), Op]
-        public static bool subscribe(EventHub hub, EventReceiver receiver, IEvent model)
+        public static bool subscribe(EventHub hub, EventHandler receiver, IEvent model)
             => hub.Index.TryAdd(model.GetType(), new HubRelay(receiver));
 
         [MethodImpl(Inline)]

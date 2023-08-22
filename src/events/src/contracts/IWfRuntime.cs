@@ -2,46 +2,45 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using static Events;
+
+public interface IWfRuntime : IDisposable, ITextual
 {
-    using static Events;
+    PartName AppName {get;}
 
-    public interface IWfRuntime : IDisposable, ITextual
+    IEventBroker EventBroker {get;}
+
+    IEventSink EventSink {get;}
+    
+    LogLevel Verbosity {get;}
+
+    ExecToken NextExecToken();
+
+    ExecToken Completed(ExecFlow src, bool success = true);
+
+    ExecToken Completed(FileEmission src);
+
+    ExecToken Completed<T>(ExecFlow<T> src, bool success = true);
+
+    IWfEmissions Emissions {get;}
+
+    IWfChannel Channel {get;}
+
+    void Disposed()
     {
-        PartName AppName {get;}
+        if(Verbosity.IsBabble())
+            Raise(disposed(EventSink.Host));
+    }
 
-        IEventBroker EventBroker {get;}
+    string ITextual.Format()
+        => AppName.Format();
 
-        IEventSink EventSink {get;}
-        
-        LogLevel Verbosity {get;}
-
-        ExecToken NextExecToken();
-
-        ExecToken Completed(ExecFlow src, bool success = true);
-
-        ExecToken Completed(FileEmission src);
-
-        ExecToken Completed<T>(ExecFlow<T> src, bool success = true);
-
-        IWfEmissions Emissions {get;}
-
-        IWfChannel Channel {get;}
-
-        void Disposed()
-        {
-            if(Verbosity.IsBabble())
-                Raise(disposed(EventSink.Host));
-        }
-
-        string ITextual.Format()
-            => AppName.Format();
-
-        EventId Raise<E>(in E e)
-            where E : IEvent
-        {
-            EventSink.Deposit(e);
-            return e.EventId;
-        }
+    EventId Raise<E>(in E e)
+        where E : IEvent
+    {
+        EventSink.Deposit(e);
+        return e.EventId;
     }
 }

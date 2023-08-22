@@ -8,6 +8,6 @@ namespace Z0
     public interface IEventHub
     {
         ref readonly E Broadcast<E>(in E e)
-            where E : struct, IEvent;
+            where E : IEvent<E>, new();
     }
 }

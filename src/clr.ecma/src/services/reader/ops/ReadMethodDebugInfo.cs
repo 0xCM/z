@@ -18,7 +18,7 @@ namespace Z0
             {
                 ref var dst = ref seek(buffer,i);
                 var info = ReadMethodDebugInfo(skip(handles,i));
-                dst.Sig = MD.GetStandaloneSignature(info.LocalSignature).DecodeLocalSignature(GSTP,null);
+                dst.Sig = MD.GetStandaloneSignature(info.LocalSignature).DecodeLocalSignature(_GSTP,null);
                 dst.SequencePoints = Blob(info.SequencePointsBlob);                                
             }
             return buffer;

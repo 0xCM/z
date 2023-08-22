@@ -2,50 +2,49 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+public class ApiCmdLoop
 {
-    public class ApiCmdLoop
+    public static Task start(IWfChannel channel, IApiCmdRunner runner)
+        => sys.start(new ApiCmdLoop(channel, runner).Run);
+
+    readonly IWfChannel Channel;
+
+    readonly IApiCmdRunner Runner;
+
+    ApiCmdLoop(IWfChannel channel, IApiCmdRunner runner)
     {
-        public static Task start(IWfChannel channel, IApiCmdRunner runner)
-            => sys.start(new ApiCmdLoop(channel, runner).Run);
+        Channel = channel;
+        Runner = runner;
+    }
 
-        readonly IWfChannel Channel;
+    ApiCmdSpec Next()
+    {
+        var input = term.prompt(string.Format("{0}> ", "cmd"));
+        return ApiServer.spec(input);
+    }
 
-        readonly IApiCmdRunner Runner;
-
-        ApiCmdLoop(IWfChannel channel, IApiCmdRunner runner)
+    void Run()
+    {
+        var input = Next();
+        while(input.Route != ".exit")
         {
-            Channel = channel;
-            Runner = runner;
+            if(input.IsNonEmpty)
+                RunCmd(input);
+            input = Next();
         }
-
-        ApiCmdSpec Next()
+    }
+        
+    void RunCmd(ApiCmdSpec cmd)
+    {
+        try
         {
-            var input = term.prompt(string.Format("{0}> ", "cmd"));
-            return ApiServer.spec(input);
+            Runner.RunCommand(cmd);
         }
-
-        void Run()
+        catch(Exception e)
         {
-            var input = Next();
-            while(input.Route != ".exit")
-            {
-                if(input.IsNonEmpty)
-                    RunCmd(input);
-                input = Next();
-            }
-        }
-            
-        void RunCmd(ApiCmdSpec cmd)
-        {
-            try
-            {
-                Runner.RunCommand(cmd);
-            }
-            catch(Exception e)
-            {
-                Channel.Error(e);
-            }
+            Channel.Error(e);
         }
     }
 }
