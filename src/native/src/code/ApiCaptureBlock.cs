@@ -19,7 +19,7 @@ namespace Z0
 
         public ExtractTermCode TermCode;
 
-        public ApiMsil Msil;
+        public CilMember Msil;
 
         public EcmaSig CliSig;
 

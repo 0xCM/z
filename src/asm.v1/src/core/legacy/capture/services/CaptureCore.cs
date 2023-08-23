@@ -24,7 +24,7 @@ namespace Z0.Asm
             Require.invariant(raw.Address == parsed.Address, () => CaptureAddressMismatch);
             dst.OpUri = ApiIdentity.hex(method.DeclaringType.ApiHostUri(), method.Name, id);
             dst.TermCode = term;
-            dst.Msil = ClrDynamic.msil(parsed.Address, dst.OpUri, method);
+            dst.Msil = CilDynamic.member(parsed.Address, dst.OpUri, method);
             dst.CliSig = sig(method);
             return dst;
         }

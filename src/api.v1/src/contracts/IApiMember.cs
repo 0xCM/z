@@ -10,7 +10,7 @@ namespace Z0
         MemoryAddress BaseAddress
             => MemoryAddress.Zero;
 
-        ApiMsil Msil {get;}
+        CilMember Msil {get;}
 
         EcmaSig CliSig {get;}
 

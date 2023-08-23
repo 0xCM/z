@@ -26,7 +26,7 @@ namespace Z0
         public Methods Methods
             => Data.Select(x => x.Method).Storage;
 
-        public ReadOnlySpan<ApiMsil> Msil
+        public ReadOnlySpan<CilMember> Msil
             => Data.Map(x => x.Msil);
 
         public ReadOnlySpan<ClrMethodArtifact> Artifacts

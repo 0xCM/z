@@ -27,8 +27,8 @@ namespace Z0
             var name = nameof(gcpu.vbsll);
             var src = typeof(gcpu).DeclaredMethods().WithName(name).OfKind(VK.v128).Single();
             var op = Dynop.EmbedVUnaryOpImm(VK.vk128<uint>(), ApiIdentity.identify(src), src, imm8);
-            var handle = ClrDynamic.handle(op.Target);
-            var dst = ClrDynamic.method(handle);
+            var handle = CilDynamic.handle(op.Target);
+            var dst = CilDynamic.method(handle);
             Claim.eq(dst.Name, name);
         }
 

@@ -14,10 +14,8 @@ namespace Z0
             [Render(12)]
             public EcmaToken Token;
 
-            public AssemblyKey AssemblyKey;
-
             [Render(48)]            
-            public VersionedName AssemblyName;
+            public AssemblyKey AssemblyKey;
             
             [Render(24)]
             public @string Namespace;
@@ -26,24 +24,31 @@ namespace Z0
             public @string DeclaringType;
 
             [Render(24)]
-            public @string Name;
+            public @string MethodName;
 
+            [Render(16)]
             public Address32 Rva;
             
-            public BinaryCode SigData;
+            [Render(48)]
+            public EcmaSig BinarySig;
 
+            [Render(82)]
             public MethodAttributes Attributes;
 
+            [Render(48)]
             public MethodImplAttributes ImplAttributes;
+
+            [Render(1)]
+            public MethodSignature<string> MethodSignature;
 
             public EcmaMember Member()
                 => new EcmaMember{
                     Token = Token,
                     Kind = EcmaMemberKind.Method,                
-                    AssemblyName = AssemblyName,
+                    AssemblyName = AssemblyKey.AssemblyName,
                     Namespace = Namespace,
                     DeclaringType = DeclaringType,
-                    Name = Name,
+                    Name = MethodName,
                 };
             public int CompareTo(MethodDef src)
                 => Member().CompareTo(src.Member());

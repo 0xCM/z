@@ -95,7 +95,7 @@ namespace Z0
 
         [Op]
         public static ApiMember member(in ResolvedMethod src)
-            => new (src.Uri, src.Method, src.EntryPoint, ClrDynamic.msil(src.EntryPoint, src.Uri, src.Method));
+            => new (src.Uri, src.Method, src.EntryPoint, CilDynamic.member(src.EntryPoint, src.Uri, src.Method));
 
         [Op, Closures(UInt64k)]
         public static ApiOpIndex<ApiMember> index(IEnumerable<(OpIdentity,ApiMember)> src)

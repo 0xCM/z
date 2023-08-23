@@ -5,7 +5,6 @@
 namespace Z0;
 
 using System.Linq;
-using Msil;
 
 using static sys;
 using static Bytes;
@@ -13,10 +12,6 @@ using static Bytes;
 [ApiHost]
 public partial class Ecma : WfSvc<Ecma>
 {   
-    [Op]
-    public static string format(EcmaSig src)
-        => DefaultMsilFormatProvider.Instance.SigByteArrayToString(src);
-
     public static MetadataVisualizer mdv(MetadataReader src, TextWriter dst)
         => new (src,dst);
 

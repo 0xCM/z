@@ -142,7 +142,7 @@ namespace Z0
             }
         }
 
-        public void RenderCode(ApiMsil src, ITextEmitter dst)
+        public void RenderCode(CilMember src, ITextEmitter dst)
         {
             var bytes = src.CliCode;
             var sig = src.CliSig.Data;

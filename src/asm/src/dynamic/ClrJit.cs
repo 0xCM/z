@@ -16,19 +16,19 @@ namespace Z0
         {
             var uri = ApiIdentity.define(ApiUriScheme.Located, host, src.Name, MultiDiviner.Service.Identify(src));
             var address = jit(src);
-            return new ApiMember(uri, src, address, ClrDynamic.msil(address, uri, src));
+            return new ApiMember(uri, src, address, CilDynamic.member(address, uri, src));
         }
 
         [Op]
         public static ApiMember member(MethodInfo src, OpUri uri)
         {
             var address = jit(src);
-            return new ApiMember(uri, src, address, ClrDynamic.msil(address, uri, src));
+            return new ApiMember(uri, src, address, CilDynamic.member(address, uri, src));
         }
 
         [Op]
         public static ApiMember member(in ResolvedMethod src)
-            => new (src.Uri, src.Method, src.EntryPoint, ClrDynamic.msil(src.EntryPoint, src.Uri, src.Method));
+            => new (src.Uri, src.Method, src.EntryPoint, CilDynamic.member(src.EntryPoint, src.Uri, src.Method));
 
         [Op]
         static Index<ApiMember> members(JittedMethod[] src)
@@ -42,7 +42,7 @@ namespace Z0
                 var method = member.Method;
                 var id = diviner.Identify(method);
                 var uri = ApiIdentity.define(ApiUriScheme.Located, member.Host, method.Name, id);
-                dst[i] = new ApiMember(uri, method, member.Location, ClrDynamic.msil(member.Location, uri, method));
+                dst[i] = new ApiMember(uri, method, member.Location, CilDynamic.member(member.Location, uri, method));
             }
 
             return dst;
@@ -78,7 +78,7 @@ namespace Z0
         public static DynamicPointer jit(DynamicDelegate src)
         {
             sys.prepare(src.Operation);
-            return ClrDynamic.pointer(src);
+            return CilDynamic.pointer(src);
         }
 
         public static DynamicPointer jit<D>(DynamicDelegate<D> src)
@@ -108,7 +108,7 @@ namespace Z0
         [Op]
         public static void jit(ApiCompleteType src, ConcurrentBag<ApiHostMembers> dst, IWfChannel channel)
         {
-            var jitted = ApiQuery.members(ClrJit.jit(src));
+            var jitted = ApiQuery.members(jit(src));
             if(jitted.IsNonEmpty)
                 dst.Add(new ApiHostMembers(src.HostUri, jitted));
         }

@@ -6,33 +6,33 @@ namespace Z0;
 using static CilModels;
 
 [Record(TableId), StructLayout(StructLayout,Pack=1)]
-public struct CilOpCode
+public readonly record struct CilOpCode
 {
     public const string TableId ="cil.opcodes";
 
     [Render(16)]
-    public ILOpCode OpCode;
+    public readonly ILOpCode OpCode;
 
     [Render(10)]
-    public Hex16 CodeValue;
+    public readonly Hex16 CodeValue;
 
     [Render(16)]
-    public OpCodeName Name;
+    public readonly OpCodeName Name;
 
     [Render(12)]
-    public OpCodeType CodeType;
+    public readonly OpCodeType CodeType;
 
     [Render(24)]
-    public OperandType ArgType;
+    public readonly OperandType ArgType;
 
     [Render(10)]
-    public byte ArgCount;
+    public readonly byte ArgCount;
 
     [Render(16)]
-    public StackBehaviour Sb1;
+    public readonly StackBehaviour Sb1;
 
     [Render(16)]
-    public StackBehaviour Sb2;
+    public readonly StackBehaviour Sb2;
 
     [MethodImpl(Inline)]
     public CilOpCode(ILOpCode id, Hex16 value, OpCodeName name, OpCodeType type, OperandType optype, byte opcount, StackBehaviour sb1, StackBehaviour sb2)

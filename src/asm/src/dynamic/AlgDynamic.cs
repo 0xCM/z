@@ -182,14 +182,14 @@ public class AlgDynamic
     {
         var src = dynops();
         var count = src.Count;
-        var buffer = alloc<MsilCompilation>(count);
+        var buffer = alloc<CilEntryPoint>(count);
         ref var dst = ref first(buffer);
         for(var i=0; i<count; i++)
         {
             ref readonly var op = ref src[i];
             ref var result = ref seek(dst,i);
-            result = ClrDynamic.compilation(op.Definition);
-            emitter(string.Format("{0}: {1}", result.EntryPoint, result.Msil.Encoded.Format()));
+            result = CilDynamic.entry(op.Definition);
+            emitter(string.Format("{0}: {1}", result.EntryPoint, result.Code.Encoded.Format()));
         }
     }
 
@@ -199,8 +199,8 @@ public class AlgDynamic
         var code = mul_8u_8u_8u;
         var dynop = BinaryOpDynamics.dynop<byte>(name, code);
         var fx = dynop.Delegate;
-        var il = ClrDynamic.compilation(dynop.Definition);
-        emitter(string.Format("{0}: {1}", il.EntryPoint, il.Msil.Encoded.Format()));
+        var il = CilDynamic.entry(dynop.Definition);
+        emitter(string.Format("{0}: {1}", il.EntryPoint, il.Code.Encoded.Format()));
         for(byte i=0; i<20; i++)
         {
             var a = i;

@@ -15,11 +15,11 @@ namespace Z0
 
         public readonly ApiClassKind ApiClass;
 
-        public readonly ApiMsil Msil;
+        public readonly CilMember Msil;
 
         public readonly ClrMethodArtifact Metadata;
 
-        public ApiMember(OpUri uri, MethodInfo method, MemoryAddress address, ApiMsil msil)
+        public ApiMember(OpUri uri, MethodInfo method, MemoryAddress address, CilMember msil)
         {
             OpUri =  Require.notnull(uri);
             Method = Require.notnull(method);
@@ -87,9 +87,9 @@ namespace Z0
             => BaseAddress.CompareTo(src.BaseAddress);
 
         public static ApiMember Empty
-            => new ApiMember(OpUri.Empty, EmptyVessels.EmptyMethod, 0u, ApiMsil.Empty);
+            => new ApiMember(OpUri.Empty, EmptyVessels.EmptyMethod, 0u, CilMember.Empty);
 
-        ApiMsil IApiMember.Msil
+        CilMember IApiMember.Msil
             => Msil;
 
         MethodInfo IApiMethod.Method
