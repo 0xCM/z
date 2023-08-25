@@ -7,7 +7,6 @@ namespace Z0.Asm;
 using static BitSeq;
 
 using TK = ConditionTokenKind;
-using G = ConditionCodes;
 
 public enum ConditionTokenKind : byte
 {

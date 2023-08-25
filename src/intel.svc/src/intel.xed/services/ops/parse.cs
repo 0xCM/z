@@ -5,6 +5,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using Asm;
+
     using static XedModels;
     using static XedRules;
 
@@ -298,7 +300,7 @@ namespace Z0
 
                 case K.BCAST:
                 {
-                    if(XedParsers.parse(value, out BCastKind kind))
+                    if(XedParsers.parse(value, out BroadcastKind kind))
                     {
                         dst = new (field, (byte)kind);
                         result = true;

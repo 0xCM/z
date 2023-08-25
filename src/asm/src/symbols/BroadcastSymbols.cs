@@ -2,10 +2,10 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0;
+namespace Z0.Asm;
 
 [LiteralProvider]
-public readonly struct AsmBroadcastSymbols
+public readonly struct BroadcastSymbols
 {
     public const string N1to2 = "{1to2}";
 

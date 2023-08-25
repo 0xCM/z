@@ -2,17 +2,16 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0.Asm;
+
+[Flags,SymSource("asm")]
+public enum AsmBitModeKind : byte
 {
-    [Flags,SymSource("asm")]
-    public enum AsmBitModeKind : byte
-    {
-        None = 0,
+    None = 0,
 
-        Mode16 = 1,
+    Mode16 = 1,
 
-        Mode32 = 2,
+    Mode32 = 2,
 
-        Mode64 = 4
-    }
+    Mode64 = 4
 }

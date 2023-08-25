@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using BK = XedModels.BCastKind;
+    using BK = Asm.BroadcastKind;
 
     partial class XedModels
     {

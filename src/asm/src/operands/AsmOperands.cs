@@ -7,29 +7,6 @@ namespace Z0.Asm;
 [StructLayout(LayoutKind.Sequential,Pack=1)]
 public struct AsmOperands
 {
-    public static string format(in AsmOperands src)
-    {
-        var dst = EmptyString;
-        switch(src.OpCount)
-        {
-            case 0:
-            break;
-            case 1:
-                dst = string.Format("{0}", src.Op0);
-            break;
-            case 2:
-                dst = string.Format("{0}, {1}", src.Op0, src.Op1);
-            break;
-            case 3:
-                dst = string.Format("{0}, {1}, {2}", src.Op0, src.Op1, src.Op2);
-            break;
-            case 4:
-                dst = string.Format("{0}, {1}, {2}, {3}", src.Op0, src.Op1, src.Op2, src.Op3);
-            break;
-        }
-        return dst;
-    }
-
     public byte OpCount;
 
     public AsmOperand Op0;
@@ -91,7 +68,7 @@ public struct AsmOperands
     }
 
     public string Format()
-        => format(this);
+        => AsmRender.format(this);
 
     public override string ToString()
         => Format();

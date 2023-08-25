@@ -3,10 +3,12 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0
-{
+{    
     using System.Linq;
+    using Asm;
 
     using static sys;
+
 
     public class ApiCatalog : AppService<ApiCatalog>
     {

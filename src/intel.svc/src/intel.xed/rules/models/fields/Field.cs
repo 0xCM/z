@@ -6,6 +6,7 @@
 namespace Z0
 {
     using static XedModels;
+    using Asm;
 
     using DT = XedRules.FieldDataKind;
 
@@ -116,8 +117,8 @@ namespace Z0
                 => (XedInstClass)Data;
 
             [MethodImpl(Inline)]
-            BCastKind BCast()
-                => (BCastKind)Data;
+            BroadcastKind BCast()
+                => (BroadcastKind)Data;
 
             [MethodImpl(Inline)]
             RuleOperator Operator()
@@ -182,7 +183,7 @@ namespace Z0
                 => src.Inst();
 
             [MethodImpl(Inline)]
-            public static implicit operator BCastKind(Field src)
+            public static implicit operator BroadcastKind(Field src)
                 => src.BCast();
 
             [MethodImpl(Inline)]

@@ -22,10 +22,3 @@ public interface IRegMask : IAsmOp
     NativeSize IAsmOp.Size
         => NativeSizeCode.W64;
 }
-
-[Free]
-public interface IRegMask<T> : IRegMask
-    where T : unmanaged
-{
-
-}

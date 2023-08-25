@@ -57,7 +57,7 @@ namespace Z0
                         break;
 
                         case K.BCAST:
-                            r.Functions[kind] = (x => format((BCastKind)x));
+                            r.Functions[kind] = (x => format((BroadcastKind)x));
                         break;
 
                         case K.DISP:

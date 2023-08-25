@@ -10,6 +10,7 @@ namespace Z0.Asm
         public static RegOp reg(NativeSizeCode width, RegClassCode @class, RegIndex r)
             => AsmRegBits.reg(width, @class,r);
 
+
         [MethodImpl(Inline), Op]
         public static RegMask regmask(RegOp target, RegIndex mask, RegMaskKind kind)
             => new (target,mask,kind);

@@ -7,6 +7,5 @@ namespace Z0.Asm;
 [ApiHost]
 public partial class AsmSigs
 {
-
     const NumericKind Closure = UnsignedInts;
 }

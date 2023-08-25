@@ -25,10 +25,3 @@ public interface IAsmOp : IExpr
     string IExpr.Format()
         => "<unimplemented>";
 }
-
-[Free]
-public interface IAsmOp<T> : IAsmOp
-    where T : unmanaged
-{
-
-}

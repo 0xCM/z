@@ -10,22 +10,6 @@ using static sys;
 
 public class SdmFormDescriptor
 {
-    public static Index<SdmFormDescriptor> unmodify(ReadOnlySpan<SdmFormDescriptor> src)
-    {
-        var count = src.Length;
-        var buffer = alloc<SdmFormDescriptor>(count);
-        for(var i=0; i<count; i++)
-        {
-            ref readonly var form = ref skip(src,i);
-            ref var dst = ref seek(buffer,i);
-            if(AsmSigs.modified(form.Sig))
-                dst = new SdmFormDescriptor(SdmForms.form(AsmSigs.unmodify(form.Sig), form.OpCode), form.OcDetail);
-            else
-                dst = form;
-        }
-        return buffer;
-    }
-
     static AsmBitModeKind mode(in SdmOpCodeDetail src)
     {
         var mode = AsmBitModeKind.None;
@@ -36,11 +20,9 @@ public class SdmFormDescriptor
         return mode;
     }
 
-    public readonly Hex32 Id;
-
     public readonly SdmForm Form;
 
-    readonly SdmOpCodeDetail OcDetail;
+    public readonly SdmOpCodeDetail OcDetail;
 
     public readonly AsmBitModeKind Mode;
 
@@ -49,7 +31,6 @@ public class SdmFormDescriptor
     [MethodImpl(Inline)]
     public SdmFormDescriptor(SdmForm form, SdmOpCodeDetail oc)
     {
-        Id = form.Id;
         Form = form;
         OcDetail = oc;
         Mode = mode(oc);
@@ -59,7 +40,7 @@ public class SdmFormDescriptor
     public Hash32 Hash
     {
         [MethodImpl(Inline)]
-        get => (uint)Id;
+        get => Name.Hash;
     }
 
     public ref readonly asci64 Name

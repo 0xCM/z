@@ -3,7 +3,7 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0;
+namespace Z0.Asm;
 
 [SymSource("asm.opcodes"), DataWidth(2)]
 public enum AsmVL : byte

@@ -4,6 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+
+using Asm;
+
 using static XedModels;
 using static MachineModes;
 
@@ -216,12 +219,12 @@ partial class XedRules
             => (ChipCode)Data;
 
         [MethodImpl(Inline)]
-        public RepPrefix ToRepPrefix()
-            => (RepPrefix)Data;
+        public XedModels.RepPrefix ToRepPrefix()
+            => (XedModels.RepPrefix)Data;
 
         [MethodImpl(Inline)]
-        public BCastKind ToBCast()
-            => (BCastKind)Data;
+        public BroadcastKind ToBCast()
+            => (BroadcastKind)Data;
 
         [MethodImpl(Inline)]
         public EOSZ ToEOSZ()
@@ -296,11 +299,11 @@ partial class XedRules
             => src.ToChip();
 
         [MethodImpl(Inline)]
-        public static implicit operator BCastKind(FieldValue src)
+        public static implicit operator BroadcastKind(FieldValue src)
             => src.ToBCast();
 
         [MethodImpl(Inline)]
-        public static implicit operator RepPrefix(FieldValue src)
+        public static implicit operator XedModels.RepPrefix(FieldValue src)
             => src.ToRepPrefix();
 
         [MethodImpl(Inline)]

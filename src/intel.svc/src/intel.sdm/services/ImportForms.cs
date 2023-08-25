@@ -26,7 +26,6 @@ namespace Z0.Asm
                 ref readonly var key = ref skip(keys,i);
                 ref var dst = ref seek(buffer,i);
                 var form = src[key];
-                dst.Id = form.Id;
                 dst.Seq = i;
                 dst.Name = form.Name;
                 dst.Sig = form.Sig;

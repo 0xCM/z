@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using Asm;
+
 using static XedModels;
 using static sys;
 
@@ -93,5 +95,5 @@ public partial class XedFlows : WfSvc<XedFlows>
 
     static readonly Symbols<XedFieldType> FieldTypes = Symbols.index<XedFieldType>();
 
-    static readonly Index<AsmBroadcast> _BroadcastDefs = Xed.broadcasts(Symbols.kinds<BCastKind>());
+    static readonly Index<AsmBroadcast> _BroadcastDefs = Xed.broadcasts(Symbols.kinds<BroadcastKind>());
 }

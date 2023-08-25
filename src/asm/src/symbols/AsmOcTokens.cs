@@ -174,7 +174,6 @@ public class AsmOcTokens
 
         [Symbol(T.W0)]
         W0,
-
     }
 
     [SymSource(GroupName), TokenKind(TK.Disp)]

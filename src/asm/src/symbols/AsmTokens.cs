@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using static sys;
-
 public class AsmTokens
 {        
     static readonly SymbolGroup _AsmOcTokens = new SymbolGroup(typeof(AsmOcTokenKind), typeof(AsmOcTokens));

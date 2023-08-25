@@ -2,7 +2,7 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0.Asm
 {
     /// <summary>
     /// Represents the target of an invocation
@@ -11,7 +11,7 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public static AsmCallee define(MemoryAddress @base, string symbol)
-            => new AsmCallee(@base, symbol);
+            => new (@base, symbol);
 
         /// <summary>
         /// The target's base address

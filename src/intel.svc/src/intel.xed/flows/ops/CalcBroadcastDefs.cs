@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using Asm;
+    
     partial class XedFlows
     {
         public Index<AsmBroadcast> CalcBroadcastDefs()

@@ -5,6 +5,7 @@
 namespace Z0
 {
     using static sys;
+    using Asm;
 
     public class ApiServices : AppService<ApiServices>
     {        

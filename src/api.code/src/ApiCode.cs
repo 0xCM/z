@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using Asm;
     using static sys;
     using System.Linq;
 

@@ -5,6 +5,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using Asm;
+    
     using static XedRules;
 
     partial class XedModels
@@ -87,7 +89,7 @@ namespace Z0
                 => XedOps.scale(this, out dst);
 
             [MethodImpl(Inline)]
-            public bool Broadcast(out BCastKind dst)
+            public bool Broadcast(out BroadcastKind dst)
                 => Xed.broadcast(this, out dst);
 
             public string Format()

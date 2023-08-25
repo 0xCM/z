@@ -3,6 +3,7 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
+
 /// <summary>
 /// Defines helpers to detect basic block exits
 /// Reference: https://github.com/microsoft/Detours/blob/5f674df62c0e1bbed82ebf86b70f04d13d4acb91/samples/disas/disas.cpp

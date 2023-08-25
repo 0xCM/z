@@ -65,7 +65,7 @@ public readonly record struct AsmSigToken : IKindedToken<AsmSigTokenKind,byte>
         => Hash;
 
     public string Format()
-        => AsmSigs.format(this);
+        => AsmRender.format(this);
 
     public override string ToString()
         => Format();

@@ -4,9 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using Asm;
+    
     using static XedModels;
     using static XedPatterns;
-    using static XedLiterals;
     using static MachineModes;
     using static sys;
 
@@ -446,7 +447,7 @@ namespace Z0
 
                     case C.Broadcast:
                     {
-                        var x = @as<BCastKind>(data);
+                        var x = @as<BroadcastKind>(data);
                         dst = XedRender.format(x);
                     }
                     break;

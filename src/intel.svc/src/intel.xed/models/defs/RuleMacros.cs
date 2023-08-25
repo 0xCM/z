@@ -15,7 +15,7 @@ namespace Z0
     using static XedModels.SMODE;
     using static XedModels.SegPrefixKind;
     using static VexMapKind;
-    using static XedModels.BCastKind;
+    using static Asm.BroadcastKind;
     using static XedLiterals;
     using static bit;
 

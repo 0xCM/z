@@ -5,6 +5,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using Asm;
+
 using static MachineModes;
 
 using M = XedModels;
@@ -35,7 +37,7 @@ partial class XedOps
 
         public const M.LLRC MaxLLRC = M.LLRC.LLRC3;
 
-        public const M.BCastKind MaxBCastKind = M.BCastKind.BCast_1TO4_16;
+        public const BroadcastKind MaxBCastKind = BroadcastKind.BCast_1TO4_16;
 
         public const AsmVL MaxVexLength = AsmVL.VL512;
 
@@ -429,10 +431,10 @@ partial class XedOps
             get => Bytes.sequential<AsmVL>(0, (byte)MaxVexLength);
         }
 
-        public static ReadOnlySpan<M.BCastKind> BCAST
+        public static ReadOnlySpan<BroadcastKind> BCAST
         {
             [MethodImpl(Inline)]
-            get => Bytes.sequential<M.BCastKind>(0, (byte)MaxBCastKind);
+            get => Bytes.sequential<BroadcastKind>(0, (byte)MaxBCastKind);
         }
 
         public static REGS Reg0

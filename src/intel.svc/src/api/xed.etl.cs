@@ -18,7 +18,7 @@ namespace Z0
                 () => Channel.TableEmit(XedRegMap.Service.REntries, XedDb.Targets().Table<RegMapEntry>("rmap")),
                 () => Channel.TableEmit(XedRegMap.Service.XEntries, XedDb.Targets().Table<RegMapEntry>("xmap")),
                 () => DataFlow.EmitChipCodes(Symbols.symkinds<ChipCode>()),
-                () => DataFlow.EmitBroadcastDefs(Xed.broadcasts(Symbols.kinds<BCastKind>())),
+                () => DataFlow.EmitBroadcastDefs(Xed.broadcasts(Symbols.kinds<BroadcastKind>())),
                 () => {
                     var cpuid = DataFlow.CalcCpuIdDataset(XedDb.DocSource(XedDocKind.CpuId));
                     DataFlow.EmitCpuIdDataset(cpuid);       

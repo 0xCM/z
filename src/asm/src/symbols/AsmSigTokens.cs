@@ -35,6 +35,9 @@ public class AsmSigTokens
         r16r32m16,
     }
 
+    /// <summary>
+    /// Designates a gp-register or a gp-sized memory operand
+    /// </summary>
     [SymSource(GroupName), TokenKind(TK.GpRm)]
     public enum GpRmToken : byte
     {
@@ -78,6 +81,9 @@ public class AsmSigTokens
         regm16,
     }
 
+    /// <summary>
+    /// Designates a vector register or a memory operand
+    /// </summary>
     [SymSource(GroupName), TokenKind(TK.VecRm)]
     public enum VecRmToken : byte
     {

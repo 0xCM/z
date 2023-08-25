@@ -20,14 +20,6 @@ public class XedRender
 
     static EnumRender<XedRegFlag> RegFlags = new();
 
-    static EnumRender<BCast8Kind> BCast8 = new();
-
-    static EnumRender<BCast16Kind> BCast16 = new();
-
-    static EnumRender<BCast32Kind> BCast32 = new();
-
-    static EnumRender<BCast64Kind> BCast64 = new();
-
     static EnumRender<ElementSize> ElementSizes = new();
 
     static EnumRender<DispWidth> DispWidthKinds = new();
@@ -261,7 +253,7 @@ public class XedRender
         if(src.Field == 0)
             dst = src.Seg.Format();
         else
-            dst = string.Format("{0}[{1}]", XedRender.format(src.Field), src.Seg);
+            dst = string.Format("{0}[{1}]", format(src.Field), src.Seg);
         return dst;
     }
 
@@ -274,20 +266,8 @@ public class XedRender
     public static string format(InstAttribKind src)
         => AttribKinds.Format(src);
 
-    public static string format(BCast8Kind src)
-        => BCast8.Format(src);
-
-    public static string format(BCast16Kind src)
-        => BCast16.Format(src);
-
     public static string format(OpKind src)
         => RuleOpKinds.Format(src);
-
-    public static string format(BCast32Kind src)
-        => BCast32.Format(src);
-
-    public static string format(BCast64Kind src)
-        => BCast64.Format(src);
 
     public static string format(VisibilityKind src)
         => VisKind.Format(src);
@@ -442,7 +422,7 @@ public class XedRender
         if(src.Kind == OpKind.Bcast)
         {
             src.Broadcast(out var kind);
-            var def = Xed.broadcast(kind);
+            var def = asm.broadcast(kind);
             return def.Symbol.Format();
         }
         else
@@ -553,7 +533,7 @@ public class XedRender
         => RuleOps.Format(src);
 
     [MethodImpl(Inline)]
-    public static string format(BCastKind src)
+    public static string format(BroadcastKind src)
     {
         if(src == 0)
             return EmptyString;

@@ -4,24 +4,24 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-    [DataTypeAttributeD("asm.nearptr")]
-    public readonly struct NearPtr
+[DataTypeAttributeD("asm.nearptr")]
+public readonly struct NearPtr
+{
+    public readonly MemoryAddress Address;
+
+    [MethodImpl(Inline)]
+    public NearPtr(MemoryAddress address)
     {
-        public readonly MemoryAddress Address;
-
-        [MethodImpl(Inline)]
-        public NearPtr(MemoryAddress address)
-        {
-            Address = address;
-        }
-
-        public string Format()
-            => Address.Format();
-
-        public override string ToString()
-            => Format();
-
-        [MethodImpl(Inline)]
-        public static implicit operator NearPtr(MemoryAddress src)
-            => new (src);
+        Address = address;
     }
+
+    public string Format()
+        => Address.Format();
+
+    public override string ToString()
+        => Format();
+
+    [MethodImpl(Inline)]
+    public static implicit operator NearPtr(MemoryAddress src)
+        => new (src);
+}

@@ -28,8 +28,8 @@ partial class XedOps
         => ref @as<XedInstKind,XedInstClass>(src.ICLASS);
 
     [MethodImpl(Inline), Op]
-    public static ref readonly BCastKind broadcast(in XedOperandState src)
-        => ref @as<BCastKind>(src.BCAST);
+    public static ref readonly BroadcastKind broadcast(in XedOperandState src)
+        => ref @as<BroadcastKind>(src.BCAST);
 
     [MethodImpl(Inline), Op]
     public static ref readonly Hex8 ocbyte(in XedOperandState src)

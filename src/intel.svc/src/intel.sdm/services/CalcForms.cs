@@ -48,7 +48,7 @@ namespace Z0.Asm
                 }
 
                 var tmp = list<SdmFormDescriptor>();
-                tmp.AddRange(SdmFormDescriptor.unmodify(forms.ViewDeposited()));
+                tmp.AddRange(SdmForms.unmodify(forms.ViewDeposited()));
                 tmp.AddRange(modified);
                 return IdentifyForms(tmp.ToArray());
             }

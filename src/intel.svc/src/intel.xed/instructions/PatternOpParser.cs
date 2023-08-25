@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using Asm;
+
 using static XedModels;
 using static XedRules;
 using static sys;
@@ -55,7 +57,7 @@ partial class XedPatterns
                     if(DataParser.eparse(part, out EMX_BROADCAST_KIND bck))
                     {
                         spec.Kind = OpKind.Bcast;
-                        spec.SourceExpr = Xed.broadcast((BCastKind)bck).Symbol.Format();
+                        spec.SourceExpr = asm.broadcast((BroadcastKind)bck).Symbol.Format();
                     }
                     else
                         Errors.Throw(AppMsg.ParseFailure.Format(part, nameof(PatternOp)));

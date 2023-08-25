@@ -674,11 +674,11 @@ public partial class XedParsers
     public bool Parse(string src, out XedOpCodeKind dst)
         => OpCodeKinds.Parse(src, out dst);
 
-    public static bool parse(string src, out BCastKind dst)
+    public static bool parse(string src, out BroadcastKind dst)
     {
         if(byte.TryParse(src, out var b))
         {
-            dst = (BCastKind)b;
+            dst = (BroadcastKind)b;
             return true;
         }
         dst = default;

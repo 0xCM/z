@@ -67,23 +67,23 @@ namespace Z0.Asm
 
         [MethodImpl(Inline), Op]
         public static AsmSigExpr expression(AsmMnemonic mnemonic, AsmSigOpExpr op0)
-            => new AsmSigExpr(mnemonic, op0);
+            => new (mnemonic, op0);
 
         [MethodImpl(Inline), Op]
         public static AsmSigExpr expression(AsmMnemonic mnemonic, AsmSigOpExpr op0, AsmSigOpExpr op1)
-            => new AsmSigExpr(mnemonic, op0, op1);
+            => new (mnemonic, op0, op1);
 
         [MethodImpl(Inline), Op]
         public static AsmSigExpr expression(AsmMnemonic mnemonic, AsmSigOpExpr op0, AsmSigOpExpr op1, AsmSigOpExpr op2)
-            => new AsmSigExpr(mnemonic, op0, op1, op2);
+            => new (mnemonic, op0, op1, op2);
 
         [MethodImpl(Inline), Op]
         public static AsmSigExpr expression(AsmMnemonic mnemonic, AsmSigOpExpr op0, AsmSigOpExpr op1, AsmSigOpExpr op2, AsmSigOpExpr op3)
-            => new AsmSigExpr(mnemonic, op0, op1, op2, op3);
+            => new (mnemonic, op0, op1, op2, op3);
 
         [MethodImpl(Inline), Op]
         public static AsmSigExpr expression(AsmMnemonic mnemonic, AsmSigOpExpr op0, AsmSigOpExpr op1, AsmSigOpExpr op2, AsmSigOpExpr op3, AsmSigOpExpr op4)
-            => new AsmSigExpr(mnemonic, op0, op1, op2, op3, op4);
+            => new (mnemonic, op0, op1, op2, op3, op4);
 
         [Op]
         public static AsmSigExpr expression(AsmMnemonic mnemonic, ReadOnlySpan<string> ops)

@@ -2,26 +2,25 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0.Asm;
+
+using I = RFlagIndex;
+
+/// <summary>
+/// Defines indices into the <see cref='StatusFlagBits'/>
+/// </summary>
+[SymSource("asm.regs.flags")]
+public enum StatusFlagIndex : byte
 {
-    using I = RFlagIndex;
+    CF = I.CF,
 
-    /// <summary>
-    /// Defines indices into the <see cref='StatusFlagBits'/>
-    /// </summary>
-    [SymSource("asm.regs.flags")]
-    public enum StatusFlagIndex : byte
-    {
-        CF = I.CF,
+    PF = I.PF,
 
-        PF = I.PF,
+    AF = I.AF,
 
-        AF = I.AF,
+    ZF = I.ZF,
 
-        ZF = I.ZF,
+    SF = I.SF,
 
-        SF = I.SF,
-
-        OF = I.OF,
-    }
+    OF = I.OF,
 }

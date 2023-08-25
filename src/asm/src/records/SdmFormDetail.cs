@@ -14,9 +14,6 @@ namespace Z0
         [Render(8)]
         public uint Seq;
 
-        [Render(12)]
-        public Hex32 Id;
-
         [Render(38)]
         public asci64 Name;
 

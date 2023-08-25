@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using Asm;
 using static XedModels;
 using static MachineModes;
 using static XedRules;
@@ -338,7 +339,7 @@ public record struct XedOperandState
     [RuleField(K.VL, 3, typeof(AsmVL), "Specifies one of {V128,V256,V512}, if applicable")]
     public byte VL;
 
-    [RuleField(K.BCAST,5, typeof(M.BCastKind))]
+    [RuleField(K.BCAST,5, typeof(BroadcastKind))]
     public byte BCAST;
 
     [RuleField(K.ERROR, 1, typeof(M.ErrorKind))]
