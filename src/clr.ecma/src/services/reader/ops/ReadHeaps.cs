@@ -6,9 +6,11 @@ namespace Z0
 {
     using static sys;
 
+    using static Ecma;
+
     partial class EcmaReader
     {
-        public EcmaHeapIndex ReadHeaps()
+        public HeapIndex ReadHeaps()
         {
             var dst = span<EcmaHeap>(4);
             var i=0u;
@@ -16,40 +18,40 @@ namespace Z0
             seek(dst,i++) = ReadGuidHeap();
             seek(dst,i++) = ReadSystemStringHeap();
             seek(dst,i) = ReadUserStringHeap();
-            return first(recover<EcmaHeap,EcmaHeapIndex>(dst));
+            return first(recover<EcmaHeap,HeapIndex>(dst));
         }
 
-        Address32 GetHeapOffset(HeapIndex kind)
+        Address32 GetHeapOffset(System.Reflection.Metadata.Ecma335.HeapIndex kind)
             => MD.GetHeapMetadataOffset(kind);
 
-        ByteSize GetHeapSize(HeapIndex kind)
+        ByteSize GetHeapSize(System.Reflection.Metadata.Ecma335.HeapIndex kind)
             => MD.GetHeapSize(kind);
 
         [Op]
         EcmaHeap ReadBlobHeap()
         {
-            var kind = HeapIndex.Blob;
+            var kind = System.Reflection.Metadata.Ecma335.HeapIndex.Blob;
             return new EcmaHeap(kind, BaseAddress + GetHeapOffset(kind), GetHeapSize(kind));
         }
 
         [Op]
         EcmaHeap ReadGuidHeap()
         {
-            var kind = HeapIndex.Guid;
+            var kind = System.Reflection.Metadata.Ecma335.HeapIndex.Guid;
             return new EcmaHeap(kind, BaseAddress + GetHeapOffset(kind), GetHeapSize(kind));
         }
 
         [Op]
         EcmaHeap ReadUserStringHeap()
         {
-            var kind = HeapIndex.UserString;
+            var kind = System.Reflection.Metadata.Ecma335.HeapIndex.UserString;
             return new EcmaHeap(kind, BaseAddress + GetHeapOffset(kind), GetHeapSize(kind));
         }
 
         [Op]
         EcmaHeap ReadSystemStringHeap()
         {
-            var kind = HeapIndex.String;
+            var kind = System.Reflection.Metadata.Ecma335.HeapIndex.String;
             return new EcmaHeap(kind, BaseAddress + GetHeapOffset(kind), GetHeapSize(kind));
         }
     }

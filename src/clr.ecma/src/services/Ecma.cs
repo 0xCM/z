@@ -9,6 +9,23 @@ using System.Linq;
 using static sys;
 using static Bytes;
 
+class EcmaCheckCmd : WfAppCmd<EcmaCheckCmd>
+{
+
+    [CmdOp("enums/check")]
+    void CheckEnums()
+    {
+        var src = typeof(System.Reflection.Metadata.MetadataReader).Assembly;
+        var reader = Ecma.reader(src);
+        foreach(var e in reader.GetEnumTypes())
+        {
+            Channel.Row(reader.String(e.Name));
+        }
+
+    }
+
+}
+
 [ApiHost]
 public partial class Ecma : WfSvc<Ecma>
 {   

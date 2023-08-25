@@ -1,6 +1,7 @@
 <Project>
     <ItemGroup>    
         <PackageReference Include="terrafx.interop.windows" Version="10.0.22621.2-rc3" />
-        <PackageReference Include="Microsoft.Windows.SDK.Win32Docs" Version="0.1.42-alpha" />        
+        <PackageReference Include="Microsoft.Windows.SDK.Win32Docs" Version="0.1.42-alpha" />  
+        <PackageReference Include="Microsoft.Windows.SDK.Win32Metadata" Version="54.0.44-preview" />              
     </ItemGroup>
 </Project>

@@ -13,7 +13,7 @@ namespace Z0
         {
             var result = 0;
             var runtime = ApiServer.runtime();
-            var spec = ApiServer.spec(args);
+            var spec = ApiServer.command(args);
             using var shell = ApiServer.shell(runtime, args);
             try
             {

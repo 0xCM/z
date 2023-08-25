@@ -6,10 +6,6 @@ namespace Z0
 {
     partial class EcmaReader
     {
-        [Op]
-        public ParallelQuery<ManifestResourceHandle> ResourceHandles()
-            => MD.ManifestResources.AsParallel();
-        
         [MethodImpl(Inline), Op]
         public ParallelQuery<TypeDefinitionHandle> TypeDefHandles()
             => MD.TypeDefinitions.AsParallel();
@@ -25,10 +21,6 @@ namespace Z0
         [Op]
         public ParallelQuery<MethodDefinitionHandle> MethodDefHandles()
             => MD.MethodDefinitions.AsParallel();
-
-        [Op]
-        public ParallelQuery<FieldDefinitionHandle> FieldDefHandles()
-            => MD.FieldDefinitions.AsParallel();
 
         [Op]
         public ParallelQuery<PropertyDefinitionHandle> PropertyDefHandles()

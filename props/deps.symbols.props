@@ -6,7 +6,6 @@
         <Reference Include="$(GlobalDeps)/Microsoft.FileFormats.dll"/>
         <Reference Include="$(GlobalDeps)/Microsoft.SymbolStore.dll"/>
         <Reference Include="$(GlobalDeps)/SOS.dll" CopyToOutputDirectory="PreserveNewest"/>
-
     </ItemGroup>
 
     <Target Name="SymbolLibs">

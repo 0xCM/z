@@ -7,7 +7,6 @@ namespace Z0
     using Asm;
 
     using static sys;
-    using static XedRules;
     using static XedModels;
     
     partial class XedCmd

@@ -5,6 +5,7 @@
 namespace Z0;
 
 using static AsmOpCodes;
+
 [StructLayout(LayoutKind.Sequential, Pack=1), Record(TableId)]
 public struct SdmOpCodeDetail : IComparable<SdmOpCodeDetail>
 {

@@ -5,9 +5,8 @@
 namespace Z0
 {
     partial class EcmaReader
-    {
-        [MethodImpl(Inline), Op]
-        public ExportedType ReadExportedType(ExportedTypeHandle src)
-            => MD.GetExportedType(src);
+    {       
+        public ParallelQuery<TypeDefinition> GetTypeDefs()
+            => from h in MD.TypeDefinitions.AsParallel() select MD.GetTypeDefinition(h);       
     }
 }

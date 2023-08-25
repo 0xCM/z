@@ -19,7 +19,7 @@ namespace Z0
                 }
                 else
                 {                                
-                    shell.Runner.RunCommand(ApiServer.spec(args));
+                    shell.Runner.RunCommand(ApiServer.command(args));
                 }
             }
             catch(Exception e)

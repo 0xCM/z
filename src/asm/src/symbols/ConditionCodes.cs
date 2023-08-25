@@ -19,13 +19,9 @@ public enum ConditionTokenKind : byte
 }
 
 [LiteralProvider(Group)]
-public class ConditionCodes : TokenGroup<G,TK>
+public class ConditionCodes
 {
     public const string Group = "asm.cc";
-
-    public override string GroupName
-        => Group;
-
 
     [LiteralProvider(Group)]
     public readonly struct ConditionFacets

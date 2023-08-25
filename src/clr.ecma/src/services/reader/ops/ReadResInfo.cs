@@ -11,7 +11,7 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public ParallelQuery<ManifestResourceRow> ReadResInfo()
-            => from handle in ResourceHandles()
+            => from handle in MD.ManifestResources.AsParallel()
                 let res = ReadResource(handle)
                 select new ManifestResourceRow {
                     Attributes = res.Attributes,

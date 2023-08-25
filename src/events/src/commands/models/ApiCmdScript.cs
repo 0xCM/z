@@ -8,17 +8,17 @@ namespace Z0
     {
         public readonly FileUri Path;
 
-        public readonly ReadOnlySeq<ApiCmdSpec> Commands;
+        public readonly ReadOnlySeq<ApiCommand> Commands;
 
-        public ApiCmdScript(FileUri path, params ApiCmdSpec[] src)        
+        public ApiCmdScript(FileUri path, params ApiCommand[] src)        
         {
             Path = path;
             Commands = src;
         }
 
-        public ApiCmdScript With(params ApiCmdSpec[] src)
+        public ApiCmdScript With(params ApiCommand[] src)
             => new (Path,src);        
 
-        public static ApiCmdScript Empty => new (FileUri.Empty, sys.empty<ApiCmdSpec>());
+        public static ApiCmdScript Empty => new (FileUri.Empty, sys.empty<ApiCommand>());
     }
 }

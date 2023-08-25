@@ -11,6 +11,7 @@ namespace Z0
         public ParallelQuery<EcmaDocInfo> ReadDocInfo()
             => from handle in MD.Documents.AsParallel()
                 select ReadDocInfo(handle);
+                
         EcmaDocInfo ReadDocInfo(DocumentHandle handle)
         {
             var src = MD.GetDocument(handle);

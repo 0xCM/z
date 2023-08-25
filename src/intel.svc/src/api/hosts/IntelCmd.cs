@@ -6,8 +6,6 @@ namespace Z0;
 
 using Asm;
 
-using System.Text;
-
 public partial class IntelCmd : WfAppCmd<IntelCmd>
 {
     IntelIntrinsics Intrinsics => Wf.IntelIntrinsics();

@@ -144,7 +144,7 @@ public class ApiCmdRunner : IApiCmdRunner
         return sys.start(Exec).Result;        
     }
 
-    public ExecToken RunCommand(ApiCmdSpec spec)
+    public ExecToken RunCommand(ApiCommand spec)
     {
         var token = TokenDispenser.open();
         var result = Outcome.Success;
@@ -169,7 +169,7 @@ public class ApiCmdRunner : IApiCmdRunner
     }
 
     public ExecToken RunCommand(string action)
-        => RunCommand(new ApiCmdSpec(action, CmdArgs.Empty));
+        => RunCommand(new ApiCommand(action, CmdArgs.Empty));
     
     public void Dispose()
     {

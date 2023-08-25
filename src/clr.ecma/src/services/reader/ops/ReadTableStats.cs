@@ -8,7 +8,24 @@ namespace Z0
 
 
     partial class EcmaReader
-    {        
+    {       
+        public EcmaToken GetSystemEnumToken()
+        {
+            var dst = EcmaToken.Empty;
+            foreach(var rh in MD.TypeReferences)
+            {
+                var r = MD.GetTypeReference(rh);
+                if(String(r.Name) == nameof(Enum) && String(r.Namespace) == nameof(System))
+                {
+                    dst = rh;
+                    break;
+                }
+            
+            }
+            return dst;
+        } 
+
+
         public void ReadTableStats(ConcurrentBag<EcmaRowStats> dst)
         {
             var counts = GetRowCounts();

@@ -9,6 +9,18 @@ namespace Z0
 
     partial class EcmaReader
     {
+        public ParallelQuery<AssemblyRef> ReadAssemblyRefs()
+            =>from handle in AssemblyRefHandles()
+                let r = MD.GetAssemblyReference(handle)
+                select new AssemblyRef{
+                    Index = handle,
+                    Token = BlobArray(r.PublicKeyOrToken),
+                    Culture = String(r.Culture),
+                    Flags = r.Flags,
+                    Hash = BlobArray(r.HashValue),
+                    Name = String(r.Name),
+                    Version = r.Version
+                };
         public AssemblyRefRow ReadAssemblyRefRow(AssemblyReferenceHandle handle)
         {
             var src = MD.GetAssemblyReference(handle);
@@ -26,23 +38,5 @@ namespace Z0
         [Op]
         public ParallelQuery<AssemblyRefRow> ReadAssemblyRefRows()
             => from handle in AssemblyRefHandles() select ReadAssemblyRefRow(handle);
-
-        public AssemblyRef ReadAssemblyRef(AssemblyReferenceHandle handle)
-        {
-            var row = ReadAssemblyRefRow(handle);
-            var dst = new AssemblyRef();
-            dst.Index = handle;
-            dst.Token = BlobArray(row.KeyOrToken);
-            dst.Culture = String(row.Culture);
-            dst.Flags = row.Flags;
-            dst.Hash = BlobArray(row.Hash);
-            dst.Name = String(row.Name);
-            dst.Version = row.Version;
-            return dst;
-        }
-
-        public ParallelQuery<AssemblyRef> ReadAssemblyRefs()
-            =>from handle in AssemblyRefHandles() select ReadAssemblyRef(handle);
-
     }
 }

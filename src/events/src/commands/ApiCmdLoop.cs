@@ -19,10 +19,10 @@ public class ApiCmdLoop
         Runner = runner;
     }
 
-    ApiCmdSpec Next()
+    ApiCommand Next()
     {
         var input = term.prompt(string.Format("{0}> ", "cmd"));
-        return ApiServer.spec(input);
+        return ApiServer.command(input);
     }
 
     void Run()
@@ -36,7 +36,7 @@ public class ApiCmdLoop
         }
     }
         
-    void RunCmd(ApiCmdSpec cmd)
+    void RunCmd(ApiCommand cmd)
     {
         try
         {

@@ -8,15 +8,15 @@ namespace Z0
 
     partial class EcmaReader
     {
-        [MethodImpl(Inline), Op]
-        public CustomAttribRow ReadAttributeRow(CustomAttribute src)
-        {
-            var dst = default(CustomAttribRow);
-            dst.Parent = src.Parent;
-            dst.Constructor = src.Constructor;
-            dst.Value = src.Value;
-            dst.ValueOffset = EcmaHeaps.offset(MD, src.Value);
-            return dst;
-        }
+        // [MethodImpl(Inline), Op]
+        // public CustomAttribRow ReadAttributeRow(CustomAttribute src)
+        // {
+        //     var dst = default(CustomAttribRow);
+        //     dst.Parent = src.Parent;
+        //     dst.Constructor = src.Constructor;
+        //     dst.Value = src.Value;
+        //     dst.ValueOffset = EcmaHeaps.offset(MD, src.Value);
+        //     return dst;
+        // }
     }
 }

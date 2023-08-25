@@ -16,7 +16,7 @@ sealed class App : ApiShell<App>
             if(args.Length == 0)
                 app.Run();
             else
-                app.Runner.RunCommand(ApiServer.spec(args));
+                app.Runner.RunCommand(ApiServer.command(args));
         }
         catch(Exception e)
         {

@@ -25,6 +25,73 @@ public sealed class ApiServer : AppService<ApiServer>
         return dst;
     }
 
+    public static ApiCommand command(string[] input)
+    {
+        var dst = ApiCommand.Empty;
+        var parts = input.ToSeq();
+        if(parts.IsNonEmpty)
+        {
+            var name = parts[0];
+            var args = alloc<CmdArg>(parts.Count - 1);
+            for(var i=0; i<parts.Count - 1; i++)
+                seek(args,i) = parts[i+1];
+            dst = new ApiCommand(name,args);
+        }
+        return dst;
+    }
+
+    public static ApiCommand command(ReadOnlySpan<char> src)
+    {
+        static CmdArg arg(object src)
+            => new (src?.ToString() ?? EmptyString);
+
+        static CmdArgs args(params object[] src)
+        {
+            var dst = alloc<CmdArg>(src.Length);
+            for(ushort i=0; i<src.Length; i++)
+                seek(dst,i) = arg(skip(src,i));
+            return new (dst);
+        }
+
+        var dst = ApiCommand.Empty;
+        var i = SQ.index(src, Chars.Space);
+        if(i < 0)
+            dst = new ApiCommand(@string(src), CmdArgs.Empty);
+        else
+        {
+            var name = @string(SQ.left(src,i));
+            var _args = @string(SQ.right(src,i)).Split(Chars.Space);
+            dst = new ApiCommand(name, args(_args));
+        }
+        return dst;  
+    }
+
+    [Op, Closures(UInt64k)]
+    public static CmdArgs args<T>(in T src)
+    {
+        var t = typeof(T);
+        var fields = t.PublicInstanceFields();
+        var count = fields.Length;
+        var reflected = sys.alloc<ClrFieldValue>(count);
+        ClrFields.values(src, fields, reflected);
+        var dst = sys.alloc<CmdArg>(count);
+        for(var i=0u; i<count; i++)
+        {
+            ref readonly var fv = ref skip(reflected,i);
+            seek(dst,i) = new CmdArg(fv.Field.Name, fv.Value?.ToString() ?? EmptyString);
+        }
+        return dst;
+    }        
+
+    // public static CmdArgs args<T>(params T[] src)
+    //     where T : new()
+    // {
+    //     var dst = alloc<CmdArg>(src.Length);
+    //     for(ushort i=0; i<src.Length; i++)
+    //         seek(dst,i) = new CmdArg<T>(skip(src,i));
+    //     return new (dst);
+    // }
+
     public static IWfChannel channel()
         => WfChannel.create(initializer());
 
@@ -184,9 +251,7 @@ public sealed class ApiServer : AppService<ApiServer>
     }
 
     static ApiCmdMethod method(IApiService host, MethodInfo def, ApiCmdRoute route, CmdMethodType @class)
-    {
-        return new (route, @class, def, host);
-    }
+        => new (route, @class, def, host);
 
     static IEnumerable<ApiCmdMethod> methods(IApiService host)
     {
@@ -248,7 +313,7 @@ public sealed class ApiServer : AppService<ApiServer>
         return dst;
     }
 
-    public static string format(ApiCmdSpec src)
+    public static string format(ApiCommand src)
     {
         if(src.IsEmpty)
             return EmptyString;
@@ -274,20 +339,6 @@ public sealed class ApiServer : AppService<ApiServer>
         return dst.Emit();
     }
 
-    public static ApiCmdSpec spec(string[] input)
-    {
-        var dst = ApiCmdSpec.Empty;
-        var parts = input.ToSeq();
-        if(parts.IsNonEmpty)
-        {
-            var name = parts[0];
-            var args = sys.alloc<CmdArg>(parts.Count - 1);
-            for(var i=0; i<parts.Count - 1; i++)
-                seek(args,i) = parts[i+1];
-            dst = new ApiCmdSpec(name,args);
-        }
-        return dst;
-    }
 
     [Op]
     public static ApiCmdRoute route(Type src)
@@ -316,13 +367,10 @@ public sealed class ApiServer : AppService<ApiServer>
         return dst;
     }
 
-    public static ProjectContext context(IProject src)
-        => new (src);
-
     public static ApiCmdScript script(FilePath src)
     {
         var dst = ApiCmdScript.Empty;
-        var specs = list<ApiCmdSpec>();
+        var specs = list<ApiCommand>();
         using var reader = src.Utf8LineReader();
         var line = TextLine.Empty;
 
@@ -330,26 +378,11 @@ public sealed class ApiServer : AppService<ApiServer>
         {
             var content = line.Content.Trim();
             if(text.nonempty(content))  
-                specs.Add(spec(content));
+                specs.Add(command(content));
         }
 
         dst = new (src, specs.ToArray());
         return dst;
-    }
-
-    public static ApiCmdSpec spec(ReadOnlySpan<char> src)
-    {
-        var dst = ApiCmdSpec.Empty;
-        var i = SQ.index(src, Chars.Space);
-        if(i < 0)
-            dst = new ApiCmdSpec(@string(src), CmdArgs.Empty);
-        else
-        {
-            var name = @string(SQ.left(src,i));
-            var _args = @string(SQ.right(src,i)).Split(Chars.Space);
-            dst = new ApiCmdSpec(name, args(_args));
-        }
-        return dst;  
     }
 
     public static ICmd reify(Type src)
@@ -360,14 +393,5 @@ public sealed class ApiServer : AppService<ApiServer>
         where P : INullity, new()
             => new (spec,token,suceeded,payload);
 
-    static CmdArg arg(object src)
-        => new (src?.ToString() ?? EmptyString);
 
-    static CmdArgs args(params object[] src)
-    {
-        var dst = alloc<CmdArg>(src.Length);
-        for(ushort i=0; i<src.Length; i++)
-            seek(dst,i) = arg(skip(src,i));
-        return new (dst);
-    }
 }

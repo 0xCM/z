@@ -6,7 +6,7 @@ namespace Z0
 {
     public interface IApiCmdRunner : IDisposable
     {
-        ExecToken RunCommand(ApiCmdSpec spec);
+        ExecToken RunCommand(ApiCommand spec);
         
         ExecToken RunCommand(string action);
 

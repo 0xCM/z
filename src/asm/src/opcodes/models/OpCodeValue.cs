@@ -13,7 +13,6 @@ partial class AsmOpCodes
         public static string format(OpCodeValue src)
         {
             var data = slice(sys.bytes(src), 0, src.TrimmedSize);
-            //var data = src.Trimmed;
             var dst = "0x00";
             switch(data.Length)
             {
