@@ -11,12 +11,8 @@ public class AsmRegBits
 {
     [MethodImpl(Inline), Op]
     public static RegOp reg(NativeSizeCode size, RegClassCode @class, RegIndexCode index)
-        => new (kind(index, @class, size));
-
-    [MethodImpl(Inline), Op]
-    public static RegOp reg(NativeSizeCode width, RegClassCode @class, RegIndex r)
-        => reg(width, @class,r);
-
+        => new (AsmRegs.kind(size, @class, index));
+    
     /// <summary>
     /// Determines the register code from the kind
     /// </summary>
@@ -47,7 +43,7 @@ public class AsmRegBits
     /// <param name="src">The register operand</param>
     [MethodImpl(Inline), Op]
     public static RegClassCode @class(RegOp src)
-        => (RegClassCode)@class(src.RegKind);
+        => @class(src.RegKind);
 
     /// <summary>
     /// Determines the width of the register represented by a specified kind
@@ -65,9 +61,6 @@ public class AsmRegBits
     public static NativeSizeCode width(RegOp src)
         => width(src.RegKind);
 
-    [MethodImpl(Inline), Op]
-    public static RegKind kind(RegIndexCode i, RegClassCode k, NativeSizeCode w)
-        => (RegKind)(((uint)i  << IndexField) | ((uint)k << ClassField) | ((uint)w << WidthField));
 
     [SymSource("asm.regs.bits")]
     public enum RegFieldIndex : byte

@@ -53,7 +53,7 @@ public struct RegOpRange : IAsmOpSource<RegOp>
     {
         if(Current < Max)
         {
-            dst = AsmRegBits.reg(Size, Class, Current++);
+            dst = AsmRegs.reg(Size, Class, (RegIndex) Current++);
             return true;
         }
         else

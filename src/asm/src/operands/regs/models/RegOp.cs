@@ -91,7 +91,7 @@ public readonly struct RegOp : IRegOp
 
     [MethodImpl(Inline)]
     public static implicit operator RegOp(RegKind kind)
-        => new RegOp((ushort)kind);
+        => asm.reg(kind);
 
     [MethodImpl(Inline)]
     public static implicit operator AsmOperand(RegOp src)

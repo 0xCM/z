@@ -5,22 +5,23 @@
 namespace Z0.Asm;
 
 using Operands;
+using static RegIndexCode;
 
 using T = Operands;
 
 partial struct AsmRegs
 {
     /// <summary>
-    /// Advances to the next <see cref='r8'/> register
+    /// Advances to the next <see cref='T.r8'/> register
     /// </summary>
     /// <param name="src"></param>
     [MethodImpl(Inline), Op]
     public static r8 next(r8 src)
     {
-        if(math.lt((byte)src.Index, (byte)RegIndexCode.r15))
+        if(math.lt((byte)src.Index, (byte)r15))
             return emath.inc(src.Index);
         else
-            return RegIndexCode.r0;
+            return r0;
     }
 
     /// <summary>
@@ -30,10 +31,10 @@ partial struct AsmRegs
     [MethodImpl(Inline), Op]
     public static r16 next(r16 src)
     {
-        if(math.lt((byte)src.Index, (byte)RegIndexCode.r15))
+        if(math.lt((byte)src.Index, (byte)r15))
             return emath.inc(src.Index);
         else
-            return RegIndexCode.r0;
+            return r0;
     }
 
     /// <summary>
@@ -43,10 +44,10 @@ partial struct AsmRegs
     [MethodImpl(Inline), Op]
     public static r32 next(r32 src)
     {
-        if(math.lt((byte)src.Index, (byte)RegIndexCode.r15))
+        if(math.lt((byte)src.Index, (byte)r15))
             return emath.inc(src.Index);
         else
-            return RegIndexCode.r0;
+            return r0;
     }
 
     /// <summary>
@@ -56,10 +57,10 @@ partial struct AsmRegs
     [MethodImpl(Inline), Op]
     public static r64 next(r64 src)
     {
-        if(math.lt((byte)src.Index, (byte)RegIndexCode.r15))
+        if(math.lt((byte)src.Index, (byte)r15))
             return emath.inc(src.Index);
         else
-            return RegIndexCode.r0;
+            return r0;
     }
 
     /// <summary>
@@ -69,10 +70,10 @@ partial struct AsmRegs
     [MethodImpl(Inline), Op]
     public static xmm next(xmm src)
     {
-        if(math.lt((byte)src.Index, (byte)RegIndexCode.r31))
+        if(math.lt((byte)src.Index, (byte)r31))
             return emath.inc(src.Index);
         else
-            return RegIndexCode.r0;
+            return r0;
     }
 
     /// <summary>
@@ -82,10 +83,10 @@ partial struct AsmRegs
     [MethodImpl(Inline), Op]
     public static ymm next(ymm src)
     {
-        if(math.lt((byte)src.Index, (byte)RegIndexCode.r31))
+        if(math.lt((byte)src.Index, (byte)r31))
             return emath.inc(src.Index);
         else
-            return RegIndexCode.r0;
+            return r0;
     }
 
     /// <summary>
@@ -95,10 +96,10 @@ partial struct AsmRegs
     [MethodImpl(Inline), Op]
     public static zmm next(zmm src)
     {
-        if(math.lt((byte)src.Index, (byte)RegIndexCode.r31))
+        if(math.lt((byte)src.Index, (byte)r31))
             return emath.inc(src.Index);
         else
-            return RegIndexCode.r0;
+            return r0;
     }
 
     [MethodImpl(Inline), Op]
@@ -107,7 +108,7 @@ partial struct AsmRegs
         if(math.lt((byte)src.Index, (byte)RegIndexCode.r8))
             return emath.inc(src.Index);
         else
-            return RegIndexCode.r0;
+            return r0;
     }
 
     [MethodImpl(Inline), Op]
@@ -116,7 +117,7 @@ partial struct AsmRegs
         if(math.lt((byte)src.Index, (byte)RegIndexCode.r8))
             return emath.inc(src.Index);
         else
-            return RegIndexCode.r0;
+            return r0;
     }
 
     [MethodImpl(Inline), Op]
@@ -125,6 +126,6 @@ partial struct AsmRegs
         if(math.lt((byte)src.Index, (byte)RegIndexCode.r8))
             return emath.inc(src.Index);
         else
-            return RegIndexCode.r0;
+            return r0;
     }
 }

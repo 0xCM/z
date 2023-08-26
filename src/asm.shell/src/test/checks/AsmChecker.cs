@@ -2,51 +2,45 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+class AsmChecker : IAsmChecker
 {
-    public interface IAsmChecker
+    public static IAsmChecker create(IWfRuntime wf, Type host, IApiCmdRunner runner)
+        => new AsmChecker(wf,host,runner);
+
+    readonly IApiCmdRunner Runner;
+
+    readonly IWfChannel Channel;
+    
+    readonly Type Host;
+
+    public AsmChecker(IWfRuntime wf, Type host, IApiCmdRunner runner)
     {
-        ExecToken RunCheck(string name, EventHandler dst);
+        Channel = wf.Channel;
+        Runner = runner;
+        Host = host;
     }
 
-    class AsmChecker : IAsmChecker
+    RunningEvent<string> Running(string name, EventHandler dst)
     {
-        public static IAsmChecker create(IWfRuntime wf, Type host, IApiCmdRunner runner)
-            => new AsmChecker(wf,host,runner);
+        var e = Events.running(Host, $"Running {text.squote(name)}");
+        dst(e);
+        return e;
+    }
 
-        readonly IApiCmdRunner Runner;
+    RanEvent<string> Ran(RunningEvent<string> running, string name, EventHandler dst)
+    {
+        var e = Events.ran(running, $"Ran {text.squote(name)}");
+        dst(e);
+        return e;
+    }
 
-        readonly IWfChannel Channel;
-        
-        readonly Type Host;
-
-        public AsmChecker(IWfRuntime wf, Type host, IApiCmdRunner runner)
-        {
-            Channel = wf.Channel;
-            Runner = runner;
-            Host = host;
-        }
-
-        RunningEvent<string> Running(string name, EventHandler dst)
-        {
-            var e = Events.running(Host, $"Running {text.squote(name)}");
-            dst(e);
-            return e;
-        }
-
-        RanEvent<string> Ran(RunningEvent<string> running, string name, EventHandler dst)
-        {
-            var e = Events.ran(running, $"Ran {text.squote(name)}");
-            dst(e);
-            return e;
-        }
-
-        public ExecToken RunCheck(string name, EventHandler dst)
-        {
-            var running = Running(name,dst);
-            var token = Runner.RunCommand(name);
-            Ran(running, name, dst);
-            return token;
-        }
+    public ExecToken RunCheck(string name, EventHandler dst)
+    {
+        var running = Running(name,dst);
+        var token = Runner.RunCommand(name);
+        Ran(running, name, dst);
+        return token;
     }
 }

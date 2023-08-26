@@ -2,14 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0;
-
-using static ApiAtomic;
+namespace Z0.Asm;
 
 using C = Asm.AsmOpClass;
 using SZ = NativeSizeCode;
 
-[Flags,SymSource(asm)]
+[Flags]
 public enum AsmOpKind : ushort
 {
     None,

@@ -90,11 +90,11 @@ namespace Z0.Asm.Operands
 
         [MethodImpl(Inline)]
         public static implicit operator G(Sym<K> src)
-            => new G((I)src.Kind);
+            => new ((I)src.Kind);
 
         [MethodImpl(Inline)]
         public static implicit operator G(RegKind src)
-            => new G(index(src));
+            => new (index(src));
 
         [MethodImpl(Inline)]
         public static G operator ++(G src)

@@ -187,43 +187,43 @@ public class AsmGen
         switch(token)
         {
             case AL:
-                seek(dst, i++) = AsmRegOps.al;
+                seek(dst, i++) = AsmRegs.reg(RegKind.AL);
             break;
             case CL:
-                seek(dst, i++) = AsmRegOps.cl;
+                seek(dst, i++) = AsmRegs.reg(RegKind.CL);
             break;
             case AX:
-                seek(dst, i++) = AsmRegOps.ax;
+                seek(dst, i++) = AsmRegs.reg(RegKind.AX);
             break;
             case DX:
-                seek(dst, i++) = AsmRegOps.dx;
+                seek(dst, i++) = AsmRegs.reg(RegKind.DX);
             break;
             case EAX:
-                seek(dst, i++) = AsmRegOps.eax;
+                seek(dst, i++) = AsmRegs.reg(RegKind.EAX);
             break;
             case EDX:
-                seek(dst, i++) = AsmRegOps.edx;
+                seek(dst, i++) = AsmRegs.reg(RegKind.EDX);
             break;
             case RAX:
-                seek(dst, i++) = AsmRegOps.rax;
+                seek(dst, i++) = AsmRegs.reg(RegKind.RAX);
             break;
             case CS:
-                seek(dst, i++) = AsmRegOps.cs;
+                seek(dst, i++) = AsmRegs.reg(RegKind.CS);
             break;
             case DS:
-                seek(dst, i++) = AsmRegOps.ds;
+                seek(dst, i++) = AsmRegs.reg(RegKind.DS);
             break;
             case SS:
-                seek(dst, i++) = AsmRegOps.ss;
+                seek(dst, i++) = AsmRegs.reg(RegKind.SS);
             break;
             case ES:
-                seek(dst, i++) = AsmRegOps.es;
+                seek(dst, i++) = AsmRegs.reg(RegKind.ES);
             break;
             case FS:
-                seek(dst, i++) = AsmRegOps.fs;
+                seek(dst, i++) = AsmRegs.reg(RegKind.FS);
             break;
             case GS:
-                seek(dst, i++) = AsmRegOps.gs;
+                seek(dst, i++) = AsmRegs.reg(RegKind.GS);
             break;
         }
 

@@ -6,15 +6,17 @@ namespace Z0.Asm;
 
 using R = Operands;
 
+using static RegKind;
+
 /// <summary>
 /// Defines accessors for supported register operands
 /// </summary>
 [ApiComplete]
 public readonly struct AsmRegOps
 {
-    public static R.al al => default;
+    public static RegOp al => AL;
 
-    public static R.cl cl => default;
+    public static RegOp cl => CL;
 
     public static R.dl dl => default;
 
@@ -116,9 +118,9 @@ public readonly struct AsmRegOps
 
     public static R.r15d r15d => default;
 
-    public static R.rax rax => default;
+    public static RegOp rax => RAX;
 
-    public static R.rcx rcx => default;
+    public static RegOp rcx => RCX;
 
     public static R.rdx rdx => default;
 
@@ -132,9 +134,9 @@ public readonly struct AsmRegOps
 
     public static R.rbp rbp => default;
 
-    public static R.r8q r8 => default;
+    public static RegOp r8 => R8Q;
 
-    public static R.r9q r9 => default;
+    public static RegOp r9 => R9Q;
 
     public static R.r10q r10 => default;
 

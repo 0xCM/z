@@ -2,29 +2,28 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0.Asm;
+
+partial class AsmCases
 {
-    partial class AsmCases
+    public readonly struct MemOpCase
     {
-        public readonly struct MemOpCase
+        public readonly MemOp Op;
+
+        public readonly string Asm;
+
+        [MethodImpl(Inline)]
+        public MemOpCase(MemOp op, string asm)
         {
-            public readonly MemOp Op;
-
-            public readonly string Asm;
-
-            [MethodImpl(Inline)]
-            public MemOpCase(MemOp op, string asm)
-            {
-                Op = op;
-                Asm = asm;
-            }
-
-            public string Format()
-                => Op.Format();
-
-
-            public override string ToString()
-                => Format();
+            Op = op;
+            Asm = asm;
         }
+
+        public string Format()
+            => Op.Format();
+
+
+        public override string ToString()
+            => Format();
     }
 }

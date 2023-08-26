@@ -2,61 +2,60 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0.Asm;
+
+using static sys;
+
+using api = AsmRegs;
+
+[ApiHost]
+public ref struct AsmRegQuery
 {
-    using static sys;
+    /// <summary>
+    /// Defines a query source over a specified operand sequence
+    /// </summary>
+    /// <param name="src"></param>
+    [Op]
+    public static AsmRegQuery query(ReadOnlySpan<RegOp> src)
+        => new (src);
 
-    using api = AsmRegs;
+    readonly ReadOnlySpan<RegOp> Regs;
 
-    [ApiHost]
-    public ref struct AsmRegQuery
+    readonly Span<RegOp> Cache;
+
+    public uint RegCount
     {
-        /// <summary>
-        /// Defines a query source over a specified operand sequence
-        /// </summary>
-        /// <param name="src"></param>
-        [Op]
-        public static AsmRegQuery query(ReadOnlySpan<RegOp> src)
-            => new (src);
+        [MethodImpl(Inline)]
+        get => (uint)Regs.Length;
+    }
 
-        readonly ReadOnlySpan<RegOp> Regs;
+    internal AsmRegQuery(ReadOnlySpan<RegOp> src)
+    {
+        Regs = src;
+        Cache = alloc<RegOp>(src.Length);
+    }
 
-        readonly Span<RegOp> Cache;
+    [MethodImpl(Inline), Op]
+    public ReadOnlySpan<RegOp> Where(RegClassCode @class)
+    {
+        var target = Cache;
+        var count = api.filter(@class, Regs, target);
+        return slice(target, 0, count);
+    }
 
-        public uint RegCount
-        {
-            [MethodImpl(Inline)]
-            get => (uint)Regs.Length;
-        }
+    [MethodImpl(Inline), Op]
+    public ReadOnlySpan<RegOp> Where(NativeSizeCode width)
+    {
+        var target = Cache;
+        var count = api.filter(width, Regs, target);
+        return slice(target, 0, count);
+    }
 
-        internal AsmRegQuery(ReadOnlySpan<RegOp> src)
-        {
-            Regs = src;
-            Cache = alloc<RegOp>(src.Length);
-        }
-
-        [MethodImpl(Inline), Op]
-        public ReadOnlySpan<RegOp> Where(RegClassCode @class)
-        {
-            var target = Cache;
-            var count = api.filter(@class, Regs, target);
-            return slice(target, 0, count);
-        }
-
-        [MethodImpl(Inline), Op]
-        public ReadOnlySpan<RegOp> Where(NativeSizeCode width)
-        {
-            var target = Cache;
-            var count = api.filter(width, Regs, target);
-            return slice(target, 0, count);
-        }
-
-        [MethodImpl(Inline), Op]
-        public ReadOnlySpan<RegOp> Where(RegClassCode @class, NativeSizeCode width)
-        {
-            var target = Cache;
-            var count = api.filter(@class, width, Regs, target);
-            return slice(target, 0, count);
-        }
+    [MethodImpl(Inline), Op]
+    public ReadOnlySpan<RegOp> Where(RegClassCode @class, NativeSizeCode width)
+    {
+        var target = Cache;
+        var count = api.filter(@class, width, Regs, target);
+        return slice(target, 0, count);
     }
 }

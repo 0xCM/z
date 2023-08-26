@@ -20,7 +20,7 @@ public class ByteSpans
         ref var target = ref first(buffer);
         for(var i=0; i<count; i++)
             seek(target, i) = (byte)skip(src,i);
-        var spec = ByteSpans.specify(name, buffer, true);
+        var spec = specify(name, buffer, true);
         ascirender(indent, spec, dst);
         return spec;
     }
@@ -77,7 +77,7 @@ public class ByteSpans
         dst.IndentLine(n, Open());
         n+=4;
 
-        var spec = ByteSpans.specify<E>(IndexName);
+        var spec = specify<E>(IndexName);
         symrender(n, spec, dst, false);
         dst.IndentLine(n, Close());
         n-=4;

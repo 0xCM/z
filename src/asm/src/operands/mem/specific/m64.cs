@@ -57,7 +57,7 @@ public readonly struct m64 : IMemOp64<m64>
     public static implicit operator AsmOperand(m64 src)
         => new (src);
 
-        [MethodImpl(Inline)]
+    [MethodImpl(Inline)]
     public static implicit operator MemOp(m64 src)
         => new (src.TargetSize, src.Address);
 

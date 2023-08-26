@@ -77,27 +77,27 @@ partial struct AsmRegs
     [MethodImpl(Inline), Op]
     public static rK prior(rK src)
     {
-        if(math.gt((byte)src.Index, (byte)RegIndexCode.r0))
+        if(math.gt((byte)src.Index, (byte)r0))
             return dec(src.Index);
         else
-            return RegIndexCode.r31;
+            return r31;
     }
 
     [MethodImpl(Inline), Op]
     public static rCr prior(rCr src)
     {
-        if(math.gt((byte)src.Index, (byte)RegIndexCode.r0))
+        if(math.gt((byte)src.Index, (byte)r0))
             return dec(src.Index);
         else
-            return RegIndexCode.r31;
+            return r31;
     }
 
     [MethodImpl(Inline), Op]
     public static rDb prior(rDb src)
     {
-        if(math.gt((byte)src.Index, (byte)RegIndexCode.r0))
+        if(math.gt((byte)src.Index, (byte)r0))
             return dec(src.Index);
         else
-            return RegIndexCode.r31;
+            return r31;
     }
 }

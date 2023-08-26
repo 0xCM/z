@@ -77,11 +77,11 @@ public readonly struct r8 : IRegOp8<G>
 
     [MethodImpl(Inline)]
     public static implicit operator G(I src)
-        => new G(src);
+        => new (src);
 
     [MethodImpl(Inline)]
     public static implicit operator G(K src)
-        => new G((I)src);
+        => new ((I)src);
 
     [MethodImpl(Inline)]
     public static explicit operator byte(G src)
@@ -89,11 +89,11 @@ public readonly struct r8 : IRegOp8<G>
 
     [MethodImpl(Inline)]
     public static implicit operator G(Sym<K> src)
-        => new G((I)src.Kind);
+        => new ((I)src.Kind);
 
     [MethodImpl(Inline)]
     public static implicit operator G(RegKind src)
-        => new G(index(src));
+        => new (index(src));
 
     [MethodImpl(Inline)]
     public static G operator ++(G src)

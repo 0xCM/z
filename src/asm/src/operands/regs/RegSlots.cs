@@ -58,9 +58,9 @@ public sealed class RegSlots
             }                
             break;
         }
-        return slot;
-        
+        return slot;        
     }
+    
     public void Return(RegSlot slot)
     {
         switch(slot.Size.Code)
