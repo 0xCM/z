@@ -2,119 +2,115 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
-{
-    using static sys;
-    using static SdmCsvLiterals;
-    using static SdmModels;
+namespace Z0.Asm;
 
-    using K = SdmModels.SdmTableKind;
+using System.Linq;
 
-    partial class IntelSdm
+using static sys;
+using static SdmCsvLiterals;
+using static SdmModels;
+
+using K = SdmModels.SdmTableKind;
+
+partial class IntelSdm
+{        
+    [Op]
+    public static K tablekind(string name)
+        => name switch {
+            "OpCodes" => K.OpCodes,
+            "Encoding" => K.EncodingRule,
+            "BinaryFormat" => K.BinaryFormat,
+            "Intrinsics" => K.Intrinsics,
+            "Notes" => K.Intrinsics,
+            _ => SdmOps.parse(name, out TableNumber dst)
+                ? K.Numbered : K.None
+        };
+
+    public ParallelQuery<Table> LoadCsvTables()
     {
-        [Op]
-        public static K tablekind(string name)
-            => name switch {
-                "OpCodes" => K.OpCodes,
-                "Encoding" => K.EncodingRule,
-                "BinaryFormat" => K.BinaryFormat,
-                "Intrinsics" => K.Intrinsics,
-                "Notes" => K.Intrinsics,
-                _ => SdmOps.parse(name, out TableNumber dst)
-                    ? K.Numbered : K.None
-            };
+        var src = AsmDocs.SdmInstructionFiles();
+        var tables = from file in src
+                    from table in LoadCsvTables(file)
+                    select table;
+        return tables;
+    }
 
-        public ReadOnlySpan<Table> LoadCsvTables()
-            => LoadCsvTables(SdmPaths.CsvSources().Files(FS.Csv).ToReadOnlySpan());
-
-        public ReadOnlySpan<Table> LoadCsvTables(ReadOnlySpan<FilePath> src)
+    public IEnumerable<Table> LoadCsvTables(FilePath src)
+    {
+        var result = Outcome.Success;
+        var foundtable = false;
+        var parsingrows = false;
+        var rowcount = 0;
+        var cols = Seq<TableColumn>.Empty;
+        var rows = list<TableRow>();
+        var rowidx = z16;
+        var table = TableBuilder.create(src);
+        var tables = list<Table>();
+        using var reader = src.LineReader(TextEncodingKind.Utf8);
+        while(reader.Next(out var line))
         {
-            var filecount = src.Length;
-            var dst = list<Table>();
-            for(var i=0; i<filecount; i++)
-                dst.AddRange(LoadCsvTables(skip(src,i)).ToArray());
+            if((line.IsEmpty || line.StartsWith(TableSeparator)) && !parsingrows)
+                continue;
 
-            return dst.ViewDeposited();
-        }
-
-        public ReadOnlySpan<Table> LoadCsvTables(FilePath src)
-        {
-            var result = Outcome.Success;
-            var foundtable = false;
-            var parsingrows = false;
-            var rowcount = 0;
-            var cols = Seq<TableColumn>.Empty;
-            var rows = list<TableRow>();
-            var rowidx = z16;
-            var table = TableBuilder.create();
-            var tables = list<Table>();
-            using var reader = src.LineReader(TextEncodingKind.Utf8);
-            while(reader.Next(out var line))
+            if(parsingrows && line.IsEmpty)
             {
-                if((line.IsEmpty || line.StartsWith(TableSeparator)) && !parsingrows)
-                    continue;
+                table.IfNonEmpty(() => tables.Add(table.Emit()));
+                foundtable = false;
+                parsingrows = false;
+                rowcount = 0;
+                continue;
+            }
 
-                if(parsingrows && line.IsEmpty)
+            var content = line.Content;
+
+            if(content.StartsWith(PageTitleMarker))
+            {
+                table.WithTableName(content.Remove(TableMarker).Trim());
+                continue;
+            }
+
+            if(parsingrows)
+            {
+                var values = content.SplitClean(ColSep);
+                var valcount = values.Length;
+
+                if(valcount != cols.Count)
+                    Channel.Warn($"{valcount} != {cols.Count}");
+
+                if(valcount != 0)
                 {
-                    table.IfNonEmpty(() => tables.Add(table.Emit()));
-                    foundtable = false;
-                    parsingrows = false;
-                    rowcount = 0;
-                    continue;
+                    table.WithRow(values);
+                    rowcount++;
                 }
+                continue;
+            }
 
-                var content = line.Content;
+            if(foundtable && !parsingrows)
+            {
+                var labels = content.SplitClean(ColSep);
+                if(labels.Length == 0)
+                    Channel.Warn(string.Format("Expected header"));
 
-                if(content.StartsWith(PageTitleMarker))
+                if(labels.Length != 0)
                 {
-                    table.WithSource(content.Remove(TableMarker).Trim());
-                    continue;
-                }
-
-                if(parsingrows)
-                {
-                    var values = content.SplitClean(ColSep);
-                    var valcount = values.Length;
-
-                    if(valcount != cols.Count)
-                        Channel.Warn($"{valcount} != {cols.Count}");
-
-                    if(valcount != 0)
-                    {
-                        table.WithRow(values);
-                        rowcount++;
-                    }
-                    continue;
-                }
-
-                if(foundtable && !parsingrows)
-                {
-                    var labels = content.SplitClean(ColSep);
-                    if(labels.Length == 0)
-                        Channel.Warn(string.Format("Expected header"));
-
-                    if(labels.Length != 0)
-                    {
-                        cols = columns(labels);
-                        table.WithColumns(cols);
-                        parsingrows = true;
-                    }
-                }
-
-                if(content.StartsWith(TableMarker))
-                {
-                    table.Clear();
-                    table.WithKind((uint)tablekind(content.Remove(TableMarker).Trim()));
-                    foundtable = true;
+                    cols = Table.columns<SdmColumnKind>(labels);
+                    table.WithColumns(cols);
+                    parsingrows = true;
                 }
             }
 
-            table.IfNonEmpty(() => tables.Add(table.Emit()));
-
-            return tables.ViewDeposited();
+            if(content.StartsWith(TableMarker))
+            {
+                table.Clear();
+                table.WithKind((uint)tablekind(content.Remove(TableMarker).Trim()));
+                foundtable = true;
+            }
         }
 
-        static Seq<TableColumn> columns(ReadOnlySpan<string> src)
-            => Table.columns<SdmColumnKind>(src);
+        if(table.IsNonEmpty)
+            yield return table.Emit();
+
+        //table.IfNonEmpty(() => tables.Add(table.Emit()));            
     }
+
 }

@@ -8,7 +8,7 @@ using static sys;
 
 using static Asm.AsmOcTokens;
 
-class AsmCmd : WfAppCmd<AsmCmd>
+partial class AsmCmd : WfAppCmd<AsmCmd>
 {
     public static void ExportTokens(IWfChannel channel, SymbolGroup group, IDbArchive dst)
     {
@@ -17,6 +17,8 @@ class AsmCmd : WfAppCmd<AsmCmd>
         group.EmitTokens(emitter);
         channel.FileEmit(emitter.Emit(), dst.Path(group.GroupName, FS.ext("ts")));
     }
+
+    IntelSdm Sdm => Wf.IntelSdm();
 
     IDbArchive Db => EnvDb.Scoped("asm.db");
 

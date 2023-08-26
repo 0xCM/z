@@ -12,6 +12,144 @@ namespace Z0.Asm
         public Index<SdmOpCodeDetail> CalcOpCodes()
             => CalcOpCodes(SdmPaths.Sources("instructions").Files(FS.Csv).ToReadOnlySpan());
 
+        public IEnumerable<SdmOpCodeDetail> CalcOpCodes(Table table)
+        {
+            var kind = (SdmTableKind)table.Kind;
+            if(kind == SdmTableKind.OpCodes)
+            {
+                var counter = 0u;
+                var rows = table.Rows;
+                var count = rows.Length;
+                var cols = table.Cols;
+                var ocfixups = OcFixupRules;
+                var sigfixups = SigFixupRules;
+                for(var i=0; i<count; i++)
+                {
+                    var target = new SdmOpCodeDetail();
+                    var cells = table[i].Cells;
+                    var valid = true;
+
+                    for(var k=0; k<cells.Length; k++)
+                    {
+                        var col = skip(table.Cols,k);
+                        var cell = skip(cells,k);
+                        var content = cell.Content?.ToString().Trim().Remove("*");
+                        var name = text.trim(col.Name);
+                        if(empty(content))
+                            continue;
+
+                        if(empty(name))
+                        {
+                            Channel.Warn($"Unnamed column with content '{content}'");
+                            continue;
+                        }
+
+                        switch(name)
+                        {
+                            case "Opcode":
+                            var octext = text.despace(text.trim(ocfixups.Apply(content)));
+                            var oc = AsmOpCodeSpec.Empty;
+                            target.OpCodeExpr = octext;
+                            if(empty(octext))
+                                valid = false;
+                            else
+                            {
+                                SdmOpCodes.parse(octext, out oc).Require();
+                                target.OpCodeValue = oc.OcValue();
+                            }
+                            break;
+
+                            case "Instruction":
+                                var monic = text.trim(text.ifempty(text.left(content, Chars.Space), content));
+                                if(empty(monic))
+                                {
+                                    valid = false;
+                                    break;
+                                }
+
+                                var sig = sigfixups.Apply(content);
+                                target.AsmSig = NormalizeSig(sig);
+                                target.Mnemonic = monic;
+                                valid = true;
+                            break;
+
+                            case "Op En":
+                            case "Op/ En":
+                            case "Op / En":
+                            case "Op/En":
+                            case "Op /En":
+                                target.EncXRef = content;
+                                valid = true;
+                            break;
+
+                            case "Compat/Leg Mode":
+                                target.Mode32 = content;
+                                if(content == "N.E." || content == "NA")
+                                    target.Mode32 = "Invalid";
+                                valid = true;
+                            break;
+
+                            case "64-Bit Mode":
+                            case "64-bit Mode":
+                                target.Mode64 = content.Replace("V/N.E.", "Valid");
+                                if(content == "N.E." || content == "N.S." | content == "Inv.")
+                                    target.Mode64 = "Invalid";
+                                valid = true;
+                            break;
+
+                            case "64/32-bit Mode":
+                            case "64/32 -bit Mode":
+                            case "64/32 bit Mode Support":
+                                target.Mode64x32 = content;
+                                if(text.trim(text.left(content, Chars.FSlash)) == "V")
+                                    target.Mode64 = "Valid";
+                                if(content == "V/V")
+                                {
+                                    target.Mode32 = "Valid";
+                                }
+                                else if(content == "V/NE" || content == "V/N.E." || content == "V/I")
+                                {
+                                    target.Mode32 = "Invalid";
+                                }
+
+                                valid = true;
+                            break;
+
+                            case "CPUID":
+                            case "CPUID Feature Flag":
+                                target.CpuIdExpr = content;
+                                valid = true;
+                            break;
+
+                            case "Description":
+                                target.Description = text.replace(content, " .", ".");
+                                valid = true;
+                            break;
+                            case "Operand1":
+                            case "Operand 1":
+                            case "Operand2":
+                            case "Operand 2":
+                            case "Operand3":
+                            case "Operand 3":
+                            case "Operand4":
+                            case "Operand 4":
+                                valid = false;
+                                break;
+
+                            default:
+                                valid = false;
+                                Channel.Warn(string.Format("Column {0} unrecognized", col.Name));
+                                break;
+                        }
+                    }
+
+                    if(valid)
+                        yield return target;
+                }                            
+            }
+
+        }
+
         Index<SdmOpCodeDetail> CalcOpCodes(ReadOnlySpan<FilePath> src)
         {
             var result = Outcome.Success;
@@ -24,7 +162,7 @@ namespace Z0.Asm
             for(var i=0; i<count; i++)
             {
                 ref readonly var inpath = ref skip(src,i);
-                var csv = LoadCsvTables(inpath);
+                var csv = LoadCsvTables(inpath).Array();
                 var id = inpath.FileName.WithoutExtension.Format();
                 for(var j=0; j<csv.Length; j++)
                 {
@@ -32,7 +170,7 @@ namespace Z0.Asm
                     var kind = (SdmTableKind)table.Kind;
                     ref readonly var symbol = ref kinds[kind];
                     if(kind == SdmTableKind.OpCodes)
-                        counter += Convert(Channel, table, slice(buffer, counter));
+                        counter += Convert(table, slice(buffer, counter));
                 }
             }
 
@@ -79,12 +217,12 @@ namespace Z0.Asm
         }
 
         [Op]
-        uint Convert(IWfChannel channel, Table src, Span<SdmOpCodeDetail> dst)
+        uint Convert(Table table, Span<SdmOpCodeDetail> dst)
         {
             var counter = 0u;
-            var rows = src.Rows;
+            var rows = table.Rows;
             var count = rows.Length;
-            var cols = src.Cols;
+            var cols = table.Cols;
             var ocfixups = OcFixupRules;
             var sigfixups = SigFixupRules;
             for(var i=0; i<count; i++)
@@ -104,7 +242,7 @@ namespace Z0.Asm
 
                     if(empty(name))
                     {
-                        channel.Warn($"Unnamed column with content '{content}'");
+                        Channel.Warn($"Unnamed column with content '{content}'");
                         continue;
                     }
 

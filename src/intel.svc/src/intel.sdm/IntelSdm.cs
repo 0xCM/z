@@ -2,46 +2,47 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0.Asm;
+
+[ApiHost]
+public partial class IntelSdm : WfSvc<IntelSdm>
 {
-    [ApiHost]
-    public partial class IntelSdm : WfSvc<IntelSdm>
+    IntelSdmPaths SdmPaths => Wf.SdmPaths();
+    
+    static readonly AsmDocs AsmDocs = new();
+    
+    TextMap SigNormalRules
+        => data(nameof(SigNormalRules), () => TextMap.load(SdmPaths.SigNormalConfig()));
+
+    TextReplacements OcFixupRules
+        => data(nameof(OcFixupRules), () => TextReplacements.load(SdmPaths.OcFixupConfig()));
+
+    TextReplacements SigFixupRules
+        => data(nameof(SigFixupRules), () => TextReplacements.load(SdmPaths.SigFixupConfig()));
+
+    void Clear()
     {
-        IntelSdmPaths SdmPaths => Wf.SdmPaths();
-        
-        TextMap SigNormalRules
-            => data(nameof(SigNormalRules), () => TextMap.load(SdmPaths.SigNormalConfig()));
+        SdmPaths.Targets().Clear();
+        ClearCache();
+    }
 
-        TextReplacements OcFixupRules
-            => data(nameof(OcFixupRules), () => TextReplacements.load(SdmPaths.OcFixupConfig()));
-
-        TextReplacements SigFixupRules
-            => data(nameof(SigFixupRules), () => TextReplacements.load(SdmPaths.SigFixupConfig()));
-
-        void Clear()
+    public void RunEtl()
+    {
+        var running = Channel.Running();
+        try
         {
-            SdmPaths.Targets().Clear();
-            ClearCache();
+            Clear();
+            ExportOpCodes();
+            ExportCharMaps();
+            ImportVolumes();
+            ExportSplitDefs();
+            ExportToc();
+        }
+        catch(Exception e)
+        {
+            Emitter.Error(e);
         }
 
-        public void RunEtl()
-        {
-            var running = Channel.Running();
-            try
-            {
-                Clear();
-                ExportOpCodes();
-                ExportCharMaps();
-                ImportVolumes();
-                ExportSplitDefs();
-                ExportToc();
-            }
-            catch(Exception e)
-            {
-                Emitter.Error(e);
-            }
-
-            Channel.Ran(running);
-        }
-   }
+        Channel.Ran(running);
+    }
 }

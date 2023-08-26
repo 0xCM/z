@@ -42,5 +42,8 @@ public class AsmTokens
         => throw new NotImplementedException();
 
     public static bool parse(string expr, out AsmOcToken dst)
-        => throw new NotImplementedException();
+    {
+        dst = AsmOcToken.Empty;
+        return true;
+    }
 }
