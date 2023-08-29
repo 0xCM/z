@@ -25,7 +25,7 @@ namespace Z0
 
         [CmdOp("xed/tool/case")]
         void DefineCaseScript(CmdArgs args)
-            => DefineCaseScript(arg(args,0));
+            => DefineCaseScript(args.First);
 
         FolderPath CaseDir<T>(T subject)
             => AppDb.AppData().Root + FS.folder(ApiAtomic.cases) + FS.folder(string.Format("{0}", subject));

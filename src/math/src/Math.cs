@@ -11,7 +11,7 @@ namespace Z0
     {
         const MethodImplOptions Inline = MethodImplOptions.AggressiveInlining;
 
-        public static Outcome parse(string src, out UInt128 dst)
+        public static Outcome parse(string src, out zUInt128 dst)
         {
             const NumberStyles ParseFlags = NumberStyles.HexNumber;
 

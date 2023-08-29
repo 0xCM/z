@@ -1,34 +1,35 @@
-//-----------------------------------------------------------------------------
-// Copyright   :  (c) Chris Moore, 2020
-// License     :  MIT
-//-----------------------------------------------------------------------------
-namespace Z0
-{
-    [Event(Kind)]
-    public readonly struct ProcessedFileEvent : ITerminalEvent<ProcessedFileEvent>
-    {
-        public const EventKind Kind = EventKind.ProcessedFile;
+// //-----------------------------------------------------------------------------
+// // Copyright   :  (c) Chris Moore, 2020
+// // License     :  MIT
+// //-----------------------------------------------------------------------------
+// namespace Z0;
 
-        public const string EventName = GlobalEvents.ProcessedFile;
+// [Event(Kind)]
+// public readonly struct ProcessedFileEvent : IEvent<ProcessedFileEvent>
+// {
+//     public const EventKind Kind = EventKind.ProcessedFile;
 
-        public EventId EventId {get;}
+//     public const string EventName = GlobalEvents.ProcessedFile;
 
-        public FilePath SourcePath {get;}
+//     public EventId EventId {get;}
 
-        public FlairKind Flair => FlairKind.Processed;
+//     public FilePath SourcePath {get;}
 
-        [MethodImpl(Inline)]
-        public ProcessedFileEvent(Type host, FilePath src)
-        {
-            EventId = EventId.define(host, Kind);
-            SourcePath = src;
-        }
+//     public FlairKind Flair => FlairKind.Processed;
 
-        [MethodImpl(Inline)]
-        public string Format()
-            => string.Format(RP.PSx2, EventId, SourcePath.ToUri());
+//     [MethodImpl(Inline)]
+//     public ProcessedFileEvent(Type host, FilePath src)
+//     {
+//         EventId = EventId.define(host, Kind);
+//         SourcePath = src;
+//     }
 
-        public override string ToString()
-            => Format();
-    }
-}
+//     public LogLevel EventLevel => LogLevel.Status;
+
+//     [MethodImpl(Inline)]
+//     public string Format()
+//         => string.Format(RP.PSx2, EventId, SourcePath.ToUri());
+
+//     public override string ToString()
+//         => Format();
+// }

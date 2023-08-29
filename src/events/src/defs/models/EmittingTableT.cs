@@ -5,9 +5,9 @@
 namespace Z0
 {
     [Event(Kind)]
-    public readonly struct EmittingTableEvent<T> : IInitialEvent<EmittingTableEvent<T>>
+    public readonly struct EmittingTableEvent<T> : IEvent<EmittingTableEvent<T>>
     {
-        public const string EventName = GlobalEvents.EmittingTable;
+        public const string EventName = EventNames.EmittingTable;
 
         public const EventKind Kind = EventKind.EmittingTable;
 
@@ -28,6 +28,8 @@ namespace Z0
             EventId = EventId.define(host, Kind);
             Target = dst;
         }
+
+        public LogLevel EventLevel => LogLevel.Status;
 
         [MethodImpl(Inline)]
         public string Format()

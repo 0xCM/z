@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Event(Kind)]
-    public readonly struct RanEvent<T> : ITerminalEvent<RanEvent<T>>
+    public readonly struct RanEvent<T> : IEvent<RanEvent<T>>
     {
         const EventKind Kind = EventKind.Ran;
 
@@ -16,6 +16,8 @@ namespace Z0
         public EventPayload<T> Payload {get;}
 
         public Type Host {get;}
+
+        public LogLevel EventLevel => LogLevel.Status;
 
         [MethodImpl(Inline)]
         public RanEvent(Type host, T msg)

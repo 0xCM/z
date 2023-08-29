@@ -247,7 +247,7 @@ namespace Z0.Asm
             var prime = 0ul;
             var buffer = list<ListItem<ulong>>();
             var limit = uint.MaxValue;
-            DataParser.parse(arg(args,0).Value, out uint count);
+            DataParser.parse(args.First.Value, out uint count);
 
             for(var i=0u; i<count; i++)
             {

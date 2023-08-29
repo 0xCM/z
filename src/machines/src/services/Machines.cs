@@ -371,7 +371,7 @@ namespace Z0
         [CmdOp("machine/run")]
         void Run(CmdArgs args)
         {
-            if(uint.TryParse(arg(args,0).Value, out var n))
+            if(uint.TryParse(args.First.Value, out var n))
             {
                 switch(n)
                 {

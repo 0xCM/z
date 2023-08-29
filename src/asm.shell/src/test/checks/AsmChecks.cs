@@ -409,7 +409,7 @@ class AsmChecks : WfAppCmd<AsmChecks>
         {
             for(var i=0; i<args.Count; i++)
             {
-                var pred = arg(args,i).Value;
+                var pred = args[i].Value;
                 result = DataParser.eparse(pred, out RegClassCode @class);
                 if(result.Fail)
                     return result;

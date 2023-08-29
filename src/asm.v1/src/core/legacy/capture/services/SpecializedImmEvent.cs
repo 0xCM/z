@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    public readonly struct SpecializedImmEvent : IWfEvent<SpecializedImmEvent>
+    public readonly struct SpecializedImmEvent : IEvent<SpecializedImmEvent>
     {
         public const string EventName = "SpecializedImm";
 
@@ -21,6 +21,8 @@ namespace Z0.Asm
         readonly FilePath TargetFile;
 
         public FlairKind Flair {get;}
+
+        public LogLevel EventLevel => LogLevel.Babble;
 
         [MethodImpl(Inline)]
         public static SpecializedImmEvent refined(StepId step, ApiHostUri uri, bool generic, Type refinement, FilePath dst)

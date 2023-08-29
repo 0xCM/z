@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(ProjectProps)\usings.props"/>
   <ItemGroup>
-    <ProjectReference Include="$(VCpu)" />
-    <ProjectReference Include="$(SFx)" />
+    <ProjectReference Include="$(Polyrand)" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>

@@ -2,31 +2,30 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+/// <summary>
+/// Realizes a Bernoulli distribution
+/// </summary>
+/// <typeparam name="T">The sample element type</typeparam>
+public class BernoulliDist<T> : Distribution<BernoulliSpec<T>,T>
+    where T : unmanaged
 {
-    /// <summary>
-    /// Realizes a Bernoulli distribution
-    /// </summary>
-    /// <typeparam name="T">The sample element type</typeparam>
-    public class BernoulliDist<T> : Distribution<BernoulliSpec<T>,T>
-        where T : unmanaged
+    static T Zero => default;
+
+    static T One => sys.one<T>();
+
+    public BernoulliDist(IPolyrand random, BernoulliSpec<T> spec)
+        : base(random, spec)
     {
-        static T Zero => default;
+    }
 
-        static T One => sys.one<T>();
-
-        public BernoulliDist(IPolyrand random, BernoulliSpec<T> spec)
-            : base(random, spec)
+    public override IEnumerable<T> Sample()
+    {
+        while(true)
         {
-        }
-
-        public override IEnumerable<T> Sample()
-        {
-            while(true)
-            {
-                var success = fmath.lt(Polyrand.Next<double>(), Spec.Success) ? One : Zero;
-                yield return success;
-            }
+            var success = fmath.lt(Polyrand.Next<double>(), Spec.Success) ? One : Zero;
+            yield return success;
         }
     }
 }

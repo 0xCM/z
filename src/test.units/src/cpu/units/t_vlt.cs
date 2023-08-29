@@ -8,7 +8,6 @@ namespace Z0
     {
         public void vlt_check()
         {
-
             check(n128);
             check(n256);
         }

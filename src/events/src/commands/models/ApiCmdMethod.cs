@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-public sealed class ApiCmdMethod : IComparable<ApiCmdMethod>, ICmdMethod
+public sealed class ApiCmdMethod : IComparable<ApiCmdMethod>, ICmdEffector
 {
     public readonly ApiCmdRoute Route;
 

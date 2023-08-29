@@ -2,29 +2,30 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+[Event(Kind)]
+public readonly struct DisposedEvent : IEvent<DisposedEvent>
 {
-    [Event(Kind)]
-    public readonly struct DisposedEvent : ITerminalEvent<DisposedEvent>
+    public const string EventName = EventNames.Disposed;
+
+    public const EventKind Kind = EventKind.Disposed;
+
+    public EventId EventId {get;}
+
+    public FlairKind Flair => FlairKind.Disposed;
+
+    [MethodImpl(Inline)]
+    public DisposedEvent(Type host)
     {
-        public const string EventName = GlobalEvents.Disposed;
-
-        public const EventKind Kind = EventKind.Disposed;
-
-        public EventId EventId {get;}
-
-        public FlairKind Flair => FlairKind.Disposed;
-
-        [MethodImpl(Inline)]
-        public DisposedEvent(Type host)
-        {
-            EventId = EventId.define(host, Kind);
-        }
-
-        public string Format()
-            => EventId.Format();
-
-        public override string ToString()
-            => Format();
+        EventId = EventId.define(host, Kind);
     }
+
+    public LogLevel EventLevel => LogLevel.Babble;
+
+    public string Format()
+        => EventId.Format();
+
+    public override string ToString()
+        => Format();
 }

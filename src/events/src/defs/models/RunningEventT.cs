@@ -5,7 +5,7 @@
 namespace Z0
 {
     [Event(Kind)]
-    public readonly struct RunningEvent<T> : IInitialEvent<RunningEvent<T>>
+    public readonly struct RunningEvent<T> : IEvent<RunningEvent<T>>
     {
         public const EventKind Kind = EventKind.Running;
 
@@ -26,6 +26,8 @@ namespace Z0
             Host = host;
             Payload = msg;
         }
+
+        public LogLevel EventLevel => LogLevel.Status;
 
         [MethodImpl(Inline)]
         public string Format()

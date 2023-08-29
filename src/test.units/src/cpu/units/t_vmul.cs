@@ -4,12 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Root;
-    using static cpu;
+    using static vcpu;
 
     public class tv_mul : t_inx<tv_mul>
     {
-
         void vmul_128x32u()
         {
             var ws = n128;
@@ -31,10 +29,10 @@ namespace Z0
             {
                 var x = Random.CpuVector(ws,s);
                 var y = Random.CpuVector(ws,s);
-                var x0 = UInt128.mul(vcell(x,0), vcell(y,0));
-                var x1 = UInt128.mul(vcell(x,1), vcell(y,1));
-                var x2 = UInt128.mul(vcell(x,2), vcell(y,2));
-                var x3 = UInt128.mul(vcell(x,3), vcell(y,3));
+                var x0 = zUInt128.mul(vcell(x,0), vcell(y,0));
+                var x1 = zUInt128.mul(vcell(x,1), vcell(y,1));
+                var x2 = zUInt128.mul(vcell(x,2), vcell(y,2));
+                var x3 = zUInt128.mul(vcell(x,3), vcell(y,3));
                 var expect = vparts(wt, x0,x1,x2,x3);
                 var actual = vmul(x,y);
 

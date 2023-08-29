@@ -71,7 +71,7 @@ namespace Z0
         protected void vlo_check<T>(N128 w, T t = default)
             where T : unmanaged
         {
-            var count = cpu.vcount(w,t);
+            var count = vcpu.vcount(w,t);
             var f = Calcs.vlo(w,t);
             var r = PolyVector.vemitter<T>(w,Random);
             for(var rep=0; rep < RepCount; rep++)
@@ -93,7 +93,7 @@ namespace Z0
             {
                 var x = r.Invoke();
                 var y = f.Invoke(x);
-                var z = gcpu.vinsert(y,x,(byte)0);
+                var z = vgcpu.vinsert(y,x,(byte)0);
                 Claim.veq(x,z);
             }
         }

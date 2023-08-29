@@ -5,9 +5,9 @@
 namespace Z0
 {
     [Event(Kind)]
-    public readonly struct WarnEvent<T> : ILevelEvent<WarnEvent<T>>
+    public readonly struct WarnEvent<T> : IEvent<WarnEvent<T>>
     {
-        public const string EventName = GlobalEvents.Warning;
+        public const string EventName = EventNames.Warning;
 
         public LogLevel EventLevel => LogLevel.Warning;
 

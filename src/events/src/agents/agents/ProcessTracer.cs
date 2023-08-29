@@ -44,7 +44,7 @@ public class ProcessTracer : IAgent
 
         if(StartLog == null)
         {
-            StartLog = Loggers.worker(new LogSettings(dst.Path(fileid,FileKind.Csv), dst.Path(fileid, FS.ext("errors"))));
+            StartLog = WorkerLog.open(new LogSettings(dst.Path(fileid,FileKind.Csv), dst.Path(fileid, FS.ext("errors"))));
         }
 
         if(Flow == null)

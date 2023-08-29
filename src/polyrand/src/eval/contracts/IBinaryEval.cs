@@ -2,12 +2,11 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    public interface IBinaryEval<T> : IEval
-    {
-        T A {get;}
+namespace Z0;
 
-        T B {get;}
-    }
+public interface IBinaryEval<T> : IEval
+{
+    T A {get;}
+
+    T B {get;}
 }

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Root;
-
     public class t_vinsert : t_inx<t_vinsert>
     {
         public void vinsert_128x8i()
@@ -46,11 +44,11 @@ namespace Z0
                 var v128Src = Random.CpuVector<T>(w);
                 var srcSpan = v128Src.ToSpan();
 
-                var dst = gcpu.vzero(n256,t);
-                var vLo = gcpu.vinsert(v128Src, dst, (byte)0);
+                var dst = vgcpu.vzero(n256,t);
+                var vLo = vgcpu.vinsert(v128Src, dst, (byte)0);
                 var vLoSpan = vLo.ToSpan().Slice(0, vLo.Length()/2);
 
-                var vHi = gcpu.vinsert(v128Src, dst, (byte)1);
+                var vHi = vgcpu.vinsert(v128Src, dst, (byte)1);
                 var vHiSpan = vHi.ToSpan().Slice(vLo.Length()/2);
 
                 ClaimNumeric.eq(srcSpan, vLoSpan);

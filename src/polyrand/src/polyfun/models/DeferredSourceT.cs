@@ -2,37 +2,36 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using System.Collections;
+using System.Linq;
+
+/// <summary>
+/// Captures a random stream along with the generator classification
+/// </summary>
+public readonly struct DeferredSource<T> : ISourceStream<T>
 {
-    using System.Collections;
-    using System.Linq;
+    readonly IEnumerable<T> Src;
 
-    /// <summary>
-    /// Captures a random stream along with the generator classification
-    /// </summary>
-    public readonly struct DeferredSource<T> : ISourceStream<T>
+    [MethodImpl(Inline)]
+    public DeferredSource(IEnumerable<T> src, ulong classifier = default)
     {
-        readonly IEnumerable<T> Src;
-
-        [MethodImpl(Inline)]
-        public DeferredSource(IEnumerable<T> src, ulong classifier = default)
-        {
-            Src = src;
-        }
-
-        [MethodImpl(Inline)]
-        public IEnumerator<T> GetEnumerator()
-            => Src.GetEnumerator();
-
-        [MethodImpl(Inline)]
-        public IEnumerable<T> Next(int count)
-            => Src.Take(count);
-
-        [MethodImpl(Inline)]
-        public T Next()
-            => Src.First();
-
-        IEnumerator IEnumerable.GetEnumerator()
-            => Src.GetEnumerator();
+        Src = src;
     }
+
+    [MethodImpl(Inline)]
+    public IEnumerator<T> GetEnumerator()
+        => Src.GetEnumerator();
+
+    [MethodImpl(Inline)]
+    public IEnumerable<T> Next(int count)
+        => Src.Take(count);
+
+    [MethodImpl(Inline)]
+    public T Next()
+        => Src.First();
+
+    IEnumerator IEnumerable.GetEnumerator()
+        => Src.GetEnumerator();
 }

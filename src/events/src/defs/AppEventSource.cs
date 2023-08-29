@@ -16,11 +16,11 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator StepId(AppEventSource src)
-            => new StepId(src.Type.Name);
+            => new (src.Type.Name);
 
         [MethodImpl(Inline)]
         public static implicit operator AppEventSource(Type src)
-            => new AppEventSource(src);                
+            => new (src);                
 
         [MethodImpl(Inline)]
         public static implicit operator Type(AppEventSource src)

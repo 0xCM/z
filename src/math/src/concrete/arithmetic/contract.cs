@@ -24,6 +24,6 @@ namespace Z0
         /// <param name="max">The maximum value in the target interval</param>
         [MethodImpl(Inline), Op]
         public static ulong contract(ulong src, ulong max)
-            => UInt128.mulhi(src,max);
+            => zUInt128.mulhi(src,max);
     }
 }

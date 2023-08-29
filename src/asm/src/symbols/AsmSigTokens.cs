@@ -334,6 +334,9 @@ public class AsmSigTokens
     [SymSource(GroupName), TokenKind(TK.Mem)]
     public enum MemToken : byte
     {
+        [Symbol("m", "A 16-, 32- or 64-bit operand in memory")]
+        m,
+
         [Symbol("m8", "A byte operand in memory ( usually expressed as a variable or array name) but pointed to by the DS:(E)SI or ES:(E)DI registers. In 64-bit mode, it is pointed to by the RSI or RDI registers")]
         m8,
 

@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
-    using static Root;
-
     public class t_vmove : t_inx<t_vmove>
     {
         public void vmove_128x16u()

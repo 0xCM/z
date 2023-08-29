@@ -326,7 +326,7 @@ namespace Z0
 
         [CmdOp("tool/docs")]
         void ToolDocs(CmdArgs args)
-            => iter(LoadDocs(arg(args,0).Value), doc => Channel.Write(doc));
+            => iter(LoadDocs(args.First.Value), doc => Channel.Write(doc));
         
         public static ToolCmdSpec spec(FolderPath? work = null, params EnvVar[] vars)
             => new (FilePath.Empty, CmdArgs.Empty, work ?? Env.cd(), vars, null, null);

@@ -36,7 +36,7 @@ public class DirectoryMonitor : IAgent
         };
         Handler = SignalChange;
         Listener += OnChange;
-        Log = Loggers.worker(new LogSettings(dst.Path($"{id}.{ts}",FileKind.Log), dst.Path($"{ts}.errors", FileKind.Log)));
+        Log = WorkerLog.open(new LogSettings(dst.Path($"{id}.{ts}",FileKind.Log), dst.Path($"{ts}.errors", FileKind.Log)));
         Sources = src;
         Subscribe();
     }

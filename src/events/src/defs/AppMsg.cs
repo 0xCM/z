@@ -73,7 +73,7 @@ namespace Z0
             => "The source text {0} is not fenced by {1}";
 
         public static StatusMsg<T> status<T>(T data)
-            => new StatusMsg<T>(data);
+            => new (data);
 
         public static string format(string header, Exception e)
         {

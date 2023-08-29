@@ -5,9 +5,9 @@
 namespace Z0
 {
     [Event(Kind)]
-    public readonly struct RunningEvent : IInitialEvent<RunningEvent>
+    public readonly struct RunningEvent : IEvent<RunningEvent>
     {
-        public const string EventName = GlobalEvents.Running;
+        public const string EventName = EventNames.Running;
 
         public const EventKind Kind = EventKind.Running;
 
@@ -22,6 +22,8 @@ namespace Z0
         {
             EventId = EventId.define(EventName, host);
         }
+
+        public LogLevel EventLevel => LogLevel.Status;
 
         [MethodImpl(Inline)]
         public string Format()
