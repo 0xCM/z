@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    public readonly struct AppEventSource : IWfHost
+    public readonly struct AppEventSource
     {
         public readonly Type Type {get;}
 

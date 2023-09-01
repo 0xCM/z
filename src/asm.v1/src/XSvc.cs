@@ -47,9 +47,6 @@ namespace Z0
             public AsmDbCmd AsmDbCmd(IWfRuntime wf)
                 => Service<AsmDbCmd>(wf);
 
-            public NasmCatalog NasmCatalog(IWfRuntime wf)
-                => Service<NasmCatalog>(wf);
-
         }
 
         static Svc Services => Svc.Instance;
@@ -87,7 +84,5 @@ namespace Z0
          public static CultProcessor CultProcessor(this IWfRuntime wf)
             => Services.CultProcessor(wf);
 
-         public static NasmCatalog NasmCatalog(this IWfRuntime wf)
-            => Services.NasmCatalog(wf);
     }
 }

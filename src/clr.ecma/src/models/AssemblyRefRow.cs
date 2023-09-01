@@ -2,33 +2,32 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class Ecma
 {
-    partial class Ecma
+    [EcmaRow(TableIndex.AssemblyRef), StructLayout(LayoutKind.Sequential,Pack=1)]
+    public struct AssemblyRefRow : IEcmaRow<AssemblyRefRow>
     {
-        [EcmaRow(TableIndex.AssemblyRef), StructLayout(LayoutKind.Sequential,Pack=1)]
-        public struct AssemblyRefRow : IEcmaRow<AssemblyRefRow>
-        {
-            [Render(12)]
-            public EcmaToken Index;
+        [Render(12)]
+        public EcmaToken Index;
 
-            [Render(12)]
-            public EcmaBlobKey KeyOrToken;
+        [Render(12)]
+        public EcmaBlobKey KeyOrToken;
 
-            [Render(12)]
-            public EcmaStringKey Name;
+        [Render(12)]
+        public EcmaStringKey Name;
 
-            [Render(12)]
-            public AssemblyVersion Version;
+        [Render(12)]
+        public AssemblyVersion Version;
 
-            [Render(12)]
-            public EcmaStringKey Culture;
+        [Render(12)]
+        public EcmaStringKey Culture;
 
-            [Render(12)]
-            public EcmaBlobKey Hash;
+        [Render(12)]
+        public EcmaBlobKey Hash;
 
-            [Render(1)]
-            public AssemblyFlags Flags;
-        }        
-    }
+        [Render(1)]
+        public AssemblyFlags Flags;
+    }        
 }

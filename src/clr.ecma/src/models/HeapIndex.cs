@@ -18,5 +18,4 @@ namespace Z0
             public readonly EcmaHeap UserStrings;
         }
     }
-
 }

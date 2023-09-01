@@ -2,8 +2,9 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
-{    
+namespace Z0;
+partial class Ecma
+{
     [Record(TableId), StructLayout(LayoutKind.Sequential)]
     public struct EcmaBlobInfo : IComparable<EcmaBlobInfo>
     {
@@ -19,6 +20,8 @@ namespace Z0
 
         public readonly int CompareTo(EcmaBlobInfo other)
             => Offset.CompareTo(other.Offset);
-
     }
+    
 }
+
+

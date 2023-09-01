@@ -9,16 +9,6 @@ using Microsoft.Extensions.Logging;
 
 public sealed class RunLoop
 {
-    public static IHostBuilder builder(IWfRuntime wf, string[] args)
-        => Host.CreateDefaultBuilder(args).ConfigureServices((c,s) => configure(wf,c,s, args));
-
-    static IServiceCollection configure(IWfRuntime wf, HostBuilderContext context, IServiceCollection services, string[] args)
-    {
-        AppController AddController(IServiceProvider provider)
-            => new (wf, provider.GetService<ILogger<AppController>>(), args);
-        return services.AddHostedService(AddController);
-    }
-
     readonly ITaskQueue Queue;
     
     readonly IWfChannel Channel;

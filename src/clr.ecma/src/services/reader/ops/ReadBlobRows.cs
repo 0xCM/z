@@ -4,11 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static Ecma;
+
     partial class EcmaReader
     {
         public IEnumerable<EcmaBlobInfo> ReadBlobRows()
         {
-            var size = (uint)MD.GetHeapSize(HeapIndex.Blob);
+            var size = (uint)MD.GetHeapSize(SRM355.HeapIndex.Blob);
             var handle = MetadataTokens.BlobHandle(1);        
             var i=0;
             do

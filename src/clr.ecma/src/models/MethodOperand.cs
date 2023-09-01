@@ -2,10 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class Ecma
 {
     [StructLayout(LayoutKind.Sequential,Pack=1)]
-    public readonly struct EcmaMethodOp
+    public readonly struct MethodOperand
     {
         public readonly EcmaToken Assembly;
 
@@ -16,7 +18,7 @@ namespace Z0
         public readonly EcmaToken Parameter;
 
         [MethodImpl(Inline)]
-        public EcmaMethodOp(EcmaToken assembly, EcmaToken type, EcmaToken method, EcmaToken name)
+        public MethodOperand(EcmaToken assembly, EcmaToken type, EcmaToken method, EcmaToken name)
         {
             Assembly = assembly;
             Type = type;
@@ -33,4 +35,5 @@ namespace Z0
         public override int GetHashCode()
             => Hash;
     }
+
 }
