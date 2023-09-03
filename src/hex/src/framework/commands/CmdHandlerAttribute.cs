@@ -2,15 +2,11 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    public class CmdOpAttribute : Attribute
-    {
-        public string Name {get;}
+namespace Z0;
 
-        public CmdOpAttribute(string name)
-        {
-            Name = name;
-        }
+public class CmdHandlerAttribute : Attribute
+{
+    public CmdHandlerAttribute()
+    {
     }
 }

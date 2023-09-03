@@ -3,7 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="$(ClrCil)"/>
     <ProjectReference Include="$(Process)"/>
-    <ProjectReference Include="$(Assets)"/>
+    <ProjectReference Include="$(Native)"/>
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>

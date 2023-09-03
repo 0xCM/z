@@ -2,11 +2,11 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-[assembly: PartId(PartId.Assets)]
+namespace Z0;
 
-namespace Z0.Parts
+public class CmdBinderAttribute : Attribute
 {
-    public sealed class Assets : Part<Assets>
+    public CmdBinderAttribute()
     {
     }
 }

@@ -1,22 +1,19 @@
-<Project>
+  <Project>
   <Import Project="packages.microsoft.extensions.fileproviders.props" />
   <Import Project="packages.microsoft.extensions.logging.props" />
   <Import Project="packages.microsoft.extensions.configuration.props" />
   <Import Project="packages.microsoft.extensions.dependencies.props" />
   <Import Project="packages.microsoft.extensions.hosting.props" />
+  <Import Project="packages.microsoft.extensions.options.props" />
+  <Import Project="packages.microsoft.extensions.caching.props" />
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="$(MicrosoftExtensionsVersion)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="$(MicrosoftExtensionsVersion)"/>
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="$(MicrosoftExtensionsVersion)"/>
     <PackageReference Include="Microsoft.Extensions.Http" Version="$(MicrosoftExtensionsVersion)"/>
     <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="$(MicrosoftExtensionsVersion)"/>
-    <PackageReference Include="Microsoft.Extensions.Options" Version="$(MicrosoftExtensionsVersion)"/>
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="$(MicrosoftExtensionsVersion)"/>
-    <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="$(MicrosoftExtensionsVersion)"/>
     <PackageReference Include="Microsoft.Extensions.ObjectPool" Version="$(MicrosoftExtensionsVersion)"/>
     <PackageReference Include="Microsoft.Extensions.Primitives" Version="$(MicrosoftExtensionsVersion)"/>
   </ItemGroup>

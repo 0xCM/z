@@ -64,7 +64,7 @@ namespace Z0
             => Namespace(0, name);
 
         public void UsingNamespace(uint offset, string name)
-            => IndentLineFormat(offset,"uisng {0};", name);
+            => IndentLineFormat(offset,"using {0};", name);
 
         public void UsingNamespace(string name)
             => UsingNamespace(0, name);

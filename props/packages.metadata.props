@@ -2,13 +2,6 @@
     <ItemGroup>    
         <PackageReference Include="Mono.Cecil" Version="0.11.4" />
         <PackageReference Include="ICSharpCode.Decompiler" Version="8.1.0.7455" />
-        <PackageReference Include="AsmResolver" Version="$(AsmResolverVersion)"/>
-        <PackageReference Include="AsmResolver.DotNet" Version="$(AsmResolverVersion)"/>
-        <PackageReference Include="AsmResolver.DotNet.Dynamic" Version="$(AsmResolverVersion)"/>
-        <PackageReference Include="AsmResolver.Pe" Version="$(AsmResolverVersion)"/>
-        <PackageReference Include="AsmResolver.Pe.File" Version="$(AsmResolverVersion)"/>
-        <PackageReference Include="AsmResolver.Pe.Win32Resources" Version="$(AsmResolverVersion)"/>
-        <PackageReference Include="AsmResolver.symbols.pdb" Version="$(AsmResolverVersion)"/>
         <PackageReference Include="Microsoft.Deployment.DotNet.Releases" Version="1.0.0" />
     </ItemGroup>
 </Project>

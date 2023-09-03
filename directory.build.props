@@ -2,7 +2,6 @@
   <PropertyGroup>
     <FrameworkMoniker>net8.0</FrameworkMoniker>
     <ConfigName>Release</ConfigName>
-    <RuntimeMoniker>win-x64</RuntimeMoniker>
     <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
     <SlnName>z0</SlnName>
     <SlnRoot>$(MsBuildThisFileDirectory)..\$(SlnName)</SlnRoot>

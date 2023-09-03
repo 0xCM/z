@@ -8,9 +8,17 @@ namespace Z0
     {
         sealed class ServiceCache : AppServices<ServiceCache>
         {
+            public ApiCatalog ApiCatalog(IWfRuntime wf)
+                => Service<ApiCatalog>(wf);
+
+        
         }
 
         static ServiceCache Services => ServiceCache.Instance;
+
+
+        public static ApiCatalog ApiCatalog(this IWfRuntime wf)            
+            => Services.ApiCatalog(wf);
 
 
     }

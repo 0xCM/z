@@ -21,5 +21,6 @@
     <CoreClrRoot>$(RuntimeArtifacts)/bin/coreclr/windows.x64.Release</CoreClrRoot>
     <IlcRoot>$(CoreClrRoot)/ilc</IlcRoot>
     <DotNetSdkFileRoot>$(DOTNET_ROOT)/sdk/$(DotNetVersion)</DotNetSdkFileRoot>
+    <ZfxRoot>$(DevRoot)\zfx</ZfxRoot>
   </PropertyGroup>
 </Project>

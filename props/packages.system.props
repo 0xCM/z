@@ -40,7 +40,6 @@
     <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
 
     <PackageReference Include="System.Diagnostics.TextWriterTraceListener" Version="4.3.0" />
-
     
     <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />

@@ -1,5 +1,9 @@
 <Project>
     <ItemGroup>    
         <PackageReference Include="Microsoft.Diagnostics.Runtime" Version="3.0.0-beta.23214.4" />
+        <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="$(PerfViewVersion)" />
+        <PackageReference Include="Microsoft.Diagnostics.FastSerialization" Version="$(PerfViewVersion)" />
+        <PackageReference Include="Microsoft.Diagnostics.MemoryGraph" Version="$(PerfViewVersion)" />
+        <PackageReference Include="Microsoft.Diagnostics.Utilities" Version="$(PerfViewVersion)" />
     </ItemGroup>
 </Project>

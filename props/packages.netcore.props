@@ -1,6 +1,6 @@
 <Project>
     <ItemGroup>    
         <PackageReference Include="microsoft.netcore.dotnetapphost" Version="$(ClrRuntimeVersion)"/>
-        <PackageReference Include="microsoft.netcore.coredistools" Version="1.1.0" />
+        <PackageReference Include="Microsoft.DotNet.RemoteExecutor" Version="7.0.0-beta.22316.2" />
     </ItemGroup>
 </Project>
