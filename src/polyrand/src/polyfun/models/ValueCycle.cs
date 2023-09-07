@@ -5,7 +5,7 @@
 namespace Z0;
 
 public struct ValueCycle<T> : ISource<ValueCycle<T>,T>
-    where T : struct
+    where T : unmanaged
 {
     readonly Index<T> Data;
 

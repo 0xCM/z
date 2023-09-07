@@ -4,10 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.Intrinsics;
-
-
     public class t_vector_ops : UnitTest<t_vector_ops>
     {
         protected override int CycleCount => Pow2.T08;

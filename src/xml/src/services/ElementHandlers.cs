@@ -2,12 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-[assembly: PartId("asm.v1")]
-
-namespace Z0.Parts
+namespace Z0
 {
-    public sealed class AsmV1 : Part<AsmV1>
+
+    public class ElementHandlers : Dictionary<string,Action<IXmlElement>>
     {
+        public void AddHandler(string node, Action<IXmlElement> handler)
+            => Add(node, handler);
     }
 }
-

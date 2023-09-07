@@ -5,7 +5,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Root;
 
     public class t_vlut : t_inx<t_vlut>
     {

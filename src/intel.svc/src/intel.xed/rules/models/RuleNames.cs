@@ -146,7 +146,7 @@ namespace Z0
             public Hash32 Hash
             {
                 [MethodImpl(Inline)]
-                get => alg.hash.combine(SegA.GetHashCode(), SegB.GetHashCode());
+                get => sys.hash(SegA.GetHashCode(), SegB.GetHashCode());
             }
 
             public bool IsEmpty

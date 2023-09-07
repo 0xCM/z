@@ -10,7 +10,7 @@ public class MemoryDispenser : Dispenser<MemoryDispenser>, IMemoryDispenser
 
     readonly Dictionary<long,MemAllocator> Allocators;
 
-    public MemoryDispenser(uint capacity = DefaultCapacity)
+    internal MemoryDispenser(uint capacity = DefaultCapacity)
         : base(true)
     {
         Allocators = new();

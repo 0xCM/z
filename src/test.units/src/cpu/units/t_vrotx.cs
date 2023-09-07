@@ -4,12 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.Intrinsics;
-
-    using static Root;
-    using static cpu;
-
+    using static vcpu;
+    
     public class t_vrotx : t_inx<t_vrotx>
     {
         public void vrotrx_128x8u()

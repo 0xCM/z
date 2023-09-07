@@ -4,9 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
-    using static core;
+    using static sys;
     using static BinaryBitLogicKind;
 
     public class t_bm_ops : t_logix<t_bm_ops>
@@ -214,7 +212,7 @@ namespace Z0
             var A = Random.BitMatrix<T>();
             var B = Random.BitMatrix<T>();
             var C = BitMatrix.alloc<T>();
-            var n = core.nat32i<N>();
+            var n = sys.nat32i<N>();
 
             for(var sample=0; sample < RepCount; sample++)
             {
@@ -359,7 +357,7 @@ namespace Z0
             var A = Random.BitMatrix<T>();
             var B = Random.BitMatrix<T>();
             var C = BitMatrix.alloc<T>();
-            var n = core.nat32i<N>();
+            var n = nat32i<N>();
 
             for(var sample=0; sample<RepCount; sample++)
             {

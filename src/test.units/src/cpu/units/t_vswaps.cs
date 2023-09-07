@@ -4,10 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.Intrinsics;
-
-    using static core;
+    using static sys;
 
     public class t_vswaps : t_inx<t_vswaps>
     {

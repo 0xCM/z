@@ -20,6 +20,7 @@ namespace Z0
                 Value = value;
                 Significant = significant;
             }
+
             public XmlNodeType Kind
                 => Significant ? XmlNodeType.SignificantWhitespace : XmlNodeType.Whitespace;
         }

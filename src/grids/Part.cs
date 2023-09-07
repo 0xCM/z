@@ -2,10 +2,11 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-[assembly: PartId(PartId.Circuits)]
+[assembly: PartId(PartId.Grids)]
+[assembly: PartName("grids")]
 namespace Z0.Parts
 {
-    public sealed class Circuits : Part<Circuits>
+    public sealed class Grids : Part<Grids>
     {
 
     }

@@ -1,13 +1,10 @@
-
 //-----------------------------------------------------------------------------
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0.Logix
 {
-    using System;
-
-    using static core;
+    using static sys;
     using static BitLogicSpec;
 
     public class t_logic_identities : t_logix<t_logic_identities>

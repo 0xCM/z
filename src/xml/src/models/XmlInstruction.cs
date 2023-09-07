@@ -4,16 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Runtime.CompilerServices;
-    using System.Xml;
-
-    using static Root;
-
     partial struct XmlParts
     {
         public readonly struct XmlInstruction : IXmlPart<string>
         {
-            public NameOld Name {get;}
+            public string Name {get;}
 
             public string Value {get;}
 

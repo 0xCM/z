@@ -12,9 +12,9 @@ namespace Z0
         {
             public IXmlPart Ancestor {get;}
 
-            public NameOld Name {get;}
+            public string Name {get;}
 
-            public NameOld Value {get;}
+            public string Value {get;}
 
             public XmlAttributes Attributes {get;}
 

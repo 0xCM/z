@@ -4,10 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
-    using static Root;
-    using static core;
+    using static sys;
 
     public class t_testbit : t_bits<t_testbit>
     {

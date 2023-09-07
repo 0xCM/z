@@ -5,14 +5,28 @@
 namespace Z0
 {
     using System;
-    using System.Runtime.CompilerServices;
+    using System.Linq;
 
-    using static Root;
-    using static core;
+    using static sys;
     using static Intervals;
 
     public class t_sra : t_bits<t_sra>
     {
+        /// <summary>
+        /// Applies an action to the increasing sequence of integers 0,1,2,...,count - 1
+        /// </summary>
+        /// <param name="count">The number of times the action will be invoked
+        /// <param name="f">The action to be applied to each value</param>
+        [Op]
+        public static void iteri(int count, Action<int> f, bool pll = false)
+        {
+            if(pll)
+                gcalc.stream(0,count-1).AsParallel().ForAll(i => f(i));
+            else
+                for(var i = 0; i<count; i++)
+                    f(i);
+        }
+
         public void bs_sra_8i_check()
             => bs_sra_check<sbyte>();
 

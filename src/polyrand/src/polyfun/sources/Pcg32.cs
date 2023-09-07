@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static sys;
+
 using api = Pcg;
 
 [Rng(nameof(Pcg32))]
@@ -40,6 +42,30 @@ public struct Pcg32 : IRandomNav<uint>, IRandomSource<Pcg32,ulong>
     [MethodImpl(Inline)]
     public uint Next(uint min, uint max)
         => min + Next(max - min);
+
+    public ByteSize Fill(Span<uint> dst)
+    {
+        var size = 0u;
+        for(var i=0; i<dst.Length; i++, size+=8)
+            seek(dst,i) = Next();
+        return size;
+    }
+
+    public ByteSize Fill(Span<uint> dst, uint max)
+    {
+        var size = 0u;
+        for(var i=0; i<dst.Length; i++, size+=8)
+            seek(dst,i) = Next(max);
+        return size;
+    }
+
+    public ByteSize Fill(Span<ulong> dst, uint min, uint max)
+    {
+        var size = 0u;
+        for(var i=0; i<dst.Length; i++, size+=8)
+            seek(dst,i) = Next(min, max);
+        return size;
+    }
 
     [MethodImpl(Inline)]
     public void Advance(ulong delta)
@@ -84,6 +110,30 @@ public struct Pcg32 : IRandomNav<uint>, IRandomSource<Pcg32,ulong>
     public ulong Next(ulong min, ulong max)
         => Next((uint)min, (uint)max);
 
-    ulong ISource<ulong>.Next()
+    public ByteSize Fill(Span<ulong> dst)
+    {
+        var size = 0u;
+        for(var i=0; i<dst.Length; i++, size+=8)
+            seek(dst,i) = Next();
+        return size;
+    }
+
+    public ByteSize Fill(Span<ulong> dst, ulong max)
+    {
+        var size = 0u;
+        for(var i=0; i<dst.Length; i++, size+=8)
+            seek(dst,i) = Next(max);
+        return size;
+    }
+
+    public ByteSize Fill(Span<ulong> dst, ulong min, ulong max)
+    {
+        var size = 0u;
+        for(var i=0; i<dst.Length; i++, size+=8)
+            seek(dst,i) = Next(min, max);
+        return size;
+    }
+
+    ulong IValueSource<ulong>.Next()
         => Next();
 }

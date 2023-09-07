@@ -4,14 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
     using System.Linq;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.Intrinsics;
 
-    using static Root;
-    using static cpu;
-    using static core;
+    using static vcpu;
+    using static sys;
 
     public class t_vperm : t_inx<t_vperm>
     {

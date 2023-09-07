@@ -7,7 +7,7 @@ namespace Z0.Logix
     using System.Runtime.Intrinsics;
 
     using TL = TypedLogicSpec;
-    using static core;
+    using static sys;
 
     public class t_typed_identities : t_logix<t_typed_identities>
     {

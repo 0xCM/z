@@ -4,10 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
     using System.Linq;
-
-    using static Root;
 
     public sealed class t_perm_ops : t_inx<t_perm_ops>
     {

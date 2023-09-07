@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Root;
-
     public class t_vcnonimpl : t_inx<t_vcnonimpl>
     {
         public void vcnonimpl_check()

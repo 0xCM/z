@@ -31,30 +31,30 @@ namespace Z0
     partial class XedRules
     {
         [MethodImpl(Inline), Op, Closures(Closure)]
-        static MacroSpec assign<T>(RuleMacroKind name, FieldKind field, T value)
+        static MacroSpec assign<T>(M name, K field, T value)
             where T : unmanaged
-                => new MacroSpec(name, field, new MacroExpansion(field, OperatorKind.Eq, new FieldValue(field, core.bw64(value))));
+                => new MacroSpec(name, field, new MacroExpansion(field, OperatorKind.Eq, new FieldValue(field, bw64(value))));
 
         [MethodImpl(Inline), Op]
-        static MacroSpec assign(RuleMacroKind name, FieldKind field, MachineModeClass value)
+        static MacroSpec assign(M name, K field, MachineModeClass value)
             => new MacroSpec(name, field, new MacroExpansion(field, OperatorKind.Eq, new FieldValue(field, value)));
 
         [MethodImpl(Inline), Op]
-        static MacroExpansion expansion(FieldKind field, ushort value)
+        static MacroExpansion expansion(K field, ushort value)
             => new MacroExpansion(field, OperatorKind.Eq, new FieldValue(field, value));
 
         [MethodImpl(Inline), Op]
-        static MacroSpec assign(RuleMacroKind name, FieldKind field, EASZ value)
+        static MacroSpec assign(M name, K field, EASZ value)
             => new MacroSpec(name, field, expansion(field, (ushort)value));
 
         [MethodImpl(Inline), Op]
-        static MacroSpec assign(RuleMacroKind name, params FieldAssign[] a0)
+        static MacroSpec assign(M name, params FieldAssign[] a0)
             => new MacroSpec(name, 0, a0.Map(x => new MacroExpansion(x.Field, OperatorKind.Eq, x.Value)));
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         static FieldAssign assign<T>(FieldKind field, T fv)
             where T : unmanaged
-                => new (new FieldValue(field, core.bw64(fv)));
+                => new (new FieldValue(field, bw64(fv)));
 
         [ApiHost("xed.rules.macros")]
         public class RuleMacros

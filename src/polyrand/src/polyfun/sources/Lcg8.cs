@@ -4,6 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static sys;
+
+
 using api = Lcg8Ops;
 
 [Rng(nameof(Lcg8))]
@@ -39,6 +42,14 @@ public struct Lcg8 : IRng<byte>
     [MethodImpl(Inline)]
     public byte Next()
         => api.next(this);
+
+    public ByteSize Fill(Span<byte> dst)
+    {
+        var size = 0u;
+        for(var i=0; i<dst.Length; i++, size+=8)
+            seek(dst,i) = Next();
+        return size;
+    }
 
     public Label Name => nameof(Lcg8);
 }

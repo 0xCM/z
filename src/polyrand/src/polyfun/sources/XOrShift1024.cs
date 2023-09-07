@@ -69,6 +69,30 @@ public class XorShift1024 : IRandomSource<ulong>
     public ulong Next(ulong min, ulong max)
         => min + Next(max - min);
 
+    public ByteSize Fill(Span<ulong> dst)
+    {
+        var size = 0u;
+        for(var i=0; i<dst.Length; i++, size+=8)
+            seek(dst,i) = Next();
+        return size;
+    }
+
+    public ByteSize Fill(Span<ulong> dst, ulong max)
+    {
+        var size = 0u;
+        for(var i=0; i<dst.Length; i++, size+=8)
+            seek(dst,i) = Next(max);
+        return size;
+    }
+
+    public ByteSize Fill(Span<ulong> dst, ulong min, ulong max)
+    {
+        var size = 0u;
+        for(var i=0; i<dst.Length; i++, size+=8)
+            seek(dst,i) = Next(min, max);
+        return size;
+    }
+
     /// <summary>
     /// The jump table of predetermined constants to facilitate an efficient way
     /// to simulate calls to "Next()"

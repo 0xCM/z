@@ -6,7 +6,7 @@ namespace Z0;
 
 using System.Linq;
 
-using BS = Z0.BitStrings;
+using BS = BitStrings;
 
 public static class PolyBitStrings
 {

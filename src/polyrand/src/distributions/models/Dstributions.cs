@@ -17,10 +17,6 @@ public readonly struct Distributions
         where T : unmanaged
             => new BinomialSpec<T>(n,p);
 
-    [MethodImpl(Inline), Op, Closures(AllNumeric)]
-    public static RVar<T> rvar<T>(IBoundSource src, Interval<T> domain)
-        where T : unmanaged
-            => new RVar<T>(domain,src);
 
     /// <summary>
     /// Specifies a Bernoulli distribution predicated on the probability of trial success

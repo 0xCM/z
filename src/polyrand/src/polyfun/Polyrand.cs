@@ -230,7 +230,7 @@ public class Polyrand : IPolyrand
     }
 
     [MethodImpl(Inline)]
-    sbyte ISource<sbyte>.Next()
+    sbyte IValueSource<sbyte>.Next()
             => (sbyte) (Points.Next((ulong)sbyte.MaxValue*2) - (ulong)SByte.MaxValue);
 
     [MethodImpl(Inline)]
@@ -258,11 +258,11 @@ public class Polyrand : IPolyrand
         => (byte)Points.Next((ulong)max);
 
     [MethodImpl(Inline)]
-    byte ISource<byte>.Next()
+    byte IValueSource<byte>.Next()
         => (byte)Points.Next((ulong)byte.MaxValue);
 
     [MethodImpl(Inline)]
-    short ISource<short>.Next()
+    short IValueSource<short>.Next()
         => (short) (Points.Next((ulong)short.MaxValue*2) - (ulong)Int16.MaxValue);
 
     [MethodImpl(Inline)]
@@ -286,7 +286,7 @@ public class Polyrand : IPolyrand
         => (short)Points.Next(((ulong)short.MaxValue*2) - (ulong)short.MaxValue);
 
     [MethodImpl(Inline)]
-    ushort ISource<ushort>.Next()
+    ushort IValueSource<ushort>.Next()
         => (ushort)Points.Next((ushort)ushort.MaxValue);
 
     [MethodImpl(Inline)]
@@ -298,7 +298,7 @@ public class Polyrand : IPolyrand
         => (ushort)Points.Next((ulong)min, (ulong)max);
 
     [MethodImpl(Inline)]
-    int ISource<int>.Next()
+    int IValueSource<int>.Next()
         => (int) (Points.Next((ulong)int.MaxValue*2) - Int32.MaxValue);
 
     [MethodImpl(Inline)]
@@ -322,7 +322,7 @@ public class Polyrand : IPolyrand
         => (int) (Points.Next((ulong)int.MaxValue*2) - Int32.MaxValue);
 
     [MethodImpl(Inline)]
-    uint ISource<uint>.Next()
+    uint IValueSource<uint>.Next()
         =>(uint)Points.Next((ulong)uint.MaxValue);
 
     [MethodImpl(Inline)]
@@ -347,7 +347,7 @@ public class Polyrand : IPolyrand
         =>  src |= (1L << pos);
 
     [MethodImpl(Inline)]
-    long ISource<long>.Next()
+    long IValueSource<long>.Next()
     {
         var next = (long)Points.Next(long.MaxValue);
         var negative = Bit32.test(next, 7);
@@ -372,7 +372,7 @@ public class Polyrand : IPolyrand
     }
 
     [MethodImpl(Inline)]
-    ulong ISource<ulong>.Next()
+    ulong IValueSource<ulong>.Next()
         => Points.Next();
 
     [MethodImpl(Inline)]
@@ -384,7 +384,7 @@ public class Polyrand : IPolyrand
         => Points.Next(min, max);
 
     [MethodImpl(Inline)]
-    float ISource<float>.Next()
+    float IValueSource<float>.Next()
         => NextF32();
 
     [MethodImpl(Inline)]
@@ -402,7 +402,7 @@ public class Polyrand : IPolyrand
     }
 
     [MethodImpl(Inline)]
-    double ISource<double>.Next()
+    double IValueSource<double>.Next()
         => NextF64();
 
     [MethodImpl(Inline)]

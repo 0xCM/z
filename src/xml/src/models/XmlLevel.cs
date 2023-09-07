@@ -19,6 +19,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator XmlLevel((int depth, string name) src)
-            => new XmlLevel((sbyte)src.depth, src.name);
+            => new ((sbyte)src.depth, src.name);
     }
 }

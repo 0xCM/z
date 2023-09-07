@@ -5,6 +5,7 @@
 global using System.Xml;
 
 [assembly: PartId("xml")]
+[assembly: PartName("xml")]
 
 namespace Z0.Parts
 {

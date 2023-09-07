@@ -4,15 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
     using System.Linq;
-    using System.Runtime.Intrinsics;
-    using System.Runtime.CompilerServices;
 
     using static HexConst;
     using static cpu;
-    using static Root;
-    using static core;
+    using static sys;
 
     public class t_vshuf : t_inx<t_vshuf>
     {
@@ -22,13 +18,13 @@ namespace Z0
         {
             var w = w128;
             var x0 = gcpu.vinc<byte>(w);
-            var x0Spec = cpu.vload(w, first(IdentityPattern));
-            var x0Dst = cpu.vshuf16x8(x0,x0Spec);
+            var x0Spec = vload(w, first(IdentityPattern));
+            var x0Dst = vshuf16x8(x0,x0Spec);
             VClaims.veq(x0Spec,x0Dst);
 
             var x1 = gcpu.vinc<byte>(w);
-            var x1Spec = cpu.vload(w, first(ReversalPattern));
-            var x1Dst = cpu.vshuf16x8(x1,x1Spec);
+            var x1Spec = vload(w, first(ReversalPattern));
+            var x1Dst = vshuf16x8(x1,x1Spec);
             VClaims.veq(x1Spec,x1Dst);
 
             var x2 = gcpu.vinc<byte>(w);

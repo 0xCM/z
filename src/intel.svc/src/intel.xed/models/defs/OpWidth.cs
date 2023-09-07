@@ -51,7 +51,7 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public static explicit operator uint(OpWidth src)
-                => core.u32(src);
+                => sys.u32(src);
 
             public static OpWidth Empty => new OpWidth(0);
         }

@@ -2,11 +2,11 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-[assembly: PartId(PartId.Dynamic)]
+[assembly: PartId(PartId.IntelSvc)]
+[assembly: PartName("intel.svc")]
 namespace Z0.Parts
 {
-    public sealed class Dynamic : Part<Dynamic>
+    public sealed class IntelIntrinsics : Part<IntelIntrinsics>
     {
-
     }
 }

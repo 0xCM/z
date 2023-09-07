@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static core;
+    using static sys;
 
     partial class XedRules
     {
@@ -15,13 +15,13 @@ namespace Z0
             public ushort Value
             {
                 [MethodImpl(Inline)]
-                get => (ushort)(core.@as<RuleCaller,uint>(this) >> 16);
+                get => (ushort)(@as<RuleCaller,uint>(this) >> 16);
             }
 
             public Kind Sort
             {
                 [MethodImpl(Inline)]
-                get => core.@as<RuleCaller,Kind>(this);
+                get => @as<RuleCaller,Kind>(this);
             }
 
             [MethodImpl(Inline)]
@@ -93,11 +93,11 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public static implicit operator RuleCaller(RuleSig src)
-                => new RuleCaller(src);
+                => new (src);
 
             [MethodImpl(Inline)]
             public static implicit operator RuleCaller(InstPattern src)
-                => new RuleCaller(src);
+                => new (src);
 
             [MethodImpl(Inline)]
             public static explicit operator RuleSig(RuleCaller src)

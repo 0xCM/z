@@ -2,16 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-[assembly: PartId(PartId.ZCmd)]
+[assembly: PartId(PartId.Circuits)]
+[assembly: PartName("circuits")]
 namespace Z0.Parts
 {
-    public sealed class ZCmd : Part<ZCmd>
+    public sealed class Circuits : Part<Circuits>
     {
-        [ModuleInitializer]
-        internal static void Init()
-        {
-            //AppData.init();
-            NumRender.Service.RegisterFomatters();
-        }
+
     }
 }

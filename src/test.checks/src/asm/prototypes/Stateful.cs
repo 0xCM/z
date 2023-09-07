@@ -11,15 +11,11 @@ namespace Z0.Asm
         [ApiHost(prototypes + "statics")]
         public unsafe struct Statics
         {
-            [Op]
-            public static CellIO<ulong> io()
-                => new CellIO<ulong>(Store0x64,Store1x64);
+            [FixedAddressValueType]
+            static Index<ulong> Store0x64;
 
             [FixedAddressValueType]
-            static Cells<ulong> Store0x64;
-
-            [FixedAddressValueType]
-            static Cells<ulong> Store1x64;
+            static Index<ulong> Store1x64;
 
             static MemoryAddress SourceAddress;
 

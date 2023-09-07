@@ -4,11 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.Intrinsics;
-
-    using static Root;
-    using static core;
+    using static sys;
 
     public class t_vstore : t_inx<t_vstore>
     {

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static sys;
-
     partial class gbits
     {
         [MethodImpl(Inline), Op, Closures(Closure)]

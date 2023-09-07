@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Root;
-
     public class t_dynamic : t_inx<t_dynamic>
     {
         public void check_blocks()

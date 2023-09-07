@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static sys;
+
 using api = LcgOps;
 
 [Rng("Lcg<{0}>")]
@@ -42,4 +44,13 @@ public struct Lcg<T> : IRng<T>
     [MethodImpl(Inline)]
     public T Next()
         => api.next(this);
+
+    public ByteSize Fill(Span<T> dst)
+    {
+        var sz = size<T>();
+        var size = 0u;
+        for(var i=0; i<dst.Length; i++, size+=sz)
+            seek(dst,i) = Next();
+        return size;
+    }
 }

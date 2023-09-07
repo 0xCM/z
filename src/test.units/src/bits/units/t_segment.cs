@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
     public class t_segment : t_bits<t_segment>
     {
         // public void segment_outline()

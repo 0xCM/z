@@ -6,7 +6,7 @@ namespace Z0.Logix
 {
     using S = NumericLogixOps;
 
-    using static core;
+    using static sys;
 
     public class t_comparison_ops : t_typed_logix<t_comparison_ops>
     {

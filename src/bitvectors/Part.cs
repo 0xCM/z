@@ -2,9 +2,11 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+[assembly: PartId(PartId.BitVectors)]
+[assembly: PartName("bitvectors")]
+namespace Z0.Parts
 {
-    public class STHostAttribute : Attribute
+    public sealed class BitVectors : Part<BitVectors>
     {
 
     }

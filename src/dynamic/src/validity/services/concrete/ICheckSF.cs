@@ -2,10 +2,9 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+public interface ICheckSF : ITestService, ICheckVectors
 {
-    public interface ICheckSF : ITestService, ICheckVectors
-    {
-        bool ExcludeZero => false;
-    }
+    bool ExcludeZero => false;
 }

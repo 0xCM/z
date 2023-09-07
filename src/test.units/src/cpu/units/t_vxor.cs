@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Root;
-
     public class t_vxor : t_inx<t_vxor>
     {
         public void vxor_check()

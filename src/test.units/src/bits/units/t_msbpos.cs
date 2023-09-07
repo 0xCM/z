@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Root;
-    using static core;
+    using static sys;
 
     public class t_mbspos : t_bits<t_mbspos>
     {

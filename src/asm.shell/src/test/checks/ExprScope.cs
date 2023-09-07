@@ -43,7 +43,7 @@ public readonly struct ExprScope : IEquatable<ExprScope>
     public uint Hash
     {
         [MethodImpl(Inline)]
-        get => alg.hash.marvin(Text);
+        get => sys.hash(Text);
     }
 
     public NameOld Name

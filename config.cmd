@@ -1,5 +1,5 @@
 @echo off
-call %EnvRoot%\buildkits\native\config.cmd
+call %EnvRoot%\settings\llvm.cmd
 set SlnName=z0
 set SlnRoot=%~dp0..\%SlnName%
 set SlnFilePath=%SlnRoot%\%SlnName%.sln

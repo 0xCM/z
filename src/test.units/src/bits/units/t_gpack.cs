@@ -6,7 +6,7 @@ namespace Z0
 {
     using System;
 
-    using static core;
+    using static sys;
 
     public class t_gpack : t_bits<t_gpack>
     {

@@ -2,10 +2,13 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-[assembly: PartId("intel.shell")]
+global using cpu = Z0.vcpu;
+global using gcpu = Z0.vgcpu;
+[assembly: PartId("asm.shell")]
+[assembly: PartName("asm.shell")]
 namespace Z0.Parts
 {
-    public sealed class IntelShell : Part<IntelShell>
+    public sealed class AsmShell : Part<AsmShell>
     {
     }
 }

@@ -2,10 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-[assembly: PartId(PartId.BitVectors)]
+[assembly: PartId(PartId.Calcs)]
+[assembly: PartName("calcs")]
+
 namespace Z0.Parts
 {
-    public sealed class BitVectors : Part<BitVectors>
+    public sealed class Calcs : Part<Calcs>
     {
 
     }

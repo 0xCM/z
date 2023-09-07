@@ -6,6 +6,7 @@ namespace Z0
 {
     partial class math
     {
+
         /// <summary>
         /// Computes the bitwise and c := ~(a & b) for operands a and b
         /// </summary>

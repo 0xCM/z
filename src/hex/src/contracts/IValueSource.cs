@@ -2,16 +2,15 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+public interface IValueSource
 {
-    public static class XSvc
-    {
-        sealed class Svc : AppServices<Svc>
-        {
+    dynamic Next();
+}
 
-        }
-
-        static Svc Services => Svc.Instance;
-
-    }
+[Free]
+public interface IValueSource<T>
+{
+    T Next();
 }

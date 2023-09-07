@@ -3,6 +3,7 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 [assembly: PartId(PartId.ClrQuery)]
+[assembly: PartName("clr.query")]
 namespace Z0.Parts
 {
     public sealed class ClrQuery : Part<ClrQuery>

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System.Xml;
-
     partial struct XmlParts
     {
         public readonly struct XmlDoc : IXmlPart<string>

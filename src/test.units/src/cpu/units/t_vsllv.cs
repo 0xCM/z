@@ -4,11 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-    using System.Runtime.Intrinsics;
-    using System.Runtime.CompilerServices;
-
-    using static core;
+    using static sys;
     using static Numeric;
 
     public class t_vsllv : t_inx<t_vsllv>

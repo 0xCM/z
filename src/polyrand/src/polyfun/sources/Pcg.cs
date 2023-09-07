@@ -16,7 +16,7 @@ public readonly struct Pcg
     /// <param name="index">The stream index</param>
     [MethodImpl(Inline), Op]
     public static Pcg32 pcg32(ulong s0, ulong? index = null)
-        => new Pcg32(s0,index);
+        => new (s0,index);
 
     /// <summary>
     /// Creates a pcg 64-bit rng
@@ -25,7 +25,7 @@ public readonly struct Pcg
     /// <param name="index">The stream index</param>
     [MethodImpl(Inline), Op]
     public static Pcg64 pcg64(ulong s0, ulong? index = null)
-        => new Pcg64(s0, index);
+        => new (s0, index);
 
     /// <summary>
     /// Creates a 32-bit Pcg RNG
@@ -34,7 +34,7 @@ public readonly struct Pcg
     /// <param name="index">The stream index, if any</param>
     [MethodImpl(Inline), Op]
     public static Pcg32 nav32(ulong? seed = null, ulong? index = null)
-        => new Pcg32(seed ?? PolySeed64.Seed00, index);
+        => new (seed ?? PolySeed64.Seed00, index);
 
     /// <summary>
     /// Creates a 32-bit Pcg RNG
@@ -43,7 +43,7 @@ public readonly struct Pcg
     /// <param name="index">The stream index, if any</param>
     [MethodImpl(Inline), Op]
     public static Pcg32 nav32()
-        => new Pcg32(PolySeed64.Seed00);
+        => new (PolySeed64.Seed00);
 
     /// <summary>
     /// Creates a 32-bit Pcg RNG suite predicated on spans of seeds and stream indices

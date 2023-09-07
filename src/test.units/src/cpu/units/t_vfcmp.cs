@@ -5,13 +5,10 @@
 namespace Z0
 {
     using System;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.Intrinsics;
     using System.Runtime.Intrinsics.X86;
 
     using static System.Runtime.Intrinsics.X86.Avx;
-    using static Root;
-    using static core;
+    using static sys;
 
     public class t_vfcmp : t_inx<t_vfcmp>
     {

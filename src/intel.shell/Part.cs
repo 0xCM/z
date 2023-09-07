@@ -2,11 +2,11 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-[assembly: PartId(PartId.Grids)]
+[assembly: PartId("intel.shell")]
+[assembly: PartName("intel.shell")]
 namespace Z0.Parts
 {
-    public sealed class Grids : Part<Grids>
+    public sealed class IntelShell : Part<IntelShell>
     {
-
     }
 }

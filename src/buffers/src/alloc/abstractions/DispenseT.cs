@@ -5,7 +5,6 @@
 namespace Z0;
 
 using static sys;
-using static NativeSigs;
 
 public abstract class Dispense<T>
     where T : Dispense<T>, new()

@@ -11,7 +11,7 @@ public interface IRng
 }
 
 [Free]
-public interface IRng<T> : IRng, ISource<T>
+public interface IRng<T> : IRng, IValueSource<T>
     where T : unmanaged
 {
 

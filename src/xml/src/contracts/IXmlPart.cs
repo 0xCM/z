@@ -2,32 +2,31 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+public interface IXmlPart
 {
-    public interface IXmlPart
-    {
-        XmlNodeType Kind {get;}
+    XmlNodeType Kind {get;}
 
-        dynamic Value {get;}
+    dynamic Value {get;}
 
-        IXmlPart Ancestor
-            => XmlParts.empty();
+    IXmlPart Ancestor
+        => XmlParts.empty();
 
-        NameOld Name
-            => NameOld.Empty;
+    string Name
+        => EmptyString;
 
-        bool HasName
-            => Name.IsNonEmpty;
+    bool HasName
+        => text.nonempty(Name);
 
-        bool IsWhitespace
-            => Kind == XmlNodeType.Whitespace || Kind == XmlNodeType.SignificantWhitespace;
-    }
+    bool IsWhitespace
+        => Kind == XmlNodeType.Whitespace || Kind == XmlNodeType.SignificantWhitespace;
+}
 
-    public interface IXmlPart<T> : IXmlPart
-    {
-        new T Value {get;}
+public interface IXmlPart<T> : IXmlPart
+{
+    new T Value {get;}
 
-        dynamic IXmlPart.Value
-            => Value;
-    }
+    dynamic IXmlPart.Value
+        => Value;
 }

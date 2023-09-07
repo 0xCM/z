@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Root;
-
     public class t_nbg_and : t_bits<t_nbg_and>
     {
         public void nbg_and_n8x8x8()

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Root;
-
     public class t_vlo : t_inx<t_vlo>
     {
         public void vlo_128x8u()

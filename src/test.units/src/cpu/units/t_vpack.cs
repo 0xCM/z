@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static Root;
     using static LimitValues;
 
     public class t_vpack : t_inx<t_vpack>

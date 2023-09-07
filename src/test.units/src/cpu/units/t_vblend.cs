@@ -4,13 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
     using System.Linq;
-    using System.Runtime.Intrinsics;
 
     using static HexConst;
     using static LimitValues;
-    using static Root;
     using static cpu;
 
     using M = BitMaskLiterals;

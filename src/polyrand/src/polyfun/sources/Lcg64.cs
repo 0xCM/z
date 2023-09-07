@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static sys;
+
 using api = Lcg64Ops;
 
 [Rng(nameof(Lcg64))]
@@ -41,4 +43,11 @@ public struct Lcg64 : IRng<ulong>
 
     public Label Name => nameof(Lcg64);
 
+    public ByteSize Fill(Span<ulong> dst)
+    {
+        var size = 0u;
+        for(var i=0; i<dst.Length; i++, size+=8)
+            seek(dst,i) = Next();
+        return size;
+    }
 }

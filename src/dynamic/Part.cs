@@ -2,12 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-global using cpu = Z0.vcpu;
-global using gcpu = Z0.vgcpu;
-[assembly: PartId("asm.shell")]
+[assembly: PartId(PartId.Dynamic)]
+[assembly: PartName("dynamic")]
 namespace Z0.Parts
 {
-    public sealed class AsmShell : Part<AsmShell>
+    public sealed class Dynamic : Part<Dynamic>
     {
+
     }
 }

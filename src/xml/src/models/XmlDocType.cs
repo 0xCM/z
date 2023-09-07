@@ -8,7 +8,7 @@ namespace Z0
     {
         public readonly struct XmlDocType : IXmlPart<string>
         {
-            public NameOld Name {get;}
+            public string Name {get;}
 
             public string Value {get;}
 

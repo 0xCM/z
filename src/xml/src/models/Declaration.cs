@@ -2,24 +2,21 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial struct XmlParts
 {
-    using System.Xml;
-
-    partial struct XmlParts
+    public readonly struct Declaration : IXmlPart<string>
     {
-        public readonly struct Declaration : IXmlPart<string>
+        public string Value {get;}
+
+        [MethodImpl(Inline)]
+        public Declaration(string value)
         {
-            public string Value {get;}
-
-            [MethodImpl(Inline)]
-            public Declaration(string value)
-            {
-                Value = value;
-            }
-
-            public XmlNodeType Kind
-                => XmlNodeType.XmlDeclaration;
+            Value = value;
         }
+
+        public XmlNodeType Kind
+            => XmlNodeType.XmlDeclaration;
     }
 }

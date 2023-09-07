@@ -241,19 +241,6 @@ class AsmChecks : WfAppCmd<AsmChecks>
         Channel.Write(impl.Format());
     }
 
-    // Parsers Parsers => new();
-
-    // [CmdOp("check/api/parsers")]
-    // Outcome CheckApiParsers(CmdArgs args)
-    // {
-    //     var x = 32u;
-    //     if(Parsers.Parse(x.ToString(), out uint dst))
-    //     {
-    //         Require.equal(x,dst);
-    //     }
-    //     return true;
-    // }
-
     [CmdOp("check/expr/scopes")]
     Outcome TestScopes(CmdArgs args)
     {

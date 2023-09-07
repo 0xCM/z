@@ -2,16 +2,11 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+[assembly: PartId("cells")]
+[assembly: PartName("cells")]
+namespace Z0.Parts
 {
-    public interface IXmlModel
+    public sealed class Cells : Part<Cells>
     {
-
-    }
-
-    public interface IXmlModel<T> : IXmlModel
-        where T : struct, IXmlModel<T>
-    {
-
     }
 }

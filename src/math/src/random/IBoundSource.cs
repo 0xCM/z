@@ -9,7 +9,7 @@ namespace Z0;
 /// </summary>
 /// <typeparam name="T">The production value type</typeparam>
 [Free]
-public interface IBoundSource<T> : ISource<T>
+public interface IBoundSource<T> : IValueSource<T>
     where T : unmanaged
 {
     /// <summary>
@@ -67,6 +67,6 @@ public interface IBoundSource : ISource
     /// <param name="domain">The domain of the random variable</param>
     /// <typeparam name="T">The point type</typeparam>
     T Next<T>(ClosedInterval<T> domain)
-            where T : unmanaged, IEquatable<T>
+        where T : unmanaged, IEquatable<T>
             => Next(domain.Min, domain.Max);
 }

@@ -4,10 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using System;
-
-    using static Root;
-    using static core;
+    using static sys;
     using static Intervals;
 
     public class t_vpop : t_inx<t_vpop>

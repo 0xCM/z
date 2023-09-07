@@ -59,7 +59,7 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public BitNumber<byte> ToLiteral()
-                => core.@as<BitNumber<byte>>(Pad.First);
+                => sys.@as<BitNumber<byte>>(Pad.First);
 
             public int CompareTo(InstFieldSeg src)
             {
@@ -83,7 +83,7 @@ namespace Z0
                 => Field == src.Field && Type == src.Type;
 
             public override int GetHashCode()
-                => (int)alg.hash.combine(Type.GetHashCode(),(uint)Field);
+                => (int)sys.hash(Type.GetHashCode(),(uint)Field);
 
             public override bool Equals(object src)
                 => src is InstFieldSeg s && Equals(s);
@@ -104,11 +104,11 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public static explicit operator ulong(InstFieldSeg src)
-                => core.@as<InstFieldSeg,ulong>(src);
+                => sys.@as<InstFieldSeg,ulong>(src);
 
             [MethodImpl(Inline)]
             public static explicit operator InstFieldSeg(ulong src)
-                => core.@as<ulong,InstFieldSeg>(src);
+                => sys.@as<ulong,InstFieldSeg>(src);
 
             public static InstFieldSeg Empty => default;
         }

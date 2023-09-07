@@ -2,10 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-[assembly: PartId("cells")]
+[assembly: PartId("asm.v1")]
+[assembly: PartName("asm.v1")]
 namespace Z0.Parts
 {
-    public sealed class Cells : Part<Cells>
+    public sealed class AsmV1 : Part<AsmV1>
     {
     }
 }
+

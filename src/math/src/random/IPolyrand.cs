@@ -25,10 +25,8 @@ public interface IPolyrand : IRng, IPolySource
 /// pseudorandom number generator
 /// </summary>
 [Free]
-public interface IPolyrandProvider : ISourceProvider<IPolyrand>
+public interface IPolyrandProvider
 {
     IPolyrand Random {get;}
 
-    IPolyrand ISourceProvider<IPolyrand>.Source()
-        => Random;
 }
