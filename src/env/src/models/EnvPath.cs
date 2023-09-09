@@ -21,16 +21,31 @@ namespace Z0
             return dst.Emit();
         }
 
+        public readonly EnvPathKind Kind;
+
         public EnvPath()
         {
+            Kind = 0;
+        }
 
+        public EnvPath(EnvPathKind kind)
+        {
+            Kind = kind;
         }
 
         [MethodImpl(Inline)]
         public EnvPath(FolderPath[] src)
             : base(src)
         {
+            Kind = 0;
 
+        }
+
+        [MethodImpl(Inline)]
+        public EnvPath(EnvPathKind kind, FolderPath[] src)
+            : base(src)
+        {
+            Kind = kind;
         }
 
         public EnvPath Prepend(params FolderPath[] src)
@@ -42,7 +57,7 @@ namespace Z0
                 seek(dst,j++) = skip(src,i);
             for(var i=0; i<src.Length; i++)
                 seek(dst,j++) = this[i];
-            return new EnvPath(dst);
+            return new EnvPath(Kind, dst);
         }
 
         public EnvPath Concat(params FolderPath[] src)
@@ -54,7 +69,7 @@ namespace Z0
                 seek(dst,j++) = this[i];
             for(var i=0; i<src.Length; i++)
                 seek(dst,j++) = skip(src,i);
-            return new EnvPath(dst);
+            return new EnvPath(Kind, dst);
         }
 
         public bool Equals(EnvPath src)
@@ -80,12 +95,12 @@ namespace Z0
         public override string Format()
             => format(this);
         
-        [MethodImpl(Inline)]
-        public static implicit operator EnvPath(FolderPath[] src)
-            => new (src);
+        // [MethodImpl(Inline)]
+        // public static implicit operator EnvPath(FolderPath[] src)
+        //     => new (src);
 
-        [MethodImpl(Inline)]
-        public static implicit operator FolderPath[](EnvPath src)
-            => src.Storage;
+        // [MethodImpl(Inline)]
+        // public static implicit operator FolderPath[](EnvPath src)
+        //     => src.Storage;
     }
 }

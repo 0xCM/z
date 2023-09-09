@@ -33,7 +33,7 @@
     <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
     <PackageReference Include="System.Diagnostics.StackTrace" Version="4.3.0" />
     <PackageReference Include="System.Diagnostics.EventLog" Version="7.0.0" />
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="7.0.0" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="7.0.2" />
     
     <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="7.0.0" />    
     <PackageReference Include="System.Diagnostics.Tracing" Version="4.3.0" />    
@@ -120,7 +120,7 @@
 
     <PackageReference Include="System.Text.Encoding" Version="4.3.0" />
     <PackageReference Include="System.Text.Encoding.Extensions" Version="4.3.0" />
-    <PackageReference Include="System.Text.Json" Version="7.0.1" />
+    <PackageReference Include="System.Text.Json" Version="$(SystemTextJsonVersion)" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
 
     <PackageReference Include="System.Threading" Version="4.3.0" />

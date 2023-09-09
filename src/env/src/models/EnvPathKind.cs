@@ -2,16 +2,15 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+public enum EnvPathKind : byte
 {
-    public enum EnvPathKind : byte
-    {
-        None,
+    None,
 
-        Bin,
+    Bin,
 
-        Include,
+    Include,
 
-        Lib,
-    }
+    Lib,
 }

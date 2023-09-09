@@ -1,5 +1,0 @@
-<Project>
-    <ItemGroup>
-        <Reference Include="$(GlobalDeps)/FASTER.dll" />
-    </ItemGroup>
-</Project>

@@ -14,13 +14,13 @@ namespace Z0
         static AppSettings AppSettings => AppSettings.Default;
 
         public static EnvVar<EnvPath> INCLUDE()
-            => new (EnvTokens.INCLUDE, path(EnvTokens.INCLUDE));
+            => new (EnvTokens.INCLUDE, path(EnvPathKind.Include));
 
         public static EnvVar<EnvPath> LIB()
-            => new (EnvTokens.LIB, path(EnvTokens.LIB));
+            => new (EnvTokens.LIB, path(EnvPathKind.Lib));
 
         public static EnvVar<EnvPath> PATH()
-            => new (EnvTokens.PATH, path(EnvTokens.PATH));
+            => new (EnvTokens.PATH, path(EnvPathKind.Bin));
 
         public static IDbArchive root()
             => AppSettings.EnvRoot();
@@ -40,7 +40,8 @@ namespace Z0
             set => apply(new EnvVar(EnvTokens.EnvId, value.Format()), EnvVarKind.Process);
         }
 
-        public static IDbArchive ShellData => AppSettings.EnvDb().Scoped("shells");
+        public static IDbArchive ShellData
+            => AppSettings.EnvDb().Scoped("shells");
 
         public static IEnvDb db(FolderPath root)
             => new EnvDb(root);
@@ -70,26 +71,45 @@ namespace Z0
         public static void cd(FolderPath dst)
             => Environment.CurrentDirectory = dst.Format(PathSeparator.BS);
 
-        public static EnvPath path(string name, EnvVarKind kind = EnvVarKind.Process)
-        {
-            var value = Environment.GetEnvironmentVariable(name, (EnvironmentVariableTarget)kind);
-            var values = text.split(value,Chars.Semicolon);
-            return map(values, FS.dir);
-        }
+        // public static EnvPath path(string name, EnvVarKind kind = EnvVarKind.Process)
+        // {
+        //     var value = Environment.GetEnvironmentVariable(name, (EnvironmentVariableTarget)kind);
+        //     var values = text.split(value,Chars.Semicolon);
+        //     return map(values, FS.dir);
+        // }
 
-        public static ExecToken<EnvPath> path(IWfChannel channel, EnvPathKind kind, IDbArchive dst, EnvVarKind envkind = EnvVarKind.Process)
-        {            
-            var name = kind switch {
+        public static string varname(EnvPathKind kind)
+            => kind switch {
               EnvPathKind.Bin => EnvTokens.PATH,
               EnvPathKind.Include => EnvTokens.INCLUDE,
               EnvPathKind.Lib => EnvTokens.LIB,
                 _ => EmptyString
             };
-            var folders = path(name, envkind);
-            var data = folders.Delimit(Chars.NL);
-            channel.Row(data);
-            var emitted = channel.FileEmit(data, dst.Path(FS.file($"paths.{kind}", FileKind.List)));
-            return (emitted, folders);
+
+        public static EnvPath path(EnvPathKind kind, EnvVarKind varkind = EnvVarKind.Process)
+        {
+            var name = varname(kind);
+            var value = Environment.GetEnvironmentVariable(name, (EnvironmentVariableTarget)varkind);
+            var folders = map(text.split(value,Chars.Semicolon), FS.dir);
+            return new EnvPath(kind, folders);
+        }
+
+        public static ExecToken<EnvPath> emit(IWfChannel channel, EnvPath src, IDbArchive dst)
+        {
+            var data = src.Delimit(Chars.NL);
+            var emitted = channel.FileEmit(data, dst.Path(FS.file($"paths.{src.Kind}", FileKind.List)));
+            return (emitted, src);
+        }
+
+        public static ExecToken<EnvPath> path(IWfChannel channel, EnvPathKind kind, IDbArchive dst, EnvVarKind envkind = EnvVarKind.Process)
+        {            
+            return emit(channel, path(kind,envkind), dst);
+            // var name = varname(kind);
+            // var folders = path(kind, envkind);
+            // var data = folders.Delimit(Chars.NL);
+            // channel.Row(data);
+            // var emitted = channel.FileEmit(data, dst.Path(FS.file($"paths.{kind}", FileKind.List)));
+            // return (emitted, folders);
         }
 
         public static EnvVar<T> var<T>(string name, Func<string,T> parser)
@@ -130,7 +150,7 @@ namespace Z0
         {
             if(_Tools == null || reload)
             {
-                var paths = Env.path(EnvTokens.PATH, EnvVarKind.Process).Delimit(Chars.NL);
+                var paths = Env.path(EnvPathKind.Bin).Delimit(Chars.NL);
                 var buffer = hashset<LocatedTool>();
                 iter(paths, dir => {
                     iter(FS.files(dir, false, FileKind.Exe, FileKind.Cmd, FileKind.Bat), path => {                

@@ -1,6 +1,8 @@
 <Project>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis" Version="$(CodeAnalysisVersion)"/>
+    <PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="$(CodeAnalysisVersion)"/>
+
     <PackageReference Include="Microsoft.CodeAnalysis.Features" Version="$(CodeAnalysisVersion)"/>
     <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="$(CodeAnalysisVersion)"/>
     <PackageReference Include="Microsoft.CodeAnalysis.Scripting.Common" Version="$(CodeAnalysisVersion)" />      
@@ -11,7 +13,6 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="$(CodeAnalysisVersion)"/>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="$(CodeAnalysisVersion)"/>
 
-    <PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="$(CodeAnalysisVersion)"/>
     <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="$(CodeAnalysisVersion)"/>
 
     <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="$(CodeAnalysisVersion)">

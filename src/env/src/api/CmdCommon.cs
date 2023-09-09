@@ -12,22 +12,22 @@ namespace Z0
         void Run(CmdArgs args)
             => emit(Channel, ApiServer.catalog(), EnvDb);
 
-        [CmdOp("env/reports")]
-        void EmitEnv(CmdArgs args)
-        {
-            if(args.IsNonEmpty)
-            {
-                EnvId name = args[0].Value;
-                var cfg = EnvReports.GetEnvConfig(name);
-                var report = cfg.Report();
-                var tools = report.Tools;
-                iter(tools, tool => Channel.Row(tool));
-                iter(report.Vars, v => Channel.Row(v));                
-            }
+        // [CmdOp("env/reports")]
+        // void EmitEnv(CmdArgs args)
+        // {
+        //     if(args.IsNonEmpty)
+        //     {
+        //         EnvId name = args[0].Value;
+        //         var cfg = EnvReports.GetEnvConfig(name);
+        //         var report = cfg.Report();
+        //         var tools = report.Tools;
+        //         iter(tools, tool => Channel.Row(tool));
+        //         iter(report.Vars, v => Channel.Row(v));                
+        //     }
                 
-            else
-                EnvReports.emit(Channel);
-        }
+        //     else
+        //         EnvReports.emit(Channel);
+        // }
 
         static void emit(IWfChannel channel, ApiCmdCatalog src, IDbArchive dst)
         {
