@@ -2,53 +2,154 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    using System.CommandLine.Parsing;
+namespace Z0;
 
-    using static sys;
+using System.CommandLine.Parsing;
 
-    [ApiHost]
-    public class Cmd 
-    {   
+using static sys;
 
-        public static bool parse(string src, out CmdLine dst)
+[ApiHost]
+public class Cmd 
+{   
+    public static ScriptVar var(string name, AsciSymbol prefix, AsciFence fence, @string value = default)
+        => new (name,prefix, fence, value);
+        
+    public static CmdVars vars(params Pair<string>[] src)
+    {
+        var dst = new CmdVar[src.Length];
+        for(var i=0; i<src.Length; i++)
+            seek(dst,i) = skip(src,i);
+        return dst;
+    }
+
+    public static bool parse(string src, out CmdLine dst)
+    {
+        dst = CmdLine.Empty;
+        dst = new (CliParser.SplitCommandLine(src).Map(x => new CmdArg(x)));
+        return true;
+    }
+
+    public static string join(CmdArgs args)
+    {
+        var dst = text.emitter();
+        for(var i=0; i<args.Count; i++)
         {
-            dst = CmdLine.Empty;
-            dst = new (CliParser.SplitCommandLine(src).Map(x => new CmdArg(x)));
-            return true;
+            if(i != 0)
+                dst.Append(Chars.Space);
+            dst.Append(args[i].Value);
         }
 
-        public static string join(CmdArgs args)
+        return dst.Emit();
+    }
+
+    public static CmdArg arg(object src)
+        => new CmdArg(src?.ToString() ?? EmptyString);
+
+    public static CmdArgs args(params object[] src)
+    {
+        var dst = alloc<CmdArg>(src.Length);
+        for(ushort i=0; i<src.Length; i++)
+            seek(dst,i) = arg(skip(src,i));
+        return new (dst);
+    }
+
+    public static CmdArgs args(params CmdArg[] src)
+    {
+        var dst = alloc<CmdArg>(src.Length);
+        for(ushort i=0; i<src.Length; i++)
+            seek(dst,i) = skip(src,i);
+        return new (dst);
+    }   
+
+    [MethodImpl(Inline), Op]
+    public static ref readonly VarPattern pattern(ScriptVarKind vck)
+        => ref VarPatterns[(byte)vck];
+    
+    public static string format(IScriptVar src)
+    {
+        var dst = EmptyString;
+        if(src.Value(out var _value))
+            dst = _value.ToString();
+        else
         {
-            var dst = text.emitter();
-            for(var i=0; i<args.Count; i++)
+            if(src.IsPrefixedFence)
+                dst = string.Format("{0}{1}{2}{3}", src.Prefix, src.Fence.Left, src.Name, src.Fence.Right);
+            if(src.IsPrefixed)
+                dst = string.Format("{0}{1}", src.Prefix, src.Name);
+            else if(src.IsFenced)
+                dst = string.Format("{0}{1}{2}", src.Fence.Left, src.Name, src.Fence.Right);
+            else
+                dst = src.Name;
+        }
+
+        return dst;
+    }
+
+    public static string format(CmdVars src)
+    {
+        var dst = text.buffer();
+        var count = src.Count;
+        for(var i=0; i<count; i++)
+        {
+            ref readonly var item = ref src[i];
+            if(item.Name.IsNonEmpty)   
             {
-                if(i != 0)
-                    dst.Append(Chars.Space);
-                dst.Append(args[i].Value);
+                if(item.Value(out var value))
+                    dst.AppendLineFormat("set {0}={1}", item.Name, value);
+                else
+                    dst.AppendLineFormat("set {0}=", item.Name);
+            }                                        
+        }
+        return dst.Emit();
+    }
+    public static string eval(string expr, ICollection<IScriptVar> vars)
+    {
+        var result = expr;
+        foreach(var v in vars)
+        {
+            if(v.Value(out var value))
+                result = text.replace(result, string.Format("{0}{1}{2}{3}", v.Prefix, v.Fence.Left, v.Name, v.Fence.Right), value.ToString());
+        }
+        return result;
+    }
+
+    public static Dictionary<string,ScriptVar> extract(ReadOnlySpan<char> src, AsciSymbol prefix, AsciFence fence)
+    {
+        var dst = dict<string,ScriptVar>();
+        var count = src.Length;
+        var lpos = -1;
+        var rpos = -1;
+        var parsing = false;
+        for(var i=0; i<count; i++)
+        {
+            ref readonly var c0 = ref skip(src,i);
+            if(c0 == prefix)
+            {
+                if(i < count -1)
+                {
+                    parsing = skip(src,++i) == fence.Left;
+                    lpos = i + 1;
+                }
             }
-
-            return dst.Emit();
+            else if(c0 == fence.Right && parsing)
+            {
+                rpos = i - 1;                    
+                var name = sys.@string(SQ.segment(src, lpos, rpos));
+                dst.TryAdd(name, new ScriptVar(name,prefix,fence));
+                lpos = -1;
+                rpos = -1;                    
+            }
         }
 
-        public static CmdArg arg(object src)
-            => new CmdArg(src?.ToString() ?? EmptyString);
+        return dst;
+    }        
 
-        public static CmdArgs args(params object[] src)
-        {
-            var dst = alloc<CmdArg>(src.Length);
-            for(ushort i=0; i<src.Length; i++)
-                seek(dst,i) = arg(skip(src,i));
-            return new (dst);
-        }
-
-        public static CmdArgs args(params CmdArg[] src)
-        {
-            var dst = alloc<CmdArg>(src.Length);
-            for(ushort i=0; i<src.Length; i++)
-                seek(dst,i) = skip(src,i);
-            return new (dst);
-        }   
-   }
+    static ReadOnlySeq<VarPattern> VarPatterns = new VarPattern[]{
+        new (ScriptVarKind.None, AsciSymbol.Empty, AsciFence.Empty),
+        new (ScriptVarKind.Cmd, AsciSymbol.Empty, (AsciSymbols.Percent, AsciSymbols.Percent)),
+        new (ScriptVarKind.Bash, AsciSymbols.Dollar, AsciFence.Empty),
+        new (ScriptVarKind.Powershell, AsciSymbols.Dollar, AsciFence.Empty),
+        new (ScriptVarKind.MsBuild, AsciSymbols.Dollar, (AsciSymbols.LParen, AsciSymbols.RParen)),
+        new (ScriptVarKind.Template, AsciSymbols.Dollar, (AsciSymbols.LBrace, AsciSymbols.RBrace)),
+    };    
 }

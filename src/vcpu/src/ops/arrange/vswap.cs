@@ -11,7 +11,6 @@ namespace Z0
         // [2*k + 1 2*k | k=0,..,7]
         // 2 <-> 3
         // [15_14 13_12 11_10 09_08 05_04 07_06 03_02 01_00 ]
-
         [MethodImpl(Inline), Op]
         public static Vector128<byte> vswap(Vector128<byte> src, uint i, uint j)
         {

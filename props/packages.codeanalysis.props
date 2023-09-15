@@ -3,6 +3,8 @@
     <PackageReference Include="Microsoft.CodeAnalysis" Version="$(CodeAnalysisVersion)"/>
     <PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="$(CodeAnalysisVersion)"/>
 
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" PrivateAssets="all" />
+
     <PackageReference Include="Microsoft.CodeAnalysis.Features" Version="$(CodeAnalysisVersion)"/>
     <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="$(CodeAnalysisVersion)"/>
     <PackageReference Include="Microsoft.CodeAnalysis.Scripting.Common" Version="$(CodeAnalysisVersion)" />      

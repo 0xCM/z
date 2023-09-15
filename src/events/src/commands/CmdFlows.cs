@@ -88,7 +88,6 @@ namespace Z0
             return slice(dst,0,counter);
         }
 
-
         ConstLookup<FilePath,List<FilePath>> Children;
 
         ConstLookup<FilePath,FilePath> Ancestors;

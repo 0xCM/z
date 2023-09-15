@@ -234,9 +234,9 @@ public sealed class ApiServer : AppService<ApiServer>
         return dst;
     }
 
-    public static ApiCmdScript script(FilePath src)
+    public static ApiScript script(FilePath src)
     {
-        var dst = ApiCmdScript.Empty;
+        var dst = ApiScript.Empty;
         var specs = list<ApiCommand>();
         using var reader = src.Utf8LineReader();
         var line = TextLine.Empty;

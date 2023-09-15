@@ -24,7 +24,7 @@ public struct CmdFlowVars
     public @string SrcId;
 
     public CmdVars ToCmdVars()
-        => CmdScripts.vars(
+        => Cmd.vars(
         (nameof(SrcDir), SrcDir.IsNonEmpty ? SrcDir.Format(PathSeparator.BS) : EmptyString),
         (nameof(SrcFile), SrcFile.IsNonEmpty ? SrcFile.Format() : EmptyString),
         (nameof(DstDir), DstDir.IsNonEmpty ? DstDir.Format(PathSeparator.BS) : EmptyString),

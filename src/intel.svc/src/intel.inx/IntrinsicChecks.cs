@@ -4,13 +4,15 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using dsl.intel;
-    using dsl.intel.intrinsics;
+    using Lang;
+    using Lang.Intel;
+    using Lang.Intel.intrinsics;
+    
     using static NativeSigs;
 
     using static sys;
 
-    using K = dsl.intel.IntrinsicName;
+    using K = Lang.Intel.IntrinsicName;
 
     [ApiHost]
     public sealed class IntrinsicsChecks : PageBank16x4x4<IntrinsicsChecks>

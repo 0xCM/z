@@ -10,7 +10,5 @@ namespace Z0
 
         protected static IEnvDb EnvDb => AppSettings.EnvDb();
 
-        protected static CmdArg arg(CmdArgs src, int index)
-            => CmdArgs.arg(src, index);
     }
 }

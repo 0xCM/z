@@ -2,7 +2,7 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.dsl.intel
+namespace Z0.Lang.Intel
 {
     public struct CmpPred128<T>
         where T : unmanaged

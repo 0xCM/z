@@ -2,7 +2,7 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.dsl.intel
+namespace Z0.Lang.Intel
 {
     [StructLayout(StructLayout,Pack=1)]
     public readonly struct mm256_min_epu8
