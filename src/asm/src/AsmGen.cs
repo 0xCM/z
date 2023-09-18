@@ -54,7 +54,7 @@ public class AsmGen
         {
             case 0:
             {
-                dst.Add(AsmSpecs.inst(form.Mnemonic, form.OpCode, AsmOperands.Empty));
+                dst.Add(AsmSpecs.inst(form.Mnemonic, AsmOperands.Empty));
             }
             break;
             case 1:
@@ -62,7 +62,7 @@ public class AsmGen
                 var ops0 = skip(lookup,0);
                 for(var a=0; a<ops0.Count; a++)
                 {
-                    dst.Add(AsmSpecs.inst(form.Mnemonic, form.OpCode, ops0[a], out _));
+                    dst.Add(AsmSpecs.inst(form.Mnemonic, ops0[a], out _));
                 }
 
             }
@@ -74,7 +74,7 @@ public class AsmGen
                 for(var a=0; a<ops0.Count; a++)
                 for(var b=0; b<ops1.Count; b++)
                 {
-                    dst.Add(AsmSpecs.inst(form.Mnemonic, form.OpCode, ops0[a], ops1[b], out _));
+                    dst.Add(AsmSpecs.inst(form.Mnemonic, ops0[a], ops1[b], out _));
                 }
             }
             break;
@@ -87,7 +87,7 @@ public class AsmGen
                 for(var b=0; b<ops1.Count; b++)
                 for(var c=0; c<ops1.Count; c++)
                 {
-                    dst.Add(AsmSpecs.inst(form.Mnemonic, form.OpCode, ops0[a], ops1[b], ops2[c], out _));
+                    dst.Add(AsmSpecs.inst(form.Mnemonic, ops0[a], ops1[b], ops2[c], out _));
                 }
             }
             break;
@@ -102,7 +102,7 @@ public class AsmGen
                 for(var c=0; c<ops2.Count; c++)
                 for(var d=0; d<ops3.Count; d++)
                 {
-                    dst.Add(AsmSpecs.inst(form.Mnemonic, form.OpCode, ops0[a], ops1[b], ops2[c], ops3[d], out _));
+                    dst.Add(AsmSpecs.inst(form.Mnemonic, ops0[a], ops1[b], ops2[c], ops3[d], out _));
                 }
             }
             break;

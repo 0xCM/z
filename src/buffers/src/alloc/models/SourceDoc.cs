@@ -4,11 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-public class SourceDoc : Seq<SourceDoc, SourceLine>, IComparable<SourceDoc>
+public class SourceDoc : Seq<SourceDoc, LineText>, IComparable<SourceDoc>
 {
     FilePath _Path;
 
-    public static SourceDoc create(FilePath src, SourceLine[] lines)
+    public static SourceDoc create(FilePath src, LineText[] lines)
     {
         var dst = create(lines);
         dst._Path = src;

@@ -2,40 +2,39 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0.Asm;
+
+using static sys;
+
+public struct RegGrid8x64
 {
-    using static sys;
+    ByteBlock64 Names;
 
-    public struct RegGrid8x64
+    RegStore8x64 Values;
+
+    [MethodImpl(Inline), UnscopedRef]
+    public ref AsmRegName RegName(byte index)
+        => ref seek(recover<AsmRegName>(Names.Bytes), index);
+
+    [MethodImpl(Inline), UnscopedRef]
+    public ref ulong RegVal(byte index)
+        => ref Values[index];
+
+    public AsmRegValue<ulong> this[byte index]
     {
-        ByteBlock64 Names;
-
-        RegStore8x64 Values;
-
-        [MethodImpl(Inline), UnscopedRef]
-        public ref AsmRegName RegName(byte index)
-            => ref seek(recover<AsmRegName>(Names.Bytes), index);
-
-        [MethodImpl(Inline), UnscopedRef]
-        public ref ulong RegVal(byte index)
-            => ref Values[index];
-
-        public AsmRegValue<ulong> this[byte index]
-        {
-            [MethodImpl(Inline)]
-            get => Tuples.paired(RegName(index), RegVal(index));
-
-            [MethodImpl(Inline)]
-            set => Define(index, value.Name, value.Value);
-        }
+        [MethodImpl(Inline)]
+        get => Tuples.paired(RegName(index), RegVal(index));
 
         [MethodImpl(Inline)]
-        void Define(byte index, AsmRegName name, ulong value)
-        {
-            RegName(index) = name;
-            RegVal(index) = value;
-        }
-
-        public static RegGrid8x64 Empty => default;
+        set => Define(index, value.Name, value.Value);
     }
+
+    [MethodImpl(Inline)]
+    void Define(byte index, AsmRegName name, ulong value)
+    {
+        RegName(index) = name;
+        RegVal(index) = value;
+    }
+
+    public static RegGrid8x64 Empty => default;
 }

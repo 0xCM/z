@@ -8,6 +8,6 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public static TextLine line(uint number, string content)
-            => new TextLine(number, content);
+            => new (number, content);
     }
 }

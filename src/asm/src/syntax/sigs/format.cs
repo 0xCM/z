@@ -2,48 +2,47 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0.Asm;
+
+using static sys;
+
+partial class AsmSigs
 {
-    using static sys;
+    public static string format(in AsmSigOp src)
+        => src.IsEmpty ? EmptyString : expression(src).Text;
 
-    partial class AsmSigs
+    public static string format(in AsmSigExpr src)
     {
-        public static string format(in AsmSigOp src)
-            => src.IsEmpty ? EmptyString : expression(src).Text;
+        var storage = CharBlock64.Null;
+        var dst = storage.Data;
+        var i=0u;
+        text.copy(src.Mnemonic.Format(MnemonicCase.Lowercase), ref i, dst);
+        var count = src.OpCount;
 
-        public static string format(in AsmSigExpr src)
+        if(count != 0)
+            seek(dst,i++) = Chars.Space;
+
+        operands(src, ref i, dst);
+        return storage.Format().Trim();
+    }
+
+    public static string format(in AsmSig src)
+    {
+        if(src.IsEmpty)
+            return EmptyString;
+
+        var dst = text.buffer();
+        dst.Append(src.Mnemonic.Format(MnemonicCase.Lowercase));
+        var count = src.OpCount;
+        for(byte i=0; i<count; i++)
         {
-            var storage = CharBlock64.Null;
-            var dst = storage.Data;
-            var i=0u;
-            text.copy(src.Mnemonic.Format(MnemonicCase.Lowercase), ref i, dst);
-            var count = src.OpCount;
+            if(i != 0)
+                dst.Append(", ");
+            else
+                dst.Append(Chars.Space);
 
-            if(count != 0)
-                seek(dst,i++) = Chars.Space;
-
-            operands(src, ref i, dst);
-            return storage.Format().Trim();
+            dst.Append(expression(src[i]).Text);
         }
-
-        public static string format(in AsmSig src)
-        {
-            if(src.IsEmpty)
-                return EmptyString;
-
-            var dst = text.buffer();
-            dst.Append(src.Mnemonic.Format(MnemonicCase.Lowercase));
-            var count = src.OpCount;
-            for(byte i=0; i<count; i++)
-            {
-                if(i != 0)
-                    dst.Append(", ");
-                else
-                    dst.Append(Chars.Space);
-
-                dst.Append(expression(src[i]).Text);
-            }
-            return dst.Emit();
-        }
+        return dst.Emit();
     }
 }

@@ -52,12 +52,6 @@ public class CompositeDispenser : Dispenser<CompositeDispenser>, ICompositeDispe
         (Strings as IDisposable).Dispose();
     }
 
-    public SourceDoc SourceDocument(FilePath src)
-    {
-        var lines = map(src.ReadNumberedLines(), line => new SourceLine(line.LineNumber, SourceText(line.Content)));
-        return SourceDoc.create(src,lines);
-    }
-
     [MethodImpl(Inline)]
     public NativeSigRef Sig(ReadOnlySpan<char> scope, ReadOnlySpan<char> name, NativeType ret, params Operand[] ops)
         => Sigs.Sig(scope, name, ret, ops);

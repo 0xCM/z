@@ -2,15 +2,14 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0.Asm;
+
+[SymSource("asm")]
+public enum BranchTargetKind : byte
 {
-    [SymSource("asm")]
-    public enum BranchTargetKind : byte
-    {
-        None = 0,
+    None = 0,
 
-        Near = 1,
+    Near = 1,
 
-        Far = 2
-    }
+    Far = 2
 }

@@ -218,7 +218,7 @@ namespace Z0
             => new FilePath(RP.format("{0}.{1}", a.Name, b.Name));
 
         public static implicit operator FileUri(FilePath src)
-            => new FileUri(src.ToUri().Format());
+            => new FileUri(src.Format());
 
         public static implicit operator FilePath(FileUri src)
             => new FilePath(src.Format());

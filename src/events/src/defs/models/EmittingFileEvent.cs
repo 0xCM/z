@@ -25,5 +25,5 @@ public readonly struct EmittingFileEvent : IEvent<EmittingFileEvent>
     public LogLevel EventLevel => LogLevel.Status;
 
     public string Format()
-        => RP.format(EventId, AppMsg.EmittingFile.Capture(Target));
+        => TextPatterns.piped(EventId, AppMsg.EmittingFile.Capture(Target));
 }

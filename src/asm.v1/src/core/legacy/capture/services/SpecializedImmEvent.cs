@@ -53,8 +53,8 @@ namespace Z0.Asm
 
         public string Format()
             => Refinement.IsEmpty()
-            ? RP.format(RP.PSx5, EventId, Host, Generic ? "generic" : "nongeneric", "unrefined", TargetFile.ToUri())
-            : RP.format(RP.PSx5, EventId, Host, Generic ? "generic" : "nongeneric", Refinement.Name, TargetFile.ToUri());
+            ? string.Format(RP.PSx5, EventId, Host, Generic ? "generic" : "nongeneric", "unrefined", TargetFile.ToUri())
+            : string.Format(RP.PSx5, EventId, Host, Generic ? "generic" : "nongeneric", Refinement.Name, TargetFile.ToUri());
 
         public SpecializedImmEvent Zero
             => default;

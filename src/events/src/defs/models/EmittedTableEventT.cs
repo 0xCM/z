@@ -40,7 +40,7 @@ public class EmittedTableEvent<T> : IEvent<EmittedTableEvent<T>>
     public LogLevel EventLevel => LogLevel.Status;
 
     public string Format()
-        => RP.format(EventId, AppMsg.EmittedTable.Capture(TableId, RowCount, Target));
+        => TextPatterns.piped(EventId, AppMsg.EmittedTable.Capture(TableId, RowCount, Target));
 
     public override string ToString()
         => Format();

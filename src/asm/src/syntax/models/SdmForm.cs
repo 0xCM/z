@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using Asm;
+
 [StructLayout(LayoutKind.Sequential,Pack=1)]
 public readonly record struct SdmForm : IDataType<SdmForm>, IExpr
 {

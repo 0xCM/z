@@ -2,7 +2,7 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0;
+namespace Z0.Asm;
 
 public readonly struct AsmRip
 {
@@ -22,7 +22,7 @@ public readonly struct AsmRip
 
     [MethodImpl(Inline)]
     public static implicit operator AsmRip((MemoryAddress call, byte instsize) src)
-        => new AsmRip(src.call, src.instsize);
+        => new (src.call, src.instsize);
 
     [MethodImpl(Inline)]
     public static implicit operator MemoryAddress(AsmRip src)

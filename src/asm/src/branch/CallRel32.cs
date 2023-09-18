@@ -12,9 +12,9 @@ public readonly struct CallRel32 : IAsmRelInst<Disp32>
     public static byte encode(AsmRip src, MemoryAddress dst, ref byte hex)
     {
         const byte Size = 5;
-        seek(hex, 0) = CallRel32.OpCode;
+        seek(hex, 0) = OpCode;
         i32(seek(hex, 1)) = AsmRel.disp32(src, dst);
-        return CallRel32.InstSize;
+        return InstSize;
     }
 
     [MethodImpl(Inline), Op]

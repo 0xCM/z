@@ -24,7 +24,6 @@ public class SourceDispenser : Dispenser<SourceDispenser>, ISourceDispenser
         iter(Allocators.Values, a => a.Dispose());
     }
 
-
     public SourceText SourceText(ReadOnlySpan<char> src)
     {
         var dst = Z0.SourceText.Empty;

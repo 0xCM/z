@@ -2,101 +2,100 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0.Asm;
+
+[ApiComplete]
+public struct RipBox
 {
-    [ApiComplete]
-    public struct RipBox
+    readonly MemoryAddress PhysicalBase;
+
+    readonly MemoryAddress VirtualBase;
+
+    public readonly ByteSize Size;
+
+    MemoryAddress _IP;
+
+    [MethodImpl(Inline)]
+    public RipBox(MemoryAddress @base, ByteSize size)
     {
-        readonly MemoryAddress PhysicalBase;
+        PhysicalBase = @base;
+        VirtualBase = 0u;
+        Size = size;
+        _IP = 0u;
+    }
 
-        readonly MemoryAddress VirtualBase;
+    [MethodImpl(Inline)]
+    public RipBox(MemoryAddress @base, MemoryAddress virt, ByteSize size)
+    {
+        PhysicalBase = @base;
+        VirtualBase = virt;
+        Size = size;
+        _IP = @base - virt;
+    }
 
-        public readonly ByteSize Size;
-
-        MemoryAddress _IP;
-
+    public readonly MemoryAddress Base
+    {
         [MethodImpl(Inline)]
-        public RipBox(MemoryAddress @base, ByteSize size)
+        get => PhysicalBase - VirtualBase;
+    }
+
+    public readonly MemoryAddress Max
+    {
+        [MethodImpl(Inline)]
+        get => Base + Size;
+    }
+
+    [MethodImpl(Inline)]
+    public MemoryAddress IP()
+        => _IP;
+
+    [MethodImpl(Inline)]
+    public bool IP(MemoryAddress src)
+    {
+        if(src <= Max && src >=Base)
         {
-            PhysicalBase = @base;
-            VirtualBase = 0u;
-            Size = size;
-            _IP = 0u;
+            _IP = src;
+            return true;
         }
+        else
+            return false;
+    }
 
-        [MethodImpl(Inline)]
-        public RipBox(MemoryAddress @base, MemoryAddress virt, ByteSize size)
+    [MethodImpl(Inline)]
+    public readonly bool Contains(MemoryAddress src)
+        => src <= Max && src >=Base;
+
+    [MethodImpl(Inline)]
+    public bool Advance(Disp32 dx, out MemoryAddress dst)
+    {
+        var _next = _IP + (MemoryAddress)(int)dx;
+        if(Contains(_next))
         {
-            PhysicalBase = @base;
-            VirtualBase = virt;
-            Size = size;
-            _IP = @base - virt;
+            _IP = _next;
+            dst = _IP;
+            return true;
         }
-
-        public readonly MemoryAddress Base
+        else
         {
-            [MethodImpl(Inline)]
-            get => PhysicalBase - VirtualBase;
+            dst = 0u;
+            return false;
         }
+    }
 
-        public readonly MemoryAddress Max
+    [MethodImpl(Inline)]
+    public bool Advance(byte sz, Disp32 dx, out MemoryAddress dst)
+    {
+        var _next = (uint)sz + (MemoryAddress)(int)dx + _IP;
+        if(Contains(_next))
         {
-            [MethodImpl(Inline)]
-            get => Base + Size;
+            _IP = _next;
+            dst = _IP;
+            return true;
         }
-
-        [MethodImpl(Inline)]
-        public MemoryAddress IP()
-            => _IP;
-
-        [MethodImpl(Inline)]
-        public bool IP(MemoryAddress src)
+        else
         {
-            if(src <= Max && src >=Base)
-            {
-                _IP = src;
-                return true;
-            }
-            else
-                return false;
-        }
-
-        [MethodImpl(Inline)]
-        public readonly bool Contains(MemoryAddress src)
-            => src <= Max && src >=Base;
-
-        [MethodImpl(Inline)]
-        public bool Advance(Disp32 dx, out MemoryAddress dst)
-        {
-            var _next = _IP + (MemoryAddress)(int)dx;
-            if(Contains(_next))
-            {
-                _IP = _next;
-                dst = _IP;
-                return true;
-            }
-            else
-            {
-                dst = 0u;
-                return false;
-            }
-        }
-
-        [MethodImpl(Inline)]
-        public bool Advance(byte sz, Disp32 dx, out MemoryAddress dst)
-        {
-            var _next = (uint)sz + (MemoryAddress)(int)dx + _IP;
-            if(Contains(_next))
-            {
-                _IP = _next;
-                dst = _IP;
-                return true;
-            }
-            else
-            {
-                dst = 0u;
-                return false;
-            }
+            dst = 0u;
+            return false;
         }
     }
 }

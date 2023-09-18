@@ -30,7 +30,7 @@ public readonly struct EmittingTableEvent : IEvent<EmittingTableEvent>
     public LogLevel EventLevel => LogLevel.Status;
 
     public string Format()
-        => RP.format(EventId, AppMsgs.EmittingTable.Capture(TableId, Target));
+        => TextPatterns.piped(EventId, AppMsgs.EmittingTable.Capture(TableId, Target));
 
 
     public override string ToString()

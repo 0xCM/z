@@ -5,7 +5,7 @@
 namespace Z0;
 
 [StructLayout(LayoutKind.Sequential, Pack=1)]
-public struct AsmInstRef
+public record struct AsmInstRef
 {
     public Hex32 DocId;
 

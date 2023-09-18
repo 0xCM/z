@@ -21,7 +21,9 @@ namespace Z0.Asm
                 if(line.IsEmpty)
                     continue;
 
-                var src = line.Cells(Chars.Pipe, SdmFormDetail.FieldCount).Reader();
+
+
+                var src = text.split(line.Content, Chars.Pipe).Reader();
                 var dst = new SdmFormDetail();
                 Throw.OnError(DataParser.parse(src.Next(), out dst.Seq));
                 Throw.OnError(Asci.parse(src.Next(), n64, out dst.Name));

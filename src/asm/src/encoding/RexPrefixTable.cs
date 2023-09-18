@@ -2,11 +2,9 @@
 // Copyright   :  (c) Chris Moore, 2023
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0;
+namespace Z0.Asm;
 
 using static sys;
-
-using Asm;
 
 public class RexPrefixTable
 {

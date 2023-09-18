@@ -26,11 +26,6 @@ public interface ISourceDispenser : IAllocDispenser
     SourceText SourceText(ReadOnlySpan<string> src);
 }
 
-[Free]
-public interface IDocumentDispenser : IAllocDispenser
-{
-    SourceDoc SourceDocument(FilePath src);
-}
 
 [Free]
 public interface ISymbolDispenser : IAllocDispenser
@@ -73,8 +68,8 @@ public interface ICompositeDispenser :
     ILabelDispenser,
     ISourceDispenser,
     IStringDispenser,
-    ISymbolDispenser,
-    IDocumentDispenser
+    ISymbolDispenser
+    
 {
 
 }

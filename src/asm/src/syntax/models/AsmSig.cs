@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using Asm;
+
 using api = Asm.AsmSigs;
 
 [StructLayout(LayoutKind.Sequential,Pack=1)]

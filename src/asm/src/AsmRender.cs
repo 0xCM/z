@@ -20,6 +20,21 @@ public class AsmRender
 
     static EnumRender<Broadcast64> BCast64 = new();
 
+    public static string format(in AsmInstruction src)
+    {
+        var dst = text.buffer();
+        ref readonly var ops = ref src.Operands;
+        var count = ops.OpCount;
+        dst.Append(src.Mnemonic.Format(MnemonicCase.Lowercase));
+        if(count != 0)
+        {
+            dst.Append(Chars.Space);
+            dst.Append(src.Operands.Format());
+        }
+        return dst.Emit();
+    }
+
+
     public static string format(in AsmOperands src)
     {
         var dst = EmptyString;

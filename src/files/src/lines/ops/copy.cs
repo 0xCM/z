@@ -2,30 +2,29 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    partial class Lines
-    {
-        static MsgPattern<Count,LineNumber,string> BadLineNumber => "BadLineNumber(counter{0} != line{1}, content{2})";
+namespace Z0;
 
-        public static Outcome<uint> copy(FilePath src, FilePath dst, Pair<TextEncodingKind> encoding)
+partial class Lines
+{
+    static MsgPattern<Count,LineNumber,string> BadLineNumber => "BadLineNumber(counter{0} != line{1}, content{2})";
+
+    public static Outcome<uint> copy(FilePath src, FilePath dst, Pair<TextEncodingKind> encoding)
+    {
+        var outcome = Outcome.Success;
+        using var reader = src.LineReader(encoding.Left);
+        using var writer = dst.Writer(encoding.Right);
+        var counter = 1u;
+        while(reader.Next(out var line))
         {
-            var outcome = Outcome.Success;
-            using var reader = src.LineReader(encoding.Left);
-            using var writer = dst.Writer(encoding.Right);
-            var counter = 1u;
-            while(reader.Next(out var line))
+            if(counter != line.LineNumber)
             {
-                if(counter != line.LineNumber)
-                {
-                    var msg = BadLineNumber.Format(counter, line.LineNumber, line.Content);
-                    outcome = (false,msg);
-                    break;
-                }
-                writer.WriteLine(line);
-                counter++;
+                var msg = BadLineNumber.Format(counter, line.LineNumber, line.Content);
+                outcome = (false,msg);
+                break;
             }
-            return (true, counter-1);
+            writer.WriteLine(line);
+            counter++;
         }
+        return (true, counter-1);
     }
 }
