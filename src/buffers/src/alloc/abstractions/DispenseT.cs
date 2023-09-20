@@ -22,11 +22,8 @@ public abstract class Dispense<T>
     public static CompositeDispenser composite()
         => dispenser(() => new CompositeDispenser());
 
-    public static CompositeDispenser composite(MemoryDispenser memory, StringDispenser strings, LabelDispenser labels, SymbolDispenser symbols, SourceDispenser source)
-        => dispenser(() => new CompositeDispenser(memory, strings, labels, symbols, source));
-
-    public static SourceDispenser source(uint capacity = SourceDispenser.DefaultCapacity)
-        => dispenser(() => new SourceDispenser(capacity));
+    public static CompositeDispenser composite(MemoryDispenser memory, StringDispenser strings, LabelDispenser labels, SymbolDispenser symbols)
+        => dispenser(() => new CompositeDispenser(memory, strings, labels, symbols));
 
     public static SymbolDispenser symbols(uint capacity = SymbolDispenser.DefaultCapacity)
         => dispenser(() => new SymbolDispenser());

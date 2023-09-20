@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static DataTypes;
+using static NativeTypes;
 
-using P = PrimalType.Intrinsic;
+using P = PrimalType;
 
 /// <summary>
 /// Defines a type that can produce anonymous or named <see cref='PrimalType'/> values
@@ -51,23 +51,11 @@ public readonly record struct LiteralType : IDataType<LiteralType>
 
     public readonly struct Intrinsic
     {
-        /// <summary>
-        /// Specifies runtime literal types that are considered intrinsic and which correspond to the
-        /// sorts defined byte <see cref='NativeKind'/>
-        /// </summary>
-        public static Type[] ClrIntrinsic => new Type[]{
-            typeof(Null),
-            typeof(bit),
-            typeof(byte),
-            typeof(ushort),
-            typeof(uint),
-            typeof(long),
-            typeof(void),
-        };
-
         public static LiteralType Null => literal(Label.Empty, P.Empty, DataSize.Zero);
 
         public static LiteralType U1 => literal(P.U1.TypeName, P.U1, (1,8));
+
+        public static LiteralType I8 => literal(P.I8.TypeName, P.I8, 8);
 
         public static LiteralType U8 => literal(P.U8.TypeName, P.U8, 8);
 
@@ -81,8 +69,8 @@ public readonly record struct LiteralType : IDataType<LiteralType>
 
         public static Intrinsic Types => new();
 
-        public static implicit operator Index<NativeKind,LiteralType>(Intrinsic src)
-            => _Types;
+        // public static implicit operator Index<NativeKind,LiteralType>(Intrinsic src)
+        //     => _Types;
 
         static LiteralType[] _Types = new LiteralType[]
         {

@@ -7,6 +7,7 @@ namespace Z0;
 using System.Linq;
 
 using static sys;
+using static NativeTypes;
 using static NativeTypeMap;
 using static NativeClass;
 using static NativeSegKind;
@@ -20,6 +21,101 @@ using ID = ScalarKind;
 [ApiHost]
 public partial class NativeSigs
 {
+    [MethodImpl(Inline), Op]
+    public static Shape shape(int n1 = 0, int n2 = 0, int n4 = 0, int n8 = 0, int n16 = 0, int n32 = 0, int n64 = 0)
+    {
+        var dst = new Shape();
+        dst.N1 = n1;
+        dst.N2 = n2;
+        dst.N4 = n4;
+        dst.N8 = n8;
+        dst.N16 = n16;
+        dst.N32 = n32;
+        dst.N64 = n64;
+        return dst;
+    }
+
+    public static Shape shape(ReadOnlySpan<byte> src, NativeSizeCode segmax = NativeSizeCode.W512)
+    {
+        var dst = new Shape();
+        return shape(src,segmax, ref dst);
+    }
+
+    [Op]
+    public static ref Shape shape(ReadOnlySpan<byte> src, NativeSize segmax, ref Shape dst)
+    {
+        const byte N1  = 1;
+        const byte N2  = 2;
+        const byte N4  = 4;
+        const byte N8  = 8;
+        const byte N16 = 16;
+        const byte N32 = 32;
+        const byte N64 = 64;
+
+        var max = (uint)segmax.ByteCount;
+
+        var count = src.Length;
+        if(count == 0)
+            return ref dst;
+
+        var mod = -1;
+        var div = 0;
+        while(mod != 0 && count != 0)
+        {
+            if(count >= N64 && N64 <= max)
+            {
+                div = count/N64;
+                dst.N64 = div;
+                mod = count/N64;
+                count -= div*N64;
+            }
+            else if(count >= N32 && N32 <= max)
+            {
+                div = count/N32;
+                dst.N32 = div;
+                mod = count/N32;
+                count -= div*N32;
+            }
+            else if(count >= N16 && N16 <= max)
+            {
+                div = count/N16;
+                dst.N16 = div;
+                mod = count/N16;
+                count -= div*N16;
+            }
+            else if(count >= N8 && N8 <= max)
+            {
+                div = count/N8;
+                dst.N8 = div;
+                mod = count/N8;
+                count -= div*N8;
+            }
+            else if(count >= N4 && N4 <= max)
+            {
+                div = count/N4;
+                dst.N4 = div;
+                mod = count/N4;
+                count -= div*N4;
+            }
+            else if(count >= N2 && N2 <= max)
+            {
+                div = count/N2;
+                dst.N2 = div;
+                mod = count/N2;
+                count -= div*N2;
+            }
+            else if(count == N1)
+            {
+                div = N1;
+                dst.N1 = div;
+                mod = 0;
+                count -= div*N1;
+            }
+        }
+
+        return ref dst;
+    }
+
     /// <summary>
     /// Determines the block classifier for a blocked type
     /// </summary>
@@ -35,89 +131,89 @@ public partial class NativeSigs
     public static SK segkind(TW width, ID id)
     {
         var k = width switch
-                { TW.W16 =>
-                    id switch {
-                        ID.U8 => Seg16x8u,
-                        ID.I8 => Seg16x8i,
-                        ID.I16 => Seg16i,
-                        ID.U16 => Seg16u,
-                        _ => Void
-                        },
-
-                    TW.W32 =>
-                    id switch {
-                        ID.U8 => Seg32x8u,
-                        ID.I8 => Seg32x8i,
-                        ID.I16 => Seg32x16i,
-                        ID.U16 => Seg32x16u,
-                        ID.I32 => Seg32i,
-                        ID.U32 => Seg32u,
-                        ID.F32 => Seg32f,
-                        _ => Void
-                        },
-
-                    TW.W64 =>
-                    id switch {
-                        ID.U8 => Seg64x8u,
-                        ID.I8 => Seg64x8i,
-                        ID.U16 => Seg64x16u,
-                        ID.I16 => Seg64x16i,
-                        ID.U32 => Seg64x32i,
-                        ID.I32 => Seg64x32i,
-                        ID.U64 => Seg64u,
-                        ID.I64 => Seg64i,
-                        ID.F32 => Seg64x32f,
-                        ID.F64 => Seg64f,
-                        _ => Void
-                        },
-
-                    TW.W128 =>
-                    id switch {
-                        ID.U8 => Seg128x8u,
-                        ID.I8 => Seg128x8i,
-                        ID.U16 => Seg128x16u,
-                        ID.I16 => Seg128x16i,
-                        ID.U32 => Seg128x32i,
-                        ID.I32 => Seg128x32i,
-                        ID.U64 => Seg128x64u,
-                        ID.I64 => Seg128x64i,
-                        ID.F32 => Seg128x32f,
-                        ID.F64 => Seg128x64f,
-                        _ => Void
-                        },
-
-                    TW.W256 =>
-                    id switch {
-                        ID.U8 => Seg256x8u,
-                        ID.I8 => Seg256x8i,
-                        ID.U16 => Seg256x16u,
-                        ID.I16 => Seg256x16i,
-                        ID.U32 => Seg256x32i,
-                        ID.I32 => Seg256x32i,
-                        ID.U64 => Seg256x64u,
-                        ID.I64 => Seg256x64i,
-                        ID.F32 => Seg256x32f,
-                        ID.F64 => Seg256x64f,
-                        _ => Void
-                        },
-
-                    TW.W512 =>
-                    id switch {
-                        ID.U8 => Seg512x8u,
-                        ID.I8 => Seg512x8i,
-                        ID.U16 => Seg512x16u,
-                        ID.I16 => Seg512x16i,
-                        ID.U32 => Seg512x32i,
-                        ID.I32 => Seg512x32i,
-                        ID.U64 => Seg512x64u,
-                        ID.I64 => Seg512x64i,
-                        ID.F32 => Seg512x32f,
-                        ID.F64 => Seg512x64f,
-                        _ => Void
-                        },
-
+            { TW.W16 =>
+                id switch {
+                    ID.U8 => Seg16x8u,
+                    ID.I8 => Seg16x8i,
+                    ID.I16 => Seg16i,
+                    ID.U16 => Seg16u,
                     _ => Void
-                };
+                    },
+
+                TW.W32 =>
+                id switch {
+                    ID.U8 => Seg32x8u,
+                    ID.I8 => Seg32x8i,
+                    ID.I16 => Seg32x16i,
+                    ID.U16 => Seg32x16u,
+                    ID.I32 => Seg32i,
+                    ID.U32 => Seg32u,
+                    ID.F32 => Seg32f,
+                    _ => Void
+                    },
+
+                TW.W64 =>
+                id switch {
+                    ID.U8 => Seg64x8u,
+                    ID.I8 => Seg64x8i,
+                    ID.U16 => Seg64x16u,
+                    ID.I16 => Seg64x16i,
+                    ID.U32 => Seg64x32i,
+                    ID.I32 => Seg64x32i,
+                    ID.U64 => Seg64u,
+                    ID.I64 => Seg64i,
+                    ID.F32 => Seg64x32f,
+                    ID.F64 => Seg64f,
+                    _ => Void
+                    },
+
+                TW.W128 =>
+                id switch {
+                    ID.U8 => Seg128x8u,
+                    ID.I8 => Seg128x8i,
+                    ID.U16 => Seg128x16u,
+                    ID.I16 => Seg128x16i,
+                    ID.U32 => Seg128x32i,
+                    ID.I32 => Seg128x32i,
+                    ID.U64 => Seg128x64u,
+                    ID.I64 => Seg128x64i,
+                    ID.F32 => Seg128x32f,
+                    ID.F64 => Seg128x64f,
+                    _ => Void
+                    },
+
+                TW.W256 =>
+                id switch {
+                    ID.U8 => Seg256x8u,
+                    ID.I8 => Seg256x8i,
+                    ID.U16 => Seg256x16u,
+                    ID.I16 => Seg256x16i,
+                    ID.U32 => Seg256x32i,
+                    ID.I32 => Seg256x32i,
+                    ID.U64 => Seg256x64u,
+                    ID.I64 => Seg256x64i,
+                    ID.F32 => Seg256x32f,
+                    ID.F64 => Seg256x64f,
+                    _ => Void
+                    },
+
+                TW.W512 =>
+                id switch {
+                    ID.U8 => Seg512x8u,
+                    ID.I8 => Seg512x8i,
+                    ID.U16 => Seg512x16u,
+                    ID.I16 => Seg512x16i,
+                    ID.U32 => Seg512x32i,
+                    ID.I32 => Seg512x32i,
+                    ID.U64 => Seg512x64u,
+                    ID.I64 => Seg512x64i,
+                    ID.F32 => Seg512x32f,
+                    ID.F64 => Seg512x64f,
+                    _ => Void
+                    },
+
+                _ => Void
+            };
 
         return k;
     }
@@ -411,7 +507,7 @@ public partial class NativeSigs
             return Void;
     }
 
-    public static byte nonempty(in NativeTypeSeq src)
+    public static byte nonempty(in TypeSeq src)
     {
         var count = z8;
         for(var i=0; i<src.MaxCount; i++)
@@ -425,31 +521,31 @@ public partial class NativeSigs
     }
 
     [MethodImpl(Inline)]
-    public static NativeSegType seg(NativeScalar type, byte count)
-        => new NativeSegType(type,count);
+    public static NativeSegType seg(Scalar type, byte count)
+        => new (type,count);
 
     [MethodImpl(Inline), Op]
-    public static NativeSegType seg16(NativeScalar cell)
+    public static NativeSegType seg16(Scalar cell)
         => seg(cell, (byte)(16/cell.Width));
 
     [MethodImpl(Inline), Op]
-    public static NativeSegType seg32(NativeScalar cell)
+    public static NativeSegType seg32(Scalar cell)
         => seg(cell, (byte)(32/cell.Width));
 
     [MethodImpl(Inline), Op]
-    public static NativeSegType seg64(NativeScalar cell)
+    public static NativeSegType seg64(Scalar cell)
         => seg(cell, (byte)(64/cell.Width));
 
     [MethodImpl(Inline), Op]
-    public static NativeSegType seg128(NativeScalar cell)
+    public static NativeSegType seg128(Scalar cell)
         => seg(cell, (byte)(128/cell.Width));
 
     [MethodImpl(Inline), Op]
-    public static NativeSegType seg256(NativeScalar cell)
+    public static NativeSegType seg256(Scalar cell)
         => seg(cell, (byte)(256/cell.Width));
 
     [MethodImpl(Inline), Op]
-    public static NativeSegType seg512(NativeScalar cell)
+    public static NativeSegType seg512(Scalar cell)
         => seg(cell, (byte)(256/cell.Width));
 
     [MethodImpl(Inline)]
@@ -650,12 +746,12 @@ public partial class NativeSigs
         => Seg512x64f;
 
     [MethodImpl(Inline), Op]
-    public static NativeScalar scalar(NativeSize size, NativeClass @class)
-        => new NativeScalar(size, @class);
+    public static Scalar scalar(NativeSize size, NativeClass @class)
+        => new Scalar(size, @class);
 
     [MethodImpl(Inline), Op]
     public static NativeType @void()
-        => NativeType.define(NativeScalar.Void);
+        => NativeType.define(Scalar.Void);
 
     [MethodImpl(Inline), Op]
     public static NativeType unsigned(NativeSize size)
@@ -793,7 +889,6 @@ public partial class NativeSigs
     public static Operand @out(Label name, NativeType type)
         => op(name,type, Out);
 
-
     [MethodImpl(Inline), Op]
     public static char indicator(NativeClass @class)
         => @class switch {
@@ -805,13 +900,10 @@ public partial class NativeSigs
             _ => ' ',
         };
 
-    public static NativeUnion union(Label name, NativeTypeSeq members)
-        => new (name, members);
-
     public static string format(MapEntry src)
         => string.Format("{0} -> {1}", src.Source, src.Target);
 
-    public static string format(NativeScalar src)
+    public static string format(Scalar src)
         => src.IsVoid ? "void" : string.Format("{0}{1}", (ushort)src.Width, indicator(src.Class));
 
     public static string format(NativeSegType src)

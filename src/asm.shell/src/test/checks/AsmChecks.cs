@@ -988,8 +988,8 @@ c5 f8 99 c8";
     void CheckShapes()
     {
         var data = array<byte>(1,2,3,4,5,6);
-        var actual = NativeShape.calc(data);
-        var expect = NativeShape.define(n4:1, n2:1);
+        var actual = shape(data);
+        var expect = shape(n4:1, n2:1);
         Require.equal(actual,expect);
     }
 

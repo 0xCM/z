@@ -28,9 +28,6 @@ public sealed class GlobalAlloc : Alloc
 
     public static MemorySegment page()
         => Alloc.Pages().Page();
-
-    public static SourceText source(ReadOnlySpan<char> src)
-        => Alloc.Source().SourceText(src);
         
     static ref readonly GlobalAlloc Alloc => ref Instance;
 

@@ -42,11 +42,8 @@ public class Alloc : IDisposable
     public MemoryDispenser Memory(uint capacity = MemoryDispenser.DefaultCapacity)
         => (MemoryDispenser)Data.GetOrAdd(AllocationKind.Memory, k => Dispense.memory(capacity));
 
-    public PageDispenser Pages(uint pages = SourceDispenser.DefaultCapacity)
+    public PageDispenser Pages(uint pages = MemoryDispenser.DefaultCapacity)
         => (PageDispenser)Data.GetOrAdd(AllocationKind.Page, k => Dispense.pages(pages));
-
-    public SourceDispenser Source(uint capacity = SourceDispenser.DefaultCapacity)
-        => (SourceDispenser)Data.GetOrAdd(AllocationKind.Source, k => Dispense.source(capacity));
 
     public StringDispenser Strings(uint capacity = StringDispenser.DefaultCapacity)
         => (StringDispenser)Data.GetOrAdd(AllocationKind.String, k => Dispense.strings(capacity));
@@ -62,7 +59,7 @@ public class Alloc : IDisposable
 
     public CompositeDispenser Composite()
         => (CompositeDispenser)Data.GetOrAdd(AllocationKind.Composite, 
-            _ => Dispense.composite(Memory(), Strings(), Labels(), Symbols(), Source()));
+            _ => Dispense.composite(Memory(), Strings(), Labels(), Symbols()));
 
     public SigDispenser Sigs()
         => (SigDispenser)Data.GetOrAdd(AllocationKind.NativeSig, 

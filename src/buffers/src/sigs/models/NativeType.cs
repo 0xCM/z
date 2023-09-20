@@ -4,18 +4,20 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static NativeSigs;
+
 public readonly struct NativeType : INativeType<NativeType>, IEquatable<NativeType>
 {
     [MethodImpl(Inline)]
-    public static NativeType define(NativeScalar src)
+    public static NativeType define(Scalar src)
         => new (src);
 
     readonly ushort Data;
 
     [MethodImpl(Inline)]
-    public NativeType(NativeScalar src)
+    public NativeType(Scalar src)
     {
-        Data = sys.@as<NativeScalar,byte>(src);
+        Data = sys.@as<Scalar,byte>(src);
     }
 
     [MethodImpl(Inline)]
@@ -36,10 +38,10 @@ public readonly struct NativeType : INativeType<NativeType>, IEquatable<NativeTy
         get => (Data & 0xFF) != 0;
     }
 
-    public NativeScalar CellType
+    public Scalar CellType
     {
         [MethodImpl(Inline)]
-        get => sys.@as<NativeType,NativeScalar>(this);
+        get => sys.@as<NativeType,Scalar>(this);
     }
 
     public NativeClass Class
@@ -65,8 +67,8 @@ public readonly struct NativeType : INativeType<NativeType>, IEquatable<NativeTy
         => sys.@as<NativeType,NativeSegType>(this);
 
     [MethodImpl(Inline)]
-    public NativeScalar AsCellType()
-        => sys.@as<NativeType,NativeScalar>(this);
+    public Scalar AsCellType()
+        => sys.@as<NativeType,Scalar>(this);
 
     [MethodImpl(Inline)]
     public bool Equals(NativeType src)
@@ -86,7 +88,7 @@ public readonly struct NativeType : INativeType<NativeType>, IEquatable<NativeTy
         => Format();
 
     [MethodImpl(Inline)]
-    public static implicit operator NativeType(NativeScalar src)
+    public static implicit operator NativeType(Scalar src)
         => new (src);
 
     [MethodImpl(Inline)]
@@ -108,6 +110,6 @@ public readonly struct NativeType : INativeType<NativeType>, IEquatable<NativeTy
     public static NativeType Void
     {
         [MethodImpl(Inline)]
-        get => new NativeType(NativeScalar.Void);
+        get => new NativeType(Scalar.Void);
     }
 }

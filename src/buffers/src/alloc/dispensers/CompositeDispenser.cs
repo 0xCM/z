@@ -11,8 +11,6 @@ public class CompositeDispenser : Dispenser<CompositeDispenser>, ICompositeDispe
 {
     readonly SymbolDispenser Symbols;
 
-    readonly SourceDispenser Sources;
-
     readonly MemoryDispenser Memories;
 
     readonly LabelDispenser Labels;
@@ -21,11 +19,10 @@ public class CompositeDispenser : Dispenser<CompositeDispenser>, ICompositeDispe
 
     readonly StringDispenser Strings;
 
-    internal CompositeDispenser(MemoryDispenser memory, StringDispenser strings, LabelDispenser labels, SymbolDispenser symbols, SourceDispenser source)
+    internal CompositeDispenser(MemoryDispenser memory, StringDispenser strings, LabelDispenser labels, SymbolDispenser symbols)
         : base(false)
     {
         Symbols = symbols;
-        Sources = source;
         Memories = memory;
         Labels = labels;
         Strings = strings;
@@ -36,7 +33,6 @@ public class CompositeDispenser : Dispenser<CompositeDispenser>, ICompositeDispe
         : base(true)
     {
         Symbols = Dispense.symbols();
-        Sources = Dispense.source();
         Memories = Dispense.memory();
         Labels = Dispense.labels();
         Strings = Dispense.strings();
@@ -46,10 +42,10 @@ public class CompositeDispenser : Dispenser<CompositeDispenser>, ICompositeDispe
     protected override void Dispose()
     {
         (Symbols as IDisposable).Dispose();
-        (Sources as IDisposable).Dispose();
         (Memories  as IDisposable).Dispose();
         (Labels as IDisposable).Dispose();
         (Strings as IDisposable).Dispose();
+        (Sigs as IDisposable).Dispose();
     }
 
     [MethodImpl(Inline)]
@@ -73,20 +69,12 @@ public class CompositeDispenser : Dispenser<CompositeDispenser>, ICompositeDispe
         => Memories.Memory(size);
 
     [MethodImpl(Inline)]
-    public SourceText SourceText(ReadOnlySpan<char> src)
-        => Sources.SourceText(src);
-
-    [MethodImpl(Inline)]
     public Label Label(ReadOnlySpan<char> src)
         => Labels.Label(src);
 
     [MethodImpl(Inline)]
     public StringRef String(ReadOnlySpan<char> content)
         => Strings.String(content);
-
-    [MethodImpl(Inline)]
-    public SourceText SourceText(ReadOnlySpan<string> src)
-        => Sources.SourceText(src);
 
     [MethodImpl(Inline)]
     public MemorySegment Store(ReadOnlySpan<byte> src)

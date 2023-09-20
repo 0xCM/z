@@ -7,48 +7,85 @@ namespace Z0;
 /// <summary>
 /// Classifies type-system primitives
 /// </summary>
-[SymSource("api"), DataWidth(3)]
+[SymSource("api")]
 public enum NativeKind : byte
 {
     /// <summary>
     /// 0
     /// </summary>
     [Symbol("")]
-    None = TypeKey.FirstKey,
+    None,
 
     /// <summary>
-    /// 1
+    /// Specifies a 1-bit value
     /// </summary>
     [Symbol("bit")]
-    U1 = None + 1,
+    U1,
 
     /// <summary>
-    /// 2
+    /// Specifies a signed 8-bit integer
+    /// </summary>
+    [Symbol("sbyte")]
+    I8,
+
+    /// <summary>
+    /// Specifies an unsigned 8-bit integer
     /// </summary>
     [Symbol("byte")]
-    U8 = U1 + 1,
+    U8,
 
     /// <summary>
-    /// 3
+    /// Specifies a signed 16-bit integer
+    /// </summary>
+    [Symbol("short")]
+    I16,
+
+    /// <summary>
+    /// Specifies an unsigned 16-bit integer
     /// </summary>
     [Symbol("ushort")]
-    U16 = U8 + 1,
+    U16,
 
     /// <summary>
-    /// 4
+    /// Specifies a signed 32-bit integer
+    /// </summary>
+    [Symbol("int")]
+    I32,
+
+    /// <summary>
+    /// Specifies an unsigned 32-bit integer
     /// </summary>
     [Symbol("uint")]
-    U32 = U16 + 1,
+    U32,
 
     /// <summary>
-    /// 5
+    /// Specifies a signed 64-bit integer
+    /// </summary>
+    [Symbol("long")]
+    I64,
+
+    /// <summary>
+    /// Specifies an unsigned 64-bit integer
     /// </summary>
     [Symbol("ulong")]
-    U64 = U32 + 1,
+    U64,
 
     /// <summary>
-    /// 6
+    /// Specifies a 32-bit float
+    /// </summary>
+    [Symbol("float")]
+    F32,
+
+    /// <summary>
+    /// Specifies a 64-bit float
+    /// </summary>
+    [Symbol("double")]
+    F64,
+
+
+    /// <summary>
+    /// Void
     /// </summary>
     [Symbol("void")]
-    Void = U64 + 1,
+    Void,
 }

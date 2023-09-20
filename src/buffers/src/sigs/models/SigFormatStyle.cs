@@ -13,7 +13,6 @@ partial class NativeSigs
         C,
 
         CSharp
-    }
-    
+    }    
 }
 

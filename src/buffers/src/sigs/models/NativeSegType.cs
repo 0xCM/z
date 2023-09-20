@@ -4,15 +4,17 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static NativeSigs;
+
 [StructLayout(LayoutKind.Sequential,Pack=1)]
 public readonly record struct NativeSegType : INativeType<NativeSegType>
 {
-    public readonly NativeScalar CellType;
+    public readonly Scalar CellType;
 
     public readonly byte CellCount;
 
     [MethodImpl(Inline)]
-    public NativeSegType(NativeScalar ct, byte count)
+    public NativeSegType(Scalar ct, byte count)
     {
         CellType = ct;
         CellCount = count;
@@ -62,7 +64,7 @@ public readonly record struct NativeSegType : INativeType<NativeSegType>
         => Format();
 
     [MethodImpl(Inline)]
-    public static implicit operator NativeSegType((NativeScalar ct, byte count) src)
+    public static implicit operator NativeSegType((Scalar ct, byte count) src)
         => new (src.ct, src.count);
 
     [MethodImpl(Inline)]
@@ -76,6 +78,6 @@ public readonly record struct NativeSegType : INativeType<NativeSegType>
     public static NativeSegType Void
     {
         [MethodImpl(Inline)]
-        get => new (NativeScalar.Void,0);
+        get => new (Scalar.Void,0);
     }
 }

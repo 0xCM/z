@@ -19,15 +19,6 @@ public interface ILabelDispenser : IAllocDispenser
 }
 
 [Free]
-public interface ISourceDispenser : IAllocDispenser
-{
-    SourceText SourceText(ReadOnlySpan<char> src);
-
-    SourceText SourceText(ReadOnlySpan<string> src);
-}
-
-
-[Free]
 public interface ISymbolDispenser : IAllocDispenser
 {
     LocatedSymbol Symbol(MemoryAddress location, ReadOnlySpan<char> name);
@@ -66,7 +57,6 @@ public interface ICompositeDispenser :
     ISigDispenser,
     IMemoryDispenser,
     ILabelDispenser,
-    ISourceDispenser,
     IStringDispenser,
     ISymbolDispenser
     
