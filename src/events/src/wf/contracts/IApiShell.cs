@@ -8,5 +8,5 @@ public interface IApiShell : IAppShell
 {
     IApiCmdRunner Runner {get;}
 
-    void Init(IWfRuntime wf, ReadOnlySeq<string> args, IApiCmdRunner dispatcher);
+    void Init(IWfRuntime wf, string[] args, IApiCmdRunner dispatcher);
 }    

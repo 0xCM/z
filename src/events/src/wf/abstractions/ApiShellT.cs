@@ -9,7 +9,7 @@ public abstract class ApiShell<S> : AppShell<S>, IApiShell
 {
     public IApiCmdRunner Runner {get; private set;}
     
-    public void Init(IWfRuntime wf, ReadOnlySeq<string> args, IApiCmdRunner runner)
+    public void Init(IWfRuntime wf, string[] args, IApiCmdRunner runner)
     {
         base.Init(wf, args);
         Runner = runner;

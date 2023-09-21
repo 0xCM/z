@@ -8,5 +8,7 @@ public interface IAppShell : IDisposable
 {
     void Run();
 
-    void Init(IWfRuntime wf, ReadOnlySeq<string> args);
+    ref readonly string[] Args {get;}
+    
+    void Init(IWfRuntime wf, string[] args);
 }

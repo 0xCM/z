@@ -4,12 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-partial class AsmCmd
+using static AsmOcTables;
+
+/// <summary>
+/// Classifes <see cref='AsmOcTables'/> members
+/// </summary>
+[LiteralProvider(GroupName)]
+public enum AsmOcTableKind : byte
 {
-    [CmdOp("sdm/export/opcodes")]
-    void ExportOpCodes()
-    {
-        Sdm.ExportOpCodes();
-    }
-   
+
+
 }

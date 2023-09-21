@@ -7,9 +7,12 @@ namespace Z0;
 public abstract class AppShell<A> : AppService<A>, IAppShell
     where A : AppShell<A>, new()
 {
-    public ReadOnlySeq<string> Args {get; private set;}
+    string[] Args;
 
-    public void Init(IWfRuntime wf, ReadOnlySeq<string> args)
+    ref readonly string[] IAppShell.Args
+        => ref Args;
+
+    public void Init(IWfRuntime wf, string[] args)
     {
         base.Init(wf);
         Args = args;
@@ -38,4 +41,6 @@ public abstract class AppShell<A> : AppService<A>, IAppShell
     {
         Run();
     }
+
+
 }

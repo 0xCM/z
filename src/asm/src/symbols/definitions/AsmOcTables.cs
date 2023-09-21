@@ -3,16 +3,15 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
-
 public class AsmOcTables
 {
-    public const string Group = "asm.oct";
+    public const string GroupName = "asm.oct";
 
     /// <summary>
     /// Defines opcode operand types
     /// </summary>
     /// <remarks>From ## Vol. 2 Section A.2.2: Codes for Operand Type</remarks>
-    [SymSource(Group)]
+    [SymSource(GroupName)]
     public enum OperandType : byte
     {
         [Symbol("a", "Two one-word operands in memory or two double-word operands in memory, depending on operand-size attribute (used only by the BOUND instruction)")]
@@ -85,7 +84,7 @@ public class AsmOcTables
         Ib,
     }
 
-    [SymSource(Group)]
+    [SymSource(GroupName)]
     public enum AddressingType : byte
     {
         [Symbol("A","Direct address: the instruction has no ModR/M byte; the address of the operand is encoded in the instruction. No base register, index register, or scaling factor can be applied (for example, far JMP (EA))")]
@@ -164,7 +163,7 @@ public class AsmOcTables
         Y,
     }
 
-    [SymSource(Group)]
+    [SymSource(GroupName)]
     public enum Refinements : byte
     {
         [Symbol("1A", "Bits 5, 4, and 3 of ModR/M byte used as an opcode extension")]
