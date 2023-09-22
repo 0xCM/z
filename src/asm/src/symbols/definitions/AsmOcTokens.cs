@@ -10,7 +10,7 @@ using T = AsmOcSymbols;
 [LiteralProvider(GroupName)]
 public class AsmOcTokens
 {
-    public const string GroupName = "asm.opcodes";
+    public const string GroupName = "opcodes";
 
     [SymSource(GroupName), TokenKind(TK.Hex16)]
     public enum Hex16Token : byte

@@ -12,21 +12,26 @@ public class AsmTokens
 
     static readonly SymbolGroup _AsmSigTokens = new SymbolGroup(typeof(AsmSigTokenKind), typeof(AsmSigTokens));
 
-    static readonly SymbolGroup _ConditionTokens = new SymbolGroup(typeof(ConditionTokenKind), typeof(ConditionCodes));
+    static readonly SymbolGroup _ConditionTokens = new SymbolGroup(typeof(ConditionTokenKind), typeof(ConditionTokens));
 
-    public static ref readonly SymbolGroup OpCodeTokens => ref _AsmOcTokens;
+    static readonly SymbolGroup _AsmOcTables = new SymbolGroup(typeof(AsmOcTableKind), typeof(AsmOcTables));
 
-    public static ref readonly SymbolGroup RegTokens => ref _AsmRegTokens;
+    public static ref readonly SymbolGroup OpCodes => ref _AsmOcTokens;
 
-    public static ref readonly SymbolGroup SigTokens => ref _AsmSigTokens;
+    public static ref readonly SymbolGroup Registers => ref _AsmRegTokens;
 
-    public static ref readonly SymbolGroup ConditionTokens => ref _ConditionTokens;
+    public static ref readonly SymbolGroup Sigs => ref _AsmSigTokens;
+
+    public static ref readonly SymbolGroup Conditions => ref _ConditionTokens;
+
+    public static ref readonly SymbolGroup OpCodeTables => ref _AsmOcTables;
 
     public static IEnumerable<SymbolGroup> groups()
     {
         yield return _AsmOcTokens;
         yield return _AsmRegTokens;
         yield return _AsmSigTokens;
+        yield return _AsmOcTables;
         yield return _ConditionTokens;
     }
 

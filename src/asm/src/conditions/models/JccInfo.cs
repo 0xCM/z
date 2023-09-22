@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
+using static ConditionTokens;
 [StructLayout(LayoutKind.Sequential, Pack=1)]
 public readonly record struct JccInfo
 {

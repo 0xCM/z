@@ -12,7 +12,7 @@ using I = RegIndexCode;
 [LiteralProvider(GroupName)]
 public class AsmRegTokens
 {
-    public const string GroupName = "asm.regs.tokens";
+    public const string GroupName = "regs";
 
     /// <summary>
     /// Clasifies the gp reg codes

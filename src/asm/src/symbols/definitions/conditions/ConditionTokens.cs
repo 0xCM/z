@@ -8,21 +8,12 @@ using static BitSeq;
 
 using TK = ConditionTokenKind;
 
-public enum ConditionTokenKind : byte
+[LiteralProvider(GroupName)]
+public partial class ConditionTokens
 {
-    None = 0,
+    public const string GroupName = "conditions";
 
-    Condition,
-
-    Alt,
-}
-
-[LiteralProvider(Group)]
-public class ConditionCodes
-{
-    public const string Group = "asm.cc";
-
-    [LiteralProvider(Group)]
+    [LiteralProvider(GroupName)]
     public readonly struct ConditionFacets
     {
         public const byte ConditionCount = 16;
@@ -42,7 +33,7 @@ public class ConditionCodes
     /// <remarks>
     /// From Vol2D, appendix B.1.4.7
     /// </remarks>
-    [SymSource(Group), TokenKind(TK.Condition)]
+    [SymSource(GroupName), TokenKind(TK.Condition)]
     public enum Condition : byte
     {
         /// <summary>
@@ -142,7 +133,7 @@ public class ConditionCodes
         NLE = b1111,
     }
 
-    [SymSource(Group), TokenKind(TK.Alt)]
+    [SymSource(GroupName), TokenKind(TK.Alt)]
     public enum ConditionAlt : byte
     {
         /// <summary>
@@ -241,4 +232,7 @@ public class ConditionCodes
         [Symbol("GT", "Greater Than")]
         GT = b1111,
     }
+
+
+
 }

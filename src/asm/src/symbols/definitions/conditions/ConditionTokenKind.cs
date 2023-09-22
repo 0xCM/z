@@ -4,9 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-partial struct asm
+[LiteralProvider(ConditionTokens.GroupName)]
+public enum ConditionTokenKind : byte
 {
-    [MethodImpl(Inline), Op]
-    public static AsmBlockLabel label(string name)
-        => new (name);
+    None = 0,
+
+    Condition,
+
+    Alt,
 }

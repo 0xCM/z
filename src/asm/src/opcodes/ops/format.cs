@@ -11,9 +11,6 @@ partial class SdmOpCodes
         if(src.IsEmpty)
             return EmptyString;
 
-        if(Datasets.Expressions.Find(src.Id, out var xpr))
-            return xpr;
-
         return RP.Error;
     }
 

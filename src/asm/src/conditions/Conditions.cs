@@ -5,8 +5,8 @@
 namespace Z0.Asm;
 
 using static sys;
-using static ConditionCodes;
-using static ConditionCodes.ConditionFacets;
+using static ConditionTokens;
+using static ConditionTokens.ConditionFacets;
 
 [ApiComplete]
 public sealed class Conditions

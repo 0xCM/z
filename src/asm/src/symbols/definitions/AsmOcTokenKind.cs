@@ -7,7 +7,7 @@ namespace Z0.Asm;
 using static Asm.AsmOcTokens;
 
 /// <summary>
-/// Classifes <see cref='AsmOcTokenTokenGroup'/> members
+/// Classifes <see cref='Asm.AsmOcTokens'/> members
 /// </summary>
 [LiteralProvider(GroupName)]
 public enum AsmOcTokenKind : byte

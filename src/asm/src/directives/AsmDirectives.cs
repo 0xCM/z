@@ -72,14 +72,14 @@ namespace Z0.Asm
 
         [MethodImpl(Inline), Op]
         public static AsmDirective define(asci16 name)
-            => new AsmDirective(name);
+            => new (name);
 
         public static AsmDirective define(AsmDirectiveKind kind, AsmDirectiveOp op0 = default, AsmDirectiveOp op1 = default, AsmDirectiveOp op2 = default)
-            => new AsmDirective(Symbols.index<AsmDirectiveKind>()[kind].Expr.Format(),op0,op1,op2);
+            => new (Symbols.index<AsmDirectiveKind>()[kind].Expr.Format(),op0,op1,op2);
 
         [MethodImpl(Inline), Op]
         public static AsmDirective define(asci16 name, AsmDirectiveOp op0, AsmDirectiveOp op1, AsmDirectiveOp op2 = default)
-            => new AsmDirective(name, op0, op1, op2);
+            => new (name, op0, op1, op2);
 
         [Op]
         public static AsmDirective define(asci16 name, ReadOnlySpan<AsmDirectiveOp> args)

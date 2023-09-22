@@ -6,6 +6,8 @@ namespace Z0.Asm;
 
 using static sys;
 
+using static ConditionTokens;
+
 public class AsmEncoderData
 {
     const byte ConditionCount = 16;

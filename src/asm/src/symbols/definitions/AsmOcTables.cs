@@ -3,15 +3,17 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
+
+using Tk = AsmOcTableKind;
 public class AsmOcTables
 {
-    public const string GroupName = "asm.oct";
+    public const string GroupName = "opcodes.tables";
 
     /// <summary>
     /// Defines opcode operand types
     /// </summary>
     /// <remarks>From ## Vol. 2 Section A.2.2: Codes for Operand Type</remarks>
-    [SymSource(GroupName)]
+    [SymSource(GroupName), TokenKind(Tk.OperandType)]
     public enum OperandType : byte
     {
         [Symbol("a", "Two one-word operands in memory or two double-word operands in memory, depending on operand-size attribute (used only by the BOUND instruction)")]
@@ -84,7 +86,7 @@ public class AsmOcTables
         Ib,
     }
 
-    [SymSource(GroupName)]
+    [SymSource(GroupName), TokenKind(Tk.AddressingType)]
     public enum AddressingType : byte
     {
         [Symbol("A","Direct address: the instruction has no ModR/M byte; the address of the operand is encoded in the instruction. No base register, index register, or scaling factor can be applied (for example, far JMP (EA))")]
@@ -163,7 +165,7 @@ public class AsmOcTables
         Y,
     }
 
-    [SymSource(GroupName)]
+    [SymSource(GroupName), TokenKind(Tk.Refinements)]
     public enum Refinements : byte
     {
         [Symbol("1A", "Bits 5, 4, and 3 of ModR/M byte used as an opcode extension")]
@@ -194,6 +196,7 @@ public class AsmOcTables
         v1,
     }
 
+    [SymSource(GroupName), TokenKind(Tk.RegIndicator)]
     public enum RegIndicator : byte
     {
         [Symbol("eXX", "Form of register identifier that indicates 16 or 32-bit widths are applicable")]

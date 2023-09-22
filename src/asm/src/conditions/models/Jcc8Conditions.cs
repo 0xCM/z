@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
+using static ConditionTokens;
+
 [StructLayout(LayoutKind.Sequential, Pack=1), DataTypeAttributeD("asm.conditions.jcc8")]
 public record struct Jcc8Conditions : IConditional
 {

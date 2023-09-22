@@ -4,21 +4,19 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using static AsmOcTables;
-
-/// <summary>
-/// Classifes <see cref='AsmOcTables'/> members
-/// </summary>
-[LiteralProvider(GroupName)]
-public enum AsmOcTableKind : byte
+public enum AsmTokenKind : byte
 {
     None,
-    
-    OperandType,
 
-    AddressingType,
+    Register,
 
-    Refinements,
+    OpCode,
 
-    RegIndicator
+    OpCodeTable,
+
+    Sig,
+
+    Conditions,
+
+    Syntax
 }
