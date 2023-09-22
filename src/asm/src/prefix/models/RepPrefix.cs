@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using static AsmPrefixCodes;
+using static AsmPrefixTokens;
 
 public record struct RepPrefix : IAsmPrefix<RepPrefixCode>, IAsmByte<RepPrefix>
 {

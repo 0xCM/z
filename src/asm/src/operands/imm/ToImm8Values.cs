@@ -5,6 +5,7 @@
 namespace Z0
 {
     using Asm;
+    
     public static partial class XTend
     {
         [Op]

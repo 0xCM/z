@@ -18,7 +18,7 @@ public enum AsmOcTableKind : byte
 
     AddressingType,
 
-    Refinements,
+    Superscripts,
 
     RegIndicator
 }

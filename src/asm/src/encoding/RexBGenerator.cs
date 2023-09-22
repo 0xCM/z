@@ -5,7 +5,7 @@
 namespace Z0.Asm;
 
 using static sys;
-using static AsmOcTokens;
+using static AsmOpCodeTokens;
 
 /// <summary>
 /// Generates <see cref='RexB'/> tables

@@ -5,9 +5,9 @@
 namespace Z0.Asm;
 
 using static sys;
-using static AsmPrefixCodes;
+using static AsmPrefixTokens;
 
-using K = AsmPrefixCodes.VexPrefixKind;
+using K = AsmPrefixTokens.VexPrefixKind;
 
 /// <remarks>
 /// [ Byte1[R | vvvv | L | pp] | Byte0[11000101b=0xC5]]

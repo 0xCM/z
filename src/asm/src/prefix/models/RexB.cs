@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using static AsmOcTokens;
+using static AsmOpCodeTokens;
 
 /// <summary>
 /// [Index:[00000] | Token:[000]]

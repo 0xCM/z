@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using F = AsmPrefixCodes.VsibField;
+using F = AsmPrefixTokens.VsibField;
 
 /// <summary>
 /// Represents a VSIB address

@@ -8,7 +8,7 @@ using static Pow2x32;
 
 using static AsmPrefixGroup;
 
-[Flags,SymSource(AsmPrefixCodes.Group)]
+[Flags,SymSource(AsmPrefixTokens.GroupName)]
 public enum AsmPrefixKind : uint
 {
     None = 0,

@@ -7,7 +7,7 @@ namespace Z0;
 using Asm;
 
 using static sys;
-using static AsmPrefixCodes;
+using static Asm.AsmPrefixTokens;
 using static Asm.AsmRegTokens;
 using static XedRules;
 using static NativeSigs;
@@ -674,6 +674,7 @@ c5 f8 99 c8";
         CheckJmp32(n1);
         CheckJmp32(n2);
     }
+
 
 
     [CmdOp("asm/check/specs")]

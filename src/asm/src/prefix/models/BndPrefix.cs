@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using static AsmPrefixCodes;
+using static AsmPrefixTokens;
 
 public readonly record struct BndPrefix : IAsmPrefix<BndPrefixCode>
 {

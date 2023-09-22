@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using static Asm.AsmOcTokens;
+using static Asm.AsmOpCodeTokens;
 
 /// <summary>
-/// Classifes <see cref='Asm.AsmOcTokens'/> members
+/// Classifes <see cref='Asm.AsmOpCodeTokens'/> members
 /// </summary>
 [LiteralProvider(GroupName)]
 public enum AsmOcTokenKind : byte

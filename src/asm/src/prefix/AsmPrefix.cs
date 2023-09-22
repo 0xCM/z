@@ -5,7 +5,7 @@
 namespace Z0.Asm;
 
 using static sys;
-using static AsmPrefixCodes;
+using static AsmPrefixTokens;
 
 using Code = AsmPrefixCode;
 using Kind = AsmPrefixKind;

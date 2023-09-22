@@ -9,7 +9,7 @@ using static RuntimeModeKind;
 using static OpszKind;
 using static AsmOpCodes;
 
-using SZ = AsmPrefixCodes.SizeOverrideCode;
+using SZ = AsmPrefixTokens.SizeOverrideCode;
 
 [ApiHost]
 public readonly struct AsmPrefixTests

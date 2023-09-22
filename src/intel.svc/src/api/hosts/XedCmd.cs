@@ -83,7 +83,7 @@ public partial class XedCmd : WfAppCmd<XedCmd>
     Outcome GenTokenSpecs(CmdArgs args)
     {
         var result = Outcome.Success;
-        var src = Symbols.concat(Symbols.index<AsmOcTokens.VexToken>());
+        var src = Symbols.concat(Symbols.index<AsmOpCodeTokens.VexToken>());
         var name = "VexTokens";
         var dst = AppDb.CgStage().Path("literals", name, FileKind.Cs);
         using var writer = dst.Writer();

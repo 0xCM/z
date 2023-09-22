@@ -75,15 +75,6 @@ public class AsmOcTables
 
         [Symbol("z", "Word for 16-bit operand-size or doubleword for 32 or 64-bit operand-size")]
         z,
-
-        [Symbol("Ev", "The ModR/M byte follows the opcode to specify a word or doubleword operand")]
-        Ev,
-
-        [Symbol("Gv", "The reg field of the ModR/M byte selects a general-purpose register")]
-        Gv,
-
-        [Symbol("Ib", "Immediate data is encoded in the subsequent byte of the instruction")]
-        Ib,
     }
 
     [SymSource(GroupName), TokenKind(Tk.AddressingType)]
@@ -165,8 +156,8 @@ public class AsmOcTables
         Y,
     }
 
-    [SymSource(GroupName), TokenKind(Tk.Refinements)]
-    public enum Refinements : byte
+    [SymSource(GroupName), TokenKind(Tk.Superscripts)]
+    public enum Superscript : byte
     {
         [Symbol("1A", "Bits 5, 4, and 3 of ModR/M byte used as an opcode extension")]
         A1,

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm
 {
-    using static AsmPrefixCodes;
+    using static AsmPrefixTokens;
     using static sys;
 
     [DataWidth(24), ApiComplete]

@@ -8,7 +8,7 @@ using TK = AsmOcTokenKind;
 using T = AsmOcSymbols;
 
 [LiteralProvider(GroupName)]
-public class AsmOcTokens
+public class AsmOpCodeTokens
 {
     public const string GroupName = "opcodes";
 

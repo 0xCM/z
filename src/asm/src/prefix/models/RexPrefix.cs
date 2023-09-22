@@ -8,7 +8,7 @@ using static sys;
 
 using F = RexFields;
 
-using static AsmPrefixCodes;
+using static AsmPrefixTokens;
 
 /// <summary>
 /// REX = [0100 | W:4 | R:3 | X:2 | B:1]

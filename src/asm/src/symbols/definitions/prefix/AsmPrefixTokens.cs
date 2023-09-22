@@ -2,20 +2,21 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0;
+namespace Z0.Asm;
 
 using Asm;
 
 using static Hex8Kind;
 
 using NBK = NumericBaseKind;
+using Tk = PrefixTokenKind;
 
 [ApiHost]
-public class AsmPrefixCodes
+public class AsmPrefixTokens
 {
     public static RexPrefixCode RexW => RexPrefixCode.W;
 
-    public const string Group = "asm.prefixes";
+    public const string GroupName = "prefixes";
 
     [MethodImpl(Inline), Op]
     public static RexPrefix rex(uint4 wrxb)
@@ -33,7 +34,28 @@ public class AsmPrefixCodes
     public static RexPrefix rex()
         => (byte)RexPrefixCode.Base;
 
-    [SymSource(Group)]
+
+    [SymSource(GroupName), TokenKind(Tk.RexMode)]
+    public enum RexPrefixMode : byte
+    {
+        [Symbol("00")]
+        R00 = 0,
+
+        [Symbol("01")]
+        R01 = 1,
+
+        [Symbol("10")]
+        R10 = 2,
+
+        [Symbol("11")]
+        R11 = 3,
+
+        Indirect = R00 | R01 | R10,
+
+        Direct = R11,
+    }
+
+    [SymSource(GroupName), TokenKind(Tk.Vsib)]
     public enum VsibField : byte
     {
         /// <summary>
@@ -59,7 +81,7 @@ public class AsmPrefixCodes
     /// Defines 3-bit emission codes for vex map specification as determined by the presence
     /// of a <see cref='AsmVL'/> value and a <see cref='XedVexKind'/> value
     /// </summary>
-    [SymSource(Group, NumericBaseKind.Base2), DataWidth(num3.Width)]
+    [SymSource(GroupName, NumericBaseKind.Base2), DataWidth(num3.Width), TokenKind(Tk.VexRXB)]
     public enum VexRXB : byte
     {
         /// <summary>
@@ -114,7 +136,7 @@ public class AsmPrefixCodes
     /// <summary>
     /// Specifies an opcode extension providing equivalent functionality of a SIMD prefix and specifies the encoding of the 'pp' field, Vol. 2A 2-15
     /// </summary>
-    [SymSource(Group)]
+    [SymSource(GroupName), TokenKind(Tk.VexOpCodeExtension)]
     public enum VexOpCodeExtension : byte
     {
         None = 0,
@@ -132,7 +154,7 @@ public class AsmPrefixCodes
     /// <summary>
     /// Specifies a vector length in the context of the VEX encoding scheme, Vol. 2A 2-15
     /// </summary>
-    [SymSource(Group)]
+    [SymSource(GroupName), TokenKind(Tk.VexLength)]
     public enum VexLengthCode : byte
     {
         [Symbol("L0", "Specifies a vector length of 128 in the contex of the VEX encoding scheme")]
@@ -155,7 +177,7 @@ public class AsmPrefixCodes
     /// 00100-11111B | Reserved
     /// 2-byte VEX   | 0F
     /// </remarks>
-    [SymSource(Group,NumericBaseKind.Base2), DataWidth(2)]
+    [SymSource(GroupName,NumericBaseKind.Base2), DataWidth(2), TokenKind(Tk.VexM)]
     public enum VexM : byte
     {
         None = 0b0,
@@ -170,7 +192,7 @@ public class AsmPrefixCodes
         x0F3A = 0b11,
     }
 
-    [SymSource(Group, NumericBaseKind.Base16)]
+    [SymSource(GroupName, NumericBaseKind.Base16), TokenKind(Tk.VexPrefix)]
     public enum VexPrefixCode
     {
         [Symbol("C4", "Indicates a VEX prefix begins with 0xC4 and is 3 bytes in length")]
@@ -180,7 +202,7 @@ public class AsmPrefixCodes
         C5 = 0xC5,
     }
 
-    [SymSource(Group), DataWidth(3)]
+    [SymSource(GroupName), DataWidth(3), TokenKind(Tk.VexWidth)]
     public enum VectorWidthCode : byte
     {
         [Symbol("V128", "VL=0")]
@@ -195,7 +217,7 @@ public class AsmPrefixCodes
         INVALID = 3,
     }
 
-    [SymSource(Group), DataWidth(3)]
+    [SymSource(GroupName), DataWidth(3), TokenKind(Tk.EvexWidth)]
     public enum EvexWidthCode
     {
         [Symbol("V128", "VL=0")]
@@ -211,7 +233,7 @@ public class AsmPrefixCodes
     /// <summary>
     /// Defines REX field identifiers
     /// </summary>
-    [SymSource(Group), DataWidth(3)]
+    [SymSource(GroupName), DataWidth(3), TokenKind(Tk.RexField)]
     public enum RexFieldIndex : byte
     {
         [Symbol("b")]
@@ -230,7 +252,7 @@ public class AsmPrefixCodes
     /// <summary>
     /// Defines the lock prefix code
     /// </summary>
-    [SymSource(Group, NBK.Base16)]
+    [SymSource(GroupName, NBK.Base16), TokenKind(Tk.Lock)]
     public enum LockPrefixCode : byte
     {
         None = 0,
@@ -239,7 +261,7 @@ public class AsmPrefixCodes
         LOCK = 0xF0,
     }
 
-    [SymSource(Group, NBK.Base16)]
+    [SymSource(GroupName, NBK.Base16), TokenKind(Tk.BranchHint)]
     public enum BranchHintCode : byte
     {
         /// <summary>
@@ -255,7 +277,7 @@ public class AsmPrefixCodes
         BNT = 0x3e,
     }
 
-    [SymSource(Group, NBK.Base16)]
+    [SymSource(GroupName, NBK.Base16), TokenKind(Tk.SizeOverride)]
     public enum SizeOverrideCode : byte
     {
         None = 0,
@@ -284,7 +306,7 @@ public class AsmPrefixCodes
     /// <summary>
     /// Defines the mandatory prefix codes as specified by Intel Vol II, 2.1.2
     /// </summary>
-    [SymSource(Group, NBK.Base16)]
+    [SymSource(GroupName, NBK.Base16), TokenKind(Tk.Mandatory)]
     public enum MandatoryPrefixCode : byte
     {
         [Symbol("66")]
@@ -297,7 +319,7 @@ public class AsmPrefixCodes
         F3 = 0xF3,
     }
 
-    [SymSource(Group, NBK.Base16)]
+    [SymSource(GroupName, NBK.Base16), TokenKind(Tk.Bnd)]
     public enum BndPrefixCode : byte
     {
         [Symbol("BND")]
@@ -307,7 +329,7 @@ public class AsmPrefixCodes
     /// <summary>
     /// The segment override codes as specified by Intel Vol II, 2.1.1
     /// </summary>
-    [SymSource(Group, NBK.Base16)]
+    [SymSource(GroupName, NBK.Base16), TokenKind(Tk.SegOverride)]
     public enum SegOverrideCode : byte
     {
         [Symbol("cs", "CS segment override")]
@@ -332,7 +354,7 @@ public class AsmPrefixCodes
     /// <summary>
     /// Classfies vex prefix codes
     /// </summary>
-    [SymSource(Group, NBK.Base16)]
+    [SymSource(GroupName, NBK.Base16), TokenKind(Tk.VexPrefix)]
     public enum VexPrefixKind : byte
     {
         [Symbol("C4", "The leading byte of a 3-byte vex prefix sequence")]
@@ -346,7 +368,7 @@ public class AsmPrefixCodes
     /// [0100 0001] | W:0 | R:0 | X:0 | B:1
     /// </summary>
     [Flags]
-    [SymSource(Group, NBK.Base16)]
+    [SymSource(GroupName, NBK.Base16), TokenKind(Tk.RexPrefix)]
     public enum RexPrefixCode : byte
     {
         /// <summary>
@@ -383,7 +405,7 @@ public class AsmPrefixCodes
         W = 0x48,
     }
 
-    [SymSource(Group, NBK.Base16)]
+    [SymSource(GroupName, NBK.Base16), TokenKind(Tk.Rep)]
     public enum RepPrefixCode : byte
     {
         [Symbol("F2")]

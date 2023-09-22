@@ -4,8 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using static AsmPrefixCodes;
-using static AsmPrefixCodes.SizeOverrideCode;
+using static AsmPrefixTokens;
+using static AsmPrefixTokens.SizeOverrideCode;
 
 public readonly record struct SizeOverride
 {
