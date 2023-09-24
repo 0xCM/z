@@ -10,6 +10,8 @@ namespace Z0
 
         public Asset Algorithms() => Asset("intrinsics.algorithms.txt");
 
-        public Asset XedFileHeader() => Asset("xedheader.cs");        
+        public Asset XedFileHeader() => Asset("xedheader.cs");
+
+        public Asset TypeDeclarations() => Asset("intel.intrinsics.types.h");
     }
 }

@@ -6,28 +6,28 @@ namespace Z0;
 
 using static sys;
 
+using api = Lcg;
 
-using api = Lcg8Ops;
-
-[Rng(nameof(Lcg8))]
-public struct Lcg8 : IRng<byte>
+[Rng("Lcg<{0}>")]
+public struct Lcg<T> : IRng<T>
+    where T : unmanaged
 {
-    internal readonly byte Mul;
+    internal readonly T Mul;
 
-    internal readonly byte Inc;
+    internal readonly T Inc;
 
-    internal readonly byte Mod;
+    internal readonly T Mod;
 
-    internal readonly byte Seed;
+    internal readonly T Seed;
 
-    internal readonly byte Min;
+    internal readonly T Min;
 
-    internal readonly byte Max;
+    internal readonly T Max;
 
-    internal byte State;
+    internal T State;
 
     [MethodImpl(Inline)]
-    internal Lcg8(byte mul, byte inc, byte mod, byte seed)
+    internal Lcg(T mul, T inc, T mod, T seed)
         : this()
     {
         Mul = mul;
@@ -39,17 +39,18 @@ public struct Lcg8 : IRng<byte>
         Max = api.max(this);
     }
 
-    [MethodImpl(Inline)]
-    public byte Next()
-        => api.next(this);
+    public Label Name => "Lcg<{0}>";
 
-    public ByteSize Fill(Span<byte> dst)
+    [MethodImpl(Inline)]
+    public T Next()
+        => api.advance(ref this).State;
+
+    public ByteSize Fill(Span<T> dst)
     {
+        var sz = size<T>();
         var size = 0u;
-        for(var i=0; i<dst.Length; i++, size+=8)
+        for(var i=0; i<dst.Length; i++, size+=sz)
             seek(dst,i) = Next();
         return size;
     }
-
-    public Label Name => nameof(Lcg8);
 }

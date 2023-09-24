@@ -7,8 +7,17 @@ namespace Z0;
 using static sys;
 
 [ApiHost]
-public readonly struct LcgOps
+public class Lcg
 {
+    [MethodImpl(Inline), Op]
+    public static Lcg8 create(N8 n, byte mul, byte inc, byte mod, byte seed)
+        => new (mul, inc, mod, seed);
+
+    [MethodImpl(Inline), Op]
+    public static Lcg64 create(N64 n, ulong mul, ulong inc, ulong mod, ulong seed, ulong min, ulong max)
+        => new (mul,inc,mod,seed,min,max);
+
+
     [MethodImpl(Inline), Op, Closures(UInt64k)]
     public static Lcg<T> create<T>(T mul, T inc, T mod, T seed)
         where T : unmanaged
@@ -36,15 +45,10 @@ public readonly struct LcgOps
     }
 
     [MethodImpl(Inline), Op, Closures(UInt64k)]
-    public static T next<T>(in Lcg<T> g)
-        where T : unmanaged
-            => gmath.mod(gmath.add(gmath.mul(g.Mul,g.State),  g.Inc),  g.Mod);
-
-    [MethodImpl(Inline), Op, Closures(UInt64k)]
     public static ref Lcg<T> advance<T>(ref Lcg<T> g)
         where T : unmanaged
     {
-        g.State = next(g);
+        g.State = gmath.mod(gmath.add(gmath.mul(g.Mul,g.State),  g.Inc),  g.Mod);
         return ref g;
     }
 
@@ -66,4 +70,5 @@ public readonly struct LcgOps
     public static T max<T>(in Lcg<T> g)
         where T : unmanaged
             => gmath.sub(g.Mod, one<T>());
+
 }

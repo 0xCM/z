@@ -10,7 +10,7 @@ partial class IntrinsicsDoc
     {
         public const string ElementName = "instruction";
 
-        public readonly @string name;
+        public readonly AsmMnemonic name;
 
         public readonly @string form;
 
@@ -26,7 +26,7 @@ partial class IntrinsicsDoc
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => text.empty(name) && text.empty(form) && xed == 0;
+            get => name.IsNonEmpty && text.empty(form) && xed == 0;
         }
 
         public bool IsNonEmpty

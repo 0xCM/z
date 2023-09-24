@@ -18,6 +18,16 @@ partial class IntrinsicsDoc
             Content = text.despace(src.Replace('\t', ' '));
         }
 
+        public bool IsEmpty
+        {
+            get => Content.IsEmpty;
+        }
+
+        public bool IsNonEmpty
+        {
+            get => Content.IsNonEmpty;
+        }
+
         public string Format()
             => Content;
 
@@ -26,7 +36,7 @@ partial class IntrinsicsDoc
 
         [MethodImpl(Inline)]
         public static implicit operator Description(string src)
-            => new Description(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator string(Description src)

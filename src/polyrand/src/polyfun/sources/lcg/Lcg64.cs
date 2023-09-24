@@ -7,37 +7,17 @@ namespace Z0;
 using static sys;
 
 using G = Lcg64;
-using api = Lcg64Ops;
 
-[ApiHost]
-public readonly partial struct Lcg64Ops
+[Rng(nameof(Lcg64)), ApiHost]
+public struct Lcg64 : IRng<ulong>
 {
     [MethodImpl(Inline), Op]
     public static void spin(ref G g, Func<ulong,bool> f)
     {
         while(true)
         {
-            if(!f(next(g)))
+            if(!f(advance(ref g).State))
                 break;
-        }
-    }
-
-    [MethodImpl(Inline), Op]
-    public static G create(N64 n, ulong mul, ulong inc, ulong mod, ulong seed)
-    {
-        var min = inc == 0 ? 1ul : 0ul;
-        var max = mod - 1;
-        return new G(mul,inc,mod,seed,min,max);
-    }
-
-    [MethodImpl(Inline), Op]
-    public static void capture(ref G g, Span<ulong> dst)
-    {
-        var count = (uint)dst.Length;
-        for(var i=0u; i<count; i++)
-        {
-            advance(ref g);
-            seek(dst,i) = g.State;
         }
     }
 
@@ -50,13 +30,9 @@ public readonly partial struct Lcg64Ops
     }
 
     [MethodImpl(Inline), Op]
-    public static ulong next(in G g)
-        => (g.Mul*g.State + g.Inc) % g.Mod;
-
-    [MethodImpl(Inline), Op]
     public static ref G advance(ref G g)
     {
-        g.State = api.next(g);
+        g.State = (g.Mul*g.State + g.Inc) % g.Mod;
         return ref g;
     }
 
@@ -64,7 +40,7 @@ public readonly partial struct Lcg64Ops
     public static ref G advance(ref G g, uint count)
     {
         for(var i=0; i<count; i++)
-            api.advance(ref g);
+            advance(ref g);
         return ref g;
     }
 
@@ -75,4 +51,44 @@ public readonly partial struct Lcg64Ops
     [MethodImpl(Inline), Op]
     public static ulong max(in G g)
         => g.Mod - 1;
+
+    readonly ulong Mul;
+
+    readonly ulong Inc;
+
+    readonly ulong Mod;
+
+    readonly ulong Seed;
+
+    readonly ulong Min;
+
+    readonly ulong Max;
+
+    ulong State;
+
+    [MethodImpl(Inline)]
+    internal Lcg64(ulong mul, ulong inc, ulong mod, ulong seed, ulong min, ulong max)
+    {
+        Mul = mul;
+        Inc = inc;
+        Mod = mod;
+        Seed = seed;
+        State = seed;
+        Min = min;
+        Max = max;
+    }
+
+    [MethodImpl(Inline)]
+    public ulong Next()
+        => advance(ref this).State;
+
+    public Label Name => nameof(Lcg64);
+
+    public ByteSize Fill(Span<ulong> dst)
+    {
+        var size = 0u;
+        for(var i=0; i<dst.Length; i++, size+=8)
+            seek(dst,i) = Next();
+        return size;
+    }
 }

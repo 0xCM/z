@@ -21,6 +21,26 @@ public class IntelIntrinsics : WfSvc<IntelIntrinsics>
 
     static FileName DeclFile => FS.file("intel.intrinsics", FS.H);
 
+    static FileName TypeDeclFile => FS.file("intel.intrinsics.types", FS.H);
+
+    static HashSet<string> DeclSkip = sys.hashset(new string[]{
+        "_BitScanForward",
+        "_BitScanForward64",
+        "_BitScanReverse",
+        "_BitScanReverse64",
+        "_bittest",
+        "_bittest64",
+        "_bittestandcomplement",
+        "_bittestandcomplement64",
+        "_bittestandreset",
+        "_bittestandreset64",
+        "_bittestandset",
+        "_bittestandset64",
+        "_get_ssp",
+        "_mm_prefetch",
+        "_mm_clflush",
+    });
+
     public ExecToken RunEtl()
     {
         var db = IntelPaths.Service.InxDb();
@@ -30,7 +50,9 @@ public class IntelIntrinsics : WfSvc<IntelIntrinsics>
         var parsed = ParseSouceDoc(xml);
         EmitAlgorithms(parsed);
         var records = EmitRecords(parsed);
-        EmitDeclarations(parsed);
+        EmitTypeDecls();
+        EmitScripts();
+        EmitMethodDecls(parsed);
         return Channel.Ran(running);
     }
 
@@ -52,14 +74,55 @@ public class IntelIntrinsics : WfSvc<IntelIntrinsics>
         Channel.FileEmit(dst.Emit(), Targets.Path(AlgFile), TextEncodingKind.Utf8);
     }
 
-    public void EmitDeclarations(ReadOnlySpan<IntrinsicDef> src)
+    public void EmitScripts()
+    {
+        var dst = text.emitter();
+        dst.AppendLine("@echo off");
+        dst.AppendLine($"clang %~dp0{TypeDeclFile} -Xclang -ast-dump-all >%~dp0{TypeDeclFile}.ast");
+        dst.AppendLine($"clang %~dp0{TypeDeclFile} -Xclang -ast-dump-all=json >%~dp0{TypeDeclFile}.ast.json");
+        dst.AppendLine($"clang %~dp0{DeclFile} -Xclang -ast-dump-all >%~dp0{DeclFile}.ast");
+        dst.AppendLine($"clang %~dp0{DeclFile} -Xclang -ast-dump-all=json >%~dp0{DeclFile}.ast.json");
+        Channel.FileEmit(dst.Emit(), Targets.Path("emit-ast", FileKind.Cmd));
+    }
+
+    public void EmitTypeDecls()
+    {
+        var dst = Targets.Path(TypeDeclFile);
+        var content = IntrinsicAssets.Instance.TypeDeclarations();
+        Utf8.decode(content.ResBytes, out var _decoded);
+        Channel.FileEmit(_decoded, dst);
+    }
+
+    public void EmitMethodDecls(ReadOnlySpan<IntrinsicDef> src)
     {
         var dst = Targets.Path(DeclFile);
         var flow = Channel.EmittingFile(dst);
         var count = src.Length;
         using var writer = dst.Writer();
+        writer.WriteLine("#pragma once");
+        writer.WriteLine(string.Format("#include {0}", text.dquote(TypeDeclFile.Format())));
+        writer.WriteLine();
         for(var i=0; i<count; i++)
-            writer.WriteLine(string.Format("{0};", skip(src,i).Sig()));
+        {
+            ref readonly var decl = ref skip(src,i);
+            if(DeclSkip.Contains(decl.name))
+                continue;
+
+            foreach(var inst in decl.instructions)
+            {
+                if(inst.xed != 0)
+                    writer.WriteLine($"// {inst.xed}");
+
+                if(inst.name.IsNonEmpty && inst.form.IsNonEmpty)
+                    writer.WriteLine($"// {inst.name} {inst.form}"); 
+            }
+
+            if(decl.description.IsNonEmpty)
+                writer.WriteLine($"// {decl.description}");
+
+            writer.WriteLine(string.Format("{0};", decl.Sig()));
+            writer.WriteLine();
+        }
         Channel.EmittedFile(flow, count);
     }
 
@@ -75,7 +138,6 @@ public class IntelIntrinsics : WfSvc<IntelIntrinsics>
     }
 
     const int MaxDefCount = Pow2.T13;
-
     
     static ReadOnlySeq<IntrinsicDef> parse(XmlDoc src)
     {
