@@ -95,18 +95,6 @@ namespace Z0
             get => ref Load<Index<XedInstOpCode>>(XedRecordType.OpCodes);
         }
 
-        public ref readonly Index<InstIsaSpec> IsaImport
-        {
-            [MethodImpl(Inline)]
-            get => ref Load<Index<InstIsaSpec>>(XedRecordType.IsaImport);
-        }
-
-        public ref readonly Index<CpuIdSpec> CpuIdImport
-        {
-            [MethodImpl(Inline)]
-            get => ref Load<Index<CpuIdSpec>>(XedRecordType.CpuIdImport);
-        }
-
         public ref readonly Index<DbTypeTable> TypeTables
         {
             [MethodImpl(Inline)]
@@ -119,40 +107,12 @@ namespace Z0
             get => ref Load<Index<TypeTableRow>>(XedRecordType.TypeTableRows);
         }
 
-        public ref readonly ChipMap ChipMap
-        {
-            [MethodImpl(Inline)]
-            get => ref Load<ChipMap>(XedRecordType.ChipMap);
-        }
-
-        public ref readonly Index<FormImport> FormImports
-        {
-            [MethodImpl(Inline)]
-            get => ref Load<Index<FormImport>>(XedRecordType.FormImports);
-        }
-
-        public ref readonly XedRuleBlocks InstImports
-        {
-            [MethodImpl(Inline)]
-            get => ref Load<XedRuleBlocks>(XedRecordType.InstImports);
-        }
-
-        public ref readonly Index<AsmBroadcast> AsmBroadcastDefs
-        {
-            [MethodImpl(Inline)]
-            get => ref Load<Index<AsmBroadcast>>(XedRecordType.AsmBroadcastDefs);
-        }
-
         public ref readonly Index<InstOpSpec> InstOpSpecs
         {
             [MethodImpl(Inline)]
             get => ref Load<Index<InstOpSpec>>(XedRecordType.InstOpSpecs);
         }
 
-        public ref readonly ConstLookup<WidthCode,OpWidthDetail> OpWidthLookup
-        {
-            [MethodImpl(Inline)]
-            get => ref Load<ConstLookup<WidthCode,OpWidthDetail>>(XedRecordType.WidthLookup);
-        }
+
     }
 }

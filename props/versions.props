@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
     <ZSysVer>0.0.177</ZSysVer>
-    <ZVer>0.0.586</ZVer>
+    <ZVer>0.0.587</ZVer>
     <ZFxVer>0.0.1034</ZFxVer>
 
     <AsmResolverVersion>5.4.0</AsmResolverVersion>

@@ -10,9 +10,6 @@ namespace Z0
     using static sys;
     using static XedModels;
 
-    using K = XedModels.OpKind;
-    using I = Asm.RFlagIndex;
-
     [ApiHost]
     public partial class XedRules : WfSvc<XedRules>
     {

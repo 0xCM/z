@@ -105,7 +105,6 @@ namespace Z0
         public static FilePath DisasmFieldsPath(IProject project, FilePath src)
             => DisasmTargets(project).Path(FS.file(string.Format("{0}.fields", src.FileName.WithoutExtension), FS.Txt));
 
-
         public static FilePath DisasmChecksPath(IProject project, FilePath src)
             => DisasmTargets(project).Path(FS.file(string.Format("{0}.checks", src.FileName.WithoutExtension), FS.Txt));
 

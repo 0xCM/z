@@ -40,7 +40,7 @@ namespace Z0
                 select new MemoryRange((MemoryAddress)start, (MemoryAddress)end);
 
         [Parser]
-        public static Outcome parse(string src, out MemoryAddress dst)
+        public static Outcome parse(ReadOnlySpan<char> src, out MemoryAddress dst)
         {
             var result = Hex.parse64u(src, out var a);
             if(result)
@@ -51,12 +51,12 @@ namespace Z0
             else
             {
                 dst = MemoryAddress.Zero;
-                return (false, Msg.AddressParseFailure.Format(src));
+                return false;
             }
         }
 
         [Parser]
-        public static Outcome parse(string src, out Address64 dst)
+        public static bool parse(string src, out Address64 dst)
         {
             var result = Hex.parse64u(src, out var a);
             if(result)
@@ -67,7 +67,7 @@ namespace Z0
             else
             {
                 dst = Address64.Zero;
-                return (false, Msg.AddressParseFailure.Format(src));
+                return false;
             }
         }
 
@@ -83,7 +83,7 @@ namespace Z0
             else
             {
                 dst = Address32.Zero;
-                return (false, Msg.AddressParseFailure.Format(src));
+                return false;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Z0
             else
             {
                 dst = Address16.Zero;
-                return (false, Msg.AddressParseFailure.Format(src));
+                return false;
             }
         }
 
@@ -115,7 +115,7 @@ namespace Z0
             else
             {
                 dst = Address8.Zero;
-                return (false, Msg.AddressParseFailure.Format(src));
+                return false;
             }
         }
     }

@@ -5,7 +5,7 @@
 namespace Z0
 {
     using System.Linq;
-
+    
     public abstract class Distribution<S,T> : IDistribution<T>
         where T : unmanaged
         where S : IDistributionSpec<T>

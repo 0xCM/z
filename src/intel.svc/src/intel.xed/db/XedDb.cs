@@ -12,7 +12,6 @@ namespace Z0
     {
         static XedPaths Paths => XedPaths.Service;
 
-
         static readonly ConcurrentDictionary<FilePath,MemoryFile> _MemoryFiles = new();
 
         public static MemoryFile MemoryFile(FilePath src)
@@ -21,7 +20,6 @@ namespace Z0
         public static MemoryFile RuleDumpFile()
             => MemoryFile(DocSource(XedDocKind.RuleBlocks));
         
-        //public IDbArchive Sources() => Paths.DbTargets
         IMemDb _Store;
 
         XedRuntime Xed => Wf.XedRuntime();
@@ -125,7 +123,7 @@ namespace Z0
 
         public static FilePath DocSource(XedDocKind kind)
             => Sources().Path(kind switch{
-                XedDocKind.RuleBlocks => FS.file("xed-dump",FileKind.Txt),
+                XedDocKind.RuleBlocks => FS.file("xed-dump", FileKind.Txt),
                 XedDocKind.EncInstDef => FS.file("all-enc-instructions", FS.Txt),
                 XedDocKind.DecInstDef => FS.file("all-dec-instructions", FS.Txt),
                 XedDocKind.EncRuleTable => FS.file("all-enc-patterns", FS.Txt),

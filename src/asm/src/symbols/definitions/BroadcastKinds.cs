@@ -105,5 +105,4 @@ public class BroadcastKinds
         [Symbol(N2to4, "BCAST=20;VL=256")]
         BCast_2TO4_64 = 20,
     }
-
 }

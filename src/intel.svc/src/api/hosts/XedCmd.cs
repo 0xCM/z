@@ -72,13 +72,6 @@ public partial class XedCmd : WfAppCmd<XedCmd>
         return true;
     }
 
-    // [CmdOp("asm/gen/sigmatch")]
-    // void Matcher()
-    // {
-    //     var forms = Sdm.LoadSigs();
-    //     StringMatcher.tables(Channel,forms.Select(x => x.Format()), AppDb.ApiTargets("codgen"));
-    // }
-
     [CmdOp("asm/gen/vex")]
     Outcome GenTokenSpecs(CmdArgs args)
     {
@@ -168,13 +161,6 @@ public partial class XedCmd : WfAppCmd<XedCmd>
     ref readonly Index<InstPattern> Patterns
         => ref XedRuntime.Views.Patterns;
 
-    [CmdOp("xed/start")]
-    void StartRuntime()
-    {
-        if(!XedRuntime.Running)
-            XedRuntime.Start();
-    }
-
     [CmdOp("xed/emit/types")]
     Outcome CheckXedDb(CmdArgs args)
     {
@@ -202,14 +188,6 @@ public partial class XedCmd : WfAppCmd<XedCmd>
     [CmdOp("xed/emit/sigs")]
     void EmitInstSig()
         => XedRuntime.Rules.EmitInstSigs(XedRuntime.Views.Patterns);
-
-    [CmdOp("xed/import/check")]
-    void CheckXedImports()
-    {
-        var blocks = XedRuntime.Views.InstImports;
-        ref readonly var lines = ref blocks.BlockLines;
-        var forms = lines.Keys.Index().Sort();
-    }
 
     [CmdOp("xed/disasm/flow")]
     void RunDisasmFlow(CmdArgs args)

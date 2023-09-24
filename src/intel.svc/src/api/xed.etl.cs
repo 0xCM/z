@@ -2,57 +2,110 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using Asm;
+
+using static sys;
+using static XedModels;
+using static XedZ;
+
+partial class XedCmd
 {
-    using Asm;
-
-    using static sys;
-    using static XedModels;
-    
-    partial class XedCmd
+    [CmdOp("xed/rules")]
+    void LoadRuleBlocks()
     {
-        [CmdOp("xed/etl")]
-        void RunImport()
-        {
-            exec(true, 
-                () => Channel.TableEmit(XedRegMap.Service.REntries, XedDb.Targets().Table<RegMapEntry>("rmap")),
-                () => Channel.TableEmit(XedRegMap.Service.XEntries, XedDb.Targets().Table<RegMapEntry>("xmap")),
-                () => DataFlow.EmitChipCodes(Symbols.symkinds<ChipCode>()),
-                () => DataFlow.EmitBroadcastDefs(Xed.broadcasts(Symbols.kinds<BroadcastKind>())),
-                () => {
-                    var cpuid = DataFlow.CalcCpuIdDataset(XedDb.DocSource(XedDocKind.CpuId));
-                    DataFlow.EmitCpuIdDataset(cpuid);       
-                },
-                () => {
-                    var chips = DataFlow.CalcChipMap(XedDb.DocSource(XedDocKind.ChipMap));
-                    DataFlow.EmitChipMap(chips);
-                    var forms = DataFlow.CalcFormImports(XedDb.DocSource(XedDocKind.FormData));
-                    DataFlow.EmitFormImports(forms);
-                    var inst = DataFlow.CalcChipInstructions(forms, chips);
-                    DataFlow.EmitChipInstructions(inst);
-                },
-                () => {
-                    var rules = DataFlow.CalcRuleBlocks(XedDb.DocSource(XedDocKind.RuleBlocks));
-                    DataFlow.EmitRules(rules);
-                },
-                () => {
-                    var widths = DataFlow.CalcWidths(XedDb.DocSource(XedDocKind.Widths));
-                    DataFlow.EmitOpWidths(widths.OpWidths);
-                    DataFlow.EmitPointerWidths(widths.PointerWidthDescriptions);
+        var src = XedZ.rules(XedDb.DocSource(XedDocKind.RuleBlocks));
+        var imports = src.Imports;
+        var domain = dict<string,HashSet<RuleAttribute>>();
+        var dst = text.emitter();
+        var counter = 0u;
+        var rules = bag<FormRules>();
+        iter(imports, import => {            
+            var block = src.FormBlocks[import.Form];
+            dst.AppendLine(RP.PageBreak160);
+            dst.AppendLineFormat("{0:D5} {1,-82} {2}", counter++, import.Form, import.Class); 
+            if(XedZ.parse(import.Form, block, out FormRules _rules))
+            {
+                rules.Add(_rules);
+                foreach(var rule in _rules.Rules)
+                {
+                    dst.AppendLine(rule);
+                    if(rule is RuleAttribute a)
+                    {
+                        if(domain.TryGetValue(a.Name, out var _values))
+                        {
+                            _values.Add(a);
+                        }
+                        else
+                        {
+                            domain[a.Name] = hashset(a);
+                        }
+                    }
                 }
-            );
-             
-            
-            //var dec = XedRuleSpecs.CalcTableCriteria(XedDb.RuleSource(RuleTableKind.DEC), status => Channel.Row(status));
+            }
 
-            // var dec = XedRuleSpecs.criteria(RuleTableKind.DEC);
-            // var rules = new XedRuleTables();
-            // var buffers = new XedRuleBuffers();
-            // buffers.Target.TryAdd(RuleTableKind.ENC, enc);
-            // buffers.Target.TryAdd(RuleTableKind.DEC, dec);
-            // var rt = XedRules.tables(buffers);
+            if(block.Count != _rules.Rules.Count)
+            {
+                @throw("block.Count != _rules.Rules.Count");
+            }
 
 
+            dst.AppendLine(RP.PageBreak160);
+        });
+
+        var _domains = text.emitter();
+        foreach(var name in domain.Keys.Array().Sort())
+        {
+            switch(name)
+            {
+                case RuleNames.opcode_base10:
+                case RuleNames.comment:
+                    break;
+                case RuleNames.iform:
+                case RuleNames.iclass:
+                    _domains.AppendLine($"{name}:[...],");
+                break;
+                default:
+                {
+                    var values = domain[name].Map(x => x.Value).Sort();
+                    _domains.AppendLine($"{name}:["); 
+                    foreach(var value in values)
+                    {
+                        _domains.AppendLine($"    {value},");
+                    }
+                    _domains.AppendLine("],");
+
+                }
+                break;
+            }
         }
+        Channel.FileEmit(_domains.Emit(), XedDb.Targets().Path("xed.instblocks.domain", FS.ext("txt")));
+    }
+    [CmdOp("xed/etl")]
+    void RunImport()
+    {
+        exec(true, 
+            () => XedZ.emit(Channel, XedZ.rules(XedDb.DocSource(XedDocKind.RuleBlocks))),
+            () => Channel.TableEmit(XedRegMap.Service.REntries, XedDb.Targets().Table<RegMapEntry>("rmap")),
+            () => Channel.TableEmit(XedRegMap.Service.XEntries, XedDb.Targets().Table<RegMapEntry>("xmap")),
+            () => DataFlow.EmitChipCodes(Symbols.symkinds<ChipCode>()),
+            () => DataFlow.EmitBroadcastDefs(Xed.broadcasts(Symbols.kinds<BroadcastKind>())),
+            () => DataFlow.EmitCpuIdDataset(DataFlow.CalcCpuIdDataset(XedDb.DocSource(XedDocKind.CpuId))),
+            () => {
+                var chips = DataFlow.CalcChipMap(XedDb.DocSource(XedDocKind.ChipMap));
+                DataFlow.EmitChipMap(chips);
+                var forms = DataFlow.CalcFormImports(XedDb.DocSource(XedDocKind.FormData));
+                DataFlow.EmitFormImports(forms);
+                var inst = DataFlow.CalcChipInstructions(forms, chips);
+                DataFlow.EmitChipInstructions(inst);
+            },
+            () => {
+                var widths = DataFlow.CalcWidths(XedDb.DocSource(XedDocKind.Widths));
+                DataFlow.EmitOpWidths(widths.OpWidths);
+                DataFlow.EmitPointerWidths(widths.PointerWidthDescriptions);
+            }
+        );
+                        
     }
 }
