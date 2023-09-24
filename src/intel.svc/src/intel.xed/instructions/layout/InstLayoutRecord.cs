@@ -28,7 +28,7 @@ namespace Z0
             public XedInstClass Instruction;
 
             [Render(18)]
-            public XedOpCode OpCode;
+            public AsmOpCode OpCode;
 
             [Render(6)]
             public byte Count;

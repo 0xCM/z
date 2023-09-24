@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using static BroadcastKinds;
+using static AsmMaskTokens;
 
 [DataWidth(num5.Width)]
 public enum BroadcastKind : byte

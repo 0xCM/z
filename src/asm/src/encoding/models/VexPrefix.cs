@@ -52,21 +52,21 @@ public record struct VexPrefix
         => VexPrefixC5.define((byte)(src._Data >> 8));
 
     [MethodImpl(Inline)]
-    public static BitfieldSeg<VexPrefixCode> code(ReadOnlySpan<byte> src)
+    public static BitfieldSeg<K> code(ReadOnlySpan<byte> src)
     {
-        var seg = BitfieldSeg<VexPrefixCode>.Empty;
+        var seg = BitfieldSeg<K>.Empty;
         var count = src.Length;
         for(var i=z8; i<count; i++)
         {
             ref readonly var b = ref skip(src,i);
-            if(b == (byte)VexPrefixCode.C4)
+            if(b == (byte)K.xC4)
             {
-                seg = BitfieldSeg.define(VexPrefixCode.C4, i, 8);
+                seg = BitfieldSeg.define(K.xC4, i, 8);
                 break;
             }
-            if(b == (byte)VexPrefixCode.C5)
+            if(b == (byte)K.xC5)
             {
-                seg = BitfieldSeg.define(VexPrefixCode.C5, i, 8);
+                seg = BitfieldSeg.define(K.xC5, i, 8);
                 break;
             }
         }
@@ -101,10 +101,10 @@ public record struct VexPrefix
         };
 
     [MethodImpl(Inline), Op]
-    public static byte size(VexPrefixCode src)
+    public static byte size(K src)
         => src switch{
-            VexPrefixCode.C4 => 3,
-            VexPrefixCode.C5 => 2,
+            K.xC4 => 3,
+            K.xC5 => 2,
             _ => 0
         };
 

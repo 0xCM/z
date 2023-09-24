@@ -10,7 +10,7 @@ partial class AsmOpCodes
     [StructLayout(StructLayout,Pack=1)]
     public readonly record struct AsmOpCodeMap : IComparable<AsmOpCodeMap>
     {
-        public readonly XedOpCodeKind Kind;
+        public readonly AsmOpCodeKind Kind;
 
         public readonly AsmOpCodeClass Class;
 
@@ -21,7 +21,7 @@ partial class AsmOpCodes
         public readonly Hex16 Value;
 
         [MethodImpl(Inline)]
-        public AsmOpCodeMap(XedOpCodeKind kind, AsmOpCodeClass @class, AsmOpCodeIndex index, asci2 indicator, asci4 selector)
+        public AsmOpCodeMap(AsmOpCodeKind kind, AsmOpCodeClass @class, AsmOpCodeIndex index, asci2 indicator, asci4 selector)
         {
             Kind = kind;
             Class = @class;

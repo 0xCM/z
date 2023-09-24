@@ -4,12 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
+using System.Linq;
 [ApiHost]
 public partial class IntelSdm : WfSvc<IntelSdm>
 {
     IntelSdmPaths SdmPaths => Wf.SdmPaths();
-    
-    static readonly AsmDocs AsmDocs = new();
     
     TextMap SigNormalRules
         => data(nameof(SigNormalRules), () => TextMap.load(SdmPaths.SigNormalConfig()));
@@ -19,6 +18,9 @@ public partial class IntelSdm : WfSvc<IntelSdm>
 
     TextReplacements SigFixupRules
         => data(nameof(SigFixupRules), () => TextReplacements.load(SdmPaths.SigFixupConfig()));
+
+    public ParallelQuery<FilePath> InstructionFiles()
+        => IntelSdmPaths.SdmDb().Scoped("instructions").Files(FileKind.Csv).AsParallel();    
 
     void Clear()
     {

@@ -293,8 +293,6 @@ public class XedZ
             Form = form;
             Rules = new();
         }
-
-
     }
 
     public static XedRuleBlocks rules(FilePath path)

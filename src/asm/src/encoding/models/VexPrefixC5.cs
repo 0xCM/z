@@ -14,7 +14,7 @@ namespace Z0.Asm
         public static VexPrefixC5 init()
         {
             var dst = new VexPrefixC5();
-            dst.B0 = (byte)VexPrefixCode.C5;
+            dst.B0 = (byte)VexPrefixKind.xC5;
             return dst;
         }
 
@@ -22,7 +22,7 @@ namespace Z0.Asm
         public static VexPrefixC5 init(bit r = default, byte vvvv = default, VexLengthCode l = default, VexOpCodeExtension pp = default)
         {
             var dst = new VexPrefixC5();
-            dst.B0 = (byte)VexPrefixCode.C5;
+            dst.B0 = (byte)VexPrefixKind.xC5;
             dst.R = r;
             dst.VVVV = vvvv;
             dst.L = l;
@@ -34,7 +34,7 @@ namespace Z0.Asm
         public static VexPrefixC5 define(byte b1)
         {
             var dst = new VexPrefixC5();
-            dst.B0 = (byte)VexPrefixCode.C5;
+            dst.B0 = (byte)VexPrefixKind.xC5;
             dst.B1 = b1;
             return dst;
         }
@@ -147,10 +147,10 @@ namespace Z0.Asm
             get => (byte)PP;
         }
 
-        public VexPrefixCode Code
+        public VexPrefixKind Code
         {
             [MethodImpl(Inline)]
-            get => VexPrefixCode.C5;
+            get => VexPrefixKind.xC5;
         }
 
         public byte Size

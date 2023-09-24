@@ -77,12 +77,12 @@ namespace Z0.Asm
             }
         }
 
-        public sealed class CodeSeg : BitfieldSeg<byte,VexPrefixCode>
+        public sealed class CodeSeg : BitfieldSeg<byte,VexPrefixKind>
         {
             public CodeSeg()
                 : base(0xFF,(0,7))
             {
-                Value = VexPrefixCode.C4;
+                Value = VexPrefixKind.xC4;
             }
         }
 
@@ -144,7 +144,7 @@ namespace Z0.Asm
         public static VexPrefixC4 init()
         {
             var dst = new VexPrefixC4();
-            dst.B0 = (byte)VexPrefixCode.C4;
+            dst.B0 = (byte)VexPrefixKind.xC4;
             return dst;
         }
 
@@ -152,7 +152,7 @@ namespace Z0.Asm
         public static VexPrefixC4 init(VexRXB rxb, VexM mmmmm = default, bit w = default, byte vvvv = default, VexLengthCode l = default, VexOpCodeExtension pp = default)
         {
             var dst = new VexPrefixC4();
-            dst.B0 = (byte)VexPrefixCode.C4;
+            dst.B0 = (byte)VexPrefixKind.xC4;
             dst.RXB = rxb;
             dst.MMMMM = mmmmm;
             dst.W = w;
@@ -166,7 +166,7 @@ namespace Z0.Asm
         public static VexPrefixC4 define(byte b1, byte b2)
         {
             var dst = new VexPrefixC4();
-            dst.B0 = (byte)VexPrefixCode.C4;
+            dst.B0 = (byte)VexPrefixKind.xC4;
             dst.B1 = b1;
             dst.B2 = b2;
             return dst;
@@ -321,10 +321,10 @@ namespace Z0.Asm
 
         const string SemanticFormat = "{0}\n{1}\n{2}";
 
-        public VexPrefixCode PrefixCode
+        public VexPrefixKind PrefixCode
         {
             [MethodImpl(Inline)]
-            get => VexPrefixCode.C4;
+            get => VexPrefixKind.xC4;
         }
 
         public RegIndex Reg

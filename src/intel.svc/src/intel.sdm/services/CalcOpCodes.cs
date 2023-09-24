@@ -32,7 +32,7 @@ namespace Z0.Asm
                     for(var k=0; k<cells.Length; k++)
                     {
                         var col = skip(table.Cols,k);
-                        var cell = skip(cells,k);
+                        var cell = cells[k];
                         var content = cell.Content?.ToString().Trim().Remove("*");
                         var name = text.trim(col.Name);
                         if(empty(content))
@@ -234,7 +234,7 @@ namespace Z0.Asm
                 for(var k=0; k<cells.Length; k++)
                 {
                     ref readonly var col = ref skip(cols,k);
-                    ref readonly var cell = ref skip(cells,k);
+                    ref readonly var cell = ref cells[k];
                     var content = cell.Content?.ToString().Trim().Remove("*");
                     var name = text.trim(col.Name);
                     if(empty(content))

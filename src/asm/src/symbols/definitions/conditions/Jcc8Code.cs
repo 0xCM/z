@@ -7,9 +7,10 @@ namespace Z0.Asm;
 using E = ConditionTokens.Expressions;
 
 using static ConditionTokens.Names;
+
 partial class ConditionTokens
 {
-    [SymSource("asm.cc")]
+    [SymSource(GroupName), TokenKind(ConditionKind.Jcc8)]
     public enum Jcc8Code : byte
     {
         [Symbol(jo, "Jump short if overflow", E.O)]

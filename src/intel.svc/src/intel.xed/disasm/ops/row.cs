@@ -156,9 +156,9 @@ partial class XedDisasm
             var vexdest = (uint5)((uint3)state.VEXDEST210 | (byte)state.VEXDEST3 << 3 | (byte)state.VEXDEST4 << 4);
             Require.equal(vexbytes.Length, vexsize);
 
-            if(vexcode.Value == AsmPrefixTokens.VexPrefixCode.C4)
+            if(vexcode.Value == AsmPrefixTokens.VexPrefixKind.xC4)
                 dst.Vex = VexPrefix.define(AsmPrefixTokens.VexPrefixKind.xC4,skip(vexbytes, 1), skip(vexbytes,2));
-            else if(vexcode.Value == AsmPrefixTokens.VexPrefixCode.C5)
+            else if(vexcode.Value == AsmPrefixTokens.VexPrefixKind.xC5)
                 dst.Vex = VexPrefix.define(AsmPrefixTokens.VexPrefixKind.xC5,skip(vexbytes, 1));
 
         }

@@ -5,7 +5,7 @@
 namespace Z0.Asm;
 
 using static sys;
-using static BroadcastKinds;
+using static AsmMaskTokens;
 using static BroadcastKind;
 using static BroadcastClass;
 

@@ -24,7 +24,6 @@ public readonly record struct AsmOcToken : IKindedToken<AsmOcTokenKind,byte>
     byte IValued<byte>.Value
         => Value;
 
-
     public uint Id
     {
         [MethodImpl(Inline)]

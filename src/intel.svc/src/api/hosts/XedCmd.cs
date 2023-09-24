@@ -154,10 +154,6 @@ public partial class XedCmd : WfAppCmd<XedCmd>
         return true;
     }
 
-    // [CmdOp("gen/sdm/code")]
-    // void GenAmsCode()
-    //     => SdmCodeGen.Emit(AppDb.CgStage(CgTarget.Intel.ToString()));
-
     ref readonly Index<InstPattern> Patterns
         => ref XedRuntime.Views.Patterns;
 

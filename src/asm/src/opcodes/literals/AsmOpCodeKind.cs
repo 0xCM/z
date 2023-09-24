@@ -13,7 +13,7 @@ using V = VexMapKind;
 using E = EvexMapKind;
 
 [SymSource(AsmOpCodes.group)]
-public enum XedOpCodeKind : ushort
+public enum AsmOpCodeKind : ushort
 {
     None = 0,
 

@@ -84,7 +84,7 @@ namespace Z0
                 get => ref Spec.Mode;
             }
 
-            public ref readonly XedOpCode OpCode
+            public ref readonly AsmOpCode OpCode
             {
                 [MethodImpl(Inline)]
                 get => ref Spec.OpCode;

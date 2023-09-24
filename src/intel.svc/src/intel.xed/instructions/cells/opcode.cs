@@ -10,12 +10,12 @@ using static XedRules;
 partial struct XedCells
 {
     [MethodImpl(Inline), Op]
-    public static XedOpCode opcode(in XedCells src)
+    public static AsmOpCode opcode(in XedCells src)
     {
         var vc = XedVexClass.None;
         var number = z8;
         var ocv = ocvalue(src);
-        var ock = XedOpCodeKind.None;
+        var ock = AsmOpCodeKind.None;
         for(var i=0; i<src.Count; i++)
         {
             ref readonly var part = ref src[i];
@@ -42,7 +42,7 @@ partial struct XedCells
             break;
         }
 
-        return new XedOpCode(XedCells.mode(src), ock, ocv);
+        return new AsmOpCode(XedCells.mode(src), ock, ocv);
     }
 }
 

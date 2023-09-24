@@ -15,15 +15,5 @@ public readonly struct AsmDocs
         _Root = AppSettings.Default.DevRoot().Scoped("asm/docs");        
     }
 
-    public IDbArchive Root()
-        => _Root;
-
-    public IDbArchive SdmDocs()
-        => Root().Scoped("sdm");
     
-    public IDbArchive SdmInstructions()
-        => SdmDocs().Scoped("instructions");
-    
-    public ParallelQuery<FilePath> SdmInstructionFiles()
-        => SdmInstructions().Files(FileKind.Csv).AsParallel();    
 }

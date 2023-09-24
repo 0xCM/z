@@ -21,7 +21,7 @@ namespace Z0
             for(var i=0; i<src.Count; i++)
             {
                 ref readonly var group = ref src[i];
-                var opcode = XedOpCode.Empty;
+                var opcode = AsmOpCode.Empty;
                 foreach(var member in group.Members)
                 {
                     if(opcode.IsEmpty)

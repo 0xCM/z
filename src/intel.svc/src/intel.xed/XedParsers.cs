@@ -68,7 +68,7 @@ public partial class XedParsers
 
     static readonly EnumParser<XedVexKind> VexKinds = new();
 
-    static readonly EnumParser<XedOpCodeKind> OpCodeKinds = new();
+    static readonly EnumParser<AsmOpCodeKind> OpCodeKinds = new();
 
     static readonly EnumParser<ErrorKind> ErrorKinds = new();
 
@@ -397,7 +397,7 @@ public partial class XedParsers
         return false;
     }
 
-    public static bool parse(string src, out XedOpCodeKind dst)
+    public static bool parse(string src, out AsmOpCodeKind dst)
         => Instance.Parse(src, out dst);
 
     public static bool parse(string src, out OpModKind dst)
@@ -671,7 +671,7 @@ public partial class XedParsers
     public static bool parse(string src, out SMODE dst)
         => SModes.Parse(src, out dst);
 
-    public bool Parse(string src, out XedOpCodeKind dst)
+    public bool Parse(string src, out AsmOpCodeKind dst)
         => OpCodeKinds.Parse(src, out dst);
 
     public static bool parse(string src, out BroadcastKind dst)

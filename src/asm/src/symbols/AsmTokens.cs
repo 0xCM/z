@@ -12,7 +12,7 @@ public class AsmTokens
 
     static readonly SymbolGroup _AsmSigTokens = new SymbolGroup(typeof(AsmSigTokenKind), typeof(AsmSigTokens));
 
-    static readonly SymbolGroup _ConditionTokens = new SymbolGroup(typeof(ConditionTokenKind), typeof(ConditionTokens));
+    static readonly SymbolGroup _ConditionTokens = new SymbolGroup(typeof(ConditionKind), typeof(ConditionTokens));
 
     static readonly SymbolGroup _AsmOcTables = new SymbolGroup(typeof(AsmOcTableKind), typeof(AsmOcTables));
 

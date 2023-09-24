@@ -9,18 +9,18 @@ using static AsmOpCodes;
 using static sys;
 
 [StructLayout(LayoutKind.Sequential,Pack=1), DataWidth(64)]
-public readonly struct XedOpCode : IEquatable<XedOpCode>, IComparable<XedOpCode>
+public readonly struct AsmOpCode : IEquatable<AsmOpCode>, IComparable<AsmOpCode>
 {
     public readonly MachineMode Mode;
 
-    public readonly XedOpCodeKind Kind;
+    public readonly AsmOpCodeKind Kind;
 
     public readonly OpCodeValue Value;
 
     readonly byte Pad;
 
     [MethodImpl(Inline)]
-    public XedOpCode(MachineMode mode, XedOpCodeKind kind, OpCodeValue value)
+    public AsmOpCode(MachineMode mode, AsmOpCodeKind kind, OpCodeValue value)
     {
         Mode = mode;
         Kind = kind;
@@ -61,44 +61,22 @@ public readonly struct XedOpCode : IEquatable<XedOpCode>, IComparable<XedOpCode>
     public AsmOpCodeMap Map
         => new (Kind, Class, index(Kind), Symbol, Selector);
 
-    static string minimal(OpCodeValue src)
-    {
-        var size = src.TrimmedSize;
-        ref readonly var b0 = ref src[0];
-        ref readonly var b1 = ref src[1];
-        ref readonly var b2 = ref src[2];
-
-        var dst = $"0x{b0} 0x{b1} 0x{b2}";
-        switch(size)
-        {
-            case 0:
-            case 1:
-                dst = $"0x{b0}";
-            break;
-            case 2:
-            dst = $"0x{b0} 0x{b1}";
-            break;
-        }
-        return dst;
-    }
-
     public string Format()
         => format(this);
 
     public override string ToString()
         => Format();
 
-
     public override int GetHashCode()
         => Hash;
 
-    public bool Equals(XedOpCode src)
+    public bool Equals(AsmOpCode src)
         => Kind == src.Kind && Value == src.Value;
 
     public override bool Equals(object src)
-        => src is XedOpCode x && Equals(x);
+        => src is AsmOpCode x && Equals(x);
 
-    public int CompareTo(XedOpCode src)
+    public int CompareTo(AsmOpCode src)
     {
         var result = cmp(Kind, src.Kind);
         if(result == 0)
@@ -107,20 +85,20 @@ public readonly struct XedOpCode : IEquatable<XedOpCode>, IComparable<XedOpCode>
     }
 
     [MethodImpl(Inline)]
-    public static bool operator==(XedOpCode a, XedOpCode b)
+    public static bool operator==(AsmOpCode a, AsmOpCode b)
         => a.Equals(b);
 
     [MethodImpl(Inline)]
-    public static bool operator!=(XedOpCode a, XedOpCode b)
+    public static bool operator!=(AsmOpCode a, AsmOpCode b)
         => !a.Equals(b);
 
     [MethodImpl(Inline)]
-    public static explicit operator ulong(XedOpCode src)
+    public static explicit operator ulong(AsmOpCode src)
         => convert(src, out _);
 
     [MethodImpl(Inline)]
-    public static explicit operator XedOpCode(ulong src)
+    public static explicit operator AsmOpCode(ulong src)
         => convert(src, out _);
 
-    public static XedOpCode Empty => default;
+    public static AsmOpCode Empty => default;
 }

@@ -17,12 +17,29 @@ namespace Z0
             _Cells = cells ?? new TableCell[]{};
         }
 
-        public Span<TableCell> Cells
+        public string Format()
+            => text.join(" | ", _Cells);
+
+        public override string ToString()
+            => Format();
+
+        public uint ColCount
         {
             [MethodImpl(Inline)]
-            get => _Cells ?? Span<TableCell>.Empty;
+            get => (uint)_Cells.Length;
         }
 
+        public ref TableCell this[int i]
+        {
+            [MethodImpl(Inline)]
+            get => ref sys.seek(_Cells,i);
+        }
+
+        public Seq<TableCell> Cells
+        {
+            [MethodImpl(Inline)]
+            get => _Cells;
+        }
 
         public static TableRow Empty
             => new TableRow(0, new TableCell[0]{});

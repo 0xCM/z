@@ -19,14 +19,14 @@ namespace Z0
 
             XedInstClass Classifier;
 
-            XedOpCode OpCode;
+            AsmOpCode OpCode;
 
             XedPaths XedPaths;
 
             public InstDocFormatter(InstDoc doc)
             {
                 Classifier = XedInstClass.Empty;
-                OpCode = XedOpCode.Empty;
+                OpCode = AsmOpCode.Empty;
                 Doc = doc;
                 XedPaths = XedPaths.Service;
             }

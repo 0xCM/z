@@ -19,7 +19,7 @@ partial class XedModels
         public XedInstClass InstClass;
 
         [Render(26)]
-        public XedOpCode OpCode;
+        public AsmOpCode OpCode;
 
         [Render(6)]
         public MachineMode Mode;

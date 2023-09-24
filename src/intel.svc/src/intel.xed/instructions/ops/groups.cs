@@ -53,7 +53,7 @@ partial class XedPatterns
 
     public static Index<InstGroupMember> members(XedInstClass @class, Index<InstPattern> src)
     {
-        var opcode = XedOpCode.Empty;
+        var opcode = AsmOpCode.Empty;
         var count = src.Count;
         var k=z8;
         var seq = new InstGroupSeq{Instruction = @class};

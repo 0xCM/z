@@ -15,7 +15,7 @@ namespace Z0
 
             public readonly XedInstClass InstClass;
 
-            public readonly XedOpCode OpCode;
+            public readonly AsmOpCode OpCode;
 
             public readonly MachineMode Mode;
 

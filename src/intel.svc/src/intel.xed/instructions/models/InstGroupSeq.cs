@@ -45,7 +45,7 @@ partial class XedRules
         public byte Index;
 
         [Render(26)]
-        public XedOpCode OpCode;
+        public AsmOpCode OpCode;
 
         [Render(22)]
         public OpCodeValue OpCodeBytes;

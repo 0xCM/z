@@ -14,6 +14,8 @@ public class TableBuilder
 
     uint Kind;
 
+    uint Index;
+
     readonly FilePath Source;
 
     string TableName;
@@ -55,7 +57,14 @@ public class TableBuilder
 
     public TableBuilder WithRow(string[] cells)
     {
-        Data.Add(new TableRow(0, cells.Select(x => new TableCell(x))));
+        var row  = new TableRow(Index++, alloc<TableCell>(Cols.Length));
+        var i=0;
+        for(;i<row.ColCount && i<cells.Length ; i++)
+            row[i] = new TableCell(text.trim(skip(cells,i)));
+        for(;i<row.ColCount; i++)
+            row[i] = new TableCell(EmptyString);
+
+        Data.Add(row);
         return this;
     }
 

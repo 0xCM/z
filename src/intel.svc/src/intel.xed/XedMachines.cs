@@ -322,9 +322,9 @@ public class XedMachines : IDisposable
         }
 
         /// <summary>
-        /// Specifies the <see cref='XedOpCode'/> of the current <see cref='P'/>
+        /// Specifies the <see cref='AsmOpCode'/> of the current <see cref='P'/>
         /// </summary>
-        public ref readonly XedOpCode OpCode
+        public ref readonly AsmOpCode OpCode
         {
             [MethodImpl(Inline)]
             get => ref Pattern.OpCode;

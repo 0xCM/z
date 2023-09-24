@@ -13,13 +13,13 @@ namespace Z0
 
             public readonly XedInstClass Instruction;
 
-            public readonly XedOpCode OpCode;
+            public readonly AsmOpCode OpCode;
 
             public readonly byte Count;
 
             public readonly SegRef<LayoutCell> Block;
 
-            public InstLayout(ushort pid, XedInstClass inst, XedOpCode oc, byte count, SegRef<LayoutCell> block)
+            public InstLayout(ushort pid, XedInstClass inst, AsmOpCode oc, byte count, SegRef<LayoutCell> block)
             {
                 PatternId = pid;
                 Instruction = inst;

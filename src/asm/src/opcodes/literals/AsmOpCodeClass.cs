@@ -10,9 +10,6 @@ using N = AsmOpCodes.Literals;
 [SymSource("asm.opcodes"), DataWidth(5)]
 public enum AsmOpCodeClass : byte
 {
-    [Symbol("")]
-    None = 0,
-
     [Symbol(N.BaseClassName)]
     Base = 1,
 
@@ -24,7 +21,4 @@ public enum AsmOpCodeClass : byte
 
     [Symbol(N.EvexClassName)]
     Evex = 8,
-
-    [Symbol(N.Amd3dClassName)]
-    Amd3D = 16,
 }

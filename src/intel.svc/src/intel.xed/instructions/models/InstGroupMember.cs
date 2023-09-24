@@ -86,7 +86,7 @@ partial class XedRules
             get => ref Seq.Instruction;
         }
 
-        public ref readonly XedOpCode OpCode
+        public ref readonly AsmOpCode OpCode
         {
             [MethodImpl(Inline)]
             get => ref Seq.OpCode;

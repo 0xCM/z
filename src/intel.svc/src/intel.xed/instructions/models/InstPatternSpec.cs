@@ -30,7 +30,7 @@ partial class XedModels
 
         public Index<XedFlagEffect> Effects;
 
-        public XedOpCode OpCode;
+        public AsmOpCode OpCode;
 
         public TextBlock RawBody;
 

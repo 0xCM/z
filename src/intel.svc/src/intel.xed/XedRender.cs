@@ -566,7 +566,7 @@ public class XedRender
     public static string format(OpVisibility src)
         => OpVis.Format(src);
 
-    public static string format(XedOpCodeKind src)
+    public static string format(AsmOpCodeKind src)
         => format(AsmOpCodes.index(src));
 
     public static string format(in RuleKeyword src)

@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using Asm;
-
 using static Hex8Kind;
 
 using NBK = NumericBaseKind;
@@ -81,7 +79,7 @@ public class AsmPrefixTokens
     /// Defines 3-bit emission codes for vex map specification as determined by the presence
     /// of a <see cref='AsmVL'/> value and a <see cref='XedVexKind'/> value
     /// </summary>
-    [SymSource(GroupName, NumericBaseKind.Base2), DataWidth(num3.Width), TokenKind(Tk.VexRXB)]
+    [SymSource(GroupName, NBK.Base2), DataWidth(num3.Width), TokenKind(Tk.VexRXB)]
     public enum VexRXB : byte
     {
         /// <summary>
@@ -190,16 +188,6 @@ public class AsmPrefixTokens
 
         [Symbol("V0F3A", "Specifies 0F 3A as the leading opcode byte in the context of the VEX encoding scheme")]
         x0F3A = 0b11,
-    }
-
-    [SymSource(GroupName, NumericBaseKind.Base16), TokenKind(Tk.VexPrefix)]
-    public enum VexPrefixCode
-    {
-        [Symbol("C4", "Indicates a VEX prefix begins with 0xC4 and is 3 bytes in length")]
-        C4 = 0xC4,
-
-        [Symbol("C5", "Indicates a VEX prefix begins with 0xC5 and is 2 bytes in length")]
-        C5 = 0xC5,
     }
 
     [SymSource(GroupName), DataWidth(3), TokenKind(Tk.VexWidth)]

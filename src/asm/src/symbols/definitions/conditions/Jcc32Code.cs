@@ -10,7 +10,7 @@ using static ConditionTokens.Names;
 
 partial class ConditionTokens
 {
-    [SymSource("asm.cc")]
+    [SymSource(GroupName), TokenKind(ConditionKind.Jcc32)]
     public enum Jcc32Code : byte
     {
         [Symbol(jo, $"Jump near if overflow:{E.O}")]

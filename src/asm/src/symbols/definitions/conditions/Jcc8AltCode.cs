@@ -10,7 +10,7 @@ using static ConditionTokens.AltNames;
 
 partial class ConditionTokens
 {
-    [SymSource("asm.cc")]
+    [SymSource(GroupName), TokenKind(ConditionKind.Jcc8Alt)]
     public enum Jcc8AltCode : byte
     {
         [Symbol(jo, "Jump short if overflow", E.O)]

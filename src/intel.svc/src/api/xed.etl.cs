@@ -12,6 +12,14 @@ using static XedZ;
 
 partial class XedCmd
 {
+    [CmdOp("xed/ock")]
+    void ListOcKinds()
+    {
+        var src = AsmOpCodes.info();
+        iter(src, r => {
+            Channel.RowFormat("{0} {1}", r.Name, r.Number);
+        });
+    }
     [CmdOp("xed/rules")]
     void LoadRuleBlocks()
     {
@@ -62,10 +70,6 @@ partial class XedCmd
                 case RuleNames.opcode_base10:
                 case RuleNames.comment:
                     break;
-                case RuleNames.iform:
-                case RuleNames.iclass:
-                    _domains.AppendLine($"{name}:[...],");
-                break;
                 default:
                 {
                     var values = domain[name].Map(x => x.Value).Sort();
@@ -82,6 +86,7 @@ partial class XedCmd
         }
         Channel.FileEmit(_domains.Emit(), XedDb.Targets().Path("xed.instblocks.domain", FS.ext("txt")));
     }
+
     [CmdOp("xed/etl")]
     void RunImport()
     {

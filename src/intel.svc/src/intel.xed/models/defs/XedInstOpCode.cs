@@ -54,7 +54,7 @@ public record struct XedInstOpCode : IComparable<XedInstOpCode>
     public XedCells Expr;
 
     [Ignore]
-    public XedOpCode OpCode;
+    public AsmOpCode OpCode;
 
     [MethodImpl(Inline)]
     public int CompareTo(XedInstOpCode src)

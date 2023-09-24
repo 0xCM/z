@@ -27,14 +27,9 @@ partial class IntelSdm
         };
 
     public ParallelQuery<Table> LoadCsvTables()
-    {
-        var src = AsmDocs.SdmInstructionFiles();
-        var tables = from file in src
-                    from table in LoadCsvTables(file)
-                    select table;
-        return tables;
-    }
-
+        => from file in InstructionFiles()
+            from table in LoadCsvTables(file)
+            select table;
     public IEnumerable<Table> LoadCsvTables(FilePath src)
     {
         var result = Outcome.Success;
@@ -109,8 +104,6 @@ partial class IntelSdm
 
         if(table.IsNonEmpty)
             yield return table.Emit();
-
-        //table.IfNonEmpty(() => tables.Add(table.Emit()));            
     }
 
 }

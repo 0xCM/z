@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using static BroadcastKinds;
+using static AsmMaskTokens;
 using static sys;
 
 using K = AsmSigTokenKind;

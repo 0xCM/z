@@ -19,7 +19,7 @@ namespace Z0
             public XedInstClass InstClass;
 
             [Render(26)]
-            public XedOpCode OpCode;
+            public AsmOpCode OpCode;
 
             [Render(8)]
             public MachineMode Mode;

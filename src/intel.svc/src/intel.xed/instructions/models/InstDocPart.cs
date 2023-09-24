@@ -42,7 +42,7 @@ namespace Z0
                 get => Inst.Classifier;
             }
 
-            public ref readonly XedOpCode OpCode
+            public ref readonly AsmOpCode OpCode
             {
                 [MethodImpl(Inline)]
                 get => ref Inst.OpCode;

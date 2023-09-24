@@ -6,7 +6,26 @@ namespace Z0.Asm;
 
 using static BitSeq;
 
-using TK = ConditionTokenKind;
+using TK = ConditionKind;
+
+[LiteralProvider(ConditionTokens.GroupName)]
+public enum ConditionKind : byte
+{
+    None = 0,
+
+    Condition,
+
+    Alt,
+
+    Jcc8,
+
+    Jcc8Alt,
+
+    Jcc32,
+
+    Jcc32Alt,
+}
+
 
 [LiteralProvider(GroupName)]
 public partial class ConditionTokens
