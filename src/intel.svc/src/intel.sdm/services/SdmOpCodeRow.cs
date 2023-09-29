@@ -9,11 +9,11 @@ public record SdmOpCodeRow : IComparable<SdmOpCodeRow>
 {
     const string TableName = "sdm.opcodes";
 
-    [Render(32)]
-    public string OpCode;
-
     [Render(64)]
     public string Instruction;
+
+    [Render(32)]
+    public string OpCode;
 
     [Render(20)]
     public string Encoding;

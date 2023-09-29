@@ -3,12 +3,12 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0;
+namespace Z0.Asm;
 
 using S = AsmOpCodes.Literals;
 
 [SymSource(AsmOpCodes.group), DataWidth(3)]
-public enum AsmBaseMapKind : byte
+public enum LegacyMapKind : byte
 {
     [Symbol(S.B0)]
     BaseMap0 = 0,

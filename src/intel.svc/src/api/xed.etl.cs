@@ -10,6 +10,18 @@ using static sys;
 using static XedModels;
 using static XedZ;
 
+public record struct AsmEncodingSpec
+{
+    public XedInstClass Class;
+
+    public XedInstForm Form;
+
+    public MachineMode Mode;
+
+    public Hex8 OpCode;
+
+}
+
 partial class XedCmd
 {
     [CmdOp("xed/ock")]
@@ -20,6 +32,7 @@ partial class XedCmd
             Channel.RowFormat("{0} {1}", r.Name, r.Number);
         });
     }
+
     [CmdOp("xed/rules")]
     void LoadRuleBlocks()
     {

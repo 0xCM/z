@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-partial class XedRules
+partial class XedModels
 {
     public readonly struct InstSigToken
     {

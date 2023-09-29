@@ -2,7 +2,8 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0;
+namespace Z0.Asm;
+
 
 [Record(TableId)]
 public record struct AsmTokenRecord

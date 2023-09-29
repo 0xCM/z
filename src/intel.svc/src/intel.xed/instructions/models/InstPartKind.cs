@@ -3,34 +3,33 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedModels
 {
-    partial class XedRules
+    /// <summary>
+    /// Classfies aspects that define an instruction rule
+    /// </summary>
+    public enum InstPartKind : byte
     {
-        /// <summary>
-        /// Classfies aspects that define an instruction rule
-        /// </summary>
-        public enum InstPartKind : byte
-        {
-            Class,
+        Class,
 
-            Form,
+        Form,
 
-            Attributes,
+        Attributes,
 
-            Category,
+        Category,
 
-            Extension,
+        Extension,
 
-            Flags,
+        Flags,
 
-            Pattern,
+        Pattern,
 
-            Operands,
+        Operands,
 
-            Isa,
+        Isa,
 
-            Comment
-        }
+        Comment
     }
 }

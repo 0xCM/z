@@ -3,36 +3,37 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using static XedModels;
+
+partial class XedRules
 {
-    partial class XedRules
+    void EmitFlagEffects(Index<InstPattern> src)
     {
-        void EmitFlagEffects(Index<InstPattern> src)
+        const string RenderPattern = "{0,-16} | {1,-4} | {2, -4}";
+        var path = XedPaths.RuleTarget("flags", FS.Csv);
+        var emitting = Channel.EmittingFile(path);
+        using var writer = path.AsciWriter();
+        writer.AppendLineFormat(RenderPattern, "Instruction",  "F", "E");
+        var counter = 0u;
+
+        for(var j=0; j<src.Count; j++)
         {
-            const string RenderPattern = "{0,-16} | {1,-4} | {2, -4}";
-            var path = XedPaths.RuleTarget("flags", FS.Csv);
-            var emitting = Channel.EmittingFile(path);
-            using var writer = path.AsciWriter();
-            writer.AppendLineFormat(RenderPattern, "Instruction",  "F", "E");
-            var counter = 0u;
-
-            for(var j=0; j<src.Count; j++)
+            ref readonly var pattern = ref src[j];
+            ref readonly var effects = ref pattern.Effects;
+            for(var k=0; k<effects.Count; k++)
             {
-                ref readonly var pattern = ref src[j];
-                ref readonly var effects = ref pattern.Effects;
-                for(var k=0; k<effects.Count; k++)
-                {
-                    ref readonly var e = ref effects[k];
-                    writer.AppendLineFormat(RenderPattern,
-                        XedRender.format(pattern.InstClass),
-                        e.Flag.ToString().ToLower(),
-                        XedRender.format(e.Effect)
-                        );
-                    counter++;
-                }
+                ref readonly var e = ref effects[k];
+                writer.AppendLineFormat(RenderPattern,
+                    XedRender.format(pattern.InstClass),
+                    e.Flag.ToString().ToLower(),
+                    XedRender.format(e.Effect)
+                    );
+                counter++;
             }
-
-            Channel.EmittedFile(emitting,counter);
         }
+
+        Channel.EmittedFile(emitting,counter);
     }
 }

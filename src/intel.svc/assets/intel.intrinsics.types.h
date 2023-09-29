@@ -32,6 +32,7 @@ typedef union __declspec(align(16)) __m128 {
      unsigned __int32    m128_u32[4];
  } __m128;
 
+
 typedef union __declspec(align(16)) __m128i {
     __int8              m128i_i8[16];
     __int16             m128i_i16[8];
@@ -66,7 +67,6 @@ typedef union  __declspec(align(32)) __m256i {
     unsigned __int64    m256i_u64[4];
 } __m256i;
 
-
 typedef union __declspec(align(64)) __m512 {
     float m512_f32[16];
 } __m512;
@@ -85,6 +85,43 @@ typedef union __declspec(align(64)) __m512i {
     unsigned __int32    m512i_u32[16];
     unsigned __int64    m512i_u64[8];
 } __m512i;
+
+// v128x8i
+typedef char v128x8i __attribute__((__vector_size__(16)));
+
+// v128x8u
+typedef unsigned char v128x8u __attribute__((__vector_size__(16)));
+
+// v128x16i
+typedef short v128x16i __attribute__((__vector_size__(16)));
+
+// v128x16u
+typedef unsigned short v128x16u __attribute__((__vector_size__(16)));
+
+// v128x32i
+typedef int v128x32i __attribute__((__vector_size__(16)));
+
+// v128x32u
+typedef unsigned int v128x32u __attribute__((__vector_size__(16)));
+
+// v128x64i
+typedef long long v128x64i __attribute__((__vector_size__(16)));
+
+// v128x64u
+typedef unsigned long long v128x64u __attribute__((__vector_size__(16)));
+
+// v256x8i
+typedef char v256x8i __attribute__((__vector_size__(32)));
+
+// v256x8u
+typedef unsigned char v256x8u __attribute__((__vector_size__(32)));
+
+// v256x8i
+typedef short v256x16i __attribute__((__vector_size__(32)));
+
+// v256x8u
+typedef unsigned short v256x16u __attribute__((__vector_size__(32)));
+
 
 typedef float __m512_u __attribute__((__vector_size__(64), __aligned__(1)));
 
@@ -145,8 +182,28 @@ typedef __bf16 __m256bh __attribute__((__vector_size__(32), __aligned__(32)));
 // v512x8i
 typedef char __v64qi __attribute__((__vector_size__(64)));
 
+typedef signed char __v64qs __attribute__((__vector_size__(64)));
+
+// v512x8u
+typedef unsigned char __v64qu __attribute__((__vector_size__(64)));
+
 // v512x16i
 typedef short __v32hi __attribute__((__vector_size__(64)));
+
+// v512x16u
+typedef unsigned short __v32hu __attribute__((__vector_size__(64)));
+
+// v512x32u
+typedef unsigned int __v16su __attribute__((__vector_size__(64)));
+
+// v512x32i
+typedef int __v16si __attribute__((__vector_size__(64)));
+
+// v512x64i
+typedef long long __v8di __attribute__((__vector_size__(64)));
+
+// v512x64u
+typedef unsigned long long __v8du __attribute__((__vector_size__(64)));
 
 // v512x64f
 typedef double __v8df __attribute__((__vector_size__(64)));
@@ -154,27 +211,6 @@ typedef double __v8df __attribute__((__vector_size__(64)));
 // v512x32f
 typedef float __v16sf __attribute__((__vector_size__(64)));
 
-// v512x64i
-typedef long long __v8di __attribute__((__vector_size__(64)));
-
-// v512x32i
-typedef int __v16si __attribute__((__vector_size__(64)));
-
-/* Unsigned types */
-
-// v512x8u
-typedef unsigned char __v64qu __attribute__((__vector_size__(64)));
-
-// v512x16u
-typedef unsigned short __v32hu __attribute__((__vector_size__(64)));
-
-// v512x64u
-typedef unsigned long long __v8du __attribute__((__vector_size__(64)));
-
-// v512x32u
-typedef unsigned int __v16su __attribute__((__vector_size__(64)));
-
-typedef signed char __v64qs __attribute__((__vector_size__(64)));
 
 typedef __bf16 __v32bf __attribute__((__vector_size__(64), __aligned__(64)));
 typedef __bf16 __m512bh __attribute__((__vector_size__(64), __aligned__(64)));
@@ -429,3 +465,33 @@ typedef enum
     _MM_BROADCAST64_NONE,
     
 } _MM_BROADCAST64_ENUM;
+
+
+typedef __v64qi v512x8i;
+
+typedef __v64qu v512x8u;
+
+typedef __v32hi v512x16i;
+
+typedef __v32hu v512x16u;
+
+typedef __v16si v512x32i;
+
+typedef __v16su v512x32u;
+
+typedef __v8di v512x64i;
+
+typedef __v8du v512x64u;
+
+typedef __v16sf v512x32f;
+
+typedef __v8df v512x64f;
+
+typedef __m64 v64;
+
+typedef __m128i v128;
+
+typedef __m128i v256;
+
+typedef __m512i v512;
+

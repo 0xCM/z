@@ -6,7 +6,7 @@ namespace Z0;
 
 using static XedModels;
 
-partial class XedRules
+partial class XedModels
 {
     [StructLayout(StructLayout,Pack=1), DataWidth(Width), Record(TableId)]
     public readonly struct InstOperand

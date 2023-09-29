@@ -241,11 +241,14 @@ public class AsmSigTokens
         [Symbol("k")]
         k,
 
-        [Symbol("k1")]
+        [Symbol("k1", "A first mask register")]
         k1,
 
-        [Symbol("k2")]
-        k2
+        [Symbol("k2", "A second mask register")]
+        k2,
+
+        [Symbol("k3", "A third mask register")]
+        k3
     }
 
     [SymSource(GroupName), TokenKind(TK.VReg)]
@@ -254,11 +257,38 @@ public class AsmSigTokens
         [Symbol("xmm", "An XMM register")]
         xmm,
 
+        [Symbol("xmm1", "A first XMM register")]
+        xmm1,
+
+        [Symbol("xmm2", "A second XMM register")]
+        xmm2,
+
+        [Symbol("xmm3", "A third XMM register")]
+        xmm3,
+
         [Symbol("ymm", "A YMM register")]
         ymm,
 
+        [Symbol("ymm1", "A first YMM register")]
+        ymm1,
+
+        [Symbol("ymm2", "A second YMM register")]
+        ymm2,
+
+        [Symbol("ymm3", "A third YMM register")]
+        ymm3,
+
         [Symbol("zmm", "A zmm register")]
         zmm,
+
+        [Symbol("zmm1", "A first ZMM register")]
+        zmm1,
+
+        [Symbol("zmm2", "A second ZMM register")]
+        zmm2,
+
+        [Symbol("zmm3", "A third ZMM register")]
+        zmm3
     }
 
     [SymSource(GroupName), TokenKind(TK.FpuReg)]
@@ -439,14 +469,15 @@ public class AsmSigTokens
         [Symbol("{k1}", "A mask register used as instruction writemask for instructions that do not allow zeroing-masking but support merging-masking")]
         k1,
 
+        [Symbol("{k2}")]
+        k2,
+
         [Symbol("{z}")]
         z,
 
         [Symbol("{k1}{z}", "A mask register used as instruction writemask")]
         k1z,
 
-        [Symbol("{k2}")]
-        k2,
     }
 
     [SymSource(GroupName), TokenKind(TK.BCastMem)]

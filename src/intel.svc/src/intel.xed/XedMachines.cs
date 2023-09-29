@@ -7,9 +7,8 @@ namespace Z0;
 using static sys;
 using static XedModels;
 using static XedRules;
-using static XedOps;
 
-using P = XedRules.InstPattern;
+using P = XedModels.InstPattern;
 using M = XedModels;
 using R = XedRules;
 
@@ -135,7 +134,7 @@ public class XedMachines : IDisposable
         public void Reset()
         {
             OpState = XedOperandState.Empty;
-            Pattern = XedRules.InstPattern.Empty;
+            Pattern = InstPattern.Empty;
             MachineMode = default;
             Form = XedInstForm.Empty;
             Expressions.Clear();

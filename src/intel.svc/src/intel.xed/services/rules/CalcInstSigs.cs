@@ -5,6 +5,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using static XedModels;
+    
     partial class XedRules
     {
         public static Pairings<InstPattern,InstSig> CalcInstSigs(Index<InstPattern> src)

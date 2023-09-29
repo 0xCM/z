@@ -21,9 +21,21 @@ partial class XedModels
         [Render(8)]
         public MachineMode Mode;
 
+        [Render(16)]
+        public AsmOpCodeClass OpCodeClass;
+
+        [Render(16)]
+        public byte OpCodeMap;
+
+        [Render(16)]
+        public AsmOpCodeKind OpCodeKind;
+
+        [Render(16)]
+        public Hex8 OpCodeValue;
+        
         [Render(62)]
         public XedInstForm Form;
-
+        
         [Render(1)]
         public InstPatternBody Pattern;
 

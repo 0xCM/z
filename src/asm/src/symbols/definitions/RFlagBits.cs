@@ -11,7 +11,7 @@ using static NumericBaseKind;
 /// Defines literals corresponding the bits in the RFLAGS register
 /// </summary>
 [Flags, SymSource("asm.regs.flags", Base16)]
-public enum RFlagBits : uint
+public enum RFlagBits : ulong
 {
     None = 0,
 

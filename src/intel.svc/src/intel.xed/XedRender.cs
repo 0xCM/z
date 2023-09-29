@@ -32,7 +32,7 @@ public class XedRender
 
     static EnumRender<VexMapKind> VexMap = new();
 
-    static EnumRender<AsmBaseMapKind> LegacyMap = new();
+    static EnumRender<LegacyMapKind> LegacyMap = new();
 
     static EnumRender<EvexMapKind> EvexMap = new();
 
@@ -241,7 +241,7 @@ public class XedRender
     public static string format(EvexMapKind src)
         => EvexMap.Format(src);
 
-    public static string format(AsmBaseMapKind src)
+    public static string format(LegacyMapKind src)
         => LegacyMap.Format(src);
 
     public static string format(RuleTableKind src)

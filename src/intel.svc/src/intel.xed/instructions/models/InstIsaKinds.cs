@@ -3,13 +3,12 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedModels
 {
-    partial class XedModels
+    public class InstIsaKinds : HashSet<InstIsaKind>
     {
-        public class InstIsaKinds : HashSet<InstIsaKind>
-        {
-            public static InstIsaKinds Empty => new();
-        }
+        public static InstIsaKinds Empty => new();
     }
 }

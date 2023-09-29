@@ -7,10 +7,10 @@ namespace Z0;
 
 using Asm;
 
-using static XedModels;
+using static XedRules;
 using static AsmOpCodes;
 
-partial class XedRules
+partial class XedModels
 {
     [StructLayout(LayoutKind.Sequential, Pack=1), Record(TableId)]
     public record struct InstGroupSeq : IComparable<InstGroupSeq>

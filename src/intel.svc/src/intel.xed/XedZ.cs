@@ -118,6 +118,17 @@ public class XedZ
         public const string EOSZ_LIST = nameof(EOSZ_LIST);
     }    
 
+    public static bool parse(string src, out AsmOpCodeClass dst)
+    {
+        dst = src switch {
+            "evex" => AsmOpCodeClass.Evex,
+            "vex" => AsmOpCodeClass.Vex,
+            "xop" => AsmOpCodeClass.Xop,
+            _ => AsmOpCodeClass.Legacy
+        };
+        return true;
+    }
+    
     public static bool parse(XedInstForm form, List<string> lines, out FormRules dst)
     {
         dst = new(form);
@@ -220,6 +231,7 @@ public class XedZ
                 result = Value.CompareTo(src.Value);
             return result;
         }
+
         public bool Equals(RuleAttribute src)
             => Name == src.Name && Value == src.Value;
 
@@ -279,7 +291,6 @@ public class XedZ
         }        
         
         protected override Fence<char> Boundary => ('[', ']');
-
     }
 
     public record FormRules
@@ -293,6 +304,40 @@ public class XedZ
             Form = form;
             Rules = new();
         }
+    }
+
+    public readonly record struct Attribute
+    {
+        public readonly InstBlockField Field;
+
+        public readonly string Value;
+
+        public Attribute(InstBlockField name, string value)
+        {
+            Field = name;
+            Value = value;
+        }
+
+        public bool IsNonEmpty
+        {
+            get => Field != 0 || nonempty(Value);
+        }
+        public static Attribute Empty => new(default,EmptyString);
+    }
+
+    static bool parse(string src, out Attribute dst)
+    {
+        var i = text.index(src,Chars.Colon);
+        if(i > 0)
+        {
+            var name = text.trim(text.left(src,i));
+            var value = text.trim(text.right(src,i));
+            XedParsers.parse(name, out InstBlockField field);
+            dst = new(field, value);
+        }
+        else
+            dst = Attribute.Empty;
+        return dst.IsNonEmpty;
     }
 
     public static XedRuleBlocks rules(FilePath path)
@@ -467,7 +512,43 @@ public class XedZ
 
         dst.MappedForms = buffer.ToArray();
     }
+    
+    static void absorb(Attribute src, ref InstBlockImport dst)
+    {
+        switch(src.Field)
+        {
+            
+            case InstBlockField.iclass:
+                XedParsers.parse(src.Value, out dst.Class);
+            break;
+            case InstBlockField.opcode:
+                HexParser.parse(src.Value, out dst.OpCodeValue);
+            break;
+            case InstBlockField.space:
+                parse(src.Value, out dst.OpCodeClass);
+            break;
+            case InstBlockField.map:
+                DataParser.parse(src.Value, out dst.OpCodeMap);
+            break;
 
+            case InstBlockField.pattern:
+            {
+                try
+                {
+                    XedInstParser.parse(src.Value, out dst.Pattern);
+                    var fields = XedCells.sort(dst.Pattern.Cells);
+                    dst.Pattern = new (fields);
+                    XedPatterns.mode(dst.Pattern, out dst.Mode);
+                }
+                catch(Exception e)
+                {
+                    term.warn(e.Message);
+                }
+            }
+            break;
+        }
+    }
+    
     static void CalcDatasets(ReadOnlySpan<string> src, BlockImportDatasets dst)
     {
         var map = dst.MappedForms;
@@ -478,9 +559,6 @@ public class XedZ
             var spec = range.Id;
             var form = spec.Form;
             var import = InstBlockImport.Empty;
-            var name = EmptyString;
-            var value = EmptyString;
-            var bf = InstBlockField.amd_3dnow_opcode;
             import.Form = form;
             import.Seq = i;
             var lines = list<string>();
@@ -489,27 +567,10 @@ public class XedZ
                 ref readonly var line = ref skip(src,k++);
                 lines.Add(line);
 
-                split(line, out name, out value);
-                XedParsers.parse(name, out bf);
-
-                if(bf == InstBlockField.iclass)
-                    XedParsers.parse(value, out import.Class);
-                else if(bf == InstBlockField.pattern)
-                {
-                    split(line, out _, out value);
-                    try
-                    {
-                        XedInstParser.parse(value, out import.Pattern);
-                        var fields = XedCells.sort(import.Pattern.Cells);
-                        import.Pattern = new (fields);
-                        XedPatterns.mode(import.Pattern, out import.Mode);
-                    }
-                    catch(Exception e)
-                    {
-                        term.warn(e.Message);
-                    }
-                }
+                parse(line, out Attribute attrib);
+                absorb(attrib, ref import);
             }
+            import.OpCodeKind = AsmOpCodes.kind(import.OpCodeClass, import.OpCodeMap);
             dst.BlockImports.Add(import);
             dst.FormData.TryAdd(form, lines);
         }

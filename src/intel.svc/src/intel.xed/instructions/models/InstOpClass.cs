@@ -5,9 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static XedModels;
-
-partial class XedRules
+partial class XedModels
 {
     /// <summary>
     /// Characterizes a disassembled operand class

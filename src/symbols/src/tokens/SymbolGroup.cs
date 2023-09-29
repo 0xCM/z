@@ -77,11 +77,6 @@ public class SymbolGroup
              select GroupPartition(t);
     }
 
-    // public IEnumerable<Symbol> Literals()
-    //     => from type in _SymbolTypes
-    //         from member in Symbols(type)
-    //         select member;
-
     public record struct Symbol : ISequential<Symbol>, IComparable<Symbol>
     {
         public uint Seq;

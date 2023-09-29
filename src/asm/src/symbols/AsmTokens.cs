@@ -40,6 +40,7 @@ public class AsmTokens
         yield return _PrefixTokens;
     }
 
+    
     [MethodImpl(Inline), Op]
     public static AsmSigToken sig(in AsmTokenRecord src)
         => new ((AsmSigTokenKind)src.Index, (byte)src.Value);

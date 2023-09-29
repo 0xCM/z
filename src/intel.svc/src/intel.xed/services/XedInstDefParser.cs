@@ -8,9 +8,8 @@ namespace Z0;
 using static sys;
 using static XedModels;
 using static XedPatterns;
-using static XedRules;
 
-using P = XedRules.InstPartKind;
+using P = XedModels.InstPartKind;
 
 public struct XedInstDefParser
 {

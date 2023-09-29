@@ -13,6 +13,11 @@ partial class IntelSdmCmd : WfAppCmd<IntelSdmCmd>
 {
     IntelSdm Sdm => Wf.IntelSdm();
 
+    IntelSdm IntelSdm => Wf.IntelSdm();
+
+    IDbArchive AsmDb => EnvDb.Scoped("asm.db");
+
+
     [CmdOp("sdm/export/charmaps")]
     void ExportCharMaps()
     {
@@ -40,34 +45,6 @@ partial class IntelSdmCmd : WfAppCmd<IntelSdmCmd>
     }
 
 
-    [CmdOp("sdm/opcodes")]
-    void CheckAsmOpCodes()
-    {            
-        var src = Sdm.CalcOpCodes();
-        var formatter = CsvTables.formatter<SdmOpCodeDetail>();
-        iter(src, oc => {
-            Channel.Row(formatter.Format(oc));
-        });
-        // var result = Outcome.Success;
-        // var src = Sdm.LoadOcDetails();
-        // var count = src.Count;
-        // var tokens = list<string>();
-        // for(var i=0; i<count; i++)
-        // {
-        //     ref readonly var detail = ref src[i];
-        //     ref readonly var input = ref detail.OpCodeExpr;
-        //     tokens.Clear();
-        //     SdmOpCodes.tokenize(detail.OpCodeExpr, tokens);
-        //     var expr = tokens.Join(EmptyString);
-        //     if(expr != detail.OpCodeExpr)
-        //     {
-        //         Channel.Error($"Equality failure: {expr} != {detail.OpCodeExpr}");
-        //         break;
-        //     }
-
-        //     Channel.Row(tokens.Join(EmptyString));
-        // }            
-    }
 
     [CmdOp("sdm/check/sigs")]
     Outcome CheckAsmSigs(CmdArgs args)
@@ -141,4 +118,51 @@ partial class IntelSdmCmd : WfAppCmd<IntelSdmCmd>
         Unicodes.match(n,src,marker,OnMatch);
         return matches.ViewDeposited();
     }
+
+    [CmdOp("sdm/instructions")]
+    void LoadInstructions()
+    {        
+        var dst = bag<SdmOpCodeRow>();
+        var files = IntelSdm.InstructionFiles();
+        foreach(var file in files)
+        {
+            var lines = file.ReadLines();
+            for(var i=0; i<lines.Count-2; i++)
+            {
+                if(lines[i].StartsWith( "## OpCodes") && lines[i+1].StartsWith("-----"))
+                {
+                    i+=2;
+                    var header = text.trim(lines[i].Split(Chars.Pipe)).Mapi((i,x) => (i,x));
+                    i++;
+                    while(i++ < lines.Count)
+                    {
+                        if(empty(lines[i]))
+                            break;
+                        
+                        var cells = text.trim(text.split(lines[i], Chars.Pipe)).ToSeq();
+                        var row = new SdmOpCodeRow();
+                        if(cells.Length >= 3)
+                        {
+                            row.OpCode = cells[0];
+                            row.Instruction = cells[1];
+                            row.Encoding = cells[2];
+                            dst.Add(row);
+                        }
+
+                        if(cells.Length >= 4)
+                        {
+                            row.Mode64 = cells[3];
+                        }
+
+                        if(cells.Length >= 5)
+                        {
+                            row.Description = cells.Last;
+                        }
+
+                    }
+                }
+            }
+        }
+        Channel.TableEmit(dst.Array().Sort(), AsmDb.Path("sdm.opcodes", FileKind.Csv));
+    }    
 }

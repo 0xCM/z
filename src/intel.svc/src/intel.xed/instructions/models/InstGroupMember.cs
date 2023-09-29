@@ -7,8 +7,9 @@ namespace Z0;
 
 using static XedModels;
 using static AsmOpCodes;
+using static XedRules;
 
-partial class XedRules
+partial class XedModels
 {
     public class InstGroupMember : IComparable<InstGroupMember>
     {

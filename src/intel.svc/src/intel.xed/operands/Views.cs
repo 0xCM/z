@@ -6,6 +6,7 @@
 namespace Z0;
 
 using static XedModels;
+using Asm;
 
 using M = XedModels;
 using R = XedRules;
@@ -25,10 +26,10 @@ partial class XedOps
         get => Bytes.sequential<M.ASZ>(0, (byte)MaxASZ);
     }
 
-    public static ReadOnlySpan<AsmBaseMapKind> BaseMapKind
+    public static ReadOnlySpan<LegacyMapKind> BaseMapKind
     {
         [MethodImpl(Inline), Op]
-        get => Bytes.sequential<AsmBaseMapKind>(0, (byte)AsmBaseMapKind.Amd3dNow);
+        get => Bytes.sequential<LegacyMapKind>(0, (byte)LegacyMapKind.Amd3dNow);
     }
 
     public static ReadOnlySpan<M.InstCategory> InstCategory

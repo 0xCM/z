@@ -7,7 +7,7 @@ namespace Z0
     using System.Linq;
 
     using static sys;
-    using static XedRules;
+    using static XedModels;
     using static MachineModes;
 
     partial class XedDisasm

@@ -81,11 +81,11 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public static implicit operator InstPatternBody(CellValue[] src)
-                => new InstPatternBody(src);
+                => new (src);
 
             [MethodImpl(Inline)]
             public static implicit operator InstPatternBody(Index<CellValue> src)
-                => new InstPatternBody(src);
+                => new (src);
         }
     }
 }

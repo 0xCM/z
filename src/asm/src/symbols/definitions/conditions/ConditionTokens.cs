@@ -251,7 +251,4 @@ public partial class ConditionTokens
         [Symbol("GT", "Greater Than")]
         GT = b1111,
     }
-
-
-
 }

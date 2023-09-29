@@ -7,7 +7,7 @@ namespace Z0;
 
 using S = AsmOpCodes.Literals;
 using C = AsmOpCodeClass;
-using B = AsmBaseMapKind;
+using B = Asm.LegacyMapKind;
 using X = XopMapKind;
 using V = VexMapKind;
 using E = EvexMapKind;
@@ -18,19 +18,19 @@ public enum AsmOpCodeKind : ushort
     None = 0,
 
     [Symbol(S.B0)]
-    Base00 = C.Base | (B.BaseMap0 << 8),
+    Base00 = C.Legacy | (B.BaseMap0 << 8),
 
     [Symbol(S.B1)]
-    Base0F = C.Base | (B.BaseMap1 << 8),
+    Base0F = C.Legacy | (B.BaseMap1 << 8),
 
     [Symbol(S.B2)]
-    Base0F38 = C.Base | (B.BaseMap2 << 8),
+    Base0F38 = C.Legacy | (B.BaseMap2 << 8),
 
     [Symbol(S.B3)]
-    Base0F3A = C.Base | (B.BaseMap3 << 8),
+    Base0F3A = C.Legacy | (B.BaseMap3 << 8),
 
     [Symbol(S.D3)]
-    Amd3DNow = C.Base | (B.Amd3dNow << 8),
+    Amd3DNow = C.Legacy | (B.Amd3dNow << 8),
 
     [Symbol(S.X8)]
     Xop8 = C.Xop | (X.Xop8 << 8),

@@ -6,7 +6,7 @@ namespace Z0
 {
     using static sys;
 
-    partial class XedRules
+    partial class XedModels
     {
         public readonly struct InstSig
         {

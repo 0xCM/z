@@ -11,7 +11,7 @@ using N = AsmOpCodes.Literals;
 public enum AsmOpCodeClass : byte
 {
     [Symbol(N.BaseClassName)]
-    Base = 1,
+    Legacy = 1,
 
     [Symbol(N.XopClassName)]
     Xop = 2,
