@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-public struct RegOpRange : IAsmOpSource<RegOp>
+public struct RegRange
 {
     readonly RegClass Class;
 
@@ -17,7 +17,7 @@ public struct RegOpRange : IAsmOpSource<RegOp>
     byte Current;
 
     [MethodImpl(Inline)]
-    public RegOpRange(RegClass @class, NativeSize size, RegIndex min, RegIndex max)
+    public RegRange(RegClass @class, NativeSize size, RegIndex min, RegIndex max)
     {
         Class = @class;
         Size = size;

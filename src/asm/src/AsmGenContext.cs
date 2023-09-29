@@ -7,7 +7,7 @@ namespace Z0.Asm;
 public class AsmGenContext
 {
 
-    RegOpRange RegOps;
+    RegRange RegOps;
 
     ImmRange ImmOps;
 
@@ -18,7 +18,7 @@ public class AsmGenContext
 
     }
 
-    AsmGenContext(SdmForm form, RegOpRange regs, ImmRange imm)
+    AsmGenContext(SdmForm form, RegRange regs, ImmRange imm)
     {
         Form = form;
         RegOps = regs;

@@ -32,8 +32,8 @@ namespace Z0
             public ApiImmEmitter ImmEmitter(IWfRuntime wf)
                 => Service<ApiImmEmitter>(wf);
 
-            public AsmTables AsmTables(IWfRuntime wf)
-                => Service<AsmTables>(wf);
+            public AsmApiTables AsmTables(IWfRuntime wf)
+                => Service<AsmApiTables>(wf);
 
             public AsmCoreCmd AsmCoreCmd(IWfRuntime wf)
                 => Service<AsmCoreCmd>(wf);
@@ -75,7 +75,7 @@ namespace Z0
         public static AsmCoreCmd AsmCoreCmd(this IWfRuntime wf)
             => Services.AsmCoreCmd(wf);
 
-        public static AsmTables AsmTables(this IWfRuntime wf)
+        public static AsmApiTables AsmTables(this IWfRuntime wf)
             => Services.AsmTables(wf);
 
          public static StanfordAsmCatalog StanfordCatalog(this IWfRuntime wf)

@@ -8,5 +8,5 @@ partial struct asm
 {
     [MethodImpl(Inline), Op]
     public static AsmFileSpec file(Identifier name, params IAsmSourcePart[] parts)
-        => new AsmFileSpec(name, parts);
+        => new (name, parts);
 }

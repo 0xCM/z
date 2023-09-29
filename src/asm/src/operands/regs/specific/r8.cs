@@ -192,7 +192,6 @@ public struct cl : IRegOp8<cl>
     [MethodImpl(Inline)]
     public static implicit operator RegOp(cl src)
         => (G)src;
-
 }
 
 public struct dl : IRegOp8<dl>

@@ -73,7 +73,7 @@ public record struct AsmHexCode
         => Data.Equals(src.Data);
 
     public string Format()
-        => asm.format(this);
+        => AsmRender.format(this);
 
     public override string ToString()
         => Format();

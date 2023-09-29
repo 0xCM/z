@@ -54,7 +54,7 @@ public class AsmGen
         {
             case 0:
             {
-                dst.Add(asm.inst(form.Mnemonic, AsmOperands.Empty));
+                dst.Add(asm.inst(form.Mnemonic, AsmOperandSet.Empty));
             }
             break;
             case 1:

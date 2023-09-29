@@ -139,12 +139,12 @@ namespace Z0.Asm.Operands
         public G Generalized
         {
             [MethodImpl(Inline)]
-            get => new G(Index);
+            get => new (Index);
         }
 
         [MethodImpl(Inline)]
         public static implicit operator G(rcx src)
-            => new G(src.Index);
+            => new (src.Index);
 
         [MethodImpl(Inline)]
         public static implicit operator K(rcx src)

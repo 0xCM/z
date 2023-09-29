@@ -46,7 +46,7 @@ public readonly record struct LockPrefix : IAsmPrefix<LockPrefixCode>, IAsmByte<
         => Format();
 
     public string Format()
-        => AsmPrefixByte.format(this);
+        => AsmBytes.format(this);
 
     [MethodImpl(Inline)]
     public static implicit operator LockPrefix(LockPrefixCode src)

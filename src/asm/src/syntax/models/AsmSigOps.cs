@@ -92,5 +92,15 @@ public record struct AsmSigOps : INullity, IHashed
         get => (byte)(u8(Op0.IsNonEmpty) + u8(Op1.IsNonEmpty) + u8(Op2.IsNonEmpty) + u8(Op3.IsNonEmpty) + u8(Op4.IsNonEmpty));
     }
 
+    public static implicit operator AsmSigOps(AsmSigOp[] src)
+    {
+        var buffer = default(AsmSigOps);
+        var dst = recover<AsmSigOp>(bytes(buffer));        
+        var count = min(src.Length, dst.Length);
+        for(var i=0; i<count; i++)
+            seek(dst,i) = skip(src,i);
+        return buffer;
+    }
+    
     public static AsmSigOps Empty => default;
 }

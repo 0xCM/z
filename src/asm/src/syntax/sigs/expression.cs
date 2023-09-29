@@ -48,14 +48,14 @@ partial class AsmSigs
             mnemonic = text.left(sig,j);
             var operands = text.right(sig,j);
             if(text.contains(sig, Chars.Comma))
-                dst = AsmSigs.expression(mnemonic, text.trim(text.split(operands, Chars.Comma)));
+                dst = expression(mnemonic, text.trim(text.split(operands, Chars.Comma)));
             else
-                dst = AsmSigs.expression(mnemonic, operands);
+                dst = expression(mnemonic, operands);
         }
         else
         {
             mnemonic = sig;
-            dst = AsmSigs.expression(mnemonic);
+            dst = expression(mnemonic);
         }
 
         return dst;

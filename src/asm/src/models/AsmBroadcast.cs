@@ -10,7 +10,7 @@ public struct AsmBroadcast
     const string TableId = "asm.broadcasts";
 
     [Render(8)]
-    public byte Id;
+    public uint5 Id;
 
     [Render(8)]
     public Ratio<byte> Ratio;
@@ -19,7 +19,7 @@ public struct AsmBroadcast
     public asci16 Symbol;
 
     [MethodImpl(Inline)]
-    public AsmBroadcast(byte id, BroadcastClass @class, asci16 symbol, byte src, byte dst)
+    public AsmBroadcast(uint5 id, BroadcastClass @class, asci16 symbol, byte src, byte dst)
     {
         Id = id;
         Symbol = symbol;

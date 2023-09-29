@@ -113,7 +113,7 @@ public record struct ModRm : IAsmByte<ModRm>
         => Value;
 
     public string Format()
-        => AsmPrefixByte.format(this);
+        => AsmBytes.format(this);
 
     public override string ToString()
         => Format();

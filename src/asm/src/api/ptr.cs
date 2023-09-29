@@ -10,11 +10,11 @@ partial struct asm
 {
     [MethodImpl(Inline), Op]
     public static FarPtr farptr(Address16 selector, long offset)
-        => new FarPtr(selector,offset);
+        => new (selector,offset);
 
     [MethodImpl(Inline), Op]
     public static NearPtr nearptr(MemoryAddress address)
-        => new NearPtr(address);
+        => new (address);
 
     [MethodImpl(Inline), Op]
     public static m8 ptr8(r64 reg)

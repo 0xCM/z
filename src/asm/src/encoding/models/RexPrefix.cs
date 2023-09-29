@@ -91,7 +91,7 @@ public record struct RexPrefix : IAsmPrefix<RexPrefix>, IAsmByte<RexPrefix>
         => Data;
 
     public string Format()
-        => AsmPrefixByte.format(this);
+        => AsmBytes.format(this);
 
     public string ToBitString()
         => BitRender.format8x4(Data);

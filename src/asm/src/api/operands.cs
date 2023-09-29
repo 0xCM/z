@@ -7,7 +7,7 @@ namespace Z0.Asm;
 partial struct asm
 {
     [MethodImpl(Inline)]
-    public static ref AsmOperands operands(in AsmOperand op0, ref AsmOperands dst)
+    public static ref AsmOperandSet operands(in AsmOperand op0, ref AsmOperandSet dst)
     {
         dst.Op0 = op0;
         dst.Op1 = AsmOperand.Empty;
@@ -18,7 +18,7 @@ partial struct asm
     }
 
     [MethodImpl(Inline)]
-    public static ref AsmOperands operands(in AsmOperand op0, in AsmOperand op1, ref AsmOperands dst)
+    public static ref AsmOperandSet operands(in AsmOperand op0, in AsmOperand op1, ref AsmOperandSet dst)
     {
         dst.Op0 = op0;
         dst.Op1 = op1;
@@ -29,7 +29,7 @@ partial struct asm
     }
 
     [MethodImpl(Inline)]
-    public static ref AsmOperands operands(in AsmOperand op0, in AsmOperand op1, in AsmOperand op2, ref AsmOperands dst)
+    public static ref AsmOperandSet operands(in AsmOperand op0, in AsmOperand op1, in AsmOperand op2, ref AsmOperandSet dst)
     {
         dst.Op0 = op0;
         dst.Op1 = op1;
@@ -40,7 +40,7 @@ partial struct asm
     }
 
     [MethodImpl(Inline)]
-    public static ref AsmOperands operands(in AsmOperand op0, in AsmOperand op1, in AsmOperand op2, in AsmOperand op3, ref AsmOperands dst)
+    public static ref AsmOperandSet operands(in AsmOperand op0, in AsmOperand op1, in AsmOperand op2, in AsmOperand op3, ref AsmOperandSet dst)
     {
         dst.Op0 = op0;
         dst.Op1 = op1;

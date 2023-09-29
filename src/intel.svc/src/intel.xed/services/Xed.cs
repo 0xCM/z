@@ -11,7 +11,7 @@ using static XedModels;
 using static XedRules;
 
 using K = XedModels.OpKind;
-using I = Asm.RFlagIndex;
+using I = Asm.RFlagSymbol;
 
 public partial class Xed : WfSvc<Xed>
 {

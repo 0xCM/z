@@ -7,6 +7,7 @@ namespace Z0
     using System.Linq;
 
     using static sys;
+    using Asm;
 
     public class ApiCodeRows
     {

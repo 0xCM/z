@@ -29,13 +29,13 @@ partial struct asm
     }
 
     [MethodImpl(Inline), Op]
-    public static AsmInstruction inst(in AsmMnemonic mnemonic, in AsmOperands ops)
+    public static AsmInstruction inst(in AsmMnemonic mnemonic, in AsmOperandSet ops)
         => new (mnemonic, ops);
 
     [MethodImpl(Inline), Op]
     public static AsmInstruction inst(in AsmMnemonic mnemonic, out AsmInstruction dst)
     {
-        dst = inst(mnemonic, AsmOperands.Empty);
+        dst = inst(mnemonic, AsmOperandSet.Empty);
         return dst;
     }
 
@@ -43,7 +43,7 @@ partial struct asm
     public static AsmInstruction inst(in AsmMnemonic mnemonic, in AsmOperand op0, out AsmInstruction dst)
     {
         dst.Mnemonic = mnemonic;
-        dst.Operands = AsmOperands.Empty;
+        dst.Operands = AsmOperandSet.Empty;
         ops(op0, ref dst.Operands);
         return dst;
     }
@@ -52,7 +52,7 @@ partial struct asm
     public static AsmInstruction inst(in AsmMnemonic mnemonic, in AsmOperand op0, in AsmOperand op1, out AsmInstruction dst)
     {
         dst.Mnemonic = mnemonic;
-        dst.Operands = AsmOperands.Empty;
+        dst.Operands = AsmOperandSet.Empty;
         ops(op0, op1, ref dst.Operands);
         return dst;
     }
@@ -61,7 +61,7 @@ partial struct asm
     public static AsmInstruction inst(in AsmMnemonic mnemonic, in AsmOperand op0, in AsmOperand op1, in AsmOperand op2, out AsmInstruction dst)
     {
         dst.Mnemonic = mnemonic;
-        dst.Operands = AsmOperands.Empty;
+        dst.Operands = AsmOperandSet.Empty;
         ops(op0, op1, op2, ref dst.Operands);
         return dst;
     }
@@ -70,7 +70,7 @@ partial struct asm
     public static AsmInstruction inst(in AsmMnemonic mnemonic, in AsmOperand op0, in AsmOperand op1, in AsmOperand op2, in AsmOperand op3, out AsmInstruction dst)
     {
         dst.Mnemonic = mnemonic;
-        dst.Operands = AsmOperands.Empty;
+        dst.Operands = AsmOperandSet.Empty;
         ops(op0, op1, op2, op3, ref dst.Operands);
         return dst;
     }

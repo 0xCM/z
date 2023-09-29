@@ -75,7 +75,7 @@ public record struct EncodingOffsets
     }
 
     public string Format()
-        => Asm.asm.format(this);
+        => AsmRender.format(this);
 
     public override string ToString()
         => Format();

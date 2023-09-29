@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using I = RFlagIndex;
+using I = RFlagSymbol;
 
 /// <summary>
 /// Defines indices into the <see cref='StatusFlagBits'/>

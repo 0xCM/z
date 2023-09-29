@@ -50,11 +50,11 @@ public record struct RepPrefix : IAsmPrefix<RepPrefixCode>, IAsmByte<RepPrefix>
         => Format();
 
     public string Format()
-        => AsmPrefixByte.format(this);
+        => AsmBytes.format(this);
 
     [MethodImpl(Inline)]
     public static implicit operator RepPrefix(RepPrefixCode src)
-        => new RepPrefix(src);
+        => new (src);
 
     [MethodImpl(Inline)]
     public static implicit operator byte(RepPrefix src)

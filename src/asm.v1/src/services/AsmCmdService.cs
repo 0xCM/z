@@ -12,7 +12,7 @@ namespace Z0.Asm
 
         AsmRegSets RegSets => Service(AsmRegSets.create);
 
-        AsmTables AsmTables => Service(Wf.AsmTables);
+        AsmApiTables AsmTables => Service(Wf.AsmTables);
 
         ApiPacks ApiPacks => Channel.Channeled<ApiPacks>();
 

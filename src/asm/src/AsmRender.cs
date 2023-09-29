@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using static AsmMaskTokens;
+using static BroadcastTokens;
 using static sys;
 
 using K = AsmSigTokenKind;
@@ -20,6 +20,51 @@ public class AsmRender
 
     static EnumRender<Broadcast64> BCast64 = new();
 
+    [Op]
+    public static string format(RegClass src)
+    {
+        var symbols = Symbols.index<RegClassCode>();
+        var index = (byte)src.Code;
+        var symbol = symbols[index];
+        return symbol.Expr.Format();
+    }
+
+
+    [Op]
+    public static byte render(AsmHexCode src, Span<char> dst)
+        => (byte)HexRender.render(LowerCase, src.Bytes, dst);
+
+    [Op]
+    public static string format(in AsmHexCode src)
+    {
+        var size = src.Size;
+        Span<char> dst = stackalloc char[64];
+        var count = HexRender.render(LowerCase, src.Bytes, dst);
+        return sys.@string(slice(dst, 0, count));
+    }
+
+    public static string format(in EncodingOffsets src)
+    {
+        if(src.IsEmpty)
+            return EmptyString;
+
+        var dst = Z0.text.emitter();
+        dst.Append(Chars.LBrace);
+        dst.AppendFormat("{0}={1}", "opcode", src.OpCode);
+        if(src.ModRm > 0)
+            dst.AppendFormat(", {0}={1}", "modrm", src.ModRm);
+        if(src.Sib > 0)
+            dst.AppendFormat(", {0}={1}", "sib",  src.Sib);
+        if(src.Disp > 0)
+            dst.AppendFormat(", {0}={1}", "disp", src.Disp);
+        if(src.Imm0 > 0)
+            dst.AppendFormat(", {0}={1}", "imm0", src.Imm0);
+        if(src.Imm1 > 0)
+            dst.AppendFormat(", {0}={1}", "imm1", src.Imm1);
+        dst.Append(Chars.RBrace);
+        return dst.Emit();
+    }
+
     public static string format(in AsmInstruction src)
     {
         var dst = text.buffer();
@@ -34,8 +79,22 @@ public class AsmRender
         return dst.Emit();
     }
 
+    [Op]
+    public static uint render(AsmHexCode src, ref uint i, Span<char> dst)
+    {
+        var i0 = i;
+        var count = src.Size;
+        var bytes = src.Bytes;
+        for(var j=0; j<count; j++)
+        {
+            HexRender.render(LowerCase, (Hex8)skip(bytes, j), ref i, dst);
+            if(j != count - 1)
+                seek(dst, i++) = Chars.Space;
+        }
+        return i - i0;
+    }
 
-    public static string format(in AsmOperands src)
+    public static string format(in AsmOperandSet src)
     {
         var dst = EmptyString;
         switch(src.OpCount)

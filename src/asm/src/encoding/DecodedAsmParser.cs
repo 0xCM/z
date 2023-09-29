@@ -2,67 +2,66 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using static sys;
+
+public class DecodedAsmParser
 {
-    using static sys;
+    public static DecodedAsmParser create(CompositeDispenser dispenser)
+        => new (dispenser);
 
-    public class DecodedAsmParser
+    List<DecodedAsmBlock> Target;
+
+    Hex16 BlockOffset;
+
+    AsmAddressLabel BlockBase;
+
+    CompositeDispenser Dispenser;
+
+    DecodedAsmParser(CompositeDispenser dispenser)
     {
-        public static DecodedAsmParser create(CompositeDispenser dispenser)
-            => new (dispenser);
+        Dispenser = dispenser;
+    }
 
-        List<DecodedAsmBlock> Target;
+    public ReadOnlySpan<DecodedAsmBlock> Parsed()
+        => Target.ViewDeposited();
 
-        Hex16 BlockOffset;
-
-        AsmAddressLabel BlockBase;
-
-        CompositeDispenser Dispenser;
-
-        DecodedAsmParser(CompositeDispenser dispenser)
+    public Outcome ParseBlocks(string src)
+    {
+        Target = list<DecodedAsmBlock>();
+        BlockOffset = 0;
+        BlockBase = AsmAddressLabel.Empty;
+        var result = Outcome.Success;
+        var block = LocatedSymbol.Empty;
+        var statemements = list<DecodedAsmStatement>();
+        var lines = Lines.read(src);
+        var count = lines.Length;
+        var label = AsmBlockLabel.Empty;
+        for(var m=0; m<count; m++)
         {
-            Dispenser = dispenser;
-        }
+            ref readonly var line = ref skip(lines,m);
+            ref readonly var content = ref line.Content;
+            if(text.begins(content, Chars.Hash))
+                continue;
 
-        public ReadOnlySpan<DecodedAsmBlock> Parsed()
-            => Target.ViewDeposited();
-
-        public Outcome ParseBlocks(string src)
-        {
-            Target = list<DecodedAsmBlock>();
-            BlockOffset = 0;
-            BlockBase = AsmAddressLabel.Empty;
-            var result = Outcome.Success;
-            var block = LocatedSymbol.Empty;
-            var statemements = list<DecodedAsmStatement>();
-            var lines = Lines.read(src);
-            var count = lines.Length;
-            var label = AsmBlockLabel.Empty;
-            for(var m=0; m<count; m++)
+            if(AsmBlockLabel.parse(content, out label))
             {
-                ref readonly var line = ref skip(lines,m);
-                ref readonly var content = ref line.Content;
-                if(text.begins(content, Chars.Hash))
-                    continue;
+                if(statemements.Count != 0)
+                    Target.Add(new DecodedAsmBlock(label, statemements.ToArray()));
 
-                if(AsmBlockLabel.parse(content, out label))
-                {
-                    if(statemements.Count != 0)
-                        Target.Add(new DecodedAsmBlock(label, statemements.ToArray()));
-
-                    BlockOffset = 0;
-                    statemements.Clear();
-                }
-                else
-                {
-
-                }
+                BlockOffset = 0;
+                statemements.Clear();
             }
+            else
+            {
 
-            if(statemements.Count != 0)
-                Target.Add(new DecodedAsmBlock(label, statemements.ToArray()));
-
-            return result;
+            }
         }
+
+        if(statemements.Count != 0)
+            Target.Add(new DecodedAsmBlock(label, statemements.ToArray()));
+
+        return result;
     }
 }

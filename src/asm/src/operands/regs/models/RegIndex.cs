@@ -15,7 +15,7 @@ public readonly record struct RegIndex
 
     [MethodImpl(Inline)]
     public static RegIndex from(RegIndexCode code)
-        => new RegIndex(code);
+        => new (code);
 
     public readonly RegIndexCode Code;
 

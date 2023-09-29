@@ -7,7 +7,7 @@ namespace Z0.Asm;
 /// <summary>
 /// Defines the bitfield index of the flags defined by <see cref='RFlagBits'/>
 /// </summary>
-public enum RFlagIndex : byte
+public enum RFlagSymbol : byte
 {
     [Symbol("cf", "Carry Flag; Enabled if an arithmetic operation generates a carry or a borrow out of the most-significant bit of the result; cleared otherwise. This flag indicates an overflow condition for unsigned-integer arithmetic. It is also used in multiple-precision arithmetic")]
     CF = 0,

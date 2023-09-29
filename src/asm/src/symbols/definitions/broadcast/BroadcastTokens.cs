@@ -5,14 +5,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using static Asm.BroadcastSymbols;
+using static BroadcastSymbols;
 
-public class AsmMaskTokens
+using Tk = BroadcastTokenKind;
+
+[LiteralProvider(GroupName)]
+public class BroadcastTokens
 {
-    public const string GroupName = "asm.masks";
+    public const string GroupName = "asm.broadcasts";
 
-
-    [SymSource(GroupName), DataWidth(num5.Width)]
+    [SymSource(GroupName), DataWidth(num5.Width), TokenKind(Tk.Broadcast8)]
     public enum Broadcast8 : byte
     {
         [Symbol(N1to16, "BCAST=17;VL=128")]
@@ -34,7 +36,7 @@ public class AsmMaskTokens
         BCast_1TO8_8  = 25,
     }
 
-    [SymSource(GroupName), DataWidth(num5.Width)]
+    [SymSource(GroupName), DataWidth(num5.Width), TokenKind(Tk.Broadcast16)]
     public enum Broadcast16 : byte
     {
         [Symbol(N1to8, "BCAST=14;VL=128")]
@@ -53,7 +55,7 @@ public class AsmMaskTokens
         BCast_1TO4_16  = 27,
     }
 
-    [SymSource(GroupName), DataWidth(num5.Width)]
+    [SymSource(GroupName), DataWidth(num5.Width), TokenKind(Tk.Broadcast32)]
     public enum Broadcast32 : byte
     {
         [Symbol(N1to16, "BCAST=1;VL=512")]
@@ -87,7 +89,7 @@ public class AsmMaskTokens
         BCast_1TO2_32 = 22,
     }
 
-    [SymSource(GroupName), DataWidth(num5.Width)]
+    [SymSource(GroupName), DataWidth(num5.Width), TokenKind(Tk.Broadcast64)]
     public enum Broadcast64 : byte
     {
         [Symbol(N1to8, "BCAST=5;VL=512")]

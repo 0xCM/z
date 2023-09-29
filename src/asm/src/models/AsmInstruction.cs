@@ -9,9 +9,9 @@ public record struct AsmInstruction : IAsmSourcePart
 {
     public AsmMnemonic Mnemonic;
 
-    public AsmOperands Operands;
+    public AsmOperandSet Operands;
 
-    public AsmInstruction(AsmMnemonic mnemonic, AsmOperands ops)
+    public AsmInstruction(AsmMnemonic mnemonic, AsmOperandSet ops)
     {
         Mnemonic = mnemonic;
         Operands = ops;

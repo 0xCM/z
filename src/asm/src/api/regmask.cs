@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-public class AsmPrefixByte
+partial struct asm
 {
-    public static string format<T>(T src)
-        where T : unmanaged, IAsmByte
-            => src.Value().FormatHex(zpad:true, specifier:true, uppercase:true);
+    [MethodImpl(Inline), Op]
+    public static RegMask regmask(RegOp target, RegIndex mask, RegMaskKind kind)
+        => new (target,mask,kind);
 }

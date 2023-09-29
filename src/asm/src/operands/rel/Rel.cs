@@ -85,13 +85,13 @@ public readonly record struct Rel : IRelOp<uint>
 
     [MethodImpl(Inline)]
     public static implicit operator Rel(Rel8 src)
-        => new Rel(NativeSizeCode.W8, src.Value);
+        => new (NativeSizeCode.W8, src.Value);
 
     [MethodImpl(Inline)]
     public static implicit operator Rel(Rel16 src)
-        => new Rel(NativeSizeCode.W16, src.Value);
+        => new (NativeSizeCode.W16, src.Value);
 
     [MethodImpl(Inline)]
     public static implicit operator Rel(Rel32 src)
-        => new Rel(NativeSizeCode.W32, src.Value);
+        => new (NativeSizeCode.W32, src.Value);
 }

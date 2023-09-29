@@ -18,6 +18,8 @@ public class AsmTokens
 
     static readonly SymbolGroup _PrefixTokens = new SymbolGroup(typeof(PrefixTokenKind), typeof(AsmPrefixTokens));
 
+    static readonly SymbolGroup _BroadcastTokens = new SymbolGroup(typeof(BroadcastTokenKind), typeof(BroadcastTokens));
+
     public static ref readonly SymbolGroup OpCodes => ref _AsmOcTokens;
 
     public static ref readonly SymbolGroup Registers => ref _AsmRegTokens;
@@ -30,6 +32,8 @@ public class AsmTokens
 
     public static ref readonly SymbolGroup PrefixTokens => ref _PrefixTokens;
 
+    public static ref readonly SymbolGroup BroadcastTokens => ref _BroadcastTokens;
+
     public static IEnumerable<SymbolGroup> groups()
     {
         yield return _AsmOcTokens;
@@ -38,8 +42,8 @@ public class AsmTokens
         yield return _AsmOcTables;
         yield return _ConditionTokens;
         yield return _PrefixTokens;
+        yield return _BroadcastTokens;
     }
-
     
     [MethodImpl(Inline), Op]
     public static AsmSigToken sig(in AsmTokenRecord src)

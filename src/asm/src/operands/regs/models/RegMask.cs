@@ -53,5 +53,5 @@ public readonly struct RegMask : IRegMask
 
     [MethodImpl(Inline)]
     public static implicit operator AsmOperand(RegMask src)
-        => new AsmOperand(src);
+        => new (src);
 }

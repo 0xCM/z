@@ -103,7 +103,7 @@ public record struct Sib : IAsmByte<Sib>
     }
 
     public string Format()
-        => AsmPrefixByte.format(this);
+        => AsmBytes.format(this);
 
     public override string ToString()
         => Format();

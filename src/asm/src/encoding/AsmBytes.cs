@@ -2,9 +2,10 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0;
+namespace Z0.Asm;
 
 using static sys;
+using static AsmOpCodeTokens;
 
 using Asm;
 
@@ -12,6 +13,11 @@ using Asm;
 public class AsmBytes
 {
     const NumericKind Closure = UnsignedInts;
+
+    public static string format<T>(T src)
+        where T : unmanaged, IAsmByte
+            => src.Value().FormatHex(zpad:true, specifier:true, uppercase:true);
+
 
     [MethodImpl(Inline), Op]
     public static ByteSize size(ReadOnlySpan<HexDataRow> src)
@@ -48,39 +54,6 @@ public class AsmBytes
             dst = AsmHexCode.Empty;
         return result;
     }
-
-    // public static void hexify(IWfChannel channel, FilePath src, FilePath dst, byte bpl = HexCsvRow.BPL)
-    // {
-    //     var emitting = channel.EmittingFile(dst);
-    //     using var stream = src.Stream();
-    //     using var reader = stream.BinaryReader();
-    //     using var writer = dst.AsciWriter();
-    //     var buffer = sys.alloc<byte>(bpl);
-    //     var @base = MemoryAddress.Zero;
-    //     var formatter = HexDataFormatter.create(@base, bpl);
-    //     writer.WriteLine(string.Concat($"Address".PadRight(HexCsvRow.AddressWidth), RP.SpacedPipe, "Data"));
-    //     var k = Read(reader, buffer);
-    //     var offset = MemoryAddress.Zero;
-    //     var lines = 0;
-    //     while(k != 0)
-    //     {
-    //         writer.WriteLine(formatter.FormatLine(buffer, offset, Chars.Pipe));
-
-    //         offset += k;
-    //         lines++;
-
-    //         buffer.Clear();
-    //         k = Read(reader, buffer);
-    //     }   
-    //     channel.EmittedFile(emitting, $"Emitted {(ByteSize)offset} bytes to {dst}");
-    // }
-
-    // [MethodImpl(Inline), Op]
-    // static uint Read(BinaryReader src, Span<byte> dst)
-    //     => (uint)src.Read(dst);
-
-    // public static void hexify(IWfChannel channel, IEnumerable<FilePath> src, FolderPath dst, byte bpl = HexCsvRow.BPL, bool pll = true)
-    //     => iter(src, file => hexify(channel, file, dst + file.FileName.ChangeExtension(FileKind.Hex), bpl));
 
     [Op]
     public static Outcome hexdat(FilePath src, out BinaryCode dst)
@@ -190,6 +163,11 @@ public class AsmBytes
     [MethodImpl(Inline), Op]
     public static Sib sib(uint3 @base, uint3 index, uint2 scale)
         => new (join((scale, 0), (index, 2), (@base, 6)));
+
+    // RexBBits:[Index[00000] | Token[000]]
+    public static RexB rexb(RexBToken token, RegIndexCode r, bit gpHi)
+        => new (token, r, gpHi);
+
 
     public static string bitstring(Sib src)
         => string.Format("{0} {1} {2}", BitRender.format2(src.Scale), BitRender.format3(src.Index), BitRender.format3(src.Base));

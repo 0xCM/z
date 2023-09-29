@@ -260,7 +260,6 @@ public readonly struct RegClasses
 
         public CC Kind => CC.XMM;
 
-
         public asci8 Name => nameof(CC.XMM);
 
         public static implicit operator CC(XmmClass src)
