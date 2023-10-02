@@ -10,7 +10,7 @@ using static XedOps;
 using static XedModels;
 
 partial class XedDisasm
-{
+{    
     public static Index<FieldValue> update(in XedDisasmBlock src, ref XedOperandState dst)
     {
         var fields = values(src);

@@ -9,7 +9,6 @@ using Asm;
 
 using static sys;
 using static XedModels;
-using static XedOps;
 using static XedRules;
 
 partial class XedDisasm
@@ -17,11 +16,11 @@ partial class XedDisasm
     static Dictionary<OpNameKind,OpData> ops(in XedDisasmState state, in AsmHexCode code)
     {
         var dst = dict<OpNameKind,OpData>();
-        var values = XedCode.ops(state.RuleState, code);
-        var count = values.Count;
+        var ops = Xed.operands(state.RuleState, code);
+        var count = ops.Count;
         for(var i=0; i<count; i++)
         {
-            ref readonly var value = ref values[i];
+            ref readonly var value = ref ops[i];
             dst.TryAdd(value.Name, new OpData(value));
         }
 
@@ -58,7 +57,7 @@ partial class XedDisasm
         var dstate = new XedDisasmFieldParser().Parse(inst.Props);
         var opsLU = ops(dstate, code);
         ref readonly var state = ref dstate.RuleState;
-        dst.Offsets = XedCode.offsets(state);
+        dst.Offsets = Xed.offsets(state);
         dst.OpCode = state.NOMINAL_OPCODE;
         dst.Ops = new OpDetails(alloc<OpDetail>(src.Block.OpCount));
         var ocpos = state.POS_NOMINAL_OPCODE;
@@ -104,7 +103,11 @@ partial class XedDisasm
             dst.Disp = (Disp)disp;
 
         var prefix = ocpos != 0 ? slice(code.Bytes,0,ocpos) : default;
-        dst.PSZ = (byte)prefix.Length;
+        dst.PrefixSize = (byte)prefix.Length;
+        for(var i=0; i<min(8, prefix.Length); i++)
+        {
+            dst.PrefixBytes[i] = skip(prefix,i);
+        }
 
         var legacyskip = z8;
         for(var k=0; k<prefix.Length; k++)
@@ -123,11 +126,11 @@ partial class XedDisasm
         }
 
         if(state.REX)
-            dst.Rex = XedOps.rex(state);
+            dst.Rex = Xed.rex(state);
 
         if(state.HAS_MODRM)
         {
-            var modrm = XedOps.modrm(state);
+            var modrm = Xed.modrm(state);
             dst.ModRm = modrm;
             if(modrm != code[state.POS_MODRM])
             {
@@ -138,7 +141,7 @@ partial class XedDisasm
 
         if(state.HAS_SIB)
         {
-            var sib = XedOps.sib(state);
+            var sib = Xed.sib(state);
             dst.Sib = sib;
             var sibenc = Sib.init(code[state.POS_SIB]);
             if(sibenc.Value() != sib)

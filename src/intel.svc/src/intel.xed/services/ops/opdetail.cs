@@ -58,7 +58,7 @@ partial class Xed
         }
         if(info.RegLit.IsNonEmpty && dst.BitWidth == 0)
         {
-            var regop = XedRegMap.map(info.RegLit);
+            var regop = Xed.regop(info.RegLit);
             if(regop.IsNonEmpty)
                 dst.BitWidth = (ushort)regop.Size.Width;
         }

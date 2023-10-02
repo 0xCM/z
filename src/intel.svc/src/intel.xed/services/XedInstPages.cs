@@ -7,6 +7,8 @@ namespace Z0;
 
 using System.Linq;
 
+using Asm;
+
 using static sys;
 using static XedModels;
 using static XedInstRender;
@@ -36,7 +38,7 @@ public class XedInstPages
         emitter.AppendLineFormat(LabelPattern, "Layout", pattern.Layout.Format());
         emitter.AppendLineFormat(LabelPattern, "Expressions", pattern.Expr.Format());
 
-        emitter.AppendLineFormat(LabelPattern, nameof(pattern.Mode), MachineModes.format(pattern.Mode));
+        emitter.AppendLineFormat(LabelPattern, nameof(pattern.Mode), AsmRender.format(pattern.Mode));
         emitter.AppendLineFormat(LabelPattern, nameof(pattern.OpCode), pattern.OpCode);
         if(pattern.InstForm.IsNonEmpty)
             emitter.AppendLineFormat(LabelPattern, nameof(pattern.InstForm), pattern.InstForm);

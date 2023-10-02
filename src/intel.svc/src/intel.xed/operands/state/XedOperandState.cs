@@ -19,9 +19,6 @@ public record struct XedOperandState
 {
     public const string TableId = "xed.operands.state";
 
-    public static Type[] EffectiveTypes()
-        => typeof(XedOperandState).InstanceFields().Tagged<RuleFieldAttribute>().Select(x => x.Tag<RuleFieldAttribute>().Value.EffectiveType);
-
     [RuleField(K.DF32, 1, typeof(bit))]
     public bit DF32;
 
@@ -212,7 +209,7 @@ public record struct XedOperandState
     public byte BRDISP_WIDTH;
 
     [RuleField(K.ELEMENT_SIZE, 3, typeof(M.ElementSize))]
-    public ushort ELEMENT_SIZE;
+    public byte ELEMENT_SIZE;
 
     [RuleField(K.DISP_WIDTH, 3, typeof(M.DispWidth))]
     public byte DISP_WIDTH;

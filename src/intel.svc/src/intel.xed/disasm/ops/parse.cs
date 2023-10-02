@@ -37,7 +37,7 @@ partial class XedDisasm
                 seek(facets,k) = (skip(kv,0), skip(kv,1));
             }
             else
-                seek(facets,k) = ((prop, "1"));
+                seek(facets,k) = (prop, "1");
         }
 
         XedDisasmParse.parse(src, out var _class, out var _form);

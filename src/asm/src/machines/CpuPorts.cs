@@ -9,7 +9,7 @@ public readonly struct CpuPorts
 {
     [MethodImpl(Inline), Op]
     public static CpuPorts range(Address16 min, Address16 max)
-        => new CpuPorts(min, max);
+        => new (min, max);
 
     readonly Address16 Min;
 
@@ -34,9 +34,9 @@ public readonly struct CpuPorts
 
     [MethodImpl(Inline), Op]
     public CpuPort<ushort> Port(W16 w, ushort index)
-        => new CpuPort<ushort>(Port(index).Address);
+        => new (Port(index).Address);
 
     [MethodImpl(Inline), Op]
     public CpuPort<uint> Port(W32 w, ushort index)
-        => new CpuPort<uint>(Port(index).Address);
+        => new (Port(index).Address);
 }

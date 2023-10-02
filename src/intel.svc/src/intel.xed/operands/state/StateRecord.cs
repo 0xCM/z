@@ -43,5 +43,4 @@ partial class XedOps
 
         public static StateRecord Empty => default;
     }
-
 }

@@ -10,7 +10,7 @@ using static sys;
 
 partial class XedModels
 {
-    public struct OpValue
+    public struct Operand
     {
         public OpNameKind Name
         {
@@ -21,7 +21,7 @@ partial class XedModels
         readonly ByteBlock16 _Data;
 
         [MethodImpl(Inline)]
-        public OpValue(OpNameKind name, MemoryScale value)
+        public Operand(OpNameKind name, MemoryScale value)
         {
             var data = ByteBlock16.Empty;
             data[0] = (byte)name;
@@ -31,7 +31,7 @@ partial class XedModels
         }
 
         [MethodImpl(Inline)]
-        public OpValue(OpNameKind name, Register value)
+        public Operand(OpNameKind name, Register value)
         {
             var data = ByteBlock16.Empty;
             data[0] = (byte)name;
@@ -41,7 +41,7 @@ partial class XedModels
         }
 
         [MethodImpl(Inline)]
-        public OpValue(OpNameKind name, Imm value)
+        public Operand(OpNameKind name, Imm value)
         {
             var data = ByteBlock16.Empty;
             data[0] = (byte)name;
@@ -51,7 +51,7 @@ partial class XedModels
         }
 
         [MethodImpl(Inline)]
-        public OpValue(OpNameKind name, Disp value)
+        public Operand(OpNameKind name, Disp value)
         {
             var data = ByteBlock16.Empty;
             data[0] = (byte)name;
@@ -115,21 +115,21 @@ partial class XedModels
             => Format();
 
         [MethodImpl(Inline)]
-        public static explicit operator Disp(OpValue src)
+        public static explicit operator Disp(Operand src)
             => src.Disp;
 
         [MethodImpl(Inline)]
-        public static explicit operator Imm(OpValue src)
+        public static explicit operator Imm(Operand src)
             => src.Imm;
 
         [MethodImpl(Inline)]
-        public static explicit operator MemoryScale(OpValue src)
+        public static explicit operator MemoryScale(Operand src)
             => src.Scale;
 
         [MethodImpl(Inline)]
-        public static explicit operator Register(OpValue src)
+        public static explicit operator Register(Operand src)
             => src.Reg;
 
-        public static OpValue Empty => new OpValue(OpNameKind.None, ScaleFactor.None);
+        public static Operand Empty => new Operand(OpNameKind.None, ScaleFactor.None);
     }
 }

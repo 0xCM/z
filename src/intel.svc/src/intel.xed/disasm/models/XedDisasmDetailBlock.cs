@@ -117,7 +117,7 @@ public class XedDisasmDetailBlock : IComparable<XedDisasmDetailBlock>
     public ref readonly byte PSZ
     {
         [MethodImpl(Inline)]
-        get => ref DetailRow.PSZ;
+        get => ref DetailRow.PrefixSize;
     }
 
     public ref readonly RexPrefix Rex

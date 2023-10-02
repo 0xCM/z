@@ -19,7 +19,6 @@ public class XedImport : WfSvc<XedImport>
         public readonly ConcurrentDictionary<RuleTableKind,Index<TableCriteria>> Target = new();
     }
 
-
     XedFlows DataFlow => Wf.XedFlows();
 
     static XedPaths XedPaths => XedPaths.Service;

@@ -114,7 +114,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static CsvTableDef def(TableId name, Identifier type, params ColumDef[] cols)
-            => new CsvTableDef(name, type, cols);
+            => new (name, type, cols);
 
         [Op]
         public static CsvTableDef def(Type src)
@@ -152,7 +152,6 @@ namespace Z0
             where T : struct
                 => def(typeof(T));        
 
-
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static ref RowAdapter<T> adapt<T>(in T src, ref RowAdapter<T> adapter)
         {
@@ -161,7 +160,6 @@ namespace Z0
             load(adapter.Source, ref adapter.Row);
             return ref adapter;
         }
-
 
         [Op, Closures(Closure)]
         public static void load<T>(in T src, ref DynamicRow<T> dst)
@@ -178,7 +176,7 @@ namespace Z0
         /// <typeparam name="T">The record type</typeparam>
         [Op, Closures(Closure)]
         public static RowAdapter<T> adapter<T>(in ClrTableCols fields)
-            => new RowAdapter<T>(fields);
+            => new (fields);
 
         /// <summary>
         /// Creates a <see cref='RowAdapter{T}'/> predicated a specified <typeparamref name='T'/>
@@ -186,7 +184,7 @@ namespace Z0
         /// <typeparam name="T">The row type</typeparam>
         [Op, Closures(Closure)]
         public static RowAdapter<T> adapter<T>()
-            => adapter<T>(CsvTables.cells<T>());
+            => adapter<T>(cells<T>());
 
         public static ReadOnlySeq<Type> types(params Assembly[] src)
             => src.Types().Tagged<RecordAttribute>();
@@ -209,7 +207,7 @@ namespace Z0
         public static FileName filename<T>(string prefix, string suffix)
             => FS.file(string.Format("{0}.{1}.{2}", prefix, Tables.identify<T>(), suffix), FS.Csv);        
 
-        internal const string DefaultDelimiter = " | ";
+        const string DefaultDelimiter = " | ";
 
         public static ExecToken emit<T>(IWfChannel channel, ReadOnlySpan<T> rows, FilePath dst, TextEncodingKind encoding = TextEncodingKind.Asci,
             ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
@@ -275,7 +273,7 @@ namespace Z0
         public static Count emit<T>(ReadOnlySpan<T> src, ITextEmitter dst)
         {
             var count = src.Length;
-            var f = CsvTables.formatter<T>();
+            var f = formatter<T>();
             dst.AppendLine(f.FormatHeader());
             for(var i=0; i<count; i++)
                 dst.AppendLine(f.Format(skip(src,i)));
@@ -292,7 +290,7 @@ namespace Z0
                 seek(buffer, i) = new HeaderCell(i, fields[i].CellName, fields[i].CellWidth);
             var header = new RowHeader(buffer, DefaultDelimiter);
             var spec = rowspec(header, header.Cells.Select(x => x.CellFormat), rowpad, fk);
-            return new CsvFormatter.Formatter2<T>(spec, CsvTables.adapter(record));
+            return new Formatter2<T>(spec, CsvTables.adapter(record));
         }
 
         public static CsvFormatter formatter(Type record, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular, string delimiter = DefaultDelimiter)
@@ -321,13 +319,13 @@ namespace Z0
         /// <param name="widths">The column widths</param>
         /// <typeparam name="T">The record type</typeparam>
         public static ICsvFormatter<T> formatter<T>(byte fieldwidth, ushort rowpad = 0, RecordFormatKind fk = RecordFormatKind.Tablular)
-            => CsvTables.formatter<T>(Tables.rowspec<T>(fieldwidth, rowpad, fk));
+            => formatter<T>(Tables.rowspec<T>(fieldwidth, rowpad, fk));
 
         public static ICsvFormatter<T> formatter<T>(RowFormatSpec spec)
             => new CsvFormatter<T>(spec, Tables.adapter<T>());
 
         public static CsvTableReader<T> reader<T>(FilePath src, RowParser<T> parser, bool header = true)
-            => new CsvTableReader<T>(src, parser, header);
+            => new (src, parser, header);
 
         [Op, Closures(Closure)]
         public static string pairs<T>(in RowFormatSpec spec, in RowAdapter<T> src)

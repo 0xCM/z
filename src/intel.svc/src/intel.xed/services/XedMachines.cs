@@ -17,7 +17,7 @@ public class XedMachines : IDisposable
     static IXedMachine allocate(XedRuntime xed)
         => new MachineState(xed);
 
-    XedRuntime Xed;
+    XedRuntime XedRt;
 
     uint6 Current = 0;
 
@@ -34,7 +34,7 @@ public class XedMachines : IDisposable
 
     public IXedMachine Machine()
     {
-        var m =  XedMachines.allocate(Xed);
+        var m =  XedMachines.allocate(XedRt);
         Allocations.TryAdd(m.MachineId,m);
         return m;
     }
@@ -45,7 +45,7 @@ public class XedMachines : IDisposable
         {
             for(var i=0; i<Capacity; i++)
             {
-                var machine = XedMachines.allocate(Xed);
+                var machine = XedMachines.allocate(XedRt);
                 Allocations[machine.MachineId] = machine;
             }
             Allocated = true;
@@ -57,7 +57,7 @@ public class XedMachines : IDisposable
 
     public XedMachine Run(XedRuntime xed)
     {
-        Xed = xed;
+        XedRt = xed;
         Allocate();
         return new XedMachine(xed);
     }
@@ -78,7 +78,7 @@ public class XedMachines : IDisposable
                 machine.Reset();
         }
         else
-            machine = XedMachines.allocate(Xed);
+            machine = XedMachines.allocate(XedRt);
 
         f(machine);
     }
@@ -103,7 +103,7 @@ public class XedMachines : IDisposable
             {
                 for(var i=0; i<Capacity; i++)
                 {
-                    var machine = new MachineState(Xed);
+                    var machine = new MachineState(XedRt);
                     Allocations[machine.Id] = machine;
                 }
                 Allocated = true;
@@ -116,7 +116,7 @@ public class XedMachines : IDisposable
 
         AsmInfo Asm;
 
-        readonly XedRuntime Xed;
+        readonly XedRuntime XedRt;
 
         readonly uint Id;
 
@@ -126,7 +126,7 @@ public class XedMachines : IDisposable
         {
             Id = sys.inc(ref Seq);
             Expressions = Fields.allocate();
-            Xed = xed;
+            XedRt = xed;
             LoadLookups();
             Reset();
         }
@@ -284,7 +284,7 @@ public class XedMachines : IDisposable
         public ref readonly XedInstClass InstClass
         {
             [MethodImpl(Inline)]
-            get => ref XedOps.iclass(Operands);
+            get => ref Xed.iclass(Operands);
         }
 
         /// <summary>
@@ -439,8 +439,8 @@ public class XedMachines : IDisposable
 
         void LoadLookups()
         {
-            var rules = Xed.Rules;
-            var patterns = Xed.Views.Patterns;
+            var rules = XedRt.Rules;
+            var patterns = XedRt.Views.Patterns;
             var groups = rules.CalcInstGroups(patterns);
             var members = groups.SelectMany(x => x.Members);
             _GroupMemberLookup = members.Select(x => (x.PatternId,x)).ToDictionary();

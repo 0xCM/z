@@ -9,7 +9,6 @@ namespace Z0
     {
         const NumericKind Closure = UnsignedInts;
 
-
         public static FixedStack<T> stack<T>(uint capacity)
             where T : unmanaged
                 => new FixedStack<T>(sys.alloc<T>(capacity));

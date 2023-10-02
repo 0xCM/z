@@ -3,14 +3,14 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0;
-
+using static sys;
 partial class XedDisasmCmd
 {
     [CmdOp("xed/disasm/collect")]
     void CollectDisasm(CmdArgs args)
     {
-        var src = FS.archive(args[0]);
-        var project = new DevProject(src.Root);
-        XedDisasm.Collect(project);
+        var dst = FS.archive(args[0]);
+        var docs = XedDisasm.Collect(dst);
+        piter(docs, doc => {});
     }
 }

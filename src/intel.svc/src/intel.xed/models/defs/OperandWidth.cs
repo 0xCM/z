@@ -7,28 +7,33 @@ namespace Z0;
 
 partial class XedModels
 {
-    public readonly struct OpModifier
+    public readonly record struct OperandWidth
     {
-        public readonly OpModKind Kind;
+        public readonly WidthCode Code;
 
         [MethodImpl(Inline)]
-        public OpModifier(OpModKind kind)
+        public OperandWidth(WidthCode code)        
         {
-            Kind = kind;
+            Code = code;
+        }
+
+        public Hash32 Hash
+        {
+            [MethodImpl(Inline)]
+            get => (uint)Code;
         }
 
         public string Format()
-            => XedRender.format(this);
-
+            => EnumRender.format(Code);
         public override string ToString()
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator OpModKind(OpModifier src)
-            => src.Kind;
+        public static implicit operator OperandWidth(WidthCode code)
+            => new(code);
 
         [MethodImpl(Inline)]
-        public static implicit operator OpModifier(OpModKind src)
-            => new OpModifier(src);
+        public static implicit operator WidthCode(OperandWidth src)
+            => src.Code;
     }
 }

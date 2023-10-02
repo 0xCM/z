@@ -84,4 +84,6 @@ public readonly struct AsmColWidths
     public const byte Hash = 12;
 
     public const byte LineNumber = 12;
+
+    public const byte PrefixBytes = 16;
 }

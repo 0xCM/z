@@ -13,7 +13,7 @@ using static sys;
 
 using M = XedModels;
 
-partial class XedOps
+partial class Xed
 {
     [MethodImpl(Inline), Op]
     public static ref readonly XedVexKind vexkind(in XedOperandState src)
@@ -128,5 +128,5 @@ partial class XedOps
 
     [MethodImpl(Inline), Op]
     public static ref readonly MachineMode mode(in XedOperandState src)
-        => ref @as<MachineMode>(src.MODE);
+        => ref @as<MachineMode>(src.MODE);    
 }

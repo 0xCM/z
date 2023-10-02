@@ -103,23 +103,23 @@ namespace Z0
             };
         }
 
-        public static IDbArchive DisasmTargets(IProject project)
-            => project.Targets("xed.disasm");
+        public static IDbArchive DisasmTargets(IDbArchive root)
+            => root.Targets("xed.disasm");
 
-        public static FilePath DisasmSummaryPath(IProject project, FilePath src)
-            => DisasmTargets(project).Path(FS.file(string.Format("{0}.summary", src.FileName.WithoutExtension), FS.Csv));
+        public static FilePath DisasmSummaryPath(IDbArchive root, FilePath src)
+            => DisasmTargets(root).Path(FS.file(string.Format("{0}.summary", src.FileName.WithoutExtension), FS.Csv));
 
-        public static FilePath DisasmDetailPath(IProject project, FilePath src)
-            => DisasmTargets(project).Path(FS.file(string.Format("{0}.details", src.FileName.WithoutExtension), FS.Csv));
+        public static FilePath DisasmDetailPath(IDbArchive root, FilePath src)
+            => DisasmTargets(root).Path(FS.file(string.Format("{0}.details", src.FileName.WithoutExtension), FS.Csv));
 
-        public static FilePath DisasmFieldsPath(IProject project, FilePath src)
-            => DisasmTargets(project).Path(FS.file(string.Format("{0}.fields", src.FileName.WithoutExtension), FS.Txt));
+        public static FilePath DisasmFieldsPath(IDbArchive root, FilePath src)
+            => DisasmTargets(root).Path(FS.file(string.Format("{0}.fields", src.FileName.WithoutExtension), FS.Txt));
 
-        public static FilePath DisasmChecksPath(IProject project, FilePath src)
-            => DisasmTargets(project).Path(FS.file(string.Format("{0}.checks", src.FileName.WithoutExtension), FS.Txt));
+        public static FilePath DisasmChecksPath(IDbArchive root, FilePath src)
+            => DisasmTargets(root).Path(FS.file(string.Format("{0}.checks", src.FileName.WithoutExtension), FS.Txt));
 
-        public static FilePath DisasmOpsPath(IProject project, FilePath src)
-            => DisasmTargets(project).Path(FS.file(string.Format("{0}.ops", src.FileName.WithoutExtension.Format()), FS.Txt));
+        public static FilePath DisasmOpsPath(IDbArchive root, FilePath src)
+            => DisasmTargets(root).Path(FS.file(string.Format("{0}.ops", src.FileName.WithoutExtension.Format()), FS.Txt));
 
         public FileUri RulePage(RuleSig sig)
             => RulePages().Path(FS.file(sig.Format(), FS.Csv));

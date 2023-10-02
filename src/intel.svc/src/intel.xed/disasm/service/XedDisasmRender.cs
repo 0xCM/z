@@ -24,7 +24,7 @@ class XedDisasmRender
 
     public static void render(Index<XedDisasmDetailBlock> src, ITextEmitter dst, bool header = true)
     {
-        var formatter = CsvTables.formatter<XedDisasmDetailRow>(XedDisasmDetailRow.RenderWidths);
+        var formatter = CsvTables.formatter<XedDisasmDetailRow>();
         if(header)
             dst.AppendLine(FormatDetailHeader(formatter));
 

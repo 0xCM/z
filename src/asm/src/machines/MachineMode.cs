@@ -5,6 +5,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using Asm;
+
 using static MachineModes.MachineModeClass;
 using static MachineModes.MachineModeKind;
 using static MachineModes.AddressingKind;
@@ -57,15 +59,15 @@ public readonly struct MachineMode : IComparable<MachineMode>, IEquatable<Machin
         switch(src)
         {
             case Mode16:
-                dst = MachineModeKind.LONG_COMPAT_16;
+                dst = LONG_COMPAT_16;
             break;
             case MachineModeClass.Default:
             case Not64:
             case Mode32:
-                dst = MachineModeKind.LONG_COMPAT_32;
+                dst = LONG_COMPAT_32;
             break;
             case Mode64:
-                dst = MachineModeKind.LONG_64;
+                dst = LONG_64;
             break;
         }
         return dst;
@@ -100,14 +102,14 @@ public readonly struct MachineMode : IComparable<MachineMode>, IEquatable<Machin
         => src is MachineMode x && Equals(x);
 
     public string Format()
-        => format(this);
+        => AsmRender.format(this);
 
     public override string ToString()
         => Format();
 
     [MethodImpl(Inline)]
     public static implicit operator MachineMode(MachineModeClass src)
-        => new MachineMode(src);
+        => new (src);
 
     [MethodImpl(Inline)]
     public static implicit operator MachineModeClass(MachineMode src)
@@ -119,11 +121,11 @@ public readonly struct MachineMode : IComparable<MachineMode>, IEquatable<Machin
 
     [MethodImpl(Inline)]
     public static explicit operator MachineMode(byte src)
-        => new MachineMode((MachineModeClass)src);
+        => new ((MachineModeClass)src);
 
     [MethodImpl(Inline)]
     public static explicit operator MachineMode(uint3 src)
-        => new MachineMode((MachineModeClass)(byte)src);
+        => new ((MachineModeClass)(byte)src);
 
     [MethodImpl(Inline)]
     public static explicit operator uint3(MachineMode src)
@@ -137,5 +139,5 @@ public readonly struct MachineMode : IComparable<MachineMode>, IEquatable<Machin
     public static bool operator!=(MachineMode a, MachineMode b)
         => !a.Equals(b);
 
-    public static MachineMode Default => new MachineMode(MachineModeClass.Default);
+    public static MachineMode Default => new (MachineModeClass.Default);
 }

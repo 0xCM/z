@@ -5,6 +5,7 @@
 namespace Z0.Asm;
 
 using static BroadcastTokens;
+using static MachineModes;
 using static sys;
 
 using K = AsmSigTokenKind;
@@ -19,6 +20,14 @@ public class AsmRender
     static EnumRender<Broadcast32> BCast32 = new();
 
     static EnumRender<Broadcast64> BCast64 = new();
+
+    static EnumRender<MachineModeClass> ClassRender = new();
+
+    public static string format(MachineModeClass src, DataFormatCode fc = DataFormatCode.Expr)
+        => fc == DataFormatCode.BitWidth ? nsize((byte)src + 1) : EnumRender.format(ClassRender, src, fc);
+
+    static string nsize<T>(T src)
+        => ((NativeSize)((NativeSizeCode)u8(src))).Format();
 
     [Op]
     public static string format(RegClass src)

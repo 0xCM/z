@@ -12,18 +12,6 @@ using static XedModels;
 
 public sealed class XedRegMap
 {
-    public static RegOp map(XedRegId src)
-        => Instance.Map(src);
-
-    public static bool map(XedRegId src, out RegOp dst)
-        => Instance.Map(src, out dst);
-
-    public static XedRegId map(RegKind src)
-        => Instance.Map(src);
-
-    public static bool map(RegKind src, out XedRegId dst)
-        => Instance.Map(src, out dst);
-
     public static XedRegMap Service => Instance;
 
     static readonly Dictionary<RegKind,XedRegId> RX = new Pairings<RegKind, XedRegId>(new Paired<RegKind,XedRegId>[]{

@@ -5,9 +5,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static XedModels;
 using static XedRules;
-using static XedFields;
+using static XedModels;
 using static sys;
 
 using FK = XedRules.FieldKind;
@@ -45,17 +44,6 @@ public partial class XedOps : AppService<XedOps>
                 counter++;
             }
             return counter;
-        }
-
-        public static Index<FK> parse(IReadOnlyDictionary<string,string> src, Fields fields, out XedOperandState state)
-        {
-            state = parse(src, out Index<FK> parsed);
-            for(var i=0; i<parsed.Count; i++)
-            {
-                var field = Xed.extract(state, parsed[i]);
-                convert(field, out fields[field.Field]);
-            }
-            return parsed;
         }
 
         public static void convert(in FieldValue src, out Field dst)
@@ -137,27 +125,6 @@ public partial class XedOps : AppService<XedOps>
             return result;
         }
 
-        public static uint parse(IReadOnlyDictionary<string,string> src, Fields dst, bool clear)
-        {
-            if(clear)
-                dst.Clear();
-
-            var result = Outcome.Success;
-            var counter = 0u;
-            var count = src.Count;
-            var keys = src.Keys.Array();
-            for(var i=0; i<count; i++)
-            {
-                var name = skip(keys,i);
-                var value = src[name];
-                result = XedParsers.parse(name, out FK kind);
-                result.Require();
-                dst.Update(pack(value, kind));
-                counter++;
-            }
-            return counter;
-        }
-
         public static XedOperandState parse(IReadOnlyDictionary<string,string> src, out Index<FK> fields)
         {
             var parsed = list<FK>();
@@ -183,9 +150,32 @@ public partial class XedOps : AppService<XedOps>
         }
 
         [MethodImpl(Inline)]
-        static FieldValue value<T>(FK kind, T value)
-            where T : unmanaged
-                => new (kind, bw64(value));
+        static FieldValue value(FK kind, bit value)
+            => new (kind, value);
+
+        [MethodImpl(Inline)]
+        static FieldValue value(FK kind, byte value)
+            => new (kind, value);
+
+        [MethodImpl(Inline)]
+        static FieldValue value(FK kind, Hex8 value)
+            => new (kind, value);
+
+        [MethodImpl(Inline)]
+        static FieldValue value(FK kind, ushort value)
+            => new (kind, value);
+
+        [MethodImpl(Inline)]
+        static FieldValue value(FK kind, XedRegId value)            
+            => new (kind, value);
+
+        [MethodImpl(Inline)]
+        static FieldValue value(FK kind, XedInstKind value)
+            => new (kind, value);
+
+        [MethodImpl(Inline)]
+        static FieldValue value(FK kind, ChipCode value)
+            => new (kind, value);
 
         [Op]
         public static FieldValue parse(string src, FK kind, ref XedOperandState dst)
@@ -1301,1033 +1291,1033 @@ public partial class XedOps : AppService<XedOps>
             return dst;
         }
     }
-        public static ref XedOperandState update(in Fields src, ReadOnlySpan<FieldKind> fields, ref XedOperandState dst)
+    public static ref XedOperandState update(in Fields src, ReadOnlySpan<FieldKind> fields, ref XedOperandState dst)
+    {
+        var count = fields.Length;
+        for(var i=0; i<count; i++)
+            update(src[skip(fields,i)], ref dst);
+        return ref dst;
+    }
+
+    public static Dictionary<FieldKind,FieldValue> update(Index<FieldValue> src, ref XedOperandState state)
+    {
+        update(src.View, ref state);
+        return src.Map(x => (x.Field, x)).ToDictionary();
+    }
+
+    static ref XedOperandState update(ReadOnlySpan<FieldValue> src, ref XedOperandState dst)
+    {
+        for(var i=0; i<src.Length; i++)
+            update(skip(src,i), ref dst);
+        return ref dst;
+    }
+
+    static ref XedOperandState update(in FieldValue src, ref XedOperandState dst)
+    {
+        var result = Outcome.Success;
+        switch(src.Field)
         {
-            var count = fields.Length;
-            for(var i=0; i<count; i++)
-                update(src[skip(fields,i)], ref dst);
-            return ref dst;
+            case FK.AMD3DNOW:
+                dst.AMD3DNOW = src;
+            break;
+
+            case FK.ASZ:
+                dst.ASZ = src;
+            break;
+
+            case FK.BASE0:
+                dst.BASE0 = src.ToReg();
+            break;
+
+            case FK.BASE1:
+                dst.BASE1 = src.ToReg();
+            break;
+
+            case FK.BCAST:
+                dst.BCAST = src.ToByte();
+            break;
+
+            case FK.BCRC:
+                dst.BCRC = src;
+            break;
+
+            case FK.RELBR:
+                dst.RELBR = src;
+            break;
+
+            case FK.BRDISP_WIDTH:
+                dst.BRDISP_WIDTH = src.ToByte();
+            break;
+
+            case FK.CET:
+                dst.CET = src;
+            break;
+
+            case FK.CHIP:
+                dst.CHIP = src;
+            break;
+
+            case FK.CLDEMOTE:
+                dst.CLDEMOTE = src;
+            break;
+
+            case FK.DEFAULT_SEG:
+                dst.DEFAULT_SEG = src.ToByte();
+            break;
+
+            case FK.DF32:
+                dst.DF32 = src;
+            break;
+
+            case FK.DF64:
+                dst.DF64 = src;
+            break;
+
+            case FK.DISP:
+                dst.DISP = src;
+            break;
+
+            case FK.DISP_WIDTH:
+                dst.DISP_WIDTH = src.ToByte();
+            break;
+
+            case FK.DUMMY:
+                dst.DUMMY = src;
+            break;
+
+            case FK.EASZ:
+                dst.EASZ = src.ToByte();
+            break;
+
+            case FK.ELEMENT_SIZE:
+                dst.ELEMENT_SIZE = src.ToByte();
+            break;
+
+            case FK.ENCODER_PREFERRED:
+                dst.ENCODER_PREFERRED = src;
+            break;
+
+            case FK.ENCODE_FORCE:
+                dst.ENCODE_FORCE = src;
+            break;
+
+            case FK.EOSZ:
+                dst.EOSZ = src.ToByte();
+            break;
+
+            case FK.ESRC:
+                dst.ESRC = src.ToByte();
+            break;
+
+            case FK.FIRST_F2F3:
+                dst.FIRST_F2F3 = src.ToByte();
+            break;
+
+            case FK.HAS_MODRM:
+                dst.HAS_MODRM = src;
+            break;
+
+            case FK.HAS_SIB:
+                dst.HAS_SIB = src;
+            break;
+
+            case FK.HINT:
+                dst.HINT  = src.ToByte();
+            break;
+
+            case FK.ICLASS:
+                dst.ICLASS = src;
+            break;
+
+            case FK.ILD_F2:
+                dst.ILD_F2 = src;
+            break;
+
+            case FK.ILD_F3:
+                dst.ILD_F3 = src;
+            break;
+
+            case FK.ILD_SEG:
+                dst.ILD_SEG = src.ToByte();
+            break;
+
+            case FK.IMM0:
+                dst.IMM0 = src;
+            break;
+
+            case FK.IMM0SIGNED:
+                dst.IMM0SIGNED = src;
+            break;
+
+            case FK.IMM1:
+                dst.IMM1 = src;
+            break;
+
+            case FK.IMM1_BYTES:
+                dst.IMM1_BYTES = src.ToByte();
+            break;
+
+            case FK.IMM_WIDTH:
+                dst.IMM_WIDTH = src.ToByte();
+            break;
+
+            case FK.INDEX:
+                dst.INDEX = src.ToReg();
+            break;
+
+            case FK.LAST_F2F3:
+                dst.LAST_F2F3 = src.ToByte();
+            break;
+
+            case FK.LLRC:
+                dst.LLRC = src.ToByte();
+            break;
+
+            case FK.LOCK:
+                dst.LOCK = src;
+            break;
+
+            case FK.LZCNT:
+                dst.LZCNT = src;
+            break;
+
+            case FK.MAP:
+                dst.MAP = src.ToByte();
+            break;
+
+            case FK.MASK:
+                dst.MASK = src.ToBit();
+            break;
+
+            case FK.MAX_BYTES:
+                dst.MAX_BYTES = src.ToByte();
+            break;
+
+            case FK.MEM_WIDTH:
+                dst.MEM_WIDTH = src.ToByte();
+            break;
+
+            case FK.MOD:
+                dst.MOD = src.ToByte();
+            break;
+
+            case FK.REG:
+                dst.REG = src.ToByte();
+            break;
+
+            case FK.MODRM_BYTE:
+                dst.MODRM_BYTE = src.ToHex8();
+            break;
+
+            case FK.MODE:
+                dst.MODE = src.ToByte();
+            break;
+
+            case FK.MODEP5:
+                dst.MODEP5 = src;
+            break;
+
+            case FK.MODEP55C:
+                dst.MODEP55C = src;
+            break;
+
+            case FK.MODE_FIRST_PREFIX:
+                dst.MODE_FIRST_PREFIX = src;
+            break;
+
+            case FK.MPXMODE:
+                dst.MPXMODE = src;
+            break;
+
+            case FK.MUST_USE_EVEX:
+                dst.MUST_USE_EVEX = src;
+            break;
+
+            case FK.NEEDREX:
+                dst.NEEDREX = src;
+            break;
+
+            case FK.NEED_MEMDISP:
+                dst.NEED_MEMDISP = src.ToByte();
+            break;
+
+            case FK.NEED_SIB:
+                dst.NEED_SIB = src;
+            break;
+
+            case FK.NELEM:
+                dst.NELEM = src.ToWord();
+            break;
+
+            case FK.NOMINAL_OPCODE:
+                dst.NOMINAL_OPCODE = src.ToByte();
+            break;
+
+            case FK.NOREX:
+                dst.NOREX = src;
+            break;
+
+            case FK.NO_SCALE_DISP8:
+                dst.NO_SCALE_DISP8 = src;
+            break;
+
+            case FK.NPREFIXES:
+                dst.NPREFIXES = src.ToByte();
+            break;
+
+            case FK.NREXES:
+                dst.NREXES = src.ToByte();
+            break;
+
+            case FK.NSEG_PREFIXES:
+                dst.NSEG_PREFIXES = src.ToByte();
+            break;
+
+            case FK.OSZ:
+                dst.OSZ = src;
+            break;
+
+            case FK.OUT_OF_BYTES:
+                dst.OUT_OF_BYTES = src;
+            break;
+
+            case FK.P4:
+                dst.P4 = src;
+            break;
+
+            case FK.POS_DISP:
+                dst.POS_DISP = src.ToByte();
+            break;
+
+            case FK.POS_IMM:
+                dst.POS_IMM = src.ToByte();
+            break;
+
+            case FK.POS_IMM1:
+                dst.POS_IMM1 = src.ToByte();
+            break;
+
+            case FK.POS_MODRM:
+                dst.POS_MODRM = src.ToByte();
+            break;
+
+            case FK.POS_NOMINAL_OPCODE:
+                dst.POS_NOMINAL_OPCODE = src.ToByte();
+            break;
+
+            case FK.POS_SIB:
+                dst.POS_SIB = src.ToByte();
+            break;
+
+            case FK.PREFIX66:
+                dst.PREFIX66 = 1;
+            break;
+
+            case FK.PTR:
+                dst.PTR = 1;
+            break;
+
+            case FK.REALMODE:
+                dst.REALMODE = 1;
+            break;
+
+            case FK.OUTREG:
+                dst.OUTREG = src.ToReg();
+            break;
+
+            case FK.REG0:
+                dst.REG0 = src.ToReg();
+            break;
+
+            case FK.REG1:
+                dst.REG1 = src.ToReg();
+            break;
+
+            case FK.REG2:
+                dst.REG2 = src.ToReg();
+            break;
+
+            case FK.REG3:
+                dst.REG3 = src.ToReg();
+            break;
+
+            case FK.REG4:
+                dst.REG4  = src.ToReg();
+            break;
+
+            case FK.REG5:
+                dst.REG5 = src.ToReg();
+            break;
+
+            case FK.REG6:
+                dst.REG6 = src.ToReg();
+            break;
+
+            case FK.REG7:
+                dst.REG7 = src.ToReg();
+            break;
+
+            case FK.REG8:
+                dst.REG8 = src.ToReg();
+            break;
+
+            case FK.REG9:
+                dst.REG9 = src.ToReg();
+            break;
+
+            case FK.REP:
+                dst.REP = src.ToByte();
+            break;
+
+            case FK.REX:
+                dst.REX = src;
+            break;
+
+            case FK.REXB:
+                dst.REXB = src;
+            break;
+
+            case FK.REXR:
+                dst.REXR = src;
+            break;
+
+            case FK.REXRR:
+                dst.REXRR = src;
+            break;
+
+            case FK.REXW:
+                dst.REXW = src;
+            break;
+
+            case FK.REXX:
+                dst.REXX = src;
+            break;
+
+            case FK.RM:
+                dst.RM = src.ToByte();
+            break;
+
+            case FK.ROUNDC:
+                dst.ROUNDC = src.ToByte();
+            break;
+
+            case FK.SAE:
+                dst.SAE = src;
+            break;
+
+            case FK.SCALE:
+                dst.SCALE = src.ToByte();
+            break;
+
+            case FK.SEG0:
+                dst.SEG0 = src.ToReg();
+            break;
+
+            case FK.SEG1:
+                dst.SEG1 = src.ToReg();
+            break;
+
+            case FK.SEG_OVD:
+                dst.SEG_OVD = src.ToByte();
+            break;
+
+            case FK.SIBBASE:
+                dst.SIBBASE = src.ToByte();
+            break;
+
+            case FK.SIBINDEX:
+                dst.SIBINDEX = src.ToByte();
+            break;
+
+            case FK.SIBSCALE:
+                dst.SIBSCALE = src.ToByte();
+            break;
+
+            case FK.SMODE:
+                dst.SMODE = src.ToByte();
+                break;
+
+            case FK.SRM:
+                dst.SRM = src.ToByte();
+            break;
+
+            case FK.TZCNT:
+                dst.TZCNT = src;
+            break;
+
+            case FK.UBIT:
+                dst.UBIT = src;
+            break;
+
+            case FK.UIMM0:
+                dst.UIMM0 = src;
+            break;
+
+            case FK.UIMM1:
+                dst.UIMM1 = src;
+            break;
+
+            case FK.USING_DEFAULT_SEGMENT0:
+                dst.USING_DEFAULT_SEGMENT0 = src;
+            break;
+
+            case FK.USING_DEFAULT_SEGMENT1:
+                dst.USING_DEFAULT_SEGMENT1 = src;
+            break;
+
+            case FK.VEXDEST210:
+                dst.VEXDEST210 = src.ToByte();
+            break;
+
+            case FK.VEXDEST3:
+                dst.VEXDEST3 = src;
+            break;
+
+            case FK.VEXDEST4:
+                dst.VEXDEST4 = src;
+            break;
+
+            case FK.VEXVALID:
+                dst.VEXVALID = src.ToByte();
+            break;
+
+            case FK.VEX_C4:
+                dst.VEX_C4 = src;
+            break;
+
+            case FK.VEX_PREFIX:
+                dst.VEX_PREFIX = src.ToByte();
+            break;
+
+            case FK.VL:
+                dst.VL = src.ToByte();
+            break;
+
+            case FK.WBNOINVD:
+                dst.WBNOINVD = src;
+            break;
+
+            case FK.ZEROING:
+                dst.ZEROING = src;
+            break;
+
+            case FK.MEM0:
+                dst.MEM0 = src;
+            break;
+
+            case FK.MEM1:
+                dst.MEM1 = src;
+            break;
+
+            case FK.AGEN:
+                dst.AGEN = src;
+            break;
         }
 
-        public static Dictionary<FieldKind,FieldValue> update(Index<FieldValue> src, ref XedOperandState state)
+        return ref dst;
+    }
+
+    static ref XedOperandState update(in Field src, ref XedOperandState dst)
+    {
+        switch(src.Kind)
         {
-            update(src.View, ref state);
-            return src.Map(x => (x.Field, x)).ToDictionary();
+            case FK.AMD3DNOW:
+                dst.AMD3DNOW = src;
+            break;
+
+            case FK.ASZ:
+                dst.ASZ = src;
+            break;
+
+            case FK.BASE0:
+                dst.BASE0 = src;
+            break;
+
+            case FK.BASE1:
+                dst.BASE1 = src;
+            break;
+
+            case FK.BCAST:
+                dst.BCAST = src;
+            break;
+
+            case FK.BCRC:
+                dst.BCRC = src;
+            break;
+
+            case FK.RELBR:
+                dst.RELBR = src;
+            break;
+
+            case FK.BRDISP_WIDTH:
+                dst.BRDISP_WIDTH = src;
+            break;
+
+            case FK.CET:
+                dst.CET = src;
+            break;
+
+            case FK.CHIP:
+                dst.CHIP = src;
+            break;
+
+            case FK.CLDEMOTE:
+                dst.CLDEMOTE = src;
+            break;
+
+            case FK.DEFAULT_SEG:
+                dst.DEFAULT_SEG = src;
+            break;
+
+            case FK.DF32:
+                dst.DF32 = src;
+            break;
+
+            case FK.DF64:
+                dst.DF64 = src;
+            break;
+
+            case FK.DISP:
+                dst.DISP = src;
+            break;
+
+            case FK.DISP_WIDTH:
+                dst.DISP_WIDTH = src;
+            break;
+
+            case FK.DUMMY:
+                dst.DUMMY = src;
+            break;
+
+            case FK.EASZ:
+                dst.EASZ = src;
+            break;
+
+            case FK.ELEMENT_SIZE:
+                dst.ELEMENT_SIZE = src;
+            break;
+
+            case FK.ENCODER_PREFERRED:
+                dst.ENCODER_PREFERRED = src;
+            break;
+
+            case FK.ENCODE_FORCE:
+                dst.ENCODE_FORCE = src;
+            break;
+
+            case FK.EOSZ:
+                dst.EOSZ = src;
+            break;
+
+            case FK.ESRC:
+                dst.ESRC = src;
+            break;
+
+            case FK.FIRST_F2F3:
+                dst.FIRST_F2F3 = src;
+            break;
+
+            case FK.HAS_MODRM:
+                dst.HAS_MODRM = src;
+            break;
+
+            case FK.HAS_SIB:
+                dst.HAS_SIB = src;
+            break;
+
+            case FK.HINT:
+                dst.HINT = src;
+            break;
+
+            case FK.ICLASS:
+                dst.ICLASS = src;
+            break;
+
+            case FK.ILD_F2:
+                dst.ILD_F2 = src;
+            break;
+
+            case FK.ILD_F3:
+                dst.ILD_F3 = src;
+            break;
+
+            case FK.ILD_SEG:
+                dst.ILD_SEG = src;
+            break;
+
+            case FK.IMM0:
+                dst.IMM0 = src;
+            break;
+
+            case FK.IMM0SIGNED:
+                dst.IMM0SIGNED = src;
+            break;
+
+            case FK.IMM1:
+                dst.IMM1 = src;
+            break;
+
+            case FK.IMM1_BYTES:
+                dst.IMM1_BYTES = src;
+            break;
+
+            case FK.IMM_WIDTH:
+                dst.IMM_WIDTH = src;
+            break;
+
+            case FK.INDEX:
+                dst.INDEX = src;
+            break;
+
+            case FK.LAST_F2F3:
+                dst.LAST_F2F3 = src;
+            break;
+
+            case FK.LLRC:
+                dst.LLRC = src;
+            break;
+
+            case FK.LOCK:
+                dst.LOCK = src;
+            break;
+
+            case FK.LZCNT:
+                dst.LZCNT = src;
+            break;
+
+            case FK.MAP:
+                dst.MAP = src;
+            break;
+
+            case FK.MASK:
+                dst.MASK = src;
+            break;
+
+            case FK.MAX_BYTES:
+                dst.MAX_BYTES = src;
+            break;
+
+            case FK.MEM_WIDTH:
+                dst.MEM_WIDTH = src;
+            break;
+
+            case FK.MOD:
+                dst.MOD = src;
+            break;
+
+            case FK.REG:
+                dst.REG = src;
+            break;
+
+            case FK.MODRM_BYTE:
+                dst.MODRM_BYTE = src;
+            break;
+
+            case FK.MODE:
+                dst.MODE = src;
+            break;
+
+            case FK.MODEP5:
+                dst.MODEP5 = src;
+            break;
+
+            case FK.MODEP55C:
+                dst.MODEP55C = src;
+            break;
+
+            case FK.MODE_FIRST_PREFIX:
+                dst.MODE_FIRST_PREFIX = src;
+            break;
+
+            case FK.MPXMODE:
+                dst.MPXMODE = src;
+            break;
+
+            case FK.MUST_USE_EVEX:
+                dst.MUST_USE_EVEX = src;
+            break;
+
+            case FK.NEEDREX:
+                dst.NEEDREX = src;
+            break;
+
+            case FK.NEED_MEMDISP:
+                dst.NEED_MEMDISP = src;
+            break;
+
+            case FK.NEED_SIB:
+                dst.NEED_SIB = src;
+            break;
+
+            case FK.NELEM:
+                dst.NELEM = src;
+            break;
+
+            case FK.NOMINAL_OPCODE:
+                dst.NOMINAL_OPCODE = src;
+            break;
+
+            case FK.NOREX:
+                dst.NOREX = src;
+            break;
+
+            case FK.NO_SCALE_DISP8:
+                dst.NO_SCALE_DISP8 = src;
+            break;
+
+            case FK.NPREFIXES:
+                dst.NPREFIXES = src;
+            break;
+
+            case FK.NREXES:
+                dst.NREXES = src;
+            break;
+
+            case FK.NSEG_PREFIXES:
+                dst.NSEG_PREFIXES = src;
+            break;
+
+            case FK.OSZ:
+                dst.OSZ = src;
+            break;
+
+            case FK.OUT_OF_BYTES:
+                dst.OUT_OF_BYTES = src;
+            break;
+
+            case FK.P4:
+                dst.P4 = src;
+            break;
+
+            case FK.POS_DISP:
+                dst.POS_DISP = src;;
+            break;
+
+            case FK.POS_IMM:
+                dst.POS_IMM = src;
+            break;
+
+            case FK.POS_IMM1:
+                dst.POS_IMM1 = src;
+            break;
+
+            case FK.POS_MODRM:
+                dst.POS_MODRM = src;
+            break;
+
+            case FK.POS_NOMINAL_OPCODE:
+                dst.POS_NOMINAL_OPCODE = src;
+            break;
+
+            case FK.POS_SIB:
+                dst.POS_SIB = src;
+            break;
+
+            case FK.PREFIX66:
+                dst.PREFIX66 = 1;
+            break;
+
+            case FK.PTR:
+                dst.PTR = 1;
+            break;
+
+            case FK.REALMODE:
+                dst.REALMODE = 1;
+            break;
+
+            case FK.OUTREG:
+                dst.OUTREG = src;
+            break;
+
+            case FK.REG0:
+                dst.REG0 = src;
+            break;
+
+            case FK.REG1:
+                dst.REG1 = src;
+            break;
+
+            case FK.REG2:
+                dst.REG2 = src;
+            break;
+
+            case FK.REG3:
+                dst.REG3 = src;
+            break;
+
+            case FK.REG4:
+                dst.REG4 = src;
+            break;
+
+            case FK.REG5:
+                dst.REG5 = src;
+            break;
+
+            case FK.REG6:
+                dst.REG6 = src;
+            break;
+
+            case FK.REG7:
+                dst.REG7 = src;
+            break;
+
+            case FK.REG8:
+                dst.REG8 = src;
+            break;
+
+            case FK.REG9:
+                dst.REG9 = src;
+            break;
+
+            case FK.REP:
+                dst.REP = src;
+            break;
+
+            case FK.REX:
+                dst.REX = src;
+            break;
+
+            case FK.REXB:
+                dst.REXB = src;
+            break;
+
+            case FK.REXR:
+                dst.REXR = src;
+            break;
+
+            case FK.REXRR:
+                dst.REXRR = src;
+            break;
+
+            case FK.REXW:
+                dst.REXW = src;
+            break;
+
+            case FK.REXX:
+                dst.REXX = src;
+            break;
+
+            case FK.RM:
+                dst.RM = src;
+            break;
+
+            case FK.ROUNDC:
+                dst.ROUNDC = src;
+            break;
+
+            case FK.SAE:
+                dst.SAE = src;
+            break;
+
+            case FK.SCALE:
+                dst.SCALE = src;
+            break;
+
+            case FK.SEG0:
+                dst.SEG0 = src;
+            break;
+
+            case FK.SEG1:
+                dst.SEG1 = src;
+            break;
+
+            case FK.SEG_OVD:
+                dst.SEG_OVD = src;
+            break;
+
+            case FK.SIBBASE:
+                dst.SIBBASE = src;
+            break;
+
+            case FK.SIBINDEX:
+                dst.SIBINDEX = src;
+            break;
+
+            case FK.SIBSCALE:
+                dst.SIBSCALE = src;
+            break;
+
+            case FK.SMODE:
+                dst.SMODE = src;
+                break;
+
+            case FK.SRM:
+                dst.SRM = src;
+            break;
+
+            case FK.TZCNT:
+                dst.TZCNT = src;
+            break;
+
+            case FK.UBIT:
+                dst.UBIT = src;
+            break;
+
+            case FK.UIMM0:
+                dst.UIMM0 = src;
+            break;
+
+            case FK.UIMM1:
+                dst.UIMM1 = src;
+            break;
+
+            case FK.USING_DEFAULT_SEGMENT0:
+                dst.USING_DEFAULT_SEGMENT0 = src;
+            break;
+
+            case FK.USING_DEFAULT_SEGMENT1:
+                dst.USING_DEFAULT_SEGMENT1 = src;
+            break;
+
+            case FK.VEXDEST210:
+                dst.VEXDEST210 = src;
+            break;
+
+            case FK.VEXDEST3:
+                dst.VEXDEST3 = src;
+            break;
+
+            case FK.VEXDEST4:
+                dst.VEXDEST4 = src;
+            break;
+
+            case FK.VEXVALID:
+                dst.VEXVALID = src;
+            break;
+
+            case FK.VEX_C4:
+                dst.VEX_C4 = src;
+            break;
+
+            case FK.VEX_PREFIX:
+                dst.VEX_PREFIX = src;
+            break;
+
+            case FK.VL:
+                dst.VL = src;
+            break;
+
+            case FK.WBNOINVD:
+                dst.WBNOINVD = src;
+            break;
+
+            case FK.ZEROING:
+                dst.ZEROING = src;
+            break;
+
+            case FK.MEM0:
+                dst.MEM0 = src;
+            break;
+
+            case FK.MEM1:
+                dst.MEM1 = src;
+            break;
+
+            case FK.AGEN:
+                dst.AGEN = src;
+            break;
+
         }
-
-        static ref XedOperandState update(ReadOnlySpan<FieldValue> src, ref XedOperandState dst)
-        {
-            for(var i=0; i<src.Length; i++)
-                update(skip(src,i), ref dst);
-            return ref dst;
-        }
-
-        static ref XedOperandState update(in FieldValue src, ref XedOperandState dst)
-        {
-            var result = Outcome.Success;
-            switch(src.Field)
-            {
-                case FK.AMD3DNOW:
-                    dst.AMD3DNOW = src;
-                break;
-
-                case FK.ASZ:
-                    dst.ASZ = src;
-                break;
-
-                case FK.BASE0:
-                    dst.BASE0 = src.ToReg();
-                break;
-
-                case FK.BASE1:
-                    dst.BASE1 = src.ToReg();
-                break;
-
-                case FK.BCAST:
-                    dst.BCAST = src.ToByte();
-                break;
-
-                case FK.BCRC:
-                    dst.BCRC = src;
-                break;
-
-                case FK.RELBR:
-                    dst.RELBR = src;
-                break;
-
-                case FK.BRDISP_WIDTH:
-                    dst.BRDISP_WIDTH = src.ToByte();
-                break;
-
-                case FK.CET:
-                    dst.CET = src;
-                break;
-
-                case FK.CHIP:
-                    dst.CHIP = src;
-                break;
-
-                case FK.CLDEMOTE:
-                    dst.CLDEMOTE = src;
-                break;
-
-                case FK.DEFAULT_SEG:
-                    dst.DEFAULT_SEG = src.ToByte();
-                break;
-
-                case FK.DF32:
-                    dst.DF32 = src;
-                break;
-
-                case FK.DF64:
-                    dst.DF64 = src;
-                break;
-
-                case FK.DISP:
-                    dst.DISP = src;
-                break;
-
-                case FK.DISP_WIDTH:
-                    dst.DISP_WIDTH = src.ToByte();
-                break;
-
-                case FK.DUMMY:
-                    dst.DUMMY = src;
-                break;
-
-                case FK.EASZ:
-                    dst.EASZ = src.ToByte();
-                break;
-
-                case FK.ELEMENT_SIZE:
-                    dst.ELEMENT_SIZE = src.ToByte();
-                break;
-
-                case FK.ENCODER_PREFERRED:
-                    dst.ENCODER_PREFERRED = src;
-                break;
-
-                case FK.ENCODE_FORCE:
-                    dst.ENCODE_FORCE = src;
-                break;
-
-                case FK.EOSZ:
-                    dst.EOSZ = src.ToByte();
-                break;
-
-                case FK.ESRC:
-                    dst.ESRC = src.ToByte();
-                break;
-
-                case FK.FIRST_F2F3:
-                    dst.FIRST_F2F3 = src.ToByte();
-                break;
-
-                case FK.HAS_MODRM:
-                    dst.HAS_MODRM = src;
-                break;
-
-                case FK.HAS_SIB:
-                    dst.HAS_SIB = src;
-                break;
-
-                case FK.HINT:
-                    dst.HINT  = src.ToByte();
-                break;
-
-                case FK.ICLASS:
-                    dst.ICLASS = src;
-                break;
-
-                case FK.ILD_F2:
-                    dst.ILD_F2 = src;
-                break;
-
-                case FK.ILD_F3:
-                    dst.ILD_F3 = src;
-                break;
-
-                case FK.ILD_SEG:
-                    dst.ILD_SEG = src.ToByte();
-                break;
-
-                case FK.IMM0:
-                    dst.IMM0 = src;
-                break;
-
-                case FK.IMM0SIGNED:
-                    dst.IMM0SIGNED = src;
-                break;
-
-                case FK.IMM1:
-                    dst.IMM1 = src;
-                break;
-
-                case FK.IMM1_BYTES:
-                    dst.IMM1_BYTES = src.ToByte();
-                break;
-
-                case FK.IMM_WIDTH:
-                    dst.IMM_WIDTH = src.ToByte();
-                break;
-
-                case FK.INDEX:
-                    dst.INDEX = src.ToReg();
-                break;
-
-                case FK.LAST_F2F3:
-                    dst.LAST_F2F3 = src.ToByte();
-                break;
-
-                case FK.LLRC:
-                    dst.LLRC = src.ToByte();
-                break;
-
-                case FK.LOCK:
-                    dst.LOCK = src;
-                break;
-
-                case FK.LZCNT:
-                    dst.LZCNT = src;
-                break;
-
-                case FK.MAP:
-                    dst.MAP = src.ToByte();
-                break;
-
-                case FK.MASK:
-                    dst.MASK = src.ToBit();
-                break;
-
-                case FK.MAX_BYTES:
-                    dst.MAX_BYTES = src.ToByte();
-                break;
-
-                case FK.MEM_WIDTH:
-                    dst.MEM_WIDTH = src.ToByte();
-                break;
-
-                case FK.MOD:
-                    dst.MOD = src.ToByte();
-                break;
-
-                case FK.REG:
-                    dst.REG = src.ToByte();
-                break;
-
-                case FK.MODRM_BYTE:
-                    dst.MODRM_BYTE = src.ToHex8();
-                break;
-
-                case FK.MODE:
-                    dst.MODE = src.ToByte();
-                break;
-
-                case FK.MODEP5:
-                    dst.MODEP5 = src;
-                break;
-
-                case FK.MODEP55C:
-                    dst.MODEP55C = src;
-                break;
-
-                case FK.MODE_FIRST_PREFIX:
-                    dst.MODE_FIRST_PREFIX = src;
-                break;
-
-                case FK.MPXMODE:
-                    dst.MPXMODE = src;
-                break;
-
-                case FK.MUST_USE_EVEX:
-                    dst.MUST_USE_EVEX = src;
-                break;
-
-                case FK.NEEDREX:
-                    dst.NEEDREX = src;
-                break;
-
-                case FK.NEED_MEMDISP:
-                    dst.NEED_MEMDISP = src.ToByte();
-                break;
-
-                case FK.NEED_SIB:
-                    dst.NEED_SIB = src;
-                break;
-
-                case FK.NELEM:
-                    dst.NELEM = src.ToWord();
-                break;
-
-                case FK.NOMINAL_OPCODE:
-                    dst.NOMINAL_OPCODE = src.ToByte();
-                break;
-
-                case FK.NOREX:
-                    dst.NOREX = src;
-                break;
-
-                case FK.NO_SCALE_DISP8:
-                    dst.NO_SCALE_DISP8 = src;
-                break;
-
-                case FK.NPREFIXES:
-                    dst.NPREFIXES = src.ToByte();
-                break;
-
-                case FK.NREXES:
-                    dst.NREXES = src.ToByte();
-                break;
-
-                case FK.NSEG_PREFIXES:
-                    dst.NSEG_PREFIXES = src.ToByte();
-                break;
-
-                case FK.OSZ:
-                    dst.OSZ = src;
-                break;
-
-                case FK.OUT_OF_BYTES:
-                    dst.OUT_OF_BYTES = src;
-                break;
-
-                case FK.P4:
-                    dst.P4 = src;
-                break;
-
-                case FK.POS_DISP:
-                    dst.POS_DISP = src.ToByte();
-                break;
-
-                case FK.POS_IMM:
-                    dst.POS_IMM = src.ToByte();
-                break;
-
-                case FK.POS_IMM1:
-                    dst.POS_IMM1 = src.ToByte();
-                break;
-
-                case FK.POS_MODRM:
-                    dst.POS_MODRM = src.ToByte();
-                break;
-
-                case FK.POS_NOMINAL_OPCODE:
-                    dst.POS_NOMINAL_OPCODE = src.ToByte();
-                break;
-
-                case FK.POS_SIB:
-                    dst.POS_SIB = src.ToByte();
-                break;
-
-                case FK.PREFIX66:
-                    dst.PREFIX66 = 1;
-                break;
-
-                case FK.PTR:
-                    dst.PTR = 1;
-                break;
-
-                case FK.REALMODE:
-                    dst.REALMODE = 1;
-                break;
-
-                case FK.OUTREG:
-                    dst.OUTREG = src.ToReg();
-                break;
-
-                case FK.REG0:
-                    dst.REG0 = src.ToReg();
-                break;
-
-                case FK.REG1:
-                    dst.REG1 = src.ToReg();
-                break;
-
-                case FK.REG2:
-                    dst.REG2 = src.ToReg();
-                break;
-
-                case FK.REG3:
-                    dst.REG3 = src.ToReg();
-                break;
-
-                case FK.REG4:
-                    dst.REG4  = src.ToReg();
-                break;
-
-                case FK.REG5:
-                    dst.REG5 = src.ToReg();
-                break;
-
-                case FK.REG6:
-                    dst.REG6 = src.ToReg();
-                break;
-
-                case FK.REG7:
-                    dst.REG7 = src.ToReg();
-                break;
-
-                case FK.REG8:
-                    dst.REG8 = src.ToReg();
-                break;
-
-                case FK.REG9:
-                    dst.REG9 = src.ToReg();
-                break;
-
-                case FK.REP:
-                    dst.REP = src.ToByte();
-                break;
-
-                case FK.REX:
-                    dst.REX = src;
-                break;
-
-                case FK.REXB:
-                    dst.REXB = src;
-                break;
-
-                case FK.REXR:
-                    dst.REXR = src;
-                break;
-
-                case FK.REXRR:
-                    dst.REXRR = src;
-                break;
-
-                case FK.REXW:
-                    dst.REXW = src;
-                break;
-
-                case FK.REXX:
-                    dst.REXX = src;
-                break;
-
-                case FK.RM:
-                    dst.RM = src.ToByte();
-                break;
-
-                case FK.ROUNDC:
-                    dst.ROUNDC = src.ToByte();
-                break;
-
-                case FK.SAE:
-                    dst.SAE = src;
-                break;
-
-                case FK.SCALE:
-                    dst.SCALE = src.ToByte();
-                break;
-
-                case FK.SEG0:
-                    dst.SEG0 = src.ToReg();
-                break;
-
-                case FK.SEG1:
-                    dst.SEG1 = src.ToReg();
-                break;
-
-                case FK.SEG_OVD:
-                    dst.SEG_OVD = src.ToByte();
-                break;
-
-                case FK.SIBBASE:
-                    dst.SIBBASE = src.ToByte();
-                break;
-
-                case FK.SIBINDEX:
-                    dst.SIBINDEX = src.ToByte();
-                break;
-
-                case FK.SIBSCALE:
-                    dst.SIBSCALE = src.ToByte();
-                break;
-
-                case FK.SMODE:
-                    dst.SMODE = src.ToByte();
-                    break;
-
-                case FK.SRM:
-                    dst.SRM = src.ToByte();
-                break;
-
-                case FK.TZCNT:
-                    dst.TZCNT = src;
-                break;
-
-                case FK.UBIT:
-                    dst.UBIT = src;
-                break;
-
-                case FK.UIMM0:
-                    dst.UIMM0 = src;
-                break;
-
-                case FK.UIMM1:
-                    dst.UIMM1 = src;
-                break;
-
-                case FK.USING_DEFAULT_SEGMENT0:
-                    dst.USING_DEFAULT_SEGMENT0 = src;
-                break;
-
-                case FK.USING_DEFAULT_SEGMENT1:
-                    dst.USING_DEFAULT_SEGMENT1 = src;
-                break;
-
-                case FK.VEXDEST210:
-                    dst.VEXDEST210 = src.ToByte();
-                break;
-
-                case FK.VEXDEST3:
-                    dst.VEXDEST3 = src;
-                break;
-
-                case FK.VEXDEST4:
-                    dst.VEXDEST4 = src;
-                break;
-
-                case FK.VEXVALID:
-                    dst.VEXVALID = src.ToByte();
-                break;
-
-                case FK.VEX_C4:
-                    dst.VEX_C4 = src;
-                break;
-
-                case FK.VEX_PREFIX:
-                    dst.VEX_PREFIX = src.ToByte();
-                break;
-
-                case FK.VL:
-                    dst.VL = src.ToByte();
-                break;
-
-                case FK.WBNOINVD:
-                    dst.WBNOINVD = src;
-                break;
-
-                case FK.ZEROING:
-                    dst.ZEROING = src;
-                break;
-
-                case FK.MEM0:
-                    dst.MEM0 = src;
-                break;
-
-                case FK.MEM1:
-                    dst.MEM1 = src;
-                break;
-
-                case FK.AGEN:
-                    dst.AGEN = src;
-                break;
-            }
-
-            return ref dst;
-        }
-
-        static ref XedOperandState update(in Field src, ref XedOperandState dst)
-        {
-            switch(src.Kind)
-            {
-                case FK.AMD3DNOW:
-                    dst.AMD3DNOW = src;
-                break;
-
-                case FK.ASZ:
-                    dst.ASZ = src;
-                break;
-
-                case FK.BASE0:
-                    dst.BASE0 = src;
-                break;
-
-                case FK.BASE1:
-                    dst.BASE1 = src;
-                break;
-
-                case FK.BCAST:
-                    dst.BCAST = src;
-                break;
-
-                case FK.BCRC:
-                    dst.BCRC = src;
-                break;
-
-                case FK.RELBR:
-                    dst.RELBR = src;
-                break;
-
-                case FK.BRDISP_WIDTH:
-                    dst.BRDISP_WIDTH = src;
-                break;
-
-                case FK.CET:
-                    dst.CET = src;
-                break;
-
-                case FK.CHIP:
-                    dst.CHIP = src;
-                break;
-
-                case FK.CLDEMOTE:
-                    dst.CLDEMOTE = src;
-                break;
-
-                case FK.DEFAULT_SEG:
-                    dst.DEFAULT_SEG = src;
-                break;
-
-                case FK.DF32:
-                    dst.DF32 = src;
-                break;
-
-                case FK.DF64:
-                    dst.DF64 = src;
-                break;
-
-                case FK.DISP:
-                    dst.DISP = src;
-                break;
-
-                case FK.DISP_WIDTH:
-                    dst.DISP_WIDTH = src;
-                break;
-
-                case FK.DUMMY:
-                    dst.DUMMY = src;
-                break;
-
-                case FK.EASZ:
-                    dst.EASZ = src;
-                break;
-
-                case FK.ELEMENT_SIZE:
-                    dst.ELEMENT_SIZE = src;
-                break;
-
-                case FK.ENCODER_PREFERRED:
-                    dst.ENCODER_PREFERRED = src;
-                break;
-
-                case FK.ENCODE_FORCE:
-                    dst.ENCODE_FORCE = src;
-                break;
-
-                case FK.EOSZ:
-                    dst.EOSZ = src;
-                break;
-
-                case FK.ESRC:
-                    dst.ESRC = src;
-                break;
-
-                case FK.FIRST_F2F3:
-                    dst.FIRST_F2F3 = src;
-                break;
-
-                case FK.HAS_MODRM:
-                    dst.HAS_MODRM = src;
-                break;
-
-                case FK.HAS_SIB:
-                    dst.HAS_SIB = src;
-                break;
-
-                case FK.HINT:
-                    dst.HINT = src;
-                break;
-
-                case FK.ICLASS:
-                    dst.ICLASS = src;
-                break;
-
-                case FK.ILD_F2:
-                    dst.ILD_F2 = src;
-                break;
-
-                case FK.ILD_F3:
-                    dst.ILD_F3 = src;
-                break;
-
-                case FK.ILD_SEG:
-                    dst.ILD_SEG = src;
-                break;
-
-                case FK.IMM0:
-                    dst.IMM0 = src;
-                break;
-
-                case FK.IMM0SIGNED:
-                    dst.IMM0SIGNED = src;
-                break;
-
-                case FK.IMM1:
-                    dst.IMM1 = src;
-                break;
-
-                case FK.IMM1_BYTES:
-                    dst.IMM1_BYTES = src;
-                break;
-
-                case FK.IMM_WIDTH:
-                    dst.IMM_WIDTH = src;
-                break;
-
-                case FK.INDEX:
-                    dst.INDEX = src;
-                break;
-
-                case FK.LAST_F2F3:
-                    dst.LAST_F2F3 = src;
-                break;
-
-                case FK.LLRC:
-                    dst.LLRC = src;
-                break;
-
-                case FK.LOCK:
-                    dst.LOCK = src;
-                break;
-
-                case FK.LZCNT:
-                    dst.LZCNT = src;
-                break;
-
-                case FK.MAP:
-                    dst.MAP = src;
-                break;
-
-                case FK.MASK:
-                    dst.MASK = src;
-                break;
-
-                case FK.MAX_BYTES:
-                    dst.MAX_BYTES = src;
-                break;
-
-                case FK.MEM_WIDTH:
-                    dst.MEM_WIDTH = src;
-                break;
-
-                case FK.MOD:
-                    dst.MOD = src;
-                break;
-
-                case FK.REG:
-                    dst.REG = src;
-                break;
-
-                case FK.MODRM_BYTE:
-                    dst.MODRM_BYTE = src;
-                break;
-
-                case FK.MODE:
-                    dst.MODE = src;
-                break;
-
-                case FK.MODEP5:
-                    dst.MODEP5 = src;
-                break;
-
-                case FK.MODEP55C:
-                    dst.MODEP55C = src;
-                break;
-
-                case FK.MODE_FIRST_PREFIX:
-                    dst.MODE_FIRST_PREFIX = src;
-                break;
-
-                case FK.MPXMODE:
-                    dst.MPXMODE = src;
-                break;
-
-                case FK.MUST_USE_EVEX:
-                    dst.MUST_USE_EVEX = src;
-                break;
-
-                case FK.NEEDREX:
-                    dst.NEEDREX = src;
-                break;
-
-                case FK.NEED_MEMDISP:
-                    dst.NEED_MEMDISP = src;
-                break;
-
-                case FK.NEED_SIB:
-                    dst.NEED_SIB = src;
-                break;
-
-                case FK.NELEM:
-                    dst.NELEM = src;
-                break;
-
-                case FK.NOMINAL_OPCODE:
-                    dst.NOMINAL_OPCODE = src;
-                break;
-
-                case FK.NOREX:
-                    dst.NOREX = src;
-                break;
-
-                case FK.NO_SCALE_DISP8:
-                    dst.NO_SCALE_DISP8 = src;
-                break;
-
-                case FK.NPREFIXES:
-                    dst.NPREFIXES = src;
-                break;
-
-                case FK.NREXES:
-                    dst.NREXES = src;
-                break;
-
-                case FK.NSEG_PREFIXES:
-                    dst.NSEG_PREFIXES = src;
-                break;
-
-                case FK.OSZ:
-                    dst.OSZ = src;
-                break;
-
-                case FK.OUT_OF_BYTES:
-                    dst.OUT_OF_BYTES = src;
-                break;
-
-                case FK.P4:
-                    dst.P4 = src;
-                break;
-
-                case FK.POS_DISP:
-                    dst.POS_DISP = src;;
-                break;
-
-                case FK.POS_IMM:
-                    dst.POS_IMM = src;
-                break;
-
-                case FK.POS_IMM1:
-                    dst.POS_IMM1 = src;
-                break;
-
-                case FK.POS_MODRM:
-                    dst.POS_MODRM = src;
-                break;
-
-                case FK.POS_NOMINAL_OPCODE:
-                    dst.POS_NOMINAL_OPCODE = src;
-                break;
-
-                case FK.POS_SIB:
-                    dst.POS_SIB = src;
-                break;
-
-                case FK.PREFIX66:
-                    dst.PREFIX66 = 1;
-                break;
-
-                case FK.PTR:
-                    dst.PTR = 1;
-                break;
-
-                case FK.REALMODE:
-                    dst.REALMODE = 1;
-                break;
-
-                case FK.OUTREG:
-                    dst.OUTREG = src;
-                break;
-
-                case FK.REG0:
-                    dst.REG0 = src;
-                break;
-
-                case FK.REG1:
-                    dst.REG1 = src;
-                break;
-
-                case FK.REG2:
-                    dst.REG2 = src;
-                break;
-
-                case FK.REG3:
-                    dst.REG3 = src;
-                break;
-
-                case FK.REG4:
-                    dst.REG4 = src;
-                break;
-
-                case FK.REG5:
-                    dst.REG5 = src;
-                break;
-
-                case FK.REG6:
-                    dst.REG6 = src;
-                break;
-
-                case FK.REG7:
-                    dst.REG7 = src;
-                break;
-
-                case FK.REG8:
-                    dst.REG8 = src;
-                break;
-
-                case FK.REG9:
-                    dst.REG9 = src;
-                break;
-
-                case FK.REP:
-                    dst.REP = src;
-                break;
-
-                case FK.REX:
-                    dst.REX = src;
-                break;
-
-                case FK.REXB:
-                    dst.REXB = src;
-                break;
-
-                case FK.REXR:
-                    dst.REXR = src;
-                break;
-
-                case FK.REXRR:
-                    dst.REXRR = src;
-                break;
-
-                case FK.REXW:
-                    dst.REXW = src;
-                break;
-
-                case FK.REXX:
-                    dst.REXX = src;
-                break;
-
-                case FK.RM:
-                    dst.RM = src;
-                break;
-
-                case FK.ROUNDC:
-                    dst.ROUNDC = src;
-                break;
-
-                case FK.SAE:
-                    dst.SAE = src;
-                break;
-
-                case FK.SCALE:
-                    dst.SCALE = src;
-                break;
-
-                case FK.SEG0:
-                    dst.SEG0 = src;
-                break;
-
-                case FK.SEG1:
-                    dst.SEG1 = src;
-                break;
-
-                case FK.SEG_OVD:
-                    dst.SEG_OVD = src;
-                break;
-
-                case FK.SIBBASE:
-                    dst.SIBBASE = src;
-                break;
-
-                case FK.SIBINDEX:
-                    dst.SIBINDEX = src;
-                break;
-
-                case FK.SIBSCALE:
-                    dst.SIBSCALE = src;
-                break;
-
-                case FK.SMODE:
-                    dst.SMODE = src;
-                    break;
-
-                case FK.SRM:
-                    dst.SRM = src;
-                break;
-
-                case FK.TZCNT:
-                    dst.TZCNT = src;
-                break;
-
-                case FK.UBIT:
-                    dst.UBIT = src;
-                break;
-
-                case FK.UIMM0:
-                    dst.UIMM0 = src;
-                break;
-
-                case FK.UIMM1:
-                    dst.UIMM1 = src;
-                break;
-
-                case FK.USING_DEFAULT_SEGMENT0:
-                    dst.USING_DEFAULT_SEGMENT0 = src;
-                break;
-
-                case FK.USING_DEFAULT_SEGMENT1:
-                    dst.USING_DEFAULT_SEGMENT1 = src;
-                break;
-
-                case FK.VEXDEST210:
-                    dst.VEXDEST210 = src;
-                break;
-
-                case FK.VEXDEST3:
-                    dst.VEXDEST3 = src;
-                break;
-
-                case FK.VEXDEST4:
-                    dst.VEXDEST4 = src;
-                break;
-
-                case FK.VEXVALID:
-                    dst.VEXVALID = src;
-                break;
-
-                case FK.VEX_C4:
-                    dst.VEX_C4 = src;
-                break;
-
-                case FK.VEX_PREFIX:
-                    dst.VEX_PREFIX = src;
-                break;
-
-                case FK.VL:
-                    dst.VL = src;
-                break;
-
-                case FK.WBNOINVD:
-                    dst.WBNOINVD = src;
-                break;
-
-                case FK.ZEROING:
-                    dst.ZEROING = src;
-                break;
-
-                case FK.MEM0:
-                    dst.MEM0 = src;
-                break;
-
-                case FK.MEM1:
-                    dst.MEM1 = src;
-                break;
-
-                case FK.AGEN:
-                    dst.AGEN = src;
-                break;
-
-            }
-            return ref dst;
-        } 
+        return ref dst;
+    } 
 }

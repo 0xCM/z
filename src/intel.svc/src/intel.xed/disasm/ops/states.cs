@@ -33,7 +33,7 @@ partial class XedDisasm
         var dst = StateRecord.Empty;
         dst.Asm = block.ParseAsm();
         dst.Ops = block.ParseOps();
-        dst.Fields = XedDisasm.fields(block).ParseFields(out dst.State);
+        dst.Fields = fields(block).ParseFields(out dst.State);
         return dst;
     }
 }

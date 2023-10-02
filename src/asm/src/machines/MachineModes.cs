@@ -25,18 +25,11 @@ public class MachineModes
             };
     }
 
-    public static string format(MachineModeClass src, DataFormatCode fc = DataFormatCode.Expr)
-        => fc == DataFormatCode.BitWidth ? nsize((byte)src + 1) : EnumRender.format(ClassRender,src,fc);
-
     public static bool parse(string src, out MachineModeClass dst)
         => ClassParser.Parse(src, out dst);
 
     static readonly EnumParser<MachineModeClass> ClassParser = new();
 
-    static EnumRender<MachineModeClass> ClassRender = new();
-
-    static string nsize<T>(T src)
-        => ((NativeSize)((NativeSizeCode)u8(src))).Format();
 
     [SymSource("xed"), DataWidth(4)]
     public enum MachineModeKind : byte

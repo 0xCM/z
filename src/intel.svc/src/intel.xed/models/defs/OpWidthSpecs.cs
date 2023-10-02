@@ -3,25 +3,24 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedModels
 {
-    partial class XedModels
+    public class OpWidthSpecs
     {
-        public class OpWidthSpecs
+        readonly Index<WidthCode,OpWidthSpec> Data;
+
+        [MethodImpl(Inline)]
+        public OpWidthSpecs(OpWidthSpec[] src)
         {
-            readonly Index<WidthCode,OpWidthSpec> Data;
+            Data = src;
+        }
 
+        public ref readonly OpWidthSpec this[WidthCode code]
+        {
             [MethodImpl(Inline)]
-            public OpWidthSpecs(OpWidthSpec[] src)
-            {
-                Data = src;
-            }
-
-            public ref readonly OpWidthSpec this[WidthCode code]
-            {
-                [MethodImpl(Inline)]
-                get => ref Data[code];
-            }
+            get => ref Data[code];
         }
     }
 }

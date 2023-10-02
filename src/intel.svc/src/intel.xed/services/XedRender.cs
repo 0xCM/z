@@ -106,8 +106,6 @@ public class XedRender
 
     static EnumRender<RuleCellKind> RuleCellKinds = new();
 
-    static XedPaths XedPaths => XedPaths.Service;
-
     public static void render(Index<OpSpec> src, ITextEmitter dst)
     {
         dst.AppendLineFormat(XedFieldRender.Columns, "Operands", EmptyString);
@@ -371,29 +369,6 @@ public class XedRender
         dst.AppendLineFormat(pattern, nameof(src.Form), src.Form);
         dst.AppendLineFormat(pattern, nameof(src.Offsets), src.Offsets);
         dst.AppendLineFormat(pattern, nameof(src.OpCode), src.OpCode);
-    }
-
-    public static void describe(in XedDisasmFields src, ITextEmitter dst)
-    {
-        const string RenderPattern = XedFieldRender.Columns;
-        dst.AppendLineFormat(RenderPattern, nameof(src.Summary.InstructionId), src.Summary.InstructionId);
-        dst.AppendLineFormat(RenderPattern, nameof(src.Asm.Asm), src.Asm.Asm);
-        dst.AppendLineFormat(RenderPattern, nameof(src.Props.InstClass), src.Props.InstClass);
-        dst.AppendLineFormat(RenderPattern, nameof(src.Props.InstForm), src.Props.InstForm);
-        dst.AppendLineFormat(RenderPattern, nameof(src.Asm.Category), src.Asm.Category);
-        dst.AppendLineFormat(RenderPattern, nameof(src.Asm.Extension), src.Asm.Extension);
-        dst.AppendLineFormat(RenderPattern, nameof(src.Encoding.Offsets), AsmRender.format(src.Encoding.Offsets));
-        dst.AppendLineFormat(RenderPattern, nameof(src.Encoding.OpCode), XedRender.format(src.Encoding.OpCode));
-        if(src.Encoding.ModRm.IsNonZero)
-            dst.AppendLineFormat(RenderPattern, nameof(src.Encoding.ModRm), src.Encoding.ModRm);
-        if(src.Encoding.Sib.IsNonZero)
-            dst.AppendLineFormat(RenderPattern, nameof(src.Encoding.Sib), src.Encoding.Sib);
-        if(src.Encoding.Imm.IsNonZero)
-            dst.AppendLineFormat(RenderPattern, nameof(src.Encoding.Imm), src.Encoding.Imm);
-        if(src.Encoding.Imm1.IsNonZero)
-            dst.AppendLineFormat(RenderPattern, nameof(src.Encoding.Imm), src.Encoding.Imm1);
-        if(src.Encoding.Disp.IsNonZero)
-            dst.AppendLineFormat(RenderPattern, nameof(src.Encoding.Disp), src.Encoding.Disp);
     }
 
     public static string format(Index<XedFlagEffect> src, bool embrace = true, char sep = Chars.Comma)

@@ -9,74 +9,73 @@ using Asm;
 
 using static sys;
 using static XedModels;
-using static XedRules;
-using static XedOps;
-using static XedFields;
-
-using K = XedRules.FieldKind;
 
 public partial class XedDisasm : WfSvc<XedDisasm>
 {
-    const string disasm = "xed.disasm";
+    static long DisasmTokens;    
 
-    static long DisasmTokens;
+    public static ParallelQuery<FilePath> sources(IDbArchive src)
+        => src.Files(FileKind.XedRawDisasm).AsParallel();        
 
     [MethodImpl(Inline)]
     public static XedDisasmToken token()
         => (uint)inc(ref DisasmTokens);
 
-    public void EmitDetails(IProject project, XedDisasmDoc doc)
-    {
-        var target = XedPaths.DisasmDetailPath(project, doc.SourcePath);
-        var emitting = Channel.EmittingFile(target);
-        var dst = text.emitter();
-        XedDisasmRender.render(doc.DetailBlocks, dst);
-        using var emitter = target.AsciEmitter();
-        emitter.Write(dst.Emit());
-        Channel.EmittedFile(emitting, doc.DetailBlocks.Count);
-    }
-
-    bool Collect(IProject project, XedDisasmDoc doc)
-    {
-        var path = doc.SourcePath;
-        var flow = Channel.Running($"Collecting disassembly content from {path.ToUri()}");
-        EmitDetails(project, doc);
-        EmitOps(project, doc);
-        EmitSummaries(project, doc);
-        EmitChecks(project,doc);
-        Channel.Ran(flow,$"Collected disassembly content from {path.ToUri()}");
-        return true;
-    }
-
-    static XedDisasmDoc LoadDocument(FilePath src)
+    public static XedDisasmDoc doc(FilePath src)
     {
         var summary = XedDisasm.summary(datafile(src));
         return new XedDisasmDoc(summary, detail(summary));
     }
 
-    ParallelQuery<XedDisasmDoc> CollectDisasm(IProject src)
-        => from path in sources(src.Root)
-            let d = LoadDocument(path)
-            let success = Collect(src,d)
+    void EmitDetails(XedDisasmDoc src, IDbArchive dst)
+    {
+        var path = XedPaths.DisasmDetailPath(dst, src.SourcePath);
+        var emitting = Channel.EmittingFile(path);
+        var te = text.emitter();
+        XedDisasmRender.render(src.DetailBlocks, te);
+        using var ae = path.AsciEmitter();
+        ae.Write(te.Emit());
+        Channel.EmittedFile(emitting, src.DetailBlocks.Count);
+    }
+    
+    public bool Import(XedDisasmDoc src, IDbArchive dst)
+    {
+        var path = src.SourcePath;
+        var flow = Channel.Running($"Collecting disassembly content from {path.ToUri()}");
+        EmitDetails(src, dst);
+        EmitOps(src, dst);
+        EmitSummaries(src, dst);
+        EmitChecks(src, dst);
+        Channel.Ran(flow,$"Collected disassembly content from {path.ToUri()}");
+        return true;
+    }
+
+    public ParallelQuery<XedDisasmDoc> Import(IDbArchive root)
+        => from path in sources(root)
+            let d = doc(path)
+            let success = Import(d, root)
             where success
             select d;
 
-    public void Collect(IProject project)
+    public ParallelQuery<XedDisasmDoc> Collect(IDbArchive root)
     {
-        Consolidate(project, CollectDisasm(project));
+        var docs = Import(root);
+        Consolidate(docs, root);
+        return docs;
     }
 
-    public void EmitSummaries(IProject project, XedDisasmDoc doc)
+    void EmitSummaries(XedDisasmDoc doc, IDbArchive project)
         => Channel.TableEmit(doc.Summary.Rows, XedPaths.DisasmSummaryPath(project, doc.SourcePath));
 
-    public void EmitOps(IProject project, XedDisasmDoc src)
+    const string OperandFormat = "{0} | {1,-20} | {2}";
+
+    void EmitOps(XedDisasmDoc src, IDbArchive dst)
     {
-        const string OperandFormat = "{0} | {1,-20} | {2}";
+        var path = XedPaths.DisasmOpsPath(dst, src.Detail.DataFile.Source);
         var doc = src.Detail;
-        var outpath = XedPaths.DisasmOpsPath(project, doc.DataFile.Source);
-        var emitting = Channel.EmittingFile(outpath);
-        using var dst = outpath.AsciEmitter();
-        dst.AppendLineFormat(RenderCol2, "DataSource", doc.Source.ToUri().Format());
+        var emitting = Channel.EmittingFile(path);
+        using var emitter = path.AsciEmitter();
+        emitter.AppendLineFormat(RenderCol2, "DataSource", doc.Source.ToUri().Format());
         var counter = 0u;
         var count = doc.Count;
         for(var i=0; i<count;i++)
@@ -84,41 +83,32 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             ref readonly var row = ref doc[i];
             ref readonly var detail = ref row.DetailRow;
             var inst = detail.Instruction;
-            dst.AppendLine(RP.PageBreak80);
-            XedRender.describe(detail, dst);
-            ref readonly var ops = ref detail.Ops;
-            dst.AppendLine("Operands");
-            var specs = ops.Map(x => x.Spec);
-            for(var j=0; j<ops.Count; j++)
-            {
-                ref readonly var op = ref ops[j];
-                dst.AppendLineFormat(OperandFormat, j, nameof(op.Spec), Xed.specifier(op.Spec));
-                dst.AppendLineFormat(OperandFormat, j, nameof(op.OpName), op.OpName);
-                dst.AppendLineFormat(OperandFormat, j, nameof(op.OpWidth), op.OpWidth);
-                dst.AppendLineFormat(OperandFormat, j, nameof(op.Def.Value), op.Def.Value);
-
-            }
-            dst.WriteLine();
+            emitter.AppendLine(RP.PageBreak80);
+            XedRender.describe(detail, emitter);
+            operands(detail, emitter);
+            emitter.WriteLine();
         }
 
         Channel.EmittedFile(emitting,counter);
     }
     
-    public void EmitFields(IProject project, XedDisasmDoc src)
-        => EmitFieldReport(project, src.Detail);
-
-    void EmitFieldReport(IProject project, XedDisasmDetail src)
+    static void operands(in XedDisasmDetailRow src, ITextEmitter dst)
     {
-        var emitter = new FieldEmitter();
-        var dst = text.emitter();
-        var count = emitter.EmitFields(src, dst);
-        Channel.FileEmit(dst.Emit(), count, XedPaths.DisasmFieldsPath(project, src.Path));
+        dst.AppendLine("Operands");
+        ref readonly var ops = ref src.Ops;
+        for(var j=0; j<ops.Count; j++)
+        {
+            ref readonly var op = ref ops[j];
+            dst.AppendLineFormat(OperandFormat, j, nameof(op.OpName), op.OpName);
+            dst.AppendLineFormat(OperandFormat, j, nameof(op.OpWidth), op.OpWidth);
+            dst.AppendLineFormat(OperandFormat, j, nameof(op.Def.Value), op.Def.Value);
+        }
     }
 
-    public static ReadOnlySeq<XedDisasmRow> summaries(IProject project, string name)
+    public static ReadOnlySeq<XedDisasmRow> summaries(IDbArchive root, string name)
     {
         const byte FieldCount = XedDisasmRow.FieldCount;
-        var src = project.TablePath<XedDisasmRow>(name);
+        var src = root.Table<XedDisasmRow>(name);
         var lines = slice(src.ReadNumberedLines().View,1);
         var count = lines.Length;
         var buffer = alloc<XedDisasmRow>(count);
@@ -148,7 +138,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         return buffer;
     }
 
-    public void Consolidate(IProject project, ParallelQuery<XedDisasmDoc> src)
+    void Consolidate(ParallelQuery<XedDisasmDoc> src, IDbArchive root)
     {
         var summaries = bag<XedDisasmRow>();
         var details = bag<XedDisasmDetailBlock>();
@@ -158,17 +148,17 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         });
 
         exec(PllExec,
-            () => EmitOpClasses(project, src),
-            () => EmitConsolidated(project, details.ToArray()),
-            () => EmitConsolidated(project, summaries.ToArray()));
+            () => EmitOpClasses(root, src),
+            () => EmitConsolidated(root, details.ToArray()),
+            () => EmitConsolidated(root, summaries.ToArray()));
     }
 
-    void EmitOpClasses(IProject project, ParallelQuery<XedDisasmDoc> src)
+    void EmitOpClasses(IDbArchive project, ParallelQuery<XedDisasmDoc> src)
     {
         Channel.TableEmit(opclasses(src).View, XedPaths.DisasmTargets(project).Table<InstOpClass>());
     }
 
-    void EmitConsolidated(IProject project, Index<XedDisasmDetailBlock> src)
+    void EmitConsolidated(IDbArchive project, Index<XedDisasmDetailBlock> src)
     {
         var dst = XedPaths.DisasmTargets(project).Table<XedDisasmDetailRow>();
         var buffer = text.buffer();
@@ -179,73 +169,22 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         Channel.EmittedFile(emitting, src.Count);
     }
 
-    void EmitConsolidated(IProject project, Index<XedDisasmRow> src)
+    void EmitConsolidated(IDbArchive project, Index<XedDisasmRow> src)
         => Channel.TableEmit(resequence(src), XedPaths.DisasmTargets(project).Table<XedDisasmRow>());
-
 
     public const string RenderCol2 = XedFieldRender.Columns;
 
-    public readonly struct FieldEmitter
+    public void EmitChecks(XedDisasmDoc src, IDbArchive dst)
     {
-        readonly HashSet<FieldKind> Exclusions;
-
-        readonly XedFieldRender Render;
-
-        public FieldEmitter()
-        {
-            Exclusions = hashset<FieldKind>(K.TZCNT,K.LZCNT,K.MAX_BYTES);
-            Render = XedFields.render();
-        }
-
-        public uint EmitFields(XedDisasmDetail src, ITextEmitter dst)
-        {
-            var fields = XedDisasm.fields();
-            ref readonly var data = ref src.DataFile;
-            dst.AppendLineFormat(RenderCol2, "DataSource", src.Source.ToUri().Format());
-            var counter = 0u;
-            for(var i=0u; i<data.LineCount; i++)
-            {
-                ref readonly var block = ref src[i];
-                XedDisasm.fields(block, ref fields);
-
-                dst.AppendLine(RP.PageBreak240);
-                dst.AppendLine(block.Lines.Format());
-                dst.AppendLine(RP.PageBreak100);
-
-                XedRender.describe(fields, dst);
-                dst.AppendLine(RP.PageBreak100);
-
-                var kinds = fields.Selected;
-                for(var k=0; k<kinds.Length; k++)
-                {
-                    ref readonly var kind = ref skip(kinds,k);
-                    if(Exclusions.Contains(kind))
-                        continue;
-
-                    dst.AppendLineFormat(RenderCol2, kind, Render[kind](fields.Fields[kind]));
-                    counter++;
-                }
-
-                XedRender.render(block.Ops.Map(o => o.Spec), dst);
-                if(i!=data.LineCount -1)
-                    dst.AppendLine();
-            }
-
-            return counter;
-        }
-    }
-
-    public void EmitChecks(IProject project, XedDisasmDoc src)
-    {
-        const string RenderPattern = "{0,-24} | {1}";
+        const string LabeledValue = "{0,-24} | {1}";
         var doc = src.Detail;
         ref readonly var file = ref doc.DataFile;
         var buffer = text.buffer();
         var count = doc.Count;
-        var outpath = XedPaths.DisasmChecksPath(project, file.Source);
-        using var dst = outpath.AsciWriter();
+        var outpath = XedPaths.DisasmChecksPath(dst, file.Source);
+        using var writer = outpath.AsciWriter();
         var emitting = Channel.EmittingFile(outpath);
-        dst.AppendLineFormat(RenderCol2, "DataSource", doc.Source.ToUri().Format());
+        writer.AppendLineFormat(RenderCol2, "DataSource", doc.Source.ToUri().Format());
 
         var counter = 0;
         for(var j=0; j<count; j++)
@@ -260,141 +199,128 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             ref readonly var lines = ref block.Block;
             ref readonly var asmhex = ref summary.Encoded;
             ref readonly var ip = ref summary.IP;
-            var cells = update(lines, ref state);
+            update(lines, ref state);
 
-            dst.WriteLine(RP.PageBreak240);
+            writer.WriteLine(RP.PageBreak240);
             for(var i=0; i<lines.Lines.Count; i++)
-                dst.AppendLineFormat("# {0}", lines.Lines[i].Content);
-            dst.WriteLine(RP.PageBreak80);
+                writer.AppendLineFormat("# {0}", text.despace(lines.Lines[i].Content));
+            
+            writer.WriteLine(RP.PageBreak80);
 
-            dst.AppendLineFormat(RenderPattern, nameof(detail.Instruction), detail.Instruction);
-            dst.AppendLineFormat(RenderPattern, nameof(summary.InstructionId), summary.InstructionId);
-            dst.AppendLineFormat(RenderPattern, nameof(detail.Form), detail.Form);
-            dst.AppendLineFormat(RenderPattern, nameof(summary.IP), summary.IP);
-            dst.AppendLineFormat(RenderPattern, nameof(summary.Asm), summary.Asm);
-            dst.AppendLineFormat(RenderPattern, nameof(summary.Encoded), summary.Encoded);
-            dst.AppendLineFormat(RenderPattern, "OcMap", AsmOpCodes.kind(XedOps.ocindex(state)));
-
-            var encoding  = XedCode.encoding(state, asmhex);
-            dst.AppendLineFormat(RenderPattern, nameof(encoding.OpCode), encoding.OpCode);
+            writer.AppendLineFormat(LabeledValue, nameof(detail.InstructionId), detail.InstructionId);
+            writer.AppendLineFormat(LabeledValue, nameof(detail.Instruction), detail.Instruction);
+            writer.AppendLineFormat(LabeledValue, nameof(detail.Form), detail.Form);
+            writer.AppendLineFormat(LabeledValue, nameof(detail.IP), detail.IP);
+            writer.AppendLineFormat(LabeledValue, nameof(detail.Asm), detail.Asm);
 
             if(state.OSZ)
             {
                 Require.invariant(state.PREFIX66);
-                dst.AppendLineFormat(RenderPattern, nameof(state.OSZ), "0x66");
+                writer.AppendLineFormat(LabeledValue, nameof(state.OSZ), "0x66");
             }
 
             if(state.ASZ)
-                dst.AppendLineFormat(RenderPattern, nameof(state.ASZ), "0x67");
+                writer.AppendLineFormat(LabeledValue, nameof(state.ASZ), "0x67");
 
             if(state.DF64)
-                dst.AppendLineFormat(RenderPattern, nameof(state.DF64), "64");
+                writer.AppendLineFormat(LabeledValue, nameof(state.DF64), "64");
 
             if(state.DF32)
-                dst.AppendLineFormat(RenderPattern, nameof(state.DF32), "32");
+                writer.AppendLineFormat(LabeledValue, nameof(state.DF32), "32");
 
-            if(detail.PSZ != 0)
-                dst.AppendLineFormat(RenderPattern, nameof(detail.PSZ), detail.PSZ);
 
             if(state.NSEG_PREFIXES != 0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.NSEG_PREFIXES), state.NSEG_PREFIXES);
+                writer.AppendLineFormat(LabeledValue, nameof(state.NSEG_PREFIXES), state.NSEG_PREFIXES);
 
             if(state.HINT != 0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.HINT), XedRender.format(XedOps.hint(state)));
+                writer.AppendLineFormat(LabeledValue, nameof(state.HINT), XedRender.format(Xed.hint(state)));
 
             if(state.REP != 0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.REP), XedRender.format(XedOps.rep(state)));
+                writer.AppendLineFormat(LabeledValue, nameof(state.REP), XedRender.format(Xed.rep(state)));
 
             if(state.LOCK)
-                dst.AppendLineFormat(RenderPattern, nameof(state.LOCK), state.LOCK);
+                writer.AppendLineFormat(LabeledValue, nameof(state.LOCK), state.LOCK);
 
             if(state.BRDISP_WIDTH != 0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.BRDISP_WIDTH), state.BRDISP_WIDTH);
+                writer.AppendLineFormat(LabeledValue, nameof(state.BRDISP_WIDTH), state.BRDISP_WIDTH);
 
-            var ocbyte = XedOps.ocbyte(state);
-            dst.AppendLineFormat(RenderPattern, nameof(state.EASZ), XedRender.format(XedOps.easz(state)));
-            dst.AppendLineFormat(RenderPattern, nameof(state.EOSZ), XedRender.format(XedOps.eosz(state)));
-            dst.AppendLineFormat(RenderPattern, nameof(state.MODE), MachineModes.format(XedOps.mode(state)));
-            dst.AppendLineFormat(RenderPattern, "OpCode", string.Format("{0} [{1}]", XedRender.format(ocbyte), BitRender.format8x4(ocbyte)));
+            writer.AppendLineFormat(LabeledValue, nameof(state.EASZ), XedRender.format(Xed.easz(state)));
+            writer.AppendLineFormat(LabeledValue, nameof(state.EOSZ), XedRender.format(Xed.eosz(state)));
+            writer.AppendLineFormat(LabeledValue, nameof(state.MODE), AsmRender.format(Xed.mode(state)));
+            writer.AppendLineFormat(LabeledValue, "OcMap", AsmOpCodes.kind(Xed.ocindex(state)));
+
+            if(detail.PrefixSize != 0)
+                writer.AppendLineFormat(LabeledValue, nameof(detail.PrefixSize), detail.PrefixSize);
+            writer.AppendLineFormat(LabeledValue, nameof(detail.Offsets), detail.Offsets);
+            writer.AppendLineFormat(LabeledValue, nameof(detail.Encoded), detail.Encoded);
+
+            var ocbyte = Xed.ocbyte(state);
+            var encoding  = Xed.encoding(state, asmhex);
+
+            if(detail.PrefixSize != 0)
+                writer.AppendLineFormat(LabeledValue, nameof(detail.PrefixBytes), slice(detail.PrefixBytes.Bytes,0, detail.PrefixSize).FormatHex());
+
+            writer.AppendLineFormat(LabeledValue, "OpCode", string.Format("{0} [{1}]", XedRender.format(ocbyte), BitRender.format8x4(ocbyte)));
 
             if(state.SRM != 0)
-            {
-                var srmHex = XedRender.format((Hex8)state.SRM);
-                var srmBits = BitRender.format8x4(state.SRM);
-                dst.AppendLineFormat(RenderPattern, nameof(state.SRM), string.Format("{0} [{1}]", srmHex, srmBits));
-            }
+                writer.AppendLineFormat(LabeledValue, nameof(state.SRM), string.Format("{0} [{1}]", XedRender.format((Hex8)state.SRM), BitRender.format8x4(state.SRM)));
 
             if(state.HAS_MODRM)
             {
-                var modrm = XedOps.modrm(state);
-                dst.AppendLineFormat(RenderPattern, "ModRm", string.Format("{0} [{1}]", modrm.Format(), modrm.Bitstring()));
+                var modrm = Xed.modrm(state);
+                writer.AppendLineFormat(LabeledValue, "ModRm", string.Format("{0} [{1}]", modrm.Format(), modrm.Bitstring()));
             }
 
             if(state.HAS_SIB)
-            {
-                var sib = XedOps.sib(state);
-                dst.AppendLineFormat(RenderPattern, "Sib", string.Format("{0} [{1}]",  sib.Format(), sib.Bitstring()));
-            }
-
-            if(state.FIRST_F2F3 != 0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.FIRST_F2F3), state.FIRST_F2F3);
-
-            if(state.ILD_F2 != 0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.ILD_F2), state.ILD_F2);
-
-            if(state.ILD_F3 != 0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.ILD_F3), state.ILD_F3);
-
-            if(state.LAST_F2F3!= 0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.LAST_F2F3), state.LAST_F2F3);
+                writer.AppendLineFormat(LabeledValue, "Sib", string.Format("{0} [{1}]",  Xed.sib(state).Format(), Xed.sib(state).Bitstring()));
 
             if(state.REX)
             {
-                var rex = XedOps.rex(state);
+                var rex = Xed.rex(state);
                 Require.invariant(state.NREXES != 0);
-                dst.AppendLineFormat(RenderPattern, "Rex", string.Format("{0} [{1}]", rex, rex.ToBitString()));
-                dst.AppendLineFormat(RenderPattern, "RexBits", string.Format("[0100 | W:{0} | R:{1} | X:{2} | B:{3}]", state.REXW, state.REXR, state.REXX, state.REXB));
+                writer.AppendLineFormat(LabeledValue, "Rex", string.Format("{0} [{1}]", rex, rex.ToBitString()));
+                writer.AppendLineFormat(LabeledValue, "RexBits", string.Format("[0100 | W:{0} | R:{1} | X:{2} | B:{3}]", state.REXW, state.REXR, state.REXX, state.REXB));
             }
 
             if(encoding.Disp != 0)
             {
-                dst.AppendLineFormat(RenderPattern, nameof(state.DISP_WIDTH), state.DISP_WIDTH);
-                dst.AppendLineFormat(RenderPattern, nameof(encoding.Disp), encoding.Disp);
+                writer.AppendLineFormat(LabeledValue, nameof(state.DISP_WIDTH), state.DISP_WIDTH);
+                writer.AppendLineFormat(LabeledValue, nameof(encoding.Disp), encoding.Disp);
             }
 
             if(state.MEM0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.MEM0), state.MEM0);
+                writer.AppendLineFormat(LabeledValue, nameof(state.MEM0), state.MEM0);
 
             if(state.MEM1)
-                dst.AppendLineFormat(RenderPattern, nameof(state.MEM1), state.MEM1);
+                writer.AppendLineFormat(LabeledValue, nameof(state.MEM1), state.MEM1);
 
             if(state.NEED_MEMDISP !=0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.NEED_MEMDISP), state.NEED_MEMDISP);
+                writer.AppendLineFormat(LabeledValue, nameof(state.NEED_MEMDISP), state.NEED_MEMDISP);
 
             if(state.UBIT)
-                dst.AppendLineFormat(RenderPattern, nameof(state.UBIT), state.UBIT);
+                writer.AppendLineFormat(LabeledValue, nameof(state.UBIT), state.UBIT);
 
             if(state.IMM0)
             {
-                dst.AppendLineFormat(RenderPattern, nameof(state.IMM_WIDTH), state.IMM_WIDTH);
-                dst.AppendLineFormat(RenderPattern, nameof(encoding.Imm), encoding.Imm);
+                writer.AppendLineFormat(LabeledValue, nameof(state.IMM_WIDTH), state.IMM_WIDTH);
+                writer.AppendLineFormat(LabeledValue, nameof(encoding.Imm), encoding.Imm);
             }
 
             if(state.IMM1)
-                dst.AppendLineFormat(RenderPattern, nameof(encoding.Imm1), encoding.Imm1);
+                writer.AppendLineFormat(LabeledValue, nameof(encoding.Imm1), encoding.Imm1);
 
             if(state.SAE)
-                dst.AppendLineFormat(RenderPattern, nameof(state.SAE), state.SAE);
+                writer.AppendLineFormat(LabeledValue, nameof(state.SAE), state.SAE);
 
             if(state.ESRC != 0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.ESRC), XedRender.format((Hex8)state.ESRC));
+                writer.AppendLineFormat(LabeledValue, nameof(state.ESRC), XedRender.format((Hex8)state.ESRC));
 
             if(state.ROUNDC != 0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.ROUNDC), XedRender.format(XedOps.rounding(state)));
+                writer.AppendLineFormat(LabeledValue, nameof(state.ROUNDC), XedRender.format(Xed.rounding(state)));
 
             var rc = (RoundingKind)state.ROUNDC;
             if(rc == 0 && state.LLRC != 0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.LLRC), XedRender.format((Hex8)state.LLRC));
+                writer.AppendLineFormat(LabeledValue, nameof(state.LLRC), XedRender.format((Hex8)state.LLRC));
 
             if(rc != 0)
             {
@@ -421,41 +347,40 @@ public partial class XedDisasm : WfSvc<XedDisasm>
                 }
             }
 
-            var vc = XedOps.vexclass(state);
+            var vc = Xed.vexclass(state);
             if(vc != 0)
             {
-                var vk = XedOps.vexkind(state);
+                var vk = Xed.vexkind(state);
                 var vex5 = BitNumbers.join((uint3)state.VEXDEST210, state.VEXDEST4, state.VEXDEST3);
                 var vexBits = string.Format("[{0} {1} {2}]", state.VEXDEST4, state.VEXDEST3, (uint3)state.VEXDEST210);
                 var vexHex = XedRender.format((Hex8)(byte)vex5);
-                dst.AppendLineFormat(RenderPattern, nameof(state.VEXVALID), XedRender.format(vc));
-                dst.AppendLineFormat(RenderPattern, nameof(state.VEX_PREFIX), vk == 0 ? "VNP" : XedRender.format(vk));
+                writer.AppendLineFormat(LabeledValue, nameof(state.VEXVALID), XedRender.format(vc));
+                writer.AppendLineFormat(LabeledValue, nameof(state.VEX_PREFIX), vk == 0 ? "VNP" : XedRender.format(vk));
                 if(vc == XedVexClass.VV1)
-                    dst.AppendLineFormat(RenderPattern, "Vex", detail.Vex);
+                    writer.AppendLineFormat(LabeledValue, "Vex", detail.Vex);
                 else if(vc == XedVexClass.EVV)
-                    dst.AppendLineFormat(RenderPattern, "Evex", detail.Evex);
-                dst.AppendLineFormat(RenderPattern, "VEXDEST", string.Format("{0} {1}", vexHex, vexBits));
+                    writer.AppendLineFormat(LabeledValue, "Evex", detail.Evex);
+                writer.AppendLineFormat(LabeledValue, "VEXDEST", string.Format("{0} {1}", vexHex, vexBits));
+                writer.AppendLineFormat(LabeledValue, "VL", XedRender.format(Xed.vl(state)));
             }
 
             if(state.ELEMENT_SIZE != 0)
-                dst.AppendLineFormat(RenderPattern, "VexSize", string.Format("{0}x{1}", XedRender.format(XedOps.vl(state)), XedRender.format(state.ELEMENT_SIZE)));
+                writer.AppendLineFormat(LabeledValue, nameof(state.ELEMENT_SIZE), XedRender.format(state.ELEMENT_SIZE));
 
             if(state.NELEM != 0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.NELEM), state.NELEM);
+                writer.AppendLineFormat(LabeledValue, nameof(state.NELEM), state.NELEM);
 
             if(state.BCAST != 0)
-                dst.AppendLineFormat(RenderPattern, nameof(state.BCAST), XedOps.broadcast(state));
+                writer.AppendLineFormat(LabeledValue, nameof(state.BCAST), Xed.broadcast(state));
 
             if(state.REXRR)
-                dst.AppendLineFormat(RenderPattern, nameof(state.REXRR), state.REXRR);
+                writer.AppendLineFormat(LabeledValue, nameof(state.REXRR), state.REXRR);
 
             if(state.OUTREG != 0)
-            {
-                dst.AppendLineFormat(RenderPattern, nameof(state.OUTREG), XedRegMap.map(state.OUTREG));
-            }
+                writer.AppendLineFormat(LabeledValue, nameof(state.OUTREG), Xed.regop(state.OUTREG));
 
-            XedDisasmRender.render(ops, buffer);
-            dst.WriteLine(buffer.Emit());
+            operands(detail, buffer);
+            writer.WriteLine(buffer.Emit());
         }
 
         Channel.EmittedFile(emitting,counter);
