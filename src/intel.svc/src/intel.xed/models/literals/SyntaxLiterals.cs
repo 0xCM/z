@@ -3,22 +3,21 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedRules
 {
-    partial class XedRules
+    [LiteralProvider]
+    internal readonly struct SyntaxLiterals
     {
-        [LiteralProvider]
-        internal readonly struct SyntaxLiterals
-        {
-            public const string SeqDeclSyntax = "SEQUENCE";
+        public const string SeqDeclSyntax = "SEQUENCE";
 
-            public const string TableDeclSyntax = "()::";
+        public const string TableDeclSyntax = "()::";
 
-            public const string CallSyntax = "()";
+        public const string CallSyntax = "()";
 
-            public const string EncStep = "->";
+        public const string EncStep = "->";
 
-            public const string DecStep = "|";
-        }
+        public const string DecStep = "|";
     }
 }

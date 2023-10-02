@@ -30,7 +30,7 @@ public class XedRuntime : WfSvc<XedRuntime>
 
     public XedOps XedOps => Wf.XedOps();
 
-    public XedFlows XedImport => Wf.XedFlows();
+    public XedFlows XedFlows => Wf.XedFlows();
 
     readonly Alloc _Alloc;
 
@@ -42,16 +42,16 @@ public class XedRuntime : WfSvc<XedRuntime>
         Disposing += HandleDispose;
     }
 
-    static XedRuleTables CalcRuleTables()
-    {
-        var tables = new XedRuleTables();
-        var dst = new XedRuleBuffers();
-        exec(PllExec,
-            () => dst.Target.TryAdd(RuleTableKind.ENC, XedRuleSpecs.criteria(RuleTableKind.ENC)),
-            () => dst.Target.TryAdd(RuleTableKind.DEC, XedRuleSpecs.criteria(RuleTableKind.DEC))
-            );
-        return XedRules.tables(dst);
-    }
+    // static XedRuleTables CalcRuleTables()
+    // {
+    //     var tables = new XedRuleTables();
+    //     var dst = new XedRuleBuffers();
+    //     exec(PllExec,
+    //         () => dst.Target.TryAdd(RuleTableKind.ENC, XedRuleSpecs.criteria(RuleTableKind.ENC)),
+    //         () => dst.Target.TryAdd(RuleTableKind.DEC, XedRuleSpecs.criteria(RuleTableKind.DEC))
+    //         );
+    //     return XedRules.tables(dst);
+    // }
 
     void CalcTypeTables()
     {
@@ -61,26 +61,25 @@ public class XedRuntime : WfSvc<XedRuntime>
 
     void RunCalcs()
     {
-        var defs = XedInstDefParser.parse(XedDb.DocSource(XedDocKind.EncInstDef));
-        var forms = XedImport.CalcFormImports(XedDb.DocSource(XedDocKind.FormData));
-        var chips = XedImport.CalcChipMap(XedDb.DocSource(XedDocKind.ChipMap));
-        var cpu = XedImport.CalcCpuIdDataset(XedDb.DocSource(XedDocKind.CpuId));
-        var brodcasts = XedImport.CalcBroadcastDefs();
+        var defs = XedInstDefParser.parse(Paths.DocSource(XedDocKind.EncInstDef));
+        var forms = XedFlows.CalcFormImports(Paths.DocSource(XedDocKind.FormData));
+        var chips = XedFlows.CalcChipMap(Paths.DocSource(XedDocKind.ChipMap));
+        var cpu = XedFlows.CalcCpuIdDataset(Paths.DocSource(XedDocKind.CpuId));
+        var brodcasts = XedFlows.CalcBroadcastDefs();
 
         CalcTypeTables();
 
         Views.Store(I.FormImports, forms);
         Views.Store(I.ChipMap, chips);
 
-        var tables = XedRuleTables.Empty;
+        //var tables = XedRuleTables.Empty;
         var patterns = sys.empty<InstPattern>();
         exec(PllExec,
-            () => tables = CalcRuleTables(),
-            () => patterns = InstPattern.load(defs),
-            () => Views.Store(I.WidthLookup, XedOps.WidthLookup)
+            //() => tables = CalcRuleTables(),
+            () => patterns = InstPattern.load(defs)
             );
 
-        Views.Store(I.RuleTables, tables);
+        //Views.Store(I.RuleTables, tables);
         Views.Store(I.InstPattern, patterns);
 
         var opdetail = sys.empty<InstOpDetail>();
@@ -89,18 +88,18 @@ public class XedRuntime : WfSvc<XedRuntime>
         exec(PllExec,
             () => instoc = poc(patterns),
             () => instfields =  XedPatterns.fieldrows(patterns),
-            () => opdetail = XedOps.opdetails(patterns)
+            () => opdetail = Xed.opdetails(patterns)
             );
 
         Views.Store(I.OpCodes, instoc);
         Views.Store(I.InstFields, instfields);
         Views.Store(I.InstOpDetail, opdetail);
 
-        var cd = CellDatasets.Empty;
+        var cd = XedRuleCells.Empty;
         var opSpecs = sys.empty<InstOpSpec>();
         exec(PllExec,
-            () => opSpecs = XedOps.CalcSpecs(opdetail),
-            () => cd = XedRuleTables.datasets(tables)
+            () => opSpecs = XedOps.CalcSpecs(opdetail)
+            //() => cd = XedRuleTables.datasets(tables)
             );
         Views.Store(I.CellDatasets, cd);
         Views.Store(I.InstOpSpecs, opSpecs);
@@ -146,7 +145,7 @@ public class XedRuntime : WfSvc<XedRuntime>
         var patterns = Views.Patterns;
         Emit(XedFields.Defs.Positioned);
         exec(PllExec,
-            () => XedImport.Run(),
+            () => XedFlows.Run(),
             () => EmitRegmaps(),
             () => Rules.EmitCatalog(patterns, tables)
             );
@@ -162,7 +161,7 @@ public class XedRuntime : WfSvc<XedRuntime>
     void EmitInstPages(Index<InstPattern> src)
     {
         src.Sort();
-        var formatter = InstPageFormatter.create();
+        var formatter = XedInstPages.create();
         Paths.InstPages().Delete();
         iter(formatter.GroupFormats(src), x => Emit(x), PllExec);
     }

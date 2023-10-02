@@ -3,260 +3,259 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedRules
 {
-    partial class XedRules
+    public enum RuleMacroKind : byte
     {
-        public enum RuleMacroKind : byte
-        {
-            None = 0,
+        None = 0,
 
-            nothing,
+        nothing,
 
-            mod0,
+        mod0,
 
-            mod1,
+        mod1,
 
-            mod2,
+        mod2,
 
-            mod3,
+        mod3,
 
-            not64,
+        not64,
 
-            mode64,
+        mode64,
 
-            mode32,
+        mode32,
 
-            mode16,
+        mode16,
 
-            eanot16,
+        eanot16,
 
-            eamode16,
+        eamode16,
 
-            eamode32,
+        eamode32,
 
-            eamode64,
+        eamode64,
 
-            smode16,
+        smode16,
 
-            smode32,
+        smode32,
 
-            smode64,
+        smode64,
 
-            eosz8,
+        eosz8,
 
-            eosz16,
+        eosz16,
 
-            eosz32,
+        eosz32,
 
-            eosz64,
+        eosz64,
 
-            not_eosz16,
+        not_eosz16,
 
-            eosznot64,
+        eosznot64,
 
-            rex_reqd,
+        rex_reqd,
 
-            no_rex,
+        no_rex,
 
-            reset_rex,
+        reset_rex,
 
-            rexb_prefix,
+        rexb_prefix,
 
-            norexb_prefix,
+        norexb_prefix,
 
-            rexx_prefix,
+        rexx_prefix,
 
-            norexx_prefix,
+        norexx_prefix,
 
-            rexr_prefix,
+        rexr_prefix,
 
-            norexr_prefix,
+        norexr_prefix,
 
-            rexw_prefix,
+        rexw_prefix,
 
-            norexw_prefix,
+        norexw_prefix,
 
-            W0,
+        W0,
 
-            W1,
+        W1,
 
-            f2_prefix,
+        f2_prefix,
 
-            f3_prefix,
+        f3_prefix,
 
-            repne,
+        repne,
 
-            repe,
+        repe,
 
-            norep,
+        norep,
 
-            [Symbol("66_prefix")]
-            x66_prefix,
+        [Symbol("66_prefix")]
+        x66_prefix,
 
-            nof3_prefix,
+        nof3_prefix,
 
-            no66_prefix,
+        no66_prefix,
 
-            not_refining,
+        not_refining,
 
-            refining_f2,
+        refining_f2,
 
-            refining_f3,
+        refining_f3,
 
-            not_refining_f3,
+        not_refining_f3,
 
-            no_refining_prefix,
+        no_refining_prefix,
 
-            osz_refining_prefix,
+        osz_refining_prefix,
 
-            f2_refining_prefix,
+        f2_refining_prefix,
 
-            f3_refining_prefix,
+        f3_refining_prefix,
 
-            no67_prefix,
+        no67_prefix,
 
-            [Symbol("67_prefix")]
-            x67_prefix,
+        [Symbol("67_prefix")]
+        x67_prefix,
 
-            lock_prefix,
+        lock_prefix,
 
-            nolock_prefix,
+        nolock_prefix,
 
-            default_ds,
+        default_ds,
 
-            default_ss,
+        default_ss,
 
-            default_es,
+        default_es,
 
-            no_seg_prefix,
+        no_seg_prefix,
 
-            cs_prefix,
+        cs_prefix,
 
-            ds_prefix,
+        ds_prefix,
 
-            es_prefix,
+        es_prefix,
 
-            fs_prefix,
+        fs_prefix,
 
-            gs_prefix,
+        gs_prefix,
 
-            ss_prefix,
+        ss_prefix,
 
-            nrmw,
+        nrmw,
 
-            df64,
+        df64,
 
-            enc,
+        enc,
 
-            no_return,
+        no_return,
 
-            [Symbol("true")]
-            @true,
+        [Symbol("true")]
+        @true,
 
-            XMAP8,
+        XMAP8,
 
-            XMAP9,
+        XMAP9,
 
-            XMAPA,
+        XMAPA,
 
-            XOPV,
+        XOPV,
 
-            VL128,
+        VL128,
 
-            VL256,
+        VL256,
 
-            VV1,
+        VV1,
 
-            VV0,
+        VV0,
 
-            VMAP0,
+        VMAP0,
 
-            V0F,
+        V0F,
 
-            otherwise,
+        otherwise,
 
-            V0F38,
+        V0F38,
 
-            V0F3A,
+        V0F3A,
 
-            VNP,
+        VNP,
 
-            V66,
+        V66,
 
-            VF2,
+        VF2,
 
-            VF3,
+        VF3,
 
-            NOVSR,
+        NOVSR,
 
-            VL512,
+        VL512,
 
-            VLBAD,
+        VLBAD,
 
-            KVV,
+        KVV,
 
-            NOEVSR,
+        NOEVSR,
 
-            NO_SPARSE_EVSR,
+        NO_SPARSE_EVSR,
 
-            EVV,
+        EVV,
 
-            EVEXRR_ONE,
+        EVEXRR_ONE,
 
-            EMX_BROADCAST_1TO4_32,
+        EMX_BROADCAST_1TO4_32,
 
-            EMX_BROADCAST_1TO4_64,
+        EMX_BROADCAST_1TO4_64,
 
-            EMX_BROADCAST_1TO8_32,
+        EMX_BROADCAST_1TO8_32,
 
-            EMX_BROADCAST_2TO4_64,
+        EMX_BROADCAST_2TO4_64,
 
-            EMX_BROADCAST_1TO2_64,
+        EMX_BROADCAST_1TO2_64,
 
-            EMX_BROADCAST_1TO8_16,
+        EMX_BROADCAST_1TO8_16,
 
-            EMX_BROADCAST_1TO16_16,
+        EMX_BROADCAST_1TO16_16,
 
-            EMX_BROADCAST_1TO16_8,
+        EMX_BROADCAST_1TO16_8,
 
-            EMX_BROADCAST_1TO32_8,
+        EMX_BROADCAST_1TO32_8,
 
-            EMX_BROADCAST_1TO16_32,
+        EMX_BROADCAST_1TO16_32,
 
-            EMX_BROADCAST_4TO16_32,
+        EMX_BROADCAST_4TO16_32,
 
-            EMX_BROADCAST_1TO8_64,
+        EMX_BROADCAST_1TO8_64,
 
-            EMX_BROADCAST_4TO8_64,
+        EMX_BROADCAST_4TO8_64,
 
-            EMX_BROADCAST_2TO16_32,
+        EMX_BROADCAST_2TO16_32,
 
-            EMX_BROADCAST_2TO8_64,
+        EMX_BROADCAST_2TO8_64,
 
-            EMX_BROADCAST_8TO16_32,
+        EMX_BROADCAST_8TO16_32,
 
-            EMX_BROADCAST_1TO32_16,
+        EMX_BROADCAST_1TO32_16,
 
-            EMX_BROADCAST_1TO64_8,
+        EMX_BROADCAST_1TO64_8,
 
-            EMX_BROADCAST_4TO8_32,
+        EMX_BROADCAST_4TO8_32,
 
-            EMX_BROADCAST_2TO4_32,
+        EMX_BROADCAST_2TO4_32,
 
-            EMX_BROADCAST_2TO8_32,
+        EMX_BROADCAST_2TO8_32,
 
-            EMX_BROADCAST_1TO2_32,
+        EMX_BROADCAST_1TO2_32,
 
-            EMX_BROADCAST_1TO2_8,
+        EMX_BROADCAST_1TO2_8,
 
-            EMX_BROADCAST_1TO4_8,
+        EMX_BROADCAST_1TO4_8,
 
-            EMX_BROADCAST_1TO8_8,
+        EMX_BROADCAST_1TO8_8,
 
-            EMX_BROADCAST_1TO2_16,
+        EMX_BROADCAST_1TO2_16,
 
-            EMX_BROADCAST_1TO4_16,
-        }
+        EMX_BROADCAST_1TO4_16,
     }
 }

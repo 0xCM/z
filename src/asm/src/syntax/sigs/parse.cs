@@ -8,6 +8,32 @@ using static sys;
 
 partial class AsmSigs
 {
+    public static bool parse(string src, out AsmSigExpr dst)
+    {
+        var result = Outcome.Success;
+        var sig = text.trim(src);
+        var j = text.index(text.trim(sig), Chars.Space);
+        var mnemonic = AsmMnemonic.Empty;
+        dst = AsmSigExpr.Empty;
+        if(j>0)
+        {
+            mnemonic = text.left(sig,j);
+            var operands = text.right(sig,j);
+            if(text.contains(sig, Chars.Comma))
+                dst = expression(mnemonic, text.trim(text.split(operands, Chars.Comma)));
+            else
+                dst = expression(mnemonic, operands);
+        }
+        else
+        {
+            mnemonic = sig;
+            dst = expression(mnemonic);
+        }
+
+        return dst.IsNonEmpty;
+    }
+
+
     static AsmMnemonic partition(ReadOnlySpan<char> src, out Index<AsmSigOpExpr> dst)
     {
         var input = text.trim(text.despace(src));

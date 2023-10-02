@@ -6,6 +6,7 @@
 namespace Z0;
 
 using Asm;
+
 using static sys;
 using static XedModels;
 
@@ -47,19 +48,18 @@ partial class XedRules
             () => Channel.TableEmit(AsmOpCodeKinds.Instance.Records, XedPaths.Table<OpCodeMapInfo>()),
             () => Emit(mapi(RuleMacros.matches().Values.ToArray().Sort(), (i,m) => m.WithSeq((uint)i))),
             () => Emit(CalcMacroDefs().View),
-            () => Emit(XedFields.Defs.Positioned),
             () => Channel.TableEmit(XedRuntime.Views.InstOpSpecs, XedPaths.InstTable<InstOpSpec>()),
             EmitRuleDeps
         );
 
-        Emit(patterns, rules);
+        Emit(patterns);
     }
 
-    public void Emit(Index<InstPattern> patterns, XedRuleTables rules)
+    public void Emit(Index<InstPattern> patterns)
     {
         exec(PllExec,
             () => EmitPatternData(patterns),
-            () => EmitRuleData(rules)
+            () => EmitRuleData()
         );
     }
 
@@ -93,12 +93,12 @@ partial class XedRules
         return src;
     }
 
-    public void EmitRuleData(XedRuleTables src)
+    public void EmitRuleData()
     {
         exec(PllExec,
             () => Emit(XedRuntime.Views.CellDatasets),
             () => EmitRuleExpr(XedRuntime.Views.CellTables),
-            () => Emit(XedRuleTables.records(XedRuntime.Views.CellTables)),
+            //() => Emit(XedRuleTables.records(XedRuntime.Views.CellTables)),
             () => EmitTableSpecs(XedRuntime.Views.RuleTables),
             EmitSeq,
             () => EmitRulePages(XedRuntime.Views.RuleTables)
@@ -151,7 +151,7 @@ partial class XedRules
         );
     }
 
-    public void Emit(CellDatasets src)
+    public void Emit(XedRuleCells src)
     {
         exec(PllExec,
             () => EmitRaw(src)
@@ -159,7 +159,7 @@ partial class XedRules
             );
     }
 
-    void EmitRaw(CellDatasets src)
+    void EmitRaw(XedRuleCells src)
     {
         var dst = text.emitter();
         var count = CellRender.Tables.render(XedRuntime.Views.CellTables.Cells(), dst);

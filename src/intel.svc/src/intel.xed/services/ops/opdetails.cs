@@ -6,10 +6,9 @@
 namespace Z0;
 
 using static sys;
-using static XedRules;
 using static XedModels;
 
-partial class XedOps
+partial class Xed
 {
     public static Index<InstOpDetail> opdetails(Index<InstPattern> src)
     {

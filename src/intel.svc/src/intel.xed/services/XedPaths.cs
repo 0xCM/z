@@ -13,8 +13,6 @@ namespace Z0
     {
         public static XedPaths Service => Instance;
 
-        static AppDb AppDb => AppDb.Service;
-
         public IDbArchive XedKit()
             => IntelPaths.service().XedKit();
 
@@ -56,11 +54,11 @@ namespace Z0
 
         public FilePath Table<T>()
             where T : struct
-                => Targets().Table<T>();
+                => Imports().Table<T>();
 
         public FilePath Table<T>(string suffix)
             where T : struct
-                => Targets().Path(Suffixed<T>(suffix));
+                => Imports().Path(Suffixed<T>(suffix));
 
         public FilePath RuleTable<T>()
             where T : struct
@@ -68,6 +66,18 @@ namespace Z0
 
         public FilePath FormCatalogPath()
             => Imports().Path(FS.file(Tables.identify<FormImport>().Format(), FS.Csv));
+
+        public FilePath RuleSource(RuleTableKind kind)
+        {
+            var tk = kind switch
+            {
+                RuleTableKind.ENC => XedDocKind.EncRuleTable,
+                RuleTableKind.DEC => XedDocKind.DecRuleTable,
+                _ => XedDocKind.None
+            };
+
+            return DocSource(tk);
+        }
 
         static FileName Suffixed<T>(string suffix)
             where T : struct
@@ -174,6 +184,25 @@ namespace Z0
 
         public FilePath DocTarget(string name, FileKind kind)
             => DocTargets().Path(FS.file(string.Format("xed.docs.{0}", name), kind.Ext()));
+
+        public FilePath DocSource(XedDocKind kind)
+            => Sources().Path(kind switch{
+                XedDocKind.RuleBlocks => FS.file("xed-dump", FileKind.Txt),
+                XedDocKind.EncInstDef => FS.file("all-enc-instructions", FS.Txt),
+                XedDocKind.DecInstDef => FS.file("all-dec-instructions", FS.Txt),
+                XedDocKind.EncRuleTable => FS.file("all-enc-patterns", FS.Txt),
+                XedDocKind.DecRuleTable => FS.file("all-dec-patterns", FS.Txt),
+                XedDocKind.EncDecRuleTable => FS.file("all-enc-dec-patterns", FS.Txt),
+                XedDocKind.Widths => FS.file("all-widths", FS.Txt),
+                XedDocKind.PointerWidths => FS.file("all-pointer-names", FS.Txt),
+                XedDocKind.Fields => FS.file("all-fields", FS.Txt),
+                XedDocKind.ChipMap => FS.file("cdata", FS.Txt),
+                XedDocKind.FormData => FS.file("idata", FS.Txt),
+                XedDocKind.CpuId => FS.file("all-cpuid", FileKind.Txt),
+                XedDocKind.RuleSeq => FS.file("all-enc-patterns", FS.Txt),
+                _ => FileName.Empty
+            });
+
 
         static FileName EncInstDef = FS.file("all-enc-instructions", FS.Txt);
 

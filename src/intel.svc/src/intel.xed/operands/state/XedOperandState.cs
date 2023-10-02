@@ -6,9 +6,11 @@
 namespace Z0;
 
 using Asm;
+
 using static XedModels;
 using static MachineModes;
 using static XedRules;
+
 using K = XedRules.FieldKind;
 using M = XedModels;
 
@@ -16,6 +18,9 @@ using M = XedModels;
 public record struct XedOperandState
 {
     public const string TableId = "xed.operands.state";
+
+    public static Type[] EffectiveTypes()
+        => typeof(XedOperandState).InstanceFields().Tagged<RuleFieldAttribute>().Select(x => x.Tag<RuleFieldAttribute>().Value.EffectiveType);
 
     [RuleField(K.DF32, 1, typeof(bit))]
     public bit DF32;
@@ -112,7 +117,6 @@ public record struct XedOperandState
 
     [RuleField(K.NEED_SIB, 1, typeof(bit))]
     public bit NEED_SIB;
-
 
     [RuleField(K.ZEROING, 1, typeof(bit), "Specifies whether zero-masking is enabled, if applicable")]
     public bit ZEROING;

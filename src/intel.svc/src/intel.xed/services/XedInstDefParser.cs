@@ -53,7 +53,7 @@ public struct XedInstDefParser
                                         forms.TryAdd(seq, form);
                                 break;
                                 case P.Attributes:
-                                    attribs = XedPatterns.attributes(text.despace(value));
+                                    XedParsers.parse(text.despace(value), out attribs);
                                 break;
                                 case P.Category:
                                     if(XedParsers.parse(text.despace(value), out InstCategory _category))
@@ -166,7 +166,7 @@ public struct XedInstDefParser
         return defs;
     }
 
-    static readonly Index<InstPartKind,string> PartKindNames = new string[]{ICLASS,IFORM,ATTRIBUTES,CATEGORY,EXTENSION,FLAGS,PATTERN,OPERANDS,ISA_SET,COMMENT};
+    static readonly Index<string> PartKindNames = new string[10]{ICLASS,IFORM,ATTRIBUTES,CATEGORY,EXTENSION,FLAGS,PATTERN,OPERANDS,ISA_SET,COMMENT};
 
     static bool parse(string src, out InstPartKind kind)
     {
@@ -174,10 +174,9 @@ public struct XedInstDefParser
         kind = default;
         for(var i=0; i<PartKindNames.Count; i++)
         {
-            var p = (InstPartKind)i;
-            if(PartKindNames[p] == src)
+            if(PartKindNames[i] == src)
             {
-                kind = p;
+                kind = (InstPartKind)i;
                 result = true;
                 break;
             }

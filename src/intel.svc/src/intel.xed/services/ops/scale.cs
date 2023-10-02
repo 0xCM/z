@@ -3,21 +3,20 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    using static XedModels;
+namespace Z0;
 
-    partial class XedOps
+using static XedModels;
+
+partial class Xed
+{
+    [MethodImpl(Inline), Op]
+    public static bool scale(in PatternOp src, out MemoryScale dst)
     {
-        [MethodImpl(Inline), Op]
-        public static bool scale(in PatternOp src, out MemoryScale dst)
-        {
-            var result = XedPatterns.first(src.Attribs, OpAttribKind.Scale, out var attrib);
-            if(result)
-                dst = attrib.ToScale();
-            else
-                dst = default;
-            return result;
-        }
+        var result = XedPatterns.first(src.Attribs, OpAttribKind.Scale, out var attrib);
+        if(result)
+            dst = attrib.ToScale();
+        else
+            dst = default;
+        return result;
     }
 }

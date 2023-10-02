@@ -38,7 +38,7 @@ namespace Z0
                 return Format(src);
         }
 
-        public string Format(E src, EnumFormatMode mode)
+        public string Format(E src, M mode)
         {
             if(mode.Test(M.EmptyZero)  && bw64(src) == 0)
                 return EmptyString;

@@ -7,7 +7,7 @@ namespace Z0;
 
 using static XedModels;
 
-partial class XedOps
+partial class Xed
 {
     [MethodImpl(Inline)]
     public static bool reglit(in PatternOp src, out Register dst)

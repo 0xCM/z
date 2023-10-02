@@ -1,5 +1,7 @@
 #pragma once
 
+#define not_inline __declspec(noinline)
+
 enum class R8 : unsigned char  {al, cl,   dl,  bl,  bpl, spl, dil, sil, r8b, r9b, r10b, r11b, r12b, r13b, r14b, r15b, ah, ch, dh, bh, };
 
 enum class R8L : unsigned char {al,  cl,  dl,  bl,  spl, bpl, sil, dil, r8b, r9b, r10b, r11b, r12b, r13b, r14b, r15b};
@@ -24,6 +26,49 @@ typedef __int128 i128;
 
 typedef float f32;
 typedef double f64;
+
+// void f(int8_t a)
+typedef void (*effect_8i)(i8 a);
+
+// void f(u8 a)
+typedef void (*effect_8u)(u8 a);
+
+// void f(int16_t a)
+typedef void (*effect_16i)(i16 a);
+
+// void f(u16 a)
+typedef void (*effect_16u)(u16 a);
+
+// void f(int32_t a)
+typedef void (*effect_32i)(i32 a);
+
+// void f(u32 a)
+typedef void (*effect_32u)(u32 a);
+
+// void f(int32_t a)
+typedef void (*effect_64i)(i64 a);
+
+// void f(u32 a)
+typedef void (*effect_64u)(u64 a);
+
+// u8 f(u8 a)
+typedef u8 (*func_8u_8u)(u8 a);
+
+// u16 f(u16 a)
+typedef u16 (*func_16u_16u)(u16 a);
+
+// bool f(u8 a, u8 b)
+typedef bool (*cmp_pred_8u)(u8 a, u8 b);
+
+// bool f(int8_t a, int8_t b)
+typedef bool (*cmp_pred_8i)(i8 a, i8 b);
+
+// bool f(u16 a, u16 b)
+typedef bool (*cmp_pred_16u)(u16 a, u16 b);
+
+// bool f(int16_t a, int16_t b)
+typedef bool (*cmp_pred_16i)(i16 a, i16 b);
+
 
 typedef union __declspec(align(16)) v128 {
     i8 i8[16];

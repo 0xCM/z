@@ -116,7 +116,7 @@ public partial class Xed : WfSvc<Xed>
         };
 
 
-        [Op]
+    [Op]
     public static bool convert(XedFlagEffect src, out FlagEffect dst)
     {
         var index = z8i;
@@ -241,7 +241,7 @@ public partial class Xed : WfSvc<Xed>
         
     public static Index<RuleTableBlock> blocks(RuleTableKind kind)
     {
-        var src = XedDb.RuleSource(kind);
+        var src = XedPaths.Service.RuleSource(kind);
         var lines = src.ReadNumberedLines();
         var offsets = list<LineNumber>();
         var names = list<string>();

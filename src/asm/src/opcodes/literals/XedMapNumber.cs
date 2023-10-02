@@ -19,6 +19,12 @@ public enum XedMapNumber : byte
     [Symbol("3")]
     MAP3=3,
 
+    [Symbol("5")]
+    MAP5=5,
+
+    [Symbol("6")]
+    MAP6=6,
+
     [Symbol("8")]
     MAP8=8,
 

@@ -8,7 +8,7 @@ namespace Z0;
 using static XedModels;
 using static XedRender;
 
-partial class XedOps
+partial class Xed
 {
     public static string specifier(in OpSpec src)
     {

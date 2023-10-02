@@ -14,7 +14,6 @@ using static VexMapKind;
 using static EvexMapKind;
 using static Asm.LegacyMapKind;
 
-using V = XedVexClass;
 using I = AsmOpCodeIndex;
 using X = XopMapKind;
 using K = AsmOpCodeKind;
@@ -55,19 +54,19 @@ public partial class AsmOpCodes
                 switch(number)
                 {
                     case 0:
-                        kind = K.Base00;
+                        kind = Base00;
                     break;
                     case 1:
-                        kind = K.Base0F;
+                        kind = Base0F;
                     break;
                     case 2:
-                        kind = K.Base0F38;
+                        kind = Base0F38;
                     break;
                     case 3:
-                        kind = K.Base0F3A;
+                        kind = Base0F3A;
                     break;
                     case 4:
-                        kind = K.Amd3DNow;
+                        kind = Amd3DNow;
                     break;
                 }
             }
@@ -77,13 +76,13 @@ public partial class AsmOpCodes
                 switch(number)
                 {
                     case 1:
-                        kind = K.Xop8;
+                        kind = Xop8;
                     break;
                     case 2:
-                        kind = K.Xop9;
+                        kind = Xop9;
                     break;
                     case 3:
-                        kind = K.XopA;
+                        kind = XopA;
                     break;
                 }
             }
@@ -93,13 +92,13 @@ public partial class AsmOpCodes
                 switch(number)
                 {
                     case 1:
-                        kind = K.Vex0F;
+                        kind = Vex0F;
                     break;
                     case 2:
-                        kind = K.Vex0F38;
+                        kind = Vex0F38;
                     break;
                     case 3:
-                        kind = K.Vex0F3A;
+                        kind = Vex0F3A;
                     break;
                 }
             }
@@ -109,13 +108,13 @@ public partial class AsmOpCodes
                 switch(number)
                 {
                     case 1:
-                        kind = K.Evex0F;
+                        kind = Evex0F;
                     break;
                     case 2:
-                        kind = K.Evex0F38;
+                        kind = Evex0F38;
                     break;
                     case 3:
-                        kind = K.Evex0F3A;
+                        kind = Evex0F3A;
                     break;
                 }
             }
@@ -123,6 +122,7 @@ public partial class AsmOpCodes
         }
         return kind;
     }
+
     public static ReadOnlySeq<OpCodeMapInfo> info()
     {
         var counter = z8;
@@ -269,20 +269,20 @@ public partial class AsmOpCodes
     public static I index(K kind)
         => kind switch
         {
-            K.Base00 => I.LegacyMap0,
-            K.Base0F => I.LegacyMap1,
-            K.Base0F38 => I.LegacyMap2,
-            K.Base0F3A => I.LegacyMap3,
-            K.Amd3DNow => I.Amd3dNow,
-            K.Xop8 => I.Xop8,
-            K.Xop9 => I.Xop9,
-            K.XopA => I.XopA,
-            K.Vex0F => I.Vex0F,
-            K.Vex0F38 => I.Vex0F38,
-            K.Vex0F3A => I.Vex0F3A,
-            K.Evex0F => I.Evex0F,
-            K.Evex0F38 => I.Evex0F38,
-            K.Evex0F3A => I.Evex0F3A,
+            Base00 => I.LegacyMap0,
+            Base0F => I.LegacyMap1,
+            Base0F38 => I.LegacyMap2,
+            Base0F3A => I.LegacyMap3,
+            Amd3DNow => I.Amd3dNow,
+            Xop8 => I.Xop8,
+            Xop9 => I.Xop9,
+            XopA => I.XopA,
+            Vex0F => I.Vex0F,
+            Vex0F38 => I.Vex0F38,
+            Vex0F3A => I.Vex0F3A,
+            Evex0F => I.Evex0F,
+            Evex0F38 => I.Evex0F38,
+            Evex0F3A => I.Evex0F3A,
             _ => 0
         };
 
@@ -338,50 +338,6 @@ public partial class AsmOpCodes
     }
 
     [Op]
-    public static I? index(V @class, byte map)
-    {
-        var dst = default(I?);
-        switch(@class)
-        {
-            case V.VV1:
-                dst = index((VexMapKind)map);
-            break;
-            case V.EVV:
-                dst = index((E)map);
-            break;
-            case V.XOPV:
-                dst = index((X)map);
-            break;
-            default:
-                dst = index((LegacyMapKind)map);
-            break;
-        }
-        return dst;
-    }
-
-    public static K kind(V vc, byte number)
-    {
-        var ock = K.None;
-        switch(vc)
-        {
-            case V.VV1:
-                ock = kind(index((VexMapKind)number));
-            break;
-            case V.XOPV:
-                ock = kind(index((X)number));
-            break;
-            case V.EVV:
-            case V.KVV:
-                ock = kind(index((E)number));
-            break;
-            default:
-                ock = kind((I)basemap(number));
-            break;
-        }
-        return ock;
-    }
-
-    [Op]
     public static K kind(I src)
         => src switch {
             I.LegacyMap0 => Base00,
@@ -408,41 +364,6 @@ public partial class AsmOpCodes
     [Op]
     public static AsmOpCodeClass @class(K src)
         => (AsmOpCodeClass)(byte)src;
-
-    [MethodImpl(Inline), Op]
-    public static VexMapKind? vexmap(V kind, byte code)
-        => kind == V.VV1 ? (VexMapKind)code : null;
-
-    [MethodImpl(Inline), Op]
-    public static E? evexmap(V kind, byte code)
-        => kind == V.EVV ? (E)code : null;
-
-    [MethodImpl(Inline), Op]
-    public static X? xopmap(V kind, byte code)
-        => kind == V.XOPV ? (X)code : null;
-
-    [Op]
-    public static V vexclass(I src)
-        => vexclass(@class(src));
-
-    [Op]
-    public static V vexclass(AsmOpCodeClass src)
-    {
-        var vc = V.None;
-        switch(src)
-        {
-            case AsmOpCodeClass.Vex:
-                vc = V.VV1;
-            break;
-            case AsmOpCodeClass.Evex:
-                vc = V.VV1;
-            break;
-            case AsmOpCodeClass.Xop:
-                vc = V.XOPV;
-            break;
-        }
-        return vc;
-    }
 
     public static asci4 selector(K src)
         => src switch {

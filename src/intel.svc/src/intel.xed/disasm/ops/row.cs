@@ -77,7 +77,7 @@ partial class XedDisasm
                 Errors.Throw(result.Message);
 
             var spec = operand.Spec;
-            var winfo = Xed.describe(spec.WidthCode);
+            var winfo = XedWidths.describe(spec.WidthCode);
             operand.OpWidth = winfo;
             operand.OpName = spec.Name;
             var optxt = EmptyString;
@@ -96,7 +96,7 @@ partial class XedDisasm
                 spec.Visibility,
                 winfo.Width64,
                 winfo.Name,
-                specifier(spec)
+                Xed.specifier(spec)
                 );
         }
 
@@ -168,8 +168,8 @@ partial class XedDisasm
         if(state.IMM0)
             dst.Imm = asm.imm(code, state.POS_IMM, state.IMM0SIGNED, Sizes.native(state.IMM_WIDTH));
 
-        dst.EASZ = Sizes.native(XedOps.width((EASZ)state.EASZ));
-        dst.EOSZ = Sizes.native(XedOps.bitwidth((EOSZ)state.EOSZ));
+        dst.EASZ = Sizes.native(XedWidths.width((EASZ)state.EASZ));
+        dst.EOSZ = Sizes.native(XedWidths.bitwidth((EOSZ)state.EOSZ));
         return dst;
     }
 }

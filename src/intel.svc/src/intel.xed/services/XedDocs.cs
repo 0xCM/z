@@ -5,7 +5,6 @@
 namespace Z0
 {
     using static sys;
-    using static XedPatterns;
 
     public partial class XedDocs : WfSvc<XedDocs>
     {
@@ -31,7 +30,7 @@ namespace Z0
         {
             var src = Xed.Views.Patterns;
             var dst = XedPaths.DocTarget("instructions", FileKind.Md);
-            var inst = new InstDoc(src.Map(x => new InstDocPart(x)));
+            var inst = new XedInstDoc(src.Map(x => new InstDocPart(x)));
             Channel.FileEmit(inst.Format(), inst.Parts.Count, dst, TextEncodingKind.Asci);
         }
 
@@ -39,7 +38,7 @@ namespace Z0
         {
             var src = Xed.Views.Patterns;
             var dst = XedPaths.DocTarget("instructions.detail", FileKind.Txt);
-            var formatter = InstPageFormatter.create();
+            var formatter = XedInstPages.create();
             var emitting = Channel.EmittingFile(dst);
             using var writer = dst.AsciWriter();
             for(var j=0; j<src.Count; j++)
@@ -48,6 +47,6 @@ namespace Z0
         }
 
         void EmitRuleDocs()
-            => Channel.FileEmit(RuleDocFormatter.create(Xed.Views.CellTables).Format(), 1, XedPaths.DocTarget("rules", FileKind.Md), TextEncodingKind.Asci);
+            => Channel.FileEmit(XedRuleDocRender.create(Xed.Views.CellTables).Format(), 1, XedPaths.DocTarget("rules", FileKind.Md), TextEncodingKind.Asci);
     }
 }

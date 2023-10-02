@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using Asm;
-
 [StructLayout(LayoutKind.Sequential, Size=2)]
 public readonly record struct AsmSigOp
 {

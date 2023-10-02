@@ -66,5 +66,5 @@ class XedDisasmRender
         => string.Format(OpDetailPattern, OpColPatterns.Select(x => string.Format(x, index)));
 
     public static void render(in OpDetails ops, ITextEmitter dst)
-        => XedOps.render(ops.Map(x => x.Spec), dst);
+        => XedRender.render(ops.Map(x => x.Spec), dst);
 }

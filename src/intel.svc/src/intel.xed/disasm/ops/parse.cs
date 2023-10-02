@@ -11,7 +11,7 @@ using static XedModels;
 partial class XedDisasm
 {
     public static void parse(in XedDisasmLines src, out Instruction dst)
-        => XedPatterns.instruction(src.Row.InstructionId, src.Block.Props.Content, fields(src.Block), out dst);
+        => Xed.instruction(src.Row.InstructionId, src.Block.Props.Content, fields(src.Block), out dst);
 
     public static uint parse(in XedDisasmBlock src, out InstFieldValues dst)
     {
@@ -81,7 +81,7 @@ partial class XedDisasm
         if(result.Fail)
             return (false, AppMsg.ParseFailure.Format(nameof(dst.Name), skip(parts,i-1)));
 
-        dst.Kind = XedOps.opkind(dst.Name);
+        dst.Kind = Xed.opkind(dst.Name);
 
         result = DataParser.eparse(skip(parts,i++), out dst.Action);
         if(result.Fail)
@@ -91,7 +91,7 @@ partial class XedDisasm
         if(result.Fail)
             return result;
 
-        var width = Xed.describe(dst.WidthCode);
+        var width = XedWidths.describe(dst.WidthCode);
         dst.BitWidth = width.Width64;
         dst.ElementType = width.ElementType;
         dst.ElementWidth = width.ElementWidth;

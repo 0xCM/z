@@ -25,7 +25,7 @@ partial class XedDisasmCmd : WfAppCmd<XedDisasmCmd>
     void Check(in XedDisasmFile src)
     {
         var states = src.ParseStates();
-        var render = FieldRender.create();
+        var render = XedFieldRender.create();
         Channel.Write($"Parsed {states.Count} instructions from {src.Source}");
         for(var i=0; i<states.Count; i++)
         {

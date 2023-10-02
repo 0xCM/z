@@ -7,7 +7,7 @@ namespace Z0;
 
 using static XedModels;
 
-partial class XedOps
+partial class Xed
 {
     public static PatternOpInfo opinfo(MachineMode mode, in PatternOp src)
     {
@@ -21,12 +21,12 @@ partial class XedOps
         Xed.visibility(src, out dst.Visibility);
         Xed.action(src, out dst.Action);
         Xed.modifier(src, out dst.Modifier);
-        if(widthcode(src, out wc))
+        if(Xed.widthcode(src, out wc))
         {
             dst.WidthCode = wc;
-            var w = width(mode,wc);
+            var w = XedWidths.width(mode,wc);
             dst.BitWidth = w.Bits;
-            var wi = Xed.describe(wc);
+            var wi = XedWidths.describe(wc);
             dst.SegType = wi.SegType;
             dst.ElementType = wi.ElementType;
             dst.ElementWidth = wi.ElementWidth;
@@ -39,11 +39,11 @@ partial class XedOps
             dst.GprWidth = GprWidth.Empty;
 
         if(src.RegLiteral(out dst.RegLit))
-            dst.BitWidth = width(dst.RegLit);
+            dst.BitWidth = XedWidths.width(dst.RegLit);
 
         if(dst.BitWidth == 0 && gpr.IsNonEmpty && gpr.IsInvariant)
             dst.BitWidth = (ushort)gpr.InvariantWidth.Width;
 
         return dst;
-    }
+    }    
 }

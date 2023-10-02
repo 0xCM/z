@@ -10,9 +10,11 @@ using Asm;
 using static XedModels;
 using static XedRules;
 using static AsmOpCodes;
+using static XedFields;
 using static sys;
 
 using OC = XedModels.OpAttribKind;
+using FTK = XedFormToken.TokenKind;
 
 public class XedRender
 {
@@ -105,6 +107,35 @@ public class XedRender
     static EnumRender<RuleCellKind> RuleCellKinds = new();
 
     static XedPaths XedPaths => XedPaths.Service;
+
+    public static void render(Index<OpSpec> src, ITextEmitter dst)
+    {
+        dst.AppendLineFormat(XedFieldRender.Columns, "Operands", EmptyString);
+        dst.AppendLine(RP.PageBreak80);
+        for(var i=0; i<src.Count; i++)
+            dst.AppendLine(src[i].Format());
+    }
+
+    public static string format(XedFormToken src)
+    {
+        var dst = EmptyString;
+        switch(src.Kind)
+        {
+            case FTK.InstClass:
+                dst = src.InstClassValue().Format();
+            break;
+            case FTK.Hex8Lit:
+                dst = src.Hex8Value().Format();
+            break;
+            case FTK.Hex16Lit:
+                dst = src.Hex16Value().Format();
+            break;
+            default:
+                dst = src.Value.Format();
+            break;
+        }
+        return dst;
+    }
 
     public static string format(Nonterminal src)
         => src.IsEmpty ? EmptyString : string.Format("{0}()", XedRender.format(src.Name));
@@ -215,7 +246,7 @@ public class XedRender
         => EnumRender.format(RepPrexixKinds, src, fc);
 
     public static string format(AsmVL src, DataFormatCode fc = DataFormatCode.Expr)
-        => fc == DataFormatCode.BitWidth ? XedOps.width(src).ToString() : EnumRender.format(VexLengthKinds,src,fc);
+        => fc == DataFormatCode.BitWidth ? XedWidths.width(src).ToString() : EnumRender.format(VexLengthKinds,src,fc);
 
     public static string format(ASZ src)
         => AszKinds.Format(src);
@@ -224,7 +255,7 @@ public class XedRender
         => ElementSizes.Format(src);
 
     public static string format(OSZ src, DataFormatCode fc = DataFormatCode.BitWidth)
-        => fc == DataFormatCode.BitWidth ? XedOps.width(src).ToString() : EnumRender.format(OszKinds, src, fc);
+        => fc == DataFormatCode.BitWidth ? XedWidths.width(src).ToString() : EnumRender.format(OszKinds, src, fc);
 
     public static string format(DispWidth src)
         => DispWidthKinds.Format(src);
@@ -331,7 +362,7 @@ public class XedRender
 
     public static void describe(in XedDisasmDetailRow src, ITextEmitter dst)
     {
-        const sbyte Pad = -XedFields.FieldRender.ColWidth;
+        const sbyte Pad = -XedFieldRender.ColWidth;
         var pattern = RP.slot(0,Pad) + " | " + RP.slot(1);
 
         dst.AppendLineFormat(pattern, nameof(src.InstructionId), src.InstructionId);
@@ -344,7 +375,7 @@ public class XedRender
 
     public static void describe(in XedDisasmFields src, ITextEmitter dst)
     {
-        const string RenderPattern = XedFields.FieldRender.Columns;
+        const string RenderPattern = XedFieldRender.Columns;
         dst.AppendLineFormat(RenderPattern, nameof(src.Summary.InstructionId), src.Summary.InstructionId);
         dst.AppendLineFormat(RenderPattern, nameof(src.Asm.Asm), src.Asm.Asm);
         dst.AppendLineFormat(RenderPattern, nameof(src.Props.InstClass), src.Props.InstClass);

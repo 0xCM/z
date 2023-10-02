@@ -12,7 +12,7 @@ namespace Z0
     {
         public void EmitInstGroups(Index<InstGroup> src)
         {
-            iter(CalcInstGroupLookup(src,PllExec), kvp => Emit(kvp.Key, kvp.Value), PllExec);
+            iter(Xed.CalcInstGroupLookup(src,PllExec), kvp => Emit(kvp.Key, kvp.Value), PllExec);
 
             const string RenderPattern = "{0,-8} | {1,-12} | {2,-18} | {3,-8} | {4,-8} | {5,-6} | {6,-6} | {7,-6} | {8,-6} | {9,-26} | {10,-22} | {11}";
             var counter = 0u;

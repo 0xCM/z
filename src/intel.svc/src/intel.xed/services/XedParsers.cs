@@ -13,6 +13,7 @@ using static XedRules;
 using static sys;
 
 using R = XedRules;
+using RFK = XedRules.FieldKind;
 
 public partial class XedParsers
 {
@@ -109,6 +110,354 @@ public partial class XedParsers
     {
 
     }
+
+    public static bool parse(RFK field, string value, out FieldValue dst)
+    {
+        var result = true;
+        dst = FieldValue.Empty;
+        switch(field)
+        {
+            case RFK.AGEN:
+            case RFK.AMD3DNOW:
+            case RFK.ASZ:
+            case RFK.CET:
+            case RFK.CLDEMOTE:
+            case RFK.DF32:
+            case RFK.DF64:
+            case RFK.DUMMY:
+            case RFK.ENCODER_PREFERRED:
+            case RFK.ENCODE_FORCE:
+            case RFK.HAS_MODRM:
+            case RFK.HAS_SIB:
+            case RFK.ILD_F2:
+            case RFK.ILD_F3:
+            case RFK.IMM0:
+            case RFK.IMM0SIGNED:
+            case RFK.IMM1:
+            case RFK.LOCK:
+            case RFK.LZCNT:
+            case RFK.MEM0:
+            case RFK.MEM1:
+            case RFK.MODE_FIRST_PREFIX:
+            case RFK.MODE_SHORT_UD0:
+            case RFK.MODEP5:
+            case RFK.MODEP55C:
+            case RFK.MPXMODE:
+            case RFK.MUST_USE_EVEX:
+            case RFK.NEEDREX:
+            case RFK.NEED_SIB:
+            case RFK.NOREX:
+            case RFK.NO_RETURN:
+            case RFK.NO_SCALE_DISP8:
+            case RFK.REX:
+            case RFK.OSZ:
+            case RFK.OUT_OF_BYTES:
+            case RFK.P4:
+            case RFK.PREFIX66:
+            case RFK.PTR:
+            case RFK.REALMODE:
+            case RFK.RELBR:
+            case RFK.TZCNT:
+            case RFK.UBIT:
+            case RFK.USING_DEFAULT_SEGMENT0:
+            case RFK.USING_DEFAULT_SEGMENT1:
+            case RFK.VEX_C4:
+            case RFK.VEXDEST3:
+            case RFK.VEXDEST4:
+            case RFK.WBNOINVD:
+            case RFK.REXRR:
+            case RFK.SAE:
+            case RFK.BCRC:
+            case RFK.ZEROING:
+            {
+                if(parse(value, out bit b))
+                {
+                    dst = new(field, b);
+                    result = true;
+                }
+            }
+            break;
+
+            case RFK.REXW:
+            {
+                if(parse(value, out bit b))
+                {
+                    dst = new (field, b);
+                    result = true;
+                }
+                else if(value.Length == 1 && value[0] == 'w')
+                {
+                    dst = new (FieldSeg.symbolic(field, 'w'));
+                    result = true;
+                }
+            }
+            break;
+            case RFK.REXR:
+            {
+                if(parse(value, out bit x))
+                {
+                    dst = new (field,x);
+                    result = true;
+                }
+                else if(value.Length == 1 && value[0] == 'r')
+                {
+                    dst = new (FieldSeg.symbolic(field, 'r'));
+                    result = true;
+                }
+            }
+            break;
+            case RFK.REXX:
+            {
+                if(parse(value, out bit x))
+                {
+                    dst = new (field,x);
+                    result = true;
+                }
+                else if(value.Length == 1 && value[0] == 'x')
+                {
+                    dst = new (FieldSeg.symbolic(field, 'x'));
+                    result = true;
+                }
+            }
+            break;
+            case RFK.REXB:
+            {
+                if(parse(value, out bit x))
+                {
+                    dst = new (field, x);
+                    result = true;
+                }
+                else if(value.Length == 1 && value[0] == 'b')
+                {
+                    dst = new (FieldSeg.symbolic(field, 'b'));
+                    result = true;
+                }
+            }
+            break;
+
+            case RFK.NELEM:
+            case RFK.ELEMENT_SIZE:
+            case RFK.MEM_WIDTH:
+            {
+                if(ushort.TryParse(value, out ushort x))
+                {
+                    dst = new (field,x);
+                    result = true;
+                }
+            }
+            break;
+
+            case RFK.SIBBASE:
+            case RFK.HINT:
+            case RFK.ROUNDC:
+            case RFK.SEG_OVD:
+            case RFK.VEXVALID:
+            case RFK.MOD:
+            case RFK.SIBSCALE:
+            case RFK.EASZ:
+            case RFK.EOSZ:
+            case RFK.FIRST_F2F3:
+            case RFK.LAST_F2F3:
+            case RFK.DEFAULT_SEG:
+            case RFK.MODE:
+            case RFK.REP:
+            case RFK.SMODE:
+            case RFK.VEX_PREFIX:
+            case RFK.VL:
+            case RFK.LLRC:
+            case RFK.MAP:
+            case RFK.SCALE:
+            case RFK.BRDISP_WIDTH:
+            case RFK.DISP_WIDTH:
+            case RFK.ILD_SEG:
+            case RFK.IMM1_BYTES:
+            case RFK.IMM_WIDTH:
+            case RFK.MAX_BYTES:
+            case RFK.MODRM_BYTE:
+            case RFK.NPREFIXES:
+            case RFK.NREXES:
+            case RFK.NSEG_PREFIXES:
+            case RFK.POS_DISP:
+            case RFK.POS_IMM:
+            case RFK.POS_IMM1:
+            case RFK.POS_MODRM:
+            case RFK.POS_NOMINAL_OPCODE:
+            case RFK.POS_SIB:
+            case RFK.NEED_MEMDISP:
+            case RFK.RM:
+            case RFK.SIBINDEX:
+            case RFK.REG:
+            case RFK.VEXDEST210:
+            case RFK.MASK:
+            case RFK.SRM:
+            {
+                if(parse(value, out byte b))
+                {
+                    dst = new (field,b);
+                    result = true;
+                }
+            }
+            break;
+
+            case RFK.ESRC:
+            {
+                if(HexParser.parse(value, out Hex4 x))
+                {
+                    dst = new (field,(byte)x);
+                    result = true;
+                }
+            }
+            break;
+
+
+            case RFK.NOMINAL_OPCODE:
+            {
+                if(HexParser.parse(value, out Hex8 x))
+                {
+                    dst = new (field, x);
+                    result = true;
+                }
+            }
+            break;
+
+            case RFK.DISP:
+            case RFK.UIMM0:
+            case RFK.UIMM1:
+            {
+                result = byte.TryParse(value, out var b);
+                if(result)
+                    dst = new (field,b);
+                else
+                {
+                    if(IsSeg(value))
+                    {
+                        if(segdata(value, out var sd))
+                        {
+                            var type = InstSegTypes.type(sd);
+                            if(type.IsNonEmpty)
+                                dst = new (field,type);
+                            else
+                                Errors.Throw(AppMsg.ParseFailure.Format(nameof(FieldValue), value));
+                        }
+                    }
+                }
+            }
+            break;
+
+            case RFK.BASE0:
+            case RFK.BASE1:
+            case RFK.INDEX:
+            case RFK.OUTREG:
+            case RFK.SEG0:
+            case RFK.SEG1:
+            case RFK.REG0:
+            case RFK.REG1:
+            case RFK.REG2:
+            case RFK.REG3:
+            case RFK.REG4:
+            case RFK.REG5:
+            case RFK.REG6:
+            case RFK.REG7:
+            case RFK.REG8:
+            case RFK.REG9:
+            {
+                if(reg(field, value, out dst))
+                    result = true;
+            }
+            break;
+            case RFK.CHIP:
+            {
+                if(parse(value, out ChipCode x))
+                {
+                    dst = new (field, (ushort)x);
+                    result = true;
+                }
+            }
+            break;
+
+            case RFK.ERROR:
+            {
+                if(parse(value, out ErrorKind x))
+                {
+                    dst = new (field, (ushort)x);
+                    result = true;
+                }
+            }
+            break;
+
+            case RFK.ICLASS:
+            {
+                if(parse(value, out XedInstKind x))
+                {
+                    dst = new (field, (ushort)x);
+                    result = true;
+                }
+            }
+            break;
+
+            case RFK.BCAST:
+            {
+                if(parse(value, out BroadcastKind kind))
+                {
+                    dst = new (field, (byte)kind);
+                    result = true;
+                }
+            }
+            break;
+        }
+
+        return result;
+    }
+
+    public static bool parse(string src, out InstAttribs dst)
+    {
+        dst = InstAttribs.Empty;
+
+        var input = text.trim(src);
+        if(empty(input))
+            return false;
+
+        var sep = ',';
+        if(input.Contains(Chars.Colon))
+            sep = ':';
+        else if(input.Contains(Chars.Space))
+            sep = ' ';
+        if(Fenced.test(input, Fenced.Embraced))
+        {
+            if(input.Length > 2)
+                input = Fenced.unfence(input, Fenced.Embraced);
+            else
+                input = EmptyString;
+        }
+
+        if(empty(input))
+            return false;
+
+        var parts = input.SplitClean(sep);
+        var count = parts.Length;
+        if(count == 0)
+            return default;
+
+        var counter = 0u;
+        var _dst = span<InstAttribKind>(count);
+        for(var i=0; i<count; i++)
+        {
+            ref var target = ref seek(_dst,i);
+            var result = DataParser.eparse(skip(parts,i), out target);
+            if(result)
+            {
+                if(target != 0)
+                    counter++;
+            }
+            else
+                return false;
+        }
+
+         dst = slice(_dst,0,counter).ToArray();
+
+        return dst.IsNonEmpty;
+    }
+
 
     public static bool IsEq(string src)
         => !src.Contains("!=") && src.Contains("=");
@@ -626,7 +975,7 @@ public partial class XedParsers
             dst = new (field, reg);
             result = true;
         }
-        else if(XedParsers.parse(value, out RuleKeyword kw))
+        else if(parse(value, out RuleKeyword kw))
         {
             dst = new(kw);
             result = true;

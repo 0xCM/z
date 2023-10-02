@@ -7,6 +7,7 @@ namespace Z0;
 
 using static XedModels;
 using static XedRules;
+
 partial class XedOps
 {
     [StructLayout(LayoutKind.Sequential,Pack=1)]
@@ -42,8 +43,5 @@ partial class XedOps
 
         public static StateRecord Empty => default;
     }
-    partial class OperandStates
-    {
 
-    }
 }

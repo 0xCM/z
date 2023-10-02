@@ -66,7 +66,7 @@ public partial class XedCmd : WfAppCmd<XedCmd>
     [CmdOp("xed/inst/parse")]
     void ParseInstructions()
     {
-        var src = XedDb.DocSource(XedDocKind.EncInstDef);
+        var src = XedPaths.DocSource(XedDocKind.EncInstDef);
         if(!src.Exists)
         {
             Channel.Error(FS.missing(src));
@@ -112,10 +112,6 @@ public partial class XedCmd : WfAppCmd<XedCmd>
     [CmdOp("xed/db/emit")]
     void DbEmit()
         => XedRuntime.XedDb.EmitArtifacts();
-
-    [CmdOp("xed/emit/rules/tables")]
-    void EmitRuleTables()
-        => XedRuntime.Rules.EmitRuleData(XedRuntime.Views.RuleTables);
 
     [CmdOp("xed/emit/rules/pages")]
     void EmitTableDefs()

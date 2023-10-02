@@ -3,48 +3,47 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+public enum XedRecordType : byte
 {
-    public enum XedRecordType : byte
-    {
-        InstPattern,
+    InstPattern,
 
-        RuleTables,
+    RuleTables,
 
-        InstFields,
+    InstFields,
 
-        CellTables,
+    CellTables,
 
-        RuleExpr,
+    RuleExpr,
 
-        CellDatasets,
+    CellDatasets,
 
-        OpCodes,
+    OpCodes,
 
-        IsaImport,
+    IsaImport,
 
-        CpuIdImport,
+    CpuIdImport,
 
-        TypeTables,
+    TypeTables,
 
-        TypeTableRows,
+    TypeTableRows,
 
-        ChipMap,
+    ChipMap,
 
-        FormImports,
+    FormImports,
 
-        InstImports,
+    InstImports,
 
-        AsmBroadcastDefs,
+    AsmBroadcastDefs,
 
-        OpWidths,
+    OpWidths,
 
-        WidthLookup,
+    WidthLookup,
 
-        InstOpSpecs,
+    InstOpSpecs,
 
-        InstOpDetail,
+    InstOpDetail,
 
-        InstSigs,
-    }
+    InstSigs,
 }

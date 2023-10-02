@@ -60,11 +60,11 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public static implicit operator ModIndicator(ModKind src)
-                => new ModIndicator(src);
+                => new (src);
 
             [MethodImpl(Inline)]
             public static explicit operator ModIndicator(uint3 src)
-                => new ModIndicator((ModKind)(byte)src);
+                => new ((ModKind)(byte)src);
 
             [MethodImpl(Inline)]
             public static explicit operator uint3(ModIndicator src)
@@ -76,7 +76,7 @@ namespace Z0
 
             [MethodImpl(Inline)]
             public static explicit operator ModIndicator(uint src)
-                => new ModIndicator((ModKind)src);
+                => new ((ModKind)src);
 
             public static ModIndicator Empty => default;
         }

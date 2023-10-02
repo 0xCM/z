@@ -11,7 +11,7 @@ partial class XedFlows
 {
     public Index<FieldImport> CalcFieldImports()
     {
-        var src = XedDb.DocSource(XedDocKind.Fields);
+        var src = XedPaths.DocSource(XedDocKind.Fields);
         var dst = list<FieldImport>();
         var result = Outcome.Success;
         var line = EmptyString;

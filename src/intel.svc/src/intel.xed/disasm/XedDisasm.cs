@@ -92,7 +92,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             for(var j=0; j<ops.Count; j++)
             {
                 ref readonly var op = ref ops[j];
-                dst.AppendLineFormat(OperandFormat, j, nameof(op.Spec), specifier(op.Spec));
+                dst.AppendLineFormat(OperandFormat, j, nameof(op.Spec), Xed.specifier(op.Spec));
                 dst.AppendLineFormat(OperandFormat, j, nameof(op.OpName), op.OpName);
                 dst.AppendLineFormat(OperandFormat, j, nameof(op.OpWidth), op.OpWidth);
                 dst.AppendLineFormat(OperandFormat, j, nameof(op.Def.Value), op.Def.Value);
@@ -183,13 +183,13 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         => Channel.TableEmit(resequence(src), XedPaths.DisasmTargets(project).Table<XedDisasmRow>());
 
 
-    public const string RenderCol2 = FieldRender.Columns;
+    public const string RenderCol2 = XedFieldRender.Columns;
 
     public readonly struct FieldEmitter
     {
         readonly HashSet<FieldKind> Exclusions;
 
-        readonly FieldRender Render;
+        readonly XedFieldRender Render;
 
         public FieldEmitter()
         {
@@ -226,7 +226,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
                     counter++;
                 }
 
-                XedOps.render(block.Ops.Map(o => o.Spec), dst);
+                XedRender.render(block.Ops.Map(o => o.Spec), dst);
                 if(i!=data.LineCount -1)
                     dst.AppendLine();
             }

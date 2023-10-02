@@ -13,6 +13,58 @@ public partial class AsmSigs
     const NumericKind Closure = UnsignedInts;
 
     [MethodImpl(Inline), Op]
+    public static AsmSigOp m8()
+        => new (AsmSigTokenKind.Mem,(byte)MemToken.m8);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp m16()
+        => new (AsmSigTokenKind.Mem,(byte)MemToken.m16);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp m32()
+        => new (AsmSigTokenKind.Mem,(byte)MemToken.m32);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp m64()
+        => new (AsmSigTokenKind.Mem,(byte)MemToken.m64);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp m128()
+        => new (AsmSigTokenKind.Mem,(byte)MemToken.m128);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp m256()
+        => new (AsmSigTokenKind.Mem,(byte)MemToken.m256);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp m512()
+        => new (AsmSigTokenKind.Mem,(byte)MemToken.m512);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp rm8()
+        => new (AsmSigTokenKind.GpRm,(byte)GpRmToken.rm8);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp rm16()
+        => new (AsmSigTokenKind.GpRm,(byte)GpRmToken.rm16);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp rm32()
+        => new (AsmSigTokenKind.GpRm,(byte)GpRmToken.rm32);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp rm64()
+        => new (AsmSigTokenKind.GpRm,(byte)GpRmToken.rm64);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp r16m16()
+        => new (AsmSigTokenKind.GpRm,(byte)GpRmToken.r16m16);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp r32m8()
+        => new (AsmSigTokenKind.GpRm,(byte)GpRmToken.r32m8);
+
+    [MethodImpl(Inline), Op]
     public static AsmSigOp sig(Rel8 src)
         => new (AsmSigTokenKind.Rel, (byte)RelToken.rel8);
 
@@ -147,5 +199,4 @@ public partial class AsmSigs
     [MethodImpl(Inline), Op]
     public static AsmSigOp sig(cl src)
         => new (AsmSigTokenKind.RegLiteral, (byte)RegLiteralToken.CL);
-
 }

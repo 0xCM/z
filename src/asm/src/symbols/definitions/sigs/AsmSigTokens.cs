@@ -481,7 +481,7 @@ public class AsmSigTokens
     }
 
     [SymSource(GroupName), TokenKind(TK.BCastMem)]
-    public enum BCastMem : byte
+    public enum BCastMemToken : byte
     {
         [Symbol("m32bcst", "Represents a 32-bit memory location that defines a scalar to broadcast to vector operands")]
         m32bcst,
@@ -491,7 +491,7 @@ public class AsmSigTokens
     }
 
     [SymSource(GroupName), TokenKind(TK.BCastComposite)]
-    public enum BCastComposite : byte
+    public enum BCastCompositeToken : byte
     {
         [Symbol("xmm/m128/m32bcst")]
         x128x32bcst,
@@ -674,4 +674,68 @@ public class AsmSigTokens
         [Symbol("SRC3", "Denotes the third source operand in the instruction syntax of an instruction encoded with the VEX/EVEX prefix and having three source operands")]
         SRC3,
     }        
+
+    public class TokenRender
+    {
+        public static readonly EnumRender<RelToken> RelToken = new();
+        
+        public static readonly EnumRender<MemToken> MemToken = new();
+
+        public static readonly EnumRender<IntLiteral> IntLiteral = new();
+
+        public static readonly EnumRender<GpRmToken> GpRmToken = new();
+
+        public static readonly EnumRender<GpRegTriple> GpRegTriple = new();
+
+        public static readonly EnumRender<GpRmTriple> GpRmTriple = new();    
+
+        public static readonly EnumRender<VRegToken> VRegToken = new();
+
+        public static readonly EnumRender<VecRmToken> VecRmToken = new();    
+
+        public static readonly EnumRender<KRmToken> KRmToken = new();    
+
+        public static readonly EnumRender<KRegToken> KRegToken = new();    
+
+        public static readonly EnumRender<SysRegToken> SysRegToken = new();
+
+        public static readonly EnumRender<RegLiteralToken> RegLiteralToken = new();
+
+        public static readonly EnumRender<GpRegToken> GpRegToken = new();
+
+        public static readonly EnumRender<MmxRegToken> MmxRegToken = new();
+
+        public static readonly EnumRender<ImmToken> ImmToken = new();
+
+        public static readonly EnumRender<FpuRegToken> FpuRegToken = new();
+
+        public static readonly EnumRender<MmxRmToken> MmxRmToken = new();
+
+        public static readonly EnumRender<PtrToken> PtrToken = new();
+
+        public static readonly EnumRender<MoffsToken> MoffsToken = new();
+
+        public static readonly EnumRender<BCastMemToken> BCastMemToken = new();
+
+        public static readonly EnumRender<BCastCompositeToken> BCastCompositeToken = new();
+
+        public static readonly EnumRender<FpuMemToken> FpuMemToken = new();
+
+        public static readonly EnumRender<FpuIntToken> FpuIntToken = new();
+
+        public static readonly EnumRender<RoundingToken> RoundingToken = new();
+
+        public static readonly EnumRender<VsibToken> VsibToken = new();
+
+        public static readonly EnumRender<DependentToken> DependentToken = new();
+
+        public static readonly EnumRender<MemPtrToken> MemPtrToken = new();
+
+        public static readonly EnumRender<MemPairToken> MemPairToken = new();
+
+        public static readonly EnumRender<OpMaskToken> OpMaskToken = new();
+
+        public static readonly EnumRender<ModifierToken> ModifierToken = new();
+    }
+
 }

@@ -215,11 +215,11 @@ public class AsmRender
             break;
 
             case K.BCastComposite:
-                EnumRender.format((T.BCastComposite)src.Value);
+                EnumRender.format((T.BCastCompositeToken)src.Value);
             break;
 
             case K.BCastMem:
-                EnumRender.format((T.BCastMem)src.Value);
+                EnumRender.format((T.BCastMemToken)src.Value);
             break;
 
             case K.OpMask:

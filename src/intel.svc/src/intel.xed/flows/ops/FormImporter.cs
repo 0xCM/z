@@ -63,7 +63,7 @@ namespace Z0
                 if(result.Fail)
                     return (false, AppMsg.ParseFailure.Format(nameof(src.IsaSet), src.IsaSet));
 
-                dst.Attributes = XedPatterns.attributes(src.Attributes);
+                XedParsers.parse(src.Attributes, out dst.Attributes);
                 return result;
             }
 
@@ -137,7 +137,7 @@ namespace Z0
                 if(result.Fail)
                     return (false, AppMsg.ParseFailure.Format(nameof(dst.Extension), reader.Prior()));
 
-                dst.Attributes = XedPatterns.attributes(reader.Next());
+                XedParsers.parse(reader.Next(), out dst.Attributes );
 
                 return result;
             }

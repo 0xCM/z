@@ -3,53 +3,51 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using static XedRules;
+
+using CK = XedRules.RuleCellKind;
+
+public class XedFields
 {
-    using static XedRules;
+    const string xed = nameof(xed);
 
-    using CK = XedRules.RuleCellKind;
+    public static XedFieldRender render()
+        => new ();
 
-    [ApiHost]
-    public partial class XedFields
+    static readonly FieldDefs _Defs;
+
+    public static DataSize size(FieldKind fk, CK ck)
     {
-        const string xed = nameof(xed);
-
-        public static FieldRender render()
-            => new ();
-
-        static readonly FieldDefs _Defs;
-
-        public static DataSize size(FieldKind fk, CK ck)
+        var dst = field(fk).Size;
+        switch(ck)
         {
-            var dst = field(fk).Size;
-            switch(ck)
-            {
-                case CK.Keyword:
-                    dst = RuleKeyword.DataSize;
-                break;
-                case CK.NtCall:
-                    dst = Nonterminal.DataSize;
-                break;
-                case CK.Operator:
-                    dst = RuleOperator.DataSize;
-                break;
-            }
-            return dst;
+            case CK.Keyword:
+                dst = RuleKeyword.DataSize;
+            break;
+            case CK.NtCall:
+                dst = Nonterminal.DataSize;
+            break;
+            case CK.Operator:
+                dst = RuleOperator.DataSize;
+            break;
         }
+        return dst;
+    }
 
+    [MethodImpl(Inline)]
+    public static ref readonly FieldDef field(FieldKind kind)
+        => ref _Defs[kind];
+
+    public static ref readonly FieldDefs Defs
+    {
         [MethodImpl(Inline)]
-        public static ref readonly FieldDef field(FieldKind kind)
-            => ref _Defs[kind];
+        get => ref _Defs;
+    }
 
-        public static ref readonly FieldDefs Defs
-        {
-            [MethodImpl(Inline)]
-            get => ref _Defs;
-        }
-
-        static XedFields()
-        {
-            _Defs = CalcFieldDefs();            
-        }
+    static XedFields()
+    {
+        _Defs = XedImport.fields();
     }
 }

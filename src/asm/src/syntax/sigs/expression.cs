@@ -8,59 +8,6 @@ using static sys;
 
 partial class AsmSigs
 {
-    public static AsmSigOpExpr expression(in AsmSigOp src)
-        => AsmSigOpExpr.Empty;
-    // {
-    //     var dst = format(src.Token);
-    //     if(src.Modifier != 0)
-    //     {
-    //         if(_Datasets.Modifers.MapKind(src.Modifier, out var mod))
-    //             dst = $"{dst} {mod.Expr}";
-    //     }
-
-    //     if(_Datasets.Expressions.Find(src.Token.Id, out var xpr))
-    //     {
-    //         if(src.Modifier != 0)
-    //         {
-    //             if(_Datasets.Modifers.MapKind(src.Modifier, out var mod))
-    //                 return string.Format("{0} {1}", xpr, mod.Expr);
-    //             else
-    //                 return RP.Error;
-    //         }
-    //         else
-    //             return xpr;
-    //     }
-    //     else
-    //         return RP.Error;
-    // }
-
-
-    public static AsmSigExpr expression(string src)
-    {
-        var dst = AsmSigExpr.Empty;
-        var result = Outcome.Success;
-        var sig = text.trim(src);
-        var j = text.index(text.trim(sig), Chars.Space);
-        var mnemonic = AsmMnemonic.Empty;
-        dst = AsmSigExpr.Empty;
-        if(j>0)
-        {
-            mnemonic = text.left(sig,j);
-            var operands = text.right(sig,j);
-            if(text.contains(sig, Chars.Comma))
-                dst = expression(mnemonic, text.trim(text.split(operands, Chars.Comma)));
-            else
-                dst = expression(mnemonic, operands);
-        }
-        else
-        {
-            mnemonic = sig;
-            dst = expression(mnemonic);
-        }
-
-        return dst;
-    }
-
     [MethodImpl(Inline)]
     public static AsmSigExpr expression(AsmMnemonic mnemonic)
         =>  new AsmSigExpr(mnemonic);

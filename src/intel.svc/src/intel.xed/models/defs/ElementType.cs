@@ -14,10 +14,10 @@ partial class XedModels
     {
         public const byte Width = num5.Width;
 
-        public readonly ElementKind Kind;
+        public readonly K Kind;
 
         [MethodImpl(Inline)]
-        public ElementType(ElementKind kind)
+        public ElementType(K kind)
         {
             Kind = kind;
         }
@@ -76,11 +76,11 @@ partial class XedModels
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator ElementType(ElementKind src)
+        public static implicit operator ElementType(K src)
             => new ElementType(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator ElementKind(ElementType src)
+        public static implicit operator K(ElementType src)
             => src.Kind;
 
         [MethodImpl(Inline)]
@@ -89,7 +89,7 @@ partial class XedModels
 
         [MethodImpl(Inline)]
         public static explicit operator ElementType(byte src)
-            => new ElementType((ElementKind)src);
+            => new ElementType((K)src);
 
         public static ElementType Empty => default;
 
@@ -100,6 +100,7 @@ partial class XedModels
             {
                 case K.BF16:
                 case K.F16:
+                case K.F16x2:
                 case K.F32:
                 case K.F64:
                 case K.F80:

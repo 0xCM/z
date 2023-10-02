@@ -22,7 +22,7 @@ public class XedDisasmTarget<T> : WfSvc<T>, IXedDisasmTarget
 
     HashSet<FieldKind> Exclusions;
 
-    readonly FieldRender _Render;
+    readonly XedFieldRender _Render;
 
     FilePath _CurrentFile;
 
@@ -70,7 +70,7 @@ public class XedDisasmTarget<T> : WfSvc<T>, IXedDisasmTarget
     }
 
 
-    protected ref readonly FieldRender Render
+    protected ref readonly XedFieldRender Render
     {
         [MethodImpl(Inline)]
         get => ref _Render;

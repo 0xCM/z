@@ -97,7 +97,7 @@ class AsmChecks : WfAppCmd<AsmChecks>
     [CmdOp("asm/check/tokens")]
     void CheckAsmTokens()
     {
-        var result = AsmSigs.parse("adc r16, r16", out var sig);
+        var result = AsmSigs.parse("adc r16, r16", out AsmSig sig);
         if(result.Fail)
             Channel.Error(result.Message);
         else

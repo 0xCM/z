@@ -11,112 +11,66 @@ public class XedZ
 {
     static XedPaths XedPaths => XedPaths.Service;
 
-    public class RuleNames
+    public sealed class BlockDomain : Dictionary<string,HashSet<RuleAttribute>>
     {
-        public const string amd_3dnow_opcode = nameof(amd_3dnow_opcode);
+        public readonly Dictionary<XedFormType,FormRules> Rules = new();
 
-        public const string attributes = nameof(attributes);
+        public string Format()
+        {
+            var dst = text.emitter();
+            foreach(var name in Keys.Array().Sort())
+            {
+                switch(name)
+                {
+                    case BlockFieldNames.opcode_base10:
+                    case BlockFieldNames.comment:
+                        break;
+                    default:
+                    {
+                        var values = this[name].Map(x => x.Value).Sort();
+                        dst.AppendLine($"{name}:["); 
+                        foreach(var value in values)
+                        {
+                            dst.AppendLine($"    {value},");
+                        }
+                        dst.AppendLine("],");
 
-        public const string avx512_tuple = nameof(avx512_tuple);
+                    }
+                    break;
+                }
+            }
+            return dst.Emit();
+        }
+    }
 
-        public const string avx512_vsib = nameof(avx512_vsib);
+    public static BlockDomain domain(XedRuleBlocks src)
+    {
+        var imports = src.Imports;
+        var domain = new BlockDomain();
+        var counter = 0u;
+        iter(imports, import => {            
+            var block = src.FormBlocks[import.Form];
+            if(parse(import.Form, block, out FormRules rules))
+            {
+                domain.Rules.TryAdd(import.Form, rules);
+                foreach(var rule in rules.Rules)
+                {
+                    if(rule is RuleAttribute a)
+                    {
+                        if(domain.TryGetValue(a.Name, out var _values))
+                            _values.Add(a);
+                        else
+                            domain[a.Name] = hashset(a);
+                    }
+                }
+            }
 
-        public const string avx_vsib = nameof(avx_vsib);
+            if(block.Count != rules.Rules.Count)
+                @throw("block.Count != _rules.Rules.Count");
+        });
 
-        public const string broadcast_allowed = nameof(broadcast_allowed);
-
-        public const string category = nameof(category);
-
-        public const string comment = nameof(comment);
-
-        public const string cpl = nameof(cpl);
-
-        public const string cpuid = nameof(cpuid);
-
-        public const string default_64b = nameof(default_64b);
-
-        public const string disasm = nameof(disasm);
-
-        public const string disasm_attsv = nameof(disasm_attsv);
-
-        public const string disasm_intel = nameof(disasm_intel);
-
-        public const string easz = nameof(easz);
-
-        public const string element_size =nameof(element_size);
-
-        public const string eosz = nameof(eosz);
-
-        public const string explicit_operands = nameof(explicit_operands);
-
-        public const string extension = nameof(extension);
-
-        public const string f2_required = nameof(f2_required);
-
-        public const string f3_required = nameof(f3_required);
-
-        public const string flags = nameof(flags);
-
-        public const string has_imm8 = nameof(has_imm8);
-
-        public const string has_imm8_2 = nameof(has_imm8_2);
-
-        public const string has_immz = nameof(has_immz);
-
-        public const string has_modrm = nameof(has_modrm);
-
-        public const string iclass = nameof(iclass);
-
-        public const string iform = nameof(iform);
-
-        public const string imm_sz = nameof(imm_sz);
-
-        public const string implicit_operands = nameof(implicit_operands);
-
-        public const string isa_set = nameof(isa_set);
-
-        public const string lower_nibble = nameof(lower_nibble);
-
-        public const string map = nameof(map);
-
-        public const string memop_rw = nameof(memop_rw);
-
-        public const string mod_required = nameof(mod_required);
-        
-        public const string mode_restriction = nameof(mode_restriction);
-
-        public const string no_prefixes_allows = nameof(no_prefixes_allows);
-
-        public const string ntname = nameof(ntname);
-
-        public const string opcode = nameof(opcode);
-
-        public const string opcode_base10 = nameof(opcode_base10);
-
-        public const string operands = nameof(operands);
-
-        public const string osz_required = nameof(osz_required);
-
-        public const string parsed_operands = nameof(parsed_operands);
-
-        public const string partial_opcode = nameof(partial_opcode);
-
-        public const string pattern = nameof(pattern);
-
-        public const string real_opcode = nameof(real_opcode);
-
-        public const string reg_required = nameof(reg_required);
-
-        public const string rexw_required = nameof(rexw_required);
-
-        public const string undocumented = nameof(undocumented);
-
-        public const string upper_nibble = nameof(upper_nibble);
-
-        public const string vl = nameof(vl);
-
-        public const string EOSZ_LIST = nameof(EOSZ_LIST);
-    }    
+        return domain;        
+    }
 
     public static bool parse(string src, out AsmOpCodeClass dst)
     {
@@ -141,14 +95,14 @@ public class XedZ
                 var value = text.trim(text.right(line,i));
                 switch(name)
                 {
-                    case RuleNames.pattern:
-                    case RuleNames.operands:
+                    case BlockFieldNames.pattern:
+                    case BlockFieldNames.operands:
                     {
                         var parts = text.trim(text.split(value, Chars.Space));
                         dst.Rules.Add(new Vector(name,parts));
                     }                    
                     break;
-                    case RuleNames.flags:
+                    case BlockFieldNames.flags:
                     {
                         var m = text.index(value,Chars.LBracket);
                         var n = text.index(value,Chars.RBracket);
@@ -159,7 +113,7 @@ public class XedZ
                         }
                     }
                     break;
-                    case RuleNames.attributes:
+                    case BlockFieldNames.attributes:
                         dst.Rules.Add(new List(name,text.trim(text.split(value, Chars.Space))));
                     break;
                     default:

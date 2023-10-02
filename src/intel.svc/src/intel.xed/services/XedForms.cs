@@ -47,27 +47,6 @@ public class XedForms : WfSvc<XedForms>
         return result;
     }
 
-    public static string format(XedFormToken src)
-    {
-        var dst = EmptyString;
-        switch(src.Kind)
-        {
-            case TK.InstClass:
-                dst = src.InstClassValue().Format();
-            break;
-            case TK.Hex8Lit:
-                dst = src.Hex8Value().Format();
-            break;
-            case TK.Hex16Lit:
-                dst = src.Hex16Value().Format();
-            break;
-            default:
-                dst = src.Value.Format();
-            break;
-        }
-        return dst;
-    }
-
     public static int cmp(XedFormToken a, XedFormToken b)
     {
         var result = ((byte)a.Kind).CompareTo((byte)b.Kind);

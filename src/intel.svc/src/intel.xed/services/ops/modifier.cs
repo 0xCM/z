@@ -3,20 +3,19 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    using static XedModels;
+namespace Z0;
 
-    partial class Xed
+using static XedModels;
+
+partial class Xed
+{
+    [MethodImpl(Inline), Op]
+    public static bool modifier(in PatternOp src, out OpModifier dst)
     {
-        [MethodImpl(Inline), Op]
-        public static bool modifier(in PatternOp src, out OpModifier dst)
-        {
-            if(XedPatterns.first(src.Attribs, OpAttribKind.Modifier, out var attrib))
-                dst = attrib.ToModifier();
-            else
-                dst = default;
-            return true;
-        }
+        if(XedPatterns.first(src.Attribs, OpAttribKind.Modifier, out var attrib))
+            dst = attrib.ToModifier();
+        else
+            dst = default;
+        return true;
     }
 }

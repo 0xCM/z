@@ -17,7 +17,7 @@ namespace Z0
             {
                 var dst = alloc<InstOpSpec>(src.Count);
                 for(var i=0; i<src.Count; i++)
-                    seek(dst,i) = spec(src[i]);
+                    seek(dst,i) = Xed.spec(src[i]);
                 return dst;
             }
         }

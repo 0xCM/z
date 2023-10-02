@@ -17,10 +17,10 @@ namespace Z0
 
             Pairings<RuleSig,Index<RuleCell>> _TableCells;
 
-            public static CellTables from(CellDatasets src)
+            public static CellTables from(XedRuleCells src)
                 => new CellTables(src);
 
-            public CellTables(CellDatasets src)
+            public CellTables(XedRuleCells src)
             {
                 TableCount = src.TableCount;
                 RowCount = src.RowCount;
@@ -31,7 +31,7 @@ namespace Z0
                 _TableCells = src.TableCells();
             }
 
-            public static CellTables Empty => new CellTables(CellDatasets.Empty);
+            public static CellTables Empty => new CellTables(XedRuleCells.Empty);
 
             /// <summary>
             /// Specifies the number of defined tables

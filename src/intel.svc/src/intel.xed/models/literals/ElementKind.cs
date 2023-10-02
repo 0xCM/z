@@ -24,6 +24,9 @@ partial class XedModels
         [Symbol("f16")]
         F16,
 
+        [Symbol("2f16")]
+        F16x2,
+
         [Symbol("f32")]
         F32,
 

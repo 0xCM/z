@@ -76,6 +76,9 @@ public static class XSvc
 
         public XedRuntime XedRuntime(IWfRuntime wf)
             => Service<XedRuntime>(wf);
+
+        public XedImport XedImport(IWfRuntime wf)
+            => Service<XedImport>(wf);
     }
 
     static ServiceCache Services => ServiceCache.Instance;
@@ -141,6 +144,10 @@ public static class XSvc
 
     public static SdeCpuid CpuId(this IWfRuntime wf)
         => Services.CpuId(wf);
+
+    public static XedImport XedImport(this IWfRuntime wf)
+        => Services.XedImport(wf);
+
 }
 
 partial struct Msg

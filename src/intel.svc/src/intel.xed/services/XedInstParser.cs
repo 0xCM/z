@@ -23,7 +23,14 @@ public readonly struct XedInstParser
         {
             if(i != 0)
                 buffer.Append(Chars.Space);
-            buffer.Append(skip(parts,i));
+
+            ref readonly var part = ref skip(parts,i);
+            if(part == "MAP5")
+                buffer.Append("MAP=5");
+            else if(part=="MAP6")
+                buffer.Append("MAP=6");
+            else 
+                buffer.Append(part);
         }
         return buffer.Emit();
     }
@@ -65,13 +72,13 @@ public readonly struct XedInstParser
                 result = (false, AppMsg.ParseFailure.Format(nameof(uint5), src));
 
         }
-        else if(XedParsers.IsSeg(src))
+        else if(IsSeg(src))
         {
             result = CellParser.parse(src, out InstFieldSeg x);
             if(result)
                 dst = x;
         }
-        else if (XedParsers.IsExpr(src))
+        else if(IsExpr(src))
         {
             result = CellParser.expr(src, out CellExpr x);
             if(result)

@@ -5,10 +5,60 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using System.Linq;
+
+using static sys;
 using static XedModels;
+using static XedRules;
 
 partial class Xed
 {
+    public static ConcurrentDictionary<AsmOpCodeClass,Index<InstGroupSeq>> CalcInstGroupLookup(Index<InstGroup> src, bool pll)
+    {
+        var dst = cdict<AsmOpCodeClass,Index<InstGroupSeq>>();
+        iter(groupseq(src), kvp => dst.TryAdd(kvp.Key, resequence(kvp.Value)), pll);
+        return dst;
+    }
+
+    static Index<InstGroupSeq> resequence(Index<InstGroupSeq> src)
+    {
+        var dst = src.Sort(new PatternOrder(true));
+        for(var i=0u; i<dst.Count; i++)
+            dst[i].Seq = i;
+        return dst;
+    }
+
+    static Dictionary<AsmOpCodeClass,Index<InstGroupSeq>> groupseq(Index<InstGroup> src)
+        => src.SelectMany(x => x.Members.Select(x => x.Seq)).GroupBy(x => x.OpCodeClass).Select(x => (x.Key, x.Index())).ToDictionary();
+
+    public static void instruction(InstructionId id, string expr, InstFieldValues props, out Instruction dst)
+        => dst = new Instruction(id, expr, props.InstClass, props.InstForm, props);
+
+    public static Index<InstPatternRecord> records(Index<InstPattern> src, bool pll = true)
+    {
+        var count = src.Count;
+        var dst = sys.bag<InstPatternRecord>();
+        iter(src, p => dst.Add(record(p)), pll);
+        var sorted = dst.Array().Sort(PatternSort.comparer());
+        return sorted.Resequence();
+    }
+
+    static InstPatternRecord record(in InstPattern src)
+    {
+        ref readonly var body = ref src.Body;
+        var dst = InstPatternRecord.Empty;
+        dst.PatternId = src.PatternId;
+        dst.OpCode = src.OpCode;
+        dst.Mode = src.Mode;
+        dst.Lock = src.Lock;
+        dst.Scalable = src.Scalable;
+        Require.invariant(src.InstClass.Kind != 0);
+        dst.InstClass = Xed.classifier(src.InstClass);
+        dst.InstForm = src.InstForm;
+        dst.Body = body;
+        return dst;
+    }
+
     [MethodImpl(Inline), Op]
     public static bool etype(in PatternOp src, out XedModels.ElementType dst)
     {

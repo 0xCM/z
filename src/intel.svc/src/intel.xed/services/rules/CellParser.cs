@@ -17,7 +17,7 @@ namespace Z0
         public class CellParser
         {
             public static Index<RuleSeq> ruleseq()
-                => ruleseq(XedDb.DocSource(XedDocKind.RuleSeq));
+                => ruleseq(XedPaths.Service.DocSource(XedDocKind.RuleSeq));
 
             public static Index<RuleSeq> ruleseq(FilePath src)
                 => ruleseq(src.ReadNumberedLines());
@@ -203,7 +203,7 @@ namespace Z0
                     if(fk == 0)
                         Errors.Throw(AppMsg.ParseFailure.Format(nameof(FieldKind), left));
 
-                    var result = XedOps.parse(fk, right, out fv);
+                    var result = XedParsers.parse(fk, right, out fv);
                     if(!result)
                         Errors.Throw(AppMsg.ParseFailure.Format(nameof(CellExpr), src));
 

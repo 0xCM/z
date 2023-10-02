@@ -389,10 +389,10 @@ partial class XedModels
         [Symbol("tv")]
         TV,
 
-        [Symbol("f16")]
+        [Symbol("zf16")]
         ZF16,
         
-        [Symbol("2f16")]
+        [Symbol("z2f16")]
         Z2F16,
     }
 }
