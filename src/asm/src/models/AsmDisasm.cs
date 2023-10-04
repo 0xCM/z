@@ -133,7 +133,6 @@ namespace Z0
 
         const string TableId = "asm.disassembly";
 
-
         [Render(16)]
         public MemoryAddress Offset;
 

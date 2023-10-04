@@ -141,8 +141,7 @@ partial class AsmSigs
 
     public static string format(in AsmSigExpr src)
     {
-        var storage = CharBlock64.Null;
-        var dst = storage.Data;
+        Span<char> dst =  stackalloc char[64];
         var i=0u;
         text.copy(src.Mnemonic.Format(MnemonicCase.Lowercase), ref i, dst);
         var count = src.OpCount;
@@ -151,7 +150,8 @@ partial class AsmSigs
             seek(dst,i++) = Chars.Space;
 
         operands(src, ref i, dst);
-        return storage.Format().Trim();
+
+        return sys.@string(slice(dst,0,i));
     }
 
     public static string format(in AsmSig src)

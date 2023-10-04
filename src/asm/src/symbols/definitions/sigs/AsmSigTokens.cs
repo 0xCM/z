@@ -737,5 +737,4 @@ public class AsmSigTokens
 
         public static readonly EnumRender<ModifierToken> ModifierToken = new();
     }
-
 }

@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-
 public abstract class AsmDirective<T> : IAsmDirective
     where T : AsmDirective<T>
 {

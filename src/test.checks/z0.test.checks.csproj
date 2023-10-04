@@ -1,6 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(ProjectProps)\usings.props"/>
-  <Import Project="imports.props"/>
+  <ItemGroup>
+    <ProjectReference Include="$(Bits)" />
+    <ProjectReference Include="$(Polyrand)" />
+    <ProjectReference Include="$(ApiMd)" />
+    <ProjectReference Include="$(ApiCode)" />
+    <ProjectReference Include="$(Machines)" />
+    <ProjectReference Include="$(Workflow)" />
+  </ItemGroup>
+  
   <PropertyGroup>
     <OutputType>Library</OutputType>
   </PropertyGroup>

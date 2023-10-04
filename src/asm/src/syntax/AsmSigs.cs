@@ -65,6 +65,38 @@ public partial class AsmSigs
         => new (AsmSigTokenKind.GpRm,(byte)GpRmToken.r32m8);
 
     [MethodImpl(Inline), Op]
+    public static AsmSigOp imm8()
+        => new (AsmSigTokenKind.Imm, (byte)ImmToken.imm8);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp imm16()
+        => new (AsmSigTokenKind.Imm, (byte)ImmToken.imm16);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp imm32()
+        => new (AsmSigTokenKind.Imm, (byte)ImmToken.imm32);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp imm64()
+        => new (AsmSigTokenKind.Imm, (byte)ImmToken.imm64);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp r8()
+        => new (AsmSigTokenKind.GpReg, (byte)GpRegToken.r8);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp r16()
+        => new (AsmSigTokenKind.GpReg, (byte)GpRegToken.r16);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp r32()
+        => new (AsmSigTokenKind.GpReg, (byte)GpRegToken.r32);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp r64()
+        => new (AsmSigTokenKind.GpReg, (byte)GpRegToken.r64);
+
+    [MethodImpl(Inline), Op]
     public static AsmSigOp sig(Rel8 src)
         => new (AsmSigTokenKind.Rel, (byte)RelToken.rel8);
 
@@ -149,54 +181,55 @@ public partial class AsmSigs
         => new (AsmSigTokenKind.Mem, (byte)MemToken.m512);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(al src)
+    public static AsmSigOp al()
         => new (AsmSigTokenKind.RegLiteral, (byte)RegLiteralToken.AL);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(ax src)
+    public static AsmSigOp ax()
         => new (AsmSigTokenKind.RegLiteral, (byte)RegLiteralToken.AX);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(dx src)
+    public static AsmSigOp dx()
         => new (AsmSigTokenKind.RegLiteral, (byte)RegLiteralToken.DX);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(eax src)
+    public static AsmSigOp eax()
         => new (AsmSigTokenKind.RegLiteral, (byte)RegLiteralToken.EAX);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(edx src)
+    public static AsmSigOp edx()
         => new (AsmSigTokenKind.RegLiteral, (byte)RegLiteralToken.EDX);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(rax src)
+    public static AsmSigOp rax()
         => new (AsmSigTokenKind.RegLiteral, (byte)RegLiteralToken.RAX);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(ds src)
+    public static AsmSigOp ds()
         => new (AsmSigTokenKind.RegLiteral, (byte)RegLiteralToken.DS);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(es src)
+    public static AsmSigOp es()
         => new (AsmSigTokenKind.RegLiteral, (byte)RegLiteralToken.ES);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(fs src)
+    public static AsmSigOp fs()
         => new (AsmSigTokenKind.RegLiteral, (byte)RegLiteralToken.FS);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(gs src)
+    public static AsmSigOp gs()
         => new (AsmSigTokenKind.RegLiteral, (byte)RegLiteralToken.GS);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(ss src)
+    public static AsmSigOp ss()
         => new (AsmSigTokenKind.RegLiteral, (byte)RegLiteralToken.SS);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(cs src)
+    public static AsmSigOp cs()
         => new (AsmSigTokenKind.RegLiteral, (byte)RegLiteralToken.CS);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(cl src)
+    public static AsmSigOp cl()
         => new (AsmSigTokenKind.RegLiteral, (byte)RegLiteralToken.CL);
+
 }

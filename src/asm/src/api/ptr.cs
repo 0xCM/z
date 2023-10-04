@@ -43,4 +43,18 @@ partial struct asm
     [MethodImpl(Inline), Op]
     public static m512 ptr512(r64 reg)
         => mem512(reg);
+
+    [MethodImpl(Inline), Op]
+    public static AsmPointerKind ptr(NativeSizeCode src)
+        => src switch {
+        NativeSizeCode.W8 => AsmPointerKind.@byte,
+        NativeSizeCode.W16 => AsmPointerKind.word,
+        NativeSizeCode.W32 => AsmPointerKind.dword,
+        NativeSizeCode.W64 => AsmPointerKind.qword,
+        NativeSizeCode.W128 => AsmPointerKind.xmmword,
+        NativeSizeCode.W256 => AsmPointerKind.ymmword,
+        NativeSizeCode.W512 => AsmPointerKind.zmmword,
+            _ => AsmPointerKind.@byte
+        };
+
 }

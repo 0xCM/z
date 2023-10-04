@@ -10,7 +10,7 @@ partial class AsmSigs
 {
     [MethodImpl(Inline)]
     public static AsmSigExpr expression(AsmMnemonic mnemonic)
-        =>  new AsmSigExpr(mnemonic);
+        =>  new (mnemonic);
 
     [MethodImpl(Inline), Op]
     public static AsmSigExpr expression(AsmMnemonic mnemonic, AsmSigOpExpr op0)

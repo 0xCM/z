@@ -1,5 +1,4 @@
 @echo off
-set ProjectId=test.shell
-set Area=src
-set ShellId=ztest
+set ProjectName=test.shell
 call %~dp0..\config.cmd
+

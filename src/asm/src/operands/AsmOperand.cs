@@ -310,6 +310,7 @@ public record struct AsmOperand : IAsmOp
     AsmOpKind IAsmOp.OpKind
         => OpKind;
 
+
     [MethodImpl(Inline)]
     public static implicit operator AsmOperand(Imm8 src)
         => new (src);
@@ -325,6 +326,35 @@ public record struct AsmOperand : IAsmOp
     [MethodImpl(Inline)]
     public static implicit operator AsmOperand(Imm64 src)
         => new (src);
+
+    [MethodImpl(Inline)]
+    public static implicit operator AsmOperand(Rel8 src)
+        => new (src);
+
+    [MethodImpl(Inline)]
+    public static implicit operator AsmOperand(Rel16 src)
+        => new (src);
+
+    [MethodImpl(Inline)]
+    public static implicit operator AsmOperand(Rel32 src)
+        => new (src);
+
+    [MethodImpl(Inline)]
+    public static implicit operator AsmOperand(Disp8 src)
+        => new (src);
+
+    [MethodImpl(Inline)]
+    public static implicit operator AsmOperand(Disp16 src)
+        => new (src);
+
+    [MethodImpl(Inline)]
+    public static implicit operator AsmOperand(Disp32 src)
+        => new (src);
+
+    [MethodImpl(Inline)]
+    public static implicit operator AsmOperand(Disp64 src)
+        => new (src);
+
 
     public static AsmOperand Empty => default;
 }

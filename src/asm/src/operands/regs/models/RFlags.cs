@@ -170,8 +170,4 @@ public record struct RFlags : IEquatable<RFlags>
     [MethodImpl(Inline)]
     public static implicit operator RFlags(RFlagBits src)
         => new (src);
-
-    public static Index<string> FlagNames = new string[15]{"CF","PF", "AF", "ZF", "SF", "TF", "IF", "DF", "OF", "RF", "VM", "AC", "VIF", "VIP", "ID"};
-
-    public static string RenderPattern = mapi(FlagNames, (i,n) => RP.slot((byte)(i), -3)).Concat(" | ");
 }

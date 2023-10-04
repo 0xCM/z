@@ -95,7 +95,7 @@ public readonly struct RegOp : IRegOp
 
     [MethodImpl(Inline)]
     public static implicit operator AsmOperand(RegOp src)
-        => new AsmOperand(src);
+        => new (src);
 
     public static RegOp Empty
     {

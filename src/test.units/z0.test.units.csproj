@@ -1,6 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(ProjectProps)\usings.props"/>
-  <Import Project="imports.props"/>
+  <ItemGroup>
+    <ProjectReference Include="$(Bits)" />
+    <ProjectReference Include="$(Circuits)" />
+    <ProjectReference Include="$(Polyrand)" />
+    <ProjectReference Include="$(Wf)" />
+    <ProjectReference Include="$(ZLib)" />
+    <ProjectReference Include="$(Native)" />
+  </ItemGroup>
+  
   <PropertyGroup>
     <OutputType>Library</OutputType>
   </PropertyGroup>

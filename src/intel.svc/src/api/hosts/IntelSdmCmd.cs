@@ -45,37 +45,6 @@ partial class IntelSdmCmd : WfAppCmd<IntelSdmCmd>
     }
 
 
-
-    [CmdOp("sdm/check/sigs")]
-    Outcome CheckAsmSigs(CmdArgs args)
-    {
-        var details = Sdm.LoadOcDetails();
-        var count = details.Count;
-        var buffer = text.buffer();
-        for(var i=0; i<count; i++)
-        {
-            ref readonly var detail = ref details[i];
-            AsmSigs.parse(detail.AsmSig.View, out var sig);
-            buffer.Append(sig.Mnemonic.Format());
-            if(sig.OpCount != 0)
-            {
-                buffer.Append("<");
-                for(var j=0; j<sig.OpCount; j++)
-                {
-                    if(j != 0)
-                        buffer.Append(", ");
-
-                    buffer.Append(AsmSigs.identify(sig[j]));
-                }
-                buffer.Append(">");
-            }
-
-            Channel.Write(buffer.Emit());
-        }
-
-        return true;
-    }
-
     [CmdOp("sdm/markers")]
     Outcome SdmMarkers()
     {

@@ -4,6 +4,8 @@
 #nullable disable
 using System.Diagnostics;
 using System.Runtime.Intrinsics.X86;
+using static System.Runtime.Intrinsics.X86.Sse2;
+using static System.Runtime.Intrinsics.X86.Ssse3;
 namespace System
 {
     public static class HexConverter
@@ -107,19 +109,19 @@ namespace System
                     ref Unsafe.Add(ref MemoryMarshal.GetReference(bytes), pos));
 
                 // Calculate nibbles
-                Vector128<byte> lowNibbles = Ssse3.Shuffle(
+                Vector128<byte> lowNibbles = Shuffle(
                     Vector128.CreateScalarUnsafe(block).AsByte(), shuffleMask);
-                Vector128<byte> highNibbles = Sse2.ShiftRightLogical(
-                    Sse2.ShiftRightLogical128BitLane(lowNibbles, 2).AsInt32(), 4).AsByte();
+                Vector128<byte> highNibbles = ShiftRightLogical(
+                    ShiftRightLogical128BitLane(lowNibbles, 2).AsInt32(), 4).AsByte();
 
                 // Lookup the hex values at the positions of the indices
-                Vector128<byte> indices = Sse2.And(
-                    Sse2.Or(lowNibbles, highNibbles), Vector128.Create((byte)0xF));
-                Vector128<byte> hex = Ssse3.Shuffle(asciiTable, indices);
+                Vector128<byte> indices = And(
+                    Or(lowNibbles, highNibbles), Vector128.Create((byte)0xF));
+                Vector128<byte> hex = Shuffle(asciiTable, indices);
 
                 // The high bytes (0x00) of the chars have also been converted
                 // to ascii hex '0', so clear them out.
-                hex = Sse2.And(hex, Vector128.Create((ushort)0xFF).AsByte());
+                hex = And(hex, Vector128.Create((ushort)0xFF).AsByte());
 
                 // Save to "chars" at pos*2 offset
                 Unsafe.WriteUnaligned(

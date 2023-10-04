@@ -1,4 +1,4 @@
 @echo off
-set ProjectId=test.checks
-set Area=src
+set ProjectName=test.shell
 call %~dp0..\config.cmd
+

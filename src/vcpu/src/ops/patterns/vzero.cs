@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    partial class vcpu
+    partial class vgcpu
     {
         /// <summary>
         /// Returns a 128-bit vector with all bits disabled

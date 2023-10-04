@@ -4,92 +4,92 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using F = StatusFlagBits;
+using B = StatusFlagBits;
 using I = StatusFlagIndex;
 
 /// <summary>
-/// Defines the state of a <see cref='F'/> join
+/// Defines the state of a <see cref='B'/> join
 /// </summary>
 [ApiComplete]
 public record struct StatusFlags : IEquatable<StatusFlags>
 {
-    StatusFlagBits State;
+    B State;
 
     [MethodImpl(Inline)]
     public StatusFlags(RFlagBits state)
-        => State = (StatusFlagBits)state;
+        => State = (B)state;
 
     [MethodImpl(Inline)]
-    public StatusFlags(StatusFlagBits state)
+    public StatusFlags(B state)
         => State = state;
 
     [MethodImpl(Inline)]
     public bit CF()
-        => (State & F.CF) != 0;
+        => (State & B.CF) != 0;
 
     [MethodImpl(Inline)]
     public void CF(bit f)
-        => State = (F)bit.set((uint)State, (byte)I.CF, f);
+        => State = (B)bit.set((uint)State, (byte)I.CF, f);
 
     [MethodImpl(Inline)]
     public bit PF()
-        => (State & F.PF) != 0;
+        => (State & B.PF) != 0;
 
     [MethodImpl(Inline)]
     public void PF(bit pf)
-        => State = (F)bit.set((uint)State, (byte)I.PF, pf);
+        => State = (B)bit.set((uint)State, (byte)I.PF, pf);
 
     [MethodImpl(Inline)]
     public bit AF()
-        => (State & F.AF) != 0;
+        => (State & B.AF) != 0;
 
     [MethodImpl(Inline)]
     public void AF(bit f)
-        => State = (F)bit.set((uint)State, (byte)I.AF, f);
+        => State = (B)bit.set((uint)State, (byte)I.AF, f);
 
     [MethodImpl(Inline)]
     public bit OF()
-        => (State & F.OF) != 0;
+        => (State & B.OF) != 0;
 
     [MethodImpl(Inline)]
     public void OF(bit f)
-        => State = (F)bit.set((uint)State, (byte)I.OF, f);
+        => State = (B)bit.set((uint)State, (byte)I.OF, f);
 
     [MethodImpl(Inline)]
     public bit SF()
-        => (State & F.SF) != 0;
+        => (State & B.SF) != 0;
 
     [MethodImpl(Inline)]
     public void SF(bit f)
-        => State = (F)bit.set((uint)State, (byte)I.SF, f);
+        => State = (B)bit.set((uint)State, (byte)I.SF, f);
 
     [MethodImpl(Inline)]
     public bit ZF()
-        => (State & F.ZF) != 0;
+        => (State & B.ZF) != 0;
 
     [MethodImpl(Inline)]
     public void ZF(bit f)
-        => State = (F)bit.set((uint)State, (byte)I.ZF, f);
+        => State = (B)bit.set((uint)State, (byte)I.ZF, f);
 
     [MethodImpl(Inline)]
     public bit NO()
-        => (State & F.OF) == 0;
+        => (State & B.OF) == 0;
 
     [MethodImpl(Inline)]
     public bit NC()
-        => (State & F.CF) == 0;
+        => (State & B.CF) == 0;
 
     [MethodImpl(Inline)]
     public bit NZ()
-        => (State & F.ZF) == 0;
+        => (State & B.ZF) == 0;
 
     [MethodImpl(Inline)]
     public bit NS()
-        => (State & F.SF) == 0;
+        => (State & B.SF) == 0;
 
     [MethodImpl(Inline)]
     public bit NP()
-        => (State & F.PF) == 0;
+        => (State & B.PF) == 0;
 
     [MethodImpl(Inline)]
     public bit LT()
@@ -97,7 +97,7 @@ public record struct StatusFlags : IEquatable<StatusFlags>
 
     [MethodImpl(Inline)]
     public bit A()
-        => (State & F.CF) == 0 && (State & F.ZF) == 0;
+        => (State & B.CF) == 0 && (State & B.ZF) == 0;
 
     [MethodImpl(Inline)]
     public bit NA()
@@ -109,7 +109,7 @@ public record struct StatusFlags : IEquatable<StatusFlags>
 
     [MethodImpl(Inline)]
     public void Write(I index, bit b)
-        => State = (F)bit.set((uint)State, (byte)index, b);
+        => State = (B)bit.set((uint)State, (byte)index, b);
 
     [MethodImpl(Inline)]
     public bool Equals(StatusFlags src)
@@ -131,19 +131,19 @@ public record struct StatusFlags : IEquatable<StatusFlags>
 
     [MethodImpl(Inline)]
     public static implicit operator StatusFlags(RFlagBits src)
-        => new StatusFlags(src);
+        => new (src);
 
     [MethodImpl(Inline)]
     public static implicit operator RFlagBits(StatusFlags src)
         => (RFlagBits)src.State;
 
     [MethodImpl(Inline)]
-    public static implicit operator StatusFlags(StatusFlagBits src)
-        => new StatusFlags(src);
+    public static implicit operator StatusFlags(B src)
+        => new (src);
 
     [MethodImpl(Inline)]
-    public static implicit operator StatusFlagBits(StatusFlags src)
-        => (StatusFlagBits)src.State;
+    public static implicit operator B(StatusFlags src)
+        => src.State;
 
     [MethodImpl(Inline)]
     public static explicit operator ushort(StatusFlags src)

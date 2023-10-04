@@ -35,7 +35,6 @@ public readonly record struct FlagEffect : IComparable<FlagEffect>
         var result = ((ulong)Flag).CompareTo(src.Flag);
         if(result == 0)
             result = ((byte)Kind).CompareTo(src.Kind);
-
         return result;
     }
 }
