@@ -2,33 +2,33 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using static XedRules;
+using static XedModels;
+
+partial class XedGrids
 {
-    using static XedRules;
-    using static XedModels;
-    partial class XedGrids
+    public readonly record struct RuleOp : ILogicOperand<Value>
     {
-        public readonly record struct RuleOp : ILogicOperand<Value>
+        public readonly Nonterminal Rule;
+
+        public readonly RuleOperator Operator;
+
+        public readonly Value Value;
+
+        [MethodImpl(Inline)]
+        public RuleOp(RuleName rule, RuleOperator op, Value value)
         {
-            public readonly Nonterminal Rule;
-
-            public readonly RuleOperator Operator;
-
-            public readonly Value Value;
-
-            [MethodImpl(Inline)]
-            public RuleOp(RuleName rule, RuleOperator op, Value value)
-            {
-                Rule = rule;
-                Operator = op;
-                Value = value;
-            }
-
-            Value ILogicOperand<Value>.Value
-                => Value;
-
-            RuleOperator ILogicOperand.Operator
-                => Operator;
+            Rule = rule;
+            Operator = op;
+            Value = value;
         }
+
+        Value ILogicOperand<Value>.Value
+            => Value;
+
+        RuleOperator ILogicOperand.Operator
+            => Operator;
     }
 }

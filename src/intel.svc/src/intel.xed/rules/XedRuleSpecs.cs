@@ -23,7 +23,7 @@ public readonly struct XedRuleSpecs
         => new (op);
 
     public static Index<TableCriteria> criteria(RuleTableKind kind)
-        => CalcTableCriteria(XedPaths.RuleSource(kind));
+        => CalcTableCriteria(XedPaths.InstPatternSource(kind));
 
     public static Index<TableCriteria> CalcTableCriteria(FilePath src, Action<object> status = null)
     {

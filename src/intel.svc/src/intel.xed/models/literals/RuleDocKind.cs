@@ -18,8 +18,6 @@ public enum XedDocKind : byte
 
     DecRuleTable,
 
-    EncDecRuleTable,
-
     Widths,
 
     PointerWidths,

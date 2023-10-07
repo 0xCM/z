@@ -2,11 +2,12 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    using static XedRules;
-    using static XedModels;
+namespace Z0;
 
+using static XedModels;
+
+partial class XedRules
+{
     [StructLayout(LayoutKind.Sequential,Pack=1), Record(TableId)]
     public record struct XedTableStats : IComparable<XedTableStats>
     {
@@ -66,4 +67,5 @@ namespace Z0
         public int CompareTo(XedTableStats src)
             => Sig.CompareTo(src.Sig);
     }
+
 }

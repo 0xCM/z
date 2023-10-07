@@ -3,7 +3,9 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0;
+
 using static sys;
+
 partial class XedDisasmCmd
 {
     [CmdOp("xed/disasm/collect")]

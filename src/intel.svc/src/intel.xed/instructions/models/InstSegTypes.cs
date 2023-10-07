@@ -3,46 +3,45 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using static XedModels;
+
+partial class XedRules
 {
-    using static XedModels;
-    
-    partial class XedRules
+    public class InstSegTypes
     {
-        public class InstSegTypes
+        public static InstSegType type(string pattern)
+            => new(SegTypeId(pattern));
+
+        [MethodImpl(Inline), Op]
+        public static InstSegType type(byte n, byte value)
+            => new InstSegType(n, value);
+
+        [MethodImpl(Inline)]
+        public static string pattern(InstSegType src)
         {
-            public static InstSegType type(string pattern)
-                => new(SegTypeId(pattern));
+            var dst = EmptyString;
+            if(src.Id < SegTypeIndex.Count)
+                dst = SegTypeIndex[src.Id].Right;
+            return dst;
+        }
 
-            [MethodImpl(Inline), Op]
-            public static InstSegType type(byte n, byte value)
-                => new InstSegType(n, value);
+        static byte SegTypeId(string src)
+        {
+            var dst = z8;
+            SegTypeLookup.Find(src, out dst);
+            return dst;
+        }
 
-            [MethodImpl(Inline)]
-            public static string pattern(InstSegType src)
-            {
-                var dst = EmptyString;
-                if(src.Id < SegTypeIndex.Count)
-                    dst = SegTypeIndex[src.Id].Right;
-                return dst;
-            }
+        static readonly Index<Paired<byte,string>> SegTypeIndex;
 
-            static byte SegTypeId(string src)
-            {
-                var dst = z8;
-                SegTypeLookup.Find(src, out dst);
-                return dst;
-            }
+        static readonly ConstLookup<string,byte> SegTypeLookup;
 
-            static readonly Index<Paired<byte,string>> SegTypeIndex;
-
-            static readonly ConstLookup<string,byte> SegTypeLookup;
-
-            static InstSegTypes()
-            {
-                SegTypeIndex = InstSegLiterals.Index();
-                SegTypeLookup = SegTypeIndex.Map(x => (x.Right,x.Left)).ToDictionary();
-            }
+        static InstSegTypes()
+        {
+            SegTypeIndex = InstSegLiterals.Index();
+            SegTypeLookup = SegTypeIndex.Map(x => (x.Right,x.Left)).ToDictionary();
         }
     }
 }

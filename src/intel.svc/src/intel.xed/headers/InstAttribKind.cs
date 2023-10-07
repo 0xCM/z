@@ -3,192 +3,191 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedModels
 {
-    partial class XedModels
+    [SymSource(xed), DataWidth(8)]
+    public enum InstAttribKind : byte
     {
-        [SymSource(xed), DataWidth(8)]
-        public enum InstAttribKind : byte
-        {
-            INVALID,
+        INVALID,
 
-            AMDONLY,
+        AMDONLY,
 
-            ATT_OPERAND_ORDER_EXCEPTION,
+        ATT_OPERAND_ORDER_EXCEPTION,
 
-            BROADCAST_ENABLED,
+        BROADCAST_ENABLED,
 
-            BYTEOP,
+        BYTEOP,
 
-            DISP8_EIGHTHMEM,
+        DISP8_EIGHTHMEM,
 
-            DISP8_FULL,
+        DISP8_FULL,
 
-            DISP8_FULLMEM,
+        DISP8_FULLMEM,
 
-            DISP8_GPR_READER,
+        DISP8_GPR_READER,
 
-            DISP8_GPR_READER_BYTE,
+        DISP8_GPR_READER_BYTE,
 
-            DISP8_GPR_READER_WORD,
+        DISP8_GPR_READER_WORD,
 
-            DISP8_GPR_WRITER_LDOP_D,
+        DISP8_GPR_WRITER_LDOP_D,
 
-            DISP8_GPR_WRITER_LDOP_Q,
+        DISP8_GPR_WRITER_LDOP_Q,
 
-            DISP8_GPR_WRITER_STORE,
+        DISP8_GPR_WRITER_STORE,
 
-            DISP8_GPR_WRITER_STORE_BYTE,
+        DISP8_GPR_WRITER_STORE_BYTE,
 
-            DISP8_GPR_WRITER_STORE_WORD,
+        DISP8_GPR_WRITER_STORE_WORD,
 
-            DISP8_GSCAT,
+        DISP8_GSCAT,
 
-            DISP8_HALF,
+        DISP8_HALF,
 
-            DISP8_HALFMEM,
+        DISP8_HALFMEM,
 
-            DISP8_MEM128,
+        DISP8_MEM128,
 
-            DISP8_MOVDDUP,
+        DISP8_MOVDDUP,
 
-            DISP8_QUARTERMEM,
+        DISP8_QUARTERMEM,
 
-            DISP8_SCALAR,
+        DISP8_SCALAR,
 
-            DISP8_TUPLE1,
+        DISP8_TUPLE1,
 
-            DISP8_TUPLE1_4X,
+        DISP8_TUPLE1_4X,
 
-            DISP8_TUPLE1_BYTE,
+        DISP8_TUPLE1_BYTE,
 
-            DISP8_TUPLE1_WORD,
+        DISP8_TUPLE1_WORD,
 
-            DISP8_TUPLE2,
+        DISP8_TUPLE2,
 
-            DISP8_TUPLE4,
+        DISP8_TUPLE4,
 
-            DISP8_TUPLE8,
+        DISP8_TUPLE8,
 
-            DOUBLE_WIDE_MEMOP,
+        DOUBLE_WIDE_MEMOP,
 
-            DOUBLE_WIDE_OUTPUT,
+        DOUBLE_WIDE_OUTPUT,
 
-            DWORD_INDICES,
+        DWORD_INDICES,
 
-            ELEMENT_SIZE_D,
+        ELEMENT_SIZE_D,
 
-            ELEMENT_SIZE_Q,
+        ELEMENT_SIZE_Q,
 
-            EXCEPTION_BR,
+        EXCEPTION_BR,
 
-            FAR_XFER,
+        FAR_XFER,
 
-            FIXED_BASE0,
+        FIXED_BASE0,
 
-            FIXED_BASE1,
+        FIXED_BASE1,
 
-            GATHER,
+        GATHER,
 
-            HALF_WIDE_OUTPUT,
+        HALF_WIDE_OUTPUT,
 
-            HLE_ACQ_ABLE,
+        HLE_ACQ_ABLE,
 
-            HLE_REL_ABLE,
+        HLE_REL_ABLE,
 
-            IGNORES_OSFXSR,
+        IGNORES_OSFXSR,
 
-            IMPLICIT_ONE,
+        IMPLICIT_ONE,
 
-            INDEX_REG_IS_POINTER,
+        INDEX_REG_IS_POINTER,
 
-            INDIRECT_BRANCH,
+        INDIRECT_BRANCH,
 
-            KMASK,
+        KMASK,
 
-            LOCKABLE,
+        LOCKABLE,
 
-            LOCKED,
+        LOCKED,
 
-            MASKOP,
+        MASKOP,
 
-            MASKOP_EVEX,
+        MASKOP_EVEX,
 
-            MASK_AS_CONTROL,
+        MASK_AS_CONTROL,
 
-            MASK_VARIABLE_MEMOP,
+        MASK_VARIABLE_MEMOP,
 
-            MEMORY_FAULT_SUPPRESSION,
+        MEMORY_FAULT_SUPPRESSION,
 
-            MMX_EXCEPT,
+        MMX_EXCEPT,
 
-            MPX_PREFIX_ABLE,
+        MPX_PREFIX_ABLE,
 
-            MULTIDEST2,
+        MULTIDEST2,
 
-            MULTISOURCE4,
+        MULTISOURCE4,
 
-            MXCSR,
+        MXCSR,
 
-            MXCSR_RD,
+        MXCSR_RD,
 
-            NONTEMPORAL,
+        NONTEMPORAL,
 
-            NOP,
+        NOP,
 
-            NOTSX,
+        NOTSX,
 
-            NOTSX_COND,
+        NOTSX_COND,
 
-            NO_RIP_REL,
+        NO_RIP_REL,
 
-            PREFETCH,
+        PREFETCH,
 
-            PROTECTED_MODE,
+        PROTECTED_MODE,
 
-            QWORD_INDICES,
+        QWORD_INDICES,
 
-            REP,
+        REP,
 
-            REQUIRES_ALIGNMENT,
+        REQUIRES_ALIGNMENT,
 
-            RING0,
+        RING0,
 
-            SCALABLE,
+        SCALABLE,
 
-            SCATTER,
+        SCATTER,
 
-            SIMD_SCALAR,
+        SIMD_SCALAR,
 
-            SKIPLOW32,
+        SKIPLOW32,
 
-            SKIPLOW64,
+        SKIPLOW64,
 
-            SPECIAL_AGEN_REQUIRED,
+        SPECIAL_AGEN_REQUIRED,
 
-            STACKPOP0,
+        STACKPOP0,
 
-            STACKPOP1,
+        STACKPOP1,
 
-            STACKPUSH0,
+        STACKPUSH0,
 
-            STACKPUSH1,
+        STACKPUSH1,
 
-            X87_CONTROL,
+        X87_CONTROL,
 
-            X87_MMX_STATE_CW,
+        X87_MMX_STATE_CW,
 
-            X87_MMX_STATE_R,
+        X87_MMX_STATE_R,
 
-            X87_MMX_STATE_W,
+        X87_MMX_STATE_W,
 
-            X87_NOWAIT,
+        X87_NOWAIT,
 
-            XMM_STATE_CW,
+        XMM_STATE_CW,
 
-            XMM_STATE_R,
+        XMM_STATE_R,
 
-            XMM_STATE_W,
-        }
+        XMM_STATE_W,
     }
 }

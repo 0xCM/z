@@ -241,7 +241,7 @@ public partial class Xed : WfSvc<Xed>
         
     public static Index<RuleTableBlock> blocks(RuleTableKind kind)
     {
-        var src = XedPaths.RuleSource(kind);
+        var src = XedPaths.InstDefSource(kind);
         var lines = src.ReadNumberedLines();
         var offsets = list<LineNumber>();
         var names = list<string>();

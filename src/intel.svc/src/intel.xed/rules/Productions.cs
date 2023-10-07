@@ -154,7 +154,6 @@ partial class XedRules
                     _ => RegOp.Empty
                 };
         }
-
     }
 
 }

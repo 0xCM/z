@@ -9,8 +9,6 @@ using static sys;
 
 public class XedZ
 {
-    static XedPaths XedPaths => XedPaths.Service;
-
     public sealed class BlockDomain : Dictionary<string,HashSet<RuleAttribute>>
     {
         public readonly Dictionary<XedFormType,FormRules> Rules = new();
@@ -219,7 +217,6 @@ public class XedZ
 
             return dst.Emit();
         }
-
     }
 
     public class Vector : Sequence
@@ -279,7 +276,7 @@ public class XedZ
         public static Attribute Empty => new(default,EmptyString);
     }
 
-    static bool parse(string src, out Attribute dst)
+    public static bool parse(string src, out Attribute dst)
     {
         var i = text.index(src,Chars.Colon);
         if(i > 0)
@@ -307,7 +304,6 @@ public class XedZ
         dst.BlockLines = ds.BlockLines;
         dst.LineMap = ds.MappedForms;
         dst.Imports = ds.BlockImports.Index().Sort().Resequence();
-        dst.Duplicates = calc(dst.Imports, out dst.ImportLookup);
         var fds = forms(ds);
         dst.FormBlocks = fds.Descriptions;
         dst.FormHeaders = fds.Headers;
@@ -386,20 +382,6 @@ public class XedZ
         return dst;
     }
 
-    static Index<InstBlockImport> calc(Index<InstBlockImport> src, out SortedLookup<string,InstBlockImport> dst)
-    {
-        var dupes = list<InstBlockImport>();
-        var lookup = cdict<string,InstBlockImport>();
-        for(var i=0; i<src.Count; i++)
-        {
-            ref readonly var import = ref src[i];
-            if(!lookup.TryAdd(import.Form.Format(), import))
-                dupes.Add(import);
-        }
-        dst = lookup;
-        return dupes.ToIndex().Sort();
-    }
-
     static bool split(string src, out string name, out string value)
     {
         var result = false;
@@ -418,12 +400,18 @@ public class XedZ
         return result;
     }
 
-    static void CalcBlockLines(ReadOnlySpan<string> src, BlockImportDatasets dst)
+    public static void BlockLines(FilePath path, Action<InstBlockLineSpec> dst)
+    {
+        using var src = MemoryFiles.map(path);
+        BlockLines(Lines.lines(src), dst);        
+    }
+
+    static void BlockLines(ReadOnlySpan<string> src, Action<InstBlockLineSpec> dst)
     {
         const string FirstItemMarker = "amd_3dnow_opcode:";
         const string LastItemMarker = "EOSZ_LIST:";
         const string Pattern = "{0,-6} | {1,-6} | {2,-6} | {3,-6} | {4,-64}";
-        const string Marker = "iform:";
+        const string IFormMarker = "iform:";
         var fields = InstBlockLineSpec.Empty;
         var buffer = list<LineInterval<InstBlockLineSpec>>();
         var form = XedInstForm.Empty;
@@ -433,6 +421,7 @@ public class XedZ
         var counter = 0u;
         var min = 0u;
         var seq = 0u;
+
         for(var i=0u; i<src.Length; i++)
         {
             var line = text.trim(skip(src,i));
@@ -450,7 +439,55 @@ public class XedZ
                 fields.MinChar = min;
                 fields.MaxChar = counter;
                 fields.Seq = seq++;
-                fields.Lines = fields.MaxLine - fields.MinLine + 1;
+                fields.LineCount = fields.MaxLine - fields.MinLine + 1;
+                fields.Lines = slice(src,fields.MinLine, fields.LineCount).ToArray();
+                dst(fields);
+                fields = InstBlockLineSpec.Empty;
+                min = counter+1;
+            }
+            else
+            {
+                var j = text.index(line,IFormMarker);
+                if(j >= 0)
+                    XedParsers.parse(value, out fields.Form);
+            }
+        }
+    }
+
+    static void CalcBlockLines(ReadOnlySpan<string> src, BlockImportDatasets dst)
+    {
+        const string FirstItemMarker = "amd_3dnow_opcode:";
+        const string LastItemMarker = "EOSZ_LIST:";
+        const string Pattern = "{0,-6} | {1,-6} | {2,-6} | {3,-6} | {4,-64}";
+        const string IFormMarker = "iform:";
+        var fields = InstBlockLineSpec.Empty;
+        var buffer = list<LineInterval<InstBlockLineSpec>>();
+        var form = XedInstForm.Empty;
+        var name = EmptyString;
+        var value = EmptyString;
+        var field = InstBlockField.amd_3dnow_opcode;
+        var counter = 0u;
+        var min = 0u;
+        var seq = 0u;
+
+        for(var i=0u; i<src.Length; i++)
+        {
+            var line = text.trim(skip(src,i));
+            counter += (uint)line.Length;
+            if(split(line, out name, out value))
+            {
+                if(XedParsers.parse(name, out field))
+                    fields.Fields[field] = bit.On;
+            }
+            if(text.begins(line,FirstItemMarker))
+                fields.MinLine = i;
+            else if(text.begins(line, LastItemMarker))
+            {
+                fields.MaxLine = i;
+                fields.MinChar = min;
+                fields.MaxChar = counter;
+                fields.Seq = seq++;
+                fields.LineCount = fields.MaxLine - fields.MinLine + 1;
                 dst.BlockLines.Add(fields);
                 buffer.Add(new LineInterval<InstBlockLineSpec>(fields, fields.MinLine, fields.MaxLine));
                 fields = InstBlockLineSpec.Empty;
@@ -458,7 +495,7 @@ public class XedZ
             }
             else
             {
-                var j = text.index(line,Marker);
+                var j = text.index(line,IFormMarker);
                 if(j >= 0)
                     XedParsers.parse(value, out fields.Form);
             }
@@ -490,8 +527,7 @@ public class XedZ
                 try
                 {
                     XedInstParser.parse(src.Value, out dst.Pattern);
-                    var fields = XedCells.sort(dst.Pattern.Cells);
-                    dst.Pattern = new (fields);
+                    dst.Pattern = new (XedCells.sort(dst.Pattern.Cells));
                     XedPatterns.mode(dst.Pattern, out dst.Mode);
                 }
                 catch(Exception e)
@@ -548,8 +584,6 @@ public class XedZ
 
         public ConcurrentDictionary<XedInstForm,string> FormHeaders = new();
 
-        public SortedLookup<string,InstBlockImport> ImportLookup = dict<string,InstBlockImport>();
-
         public XedRuleBlocks()
         {
 
@@ -581,7 +615,7 @@ public class XedZ
                 var content = src.FormData[form];
                 var seq = Sorted[form];
                 Descriptions[form] = content;
-                Headers[form] = string.Format("{0,-64} | {1:D5} | {2:D2} | {3:D6} | {4:D6}", form, seq, line.Lines, line.MinLine, line.MaxLine);
+                Headers[form] = string.Format("{0,-64} | {1:D5} | {2:D2} | {3:D6} | {4:D6}", form, seq, line.LineCount, line.MinLine, line.MaxLine);
             }
         }
     }

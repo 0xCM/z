@@ -21,7 +21,7 @@ public class XedSigs
         for(var i=z8; i<count; i++)
         {
             ref readonly var operand = ref ops[i];
-            dst[i] = op(operand.Index, operand.Name, XedSigs.indicator(operand.Name), operand.Kind, operand.BitWidth);
+            dst[i] = op(operand.Index, operand.Name, indicator(operand.Name), operand.Kind, operand.BitWidth);
         }
         return dst;
     }

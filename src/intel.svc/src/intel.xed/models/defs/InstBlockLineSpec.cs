@@ -27,13 +27,16 @@ partial class XedModels
         public uint MaxChar;
 
         [Render(8)]
-        public uint Lines;
+        public uint LineCount;
 
         [Render(64)]
         public XedInstForm Form;
 
-        [Render(1)]
+        [Render(128)]
         public BitVector64<InstBlockField> Fields;
+
+        [Render(1)]
+        public ReadOnlySeq<string> Lines;
 
         public static InstBlockLineSpec Empty => default;
     }

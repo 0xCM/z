@@ -8,7 +8,7 @@ using Asm;
 
 using static sys;
 using static XedModels;
-
+using static XedZ;
 
 partial class XedCmd
 {
@@ -23,41 +23,58 @@ partial class XedCmd
         });
     }
 
-    [CmdOp("xed/sigs")]
-    void EmitSigs()
+    [CmdOp("xed/blocks")]
+    void EmitBlockLines()
     {
-        Channel.Row(AsmSigs.m16());
+        var path =  XedPaths.DocSource(XedDocKind.RuleBlocks);
+        XedZ.BlockLines(path, spec => {
+            var attribs = list<Attribute>();
+            var result = true;
+            Channel.Row($"form:{spec.Form}");
+
+            foreach(var line in spec.Lines)
+            {                
+                if(XedZ.parse(line, out Attribute attrib))
+                {
+                    attribs.Add(attrib);
+                    switch(attrib.Field)
+                    {
+                        case InstBlockField.iclass:
+                        {
+                            if(XedParsers.parse(attrib.Value, out XedInstClass @class))
+                            {
+                                Channel.Row($"iclass:{@class}");
+                            }
+                        }
+                        break;
+                        case InstBlockField.pattern:
+                        {
+                            result = XedInstParser.parse(attrib.Value, out InstPatternBody pattern);
+                            ref readonly var fields = ref pattern.Cells;
+                            var layout = fields.Layout;
+                            var expr = fields.Expr;
+                            foreach(var f in fields)
+                                Channel.Row($"field:{f.Format()}");
+                        }
+                        break;
+                        
+                        case InstBlockField.operands:
+                        break;
+                    }
+                }
+                if(!result)                
+                {
+                    Channel.Error(line);
+                    break;
+                }                
+            }
+        });
     }
 
     [CmdOp("xed/etl")]
     void RunImport()
     {
+
         XedImport.Run();        
-        // exec(true, 
-        //     () => XedZ.emit(Channel, XedZ.rules(XedPaths.DocSource(XedDocKind.RuleBlocks))),
-        //     () => Channel.TableEmit(XedRegMap.Service.REntries, XedPaths.Targets().Table<RegMapEntry>("rmap")),
-        //     () => Channel.TableEmit(XedRegMap.Service.XEntries, XedPaths.Targets().Table<RegMapEntry>("xmap")),
-        //     () => DataFlow.EmitChipCodes(Symbols.symkinds<ChipCode>()),
-        //     () => DataFlow.EmitBroadcastDefs(Xed.broadcasts(Symbols.kinds<BroadcastKind>())),
-        //     () => DataFlow.EmitCpuIdDataset(DataFlow.CalcCpuIdDataset(XedPaths.DocSource(XedDocKind.CpuId))),
-        //     () => {
-        //         var chips = DataFlow.CalcChipMap(XedPaths.DocSource(XedDocKind.ChipMap));
-        //         DataFlow.EmitChipMap(chips);
-        //         var forms = DataFlow.CalcFormImports(XedPaths.DocSource(XedDocKind.FormData));
-        //         DataFlow.EmitFormImports(forms);
-        //         var inst = DataFlow.CalcChipInstructions(forms, chips);
-        //         DataFlow.EmitChipInstructions(inst);
-        //     },
-        //     () => {
-        //         var widths = XedImport.Widths;
-        //         DataFlow.EmitOpWidths(widths.Details);
-        //         DataFlow.EmitPointerWidths(widths.Pointers.Where(x => x.Kind != 0).Map(x => x.ToRecord()));
-        //     }
-        // );
-
-        // var defs = XedInstDefParser.parse(XedPaths.DocSource(XedDocKind.EncInstDef));
-        // var patterns = InstPattern.load(defs);
-
-
     }
 }

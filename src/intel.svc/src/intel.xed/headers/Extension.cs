@@ -5,17 +5,17 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-partial class XedRules
+partial class XedModels
 {
     [DataWidth(8)]
-    public readonly struct RuleMacro
+    public readonly record struct Extension
     {
-        public readonly RuleMacroKind Kind;
+        public readonly ExtensionKind Kind;
 
         [MethodImpl(Inline)]
-        public RuleMacro(RuleMacroKind kind)
+        public Extension(ExtensionKind src)
         {
-            Kind = kind;
+            Kind = src;
         }
 
         public string Format()
@@ -25,13 +25,13 @@ partial class XedRules
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator RuleMacro(RuleMacroKind src)
-            => new RuleMacro(src);
+        public static implicit operator Extension(ExtensionKind src)
+            => new Extension(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator RuleMacroKind(RuleMacro src)
+        public static implicit operator ExtensionKind(Extension src)
             => src.Kind;
 
-        public static RuleMacro Emtpy => new RuleMacro(0);
+        public static Extension Empty => default;
     }
 }

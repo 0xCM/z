@@ -185,6 +185,20 @@ public class XedPaths
     public static FilePath DocTarget(string name, FileKind kind)
         => DocTargets().Path(FS.file(string.Format("xed.docs.{0}", name), kind.Ext()));
     
+    public static FilePath InstDefSource(RuleTableKind kind)
+        => kind switch {
+            RuleTableKind.DEC => Sources().Path(FS.file("all-dec-instructions", FS.Txt)),
+            RuleTableKind.ENC => Sources().Path(FS.file("all-enc-instructions", FS.Txt)),
+            _ => FilePath.Empty
+        };
+
+    public static FilePath InstPatternSource(RuleTableKind kind)
+        => kind switch {
+            RuleTableKind.DEC => Sources().Path(FS.file("all-dec-patterns", FS.Txt)),
+            RuleTableKind.ENC => Sources().Path(FS.file("all-enc-patterns", FS.Txt)),
+            _ => Sources().Path(FS.file("all-enc-dec-patterns", FS.Txt)),
+        };
+
     public static FilePath DocSource(XedDocKind kind)
         => Sources().Path(kind switch{
             XedDocKind.RuleBlocks => FS.file("xed-dump", FileKind.Txt),
@@ -192,7 +206,7 @@ public class XedPaths
             XedDocKind.DecInstDef => FS.file("all-dec-instructions", FS.Txt),
             XedDocKind.EncRuleTable => FS.file("all-enc-patterns", FS.Txt),
             XedDocKind.DecRuleTable => FS.file("all-dec-patterns", FS.Txt),
-            XedDocKind.EncDecRuleTable => FS.file("all-enc-dec-patterns", FS.Txt),
+            //XedDocKind.EncDecRuleTable => FS.file("all-enc-dec-patterns", FS.Txt),
             XedDocKind.Widths => FS.file("all-widths", FS.Txt),
             XedDocKind.PointerWidths => FS.file("all-pointer-names", FS.Txt),
             XedDocKind.Fields => FS.file("all-fields", FS.Txt),
@@ -212,8 +226,6 @@ public class XedPaths
 
     static FileName DecRuleTable = FS.file("all-dec-patterns", FS.Txt);
 
-    static FileName EncDecRuleTable = FS.file("all-enc-dec-patterns", FS.Txt);
-
     static XedDocKind srckind(FileName src)
     {
         if(src == EncInstDef)
@@ -224,8 +236,8 @@ public class XedPaths
             return XedDocKind.EncRuleTable;
         else if(src == DecRuleTable)
             return XedDocKind.DecRuleTable;
-        else if(src == EncDecRuleTable)
-            return XedDocKind.EncDecRuleTable;
+        // else if(src == EncDecRuleTable)
+        //     return XedDocKind.EncDecRuleTable;
         else
             return 0;
     }

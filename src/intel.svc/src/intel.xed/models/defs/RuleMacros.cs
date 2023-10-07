@@ -32,23 +32,23 @@ partial class XedRules
     [MethodImpl(Inline), Op, Closures(Closure)]
     static MacroSpec assign<T>(M name, K field, T value)
         where T : unmanaged
-            => new MacroSpec(name, field, new MacroExpansion(field, OperatorKind.Eq, new FieldValue(field, bw64(value))));
+            => new (name, field, new MacroExpansion(field, OperatorKind.Eq, new FieldValue(field, bw64(value))));
 
     [MethodImpl(Inline), Op]
     static MacroSpec assign(M name, K field, MachineModeClass value)
-        => new MacroSpec(name, field, new MacroExpansion(field, OperatorKind.Eq, new FieldValue(field, value)));
+        => new (name, field, new MacroExpansion(field, OperatorKind.Eq, new FieldValue(field, value)));
 
     [MethodImpl(Inline), Op]
     static MacroExpansion expansion(K field, ushort value)
-        => new MacroExpansion(field, OperatorKind.Eq, new FieldValue(field, value));
+        => new (field, OperatorKind.Eq, new FieldValue(field, value));
 
     [MethodImpl(Inline), Op]
     static MacroSpec assign(M name, K field, EASZ value)
-        => new MacroSpec(name, field, expansion(field, (ushort)value));
+        => new (name, field, expansion(field, (ushort)value));
 
     [MethodImpl(Inline), Op]
     static MacroSpec assign(M name, params FieldAssign[] a0)
-        => new MacroSpec(name, 0, a0.Map(x => new MacroExpansion(x.Field, OperatorKind.Eq, x.Value)));
+        => new (name, 0, a0.Map(x => new MacroExpansion(x.Field, OperatorKind.Eq, x.Value)));
 
     [MethodImpl(Inline), Op, Closures(Closure)]
     static FieldAssign assign<T>(FieldKind field, T fv)
