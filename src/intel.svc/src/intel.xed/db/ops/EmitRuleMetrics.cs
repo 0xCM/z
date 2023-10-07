@@ -14,13 +14,13 @@ namespace Z0
             var dst = text.emitter();
             for(var i=0; i<src.TableCount; i++)
                 dst.AppendLine(CalcTableMetrics(src[i]));
-            Channel.FileEmit(dst.Emit(), src.TableCount, Paths.DbTarget("rules.metrics", FileKind.Txt));
+            Channel.FileEmit(dst.Emit(), src.TableCount, XedPaths.DbTarget("rules.metrics", FileKind.Txt));
         }
 
         string CalcTableMetrics(in CellTable table)
         {
             var dst = text.emitter();
-            dst.AppendLine(string.Format("{0,-32} {1}", table.Sig, Paths.CheckedRulePage(table.Sig)));
+            dst.AppendLine(string.Format("{0,-32} {1}", table.Sig, XedPaths.CheckedRulePage(table.Sig)));
             dst.AppendLine(RP.PageBreak120);
             dst.AppendLine();
             for(var i=0; i<table.RowCount; i++)

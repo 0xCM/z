@@ -39,12 +39,8 @@ partial class AsmSigs
                 dst = TokenRender.FpuRegToken.Format((FpuRegToken)src.Value);
             break;
 
-            case K.MmxRm:
-                dst = TokenRender.MmxRmToken.Format((MmxRmToken)src.Value);
-            break;
-
-            case K.MmxReg:                
-                dst = TokenRender.MmxRegToken.Format((MmxRegToken)src.Value);
+            case K.Mmx:                
+                dst = TokenRender.MmxRmToken.Format((MmxToken)src.Value);
             break;
 
             case K.Imm:                

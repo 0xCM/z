@@ -24,9 +24,7 @@ public enum AsmSigTokenKind : byte
 
     FpuReg,
 
-    MmxRm,
-
-    MmxReg,
+    Mmx,
 
     Imm,
 

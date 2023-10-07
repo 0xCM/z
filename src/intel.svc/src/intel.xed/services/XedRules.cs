@@ -19,8 +19,6 @@ public partial class XedRules : WfSvc<XedRules>
 
     XedRuntime XedRuntime => Wf.XedRuntime();
 
-    XedPaths XedPaths => XedRuntime.Paths;
-
     [MethodImpl(Inline)]
     StringRef String(string src)
         => XedRuntime.Alloc.String(src);

@@ -199,10 +199,10 @@ public partial class Xed : WfSvc<Xed>
 
     [MethodImpl(Inline), Op]
     public static RowExpr expr(Index<RuleCell> src)
-        => new RowExpr(src);
+        => new (src);
 
     public static XedKit kit()
-        => new XedKit(AppSettings.Sdks().Scoped("intel/xed"));
+        => new (AppSettings.Sdks().Scoped("intel/xed"));
 
     public static Index<FieldUsage> fields(CellTables src)
     {
@@ -241,7 +241,7 @@ public partial class Xed : WfSvc<Xed>
         
     public static Index<RuleTableBlock> blocks(RuleTableKind kind)
     {
-        var src = XedPaths.Service.RuleSource(kind);
+        var src = XedPaths.RuleSource(kind);
         var lines = src.ReadNumberedLines();
         var offsets = list<LineNumber>();
         var names = list<string>();

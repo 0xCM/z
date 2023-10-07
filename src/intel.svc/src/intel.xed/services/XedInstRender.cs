@@ -41,7 +41,7 @@ public class XedInstRender
         var _bw = bw.ToString();
         if(src.Nonterminal(out var nt))
         {
-            if(GprWidth.widths(nt, out var gpr))
+            if(GprWidth.width(nt, out var gpr))
                 _bw = gpr.Format();
         }
 
@@ -64,7 +64,7 @@ public class XedInstRender
             if(op.IsNonTerminal)
             {
                 op.Nonterminal(out var nt);
-                var uri = XedPaths.Service.CheckedTableDef(nt, true, out var sig);
+                var uri = XedPaths.CheckedTableDef(nt, true, out var sig);
                 seek(dst,k++) = (string.Format(RenderPattern,
                     op.Index,
                     XedRender.format(op.Name),
@@ -118,7 +118,7 @@ public class XedInstRender
                         var rule = field.AsNonterm();
                         if(rule.IsNonEmpty)
                         {
-                            var uri = XedPaths.Service.CheckedTableDef(rule, true, out var sig);
+                            var uri = XedPaths.CheckedTableDef(rule, true, out var sig);
                             seek(dst,k++) = string.Format(Pattern, j, "Nonterm",  string.Format("{0}::{1}", rule.Format(), uri));
                         }
                         else

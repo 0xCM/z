@@ -50,7 +50,7 @@ namespace Z0
                 seek(stats,i) = new XedTableStats(i, rule, new DataSize(pw, aw), new DataSize(mpw,maw),(ushort)rows.Count, cc, (byte)mcc);
             }
 
-            Channel.TableEmit(stats, Paths.DbTable<XedTableStats>(), TextEncodingKind.Asci);
+            Channel.TableEmit(stats, XedPaths.DbTable<XedTableStats>(), TextEncodingKind.Asci);
         }
     }
 }

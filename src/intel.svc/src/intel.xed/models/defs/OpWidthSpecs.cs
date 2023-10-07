@@ -22,5 +22,8 @@ partial class XedModels
             [MethodImpl(Inline)]
             get => ref Data[code];
         }
+
+        public ReadOnlySpan<WidthCode> Codes
+            => Symbols.kinds<WidthCode>();
     }
 }

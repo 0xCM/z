@@ -190,6 +190,9 @@ public class AsmSigTokens
     [SymSource(GroupName), TokenKind(TK.GpReg)]
     public enum GpRegToken : byte
     {
+        [Symbol("reg", "A gp register used for instructions when the width of the register does not matter to the semantics of the operation of the instruction. The register can be r16, r32, or r64.")]
+        reg,
+
         /// <summary>
         ///  One of {al, cl, dl, bl, ah, ch, dh, bh, bpl, spl, dil, sil} or {r8b, r9b, r10b, r11b, r12b, r13b, r14b, r15b} when using REX.R and 64-bit mode.
         /// </summary>
@@ -215,16 +218,12 @@ public class AsmSigTokens
         r64,
     }
 
-    [SymSource(GroupName), TokenKind(TK.MmxReg)]
-    public enum MmxRegToken : byte
+    [SymSource(GroupName), TokenKind(TK.Mmx)]
+    public enum MmxToken : byte
     {
         [Symbol("mm")]
         mm,
-    }
 
-    [SymSource(GroupName), TokenKind(TK.MmxRm)]
-    public enum MmxRmToken : byte
-    {
         [Symbol("mm/m32", "The low-order bits of an mmx register or a 32-bit memory operand; The contents of memory are found at the address provided by the effective address computation")]
         mm32,
 
@@ -364,8 +363,14 @@ public class AsmSigTokens
     [SymSource(GroupName), TokenKind(TK.Mem)]
     public enum MemToken : byte
     {
-        [Symbol("m", "A 16-, 32- or 64-bit operand in memory")]
+        [Symbol("m", "A memory operand of width 16, 32 or 64 bits")]
         m,
+
+        [Symbol("mem", "A memory operand of width 16, 32 or 64 bits")]
+        mem,
+
+        [Symbol("mV", "A vector memory operand; the operand size is dependent on the instruction")]
+        mV,
 
         [Symbol("m8", "A byte operand in memory ( usually expressed as a variable or array name) but pointed to by the DS:(E)SI or ES:(E)DI registers. In 64-bit mode, it is pointed to by the RSI or RDI registers")]
         m8,
@@ -644,23 +649,13 @@ public class AsmSigTokens
         vm64z
     }
 
+    
+
     [SymSource(GroupName), TokenKind(TK.Dependent)]
     public enum DependentToken : byte
     {
         [Symbol("/r", "Indicates that the ModR/M byte of the instruction contains a register operand and an r/m operand")]
         r,
-
-        [Symbol("m", "A memory operand of width 16, 32 or 64 bits")]
-        m,
-
-        [Symbol("mem", "A memory operand of width 16, 32 or 64 bits")]
-        mem,
-
-        [Symbol("mV", "A vector memory operand; the operand size is dependent on the instruction")]
-        mV,
-
-        [Symbol("reg", "A gp register used for instructions when the width of the register does not matter to the semantics of the operation of the instruction. The register can be r16, r32, or r64.")]
-        reg,
 
         [Symbol("SRC", "The source in a single-source instruction")]
         SRC,
@@ -703,13 +698,13 @@ public class AsmSigTokens
 
         public static readonly EnumRender<GpRegToken> GpRegToken = new();
 
-        public static readonly EnumRender<MmxRegToken> MmxRegToken = new();
+        public static readonly EnumRender<MmxToken> MmxRegToken = new();
 
         public static readonly EnumRender<ImmToken> ImmToken = new();
 
         public static readonly EnumRender<FpuRegToken> FpuRegToken = new();
 
-        public static readonly EnumRender<MmxRmToken> MmxRmToken = new();
+        public static readonly EnumRender<MmxToken> MmxRmToken = new();
 
         public static readonly EnumRender<PtrToken> PtrToken = new();
 

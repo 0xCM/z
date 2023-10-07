@@ -14,6 +14,9 @@ using R = XedRules;
 
 partial class XedOps
 {
+    public ReadOnlySeq<OpName> OpNames
+        => Symbols.index<OpNameKind>().Kinds.Map(x => new OpName(x));            
+
     public static ReadOnlySpan<M.ASZ> ASZ
     {
         [MethodImpl(Inline), Op]

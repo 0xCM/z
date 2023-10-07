@@ -15,17 +15,16 @@ using Class = AsmPrefixClass;
 public class AsmPrefix
 {        
     [MethodImpl(Inline)]
-    public static EvexPrefix evex(byte b0, byte b1, byte b2, byte b3)
-        => new (Bytes.join(b0,b1,b2,b3));
+    public static EvexPrefix evex(byte b1, byte b2, byte b3)
+        => new (Bytes.join(0x62, b1, b2, b3));
 
     [MethodImpl(Inline)]
     public static EvexPrefix evex(ReadOnlySpan<byte> src)
     {
-        var count = min(src.Length,4);
-        var data = 0u;
-        for(var i=0; i<count; i++)
-            data |= (uint)skip(src,i) << (i*8);
-        return new EvexPrefix(data);
+        if(src.Length < 4)
+            return EvexPrefix.Empty;
+        else
+            return @as<EvexPrefix>(src);
     }
 
     [MethodImpl(Inline), Op]

@@ -104,7 +104,7 @@ public class XedForms : WfSvc<XedForms>
             }
         }
 
-        var path = XedPaths.Service.DbTargets().Path(FS.file(monic, FS.Csv));
+        var path = XedPaths.DbTargets().Path(FS.file(monic, FS.Csv));
         var records = dst.ViewDeposited();
         channel.TableEmit(records, path);
         return records;

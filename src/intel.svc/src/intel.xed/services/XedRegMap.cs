@@ -64,7 +64,7 @@ public sealed class XedRegMap
         dst.RegClass = reg.RegClass;
         dst.RegSize = reg.Size;
         dst.RegName = reg.Name;
-        dst.RegIndex = (byte)reg.Index;
+        dst.RegIndex = (byte)reg.IndexCode;
         return dst;
     }
 

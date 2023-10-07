@@ -53,7 +53,7 @@ public readonly struct RegOp : IRegOp
         get => @class(this);
     }
 
-    public RegIndexCode Index
+    public RegIndexCode IndexCode
     {
         [MethodImpl(Inline)]
         get => index(this);
@@ -80,7 +80,7 @@ public readonly struct RegOp : IRegOp
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public string Format()

@@ -7,7 +7,7 @@ namespace Z0.Asm;
 /// <summary>
 /// Represents a register index from the domain [0,31]
 /// </summary>
-public readonly record struct RegIndex
+public readonly record struct RegIndex : IComparable<RegIndex>
 {
     [MethodImpl(Inline)]
     public static RegIndex from(byte value)
@@ -36,6 +36,11 @@ public readonly record struct RegIndex
     [MethodImpl(Inline)]
     public RegIndex Prior()
         => (byte)Code > 0 ? (byte)((byte)Code - 1) : 31;
+
+    [MethodImpl(Inline)]
+    public int CompareTo(RegIndex src)
+        => ((byte)Code).CompareTo((byte)src.Code);
+
     public string Format()
         => BitRender.format5(Encoded);
 

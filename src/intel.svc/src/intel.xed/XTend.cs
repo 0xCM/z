@@ -6,7 +6,6 @@ namespace Z0;
 
 using System.Linq;
 
-using static XedRules;
 using static XedModels;
 
 partial class XTend

@@ -17,12 +17,12 @@ public readonly struct r16 : IRegOp16<G>
 {
     internal const NativeSizeCode W = NativeSizeCode.W16;
 
-    public I Index {get;}
+    public I IndexCode {get;}
 
     [MethodImpl(Inline)]
     public r16(I index)
     {
-        Index = index;
+        IndexCode = index;
     }
 
     [MethodImpl(Inline)]
@@ -30,7 +30,7 @@ public readonly struct r16 : IRegOp16<G>
         => new (this);
 
     public string Format()
-        => ((K)Index).ToString();
+        => ((K)IndexCode).ToString();
 
     public override string ToString()
         => Format();
@@ -61,7 +61,7 @@ public readonly struct r16 : IRegOp16<G>
 
     [MethodImpl(Inline)]
     public static implicit operator RegOp(G src)
-        => reg(src.Size, src.RegClassCode, src.Index);
+        => reg(src.Size, src.RegClassCode, src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator AsmOperand(G src)
@@ -69,7 +69,7 @@ public readonly struct r16 : IRegOp16<G>
 
     [MethodImpl(Inline)]
     public static implicit operator K(G src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator G(K src)
@@ -81,11 +81,11 @@ public readonly struct r16 : IRegOp16<G>
 
     [MethodImpl(Inline)]
     public static implicit operator I(G src)
-        => src.Index;
+        => src.IndexCode;
 
     [MethodImpl(Inline)]
     public static explicit operator byte(G src)
-        => (byte)src.Index;
+        => (byte)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator G(Sym<K> src)
@@ -106,12 +106,12 @@ public readonly struct r16 : IRegOp16<G>
 
 public readonly struct ax : IRegOp16<ax>
 {
-    public I Index => I.r0;
+    public I IndexCode => I.r0;
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -134,11 +134,11 @@ public readonly struct ax : IRegOp16<ax>
 
     [MethodImpl(Inline)]
     public static implicit operator G(ax src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(ax src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(ax src)
@@ -152,15 +152,15 @@ public readonly struct ax : IRegOp16<ax>
 
 public struct cx : IRegOp16<cx>
 {
-    public I Index => I.r1;
+    public I IndexCode => I.r1;
 
     [MethodImpl(Inline)]
     public static implicit operator G(cx src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(cx src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(cx src)
@@ -173,15 +173,15 @@ public struct cx : IRegOp16<cx>
 
 public struct dx : IRegOp16<dx>
 {
-    public I Index => I.r2;
+    public I IndexCode => I.r2;
 
     [MethodImpl(Inline)]
     public static implicit operator G(dx src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(dx src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(dx src)
@@ -194,15 +194,15 @@ public struct dx : IRegOp16<dx>
 
 public struct bx : IRegOp16<bx>
 {
-    public I Index => I.r3;
+    public I IndexCode => I.r3;
 
     [MethodImpl(Inline)]
     public static implicit operator G(bx src)
-        => new(src.Index);
+        => new(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(bx src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(bx src)
@@ -215,15 +215,15 @@ public struct bx : IRegOp16<bx>
 
 public struct si : IRegOp16<si>
 {
-    public I Index => I.r4;
+    public I IndexCode => I.r4;
 
     [MethodImpl(Inline)]
     public static implicit operator G(si src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(si src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(si src)
@@ -236,104 +236,104 @@ public struct si : IRegOp16<si>
 
 public struct di : IRegOp16<di>
 {
-    public I Index => I.r5;
+    public I IndexCode => I.r5;
 
     [MethodImpl(Inline)]
     public static implicit operator G(di src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(di src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 }
 
 public struct sp : IRegOp16<sp>
 {
-    public I Index => I.r6;
+    public I IndexCode => I.r6;
 
     [MethodImpl(Inline)]
     public static implicit operator G(sp src)
-        => new(src.Index);
+        => new(src.IndexCode);
 }
 
 public struct bp : IRegOp16<bp>
 {
-    public I Index => I.r7;
+    public I IndexCode => I.r7;
 
     [MethodImpl(Inline)]
     public static implicit operator G(bp src)
-        => new(src.Index);
+        => new(src.IndexCode);
 }
 
 public struct r8w : IRegOp16<r8w>
 {
-    public I Index => I.r8;
+    public I IndexCode => I.r8;
 
     [MethodImpl(Inline)]
     public static implicit operator G(r8w src)
-        => new(src.Index);
+        => new(src.IndexCode);
 }
 
 public struct r9w : IRegOp16<r9w>
 {
-    public I Index => I.r9;
+    public I IndexCode => I.r9;
 
     [MethodImpl(Inline)]
     public static implicit operator G(r9w src)
-        => new(src.Index);
+        => new(src.IndexCode);
 }
 
 public struct r10w : IRegOp16<r10w>
 {
-    public I Index => I.r10;
+    public I IndexCode => I.r10;
 
     [MethodImpl(Inline)]
     public static implicit operator G(r10w src)
-        => new(src.Index);
+        => new(src.IndexCode);
 }
 
 public struct r11w : IRegOp16<r11w>
 {
-    public I Index => I.r11;
+    public I IndexCode => I.r11;
 
     [MethodImpl(Inline)]
     public static implicit operator G(r11w src)
-        => new(src.Index);
+        => new(src.IndexCode);
 }
 
 public struct r12w : IRegOp16<r12w>
 {
-    public I Index => I.r12;
+    public I IndexCode => I.r12;
 
     [MethodImpl(Inline)]
     public static implicit operator G(r12w src)
-        => new (src.Index);
+        => new (src.IndexCode);
 }
 
 public struct r13w : IRegOp16<r13w>
 {
-    public I Index => I.r13;
+    public I IndexCode => I.r13;
 
     [MethodImpl(Inline)]
     public static implicit operator G(r13w src)
-        => new (src.Index);
+        => new (src.IndexCode);
 }
 
 public struct r14w : IRegOp16<r14w>
 {
-    public I Index => I.r14;
+    public I IndexCode => I.r14;
 
     [MethodImpl(Inline)]
     public static implicit operator G(r14w src)
-        => new (src.Index);
+        => new (src.IndexCode);
 }
 
 public struct r15w : IRegOp16<r15w>
 {
-    public I Index => I.r15;
+    public I IndexCode => I.r15;
 
     [MethodImpl(Inline)]
     public static implicit operator G(r15w src)
-        => new (src.Index);
+        => new (src.IndexCode);
 }
 

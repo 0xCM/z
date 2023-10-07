@@ -7,7 +7,7 @@ namespace Z0.Asm;
 /// <summary>
 /// Specifies a <see cref='RegClassCode'/>
 /// </summary>
-public readonly struct RegClass
+public readonly record struct RegClass : IComparable<RegClass>
 {
     public readonly RegClassCode Code;
 
@@ -16,6 +16,10 @@ public readonly struct RegClass
     {
         Code = code;
     }
+
+    [MethodImpl(Inline)]
+    public int CompareTo(RegClass src)
+        => ((byte)Code).CompareTo((byte)src.Code);
 
     public string Format()
         => AsmRender.format(this);

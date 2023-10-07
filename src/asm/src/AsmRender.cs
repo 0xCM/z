@@ -155,12 +155,8 @@ public class AsmRender
                 EnumRender.format((T.FpuRegToken)src.Value);
             break;
 
-            case K.MmxRm:
-                EnumRender.format((T.MmxRmToken)src.Value);
-            break;
-
-            case K.MmxReg:
-                EnumRender.format((T.MmxRegToken)src.Value);
+            case K.Mmx:
+                EnumRender.format((T.MmxToken)src.Value);
             break;
 
             case K.Imm:

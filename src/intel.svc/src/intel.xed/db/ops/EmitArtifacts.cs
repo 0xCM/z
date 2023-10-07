@@ -13,7 +13,7 @@ namespace Z0
         {
             exec(PllExec,
                 EmitRuleSchema,
-                () => Channel.TableEmit(Xed.Views.TypeTableRows, Paths.DbTable<TypeTableRow>()),
+                () => Channel.TableEmit(Xed.Views.TypeTableRows, XedPaths.DbTable<TypeTableRow>()),
                 EmitLayouts
             );
         }

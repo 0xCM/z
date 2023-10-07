@@ -27,9 +27,9 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         return new XedDisasmDoc(summary, detail(summary));
     }
 
-    void EmitDetails(XedDisasmDoc src, IDbArchive dst)
+    void EmitDetails(XedDisasmDoc src)
     {
-        var path = XedPaths.DisasmDetailPath(dst, src.SourcePath);
+        var path = XedPaths.DisasmDetailPath(src.SourcePath);
         var emitting = Channel.EmittingFile(path);
         var te = text.emitter();
         XedDisasmRender.render(src.DetailBlocks, te);
@@ -38,14 +38,14 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         Channel.EmittedFile(emitting, src.DetailBlocks.Count);
     }
     
-    public bool Import(XedDisasmDoc src, IDbArchive dst)
+    public bool Import(XedDisasmDoc src)
     {
         var path = src.SourcePath;
         var flow = Channel.Running($"Collecting disassembly content from {path.ToUri()}");
-        EmitDetails(src, dst);
-        EmitOps(src, dst);
-        EmitSummaries(src, dst);
-        EmitChecks(src, dst);
+        EmitDetails(src);
+        EmitOps(src);
+        EmitSummaries(src);
+        EmitChecks(src);
         Channel.Ran(flow,$"Collected disassembly content from {path.ToUri()}");
         return true;
     }
@@ -53,7 +53,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
     public ParallelQuery<XedDisasmDoc> Import(IDbArchive root)
         => from path in sources(root)
             let d = doc(path)
-            let success = Import(d, root)
+            let success = Import(d)
             where success
             select d;
 
@@ -64,14 +64,14 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         return docs;
     }
 
-    void EmitSummaries(XedDisasmDoc doc, IDbArchive project)
-        => Channel.TableEmit(doc.Summary.Rows, XedPaths.DisasmSummaryPath(project, doc.SourcePath));
+    void EmitSummaries(XedDisasmDoc doc)
+        => Channel.TableEmit(doc.Summary.Rows, XedPaths.DisasmSummaryPath(doc.SourcePath));
 
     const string OperandFormat = "{0} | {1,-20} | {2}";
 
-    void EmitOps(XedDisasmDoc src, IDbArchive dst)
+    void EmitOps(XedDisasmDoc src)
     {
-        var path = XedPaths.DisasmOpsPath(dst, src.Detail.DataFile.Source);
+        var path = XedPaths.DisasmOpsPath(src.Detail.DataFile.Source);
         var doc = src.Detail;
         var emitting = Channel.EmittingFile(path);
         using var emitter = path.AsciEmitter();
@@ -174,18 +174,17 @@ public partial class XedDisasm : WfSvc<XedDisasm>
 
     public const string RenderCol2 = XedFieldRender.Columns;
 
-    public void EmitChecks(XedDisasmDoc src, IDbArchive dst)
+    public void EmitChecks(XedDisasmDoc src)
     {
         const string LabeledValue = "{0,-24} | {1}";
         var doc = src.Detail;
         ref readonly var file = ref doc.DataFile;
         var buffer = text.buffer();
         var count = doc.Count;
-        var outpath = XedPaths.DisasmChecksPath(dst, file.Source);
+        var outpath = XedPaths.DisasmChecksPath(file.Source);
         using var writer = outpath.AsciWriter();
         var emitting = Channel.EmittingFile(outpath);
         writer.AppendLineFormat(RenderCol2, "DataSource", doc.Source.ToUri().Format());
-
         var counter = 0;
         for(var j=0; j<count; j++)
         {
@@ -228,7 +227,6 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             if(state.DF32)
                 writer.AppendLineFormat(LabeledValue, nameof(state.DF32), "32");
 
-
             if(state.NSEG_PREFIXES != 0)
                 writer.AppendLineFormat(LabeledValue, nameof(state.NSEG_PREFIXES), state.NSEG_PREFIXES);
 
@@ -257,8 +255,9 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             var ocbyte = Xed.ocbyte(state);
             var encoding  = Xed.encoding(state, asmhex);
 
+            var prefix = slice(detail.PrefixBytes.Bytes,0, detail.PrefixSize);
             if(detail.PrefixSize != 0)
-                writer.AppendLineFormat(LabeledValue, nameof(detail.PrefixBytes), slice(detail.PrefixBytes.Bytes,0, detail.PrefixSize).FormatHex());
+                writer.AppendLineFormat(LabeledValue, nameof(detail.PrefixBytes), prefix.FormatHex());
 
             writer.AppendLineFormat(LabeledValue, "OpCode", string.Format("{0} [{1}]", XedRender.format(ocbyte), BitRender.format8x4(ocbyte)));
 
@@ -357,9 +356,21 @@ public partial class XedDisasm : WfSvc<XedDisasm>
                 writer.AppendLineFormat(LabeledValue, nameof(state.VEXVALID), XedRender.format(vc));
                 writer.AppendLineFormat(LabeledValue, nameof(state.VEX_PREFIX), vk == 0 ? "VNP" : XedRender.format(vk));
                 if(vc == XedVexClass.VV1)
+                {
                     writer.AppendLineFormat(LabeledValue, "Vex", detail.Vex);
+                }
                 else if(vc == XedVexClass.EVV)
-                    writer.AppendLineFormat(LabeledValue, "Evex", detail.Evex);
+                {
+                    if(prefix.Length < 4)
+                    {
+                        writer.AppendLineFormat(LabeledValue, "Evex", "<evex:error>");
+                    }
+                    else
+                    {
+                        var evex = @as<EvexPrefix>(prefix);
+                        writer.AppendLineFormat(LabeledValue, "Evex",  $"{detail.Evex}");
+                    }
+                }
                 writer.AppendLineFormat(LabeledValue, "VEXDEST", string.Format("{0} {1}", vexHex, vexBits));
                 writer.AppendLineFormat(LabeledValue, "VL", XedRender.format(Xed.vl(state)));
             }

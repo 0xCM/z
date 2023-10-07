@@ -33,7 +33,7 @@ partial class Xed
         }
 
         var gpr = GprWidth.Empty;
-        if(GprWidth.widths(dst.NonTerminal, out gpr))
+        if(GprWidth.width(dst.NonTerminal, out gpr))
             dst.GprWidth = gpr;
         else
             dst.GprWidth = GprWidth.Empty;

@@ -21,7 +21,7 @@ partial class XedModels
             return new OpWidthSpec(0, MachineModeClass.Default, gpr, ElementType.Empty, 1);
         }
 
-        public static OpWidthSpecs specs(Index<OpWidthDetail> src)
+        public static OpWidthSpecs specs(ReadOnlySeq<OpWidthDetail> src)
         {
             var count = src.Count*3;
             var dst = alloc<OpWidthSpec>(count);

@@ -31,7 +31,7 @@ partial class AsmSigs
             case K.IntLiteral:
             case K.SysReg:
             case K.RegLiteral:
-            case K.MmxReg:
+            case K.Mmx:
             case K.KReg:
             case K.VReg:
             case K.FpuReg:

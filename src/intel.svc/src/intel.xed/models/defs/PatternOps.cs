@@ -6,9 +6,9 @@
 namespace Z0;
 
 using static sys;
-using static XedModels;
+using static XedRules;
 
-partial class XedRules
+partial class XedModels
 {
     public readonly struct PatternOps : IComparable<PatternOps>
     {

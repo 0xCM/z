@@ -457,19 +457,6 @@ class AsmChecks : WfAppCmd<AsmChecks>
         Channel.Write(dst.Emit());
     }
 
-    [CmdOp("asm/check/ccv")]
-    void CheckCcv()
-    {
-        var r0 = Win64Ccv.reg(w64,0);
-        Require.invariant(r0 == Gp64Reg.rcx);
-        var r1 = Win64Ccv.reg(w64,1);
-        Require.invariant(r1 == Gp64Reg.rdx);
-        var r2 = Win64Ccv.reg(w64,2);
-        Require.invariant(r2 == Gp64Reg.r8);
-        var r3 = Win64Ccv.reg(w64,3);
-        Require.invariant(r3 == Gp64Reg.r9);
-        Channel.Write(string.Format("{0} | {1} | {2} | {3}", r0, r1, r2, r3));
-    }         
 
     void vlut(W128 w)
     {
@@ -1026,7 +1013,7 @@ c5 f8 99 c8";
         for(byte i=0; i<7; i++)
         {
             regs[i] = i;
-            seek(names,i) = RegClasses.KReg.RegName((RegIndexCode)i);
+            seek(names,i) = RegClasses.KReg.RegName(i);
             grid[i] = asm.regval(skip(names,i), regs[i]);
         }
 

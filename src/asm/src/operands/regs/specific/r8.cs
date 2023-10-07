@@ -17,12 +17,12 @@ public readonly struct r8 : IRegOp8<G>
 {
     internal const NativeSizeCode W = NativeSizeCode.W8;
 
-    public I Index {get;}
+    public I IndexCode {get;}
 
     [MethodImpl(Inline)]
     public r8(I index)
     {
-        Index = index;
+        IndexCode = index;
     }
 
     public NativeSize Size
@@ -54,14 +54,14 @@ public readonly struct r8 : IRegOp8<G>
         => new AsmOperand(this);
 
     public string Format()
-        => ((K)Index).ToString();
+        => ((K)IndexCode).ToString();
 
     public override string ToString()
         => Format();
 
     [MethodImpl(Inline)]
     public static implicit operator RegOp(G src)
-        => reg(src.Size, src.RegClassCode, src.Index);
+        => reg(src.Size, src.RegClassCode, src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator AsmOperand(G src)
@@ -69,11 +69,11 @@ public readonly struct r8 : IRegOp8<G>
 
     [MethodImpl(Inline)]
     public static implicit operator K(G src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator I(G src)
-        => src.Index;
+        => src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator G(I src)
@@ -85,7 +85,7 @@ public readonly struct r8 : IRegOp8<G>
 
     [MethodImpl(Inline)]
     public static explicit operator byte(G src)
-        => (byte)src.Index;
+        => (byte)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator G(Sym<K> src)
@@ -106,12 +106,12 @@ public readonly struct r8 : IRegOp8<G>
 
 public readonly struct al : IRegOp8<al>
 {
-    public I Index => I.r0;
+    public I IndexCode => I.r0;
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -133,11 +133,11 @@ public readonly struct al : IRegOp8<al>
         => Format();
 
     public static implicit operator r8(al src)
-        => new r8(src.Index);
+        => new r8(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(al src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(al src)
@@ -151,12 +151,12 @@ public readonly struct al : IRegOp8<al>
 
 public struct cl : IRegOp8<cl>
 {
-    public I Index => I.r1;
+    public I IndexCode => I.r1;
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -179,11 +179,11 @@ public struct cl : IRegOp8<cl>
 
     [MethodImpl(Inline)]
     public static implicit operator G(cl src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(cl src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(cl src)
@@ -196,12 +196,12 @@ public struct cl : IRegOp8<cl>
 
 public struct dl : IRegOp8<dl>
 {
-    public I Index => I.r2;
+    public I IndexCode => I.r2;
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -224,11 +224,11 @@ public struct dl : IRegOp8<dl>
 
     [MethodImpl(Inline)]
     public static implicit operator G(dl src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(dl src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(dl src)
@@ -241,12 +241,12 @@ public struct dl : IRegOp8<dl>
 
 public struct bl : IRegOp8<bl>
 {
-    public I Index => I.r3;
+    public I IndexCode => I.r3;
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -269,11 +269,11 @@ public struct bl : IRegOp8<bl>
 
     [MethodImpl(Inline)]
     public static implicit operator G(bl src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(bl src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(bl src)
@@ -286,12 +286,12 @@ public struct bl : IRegOp8<bl>
 
 public struct sil : IRegOp8<sil>
 {
-    public I Index => I.r4;
+    public I IndexCode => I.r4;
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -314,11 +314,11 @@ public struct sil : IRegOp8<sil>
 
     [MethodImpl(Inline)]
     public static implicit operator G(sil src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(sil src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(sil src)
@@ -331,12 +331,12 @@ public struct sil : IRegOp8<sil>
 
 public struct dil : IRegOp8<dil>
 {
-    public I Index => I.r5;
+    public I IndexCode => I.r5;
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -359,11 +359,11 @@ public struct dil : IRegOp8<dil>
 
     [MethodImpl(Inline)]
     public static implicit operator G(dil src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(dil src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(dil src)
@@ -376,13 +376,13 @@ public struct dil : IRegOp8<dil>
 
 public struct spl : IRegOp8<spl>
 {
-    public I Index => I.r6;
+    public I IndexCode => I.r6;
 
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -405,11 +405,11 @@ public struct spl : IRegOp8<spl>
 
     [MethodImpl(Inline)]
     public static implicit operator G(spl src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(spl src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(spl src)
@@ -422,12 +422,12 @@ public struct spl : IRegOp8<spl>
 
 public struct bpl : IRegOp8<bpl>
 {
-    public I Index => I.r7;
+    public I IndexCode => I.r7;
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -450,11 +450,11 @@ public struct bpl : IRegOp8<bpl>
 
     [MethodImpl(Inline)]
     public static implicit operator G(bpl src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(bpl src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(bpl src)
@@ -467,12 +467,12 @@ public struct bpl : IRegOp8<bpl>
 
 public struct r8b : IRegOp8<r8b>
 {
-    public I Index => I.r8;
+    public I IndexCode => I.r8;
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -495,11 +495,11 @@ public struct r8b : IRegOp8<r8b>
 
     [MethodImpl(Inline)]
     public static implicit operator G(r8b src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(r8b src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(r8b src)
@@ -512,12 +512,12 @@ public struct r8b : IRegOp8<r8b>
 
 public struct r9b : IRegOp8<r9b>
 {
-    public I Index => I.r9;
+    public I IndexCode => I.r9;
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -540,11 +540,11 @@ public struct r9b : IRegOp8<r9b>
 
     [MethodImpl(Inline)]
     public static implicit operator G(r9b src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(r9b src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(r9b src)
@@ -557,12 +557,12 @@ public struct r9b : IRegOp8<r9b>
 
 public struct r10b : IRegOp8<r10b>
 {
-    public I Index => I.r10;
+    public I IndexCode => I.r10;
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -585,21 +585,21 @@ public struct r10b : IRegOp8<r10b>
 
     [MethodImpl(Inline)]
     public static implicit operator G(r10b src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(r10b src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 }
 
 public struct r11b : IRegOp8<r11b>
 {
-    public I Index => I.r11;
+    public I IndexCode => I.r11;
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -622,21 +622,21 @@ public struct r11b : IRegOp8<r11b>
 
     [MethodImpl(Inline)]
     public static implicit operator G(r11b src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(r11b src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 }
 
 public struct r12b : IRegOp8<r12b>
 {
-    public I Index => I.r12;
+    public I IndexCode => I.r12;
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -659,21 +659,21 @@ public struct r12b : IRegOp8<r12b>
 
     [MethodImpl(Inline)]
     public static implicit operator G(r12b src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(r12b src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 }
 
 public struct r13b : IRegOp8<r13b>
 {
-    public I Index => I.r13;
+    public I IndexCode => I.r13;
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -696,22 +696,22 @@ public struct r13b : IRegOp8<r13b>
 
     [MethodImpl(Inline)]
     public static implicit operator G(r13b src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(r13b src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 }
 
 public struct r14b : IRegOp8<r14b>
 {
-    public I Index => I.r14;
+    public I IndexCode => I.r14;
 
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -734,21 +734,21 @@ public struct r14b : IRegOp8<r14b>
 
     [MethodImpl(Inline)]
     public static implicit operator G(r14b src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(r14b src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 }
 
 public struct r15b : IRegOp8<r15b>
 {
-    public I Index => I.r15;
+    public I IndexCode => I.r15;
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -771,15 +771,15 @@ public struct r15b : IRegOp8<r15b>
 
     [MethodImpl(Inline)]
     public static implicit operator G(r15b src)
-        => new G(src.Index);
+        => new G(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(r15b src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator I(r15b src)
-        => src.Index;
+        => src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(r15b src)
@@ -788,12 +788,12 @@ public struct r15b : IRegOp8<r15b>
 
 public readonly struct ah : IRegOp8<ah>
 {
-    public I Index => I.r4;
+    public I IndexCode => I.r4;
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -815,15 +815,15 @@ public readonly struct ah : IRegOp8<ah>
         => Format();
 
     public static implicit operator r8(ah src)
-        => new r8(src.Index);
+        => new r8(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(ah src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator I(ah src)
-        => src.Index;
+        => src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(ah src)
@@ -832,12 +832,12 @@ public readonly struct ah : IRegOp8<ah>
 
 public readonly struct ch : IRegOp8<ch>
 {
-    public I Index => I.r5;
+    public I IndexCode => I.r5;
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -859,15 +859,15 @@ public readonly struct ch : IRegOp8<ch>
         => Format();
 
     public static implicit operator r8(ch src)
-        => new r8(src.Index);
+        => new r8(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(ch src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator I(ch src)
-        => src.Index;
+        => src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(ch src)
@@ -877,13 +877,13 @@ public readonly struct ch : IRegOp8<ch>
 
 public readonly struct dh : IRegOp8<dh>
 {
-    public I Index => I.r6;
+    public I IndexCode => I.r6;
 
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -905,15 +905,15 @@ public readonly struct dh : IRegOp8<dh>
         => Format();
 
     public static implicit operator r8(dh src)
-        => new r8(src.Index);
+        => new r8(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(dh src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator I(dh src)
-        => src.Index;
+        => src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(dh src)
@@ -922,12 +922,12 @@ public readonly struct dh : IRegOp8<dh>
 
 public readonly struct bh : IRegOp8<bh>
 {
-    public I Index => I.r7;
+    public I IndexCode => I.r7;
 
     public AsmRegName Name
     {
         [MethodImpl(Inline)]
-        get => api.name(Size, RegClass, Index);
+        get => api.name(Size, RegClass, IndexCode);
     }
 
     public NativeSize Size
@@ -949,15 +949,15 @@ public readonly struct bh : IRegOp8<bh>
         => Format();
 
     public static implicit operator r8(bh src)
-        => new r8(src.Index);
+        => new r8(src.IndexCode);
 
     [MethodImpl(Inline)]
     public static implicit operator K(bh src)
-        => (K)src.Index;
+        => (K)src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator I(bh src)
-        => src.Index;
+        => src.IndexCode;
 
     [MethodImpl(Inline)]
     public static implicit operator O(bh src)

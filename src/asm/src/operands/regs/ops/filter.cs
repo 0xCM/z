@@ -16,7 +16,7 @@ partial struct AsmRegs
         for(var i=0; i<j; i++)
         {
             ref readonly var candidate = ref skip(src,i);
-            if(invalid(candidate.Index))
+            if(invalid(candidate.IndexCode))
                 continue;
 
             if(candidate.RegClassCode == @class)
@@ -34,7 +34,7 @@ partial struct AsmRegs
         {
             ref readonly var candidate = ref skip(src,i);
 
-            if(invalid(candidate.Index))
+            if(invalid(candidate.IndexCode))
                 continue;
 
             if(candidate.Size == width)
@@ -52,7 +52,7 @@ partial struct AsmRegs
         {
             ref readonly var candidate = ref skip(src,i);
 
-            if(invalid(candidate.Index))
+            if(invalid(candidate.IndexCode))
                 continue;
 
             if(candidate.Size == width && candidate.RegClassCode == @class)

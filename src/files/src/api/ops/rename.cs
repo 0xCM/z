@@ -8,6 +8,9 @@ using static sys;
 
 partial struct FS
 {
-    public static FilePath reparent(FilePath src, FolderPath dst)
-        => dst + src.FileName;
+    public static FilePath rename(FilePath src, FilePath dst)
+    {
+        File.Move(src.Format(), dst.Format());
+        return dst;
+    }
 }

@@ -53,7 +53,7 @@ partial class XedModels
                     Visibility.Code(),
                     format(OpType),
                     Rule.IsNonEmpty
-                    ? string.Format("{0} => {1}", Rule, XedPaths.Service.RulePage(new RuleSig(RuleTableKind.DEC, Rule.Name)))
+                    ? string.Format("{0} => {1}", Rule, XedPaths.RulePage(new RuleSig(RuleTableKind.DEC, Rule.Name)))
                     : OpType == OpType.IMM_CONST ? "1"
                     : Reg.IsNonEmpty ? Reg.Format()
                     : EmptyString

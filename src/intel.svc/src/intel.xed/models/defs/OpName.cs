@@ -59,7 +59,7 @@ partial class XedModels
 
         [MethodImpl(Inline)]
         public static explicit operator OpName(byte src)
-            => new OpName((OpNameKind)src);
+            => new ((OpNameKind)src);
 
         public static OpName Empty => default;
     }

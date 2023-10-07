@@ -5,80 +5,10 @@
 namespace Z0;
 
 using static XedModels;
-using static XedRules;
 using static sys;
 
 public class XedSigs
 {
-    static Index<InstSigToken> _SigTokens => new InstSigToken[]{
-        "agen",
-
-        "base0",
-        "base1",
-
-        "seg0",
-        "seg1",
-
-        "imm0",
-        "imm1",
-        "imm2",
-
-        "imm8",
-        "imm16",
-        "imm32",
-        "imm64",
-
-        "index",
-        "index8",
-        "index80",
-
-        "scale",
-
-        "disp",
-
-        "agen",
-
-        "mem0",
-        "mem1",
-
-        "m8",
-        "m16",
-        "m32",
-        "m64",
-        "m80",
-        "m128",
-        "m256",
-        "m512",
-        "m4068",
-
-        "ptr",
-        "ptr48",
-
-        "reg0",
-        "reg1",
-        "reg2",
-        "reg3",
-        "reg4",
-        "reg5",
-        "reg6",
-        "reg7",
-        "reg8",
-        "reg9",
-
-        "r8",
-        "r16",
-        "r32",
-        "r64",
-        "r80",
-        "xmm",
-        "ymm",
-        "zmm",
-
-        "relbr",
-        "relbr32",
-        "relbr8",
-    };
-
     [MethodImpl(Inline)]
     public static InstOperand op(num3 pos, OpName name, InstOpSymbol ind, OpKind kind, ushort width)
         => new(pos, name, ind,kind, width);

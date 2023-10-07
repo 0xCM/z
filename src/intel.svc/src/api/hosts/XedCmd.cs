@@ -15,8 +15,6 @@ public partial class XedCmd : WfAppCmd<XedCmd>
 
     XedRuntime XedRuntime => Wf.XedRuntime();
 
-    XedPaths XedPaths => XedRuntime.Paths;
-
     XedDb XedDb => XedRuntime.XedDb;
 
     IntelSdm Sdm => Wf.IntelSdm();

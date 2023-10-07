@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
+using System.Linq;
 using R = Operands;
 
 using static RegKind;
@@ -14,9 +15,17 @@ using static RegKind;
 [ApiComplete]
 public readonly struct AsmRegOps
 {
-    public static RegOp al => AL;
+    public static IEnumerable<IRegOp> enumerate()
+    {
+        var query = from prop in typeof(AsmRegOps).PublicStaticProperties()
+                    let r = (IRegOp)prop.GetValue(null)
+                    select r;
+        return query.OrderBy(x => x.RegClass).ThenBy(x => x.Index);
+    }
+    
+    public static R.al al => default;
 
-    public static RegOp cl => CL;
+    public static R.cl cl => default;
 
     public static R.dl dl => default;
 

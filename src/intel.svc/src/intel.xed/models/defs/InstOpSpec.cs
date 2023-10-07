@@ -70,7 +70,7 @@ partial class XedModels
             var bw = BitWidth.ToString();
             if(IsRule)
             {
-                uri = XedPaths.Service.CheckedTableDef(Rule, true, out sig);
+                uri = XedPaths.CheckedTableDef(Rule, true, out sig);
                 detail = string.Format("{0}::{1}", Rule, uri);
             }
             else if(IsReg)

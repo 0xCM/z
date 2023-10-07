@@ -20,104 +20,104 @@ public enum RegClassCode : byte
     GP = 0,
 
     /// <summary>
+    /// Classifies a hi byte register
+    /// </summary>
+    [Symbol("gp8hi", "A hi gp8 register")]
+    GP8HI,
+
+    /// <summary>
     /// Classifies a 64-bit mask register
     /// </summary>
     [Symbol("mask", "A 64-bit avx512 mask register")]
-    MASK = 1,
+    MASK,
 
     /// <summary>
     /// Classifies an xmm vector register of width <see cref='W128'/>
     /// </summary>
     [Symbol("xmm", "An xmm register")]
-    XMM = 2,
+    XMM,
 
     /// <summary>
     /// Classifies a ymm vector register of width <see cref='W256'/>
     /// </summary>
     [Symbol("ymm", "A ymm register")]
-    YMM = 3,
+    YMM,
 
     /// <summary>
     /// Classifies a zmm vector register of width <see cref='W512'/>
     /// </summary>
     [Symbol("zmm", "A zmm register")]
-    ZMM = 4,
+    ZMM,
 
     /// <summary>
     /// Classifies a 64-bit mmx register
     /// </summary>
     [Symbol("mmx", "An mmx register")]
-    MMX = 5,
+    MMX,
 
     /// <summary>
     /// Identifies a segment register
     /// </summary>
     [Symbol("seg", "A segment regitser")]
-    SEG = 6,
+    SEG,
 
     /// <summary>
     /// An flag register of width <see cref='W16'/>, <see cref='W32'/> or <see cref='W64'/>
     /// </summary>
     [Symbol("flags", "A system flags register")]
-    FLAG = 7,
+    FLAG,
 
     /// <summary>
     /// Class identifier control registers
     /// </summary>
     [Symbol("cr", "A control register")]
-    CR = 8,
+    CR,
 
     /// <summary>
     /// Classifies a 64-bit extended control register
     /// </summary>
     [Symbol("xcr", "An extended control register")]
-    XCR = 9,
+    XCR,
 
     /// <summary>
     /// Class identifier for debug registers
     /// </summary>
     [Symbol("db", "A debug register")]
-    DB = 10,
+    DB,
 
     /// <summary>
     /// Classifies an 80-bit fpu register
     /// </summary>
     [Symbol("st", "An 80-bit fpu register")]
-    ST = 11,
+    ST,
 
     /// <summary>
     /// Classifies a bounds register
     /// </summary>
     [Symbol("bnd", "A bounds register")]
-    BND = 12,
+    BND,
 
     /// <summary>
     /// Class identifier for pointer table registers
     /// </summary>
     [Symbol("sptr", "A table-pointer register")]
-    SPTR = 13,
+    SPTR,
 
     /// <summary>
     /// Classifies an instruction-pointer register of width <see cref='W16'/>, <see cref='W32'/> or <see cref='W64'/>
     /// </summary>
     [Symbol("iptr", "An instruction-pointer register")]
-    IPTR = 14,
-
-    /// <summary>
-    /// Classifies a hi byte register
-    /// </summary>
-    [Symbol("gp8hi", "A hi gp8 register")]
-    GP8HI = 15,
+    IPTR,
 
     /// <summary>
     /// Classifies test registers
     /// </summary>
     [Symbol("tr", "A test register")]
-    TR = 16,
+    TR,
 
     /// <summary>
     /// Classifies tile maxtrix multiplication registers
     /// </summary>
     [Symbol("tmm", "An amx register")]
-    TMM = 17,
+    TMM,
 }

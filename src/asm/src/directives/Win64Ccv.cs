@@ -10,6 +10,7 @@ using static AsmRegTokens;
 [ApiHost("ccv.win64")]
 public readonly record struct Win64Ccv : ICallCv<Win64Ccv>
 {
+
     public CcvKind Kind => CcvKind.Win64;
 
     [MethodImpl(Inline)]

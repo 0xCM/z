@@ -23,15 +23,6 @@ partial class XedCmd
         });
     }
 
-    [CmdOp("xed/rules")]
-    void LoadRuleBlocks()
-    {
-        var src = XedZ.rules(XedPaths.DocSource(XedDocKind.RuleBlocks));
-        var domain = XedZ.domain(src);
-        Channel.FileEmit(domain.Format(), XedPaths.Targets().Path("xed.instblocks.domain", FS.ext("txt")));
-    }
-
-
     [CmdOp("xed/sigs")]
     void EmitSigs()
     {

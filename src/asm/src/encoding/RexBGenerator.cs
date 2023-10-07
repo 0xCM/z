@@ -56,7 +56,7 @@ public sealed class RexBGenerator : AppService<RexBGenerator>
         for(byte i=0; i<count; i++)
         {
             ref readonly var reg = ref src[i];
-            seek(dst,j++) = rexb(token, (RegIndexCode)reg.Index, hi);
+            seek(dst,j++) = rexb(token, (RegIndexCode)reg.IndexCode, hi);
         }
     }
 }

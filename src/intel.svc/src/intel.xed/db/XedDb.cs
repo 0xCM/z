@@ -10,15 +10,13 @@ namespace Z0
 
     public partial class XedDb : WfSvc<XedDb>
     {
-        static XedPaths Paths => XedPaths.Service;
-
         static readonly ConcurrentDictionary<FilePath,MemoryFile> _MemoryFiles = new();
 
         public static MemoryFile MemoryFile(FilePath src)
             => _MemoryFiles.GetOrAdd(src, path => path.MemoryMap(true));
 
         public static MemoryFile RuleDumpFile()
-            => MemoryFile(Paths.DocSource(XedDocKind.RuleBlocks));
+            => MemoryFile(XedPaths.DocSource(XedDocKind.RuleBlocks));
         
         IMemDb _Store;
 
@@ -51,8 +49,8 @@ namespace Z0
 
         void Emit(InstLayouts src)
         {
-            Channel.FileEmit(src.Format(), 0, Paths.InstTarget("layouts.vectors", FileKind.Csv));
-            Channel.TableEmit(src.Records.View, Paths.InstTable<InstLayoutRecord>(), TextEncodingKind.Asci);
+            Channel.FileEmit(src.Format(), 0, XedPaths.InstTarget("layouts.vectors", FileKind.Csv));
+            Channel.TableEmit(src.Records.View, XedPaths.InstTable<InstLayoutRecord>(), TextEncodingKind.Asci);
         }
 
         public InstLayouts CalcLayouts(Index<InstPattern> src)

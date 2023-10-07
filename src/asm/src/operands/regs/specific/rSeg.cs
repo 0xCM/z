@@ -15,12 +15,12 @@ namespace Z0.Asm.Operands
 
     public readonly struct rSeg: IRegOp64<G>
     {
-        public RegIndexCode Index {get;}
+        public I IndexCode {get;}
 
         [MethodImpl(Inline)]
-        public rSeg(RegIndexCode index)
+        public rSeg(I index)
         {
-            Index = index;
+            IndexCode = index;
         }
 
 
@@ -29,7 +29,7 @@ namespace Z0.Asm.Operands
             => new O(this);
 
         public string Format()
-            => ((K)Index).ToString();
+            => ((K)IndexCode).ToString();
 
         public override string ToString()
             => Format();
@@ -40,10 +40,10 @@ namespace Z0.Asm.Operands
             get => NativeSizeCode.W64;
         }
 
-        public RegClassCode RegClassCode
+        public C RegClassCode
         {
             [MethodImpl(Inline)]
-            get => RegClassCode.DB;
+            get => C.DB;
         }
 
         public RegClass RegClass
@@ -54,7 +54,7 @@ namespace Z0.Asm.Operands
 
         [MethodImpl(Inline)]
         public static implicit operator RegOp(G src)
-            => reg(src.Size, src.RegClassCode, src.Index);
+            => reg(src.Size, src.RegClassCode, src.IndexCode);
 
         [MethodImpl(Inline)]
         public static implicit operator O(G src)
@@ -62,7 +62,7 @@ namespace Z0.Asm.Operands
 
         [MethodImpl(Inline)]
         public static implicit operator K(G src)
-            => (K)src.Index;
+            => (K)src.IndexCode;
 
         [MethodImpl(Inline)]
         public static implicit operator G(K src)
@@ -74,32 +74,32 @@ namespace Z0.Asm.Operands
 
         [MethodImpl(Inline)]
         public static implicit operator I(G src)
-            => src.Index;
+            => src.IndexCode;
 
         [MethodImpl(Inline)]
         public static explicit operator byte(G src)
-            => (byte)src.Index;
+            => (byte)src.IndexCode;
 
         [MethodImpl(Inline)]
         public static implicit operator G(Sym<K> src)
-            => new G((I)src.Kind);
+            => new ((I)src.Kind);
 
         [MethodImpl(Inline)]
         public static implicit operator G(RegKind src)
-            => new G(index(src));
+            => new (index(src));
     }
 
     public readonly struct cs : IRegOp64<cs>
     {
-        public I Index => I.r0;
+        public I IndexCode => I.r0;
 
         [MethodImpl(Inline)]
         public static implicit operator G(cs src)
-            => new G(src.Index);
+            => new G(src.IndexCode);
 
         [MethodImpl(Inline)]
         public static implicit operator K(cs src)
-            => (K)src.Index;
+            => (K)src.IndexCode;
 
         [MethodImpl(Inline)]
         public static implicit operator O(cs src)
@@ -108,15 +108,15 @@ namespace Z0.Asm.Operands
 
     public readonly struct ds : IRegOp64<ds>
     {
-        public I Index => I.r1;
+        public I IndexCode => I.r1;
 
         [MethodImpl(Inline)]
         public static implicit operator G(ds src)
-            => new G(src.Index);
+            => new G(src.IndexCode);
 
         [MethodImpl(Inline)]
         public static implicit operator K(ds src)
-            => (K)src.Index;
+            => (K)src.IndexCode;
 
         [MethodImpl(Inline)]
         public static implicit operator O(ds src)
@@ -125,15 +125,15 @@ namespace Z0.Asm.Operands
 
     public readonly struct ss : IRegOp64<ss>
     {
-        public I Index => I.r2;
+        public I IndexCode => I.r2;
 
         [MethodImpl(Inline)]
         public static implicit operator G(ss src)
-            => new G(src.Index);
+            => new G(src.IndexCode);
 
         [MethodImpl(Inline)]
         public static implicit operator K(ss src)
-            => (K)src.Index;
+            => (K)src.IndexCode;
 
         [MethodImpl(Inline)]
         public static implicit operator O(ss src)
@@ -142,15 +142,15 @@ namespace Z0.Asm.Operands
 
     public readonly struct es : IRegOp64<es>
     {
-        public I Index => I.r3;
+        public I IndexCode => I.r3;
 
         [MethodImpl(Inline)]
         public static implicit operator G(es src)
-            => new G(src.Index);
+            => new G(src.IndexCode);
 
         [MethodImpl(Inline)]
         public static implicit operator K(es src)
-            => (K)src.Index;
+            => (K)src.IndexCode;
 
         [MethodImpl(Inline)]
         public static implicit operator O(es src)
@@ -159,15 +159,15 @@ namespace Z0.Asm.Operands
 
     public readonly struct fs : IRegOp64<fs>
     {
-        public I Index => I.r4;
+        public I IndexCode => I.r4;
 
         [MethodImpl(Inline)]
         public static implicit operator G(fs src)
-            => new G(src.Index);
+            => new G(src.IndexCode);
 
         [MethodImpl(Inline)]
         public static implicit operator K(fs src)
-            => (K)src.Index;
+            => (K)src.IndexCode;
 
         [MethodImpl(Inline)]
         public static implicit operator O(fs src)
@@ -176,15 +176,15 @@ namespace Z0.Asm.Operands
 
     public readonly struct gs : IRegOp64<gs>
     {
-        public I Index => I.r5;
+        public I IndexCode => I.r5;
 
         [MethodImpl(Inline)]
         public static implicit operator G(gs src)
-            => new G(src.Index);
+            => new G(src.IndexCode);
 
         [MethodImpl(Inline)]
         public static implicit operator K(gs src)
-            => (K)src.Index;
+            => (K)src.IndexCode;
 
         [MethodImpl(Inline)]
         public static implicit operator O(gs src)

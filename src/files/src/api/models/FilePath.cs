@@ -106,6 +106,18 @@ namespace Z0
             get => FS.size(this);
         }
 
+        public FilePath Rename(FilePath dst)
+            => FS.rename(this,dst);
+
+        public FilePath Move(FilePath dst)
+            => FS.move(this,dst);
+
+        public FilePath Copy(FilePath dst, bool overwrite = true)
+            => FS.copy(this,dst, overwrite);
+
+        public FilePath Copy(FolderPath dst, bool overwrite = true)
+            => FS.copy(this,dst, overwrite);
+
         [MethodImpl(Inline)]
         public bool Is(FileExt ext)
             => Name.Text.EndsWith(ext.Name.Text, NoCase);

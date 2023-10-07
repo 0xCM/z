@@ -23,15 +23,15 @@ partial class XedModels
 
         [MethodImpl(Inline)]
         static GprWidth define(byte o16, byte o32, byte o64)
-            => new GprWidth(o16, o32, o64);
+            => new (o16, o32, o64);
 
         [MethodImpl(Inline)]
-        public static ref readonly GprWidth widths(GprWidthIndex index)
+        public static ref readonly GprWidth widths(I index)
             => ref skip(All, (byte)index);
 
-        public static bool widths(Nonterminal src, out GprWidth dst)
+        public static bool width(Nonterminal src, out GprWidth dst)
         {
-            dst = GprWidth.Empty;
+            dst = Empty;
             var result = true;
             switch(src.Name)
             {

@@ -17,7 +17,7 @@ namespace Z0
         public class CellParser
         {
             public static Index<RuleSeq> ruleseq()
-                => ruleseq(XedPaths.Service.DocSource(XedDocKind.RuleSeq));
+                => ruleseq(XedPaths.DocSource(XedDocKind.RuleSeq));
 
             public static Index<RuleSeq> ruleseq(FilePath src)
                 => ruleseq(src.ReadNumberedLines());

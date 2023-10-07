@@ -10,17 +10,23 @@ using static sys;
 /// Characterizes a register operand representation
 /// </summary>
 [Free]
-public interface IRegOp : IAsmOp, ITextual
+public interface IRegOp : IAsmOp
 {
     /// <summary>
     /// The register index code
     /// </summary>
-    RegIndexCode Index {get;}
+    RegIndexCode IndexCode {get;}
+
+    RegIndex Index
+        => IndexCode;
 
     /// <summary>
     /// The register classifier
     /// </summary>
     RegClassCode RegClassCode {get;}
+
+    AsmRegName RegName
+        => AsmRegs.name(Size,RegClass, IndexCode);
 
     NativeSize IAsmOp.Size
         => new (Size);
@@ -28,8 +34,8 @@ public interface IRegOp : IAsmOp, ITextual
     RegClass RegClass
         => RegClassCode;
 
-    string ITextual.Format()
-        => GetType().Name;
+    string IExpr.Format()
+        => RegName.Format();
 }
 
 /// <summary>

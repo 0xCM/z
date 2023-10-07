@@ -9,7 +9,6 @@ using System.Linq;
 
 using static sys;
 using static XedModels;
-using static XedRules;
 
 partial class Xed
 {
@@ -30,9 +29,6 @@ partial class Xed
 
     static Dictionary<AsmOpCodeClass,Index<InstGroupSeq>> groupseq(Index<InstGroup> src)
         => src.SelectMany(x => x.Members.Select(x => x.Seq)).GroupBy(x => x.OpCodeClass).Select(x => (x.Key, x.Index())).ToDictionary();
-
-    public static void instruction(InstructionId id, string expr, InstFieldValues props, out Instruction dst)
-        => dst = new Instruction(id, expr, props.InstClass, props.InstForm, props);
 
     public static Index<InstPatternRecord> records(Index<InstPattern> src, bool pll = true)
     {
@@ -60,7 +56,7 @@ partial class Xed
     }
 
     [MethodImpl(Inline), Op]
-    public static bool etype(in PatternOp src, out XedModels.ElementType dst)
+    public static bool etype(in PatternOp src, out ElementType dst)
     {
         var result = XedPatterns.first(src.Attribs, OpAttribKind.ElementType, out var attrib);
         if(result)

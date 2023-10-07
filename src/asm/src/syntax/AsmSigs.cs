@@ -13,6 +13,14 @@ public partial class AsmSigs
     const NumericKind Closure = UnsignedInts;
 
     [MethodImpl(Inline), Op]
+    public static AsmSigOp m()
+        => new (AsmSigTokenKind.Mem,(byte)MemToken.m);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp mib()
+        => new (AsmSigTokenKind.Mem,(byte)MemToken.mib);
+
+    [MethodImpl(Inline), Op]
     public static AsmSigOp m8()
         => new (AsmSigTokenKind.Mem,(byte)MemToken.m8);
 
@@ -97,88 +105,88 @@ public partial class AsmSigs
         => new (AsmSigTokenKind.GpReg, (byte)GpRegToken.r64);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(Rel8 src)
-        => new (AsmSigTokenKind.Rel, (byte)RelToken.rel8);
-
-    [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(Rel16 src)
-        => new (AsmSigTokenKind.Rel, (byte)RelToken.rel16);
-
-    [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(Rel32 src)
-        => new (AsmSigTokenKind.Rel, (byte)RelToken.rel32);
-
-    [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(Imm8 src)
-        => new (AsmSigTokenKind.Imm, (byte)ImmToken.imm8);
-
-    [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(Imm16 src)
-        => new (AsmSigTokenKind.Imm, (byte)ImmToken.imm16);
-
-    [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(Imm32 src)
-        => new (AsmSigTokenKind.Imm, (byte)ImmToken.imm32);
-
-    [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(Imm64 src)
-        => new (AsmSigTokenKind.Imm, (byte)ImmToken.imm64);
-
-    [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(r8 src)
-        => new (AsmSigTokenKind.GpReg, (byte)GpRegToken.r8);
-
-    [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(r16 src)
-        => new (AsmSigTokenKind.GpReg, (byte)GpRegToken.r16);
-
-    [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(r32 src)
-        => new (AsmSigTokenKind.GpReg, (byte)GpRegToken.r32);
-
-    [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(r64 src)
-        => new (AsmSigTokenKind.GpReg, (byte)GpRegToken.r64);
-
-    [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(xmm src)
+    public static AsmSigOp xmm()
         => new (AsmSigTokenKind.VReg, (byte)VRegToken.xmm);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(ymm src)
+    public static AsmSigOp xmm(N1 n)
+        => new (AsmSigTokenKind.VReg, (byte)VRegToken.xmm1);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp xmm(N2 n)
+        => new (AsmSigTokenKind.VReg, (byte)VRegToken.xmm2);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp xmm(N3 n)
+        => new (AsmSigTokenKind.VReg, (byte)VRegToken.xmm3);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp ymm()
         => new (AsmSigTokenKind.VReg, (byte)VRegToken.ymm);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(zmm src)
+    public static AsmSigOp ymm(N1 n)
+        => new (AsmSigTokenKind.VReg, (byte)VRegToken.ymm1);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp ymm(N2 n)
+        => new (AsmSigTokenKind.VReg, (byte)VRegToken.ymm2);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp ymm(N3 n)
+        => new (AsmSigTokenKind.VReg, (byte)VRegToken.ymm3);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp zmm()
         => new (AsmSigTokenKind.VReg, (byte)VRegToken.zmm);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(m8 src)
-        => new (AsmSigTokenKind.Mem, (byte)MemToken.m8);
+    public static AsmSigOp zmm(N1 n)
+        => new (AsmSigTokenKind.VReg, (byte)VRegToken.zmm1);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(m16 src)
-        => new (AsmSigTokenKind.Mem, (byte)MemToken.m16);
+    public static AsmSigOp zmm(N2 n)
+        => new (AsmSigTokenKind.VReg, (byte)VRegToken.zmm2);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(m32 src)
-        => new (AsmSigTokenKind.Mem, (byte)MemToken.m32);
+    public static AsmSigOp zmm(N3 n)
+        => new (AsmSigTokenKind.VReg, (byte)VRegToken.zmm3);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(m64 src)
-        => new (AsmSigTokenKind.Mem, (byte)MemToken.m64);
+    public static AsmSigOp k()
+        => new (AsmSigTokenKind.KReg, (byte)KRegToken.k);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(m128 src)
-        => new (AsmSigTokenKind.Mem, (byte)MemToken.m128);
+    public static AsmSigOp rk()
+        => new (AsmSigTokenKind.KReg, (byte)KRegToken.rK);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(m256 src)        
-        => new (AsmSigTokenKind.Mem, (byte)MemToken.m256);
+    public static AsmSigOp k(N1 n)
+        => new (AsmSigTokenKind.KReg, (byte)KRegToken.k1);
+    
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp k(N2 n)
+        => new (AsmSigTokenKind.KReg, (byte)KRegToken.k2);
 
     [MethodImpl(Inline), Op]
-    public static AsmSigOp sig(m512 src)
-        => new (AsmSigTokenKind.Mem, (byte)MemToken.m512);
+    public static AsmSigOp k(N3 n)
+        => new (AsmSigTokenKind.KReg, (byte)KRegToken.k3);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp mask(N1 n)
+        => new (AsmSigTokenKind.OpMask, (byte)OpMaskToken.k1);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp mask(N2 n)
+        => new (AsmSigTokenKind.OpMask, (byte)OpMaskToken.k2);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp zmask()
+        => new (AsmSigTokenKind.OpMask, (byte)OpMaskToken.z);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp k1z()
+        => new (AsmSigTokenKind.OpMask, (byte)OpMaskToken.k1z);
 
     [MethodImpl(Inline), Op]
     public static AsmSigOp al()
@@ -232,4 +240,39 @@ public partial class AsmSigs
     public static AsmSigOp cl()
         => new (AsmSigTokenKind.RegLiteral, (byte)RegLiteralToken.CL);
 
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp rel8()
+        => new (AsmSigTokenKind.Rel, (byte)RelToken.rel8);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp rel16()
+        => new (AsmSigTokenKind.Rel, (byte)RelToken.rel16);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp rel32()
+        => new (AsmSigTokenKind.Rel, (byte)RelToken.rel32);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp vm32x()
+        => new (AsmSigTokenKind.Vsib, (byte)VsibToken.vm32x);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp vm32y()
+        => new (AsmSigTokenKind.Vsib, (byte)VsibToken.vm32y);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp vm32z()
+        => new (AsmSigTokenKind.Vsib, (byte)VsibToken.vm32z);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp vm64x()
+        => new (AsmSigTokenKind.Vsib, (byte)VsibToken.vm64x);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp vm64y()
+        => new (AsmSigTokenKind.Vsib, (byte)VsibToken.vm64y);
+
+    [MethodImpl(Inline), Op]
+    public static AsmSigOp vm64z()
+        => new (AsmSigTokenKind.Vsib, (byte)VsibToken.vm64z);
 }

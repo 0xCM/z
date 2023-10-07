@@ -12,7 +12,7 @@ namespace Z0
         static void EmitRulePage(in TableCriteria src)
         {
             var formatter = CsvTables.formatter<TableDefRow>();
-            using var emitter = XedPaths.Service.RulePage(src.Sig).AsciEmitter();
+            using var emitter = XedPaths.RulePage(src.Sig).AsciEmitter();
             emitter.AppendLine(formatter.FormatHeader());
             var k=0u;
             for(var j=0u; j<src.RowCount; j++, k++)

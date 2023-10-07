@@ -15,16 +15,16 @@ namespace Z0.Asm.Operands
 
     public readonly struct xCr : IRegOp64<xCr>
     {
-        public I Index {get;}
+        public I IndexCode {get;}
 
         [MethodImpl(Inline)]
         public xCr(I index)
         {
-            Index = index;
+            IndexCode = index;
         }
 
         public string Format()
-            => ((K)Index).ToString();
+            => ((K)IndexCode).ToString();
 
         public override string ToString()
             => Format();
@@ -54,7 +54,7 @@ namespace Z0.Asm.Operands
 
         [MethodImpl(Inline)]
         public static implicit operator RegOp(G src)
-            => reg(src.Size, src.RegClassCode, src.Index);
+            => reg(src.Size, src.RegClassCode, src.IndexCode);
 
         [MethodImpl(Inline)]
         public static implicit operator O(G src)
@@ -62,7 +62,7 @@ namespace Z0.Asm.Operands
 
         [MethodImpl(Inline)]
         public static implicit operator K(G src)
-            => (K)src.Index;
+            => (K)src.IndexCode;
 
         [MethodImpl(Inline)]
         public static implicit operator G(K src)
@@ -78,11 +78,11 @@ namespace Z0.Asm.Operands
 
         [MethodImpl(Inline)]
         public static implicit operator I(G src)
-            => src.Index;
+            => src.IndexCode;
 
         [MethodImpl(Inline)]
         public static explicit operator byte(G src)
-            => (byte)src.Index;
+            => (byte)src.IndexCode;
 
         [MethodImpl(Inline)]
         public static implicit operator G(Sym<K> src)

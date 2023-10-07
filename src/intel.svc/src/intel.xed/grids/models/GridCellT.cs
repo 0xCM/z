@@ -31,9 +31,6 @@ namespace Z0
                 get => Key.Index;
             }
 
-            // [MethodImpl(Inline)]
-            // public static implicit operator Cell(GridCell<T> src)
-            //     => new Cell(src.Key, src.Value.Operator, XedGrids.Value.untype(src.Value));
         }
     }
 }

@@ -10,38 +10,39 @@ partial struct AsmRegs
 {
     public static AsmRegName name<T>(T src)
         where T : unmanaged, IRegOp
-            => name(src.Size, src.RegClassCode, src.Index);
+            => name(src.Size, src.RegClassCode, src.IndexCode);
 
     public static AsmRegName name(NativeSizeCode size, RegClassCode @class, RegIndexCode index)
     {
+        var i = (byte)index;
         switch(@class)
         {
             case RegClassCode.GP:
-                return Gp.RegName(index, size);
+                return Gp.RegName(i, size);
             case RegClassCode.GP8HI:
-                return Gp8Hi.RegName(index);
+                return Gp8Hi.RegName(i);
             case RegClassCode.XMM:
-                return Xmm.RegName(index);
+                return Xmm.RegName(i);
             case RegClassCode.YMM:
-                return Ymm.RegName(index);
+                return Ymm.RegName(i);
             case RegClassCode.ZMM:
-                return Zmm.RegName(index);
+                return Zmm.RegName(i);
             case RegClassCode.MASK:
-                return KReg.RegName(index);
+                return KReg.RegName(i);
             case RegClassCode.MMX:
-                return Mmx.RegName(index);
+                return Mmx.RegName(i);
             case RegClassCode.DB:
-                return Db.RegName(index);
+                return Db.RegName(i);
             case RegClassCode.CR:
-                return Cr.RegName(index);
+                return Cr.RegName(i);
             case RegClassCode.TR:
-                return Tr.RegName(index);
+                return Tr.RegName(i);
             case RegClassCode.ST:
-                return St.RegName(index);
+                return St.RegName(i);
             case RegClassCode.SEG:
-                return Seg.RegName(index);
+                return Seg.RegName(i);
             case RegClassCode.BND:
-                return Bnd.RegName(index);
+                return Bnd.RegName(i);
             case RegClassCode.IPTR:
                 return IP.RegName(size);
             case RegClassCode.FLAG:
