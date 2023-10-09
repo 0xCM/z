@@ -7,17 +7,10 @@ namespace Z0;
 
 using Asm;
 
-using static XedFlows;
 using static XedModels;
 
 public static class XSvc
 {
-    sealed class ChannelCache : AppChannels<ChannelCache>
-    {
-        public XedTables XedViews(IWfChannel channel)
-            => service<XedTables>(channel);
-    }
-
     sealed class ServiceCache : AppServices<ServiceCache>
     {
         public SdeCpuid CpuId(IWfRuntime wf)
@@ -83,8 +76,6 @@ public static class XSvc
 
     static ServiceCache Services => ServiceCache.Instance;
 
-    static ChannelCache Channeled => ChannelCache.Instance;
-
     public static IntelIntrinsics IntelIntrinsics(this IWfRuntime wf)
         => Services.IntelInx(wf);
 
@@ -138,9 +129,6 @@ public static class XSvc
 
     public static IntelCmd IntelCmd(this IWfRuntime wf)
         => Services.IntelCmd(wf);
-
-    public static XedTables XedViews(this IWfChannel channel)
-        => Channeled.XedViews(channel);
 
     public static SdeCpuid CpuId(this IWfRuntime wf)
         => Services.CpuId(wf);

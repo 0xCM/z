@@ -12,8 +12,8 @@ using static XedModels;
 
 partial class XedRules
 {
-    public Index<FieldUsage> CalcFieldDeps()
-        => Data(nameof(CalcFieldDeps), () => Xed.fields(XedRuntime.Views.CellTables));
+    public Index<FieldUsage> CalcFieldDeps(CellTables src)
+        => Data(nameof(CalcFieldDeps), () => Xed.fields(src));
 
     public void Emit(Index<FieldUsage> src)
     {
@@ -38,45 +38,30 @@ partial class XedRules
         Channel.FileEmit(dst.Emit(), XedPaths.RuleTargets().Path("xed.rules.fields.deps", FileKind.Csv));
     }
 
-    void EmitRuleDeps()
-        => Emit(CalcFieldDeps());
+    void EmitRuleDeps(CellTables src)
+        => Emit(CalcFieldDeps(src));
 
     public void EmitCatalog(Index<InstPattern> patterns, XedRuleTables rules)
     {
         exec(PllExec,
             EmitRuleBlocks,
-            () => Channel.TableEmit(AsmOpCodeKinds.Instance.Records, XedPaths.Table<OpCodeMapInfo>()),
+            () => Channel.TableEmit(AsmOpCodeKinds.Instance.Records, XedPaths.ImportTable<OpCodeMapInfo>()),
             () => Emit(mapi(RuleMacros.matches().Values.ToArray().Sort(), (i,m) => m.WithSeq((uint)i))),
-            () => Emit(CalcMacroDefs().View),
-            () => Channel.TableEmit(XedRuntime.Views.InstOpSpecs, XedPaths.InstTable<InstOpSpec>()),
-            EmitRuleDeps
+            () => Emit(CalcMacroDefs().View)
         );
 
         Emit(patterns);
     }
 
     public void Emit(Index<InstPattern> patterns)
-    {
-        exec(PllExec,
-            () => EmitPatternData(patterns),
-            () => EmitRuleData()
-        );
-    }
+        => EmitPatternData(patterns);
 
     public void EmitInstGroups(Index<InstPattern> src)
         => EmitInstGroups(CalcInstGroups(src));
 
-    public void EmitOpcodes(Index<InstPattern> src)
-        => Emit(XedRuntime.Views.OpCodes);
-
-    public void EmitInstFields(Index<InstPattern> src)
-        => Channel.TableEmit(XedRuntime.Views.InstFields, XedPaths.InstTable<InstFieldRow>());
 
     public void EmitPatternRecords(Index<InstPattern> src)
-        => Channel.TableEmit(CalcPatternRecords(src), XedPaths.InstTable<InstPatternRecord>());
-
-    public void EmitOpDetails()
-        => Emit(XedRuntime.Views.InstOpDetails);
+        => Channel.TableEmit(InstPattern.records(src), XedPaths.ImportTable<InstPatternRecord>());
 
     public Index<InstPattern> EmitPatternData(Index<InstPattern> src)
     {
@@ -85,63 +70,18 @@ partial class XedRules
             () => EmitFlagEffects(src),
             () => EmitInstAttribs(src),
             () => EmitInstSigs(src),
-            () => EmitInstFields(src),
-            () => EmitInstGroups(src),
-            () => EmitOpDetails(),
-            () => EmitOpcodes(src)
+            () => EmitInstGroups(src)
             );
         return src;
     }
 
-    public void EmitRuleData()
-    {
-        exec(PllExec,
-            () => Emit(XedRuntime.Views.CellDatasets),
-            () => EmitRuleExpr(XedRuntime.Views.CellTables),
-            //() => Emit(XedRuleTables.records(XedRuntime.Views.CellTables)),
-            () => EmitTableSpecs(XedRuntime.Views.RuleTables),
-            EmitSeq,
-            () => EmitRulePages(XedRuntime.Views.RuleTables)
-        );
-    }
-
     void Emit(AsmOpCodeClass @class, ReadOnlySpan<InstGroupSeq> src)
-        => Channel.TableEmit(src, XedPaths.InstTable<InstGroupSeq>(@class.ToString().ToLower()));
+        => Channel.TableEmit(src, XedPaths.ImportTable<InstGroupSeq>(@class.ToString().ToLower()));
 
     public void EmitSeq()
     {
-        exec(PllExec,
-            () => EmitSeq(CellParser.ruleseq()),
-            () => Emit(XedRuleSeq.controls(), XedRuleSeq.defs())
-            );
     }
 
-    public void Emit(Index<SeqControl> controls, Index<SeqDef> defs)
-    {
-        var dst = text.emitter();
-        for(var i=0; i<controls.Count; i++)
-        {
-            if(i != 1)
-                dst.AppendLine();
-
-            dst.AppendLine(controls[i].Format());
-        }
-
-        for(var i=0; i<defs.Count; i++)
-        {
-            dst.AppendLine();
-            dst.AppendLine(defs[i].Format());
-        }
-
-        Channel.FileEmit(dst.Emit(), controls.Count + defs.Count, XedPaths.RuleTarget("seq.reflected", FS.Txt));
-    }
-
-    void EmitSeq(Index<RuleSeq> src)
-    {
-        var dst = text.buffer();
-        iter(src, x => dst.AppendLine(x.Format()));
-        Channel.FileEmit(dst.Emit(), src.Count, XedPaths.RuleTarget("seq", FS.Txt));
-    }
 
     public void Emit(Index<InstOpDetail> src)
     {
@@ -162,32 +102,26 @@ partial class XedRules
     void EmitRaw(XedRuleCells src)
     {
         var dst = text.emitter();
-        var count = CellRender.Tables.render(XedRuntime.Views.CellTables.Cells(), dst);
+        var count = CellRender.Tables.render(src.Cells(), dst);
         var data = Require.equal(dst.Emit(), src.RawFormat);
         Channel.FileEmit(data, src.TableCount, XedPaths.RuleTarget("cells.raw", FS.Csv));
     }
 
     public void Emit(ReadOnlySpan<MacroMatch> src)
-        => Channel.TableEmit(src, XedPaths.RuleTable<MacroMatch>());
-
-    public void Emit(ReadOnlySpan<FieldDef> src)
-        => Channel.TableEmit(src, XedPaths.Table<FieldDef>());
-
-    public void Emit(ReadOnlySpan<RuleCellRecord> src)
-        => Channel.TableEmit(src, XedPaths.RuleTable<RuleCellRecord>());
+        => Channel.TableEmit(src, XedPaths.ImportTable<MacroMatch>());
 
     public void Emit(ReadOnlySpan<MacroDef> src)
-        => Channel.TableEmit(src, XedPaths.RuleTable<MacroDef>());
+        => Channel.TableEmit(src, XedPaths.ImportTable<MacroDef>());
 
     public void Emit(ReadOnlySpan<XedInstOpCode> src)
-        => Channel.TableEmit(src, XedPaths.InstTable<XedInstOpCode>());
+        => Channel.TableEmit(src, XedPaths.ImportTable<XedInstOpCode>());
 
     public void Emit(ReadOnlySpan<InstOpRow> src)
-        => Channel.TableEmit(src, XedPaths.InstTable<InstOpRow>());
+        => Channel.TableEmit(src, XedPaths.ImportTable<InstOpRow>());
 
     public void Emit(ReadOnlySpan<InstOpClass> src)
-        => Channel.TableEmit(src, XedPaths.Table<InstOpClass>());
+        => Channel.TableEmit(src, XedPaths.ImportTable<InstOpClass>());
 
     public void Emit(ReadOnlySpan<RuleExpr> src)
-        => Channel.TableEmit(src, XedPaths.RuleTable<RuleExpr>());
+        => Channel.TableEmit(src, XedPaths.ImportTable<RuleExpr>());
 }

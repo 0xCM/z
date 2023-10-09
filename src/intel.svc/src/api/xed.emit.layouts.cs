@@ -14,7 +14,7 @@ partial class XedCmd
     Outcome EmitLayouts(CmdArgs args)
     {
         var dst = hashset<LayoutCell>();
-        var layouts = XedDb.CalcLayouts(Patterns);
+        var layouts = LayoutCalcs.layouts(sys.empty<InstPattern>());
         for(var i=0; i<layouts.LayoutCount; i++)
         {
             ref readonly var layout = ref layouts[i];

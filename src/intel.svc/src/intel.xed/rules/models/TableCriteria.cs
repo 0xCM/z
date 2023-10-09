@@ -18,7 +18,6 @@ partial class XedRules
 
         public readonly Index<RowCriteria> Rows;
 
-        [MethodImpl(Inline)]
         public TableCriteria(RuleSig sig, RowCriteria[] rows)
         {
             TableId = 0u;
@@ -28,7 +27,6 @@ partial class XedRules
             Rows = rows;
         }
 
-        [MethodImpl(Inline)]
         public TableCriteria(uint id, RuleSig sig, RowCriteria[] rows)
         {
             TableId = id;

@@ -3,17 +3,20 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    using static XedRules;
-    using static XedModels;
-    using static XedModels.RuleName;
+namespace Z0;
 
-    partial class XedRuleSeq
-    {
-        public static SeqDef VMODRM_XMM_EMIT() => emit(nameof(VMODRM_XMM_EMIT), new RuleName[]{
-            VSIB_ENC,
-            DISP_NT,
-            });
-    }
+using static XedRules;
+
+partial class XedRuleSeq
+{
+    /*
+    SEQUENCE ISA_ENCODE
+        ISA_BINDINGS
+        ISA_EMIT
+    */
+
+    public static SeqControl ISA_ENCODE() => control(nameof(ISA_ENCODE), new SeqDef[]{
+        ISA_BINDINGS(),
+        ISA_EMIT(),
+        });
 }

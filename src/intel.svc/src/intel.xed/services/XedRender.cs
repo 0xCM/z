@@ -10,7 +10,6 @@ using Asm;
 using static XedModels;
 using static XedRules;
 using static AsmOpCodes;
-using static XedFields;
 using static sys;
 
 using OC = XedModels.OpAttribKind;

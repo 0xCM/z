@@ -11,15 +11,12 @@ namespace Z0
     {
         public struct FieldDefs
         {
-            internal readonly Index<FieldKind,FieldDef> Indexed;
-
-            internal readonly Index<FieldDef> ByPos;
+            internal readonly Index<FieldDef> Indexed;
 
             [MethodImpl(Inline)]
-            internal FieldDefs(Index<FieldKind,FieldDef> indexed, Index<FieldDef> positioned)
+            internal FieldDefs(Index<FieldDef> indexed)
             {
-                Indexed = indexed;;
-                ByPos = positioned;
+                Indexed = indexed;
             }
 
             public void SortIndex()
@@ -35,25 +32,19 @@ namespace Z0
             public ref FieldDef this[FieldKind kind]
             {
                 [MethodImpl(Inline)]
-                get => ref Indexed[kind];
+                get => ref Indexed[(uint)kind];
             }
 
             public ref FieldDef this[uint i]
             {
                 [MethodImpl(Inline)]
-                get => ref Indexed[(FieldKind)i];
+                get => ref Indexed[i];
             }
 
             public ref FieldDef this[int i]
             {
                 [MethodImpl(Inline)]
-                get => ref Indexed[(FieldKind)i];
-            }
-
-            public ReadOnlySpan<FieldDef> Positioned
-            {
-                [MethodImpl(Inline)]
-                get => slice(ByPos.View,1);
+                get => ref Indexed[i];
             }
 
             [MethodImpl(Inline)]

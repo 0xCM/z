@@ -7,7 +7,6 @@ namespace Z0;
 
 using static sys;
 using static XedRules;
-using static XedPatterns;
 using static XedModels;
 
 using I = XedRecordType;
@@ -20,20 +19,13 @@ public class XedRuntime : WfSvc<XedRuntime>
 
     public ref readonly Alloc Alloc => ref _Alloc;
 
-
-    public XedDocs Docs => Wf.XedDocs();
-
     public XedDb XedDb => Wf.XedDb();
 
     public XedRules Rules => Wf.XedRules();
 
     public XedOps XedOps => Wf.XedOps();
 
-    public XedFlows XedFlows => Wf.XedFlows();
-
     readonly Alloc _Alloc;
-
-    public XedTables Views => Channel.XedViews();
 
     public XedRuntime()
     {
@@ -52,27 +44,13 @@ public class XedRuntime : WfSvc<XedRuntime>
     //     return XedRules.tables(dst);
     // }
 
-    void CalcTypeTables()
-    {
-        Views.Store(I.TypeTables, TypeTables.typetables(typeof(XedDb).Assembly,"xed", Alloc.Composite()));
-        Views.Store(I.TypeTableRows, TypeTables.rows(Views.TypeTables));
-    }
-
     void RunCalcs()
     {
         var defs = XedInstDefParser.parse(XedPaths.DocSource(XedDocKind.EncInstDef));
-        var cpu = XedFlows.CalcCpuIdDataset(XedPaths.DocSource(XedDocKind.CpuId));
-        var brodcasts = XedFlows.CalcBroadcastDefs();
-
-        CalcTypeTables();
 
         //var tables = XedRuleTables.Empty;
         var patterns = sys.empty<InstPattern>();
-        exec(PllExec,
-            //() => tables = CalcRuleTables(),
-            () => patterns = InstPattern.load(defs)
-            );
-
+        
         var opdetail = sys.empty<InstOpDetail>();
         var instfields = sys.empty<InstFieldRow>();
         var instoc = sys.empty<XedInstOpCode>();
@@ -91,12 +69,9 @@ public class XedRuntime : WfSvc<XedRuntime>
 
         var ct = CellTables.Empty;
         exec(PllExec,
-            () => ct = CellTables.from(cd));
+            () => ct = CellTables.tables(cd));
 
         var rulexpr = sys.empty<RuleExpr>();
-        exec(PllExec,
-            () => rulexpr = Rules.CalcRuleExpr(Views.CellTables));
-
         Started = true;
     }
 
@@ -121,25 +96,24 @@ public class XedRuntime : WfSvc<XedRuntime>
         _Alloc?.Dispose();
     }
 
-    public void RunEtl()
-    {
-        XedPaths.Targets().Delete();
-        var tables = Views.RuleTables;
-        var patterns = Views.Patterns;
-        Emit(XedFields.Defs.Positioned);
-        exec(PllExec,
-            () => XedFlows.Run(),
-            () => EmitRegmaps(),
-            () => Rules.EmitCatalog(patterns, tables)
-            );
+    // public void RunEtl()
+    // {
+    //     XedPaths.Targets().Delete();
+    //     var tables = Views.RuleTables;
+    //     var patterns = Views.Patterns;
+    //     exec(PllExec,
+    //         () => XedFlows.Run(),
+    //         () => EmitRegmaps(),
+    //         () => Rules.EmitCatalog(patterns, tables)
+    //         );
 
-        EmitInstPages(patterns);
-        EmitDocs();
-        XedDb.EmitArtifacts();
-    }
+    //     EmitInstPages(patterns);
+    //     EmitDocs();
+    //     XedDb.EmitArtifacts();
+    // }
 
-    void EmitDocs()
-        => Docs.Emit();
+    // void EmitDocs()
+    //     => Docs.Emit();
 
     void EmitInstPages(Index<InstPattern> src)
     {
@@ -156,12 +130,9 @@ public class XedRuntime : WfSvc<XedRuntime>
         Channel.FileEmit(src.Content, src.LineCount, dst, TextEncodingKind.Asci);
     }
 
-    void Emit(ReadOnlySpan<FieldDef> src)
-        => Channel.TableEmit(src, XedPaths.Table<FieldDef>());
-
     void EmitRegmaps()
     {
-        Channel.TableEmit(XedRegMap.Service.REntries, XedPaths.Table<RegMapEntry>("rmap"));
-        Channel.TableEmit(XedRegMap.Service.XEntries, XedPaths.Table<RegMapEntry>("xmap"));
+        Channel.TableEmit(XedRegMap.Service.REntries, XedPaths.ImportTable<RegMapEntry>("rmap"));
+        Channel.TableEmit(XedRegMap.Service.XEntries, XedPaths.ImportTable<RegMapEntry>("xmap"));
     }
 }

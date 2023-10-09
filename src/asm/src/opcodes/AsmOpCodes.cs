@@ -25,25 +25,6 @@ public partial class AsmOpCodes
 {
     public const string group = "asm.opcodes";
 
-    public static byte number(K kind)
-        => kind switch {
-            Base00 => (byte)BaseMap0,
-            Base0F => (byte)BaseMap1,
-            Base0F38 => (byte)BaseMap2,
-            Base0F3A => (byte)BaseMap3,
-            Amd3DNow => (byte)Amd3dNow,
-            Xop8 => (byte)X.Xop8,
-            Xop9 => (byte)X.Xop9,
-            XopA => (byte)X.XopA,
-            Vex0F => (byte)VEX_MAP_0F,
-            Vex0F38 => (byte)VEX_MAP_0F38,
-            Vex0F3A => (byte)VEX_MAP_0F3A,
-            Evex0F => (byte)EVEX_MAP_0F,
-            Evex0F38 => (byte)EVEX_MAP_0F38,
-            Evex0F3A => (byte)EVEX_MAP_0F3A,
-            _ => 0xFF,
-        };
-
     public static K kind(AsmOpCodeClass @class, byte number)
     {
         var kind = K.None;
@@ -75,13 +56,13 @@ public partial class AsmOpCodes
             {
                 switch(number)
                 {
-                    case 1:
+                    case 8:
                         kind = Xop8;
                     break;
-                    case 2:
+                    case 9:
                         kind = Xop9;
                     break;
-                    case 3:
+                    case 10:
                         kind = XopA;
                     break;
                 }
@@ -115,6 +96,12 @@ public partial class AsmOpCodes
                     break;
                     case 3:
                         kind = Evex0F3A;
+                    break;
+                    case 5:
+                        kind = Evex5;
+                    break;
+                    case 6:
+                        kind = Evex6;
                     break;
                 }
             }
@@ -224,15 +211,17 @@ public partial class AsmOpCodes
                 Base0F38 => 2,
                 Base0F3A => 3,
                 Amd3DNow => 4,
-                Vex0F => 5,
-                Vex0F38 => 6,
-                Vex0F3A => 7,
-                Evex0F => 8,
-                Evex0F38 => 9,
-                Evex0F3A => 10,
-                Xop8 => 11,
-                Xop9 => 12,
-                XopA => 13,
+                Xop8 => 5,
+                Xop9 => 6,
+                XopA => 7,
+                Vex0F => 8,
+                Vex0F38 => 9,
+                Vex0F3A => 10,
+                Evex0F => 11,
+                Evex0F38 => 12,
+                Evex0F3A => 13,
+                Evex5 => 14,
+                Evex6 => 15,
                 _ => 0,
             };
     }
@@ -243,9 +232,9 @@ public partial class AsmOpCodes
         return new (symbol, selector(kind), $"{symbol}[{value(kind)}]");
     }
 
-    [MethodImpl(Inline), Op]
-    public static LegacyMapKind? basemap(byte code)
-        => code <= 4? (LegacyMapKind)code : null;
+    // [MethodImpl(Inline), Op]
+    // public static LegacyMapKind? basemap(byte code)
+    //     => code <= 4? (LegacyMapKind)code : null;
 
     [MethodImpl(Inline), Op]
     public static LegacyMapKind basemap(OpCodeValue value)
@@ -283,6 +272,8 @@ public partial class AsmOpCodes
             Evex0F => I.Evex0F,
             Evex0F38 => I.Evex0F38,
             Evex0F3A => I.Evex0F3A,
+            Evex5 => I.Evex5,
+            Evex6 => I.Evex6,
             _ => 0
         };
 
@@ -315,6 +306,8 @@ public partial class AsmOpCodes
             EVEX_MAP_0F => I.Evex0F,
             EVEX_MAP_0F38 => I.Evex0F38,
             EVEX_MAP_0F3A => I.Evex0F3A,
+            EVEX_MAP_5 => I.Evex5,
+            EVEX_MAP_6 => I.Evex6,
             _ => 0
         };
 
@@ -328,14 +321,14 @@ public partial class AsmOpCodes
             _ => 0
         };
 
-    public static I? index(byte code)
-    {
-        var kind = basemap(code);
-        if(kind != null)
-            return index(kind.Value);
-        else
-            return null;
-    }
+    // public static I? index(byte code)
+    // {
+    //     var kind = basemap(code);
+    //     if(kind != null)
+    //         return index(kind.Value);
+    //     else
+    //         return null;
+    // }
 
     [Op]
     public static K kind(I src)
@@ -354,12 +347,14 @@ public partial class AsmOpCodes
             I.Evex0F => Evex0F,
             I.Evex0F38 => Evex0F38,
             I.Evex0F3A => Evex0F3A,
+            I.Evex5 => Evex5,
+            I.Evex6 => Evex6,
             _=> AsmOpCodeKind.None
         };
 
-    [Op]
-    public static AsmOpCodeClass @class(I src)
-        => @class(kind(src));
+    // [Op]
+    // public static AsmOpCodeClass @class(I src)
+    //     => @class(kind(src));
 
     [Op]
     public static AsmOpCodeClass @class(K src)
@@ -403,7 +398,6 @@ public partial class AsmOpCodes
             _ =>  0x0000,
         };
 
-
     [Op]
     public static asci2 symbol(K src)
         => src switch
@@ -422,7 +416,8 @@ public partial class AsmOpCodes
             Evex0F => S.E1,
             Evex0F38 => S.E2,
             Evex0F3A => S.E3,
-
+            Evex5 => S.E5,
+            Evex6 => S.E6,
             _ => EmptyString
         };
 
@@ -430,110 +425,112 @@ public partial class AsmOpCodes
     public static AsmOpCodeMap map(K src)
         => new (src, @class(src), index(src), symbol(src), selector(src));
 
-    [MethodImpl(Inline), Op]
-    public static AsmOpCodeMap map(I src)
-        => map(kind(src));
+    // [MethodImpl(Inline), Op]
+    // public static AsmOpCodeMap map(I src)
+    //     => map(kind(src));
 
-    public static IEnumerable<AsmOpCodeMap> maps(AsmOpCodeClass @class)
-    {
-        switch(@class)
-        {
-            case AsmOpCodeClass.Legacy:
-            {
-                yield return map(I.LegacyMap0);
-                yield return map(I.LegacyMap1);
-                yield return map(I.LegacyMap2);
-                yield return map(I.LegacyMap3);
-                yield return map(I.Amd3dNow);
-            }
-            break;
-            case AsmOpCodeClass.Xop:
-            {
-                yield return map(I.Xop8);
-                yield return map(I.Xop9);
-                yield return map(I.XopA);
-            }
-            break;
-            case AsmOpCodeClass.Vex:
-            {
-                yield return map(I.Vex0F);
-                yield return map(I.Vex0F38);
-                yield return map(I.Vex0F3A);            
-            }
-            break;
-            case AsmOpCodeClass.Evex:
-            {
-                yield return map(I.Evex0F);
-                yield return map(I.Evex0F38);
-                yield return map(I.Evex0F3A);            
-            }
-            break;
-        }
-    }
+    // public static IEnumerable<AsmOpCodeMap> maps(AsmOpCodeClass @class)
+    // {
+    //     switch(@class)
+    //     {
+    //         case AsmOpCodeClass.Legacy:
+    //         {
+    //             yield return map(I.LegacyMap0);
+    //             yield return map(I.LegacyMap1);
+    //             yield return map(I.LegacyMap2);
+    //             yield return map(I.LegacyMap3);
+    //             yield return map(I.Amd3dNow);
+    //         }
+    //         break;
+    //         case AsmOpCodeClass.Xop:
+    //         {
+    //             yield return map(I.Xop8);
+    //             yield return map(I.Xop9);
+    //             yield return map(I.XopA);
+    //         }
+    //         break;
+    //         case AsmOpCodeClass.Vex:
+    //         {
+    //             yield return map(I.Vex0F);
+    //             yield return map(I.Vex0F38);
+    //             yield return map(I.Vex0F3A);            
+    //         }
+    //         break;
+    //         case AsmOpCodeClass.Evex:
+    //         {
+    //             yield return map(I.Evex0F);
+    //             yield return map(I.Evex0F38);
+    //             yield return map(I.Evex0F3A);
+    //             yield return map(I.Evex5);
+    //             yield return map(I.Evex6);
+    //         }
+    //         break;
+    //     }
+    // }
 
-    public static IEnumerable<AsmOpCodeMap> maps()
-    {
-        foreach(var map in maps(AsmOpCodeClass.Legacy))
-            yield return map;
-        foreach(var map in maps(AsmOpCodeClass.Xop))
-            yield return map;
-        foreach(var map in maps(AsmOpCodeClass.Vex))
-            yield return map;
-        foreach(var map in maps(AsmOpCodeClass.Evex))
-            yield return map;
-    }    
+    // public static IEnumerable<AsmOpCodeMap> maps()
+    // {
+    //     foreach(var map in maps(AsmOpCodeClass.Legacy))
+    //         yield return map;
+    //     foreach(var map in maps(AsmOpCodeClass.Xop))
+    //         yield return map;
+    //     foreach(var map in maps(AsmOpCodeClass.Vex))
+    //         yield return map;
+    //     foreach(var map in maps(AsmOpCodeClass.Evex))
+    //         yield return map;
+    // }    
 
-    public static N? number(I src)
-    {
-        var dst = default(N?);
-        switch(src)
-        {
-            case I.LegacyMap0:
-                dst = (N)BaseMap0;
-            break;
-            case I.LegacyMap1:
-                dst = (N)BaseMap1;
-            break;
-            case I.LegacyMap2:
-                dst = (N)BaseMap2;
-            break;
-            case I.LegacyMap3:
-                dst = (N)BaseMap3;
-            break;
-            case I.Amd3dNow:
-                dst = (N)src;
-            break;
+    // public static N? number(I src)
+    // {
+    //     var dst = default(N?);
+    //     switch(src)
+    //     {
+    //         case I.LegacyMap0:
+    //             dst = (N)BaseMap0;
+    //         break;
+    //         case I.LegacyMap1:
+    //             dst = (N)BaseMap1;
+    //         break;
+    //         case I.LegacyMap2:
+    //             dst = (N)BaseMap2;
+    //         break;
+    //         case I.LegacyMap3:
+    //             dst = (N)BaseMap3;
+    //         break;
+    //         case I.Amd3dNow:
+    //             dst = (N)src;
+    //         break;
 
-            case I.Vex0F:
-                dst = (N)VEX_MAP_0F;
-            break;
-            case I.Vex0F38:
-                dst = (N)VEX_MAP_0F38;
-            break;
-            case I.Vex0F3A:
-                dst = (N)VEX_MAP_0F3A;
-            break;
-            case I.Evex0F:
-                dst = (N)EVEX_MAP_0F;
-            break;
-            case I.Evex0F38:
-                dst = (N)EVEX_MAP_0F38;
-            break;
-            case I.Evex0F3A:
-                dst = (N)EVEX_MAP_0F3A;
-            break;
-            case I.Xop8:
-                dst = (N)XopMapKind.Xop8;
-            break;
-            case I.Xop9:
-                dst = (N)XopMapKind.Xop9;
-            break;
-            case I.XopA:
-                dst = (N)XopMapKind.XopA;
-            break;
-        }
-        return dst;
-    }
+    //         case I.Vex0F:
+    //             dst = (N)VEX_MAP_0F;
+    //         break;
+    //         case I.Vex0F38:
+    //             dst = (N)VEX_MAP_0F38;
+    //         break;
+    //         case I.Vex0F3A:
+    //             dst = (N)VEX_MAP_0F3A;
+    //         break;
+    //         case I.Evex0F:
+    //             dst = (N)EVEX_MAP_0F;
+    //         break;
+    //         case I.Evex0F38:
+    //             dst = (N)EVEX_MAP_0F38;
+    //         break;
+    //         case I.Evex0F3A:
+    //             dst = (N)EVEX_MAP_0F3A;
+    //         break;
+    //         case I.Xop8:
+    //             dst = (N)XopMapKind.Xop8;
+    //         break;
+    //         case I.Xop9:
+    //             dst = (N)XopMapKind.Xop9;
+    //         break;
+    //         case I.XopA:
+    //             dst = (N)XopMapKind.XopA;
+    //         break;
+    //     }
+    //     return dst;
+    // }
 
     static string hex(byte src)
         => "0x" + src.ToString("X2");
@@ -635,14 +632,24 @@ public partial class AsmOpCodes
         public const string E1 = nameof(E1);
 
         /// <summary>
-        /// Evex map 1
+        /// Evex map 2
         /// </summary>
         public const string E2 = nameof(E2);
 
         /// <summary>
-        /// Evex map 1
+        /// Evex map 3
         /// </summary>
         public const string E3 = nameof(E3);
+
+        /// <summary>
+        /// Evex map 5
+        /// </summary>
+        public const string E5 = nameof(E5);
+
+        /// <summary>
+        /// Evex map 6
+        /// </summary>
+        public const string E6 = nameof(E6);
 
         /// <summary>
         /// Xop map 8

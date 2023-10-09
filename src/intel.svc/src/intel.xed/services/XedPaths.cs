@@ -40,44 +40,25 @@ public class XedPaths
     public static IDbArchive RuleTargets()
         => Targets("rules");
 
-    public static IDbArchive Refs()
-        => Targets("refs");
-
     public static IDbArchive InstTargets()
         => Targets("instructions");
 
     public static IDbArchive InstPages()
         => InstTargets().Targets("pages");
 
-    public static IDbArchive RulePages()
-        => RuleTargets().Targets("pages");
+    public static IDbArchive RuleTables()
+        => Imports().Targets("rules.tables");
 
-    public static FilePath Table<T>()
+    public static FilePath ImportTable<T>()
         where T : struct
             => Imports().Table<T>();
 
-    public static FilePath Table<T>(string suffix)
+    public static FilePath ImportTable<T>(string suffix)
         where T : struct
             => Imports().Path(Suffixed<T>(suffix));
 
-    public static FilePath RuleTable<T>()
-        where T : struct
-            => RuleTargets().Table<T>();
-
     public static FilePath FormCatalogPath()
         => Imports().Path(FS.file(Tables.identify<FormImport>().Format(), FS.Csv));
-
-    public static FilePath RuleSource(RuleTableKind kind)
-    {
-        var tk = kind switch
-        {
-            RuleTableKind.ENC => XedDocKind.EncRuleTable,
-            RuleTableKind.DEC => XedDocKind.DecRuleTable,
-            _ => XedDocKind.None
-        };
-
-        return DocSource(tk);
-    }
 
     static FileName Suffixed<T>(string suffix)
         where T : struct
@@ -91,7 +72,7 @@ public class XedPaths
         => DbTargets().Root + FS.file(string.Format("xed.db.{0}",name), kind.Ext());
 
     public static AbsoluteLink MarkdownLink(RuleSig sig)
-        => Markdown.link(string.Format("{0}::{1}()", sig.TableKind, sig.TableName), RulePage(sig));
+        => Markdown.link(string.Format("{0}::{1}()", sig.TableKind, sig.TableName), RuleTable(sig));
 
     public static RuleTableKind tablekind(FileName src)
     {
@@ -121,12 +102,12 @@ public class XedPaths
     public static FilePath DisasmOpsPath(FilePath src)
         => src.FolderPath + FS.file(string.Format("{0}.ops", src.FileName.WithoutExtension.Format()), FS.Txt);
 
-    public static FileUri RulePage(RuleSig sig)
-        => RulePages().Path(FS.file(sig.Format(), FS.Csv));
+    public static FileUri RuleTable(RuleSig sig)
+        => RuleTables().Path(FS.file(sig.Format(), FS.Csv));
 
     public static FileUri CheckedRulePage(RuleSig sig)
     {
-        var uri = RulePage(sig);
+        var uri = RuleTable(sig);
         return uri.Exists ? uri : FileUri.Empty;
     }
 
@@ -159,13 +140,6 @@ public class XedPaths
     public static FilePath RuleSpecs()
         => RuleTargets().Path(FS.file("xed.rules.specs", FS.Csv));
 
-    public static FilePath InstTable<T>()
-        where T : struct
-            => InstTargets().Path(CsvTables.filename<T>());
-
-    public static FilePath InstTable<T>(string suffix)
-        where T : struct
-            => InstTargets().Path(Suffixed<T>(suffix));
 
     public static FilePath InstTarget(string name, FileKind kind)
         => InstTargets().Path(FS.file(string.Format("xed.inst.{0}", name), kind.Ext()));

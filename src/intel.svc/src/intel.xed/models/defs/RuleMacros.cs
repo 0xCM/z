@@ -108,7 +108,6 @@ partial class XedRules
             return Require.nonempty(buffer.Emit());
         }
 
-
         static void matches(MacroSpec spec, Dictionary<string,MacroMatch> dst)
         {
             var value = XedRender.format(spec.Name);

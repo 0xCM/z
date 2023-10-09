@@ -26,7 +26,7 @@ public class ApiCmdRunner : IApiCmdRunner
         catch(Exception e)
         {
             channel.Error(e);
-            token = TokenDispenser.close(flow,false);
+            token = WfTokens.close(flow,false);
         }
 
         token = channel.Ran(flow, $"{handler.Route} execution completed in {sw.Elapsed()}");
@@ -146,7 +146,7 @@ public class ApiCmdRunner : IApiCmdRunner
 
     public ExecToken RunCommand(ApiCommand spec)
     {
-        var token = TokenDispenser.open();
+        var token = WfTokens.open();
         var result = Outcome.Success;
         try
         {
@@ -156,12 +156,12 @@ public class ApiCmdRunner : IApiCmdRunner
                 result = run(Channel, fx, spec.Args);            
             else
                 result = (false,string.Format("Command '{0}' unrecognized", spec.Route));
-            token = TokenDispenser.close(token, result);
+            token = WfTokens.close(token, result);
         }
         catch(Exception e)
         {
             result = (false, e.ToString());
-            token = TokenDispenser.close(token, false);
+            token = WfTokens.close(token, false);
         }
         if(result.Fail)
             Channel.Error(result.Message);

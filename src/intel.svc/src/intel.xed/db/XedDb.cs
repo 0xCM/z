@@ -40,20 +40,16 @@ namespace Z0
             }
         }
 
-        ref readonly CellTables CellTables => ref Xed.Views.CellTables;
-
-        ref readonly Index<InstPattern> Patterns => ref Xed.Views.Patterns;
-
-        public void EmitLayouts()
-            => Emit(CalcLayouts(Patterns));
+        public void EmitLayouts(ReadOnlySeq<InstPattern> src)
+            => Emit(CalcLayouts(src));
 
         void Emit(InstLayouts src)
         {
             Channel.FileEmit(src.Format(), 0, XedPaths.InstTarget("layouts.vectors", FileKind.Csv));
-            Channel.TableEmit(src.Records.View, XedPaths.InstTable<InstLayoutRecord>(), TextEncodingKind.Asci);
+            Channel.TableEmit(src.Records.View, XedPaths.ImportTable<InstLayoutRecord>(), TextEncodingKind.Asci);
         }
 
-        public InstLayouts CalcLayouts(Index<InstPattern> src)
+        public InstLayouts CalcLayouts(ReadOnlySeq<InstPattern> src)
             => Data(nameof(CalcLayouts), () => LayoutCalcs.layouts(src));
 
         public LayoutVectors CalcLayoutVectors(InstLayouts src)

@@ -12,7 +12,7 @@ partial class XedRules
 {
     public readonly struct LayoutCalcs
     {
-        public static InstLayouts layouts(Index<InstPattern> src)
+        public static InstLayouts layouts(ReadOnlySeq<InstPattern> src)
         {
             Require.invariant(src.IsNonEmpty);
             var count = src.Count;

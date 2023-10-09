@@ -10,7 +10,7 @@ using static XedModels;
 
 partial class XedPatterns
 {
-    public static SortedLookup<XedInstClass,InstGroup> groups(Index<InstPattern> src)
+    public static SortedLookup<XedInstClass,InstGroup> groups(ReadOnlySeq<InstPattern> src)
     {
         var dst = dict<XedInstClass,Index<InstPattern>>();
         var patterns = list<InstPattern>();
@@ -49,7 +49,7 @@ partial class XedPatterns
     }
 
     public static InstGroup group(XedInstClass @class, Index<InstPattern> src)
-        => new InstGroup(@class, members(@class, src));
+        => new (@class, members(@class, src));
 
     public static Index<InstGroupMember> members(XedInstClass @class, Index<InstPattern> src)
     {

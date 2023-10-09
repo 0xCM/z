@@ -9,6 +9,6 @@ using static XedModels;
 
 partial class XedRules
 {
-    public Index<InstGroup> CalcInstGroups(Index<InstPattern> src)
+    public Index<InstGroup> CalcInstGroups(ReadOnlySeq<InstPattern> src)
         => Data(nameof(CalcInstGroups),() => XedPatterns.groups(src).Values.ToArray().Sort());
 }

@@ -127,7 +127,6 @@ public class XedMachines : IDisposable
             Id = sys.inc(ref Seq);
             Expressions = Fields.allocate();
             XedRt = xed;
-            LoadLookups();
             Reset();
         }
 
@@ -437,10 +436,9 @@ public class XedMachines : IDisposable
         uint IXedMachine.MachineId
             => Id;
 
-        void LoadLookups()
+        void LoadLookups(ReadOnlySeq<InstPattern> patterns)
         {
             var rules = XedRt.Rules;
-            var patterns = XedRt.Views.Patterns;
             var groups = rules.CalcInstGroups(patterns);
             var members = groups.SelectMany(x => x.Members);
             _GroupMemberLookup = members.Select(x => (x.PatternId,x)).ToDictionary();

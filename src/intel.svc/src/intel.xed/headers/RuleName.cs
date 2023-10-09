@@ -10,677 +10,681 @@ partial class XedModels
     [DataWidth(num9.Width)]
     public enum RuleName : ushort
     {
-        None = 0,
+        None,
 
-        A_GPR_B = 1,
+        A_GPR_B,
 
-        A_GPR_R = 2,
+        A_GPR_R,
 
-        Ar10 = 3,
+        Ar10,
 
-        Ar11 = 4,
+        Ar11,
 
-        Ar12 = 5,
+        Ar12,
 
-        Ar13 = 6,
+        Ar13,
 
-        Ar14 = 7,
+        Ar14,
 
-        Ar15 = 8,
+        Ar15,
 
-        Ar8 = 9,
+        Ar8,
 
-        Ar9 = 10,
+        Ar9,
 
-        ArAX = 11,
+        ArAX,
 
-        ArBP = 12,
+        ArBP,
 
-        ArBX = 13,
+        ArBX,
 
-        ArCX = 14,
+        ArCX,
 
-        ArDI = 15,
+        ArDI,
 
-        ArDX = 16,
+        ArDX,
 
-        ArSI = 17,
+        ArSI,
 
-        ArSP = 18,
+        ArSP,
 
-        ASZ_NONTERM = 19,
+        ASZ_NONTERM,
 
-        AVX_INSTRUCTIONS = 20,
+        AVX_INSTRUCTIONS,
 
-        AVX_SPLITTER = 21,
+        AVX_SPLITTER,
 
-        AVX512_EVEX_BYTE3_ENC = 22,
+        AVX512_EVEX_BYTE3_ENC,
 
-        AVX512_EVEX_BYTE3_ENC_BIND = 23,
+        AVX512_EVEX_BYTE3_ENC_BIND,
 
-        AVX512_ROUND = 24,
+        AVX512_ROUND,
 
-        BND_B = 25,
+        BND_B,
 
-        BND_B_CHECK = 26,
+        BND_B_CHECK,
 
-        BND_R = 27,
+        BND_R,
 
-        BND_R_CHECK = 28,
+        BND_R_CHECK,
 
-        BRANCH_HINT = 29,
+        BRANCH_HINT,
 
-        BRDISP32 = 30,
+        BRDISP32,
 
-        BRDISP8 = 31,
+        BRDISP8,
 
-        BRDISPz = 32,
+        BRDISPz,
 
-        CET_NO_TRACK = 33,
+        CET_NO_TRACK,
 
-        CR_B = 34,
+        CR_B,
 
-        CR_R = 35,
+        CR_R,
 
-        CR_WIDTH = 36,
+        CR_WIDTH,
 
-        DF64 = 37,
+        DF64,
 
-        DISP_NT = 38,
+        DISP_NT,
 
-        DISP_WIDTH_0 = 39,
+        DISP_WIDTH_0,
 
-        DISP_WIDTH_0_8_16 = 40,
+        DISP_WIDTH_0_8_16,
 
-        DISP_WIDTH_0_8_32 = 41,
+        DISP_WIDTH_0_8_32,
 
-        DISP_WIDTH_16 = 42,
+        DISP_WIDTH_16,
 
-        DISP_WIDTH_32 = 43,
+        DISP_WIDTH_32,
 
-        DISP_WIDTH_8 = 44,
+        DISP_WIDTH_8,
 
-        DISP_WIDTH_8_32 = 45,
+        DISP_WIDTH_8_32,
 
-        DR_R = 46,
+        DR_R,
 
-        ERROR = 47,
+        ERROR,
 
-        ESIZE_1_BITS = 48,
+        ESIZE_1_BITS,
 
-        ESIZE_128_BITS = 49,
+        ESIZE_128_BITS,
 
-        ESIZE_16_BITS = 50,
+        ESIZE_16_BITS,
 
-        ESIZE_2_BITS = 51,
+        ESIZE_2_BITS,
 
-        ESIZE_32_BITS = 52,
+        ESIZE_32_BITS,
 
-        ESIZE_4_BITS = 53,
+        ESIZE_4_BITS,
 
-        ESIZE_64_BITS = 54,
+        ESIZE_64_BITS,
 
-        ESIZE_8_BITS = 55,
+        ESIZE_8_BITS,
 
-        EVEX_62_REXR_ENC = 56,
+        EVEX_62_REXR_ENC,
 
-        EVEX_62_REXR_ENC_BIND = 57,
+        EVEX_62_EXR_ENC_BIND,
 
-        EVEX_ENC = 58,
+        EVEX_ENC,
 
-        EVEX_INSTRUCTIONS = 59,
+        EVEX_INSTRUCTIONS,
 
-        EVEX_LL_ENC = 60,
+        EVEX_LL_ENC,
 
-        EVEX_LL_ENC_BIND = 61,
+        EVEX_LL_ENC_BIND,
 
-        EVEX_MAP_ENC = 62,
+        EVEX_U_ENC,
 
-        EVEX_MAP_ENC_BIND = 63,
+        EVEX_PP_ENC,
 
-        EVEX_REXB_ENC = 64,
+        EVEX_MAP_ENC,
 
-        EVEX_REXB_ENC_BIND = 65,
+        EVEX_MAP_ENC_BIND,
 
-        EVEX_REXRR_ENC = 66,
+        EVEX_REXB_ENC,
 
-        EVEX_REXRR_ENC_BIND = 67,
+        EVEX_REXB_ENC_BIND,
 
-        EVEX_REXW_VVVV_ENC = 68,
+        EVEX_REXRR_ENC,
 
-        EVEX_REXW_VVVV_ENC_BIND = 69,
+        EVEX_REXRR_ENC_BIND,
 
-        EVEX_REXX_ENC = 70,
+        EVEX_REXW_VVVV_ENC,
 
-        EVEX_REXX_ENC_BIND = 71,
+        EVEX_REXW_VVVV_ENC_BIND,
 
-        EVEX_SPLITTER = 72,
+        EVEX_REXX_ENC,
 
-        EVEX_UPP_ENC = 73,
+        EVEX_REXX_ENC_BIND,
 
-        EVEX_UPP_ENC_BIND = 74,
+        EVEX_SPLITTER,
 
-        FINAL_DSEG = 75,
+        EVEX_UPP_ENC,
 
-        FINAL_DSEG_MODE64 = 76,
+        EVEX_UPP_ENC_BIND,
 
-        FINAL_DSEG_NOT64 = 77,
+        FINAL_DSEG,
 
-        FINAL_DSEG1 = 78,
+        FINAL_DSEG_MODE64,
 
-        FINAL_DSEG1_MODE64 = 79,
+        FINAL_DSEG_NOT64,
 
-        FINAL_DSEG1_NOT64 = 80,
+        FINAL_DSEG1,
 
-        FINAL_ESEG = 81,
+        FINAL_DSEG1_MODE64,
 
-        FINAL_ESEG1 = 82,
+        FINAL_DSEG1_NOT64,
 
-        FINAL_SSEG = 83,
+        FINAL_ESEG,
 
-        FINAL_SSEG_MODE64 = 84,
+        FINAL_ESEG1,
 
-        FINAL_SSEG_NOT64 = 85,
+        FINAL_SSEG,
 
-        FINAL_SSEG0 = 86,
+        FINAL_SSEG_MODE64,
 
-        FINAL_SSEG1 = 87,
+        FINAL_SSEG_NOT64,
 
-        FIX_ROUND_LEN128 = 88,
+        FINAL_SSEG0,
 
-        FIX_ROUND_LEN512 = 89,
+        FINAL_SSEG1,
 
-        FIXUP_EASZ_ENC = 90,
+        FIX_ROUND_LEN128,
 
-        FIXUP_EOSZ_ENC = 91,
+        FIX_ROUND_LEN512,
 
-        FIXUP_SMODE_ENC = 92,
+        FIXUP_EASZ_ENC,
 
-        FORCE64 = 93,
+        FIXUP_EOSZ_ENC,
 
-        GPR16_B = 94,
+        FIXUP_SMODE_ENC,
 
-        GPR16_R = 95,
+        FORCE64,
 
-        GPR16_SB = 96,
+        GPR16_B,
 
-        GPR16e = 97,
+        GPR16_R,
 
-        GPR32_B = 98,
+        GPR16_SB,
 
-        GPR32_R = 99,
+        GPR16e,
 
-        GPR32_SB = 100,
+        GPR32_B,
 
-        GPR32_X = 101,
+        GPR32_R,
 
-        GPR32e = 102,
+        GPR32_SB,
 
-        GPR32e_m32 = 103,
+        GPR32_X,
 
-        GPR32e_m64 = 104,
+        GPR32e,
 
-        GPR64_B = 105,
+        GPR32e_m32,
 
-        GPR64_R = 106,
+        GPR32e_m64,
 
-        GPR64_SB = 107,
+        GPR64_B,
 
-        GPR64_X = 108,
+        GPR64_R,
 
-        GPR64e = 109,
+        GPR64_SB,
 
-        GPR8_B = 110,
+        GPR64_X,
 
-        GPR8_R = 111,
+        GPR64e,
 
-        GPR8_SB = 112,
+        GPR8_B,
 
-        GPRv_B = 113,
+        GPR8_R,
 
-        GPRv_R = 114,
+        GPR8_SB,
 
-        GPRv_SB = 115,
+        GPRv_B,
 
-        GPRy_B = 116,
+        GPRv_R,
 
-        GPRy_R = 117,
+        GPRv_SB,
 
-        GPRz_B = 118,
+        GPRy_B,
 
-        GPRz_R = 119,
+        GPRy_R,
 
-        IGNORE66 = 120,
+        GPRz_B,
 
-        IMMUNE_REXW = 121,
+        GPRz_R,
 
-        IMMUNE66 = 122,
+        IGNORE66,
 
-        IMMUNE66_LOOP64 = 123,
+        IMMUNE_REXW,
 
-        INSTRUCTIONS = 124,
+        IMMUNE66,
 
-        ISA = 125,
+        IMMUNE66_LOOP64,
 
-        MASK_B = 126,
+        INSTRUCTIONS,
 
-        MASK_N = 127,
+        ISA,
 
-        MASK_N32 = 128,
+        MASK_B,
 
-        MASK_N64 = 129,
+        MASK_N,
 
-        MASK_R = 130,
+        MASK_N32,
 
-        MASK1 = 131,
+        MASK_N64,
 
-        MASKNOT0 = 132,
+        MASK_R,
 
-        MEMDISP = 133,
+        MASK1,
 
-        MEMDISP16 = 134,
+        MASKNOT0,
 
-        MEMDISP32 = 135,
+        MEMDISP,
 
-        MEMDISP8 = 136,
+        MEMDISP16,
 
-        MEMDISPv = 137,
+        MEMDISP32,
 
-        MMX_B = 138,
+        MEMDISP8,
 
-        MMX_R = 139,
+        MEMDISPv,
 
-        MODRM = 140,
+        MMX_B,
 
-        MODRM_MOD_EA16_DISP0 = 141,
+        MMX_R,
 
-        MODRM_MOD_EA16_DISP16 = 142,
+        MODRM,
 
-        MODRM_MOD_EA16_DISP8 = 143,
+        MODRM_MOD_EA16_DISP0,
 
-        MODRM_MOD_EA32_DISP0 = 144,
+        MODRM_MOD_EA16_DISP16,
 
-        MODRM_MOD_EA32_DISP32 = 145,
+        MODRM_MOD_EA16_DISP8,
 
-        MODRM_MOD_EA32_DISP8 = 146,
+        MODRM_MOD_EA32_DISP0,
 
-        MODRM_MOD_EA64_DISP0 = 147,
+        MODRM_MOD_EA32_DISP32,
 
-        MODRM_MOD_EA64_DISP32 = 148,
+        MODRM_MOD_EA32_DISP8,
 
-        MODRM_MOD_EA64_DISP8 = 149,
+        MODRM_MOD_EA64_DISP0,
 
-        MODRM_MOD_ENCODE = 150,
+        MODRM_MOD_EA64_DISP32,
 
-        MODRM_RM_ENCODE = 151,
+        MODRM_MOD_EA64_DISP8,
 
-        MODRM_RM_ENCODE_EA16_SIB0 = 152,
+        MODRM_MOD_ENCODE,
 
-        MODRM_RM_ENCODE_EA32_SIB0 = 153,
+        MODRM_RM_ENCODE,
 
-        MODRM_RM_ENCODE_EA64_SIB0 = 154,
+        MODRM_RM_ENCODE_EA16_SIB0,
 
-        MODRM_RM_ENCODE_EANOT16_SIB1 = 155,
+        MODRM_RM_ENCODE_EA32_SIB0,
 
-        MODRM16 = 156,
+        MODRM_RM_ENCODE_EA64_SIB0,
 
-        MODRM32 = 157,
+        MODRM_RM_ENCODE_EANOT16_SIB1,
 
-        MODRM64alt32 = 158,
+        MODRM16,
 
-        UISA_ENC_INDEX_XMM = 159,
+        MODRM32,
 
-        NELEM_EIGHTHMEM = 160,
+        MODRM64alt32,
 
-        NELEM_FULL = 161,
+        UISA_ENC_INDEX_XMM,
 
-        NELEM_FULLMEM = 162,
+        NELEM_EIGHTHMEM,
 
-        NELEM_GPR_READER = 163,
+        NELEM_FULL,
 
-        NELEM_GPR_READER_BYTE = 164,
+        NELEM_FULLMEM,
 
-        NELEM_GPR_READER_SUBDWORD = 165,
+        NELEM_GPR_READER,
 
-        NELEM_GPR_READER_WORD = 166,
+        NELEM_GPR_READER_BYTE,
 
-        NELEM_GPR_WRITER_LDOP = 167,
+        NELEM_GPR_READER_SUBDWORD,
 
-        NELEM_GPR_WRITER_LDOP_D = 168,
+        NELEM_GPR_READER_WORD,
 
-        NELEM_GPR_WRITER_LDOP_Q = 169,
+        NELEM_GPR_WRITER_LDOP,
 
-        NELEM_GPR_WRITER_STORE = 170,
+        NELEM_GPR_WRITER_LDOP_D,
 
-        NELEM_GPR_WRITER_STORE_BYTE = 171,
+        NELEM_GPR_WRITER_LDOP_Q,
 
-        NELEM_GPR_WRITER_STORE_SUBDWORD = 172,
+        NELEM_GPR_WRITER_STORE,
 
-        NELEM_GPR_WRITER_STORE_WORD = 173,
+        NELEM_GPR_WRITER_STORE_BYTE,
 
-        NELEM_GSCAT = 174,
+        NELEM_GPR_WRITER_STORE_SUBDWORD,
 
-        NELEM_HALF = 175,
+        NELEM_GPR_WRITER_STORE_WORD,
 
-        NELEM_HALFMEM = 176,
+        NELEM_GSCAT,
 
-        NELEM_MEM128 = 177,
+        NELEM_HALF,
 
-        NELEM_MOVDDUP = 178,
+        NELEM_HALFMEM,
 
-        NELEM_QUARTERMEM = 179,
+        NELEM_MEM128,
 
-        NELEM_SCALAR = 180,
+        NELEM_MOVDDUP,
 
-        NELEM_TUPLE1 = 181,
+        NELEM_QUARTERMEM,
 
-        NELEM_TUPLE1_4X = 182,
+        NELEM_SCALAR,
 
-        NELEM_TUPLE1_BYTE = 183,
+        NELEM_TUPLE1,
 
-        NELEM_TUPLE1_SUBDWORD = 184,
+        NELEM_TUPLE1_4X,
 
-        NELEM_TUPLE1_WORD = 185,
+        NELEM_TUPLE1_BYTE,
 
-        NELEM_TUPLE2 = 186,
+        NELEM_TUPLE1_SUBDWORD,
 
-        NELEM_TUPLE4 = 187,
+        NELEM_TUPLE1_WORD,
 
-        NELEM_TUPLE8 = 188,
+        NELEM_TUPLE2,
 
-        NEWVEX_ENC = 189,
+        NELEM_TUPLE4,
 
-        OeAX = 190,
+        NELEM_TUPLE8,
 
-        ONE = 191,
+        NEWVEX_ENC,
 
-        OrAX = 192,
+        OeAX,
 
-        OrBP = 193,
+        ONE,
 
-        OrBX = 194,
+        OrAX,
 
-        OrCX = 195,
+        OrBP,
 
-        OrDX = 196,
+        OrBX,
 
-        OrSP = 197,
+        OrCX,
 
-        OSZ_NONTERM = 198,
+        OrDX,
 
-        OSZ_NONTERM_ENC = 199,
+        OrSP,
 
-        OVERRIDE_SEG0 = 200,
+        OSZ_NONTERM,
 
-        OVERRIDE_SEG1 = 201,
+        OSZ_NONTERM_ENC,
 
-        PREFIX_ENC = 202,
+        OVERRIDE_SEG0,
 
-        PREFIXES = 203,
+        OVERRIDE_SEG1,
 
-        REFINING66 = 204,
+        PREFIX_ENC,
 
-        REMOVE_SEGMENT = 205,
+        PREFIXES,
 
-        REMOVE_SEGMENT_AGEN1 = 206,
+        REFINING66,
 
-        REX_PREFIX_ENC = 207,
+        REMOVE_SEGMENT,
 
-        rFLAGS = 208,
+        REMOVE_SEGMENT_AGEN1,
 
-        rIP = 209,
+        REX_PREFIX_ENC,
 
-        rIPa = 210,
+        rFLAGS,
 
-        SAE = 211,
+        rIP,
 
-        SE_IMM8 = 212,
+        rIPa,
 
-        SEG = 213,
+        SAE,
 
-        SEG_MOV = 214,
+        SE_IMM8,
 
-        SEGe = 215,
+        SEG,
 
-        SEGMENT_DEFAULT_ENCODE = 216,
+        SEG_MOV,
 
-        SEGMENT_ENCODE = 217,
+        SEGe,
 
-        SIB = 218,
+        SEGMENT_DEFAULT_ENCODE,
 
-        SIB_BASE0 = 219,
+        SEGMENT_ENCODE,
 
-        SIB_NT = 220,
+        SIB,
 
-        SIB_REQUIRED_ENCODE = 221,
+        SIB_BASE0,
 
-        SIBBASE_ENCODE = 222,
+        SIB_NT,
 
-        SIBBASE_ENCODE_SIB1 = 223,
+        SIB_REQUIRED_ENCODE,
 
-        SIBINDEX_ENCODE = 224,
+        SIBBASE_ENCODE,
 
-        SIBINDEX_ENCODE_SIB1 = 225,
+        SIBBASE_ENCODE_SIB1,
 
-        SIBSCALE_ENCODE = 226,
+        SIBINDEX_ENCODE,
 
-        SIMM8 = 227,
+        SIBINDEX_ENCODE_SIB1,
 
-        SIMMz = 228,
+        SIBSCALE_ENCODE,
 
-        SrBP = 229,
+        SIMM8,
 
-        SRBP = 230,
+        SIMMz,
 
-        SrSP = 231,
+        SrBP,
 
-        SRSP = 232,
+        SRBP,
 
-        TMM_B = 233,
+        SrSP,
 
-        TMM_N = 234,
+        SRSP,
 
-        TMM_R = 235,
+        TMM_B,
 
-        UIMM16 = 236,
+        TMM_N,
 
-        UIMM32 = 237,
+        TMM_R,
 
-        UIMM8 = 238,
+        UIMM16,
 
-        UIMM8_1 = 239,
+        UIMM32,
 
-        UIMMv = 240,
+        UIMM8,
 
-        UISA_ENC_INDEX_YMM = 241,
+        UIMM8_1,
 
-        UISA_ENC_INDEX_ZMM = 242,
+        UIMMv,
 
-        UISA_VMODRM_XMM = 243,
+        UISA_ENC_INDEX_YMM,
 
-        UISA_VMODRM_YMM = 244,
+        UISA_ENC_INDEX_ZMM,
 
-        UISA_VMODRM_ZMM = 245,
+        UISA_VMODRM_XMM,
 
-        UISA_VSIB_BASE = 246,
+        UISA_VMODRM_YMM,
 
-        UISA_VSIB_INDEX_XMM = 247,
+        UISA_VMODRM_ZMM,
 
-        UISA_VSIB_INDEX_YMM = 248,
+        UISA_VSIB_BASE,
 
-        UISA_VSIB_INDEX_ZMM = 249,
+        UISA_VSIB_INDEX_XMM,
 
-        UISA_VSIB_XMM = 250,
+        UISA_VSIB_INDEX_YMM,
 
-        UISA_VSIB_YMM = 251,
+        UISA_VSIB_INDEX_ZMM,
 
-        UISA_VSIB_ZMM = 252,
+        UISA_VSIB_XMM,
 
-        VEX_ESCVL_ENC = 253,
+        UISA_VSIB_YMM,
 
-        VEX_MAP_ENC = 254,
+        UISA_VSIB_ZMM,
 
-        VEX_REG_ENC = 255,
+        VEX_ESCVL_ENC,
 
-        VEX_REXR_ENC = 256,
+        VEX_MAP_ENC,
 
-        VEX_REXXB_ENC = 257,
+        VEX_REG_ENC,
 
-        VEX_TYPE_ENC = 258,
+        VEX_REXR_ENC,
 
-        VEXED_REX = 259,
+        VEX_REXXB_ENC,
 
-        VGPR32_B = 260,
+        VEX_TYPE_ENC,
 
-        VGPR32_B_32 = 261,
+        VEXED_REX,
 
-        VGPR32_B_64 = 262,
+        VGPR32_B,
 
-        VGPR32_N = 263,
+        VGPR32_B_32,
 
-        VGPR32_N_32 = 264,
+        VGPR32_B_64,
 
-        VGPR32_N_64 = 265,
+        VGPR32_N,
 
-        VGPR32_R = 266,
+        VGPR32_N_32,
 
-        VGPR32_R_32 = 267,
+        VGPR32_N_64,
 
-        VGPR32_R_64 = 268,
+        VGPR32_R,
 
-        VGPR64_B = 269,
+        VGPR32_R_32,
 
-        VGPR64_N = 270,
+        VGPR32_R_64,
 
-        VGPR64_R = 271,
+        VGPR64_B,
 
-        VGPRy_B = 272,
+        VGPR64_N,
 
-        VGPRy_N = 273,
+        VGPR64_R,
 
-        VGPRy_R = 274,
+        VGPRy_B,
 
-        VMODRM_MOD_ENCODE = 275,
+        VGPRy_N,
 
-        VMODRM_XMM = 276,
+        VGPRy_R,
 
-        VMODRM_YMM = 277,
+        VMODRM_MOD_ENCODE,
 
-        VSIB_BASE = 278,
+        VMODRM_XMM,
 
-        VSIB_ENC = 279,
+        VMODRM_YMM,
 
-        VSIB_ENC_BASE = 280,
+        VSIB_BASE,
 
-        VSIB_ENC_INDEX_XMM = 281,
+        VSIB_ENC,
 
-        VSIB_ENC_INDEX_YMM = 282,
+        VSIB_ENC_BASE,
 
-        VSIB_ENC_SCALE = 283,
+        VSIB_ENC_INDEX_XMM,
 
-        VSIB_INDEX_XMM = 284,
+        VSIB_ENC_INDEX_YMM,
 
-        VSIB_INDEX_YMM = 285,
+        VSIB_ENC_SCALE,
 
-        VSIB_XMM = 286,
+        VSIB_INDEX_XMM,
 
-        VSIB_YMM = 287,
+        VSIB_INDEX_YMM,
 
-        X87 = 288,
+        VSIB_XMM,
 
-        XMM_B = 289,
+        VSIB_YMM,
 
-        XMM_B_32 = 290,
+        X87,
 
-        XMM_B_64 = 291,
+        XMM_B,
 
-        XMM_B3 = 292,
+        XMM_B_32,
 
-        XMM_B3_32 = 293,
+        XMM_B_64,
 
-        XMM_B3_64 = 294,
+        XMM_B3,
 
-        XMM_N = 295,
+        XMM_B3_32,
 
-        XMM_N_32 = 296,
+        XMM_B3_64,
 
-        XMM_N_64 = 297,
+        XMM_N,
 
-        XMM_N3 = 298,
+        XMM_N_32,
 
-        XMM_N3_32 = 299,
+        XMM_N_64,
 
-        XMM_N3_64 = 300,
+        XMM_N3,
 
-        XMM_R = 301,
+        XMM_N3_32,
 
-        XMM_R_32 = 302,
+        XMM_N3_64,
 
-        XMM_R_64 = 303,
+        XMM_R,
 
-        XMM_R3 = 304,
+        XMM_R_32,
 
-        XMM_R3_32 = 305,
+        XMM_R_64,
 
-        XMM_R3_64 = 306,
+        XMM_R3,
 
-        XMM_SE = 307,
+        XMM_R3_32,
 
-        XMM_SE32 = 308,
+        XMM_R3_64,
 
-        XMM_SE64 = 309,
+        XMM_SE,
 
-        XOP_ENC = 310,
+        XMM_SE32,
 
-        XOP_INSTRUCTIONS = 311,
+        XMM_SE64,
 
-        XOP_MAP_ENC = 312,
+        XOP_ENC,
 
-        XOP_REXXB_ENC = 313,
+        XOP_INSTRUCTIONS,
 
-        XOP_TYPE_ENC = 314,
+        XOP_MAP_ENC,
 
-        YMM_B = 315,
+        XOP_REXXB_ENC,
 
-        YMM_B_32 = 316,
+        XOP_TYPE_ENC,
 
-        YMM_B_64 = 317,
+        YMM_B,
 
-        YMM_B3 = 318,
+        YMM_B_32,
 
-        YMM_B3_32 = 319,
+        YMM_B_64,
 
-        YMM_B3_64 = 320,
+        YMM_B3,
 
-        YMM_N = 321,
+        YMM_B3_32,
 
-        YMM_N_32 = 322,
+        YMM_B3_64,
 
-        YMM_N_64 = 323,
+        YMM_N,
 
-        YMM_N3 = 324,
+        YMM_N_32,
 
-        YMM_N3_32 = 325,
+        YMM_N_64,
 
-        YMM_N3_64 = 326,
+        YMM_N3,
 
-        YMM_R = 327,
+        YMM_N3_32,
 
-        YMM_R_32 = 328,
+        YMM_N3_64,
 
-        YMM_R_64 = 329,
+        YMM_R,
 
-        YMM_R3 = 330,
+        YMM_R_32,
 
-        YMM_R3_32 = 331,
+        YMM_R_64,
 
-        YMM_R3_64 = 332,
+        YMM_R3,
 
-        YMM_SE = 333,
+        YMM_R3_32,
 
-        YMM_SE32 = 334,
+        YMM_R3_64,
 
-        YMM_SE64 = 335,
+        YMM_SE,
+
+        YMM_SE32,
+
+        YMM_SE64,
 
         ZMM_B3,
 
@@ -703,5 +707,7 @@ partial class XedModels
         XSAVE,
 
         NELEM_QUARTER,
+
+
     }
 }

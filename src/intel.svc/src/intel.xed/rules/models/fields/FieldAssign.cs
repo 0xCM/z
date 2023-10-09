@@ -3,51 +3,50 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedRules
 {
-    partial class XedRules
+    [StructLayout(LayoutKind.Sequential,Pack=1)]
+    readonly record struct FieldAssign
     {
-        [StructLayout(LayoutKind.Sequential,Pack=1)]
-        readonly record struct FieldAssign
+        public readonly FieldKind Field;
+
+        public readonly FieldValue Value;
+
+        [MethodImpl(Inline)]
+        public FieldAssign(FieldValue value)
         {
-            public readonly FieldKind Field;
-
-            public readonly FieldValue Value;
-
-            [MethodImpl(Inline)]
-            public FieldAssign(FieldValue value)
-            {
-                Field = value.Field;
-                Value = value;
-            }
-
-            public bool IsEmpty
-            {
-                [MethodImpl(Inline)]
-                get => Field == 0;
-            }
-
-            public bool IsNonEmpty
-            {
-                [MethodImpl(Inline)]
-                get => Field != 0;
-            }
-
-            [MethodImpl(Inline)]
-            public CellExpr Expression()
-                => Xed.expr(OperatorKind.Eq, Value);
-
-            public string Format()
-                => XedRender.format(Expression());
-
-            public override string ToString()
-                => Format();
-
-            [MethodImpl(Inline)]
-            public static implicit operator FieldAssign(FieldValue src)
-                => new FieldAssign(src);
-
-            public static FieldAssign Empty => new FieldAssign(FieldValue.Empty);
+            Field = value.Field;
+            Value = value;
         }
+
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Field == 0;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Field != 0;
+        }
+
+        [MethodImpl(Inline)]
+        public CellExpr Expression()
+            => Xed.expr(OperatorKind.Eq, Value);
+
+        public string Format()
+            => XedRender.format(Expression());
+
+        public override string ToString()
+            => Format();
+
+        [MethodImpl(Inline)]
+        public static implicit operator FieldAssign(FieldValue src)
+            => new FieldAssign(src);
+
+        public static FieldAssign Empty => new FieldAssign(FieldValue.Empty);
     }
 }

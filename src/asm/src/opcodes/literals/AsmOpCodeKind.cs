@@ -58,4 +58,10 @@ public enum AsmOpCodeKind : ushort
 
     [Symbol(S.E3)]
     Evex0F3A = C.Evex | (E.EVEX_MAP_0F3A << 8),
+
+    [Symbol(S.E5)]
+    Evex5 = C.Evex | (E.EVEX_MAP_5 << 8),
+
+    [Symbol(S.E6)]
+    Evex6 = C.Evex | (E.EVEX_MAP_6 << 8),
 }

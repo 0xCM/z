@@ -86,10 +86,9 @@ public class XedMachine : IDisposable
     ref MachineState State()
         => ref RuntimeState;
 
-    void LoadLookups()
+    void LoadLookups(ReadOnlySeq<InstPattern> patterns)
     {
         var rules = Rules;
-        var patterns = Xed.Views.Patterns;
         var groups = rules.CalcInstGroups(patterns);
         var members = groups.SelectMany(x => x.Members);
         _GroupMemberLookup = members.Select(x => (x.PatternId,x)).ToDictionary();
@@ -150,7 +149,7 @@ public class XedMachine : IDisposable
         Xed = xed;
         RuntimeState = new(NextId());
         _Emitter = Channel.create(this, StatusWriter);
-        LoadLookups();
+        //LoadLookups();
     }
 
     [MethodImpl(Inline)]

@@ -2,116 +2,115 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using static XedModels;
+
+partial class XedRules
 {
-    using static XedModels;
-    
-    partial class XedRules
+    public class InstLayouts : IDisposable
     {
-        public class InstLayouts : IDisposable
+        readonly NativeCells<InstLayoutBlock> Blocks;
+
+        readonly Index<InstLayout> Layouts;
+
+        public readonly Index<InstLayoutRecord> Records;
+
+        public InstLayouts(InstLayout[] src, NativeCells<InstLayoutBlock> blocks)
         {
-            readonly NativeCells<InstLayoutBlock> Blocks;
+            Layouts = src;
+            Blocks = blocks;
+            Records = sys.alloc<InstLayoutRecord>(src.Length);;
+        }
 
-            readonly Index<InstLayout> Layouts;
-
-            public readonly Index<InstLayoutRecord> Records;
-
-            public InstLayouts(InstLayout[] src, NativeCells<InstLayoutBlock> blocks)
-            {
-                Layouts = src;
-                Blocks = blocks;
-                Records = sys.alloc<InstLayoutRecord>(src.Length);;
-            }
-
-            public uint BlockCount
-            {
-                [MethodImpl(Inline)]
-                get => Blocks.CellCount;
-            }
-
+        public uint BlockCount
+        {
             [MethodImpl(Inline)]
-            public ref InstLayoutRecord Record(uint i)
-                => ref Records[i];
+            get => Blocks.CellCount;
+        }
 
+        [MethodImpl(Inline)]
+        public ref InstLayoutRecord Record(uint i)
+            => ref Records[i];
+
+        [MethodImpl(Inline)]
+        public ref InstLayoutRecord Record(int i)
+            => ref Records[i];
+
+        [MethodImpl(Inline)]
+        public ref readonly InstLayoutBlock Block(int i)
+        {
+            ref readonly var block = ref Blocks[i];
+            return ref block;
+        }
+
+        [MethodImpl(Inline)]
+        public ref readonly InstLayoutBlock Block(uint i)
+        {
+            ref readonly var block = ref Blocks[i];
+            return ref block;
+        }
+
+        public uint LayoutCount
+        {
             [MethodImpl(Inline)]
-            public ref InstLayoutRecord Record(int i)
-                => ref Records[i];
+            get => Layouts.Count;
+        }
 
+        public ref InstLayout this[uint i]
+        {
             [MethodImpl(Inline)]
-            public ref readonly InstLayoutBlock Block(int i)
-            {
-                ref readonly var block = ref Blocks[i];
-                return ref block;
-            }
+            get => ref Layouts[i];
+        }
 
+        public ref InstLayout this[int i]
+        {
             [MethodImpl(Inline)]
-            public ref readonly InstLayoutBlock Block(uint i)
-            {
-                ref readonly var block = ref Blocks[i];
-                return ref block;
-            }
+            get => ref Layouts[i];
+        }
 
-            public uint LayoutCount
-            {
-                [MethodImpl(Inline)]
-                get => Layouts.Count;
-            }
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Layouts.IsEmpty;
+        }
 
-            public ref InstLayout this[uint i]
-            {
-                [MethodImpl(Inline)]
-                get => ref Layouts[i];
-            }
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Layouts.IsNonEmpty;
+        }
 
-            public ref InstLayout this[int i]
-            {
-                [MethodImpl(Inline)]
-                get => ref Layouts[i];
-            }
+        public ReadOnlySpan<InstLayout> View
+        {
+            [MethodImpl(Inline)]
+            get => Layouts;
+        }
 
-            public bool IsEmpty
+        public void Render(ITextEmitter dst)
+        {
+            const string RenderPattern = "{0,-10} | {1,-18} | {2,-22} | {3,-6} | {4}";
+            dst.AppendLineFormat(RenderPattern,"PatternId", "Instruction", "OpCode", "Length", "Vector");
+            for(var i=0; i<LayoutCount; i++)
             {
-                [MethodImpl(Inline)]
-                get => Layouts.IsEmpty;
+                ref readonly var src = ref this[i];
+                dst.AppendLineFormat(RenderPattern, src.PatternId, src.Instruction, src.OpCode, src.Count, src.Format());
             }
+        }
 
-            public bool IsNonEmpty
-            {
-                [MethodImpl(Inline)]
-                get => Layouts.IsNonEmpty;
-            }
+        public string Format()
+        {
+            var dst = text.emitter();
+            Render(dst);
+            return dst.Emit();
+        }
 
-            public ReadOnlySpan<InstLayout> View
-            {
-                [MethodImpl(Inline)]
-                get => Layouts;
-            }
+        public override string ToString()
+            => Format();
 
-            public void Render(ITextEmitter dst)
-            {
-                const string RenderPattern = "{0,-10} | {1,-18} | {2,-22} | {3,-6} | {4}";
-                dst.AppendLineFormat(RenderPattern,"PatternId", "Instruction", "OpCode", "Length", "Vector");
-                for(var i=0; i<LayoutCount; i++)
-                {
-                    ref readonly var src = ref this[i];
-                    dst.AppendLineFormat(RenderPattern, src.PatternId, src.Instruction, src.OpCode, src.Count, src.Format());
-                }
-            }
-
-            public string Format()
-            {
-                var dst = text.emitter();
-                Render(dst);
-                return dst.Emit();
-            }
-
-            public override string ToString()
-                => Format();
-
-            public void Dispose()
-            {
-                Blocks.Dispose();
-            }
+        public void Dispose()
+        {
+            Blocks.Dispose();
         }
     }
 }

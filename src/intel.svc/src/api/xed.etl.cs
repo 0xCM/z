@@ -74,7 +74,6 @@ partial class XedCmd
     [CmdOp("xed/etl")]
     void RunImport()
     {
-
         XedImport.Run();        
     }
 }

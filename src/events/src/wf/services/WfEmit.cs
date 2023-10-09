@@ -29,20 +29,20 @@ public sealed class WfChannel : IWfChannel
     }
 
     static ExecToken Completed(ExecFlow src, bool success = true)
-        => TokenDispenser.close(src, success);
+        => WfTokens.close(src, success);
 
     [MethodImpl(Inline)]
     static ExecToken NextExecToken()
-        => TokenDispenser.open();
+        => WfTokens.open();
 
     static ExecToken Completed(FileEmission src)
-        => TokenDispenser.close(src);
+        => WfTokens.close(src);
 
     static ExecToken Completed<T>(ExecFlow<T> src, bool success = true)
-        => TokenDispenser.close(src, success);
+        => WfTokens.close(src, success);
 
     static ExecToken Completed<T>(TableFlow<T> src, bool success = true)
-        => TokenDispenser.close(src, success);
+        => WfTokens.close(src, success);
 
     ExecFlow<T> Flow<T>(T data)
         => new (this, data, NextExecToken());

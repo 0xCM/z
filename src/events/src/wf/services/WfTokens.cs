@@ -7,9 +7,9 @@ namespace Z0;
 using static sys;
 
 [ApiHost]
-public class TokenDispenser
+public class WfTokens
 {
-    public static ref readonly TokenDispenser Service => ref Instance;
+    public static ref readonly WfTokens Service => ref Instance;
 
     [MethodImpl(Inline)]
     public static ExecToken open()
@@ -34,15 +34,15 @@ public class TokenDispenser
 
     long EndToken;
 
-    static TokenDispenser Instance;
+    static WfTokens Instance;
     
-    TokenDispenser()
+    WfTokens()
     {
         StartToken = 0;
         EndToken = 0;
     }
 
-    public static TokenDispenser create()
+    public static WfTokens create()
         => Instance;
 
     [MethodImpl(Inline), Op]
@@ -53,7 +53,7 @@ public class TokenDispenser
     public ExecToken Close(ExecToken src, bool success = true)
         => src.Complete((ulong)inc(ref EndToken), success);
 
-    static TokenDispenser()
+    static WfTokens()
     {
         Instance = new();
     }

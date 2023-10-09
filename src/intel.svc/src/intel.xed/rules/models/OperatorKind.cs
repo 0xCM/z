@@ -3,27 +3,26 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedRules
 {
-    partial class XedRules
+    [SymSource(xed), DataWidth(RuleOperator.Width)]
+    public enum OperatorKind : byte
     {
-        [SymSource(xed), DataWidth(RuleOperator.Width)]
-        public enum OperatorKind : byte
-        {
-            [Symbol(RuleOperator.EmptySym)]
-            None,
+        [Symbol(RuleOperator.EmptySym)]
+        None,
 
-            [Symbol(RuleOperator.EqSym)]
-            Eq,
+        [Symbol(RuleOperator.EqSym)]
+        Eq,
 
-            [Symbol(RuleOperator.NeSym)]
-            Ne,
+        [Symbol(RuleOperator.NeSym)]
+        Ne,
 
-            [Symbol(RuleOperator.AndSym)]
-            And,
+        [Symbol(RuleOperator.AndSym)]
+        And,
 
-            [Symbol(RuleOperator.ImplSym)]
-            Impl,
-        }
+        [Symbol(RuleOperator.ImplSym)]
+        Impl,
     }
 }

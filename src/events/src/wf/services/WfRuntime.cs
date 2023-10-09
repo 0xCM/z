@@ -41,16 +41,16 @@ public class WfRuntime : IWfRuntime
 
     [MethodImpl(Inline)]
     public ExecToken NextExecToken()
-        => TokenDispenser.open();
+        => WfTokens.open();
 
     public ExecToken Completed(ExecFlow src, bool success = true)
-        => TokenDispenser.close(src, success);
+        => WfTokens.close(src, success);
 
     public ExecToken Completed(FileEmission src)
-        => TokenDispenser.close(src);
+        => WfTokens.close(src);
 
     public ExecToken Completed<T>(ExecFlow<T> src, bool success = true)
-        => TokenDispenser.close(src, success);
+        => WfTokens.close(src, success);
 
     public void Dispose()
     {

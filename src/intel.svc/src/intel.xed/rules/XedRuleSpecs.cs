@@ -22,10 +22,10 @@ public readonly struct XedRuleSpecs
     static CellInfo cellinfo(RuleOperator op)
         => new (op);
 
-    public static Index<TableCriteria> criteria(RuleTableKind kind)
-        => CalcTableCriteria(XedPaths.InstPatternSource(kind));
+    public static Index<TableCriteria> criteria(RuleTableKind kind, Action<object> status = null)
+        => criteria(XedPaths.InstPatternSource(kind), status);
 
-    public static Index<TableCriteria> CalcTableCriteria(FilePath src, Action<object> status = null)
+    public static Index<TableCriteria> criteria(FilePath src, Action<object> status = null)
     {
         var skip = hashset("XED_RESET");
         using var reader = src.Utf8LineReader();
@@ -60,8 +60,10 @@ public readonly struct XedRuleSpecs
                 {
                     if(!skip.Contains(name))
                     {
-                        XedParsers.parse(name, out RuleName rn);
-                        dst.Add(new (new (tkind,rn), statements.ToArray()));
+                        if(XedParsers.parse(name, out RuleName rn))
+                            dst.Add(new (new (tkind,rn), statements.ToArray()));
+                        else
+                            sys.@throw($"UnknownRule:'{name}'");
                     }
 
                     statements.Clear();

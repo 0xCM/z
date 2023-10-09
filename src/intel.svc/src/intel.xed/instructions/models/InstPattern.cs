@@ -12,6 +12,32 @@ partial class XedModels
 {
     public class InstPattern : IComparable<InstPattern>
     {
+        public static Index<InstPatternRecord> records(Index<InstPattern> src, bool pll = true)
+        {
+            var count = src.Count;
+            var dst = sys.bag<InstPatternRecord>();
+            iter(src, p => dst.Add(record(p)), pll);
+            var sorted = dst.Array().Sort(PatternSort.comparer());
+            return sorted.Resequence();
+        }
+
+        static InstPatternRecord record(in InstPattern src)
+        {
+            ref readonly var body = ref src.Body;
+            var dst = InstPatternRecord.Empty;
+            dst.PatternId = src.PatternId;
+            dst.OpCode = src.OpCode;
+            dst.Mode = src.Mode;
+            dst.Lock = src.Lock;
+            dst.Scalable = src.Scalable;
+            Require.invariant(src.InstClass.Kind != 0);
+            dst.InstClass = Xed.classifier(src.InstClass);
+            dst.InstForm = src.InstForm;
+            dst.Body = body;
+            return dst;
+        }
+
+
         public static Index<InstPattern> load(Index<InstDef> defs)
         {
             var count = 0u;

@@ -30,31 +30,6 @@ partial class Xed
     static Dictionary<AsmOpCodeClass,Index<InstGroupSeq>> groupseq(Index<InstGroup> src)
         => src.SelectMany(x => x.Members.Select(x => x.Seq)).GroupBy(x => x.OpCodeClass).Select(x => (x.Key, x.Index())).ToDictionary();
 
-    public static Index<InstPatternRecord> records(Index<InstPattern> src, bool pll = true)
-    {
-        var count = src.Count;
-        var dst = sys.bag<InstPatternRecord>();
-        iter(src, p => dst.Add(record(p)), pll);
-        var sorted = dst.Array().Sort(PatternSort.comparer());
-        return sorted.Resequence();
-    }
-
-    static InstPatternRecord record(in InstPattern src)
-    {
-        ref readonly var body = ref src.Body;
-        var dst = InstPatternRecord.Empty;
-        dst.PatternId = src.PatternId;
-        dst.OpCode = src.OpCode;
-        dst.Mode = src.Mode;
-        dst.Lock = src.Lock;
-        dst.Scalable = src.Scalable;
-        Require.invariant(src.InstClass.Kind != 0);
-        dst.InstClass = Xed.classifier(src.InstClass);
-        dst.InstForm = src.InstForm;
-        dst.Body = body;
-        return dst;
-    }
-
     [MethodImpl(Inline), Op]
     public static bool etype(in PatternOp src, out ElementType dst)
     {
