@@ -63,7 +63,7 @@ readonly struct XedDisasmFlow : IXedDisasmFlow
         dst.Computed(seq, kinds);
         dst.Computed(seq, ops);
 
-        var state = XedOperandState.Empty;
+        var state = XedFields.Empty;
         XedOps.update(fields, kinds, ref state);
         dst.Computed(seq, state);
 

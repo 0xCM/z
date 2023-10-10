@@ -126,7 +126,7 @@ partial class XedDisasm
         }
 
         if(state.REX)
-            dst.Rex = Xed.rex(state);
+            dst.RexPrefix = Xed.rex(state);
 
         if(state.HAS_MODRM)
         {
@@ -160,13 +160,13 @@ partial class XedDisasm
             Require.equal(vexbytes.Length, vexsize);
 
             if(vexcode.Value == AsmPrefixTokens.VexPrefixKind.xC4)
-                dst.Vex = VexPrefix.define(AsmPrefixTokens.VexPrefixKind.xC4,skip(vexbytes, 1), skip(vexbytes,2));
+                dst.VexPrefix = VexPrefix.define(AsmPrefixTokens.VexPrefixKind.xC4,skip(vexbytes, 1), skip(vexbytes,2));
             else if(vexcode.Value == AsmPrefixTokens.VexPrefixKind.xC5)
-                dst.Vex = VexPrefix.define(AsmPrefixTokens.VexPrefixKind.xC5,skip(vexbytes, 1));
+                dst.VexPrefix = VexPrefix.define(AsmPrefixTokens.VexPrefixKind.xC5,skip(vexbytes, 1));
 
         }
         else if(state.VEXVALID == (byte)XedVexClass.EVV)
-            dst.Evex = AsmPrefix.evex(slice(prefix,legacyskip));
+            dst.EvexPrefix = AsmPrefix.evex(slice(prefix,legacyskip));
 
         if(state.IMM0)
             dst.Imm = asm.imm(code, state.POS_IMM, state.IMM0SIGNED, Sizes.native(state.IMM_WIDTH));

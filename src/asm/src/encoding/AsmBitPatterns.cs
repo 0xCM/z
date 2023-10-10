@@ -33,6 +33,8 @@ public readonly struct AsmBitPatterns
 
     const string vvvv = "vvvv";
 
+    const string mmm = "mmm";
+
     const string WRXB = "WRXB";
 
     const string W = "W";
@@ -45,11 +47,29 @@ public readonly struct AsmBitPatterns
 
     const string L = "L";
 
+    const string RXB = $"{R}{X}{B}";
+
     const string cccccccc = "cccccccc";
 
     const string mmmmm = "mmmmm";
 
     const string pp = "pp";
+
+    const string aaa = "aaa";
+
+    const string q = "q";
+
+    const string d0 = "0";
+
+    const string d1 = "1";
+
+    const string z = "z";
+
+    const string b = "b";
+
+    const string f = "f";
+
+    const string VL = "VL";
 
     public static readonly BpInfo Sib = describe<P>(nameof(Sib),
         ss + sep + iii + sep + bbb);
@@ -67,4 +87,11 @@ public readonly struct AsmBitPatterns
     public static readonly BpInfo VexC5 = describe<P>(nameof(VexC5),
         cccccccc + sep + R + sep + vvvv + sep + L + sep + pp
         );
+
+    public static readonly BpInfo Evex = describe<P>(nameof(Evex),
+        mmm + sep + d0 + sep + q + sep + RXB + sep +
+        pp + sep + d1 + sep + vvvv + sep + W + sep + 
+        aaa + sep + f + sep + b + sep  + VL + sep + z 
+        );
+
 }

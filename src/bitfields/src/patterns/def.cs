@@ -10,12 +10,12 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public static BpDef def(in asci32 name, in BitPattern pattern, BfOrigin origin)
-            => new BpDef(name, pattern, origin);
+            => new (name, pattern, origin);
 
         [MethodImpl(Inline), Op]
         public static BpDef<P> def<P>(in asci32 name, in BitPattern pattern, P src)
             where P : unmanaged
-                => new BpDef<P>(name, pattern, origin(src));
+                => new (name, pattern, origin(src));
 
         public static Index<BpDef> defs(ReadOnlySpan<BpInfo> src)
         {

@@ -11,12 +11,15 @@ namespace Z0.Asm;
 public record struct ModRm : IAsmByte<ModRm>
 {
     const uint mmMask=0b11000000;
+    
     const byte mmMinPos=6;
     
     const uint rrrMask=0b00111000;
+    
     const byte rrrMinPos=3;
     
     const uint nnnMask=0b00000111;
+    
     const byte nnnMinPos=0;
 
     ref byte Value

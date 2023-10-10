@@ -45,11 +45,11 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator BitPattern(string src)
-            => new BitPattern(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator BitPattern(asci64 src)
-            => new BitPattern(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator asci64(BitPattern src)

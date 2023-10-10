@@ -18,7 +18,7 @@ namespace Z0
             FieldBuffer(Fields fields)
             {
                 Fields = fields;
-                State = XedOperandState.Empty;
+                State = XedFields.Empty;
                 Asm = AsmInfo.Empty;
                 Props = InstFieldValues.Empty;
                 Selected = default;
@@ -30,7 +30,7 @@ namespace Z0
 
             public InstFieldValues Props;
 
-            public XedOperandState State;
+            public XedFields State;
 
             public ReadOnlySpan<FieldKind> Selected;
 

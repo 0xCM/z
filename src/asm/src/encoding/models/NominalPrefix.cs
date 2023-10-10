@@ -7,7 +7,7 @@ namespace Z0.Asm;
 /// <summary>
 /// Classifies prefix domains
 /// </summary>
-public enum AsmPrefixCode : byte
+public enum NominalPrefix : byte
 {
     None = 0,
 

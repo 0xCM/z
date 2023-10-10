@@ -23,6 +23,5 @@ namespace Z0
         public static BpCalcs calcs<P>(in BpDef<P> def)
             where P : unmanaged
                 => new (def);
-
     }
 }

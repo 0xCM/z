@@ -41,15 +41,15 @@ public record struct VexPrefix
         => new (kind, b1, b2);
 
     [MethodImpl(Inline)]
-    public static VexPrefixC4 c4(VexPrefix src)
+    public static VexC4 c4(VexPrefix src)
     {
         var data = slice(bytes(src), 1, 2);
-        return VexPrefixC4.define(skip(data,0), skip(data,1));
+        return VexC4.define(skip(data,0), skip(data,1));
     }
 
     [MethodImpl(Inline)]
-    public static VexPrefixC5 c5(VexPrefix src)
-        => VexPrefixC5.define((byte)(src._Data >> 8));
+    public static VexC5 c5(VexPrefix src)
+        => VexC5.define((byte)(src._Data >> 8));
 
     [MethodImpl(Inline)]
     public static BitfieldSeg<K> code(ReadOnlySpan<byte> src)
@@ -138,13 +138,22 @@ public record struct VexPrefix
     public K Kind()
         => (K)_Data;
 
+    public K VexKind
+    {
+        [MethodImpl(Inline)]
+        get => (K)_Data;
+    }
+
     [MethodImpl(Inline)]
     public void Kind(K k)
         => _Data = Bytes.inject((byte)k,0, ref _Data);
 
+    public string Bitstring()
+        => VexKind == K.xC4 ? c4(this).Bitstring() : VexKind == K.xC5 ? c5(this).Bitstring() : EmptyString;
+
     public string Format()
     {
-        var kind = Kind();
+        var kind = VexKind;
         if(kind == K.xC4)
             return c4(this).Format();
         else if(kind == K.xC5)

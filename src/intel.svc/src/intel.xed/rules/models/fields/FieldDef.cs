@@ -45,7 +45,7 @@ partial class XedRules
         public DataSize Size
         {
             [MethodImpl(Inline)]
-            get => new DataSize(PackedWidth, AlignedWidth);
+            get => new (PackedWidth, AlignedWidth);
         }
 
         [MethodImpl(Inline)]

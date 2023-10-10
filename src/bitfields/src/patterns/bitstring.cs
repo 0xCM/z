@@ -32,6 +32,5 @@ namespace Z0
             where P : unmanaged
             where T : unmanaged
                 => bitstring(def.Untyped, bw64(value));
-
     }
 }

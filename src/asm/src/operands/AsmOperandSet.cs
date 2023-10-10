@@ -17,6 +17,8 @@ public record struct AsmOperandSet
 
     public AsmOperand Op3;
 
+    public AsmOperand Op4;
+
     public string Format()
         => AsmRender.format(this);
 

@@ -98,31 +98,6 @@ public class XedImport : WfSvc<XedImport>
     static IDbArchive Targets
         => XedPaths.Imports();
 
-    static uint bitwidth(NativeTypeWidth src)
-    {
-        var dst = (uint)src;
-        if(dst == 1)
-            dst = 8;
-        return dst;
-    }
-
-    static uint width(Type src)
-    {
-        var result = z32;
-        var attrib = src.Tag<DataWidthAttribute>();
-        if(src.IsEnum)
-            result = bitwidth(PrimalBits.width(Enums.@base(src)));
-        else if(attrib.IsSome())
-            result = attrib.MapRequired(w => w.NativeWidth == 0 ?  (uint)w.PackedWidth: (uint)w.NativeWidth);
-        if(result != 0)
-            return result;
-        if(src == typeof(bit) || src == typeof(byte))
-            result = 8;
-        else if(src == typeof(ushort))
-            result = 16;
-        return result;
-    }
-
     public ReadOnlySeq<TableCriteria> RuleCriteria(RuleTableKind kind)
         => XedRuleSpecs.criteria(kind);
 
@@ -168,46 +143,11 @@ public class XedImport : WfSvc<XedImport>
             if(chips.TryGetValue(code, out var entry))
                 buffer[code] = entry.Kinds;
             else
-                buffer[code] = XedModels.InstIsaKinds.Empty;
+                buffer[code] = InstIsaKinds.Empty;
         }
         return new ChipMap(buffer);
     }
 
-    public static FieldDefs fields()
-    {
-        var fields = typeof(XedOperandState).InstanceFields().Tagged<RuleFieldAttribute>();
-        var count = fields.Length;
-        var defs = new FieldDefs(sys.alloc<FieldDef>(count));
-        var indexed = defs.Indexed;
-        var packed = z32;
-        var aligned = z32;
-
-        for(var i=z8; i<count; i++)
-        {
-            ref readonly var field = ref skip(fields,i);
-            var dst = default(FieldDef);
-            var tag = field.Tag<RuleFieldAttribute>().Require();
-            var awidth = width(field.FieldType);
-            var pwidth = tag.Width;
-            var index = (byte)tag.Kind;
-            dst.Pos = i;
-            dst.Field = tag.Kind;
-            dst.Index = index;
-            dst.DataType = tag.EffectiveType.DisplayName();
-            dst.NativeType = field.FieldType.DisplayName();
-            dst.PackedWidth = pwidth;
-            dst.AlignedWidth = awidth;
-            dst.PackedOffset = packed;
-            dst.AlignedOffset = aligned;
-            dst.Description = tag.Description;
-            indexed[index] = dst;
-            packed += pwidth;
-            aligned += awidth;
-        }
-
-        defs.SortIndex();
-        return defs;
-    }
 
     public static XedRuleCells datasets(XedRuleTables tables)
     {
@@ -233,7 +173,7 @@ public class XedImport : WfSvc<XedImport>
                     ref readonly var data = ref info.Data;
                     ref readonly var logic = ref info.Logic;
                     ref readonly var key = ref keys[k];
-                    var size = XedFields.size(key.Field, key.CellType);
+                    var size = FieldDefs.size(key.Field, key.CellType);
                     var result = false;
                     var cell = RuleCell.Empty;
 

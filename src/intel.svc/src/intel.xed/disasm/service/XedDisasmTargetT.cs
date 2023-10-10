@@ -7,7 +7,6 @@ namespace Z0;
 
 using static sys;
 using static XedRules;
-using static XedFields;
 using static XedModels;
 using static XedDisasm;
 
@@ -40,7 +39,7 @@ public class XedDisasmTarget<T> : WfSvc<T>, IXedDisasmTarget
         FieldsComputed += Nothing;
         ComputingInst += Nothing;
         ComputedInst += Nothing;
-        _Render = XedFields.render();
+        _Render = new XedFieldRender();
     }
 
     protected event DisasmReceiver<Instruction> ComputingInst;
@@ -85,7 +84,7 @@ public class XedDisasmTarget<T> : WfSvc<T>, IXedDisasmTarget
     void IXedDisasmTarget.Computed(uint seq, in Instruction src)
         => ComputedInst(seq, src);
 
-    void IXedDisasmTarget.Computed(uint seq, in XedOperandState src)
+    void IXedDisasmTarget.Computed(uint seq, in XedFields src)
         => Buffer.State(seq, src, OpStateComputed);
 
     void IXedDisasmTarget.Computed(uint seq, in AsmInfo src)
@@ -125,7 +124,7 @@ public class XedDisasmTarget<T> : WfSvc<T>, IXedDisasmTarget
     void IXedDisasmTarget.Finished(XedDisasmToken token)
         => Ran(token);
 
-    void StateComputed(uint seq, in XedOperandState state, ReadOnlySpan<FieldKind> fields)
+    void StateComputed(uint seq, in XedFields state, ReadOnlySpan<FieldKind> fields)
     {
         for(var i=0; i<fields.Length; i++)
         {

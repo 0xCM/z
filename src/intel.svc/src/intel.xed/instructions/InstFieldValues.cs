@@ -32,7 +32,7 @@ partial class XedRules
             InstForm = form;
         }
 
-        public Index<FieldValue> ParseFields(out XedOperandState state)
+        public Index<FieldValue> ParseFields(out XedFields state)
             => FieldParser.parse(this, out state);
 
         public static InstFieldValues Empty

@@ -60,29 +60,6 @@ class AsmChecks : WfAppCmd<AsmChecks>
         RunCheck(CheckNames.CheckVex);
     }
 
-    [CmdOp(CheckNames.CheckVex)]
-    Outcome Vex(CmdArgs args)
-    {
-        var segments = VexPrefixC4.segments();
-
-        var vp0 = VexPrefixC4.define(byte.MaxValue, byte.MaxValue);
-        Channel.Write(vp0.FormatSemantic());
-        segments.Fill(vp0);
-        Channel.Write(segments.ToBitstring());
-
-        var vp1 = VexPrefixC4.init(VexRXB.L0_V0F38, VexM.x0F3A, bit.On, 0b1111, VexLengthCode.L1, VexOpCodeExtension.F3);
-        Channel.Write(vp1.FormatSemantic());
-        segments.Fill(vp1);
-        Channel.Write(segments.ToBitstring());
-
-        var vp2 = VexPrefixC4.define(0xe3, 0x69);
-        Channel.Write(vp2.FormatSemantic());
-        segments.Fill(vp2);
-        Channel.Write(segments.ToBitstring());
-
-        return true;
-    }
-
     void CheckHex1()
     {
         var input = "66 66 2e 0f 1f 84 00 00 00 00 00 00";

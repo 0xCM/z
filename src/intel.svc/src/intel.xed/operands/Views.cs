@@ -11,7 +11,6 @@ using Asm;
 using M = XedModels;
 using R = XedRules;
 
-
 partial class XedOps
 {
     public ReadOnlySeq<OpName> OpNames

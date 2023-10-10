@@ -3,20 +3,15 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0;
+namespace Z0.Asm;
 
-[StructLayout(LayoutKind.Sequential,Pack=1)]
-public record struct XedDisasmState
+public enum BroadcastWidth : byte
 {
-    public Disp RELBRVal;
+    W8,
 
-    public asci32 AGENVal;
+    W16,
 
-    public asci32 MEM0Val;
+    W32,
 
-    public asci32 MEM1Val;
-
-    public XedFields RuleState;
-
-    public static XedDisasmState Empty => default;
+    W64
 }

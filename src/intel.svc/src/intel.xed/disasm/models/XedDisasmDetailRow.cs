@@ -48,13 +48,13 @@ public record struct XedDisasmDetailRow : IComparable<XedDisasmDetailRow>
     public ByteBlock8 PrefixBytes;
     
     [Render(AsmColWidths.RexPrefx)]
-    public RexPrefix Rex;
+    public RexPrefix RexPrefix;
 
     [Render(AsmColWidths.VexPrefix)]
-    public VexPrefix Vex;
+    public VexPrefix VexPrefix;
 
     [Render(AsmColWidths.EvexPrefix)]
-    public EvexPrefix Evex;
+    public EvexPrefix EvexPrefix;
 
     [Render(AsmColWidths.ModRm)]
     public ModRm ModRm;

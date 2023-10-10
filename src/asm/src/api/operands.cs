@@ -49,4 +49,16 @@ partial struct asm
         dst.OpCount = 4;
         return ref dst;
     }
+
+    [MethodImpl(Inline)]
+    public static ref AsmOperandSet operands(in AsmOperand op0, in AsmOperand op1, in AsmOperand op2, in AsmOperand op3, in AsmOperand op4, ref AsmOperandSet dst)
+    {
+        dst.Op0 = op0;
+        dst.Op1 = op1;
+        dst.Op2 = op2;
+        dst.Op3 = op3;
+        dst.Op4 = op4;
+        dst.OpCount = 5;
+        return ref dst;
+    }    
 }

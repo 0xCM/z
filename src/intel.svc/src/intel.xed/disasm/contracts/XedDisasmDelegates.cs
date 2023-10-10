@@ -11,7 +11,7 @@ namespace Z0
     {
         public delegate void DisasmReceiver<T>(uint seq, in T src);
 
-        public delegate void OpStateReceiver(uint seq, in XedOperandState state, ReadOnlySpan<FieldKind> fields);
+        public delegate void OpStateReceiver(uint seq, in XedFields state, ReadOnlySpan<FieldKind> fields);
 
         public delegate void FieldReceiver(uint seq, in Fields src);
 

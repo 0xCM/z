@@ -122,6 +122,9 @@ public class AsmRender
             case 4:
                 dst = string.Format("{0}, {1}, {2}, {3}", src.Op0, src.Op1, src.Op2, src.Op3);
             break;
+            case 5:
+                dst = string.Format("{0}, {1}, {2}, {3}, {4}", src.Op0, src.Op1, src.Op2, src.Op3, src.Op4);
+            break;
         }
         return dst;
     }

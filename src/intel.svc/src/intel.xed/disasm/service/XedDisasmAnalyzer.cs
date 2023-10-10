@@ -55,7 +55,7 @@ public sealed class XedDisasmAnalyzer : XedDisasmTarget<XedDisasmAnalyzer>
         Output.AppendLineFormat(PaddedSlots, src.Kind, Render[src.Kind](src));
     }
 
-    void Handle(FieldKind kind, in XedOperandState src)
+    void Handle(FieldKind kind, in XedFields src)
     {
 
     }
@@ -66,7 +66,7 @@ public sealed class XedDisasmAnalyzer : XedDisasmTarget<XedDisasmAnalyzer>
         XedDisasmRender.render(src, Output);
     }
 
-    void Handle(uint seq, in XedOperandState state, ReadOnlySpan<FieldKind> fields)
+    void Handle(uint seq, in XedFields state, ReadOnlySpan<FieldKind> fields)
     {
         for(var i=0; i<fields.Length; i++)
             Handle(skip(fields,i), state);

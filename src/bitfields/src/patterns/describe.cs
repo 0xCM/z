@@ -7,7 +7,7 @@ namespace Z0
     partial struct BitPatterns
     {
         public static string descriptor(in BitPattern src)
-            => text.intersperse(segs(src).Reverse().Select(x => x.Format()), Chars.Space);
+            => text.intersperse(segs(src).Select(x => x.Format()), Chars.Space);
 
         public static BpInfo describe<O>(in asci32 name, in BitPattern pattern)
             => describe(name, pattern, PolyBits.origin<O>());

@@ -10,7 +10,6 @@ using static XedModels;
 using static sys;
 
 using FK = XedRules.FieldKind;
-using DK = XedRules.FieldDataKind;
 using R = XedRules;
 
 [ApiHost]
@@ -50,7 +49,7 @@ public partial class XedOps : AppService<XedOps>
         {
             dst = Field.Empty;
             var kind = src.Field;
-            var size = XedFields.size(kind, src.CellKind);
+            var size = FieldDefs.size(kind, src.CellKind);
             if(size.PackedWidth == 1)
                 dst = Field.init(kind, (bit)src.Data);
             else if(size.NativeWidth == 1)
@@ -61,7 +60,7 @@ public partial class XedOps : AppService<XedOps>
                 Errors.Throw($"Unsupported size {size}");
         }
 
-        public static uint parse(IReadOnlyDictionary<string,string> src, Span<FieldValue> fields, out XedOperandState state)
+        public static uint parse(IReadOnlyDictionary<string,string> src, Span<FieldValue> fields, out XedFields state)
         {
             state = parse(src, out Index<FK> _);
             var names = src.Keys.Array();
@@ -79,7 +78,7 @@ public partial class XedOps : AppService<XedOps>
             return (uint)count;
         }
 
-        public static Index<FieldValue> parse(IReadOnlyDictionary<string,string> src, out XedOperandState dst)
+        public static Index<FieldValue> parse(IReadOnlyDictionary<string,string> src, out XedFields dst)
         {
             var count = (uint)src.Count;
             var fields = alloc<FieldValue>(count);
@@ -125,12 +124,12 @@ public partial class XedOps : AppService<XedOps>
             return result;
         }
 
-        public static XedOperandState parse(IReadOnlyDictionary<string,string> src, out Index<FK> fields)
+        public static XedFields parse(IReadOnlyDictionary<string,string> src, out Index<FK> fields)
         {
             var parsed = list<FK>();
             var failed = dict<FK,string>();
             var count = src.Count;
-            var dst = XedOperandState.Empty;
+            var dst = XedFields.Empty;
             var names = src.Keys.Index();
             for(var i=0; i<count; i++)
             {
@@ -178,7 +177,7 @@ public partial class XedOps : AppService<XedOps>
             => new (kind, value);
 
         [Op]
-        public static FieldValue parse(string src, FK kind, ref XedOperandState dst)
+        public static FieldValue parse(string src, FK kind, ref XedFields dst)
         {
             var result = true;
             var fieldval = R.FieldValue.Empty;
@@ -1291,7 +1290,8 @@ public partial class XedOps : AppService<XedOps>
             return dst;
         }
     }
-    public static ref XedOperandState update(in Fields src, ReadOnlySpan<FieldKind> fields, ref XedOperandState dst)
+
+    public static ref XedFields update(in Fields src, ReadOnlySpan<FieldKind> fields, ref XedFields dst)
     {
         var count = fields.Length;
         for(var i=0; i<count; i++)
@@ -1299,20 +1299,19 @@ public partial class XedOps : AppService<XedOps>
         return ref dst;
     }
 
-    public static Dictionary<FieldKind,FieldValue> update(Index<FieldValue> src, ref XedOperandState state)
+    public static void update(Index<FieldValue> src, ref XedFields state)
     {
         update(src.View, ref state);
-        return src.Map(x => (x.Field, x)).ToDictionary();
     }
 
-    static ref XedOperandState update(ReadOnlySpan<FieldValue> src, ref XedOperandState dst)
+    static ref XedFields update(ReadOnlySpan<FieldValue> src, ref XedFields dst)
     {
         for(var i=0; i<src.Length; i++)
             update(skip(src,i), ref dst);
         return ref dst;
     }
 
-    static ref XedOperandState update(in FieldValue src, ref XedOperandState dst)
+    static ref XedFields update(in FieldValue src, ref XedFields dst)
     {
         var result = Outcome.Success;
         switch(src.Field)
@@ -1817,7 +1816,7 @@ public partial class XedOps : AppService<XedOps>
         return ref dst;
     }
 
-    static ref XedOperandState update(in Field src, ref XedOperandState dst)
+    static ref XedFields update(in Field src, ref XedFields dst)
     {
         switch(src.Kind)
         {

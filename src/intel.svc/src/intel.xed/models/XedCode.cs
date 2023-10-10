@@ -15,7 +15,7 @@ using N = XedModels.OpNameKind;
 partial class Xed
 {
     [Op]
-    public static ref XedOperandState update(in EncodingOffsets src, AsmHexCode code, ref XedOperandState dst)
+    public static ref XedFields update(in EncodingOffsets src, AsmHexCode code, ref XedFields dst)
     {
         if(src.HasOpCode)
         {
@@ -51,7 +51,7 @@ partial class Xed
     }
 
     [Op]
-    public static EncodingOffsets offsets(in XedOperandState src)
+    public static EncodingOffsets offsets(in XedFields src)
     {
         var offsets = EncodingOffsets.Empty;
         offsets.OpCode = (sbyte)src.POS_NOMINAL_OPCODE;
@@ -69,7 +69,7 @@ partial class Xed
     }
 
     [Op]
-    public static Imm imm0(in XedOperandState state, in AsmHexCode code)
+    public static Imm imm0(in XedFields state, in AsmHexCode code)
     {
         var dst = Imm.Empty;
         if(state.IMM0)
@@ -78,7 +78,7 @@ partial class Xed
     }
 
     [Op]
-    public static Imm imm1(in XedOperandState state, in AsmHexCode code)
+    public static Imm imm1(in XedFields state, in AsmHexCode code)
     {
         var dst = Imm.Empty;
         if(state.IMM1)
@@ -87,7 +87,7 @@ partial class Xed
     }
 
     [Op]
-    public static Disp disp(in XedOperandState state, in AsmHexCode code)
+    public static Disp disp(in XedFields state, in AsmHexCode code)
     {
         var val = Disp.Zero;
         if(state.DISP_WIDTH != 0)
@@ -116,7 +116,7 @@ partial class Xed
     }
 
     [Op]
-    public static EncodingExtract encoding(in XedOperandState state, AsmHexCode code)
+    public static EncodingExtract encoding(in XedFields state, AsmHexCode code)
     {
         var dst = EncodingExtract.Empty;
         dst.Code = code;
@@ -139,7 +139,7 @@ partial class Xed
         return dst;
     }
 
-    public static Index<Operand> operands(in XedOperandState state, in AsmHexCode code)
+    public static Index<Operand> operands(in XedFields state, in AsmHexCode code)
     {
         var _ops = list<Operand>();
         if(state.IMM0)

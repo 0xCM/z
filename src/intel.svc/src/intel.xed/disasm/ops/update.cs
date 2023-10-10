@@ -11,17 +11,13 @@ using static XedModels;
 
 partial class XedDisasm
 {    
-    public static Index<FieldValue> update(in XedDisasmBlock src, ref XedOperandState dst)
-    {
-        var fields = values(src);
-        XedOps.update(fields, ref dst);
-        return fields;
-    }
+    public static void update(in XedDisasmBlock src, ref XedFields dst)
+        => XedOps.update(values(src), ref dst);
 
     static Index<FieldValue> values(in XedDisasmBlock src)
     {
         parse(src, out InstFieldValues props);
-        var state = XedOperandState.Empty;
+        var state = XedFields.Empty;
         var names = props.Keys.Array();
         var count = names.Length;
         var dst = alloc<FieldValue>(count - 2);

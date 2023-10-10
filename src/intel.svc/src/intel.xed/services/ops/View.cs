@@ -16,31 +16,31 @@ using M = XedModels;
 partial class Xed
 {
     [MethodImpl(Inline), Op]
-    public static ref readonly XedVexKind vexkind(in XedOperandState src)
+    public static ref readonly XedVexKind vexkind(in XedFields src)
         => ref @as<XedVexKind>(src.VEX_PREFIX);
 
     [MethodImpl(Inline), Op]
-    public static ref readonly XedVexClass vexclass(in XedOperandState src)
+    public static ref readonly XedVexClass vexclass(in XedFields src)
         => ref @as<XedVexClass>(src.VEXVALID);
 
     [MethodImpl(Inline), Op]
-    public static ref readonly XedInstClass iclass(in XedOperandState src)
+    public static ref readonly XedInstClass iclass(in XedFields src)
         => ref @as<XedInstKind,XedInstClass>(src.ICLASS);
 
     [MethodImpl(Inline), Op]
-    public static ref readonly BroadcastKind broadcast(in XedOperandState src)
-        => ref @as<BroadcastKind>(src.BCAST);
+    public static AsmBroadcast broadcast(in XedFields src)
+        => asm.broadcast(@as<BroadcastKind>(src.BCAST));
 
     [MethodImpl(Inline), Op]
-    public static ref readonly Hex8 ocbyte(in XedOperandState src)
+    public static ref readonly Hex8 ocbyte(in XedFields src)
         => ref @as<Hex8>(src.NOMINAL_OPCODE);
 
     [MethodImpl(Inline), Op]
-    public static ref readonly AsmVL vl(in XedOperandState src)
+    public static ref readonly AsmVL vl(in XedFields src)
         => ref @as<AsmVL>(src.VL);
 
     [MethodImpl(Inline), Op]
-    public static AsmOpCodeIndex ocindex(in XedOperandState state)
+    public static AsmOpCodeIndex ocindex(in XedFields state)
     {
         var dst = AsmOpCodeIndex.Amd3dNow;
         ref readonly var map = ref state.MAP;
@@ -65,7 +65,7 @@ partial class Xed
     }
 
     [Op]
-    public static XedRegs regs(in XedOperandState src)
+    public static XedRegs regs(in XedFields src)
     {
         var storage = ByteBlock32.Empty;
         var dst = recover<XedRegId>(storage.Bytes);
@@ -95,38 +95,38 @@ partial class Xed
     }
 
     [MethodImpl(Inline), Op]
-    public static ref readonly RoundingKind rounding(in XedOperandState src)
+    public static ref readonly RoundingKind rounding(in XedFields src)
         => ref @as<RoundingKind>(src.ROUNDC);
 
     [MethodImpl(Inline), Op]
-    public static Sib sib(in XedOperandState src)
+    public static Sib sib(in XedFields src)
         => new (src.SIBBASE, src.SIBINDEX, src.SIBSCALE);
 
     [MethodImpl(Inline), Op]
-    public static ref readonly ModRm modrm(in XedOperandState src)
+    public static ref readonly ModRm modrm(in XedFields src)
         => ref @as<Hex8,ModRm>(src.MODRM_BYTE);
 
     [MethodImpl(Inline), Op]
-    public static RexPrefix rex(in XedOperandState src)
+    public static RexPrefix rex(in XedFields src)
         => new (src.REXB, src.REXX, src.REXR, src.REXW);
 
     [MethodImpl(Inline), Op]
-    public static ref readonly HintKind hint(in XedOperandState src)
+    public static ref readonly HintKind hint(in XedFields src)
         => ref @as<HintKind>(src.HINT);
 
     [MethodImpl(Inline), Op]
-    public static ref readonly M.RepPrefix rep(in XedOperandState src)
+    public static ref readonly M.RepPrefix rep(in XedFields src)
         => ref @as<M.RepPrefix>(src.REP);
 
     [MethodImpl(Inline), Op]
-    public static ref readonly EASZ easz(in XedOperandState src)
+    public static ref readonly EASZ easz(in XedFields src)
         => ref @as<EASZ>(src.EASZ);
 
     [MethodImpl(Inline), Op]
-    public static ref readonly EOSZ eosz(in XedOperandState src)
+    public static ref readonly EOSZ eosz(in XedFields src)
         => ref @as<EOSZ>(src.EOSZ);
 
     [MethodImpl(Inline), Op]
-    public static ref readonly MachineMode mode(in XedOperandState src)
+    public static ref readonly MachineMode mode(in XedFields src)
         => ref @as<MachineMode>(src.MODE);    
 }

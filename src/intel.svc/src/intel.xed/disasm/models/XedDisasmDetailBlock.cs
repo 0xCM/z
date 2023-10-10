@@ -7,7 +7,6 @@ namespace Z0;
 
 using Asm;
 
-using static XedRules;
 using static XedModels;
 
 public class XedDisasmDetailBlock : IComparable<XedDisasmDetailBlock>
@@ -123,19 +122,19 @@ public class XedDisasmDetailBlock : IComparable<XedDisasmDetailBlock>
     public ref readonly RexPrefix Rex
     {
         [MethodImpl(Inline)]
-        get => ref DetailRow.Rex;
+        get => ref DetailRow.RexPrefix;
     }
 
     public ref readonly VexPrefix Vex
     {
         [MethodImpl(Inline)]
-        get => ref DetailRow.Vex;
+        get => ref DetailRow.VexPrefix;
     }
 
     public ref readonly EvexPrefix Evex
     {
         [MethodImpl(Inline)]
-        get => ref DetailRow.Evex;
+        get => ref DetailRow.EvexPrefix;
     }
 
     public int CompareTo(XedDisasmDetailBlock src)

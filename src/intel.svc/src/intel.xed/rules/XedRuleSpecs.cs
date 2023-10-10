@@ -172,7 +172,7 @@ public readonly struct XedRuleSpecs
         Require.nonempty(data);
         Require.invariant(data.Length < 48);
         var kind = FieldParser.kind(data);
-        var field = kind != 0 ? XedFields.field(kind) : FieldDef.Empty;
+        var field = kind != 0 ? FieldDefs.field(kind) : FieldDef.Empty;
         ruleop(data, out RuleOperator op);
         dst = new (kind, celltype(field.Field, data), op, field.DataType, field.Size);
         return true;

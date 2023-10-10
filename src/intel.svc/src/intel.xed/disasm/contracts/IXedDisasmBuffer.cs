@@ -29,5 +29,5 @@ public interface IXedDisasmBuffer
 
     void Cache(ReadOnlySpan<FieldKind> src);
 
-    void State(uint seq, in XedOperandState state, OpStateReceiver receiver);
+    void State(uint seq, in XedFields state, OpStateReceiver receiver);
 }

@@ -27,17 +27,6 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         return new XedDisasmDoc(summary, detail(summary));
     }
 
-    void EmitDetails(XedDisasmDoc src)
-    {
-        var path = XedPaths.DisasmDetailPath(src.SourcePath);
-        var emitting = Channel.EmittingFile(path);
-        var te = text.emitter();
-        XedDisasmRender.render(src.DetailBlocks, te);
-        using var ae = path.AsciEmitter();
-        ae.Write(te.Emit());
-        Channel.EmittedFile(emitting, src.DetailBlocks.Count);
-    }
-    
     public bool Import(XedDisasmDoc src)
     {
         var path = src.SourcePath;
@@ -49,6 +38,18 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         Channel.Ran(flow,$"Collected disassembly content from {path.ToUri()}");
         return true;
     }
+
+    public void EmitDetails(XedDisasmDoc src)
+    {
+        var path = XedPaths.DisasmDetailPath(src.SourcePath);
+        var emitting = Channel.EmittingFile(path);
+        var te = text.emitter();
+        XedDisasmRender.render(src.DetailBlocks, te);
+        using var ae = path.AsciEmitter();
+        ae.Write(te.Emit());
+        Channel.EmittedFile(emitting, src.DetailBlocks.Count);
+    }
+    
 
     public ParallelQuery<XedDisasmDoc> Import(IDbArchive root)
         => from path in sources(root)
@@ -69,7 +70,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
 
     const string OperandFormat = "{0} | {1,-20} | {2}";
 
-    void EmitOps(XedDisasmDoc src)
+    public void EmitOps(XedDisasmDoc src)
     {
         var path = XedPaths.DisasmOpsPath(src.Detail.DataFile.Source);
         var doc = src.Detail;
@@ -188,7 +189,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         var counter = 0;
         for(var j=0; j<count; j++)
         {
-            var state = XedOperandState.Empty;
+            var state = XedFields.Empty;
             buffer.Clear();
 
             ref readonly var detail = ref doc[j].DetailRow;
@@ -349,15 +350,14 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             var vc = Xed.vexclass(state);
             if(vc != 0)
             {
-                var vk = Xed.vexkind(state);
                 var vex5 = BitNumbers.join((uint3)state.VEXDEST210, state.VEXDEST4, state.VEXDEST3);
                 var vexBits = string.Format("[{0} {1} {2}]", state.VEXDEST4, state.VEXDEST3, (uint3)state.VEXDEST210);
                 var vexHex = XedRender.format((Hex8)(byte)vex5);
-                writer.AppendLineFormat(LabeledValue, nameof(state.VEXVALID), XedRender.format(vc));
-                writer.AppendLineFormat(LabeledValue, nameof(state.VEX_PREFIX), vk == 0 ? "VNP" : XedRender.format(vk));
                 if(vc == XedVexClass.VV1)
                 {
-                    writer.AppendLineFormat(LabeledValue, "Vex", detail.Vex);
+                    writer.AppendLineFormat(LabeledValue, nameof(detail.VexPrefix.VexKind), detail.VexPrefix.VexKind);
+                    writer.AppendLineFormat(LabeledValue, nameof(detail.VexPrefix), detail.VexPrefix.VexKind == AsmPrefixTokens.VexPrefixKind.xC4 ? AsmBitPatterns.VexC4 : AsmBitPatterns.VexC5);
+                    writer.AppendLineFormat(LabeledValue, EmptyString, detail.VexPrefix.Bitstring());
                 }
                 else if(vc == XedVexClass.EVV)
                 {
@@ -368,7 +368,16 @@ public partial class XedDisasm : WfSvc<XedDisasm>
                     else
                     {
                         var evex = @as<EvexPrefix>(prefix);
-                        writer.AppendLineFormat(LabeledValue, "Evex",  $"{detail.Evex}");
+                        writer.AppendLineFormat(LabeledValue, "Evex",  AsmBitPatterns.Evex);
+                        var dat = @as<EvexPrefix,uint>(evex) >> 8;                                                
+                        writer.AppendLineFormat(LabeledValue, "", string.Format("0x{0} [{1} {2} {3} {4}] [{5} {6} {7} {8}] [{9} {10} {11} {12} {13}]", evex[0], 
+                            // mmm[2:0]                   0[3]              q[4]              RXB[7:5] 
+                            (uint3)bits.extract(dat,0,2), bits.test(dat,3), ~bits.test(dat,4), ~(uint3)bits.extract(dat,5,7),
+                            // pp[9:8]             1[10]              vvvv[14:11]                     W[15]                             
+                            bits.extract(dat,8,9), bits.test(dat,10), ~(uint4)bits.extract(dat,11,14), bits.test(dat,15),
+                            // aaa[18:16]                   f[19]              b[20]              VL[22:21]                      z[23]
+                            (uint3)bits.extract(dat,16,18), ~bits.test(dat,19), bits.test(dat,20), (uint2)bits.extract(dat,21,22), bits.test(dat,23)
+                            ));
                     }
                 }
                 writer.AppendLineFormat(LabeledValue, "VEXDEST", string.Format("{0} {1}", vexHex, vexBits));

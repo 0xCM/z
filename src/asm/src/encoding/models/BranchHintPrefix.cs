@@ -6,14 +6,14 @@ namespace Z0.Asm;
 
 using static AsmPrefixTokens;
 
-public readonly record struct BranchHintPrefix : IAsmPrefix<BranchHintCode>
+public readonly record struct BranchHintPrefix : IAsmPrefix<BranchHintPrefix>
 {
-    readonly BranchHintCode _Code;
+    readonly byte _Code;
 
     [MethodImpl(Inline)]
     public BranchHintPrefix(BranchHintCode src)
     {
-        _Code = src;
+        _Code = (byte)src;
     }
 
     public byte Encoded
@@ -24,7 +24,7 @@ public readonly record struct BranchHintPrefix : IAsmPrefix<BranchHintCode>
 
     [MethodImpl(Inline)]
     public BranchHintCode Code()
-        => _Code;
+        => (BranchHintCode)_Code;
 
     public bool IsEmpty
     {

@@ -16,4 +16,3 @@ public enum BroadcastTokenKind : byte
 
     Broadcast64
 }
-

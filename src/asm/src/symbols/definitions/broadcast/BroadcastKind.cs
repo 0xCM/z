@@ -50,20 +50,20 @@ public enum BroadcastKind : byte
 
     BCast_1TO64_8 = Broadcast8.BCast_1TO64_8,
 
-    BCast_2TO4_64 = 20,
+    BCast_2TO4_64 = Broadcast64.BCast_2TO4_64,
 
-    BCast_2TO8_32 = 21,
+    BCast_2TO8_32 = Broadcast32.BCast_2TO8_32,
 
-    BCast_1TO2_32 = 22,
+    BCast_1TO2_32 = Broadcast32.BCast_1TO2_32,
 
-    BCast_1TO2_8  = 23,
+    BCast_1TO2_8  = Broadcast8.BCast_1TO2_8,
 
-    BCast_1TO4_8  = 24,
+    BCast_1TO4_8  = Broadcast8.BCast_1TO4_8,
 
     BCast_1TO8_8  = Broadcast8.BCast_1TO8_8,
 
-    BCast_1TO2_16  = 26,
+    BCast_1TO2_16  = Broadcast16.BCast_1TO2_16,
 
-    BCast_1TO4_16  = 27,
+    BCast_1TO4_16  = Broadcast16.BCast_1TO4_16,
 }
 

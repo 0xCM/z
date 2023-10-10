@@ -8,12 +8,12 @@ namespace Z0
     {
         [MethodImpl(Inline)]
         public static Indicator1u enabled(bit src)
-            => new Indicator1u(new Indicator<bit>(src, src));
+            => new (new Indicator<bit>(src, src));
 
         [MethodImpl(Inline)]
         public static Indicator<T> enabled<T>(T src)
             where T : unmanaged
-                => new Indicator<T>(src);
+                => new (src);
 
         [MethodImpl(Inline)]
         public static Indicator<T> disabled<T>()

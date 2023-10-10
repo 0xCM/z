@@ -12,7 +12,7 @@ using K = XedRules.FieldKind;
 partial class Xed
 {
     [Op]
-    public static FieldValue extract(in XedOperandState src, FieldKind kind)
+    public static FieldValue extract(in XedFields src, FieldKind kind)
     {
         var dst = FieldValue.Empty;
         switch(kind)

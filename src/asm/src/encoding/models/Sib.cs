@@ -5,14 +5,38 @@
 namespace Z0.Asm;
 
 using static sys;
-using static SibFields;
 
-/// <summary>
-/// ss iii bbb
-/// </summary>
 [ApiComplete, DataWidth(8)]
 public record struct Sib : IAsmByte<Sib>
 {
+    public const byte RenderWidth = 10;
+
+    public const byte Base_Mask = 0b00_000_111;
+
+    public const byte Base_Min = 0;
+
+    public const byte Base_Max = 2;
+
+    public const byte Base_Width = Base_Max - Base_Min + 1;
+
+    public const byte Index_Mask = 0b00_111_000;
+
+    public const byte Index_Min = 3;
+
+    public const byte Index_Max = 5;
+
+    public const byte Index_Width = Index_Max - Index_Min + 1;
+
+    public const byte Scale_Mask = 0b11_000_000;
+
+    public const byte Scale_Min = 6;
+
+    public const byte Scale_Max = 7;
+
+    public const byte Scale_Width = Scale_Max - Scale_Min + 1;
+
+    public const string Pattern = "ss iii bbb";
+
     [MethodImpl(Inline), Op]
     public static ScaleFactor factor(Sib src)
         => (ScaleFactor)Pow2.pow8u(src.Scale);

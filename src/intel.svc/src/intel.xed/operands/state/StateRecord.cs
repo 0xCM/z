@@ -13,7 +13,7 @@ partial class XedOps
     [StructLayout(LayoutKind.Sequential,Pack=1)]
     public record struct StateRecord : IComparable<StateRecord>
     {
-        public XedOperandState State;
+        public XedFields State;
 
         public Index<OpSpec> Ops;
 

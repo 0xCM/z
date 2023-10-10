@@ -11,7 +11,7 @@ partial class XedRules
 {
     public sealed class ReflectedState : PairedLookup<FieldKind,FieldInfo>
     {
-        static FieldInfo[] fields = typeof(XedOperandState).DeclaredInstanceFields().Tagged<RuleFieldAttribute>();
+        static FieldInfo[] fields = typeof(XedFields).DeclaredInstanceFields().Tagged<RuleFieldAttribute>();
 
         static Dictionary<FieldKind,FieldInfo> kinds = fields.Select(f => (f.Tag<RuleFieldAttribute>().Require().Kind,f)).ToDictionary();
 
@@ -21,7 +21,7 @@ partial class XedRules
 
         }
 
-        public ConstLookup<FieldKind,object> Values<T>(in XedOperandState src)
+        public ConstLookup<FieldKind,object> Values<T>(in XedFields src)
             where T : unmanaged
         {
             var dst = dict<FieldKind,object>();
