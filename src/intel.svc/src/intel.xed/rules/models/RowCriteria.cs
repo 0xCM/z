@@ -3,42 +3,41 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedRules
 {
-    partial class XedRules
+    public readonly struct RowCriteria
     {
-        public readonly struct RowCriteria
+        public readonly Index<CellInfo> Antecedant;
+
+        public readonly Index<CellInfo> Consequent;
+
+        [MethodImpl(Inline)]
+        public RowCriteria(CellInfo[] p, CellInfo[] c)
         {
-            public readonly Index<CellInfo> Antecedant;
-
-            public readonly Index<CellInfo> Consequent;
-
-            [MethodImpl(Inline)]
-            public RowCriteria(CellInfo[] p, CellInfo[] c)
-            {
-                Antecedant = p;
-                Consequent = c;
-            }
-
-            public bool IsEmpty
-            {
-                [MethodImpl(Inline)]
-                get => Antecedant.Count == 0 && Consequent.Count == 0;
-            }
-
-            public bool IsNonEmpty
-            {
-                [MethodImpl(Inline)]
-                get => !IsEmpty;
-            }
-
-            public string Format()
-                => XedRender.format(this);
-
-            public override string ToString()
-                => Format();
-
-            public static RowCriteria Empty => new RowCriteria(sys.empty<CellInfo>(), sys.empty<CellInfo>());
+            Antecedant = p;
+            Consequent = c;
         }
+
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Antecedant.Count == 0 && Consequent.Count == 0;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => !IsEmpty;
+        }
+
+        public string Format()
+            => XedRender.format(this);
+
+        public override string ToString()
+            => Format();
+
+        public static RowCriteria Empty => new RowCriteria(sys.empty<CellInfo>(), sys.empty<CellInfo>());
     }
 }
