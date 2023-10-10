@@ -37,7 +37,7 @@ partial class XedModels
             return dst;
         }
 
-        public static Index<InstPattern> load(Index<InstDef> defs)
+        public static Index<InstPattern> patterns(Index<InstDef> defs)
         {
             var count = 0u;
             iter(defs, def => count += def.PatternSpecs.Count);
@@ -48,17 +48,22 @@ partial class XedModels
                 ref readonly var def = ref defs[i];
                 var specs = def.PatternSpecs;
                 for(var j=0; j<specs.Count; j++, k++)
-                    seek(dst,k) = load(ref specs[j]);
+                {
+                    ref var spec = ref specs[j];
+                    var fields = XedCells.sort(spec.Body.Cells);
+                    spec.Body = new(fields);
+                    seek(dst,k) = new InstPattern(spec, XedCells.usage(fields));
+                }
             }
             return dst.Sort();
         }
 
-        static InstPattern load(ref InstPatternSpec spec)
-        {
-            var fields = XedCells.sort(spec.Body.Cells);
-            spec.Body = new (fields);
-            return new InstPattern(spec, XedCells.usage(fields));
-        }
+        // static InstPattern load(ref InstPatternSpec spec)
+        // {
+        //     var fields = XedCells.sort(spec.Body.Cells);
+        //     spec.Body = new (fields);
+        //     return new InstPattern(spec, XedCells.usage(fields));
+        // }
 
         public readonly InstPatternSpec Spec;
 

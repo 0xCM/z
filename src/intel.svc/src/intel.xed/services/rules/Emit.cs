@@ -36,14 +36,6 @@ partial class XedRules
         return src;
     }
 
-    public void Emit(XedRuleCells src)
-    {
-        exec(PllExec,
-            () => EmitRaw(src)
-
-            );
-    }
-
     void EmitRaw(XedRuleCells src)
     {
         var dst = text.emitter();

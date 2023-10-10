@@ -6,7 +6,6 @@ namespace Z0;
 
 using static XedRules;
 using static XedModels;
-using static XedDocs;
 using static Markdown;
 
 public class XedInstDocRender

@@ -6,7 +6,7 @@ namespace Z0;
 
 using static XedModels;
 
-partial class XedDocs
+partial class XedModels
 {
     public class InstDocPart : IComparable<InstDocPart>
     {

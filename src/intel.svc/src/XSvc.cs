@@ -22,20 +22,11 @@ public static class XSvc
         public IntelCmd IntelCmd(IWfRuntime wf)
             => Service<IntelCmd>(wf);
 
-        public IntelCmd IntelInxCmd(IWfRuntime wf)
-            => Service<IntelCmd>(wf);
-
         public SdeSvc SdeSvc(IWfRuntime wf)
             => Service<SdeSvc>(wf);
 
-        public XedChecks XedChecks(IWfRuntime wf)
-            => Service<XedChecks>(wf);
-
         public IntelSdm IntelSdm(IWfRuntime wf)
             => Service<IntelSdm>(wf);
-
-        public XedFlows XedFlows(IWfRuntime wf)
-            => Service<XedFlows>(wf);
 
         public XedRules XedRules(IWfRuntime wf)
             => Service<XedRules>(wf);
@@ -49,9 +40,6 @@ public static class XSvc
         public XedDisasm XedDisasm(IWfRuntime wf)
             => Service<XedDisasm>(wf);
 
-        public XedDocs XedDocs(IWfRuntime wf)
-            => Service<XedDocs>(wf);
-
         public XedPaths XedPaths(IWfRuntime wf)
             => Z0.XedPaths.Service;
 
@@ -60,12 +48,6 @@ public static class XSvc
 
         public IntelSdmPaths SdmPaths(IWfRuntime wf)
             => Service<IntelSdmPaths>(wf);
-
-        public XedToolCmd XedToolCmd(IWfRuntime wf)
-            => Service<XedToolCmd>(wf);
-
-        public Xed Xed(IWfRuntime wf)
-            => Service<Xed>(wf);
 
         public XedRuntime XedRuntime(IWfRuntime wf)
             => Service<XedRuntime>(wf);
@@ -79,23 +61,14 @@ public static class XSvc
     public static IntelIntrinsics IntelIntrinsics(this IWfRuntime wf)
         => Services.IntelInx(wf);
 
-    public static IApiService IntelInxCmd(this IWfRuntime wf)
-        => Services.IntelInxCmd(wf);
-
     public static SdeSvc SdeSvc(this IWfRuntime wf)
         => Services.SdeSvc(wf);
-
-    public static XedChecks XedChecks(this IWfRuntime xed)
-        => Services.XedChecks(xed);
 
     public static IntelSdm IntelSdm(this IWfRuntime wf)
         => Services.IntelSdm(wf);
 
     public static XedRuntime XedRuntime(this IWfRuntime wf)
         => Services.XedRuntime(wf);
-
-    public static XedFlows XedFlows(this IWfRuntime wf)
-        => Services.XedFlows(wf);
 
     public static XedRules XedRules(this IWfRuntime wf)
         => Services.XedRules(wf);
@@ -109,9 +82,6 @@ public static class XSvc
     public static XedDisasm XedDisasm(this IWfRuntime wf)
         => Services.XedDisasm(wf);
 
-    public static XedDocs XedDocs(this IWfRuntime wf)
-        => Services.XedDocs(wf);
-
     public static XedDisasmAnalyzer DisasmAnalyser(this IWfRuntime wf)
         => Services.DisasmAnalyzer(wf);
 
@@ -120,12 +90,6 @@ public static class XSvc
 
     public static IntelSdmPaths SdmPaths(this IWfRuntime wf)
         => Services.SdmPaths(wf);
-
-    public static Xed Xed(this IWfRuntime wf)
-        => Services.Xed(wf);
-
-    public static XedToolCmd XedToolCmd(this IWfRuntime wf)
-        => Services.XedToolCmd(wf);
 
     public static IntelCmd IntelCmd(this IWfRuntime wf)
         => Services.IntelCmd(wf);

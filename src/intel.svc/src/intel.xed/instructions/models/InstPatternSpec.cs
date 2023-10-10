@@ -139,7 +139,6 @@ partial class XedModels
                 result = RawBody.CompareTo(src.RawBody);
             return result;
         }
-            //=> Sort().CompareTo(src.Sort());
 
         public static InstPatternSpec Empty => default;
 

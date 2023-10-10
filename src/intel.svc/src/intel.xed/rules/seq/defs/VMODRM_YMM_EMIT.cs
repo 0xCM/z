@@ -16,7 +16,6 @@ partial class XedRuleSeq
         VSIB_ENC_EMIT()
         DISP_NT_EMIT()
     */
-
     public static SeqDef VMODRM_YMM_EMIT() => emit(nameof(VMODRM_YMM_EMIT), new RuleName[]{
         VSIB_ENC,
         DISP_NT,

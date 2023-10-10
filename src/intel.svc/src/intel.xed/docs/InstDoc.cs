@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static XedDocs;
+using static XedModels;
 
 public class XedInstDoc
 {

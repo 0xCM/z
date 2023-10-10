@@ -9,43 +9,9 @@ using System.Linq;
 
 using static sys;
 using static XedModels;
+using static XedRules;
+using static XedFlows;
 using static XedZ;
-
-[Record(TableName)]
-public record XedInstPattern : IComparable<XedInstPattern>, ISequential
-{
-    const string TableName = "xed.instructions.patterns";
-
-    [Render(8)]
-    public uint Seq;
-
-    [Render(20)]
-    public XedInstClass Instruction;
-
-    [Render(58)]
-    public XedInstForm Form;
-
-    [Render(8)]
-    public byte Index;
-
-    [Render(1)]
-    public InstPatternBody Body;
-
-    public int CompareTo(XedInstPattern src)
-    {
-        var result = Form.CompareTo(src.Form);
-        if(result == 0)
-            result = Body.CellCount.CompareTo(src.Body.CellCount);
-        return result;
-    }
-
-    uint ISequential.Seq
-    {
-        get => Seq;
-        set => Seq = value;
-    }
-}
-
 
 partial class XedCmd
 {
@@ -60,9 +26,11 @@ partial class XedCmd
         });
     }
 
+
     [CmdOp("xed/blocks")]
     void EmitBlockLines()
     {
+        EmitInstPatterns();
     }
 
     [CmdOp("xed/etl")]
@@ -70,4 +38,64 @@ partial class XedCmd
     {
         XedImport.Run();        
     }
+
+
+    void EmitInstPatterns()
+    {
+        var path =  XedPaths.DocSource(XedDocKind.RuleBlocks);
+        var patterns = bag<XedInstBlockPattern>();
+        XedZ.BlockLines(path, spec => {
+            var attribs = list<Attribute>();
+            var result = true;
+            var pattern = new XedInstBlockPattern{Form = spec.Form};
+            patterns.Add(pattern);
+
+            foreach(var line in spec.Lines)
+            {                
+                if(XedZ.parse(line, out Attribute attrib))
+                {
+                    attribs.Add(attrib);
+                    switch(attrib.Field)
+                    {
+                        case InstBlockField.iclass:
+                        {
+                            XedParsers.parse(attrib.Value, out pattern.Instruction);
+                        }
+                        break;
+                        case InstBlockField.pattern:
+                        {
+                            result = XedInstParser.parse(attrib.Value, out pattern.Body);
+                        }
+                        break;
+                        
+                        case InstBlockField.operands:
+                        break;
+                    }
+                }
+                if(!result)                
+                {
+                    Channel.Error(line);
+                    break;
+                }                
+            }
+        });
+
+        var records = patterns.OrderBy(x => x.Form).ThenBy(x => x.Body.CellCount).Array().Sort();
+        var form = XedInstForm.Empty;
+        var j=z8;
+        for(var i=0u; i<records.Length; i++)
+        {
+            ref var record = ref seek(records,i);
+            if(record.Form != form)
+            {
+                j=0;
+                form = record.Form;
+            }
+            record.Seq = i;
+            record.Index=j++;
+        }
+
+        Channel.TableEmit(records, XedPaths.ImportTable<XedInstBlockPattern>());
+    }
+
 }
