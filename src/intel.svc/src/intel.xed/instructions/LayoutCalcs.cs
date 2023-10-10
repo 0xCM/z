@@ -31,31 +31,6 @@ partial class XedRules
             return layouts;
         }
 
-        public static LayoutVectors vectors(InstLayouts src)
-        {
-            var counts = (uint)src.View.Select(x => x.Cells.Length).Sum();
-            var count = (uint)src.View.Length;
-            var comps = NativeCells.alloc<LayoutComponent>(counts, out var id);
-            var vectors = alloc<LayoutVector>(count);
-            var k = 0u;
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var layout = ref src[i];
-                if(layout.Count == 0)
-                    continue;
-
-                ref var _buffer = ref comps[k];
-                for(var j=0; j<layout.Count; j++, k++)
-                {
-                    ref readonly var cell = ref layout[j];
-                    seek(_buffer,j) = new LayoutComponent(cell.Field, cell.Kind, (ulong)cell);
-                }
-                seek(vectors,k) = new LayoutVector(memory.segref(_buffer, layout.Count));
-            }
-
-            return new LayoutVectors(comps,vectors);
-        }
-
         public static uint layout(InstPattern src, SegRef<LayoutCell> block, out InstLayout dst)
         {
             ref readonly var fields = ref src.Layout;

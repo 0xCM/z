@@ -86,5 +86,7 @@ partial class XedModels
         [MethodImpl(Inline)]
         public static implicit operator InstPatternBody(Index<CellValue> src)
             => new (src);
+
+        public static InstPatternBody Empty => new(sys.empty<CellValue>());
     }
 }

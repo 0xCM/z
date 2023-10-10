@@ -5,9 +5,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using Asm;
-
-using static XedRules;
 using static AsmOpCodes;
 
 partial class XedModels

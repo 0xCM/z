@@ -39,7 +39,7 @@ partial class XedRules
 
         [MethodImpl(Inline)]
         public static implicit operator LogicClass(LogicKind src)
-            => new LogicClass(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator LogicKind(LogicClass src)
@@ -51,6 +51,6 @@ partial class XedRules
 
         [MethodImpl(Inline)]
         public static explicit operator LogicClass(byte src)
-            => new LogicClass((LogicKind)src);
+            => new ((LogicKind)src);
     }
 }

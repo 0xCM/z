@@ -11,7 +11,7 @@ partial class XedRules
     [StructLayout(LayoutKind.Sequential,Pack=1), Record(TableId)]
     public record struct XedTableStats : IComparable<XedTableStats>
     {
-        const string TableId = "rules.stats";
+        const string TableId = "xed.rules.stats";
 
         [Render(6)]
         public uint Seq;

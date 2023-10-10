@@ -5,10 +5,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using Asm;
+
 using static XedRules;
 
 partial struct XedCells
 {
+    
     [MethodImpl(Inline), Op]
     public static AsmOpCode opcode(in XedCells src)
     {
@@ -34,7 +37,6 @@ partial struct XedCells
                 ock = AsmOpCodes.kind(AsmOpCodes.index((XopMapKind)number));
             break;
             case XedVexClass.EVV:
-            case XedVexClass.KVV:
                 ock = AsmOpCodes.kind(AsmOpCodes.index((EvexMapKind)number));
             break;
             default:
@@ -42,7 +44,7 @@ partial struct XedCells
             break;
         }
 
-        return new AsmOpCode(XedCells.mode(src), ock, ocv);
+        return new AsmOpCode(mode(src), ock, ocv);
     }
 }
 

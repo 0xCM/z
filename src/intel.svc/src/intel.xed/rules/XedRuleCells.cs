@@ -6,6 +6,7 @@
 namespace Z0;
 
 using System.Linq;
+
 using static XedRules;
 
 public class XedRuleCells

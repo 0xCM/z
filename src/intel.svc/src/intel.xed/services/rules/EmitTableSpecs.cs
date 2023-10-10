@@ -6,10 +6,7 @@
 namespace Z0
 {
     partial class XedRules
-    {
-        void EmitRuleExpr(CellTables src)
-            => Emit(CalcRuleExpr(src));
-
+    {     
         public void EmitTableSpecs(XedRuleTables src)
         {
             var formatter = CsvTables.formatter<TableDefRow>();

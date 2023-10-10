@@ -6,12 +6,10 @@ namespace Z0;
 
 partial class XedModels
 {
-    [StructLayout(StructLayout,Pack=1), DataWidth(Width), Record(TableId)]
+    [StructLayout(StructLayout,Pack=1), Record(TableId)]
     public readonly struct InstOperand
     {
         const string TableId = "xed.inst.opatterns.ops";
-
-        public const byte Width = num3.Width + OpName.Width + InstOpSymbol.Width + num8.Width + num16.Width;
 
         public readonly num3 Pos;
 
@@ -21,7 +19,7 @@ partial class XedModels
 
         public readonly OpKind Kind;
 
-        public readonly ushort Bits;
+        public readonly ushort Width;
 
         [MethodImpl(Inline)]
         public InstOperand(num3 pos, OpName name, InstOpSymbol ind, OpKind kind, ushort width)
@@ -29,7 +27,7 @@ partial class XedModels
             Kind = kind;
             Name = name;
             Pos = pos;
-            Bits = width;
+            Width = width;
             Symbol = ind;
         }
     }

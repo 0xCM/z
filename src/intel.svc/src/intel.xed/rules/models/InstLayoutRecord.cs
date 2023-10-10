@@ -11,13 +11,9 @@ partial class XedModels
     [Record(TableName), StructLayout(LayoutKind.Sequential,Pack=1)]
     public struct InstLayoutRecord : IComparable<InstLayoutRecord>
     {
-        public const string TableName = "xed.inst.layouts";
+        const string TableName = "xed.inst.layouts";
 
         public const byte CellCount = 11;
-
-        const byte HeaderCount = 4;
-
-        const byte TotalCount = HeaderCount + CellCount;
 
         public const byte CellWidth = LayoutCell.RenderWidth;
 

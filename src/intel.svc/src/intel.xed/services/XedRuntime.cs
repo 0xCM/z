@@ -33,17 +33,6 @@ public class XedRuntime : WfSvc<XedRuntime>
         Disposing += HandleDispose;
     }
 
-    // static XedRuleTables CalcRuleTables()
-    // {
-    //     var tables = new XedRuleTables();
-    //     var dst = new XedRuleBuffers();
-    //     exec(PllExec,
-    //         () => dst.Target.TryAdd(RuleTableKind.ENC, XedRuleSpecs.criteria(RuleTableKind.ENC)),
-    //         () => dst.Target.TryAdd(RuleTableKind.DEC, XedRuleSpecs.criteria(RuleTableKind.DEC))
-    //         );
-    //     return XedRules.tables(dst);
-    // }
-
     void RunCalcs()
     {
         var defs = XedInstDefParser.parse(XedPaths.DocSource(XedDocKind.EncInstDef));

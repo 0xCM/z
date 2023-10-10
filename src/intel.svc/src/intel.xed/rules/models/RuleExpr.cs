@@ -26,10 +26,10 @@ partial class XedRules
         public readonly RuleName Name;
 
         [Render(1)]
-        public readonly StringRef Body;
+        public readonly string Body;
 
         [MethodImpl(Inline)]
-        public RuleExpr(ushort seq, RuleSig sig, byte row, StringRef body)
+        public RuleExpr(ushort seq, RuleSig sig, byte row, string body)
         {
             Seq = seq;
             Name = sig.TableName;

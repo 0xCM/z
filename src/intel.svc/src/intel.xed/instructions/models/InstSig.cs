@@ -11,19 +11,16 @@ partial class XedModels
     public readonly struct InstSig
     {
         public static InstSig init(byte n)
-            => new InstSig(n);
+            => new (n);
 
         readonly Index<InstOperand> Ops;
 
         public readonly byte N;
 
-        public readonly ushort PackedWidth;
-
         public InstSig(byte n)
         {
             N = n;
             Ops = alloc<InstOperand>(n);
-            PackedWidth = (ushort)(n*InstOperand.Width);
         }
 
         public ref InstOperand this[byte i]

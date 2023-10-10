@@ -10,27 +10,31 @@ namespace Z0
         [Record(TableName), StructLayout(LayoutKind.Sequential,Pack=1)]
         public struct MacroDef
         {
-            public const byte FieldCount = 8;
+            const string TableName = "xed.rules.macros";
 
-            public const string TableName = "xed.rules.macros";
-
+            [Render(8)]
             public uint Seq;
 
+            [Render(24)]
             public RuleMacroKind MacroName;
 
+            [Render(8)]
             public byte Fields;
 
+            [Render(26)]
             public MacroExpansion E0;
 
+            [Render(26)]
             public MacroExpansion E1;
 
+            [Render(26)]
             public MacroExpansion E2;
 
+            [Render(26)]
             public MacroExpansion E3;
 
+            [Render(26)]
             public MacroExpansion E4;
-
-            public static ReadOnlySpan<byte> RenderWidths => new byte[FieldCount]{8,24,8,26,26,26,26,26};
 
             public static MacroDef Empty => default;
         }

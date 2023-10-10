@@ -5,9 +5,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static XedRules;
-    using static XedModels;
-
     public partial class XedDb : WfSvc<XedDb>
     {
         static readonly ConcurrentDictionary<FilePath,MemoryFile> _MemoryFiles = new();
@@ -19,8 +16,6 @@ namespace Z0
             => MemoryFile(XedPaths.DocSource(XedDocKind.RuleBlocks));
         
         IMemDb _Store;
-
-        XedRuntime Xed => Wf.XedRuntime();
 
         object _StoreLock = new();
         
@@ -39,21 +34,5 @@ namespace Z0
                 return _Store;
             }
         }
-
-        public void EmitLayouts(ReadOnlySeq<InstPattern> src)
-            => Emit(CalcLayouts(src));
-
-        void Emit(InstLayouts src)
-        {
-            Channel.FileEmit(src.Format(), 0, XedPaths.InstTarget("layouts.vectors", FileKind.Csv));
-            Channel.TableEmit(src.Records.View, XedPaths.ImportTable<InstLayoutRecord>(), TextEncodingKind.Asci);
-        }
-
-        public InstLayouts CalcLayouts(ReadOnlySeq<InstPattern> src)
-            => Data(nameof(CalcLayouts), () => LayoutCalcs.layouts(src));
-
-        public LayoutVectors CalcLayoutVectors(InstLayouts src)
-            => Data(nameof(CalcLayoutVectors), () => LayoutCalcs.vectors(src));
-
     }
 }

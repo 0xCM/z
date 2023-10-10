@@ -37,7 +37,6 @@ partial class XedModels
             return dst;
         }
 
-
         public static Index<InstPattern> load(Index<InstDef> defs)
         {
             var count = 0u;

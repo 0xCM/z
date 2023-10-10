@@ -34,27 +34,6 @@ public class XedSigs
         return dst;
     }
 
-    public static void render(Pairings<InstPattern,InstSig> src, ITextEmitter dst)
-    {
-        const string RenderPattern = "{0,-18} | {1,-6} | {2,-26} | {3,-12} | {4}({5})";
-        const string HeaderPattern = "{0,-18} | {1,-6} | {2,-26} | {3,-12} | {4}";
-        dst.AppendLineFormat(HeaderPattern, "Instruction", "Lock", "OpCode", "PackedWidth", "Sig");
-        for(var i=0; i<src.Count; i++)
-        {
-            ref readonly var pattern = ref src[i].Left;
-            ref readonly var sig = ref src[i].Right;
-            var @class = Xed.classifier(pattern.InstClass);
-            dst.AppendLineFormat(RenderPattern,
-                @class,
-                pattern.Lock,
-                pattern.OpCode,
-                sig.PackedWidth,
-                @class.Format().ToLower(),
-                sig
-                );
-        }
-    }
-
     public static string format(in InstSig src)
     {
         var dst = text.buffer();
@@ -70,8 +49,8 @@ public class XedSigs
 
                 ref readonly var c = ref src[i];
                 dst.Append(c.Symbol.Format());
-                if(c.Bits != 0)
-                    dst.AppendFormat(":w{0}", c.Bits);
+                if(c.Width != 0)
+                    dst.AppendFormat(":w{0}", c.Width);
             }
         }
 
@@ -82,7 +61,7 @@ public class XedSigs
     static InstOpSymbol i(string src)
         => new (src);
 
-    static readonly Index<OpNameKind,InstOpSymbol> _KindIndicators = new InstOpSymbol[]{
+    static readonly ReadOnlySeq<InstOpSymbol> _KindIndicators = new InstOpSymbol[26]{
         i(""),
         i("reg0"),
         i("reg1"),
@@ -113,5 +92,5 @@ public class XedSigs
 
     [MethodImpl(Inline), Op]
     public static InstOpSymbol indicator(OpNameKind src)
-        => _KindIndicators[src];
+        => _KindIndicators[(byte)src];
 }

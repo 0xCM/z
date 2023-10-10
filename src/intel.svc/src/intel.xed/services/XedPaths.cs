@@ -50,8 +50,7 @@ public class XedPaths
         => Imports().Targets("rules.tables");
 
     public static FilePath ImportTable<T>()
-        where T : struct
-            => Imports().Table<T>();
+        => Imports().Table<T>();
 
     public static FilePath ImportTable<T>(string suffix)
         where T : struct

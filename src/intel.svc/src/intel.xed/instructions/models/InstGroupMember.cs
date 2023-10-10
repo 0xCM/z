@@ -5,9 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static XedModels;
 using static AsmOpCodes;
-using static XedRules;
 
 partial class XedModels
 {

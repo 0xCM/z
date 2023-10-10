@@ -5,10 +5,47 @@
 namespace Z0;
 
 using Asm;
+using System.Linq;
 
 using static sys;
 using static XedModels;
 using static XedZ;
+
+[Record(TableName)]
+public record XedInstPattern : IComparable<XedInstPattern>, ISequential
+{
+    const string TableName = "xed.instructions.patterns";
+
+    [Render(8)]
+    public uint Seq;
+
+    [Render(20)]
+    public XedInstClass Instruction;
+
+    [Render(58)]
+    public XedInstForm Form;
+
+    [Render(8)]
+    public byte Index;
+
+    [Render(1)]
+    public InstPatternBody Body;
+
+    public int CompareTo(XedInstPattern src)
+    {
+        var result = Form.CompareTo(src.Form);
+        if(result == 0)
+            result = Body.CellCount.CompareTo(src.Body.CellCount);
+        return result;
+    }
+
+    uint ISequential.Seq
+    {
+        get => Seq;
+        set => Seq = value;
+    }
+}
+
 
 partial class XedCmd
 {
@@ -26,49 +63,6 @@ partial class XedCmd
     [CmdOp("xed/blocks")]
     void EmitBlockLines()
     {
-        var path =  XedPaths.DocSource(XedDocKind.RuleBlocks);
-        XedZ.BlockLines(path, spec => {
-            var attribs = list<Attribute>();
-            var result = true;
-            Channel.Row($"form:{spec.Form}");
-
-            foreach(var line in spec.Lines)
-            {                
-                if(XedZ.parse(line, out Attribute attrib))
-                {
-                    attribs.Add(attrib);
-                    switch(attrib.Field)
-                    {
-                        case InstBlockField.iclass:
-                        {
-                            if(XedParsers.parse(attrib.Value, out XedInstClass @class))
-                            {
-                                Channel.Row($"iclass:{@class}");
-                            }
-                        }
-                        break;
-                        case InstBlockField.pattern:
-                        {
-                            result = XedInstParser.parse(attrib.Value, out InstPatternBody pattern);
-                            ref readonly var fields = ref pattern.Cells;
-                            var layout = fields.Layout;
-                            var expr = fields.Expr;
-                            foreach(var f in fields)
-                                Channel.Row($"field:{f.Format()}");
-                        }
-                        break;
-                        
-                        case InstBlockField.operands:
-                        break;
-                    }
-                }
-                if(!result)                
-                {
-                    Channel.Error(line);
-                    break;
-                }                
-            }
-        });
     }
 
     [CmdOp("xed/etl")]

@@ -10,40 +10,40 @@ partial class XedModels
     [SymSource(xed), DataWidth(num4.Width)]
     public enum OpKind : byte
     {
-        None = 0,
+        None,
 
         [Symbol("agen")]
-        Agen = 1,
+        Agen,
 
         [Symbol("base")]
-        Base = 2,
+        Base,
 
         [Symbol("disp")]
-        Disp = 3,
+        Disp,
 
         [Symbol("imm")]
-        Imm = 4,
+        Imm,
 
         [Symbol("index")]
-        Index = 5,
+        Index,
 
         [Symbol("mem")]
-        Mem = 6,
+        Mem,
 
         [Symbol("ptr")]
-        Ptr = 7,
+        Ptr,
 
         [Symbol("reg")]
-        Reg = 8,
+        Reg,
 
         [Symbol("relbr")]
-        RelBr = 9,
+        RelBr,
 
         [Symbol("scale")]
-        Scale = 10,
+        Scale,
 
         [Symbol("seg")]
-        Seg = 11,
+        Seg,
 
         [Symbol("bcast")]
         Bcast,

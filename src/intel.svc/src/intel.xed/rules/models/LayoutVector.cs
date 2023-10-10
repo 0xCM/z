@@ -30,7 +30,6 @@ partial class XedRules
             Vectors = vectors;
         }
 
-
         public void Dispose()
         {
             Components.Dispose();

@@ -330,10 +330,6 @@ partial class XedRules
             => assign(M.VV1, K.VEXVALID, XedVexClass.VV1);
 
         [MethodImpl(Inline), Op]
-        static MacroSpec KVV()
-            => assign(M.KVV, K.VEXVALID, XedVexClass.KVV);
-
-        [MethodImpl(Inline), Op]
         static MacroSpec EVV()
             => assign(M.EVV, K.VEXVALID, XedVexClass.EVV);
 

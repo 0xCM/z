@@ -27,14 +27,6 @@ namespace Z0
                 Description = desc;
             }
 
-            public RuleFieldAttribute(FieldKind kind)
-            {
-                Kind = kind;
-                Width = 0;
-                EffectiveType = typeof(void);
-                Description = EmptyString;
-            }
-
             public FieldKind Kind {get;}
 
             public byte Width {get;}

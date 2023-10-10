@@ -50,6 +50,7 @@ partial class XedRules
         {
             Indexed.Storage.Sort();
         }
+
         public byte Count
         {
             [MethodImpl(Inline)]
@@ -106,15 +107,16 @@ partial class XedRules
         static FieldDefs fields()
         {
             var fields = typeof(XedFields).InstanceFields().Tagged<RuleFieldAttribute>();
-            var count = fields.Length;
+            var count = fields.Length + 1;
             var defs = new FieldDefs(sys.alloc<FieldDef>(count));
             var indexed = defs.Indexed;
             var packed = z32;
             var aligned = z32;
-
-            for(var i=z8; i<count; i++)
+            var i=z8;
+            defs[i++] = FieldDef.Empty;
+            for(; i<count; i++)
             {
-                ref readonly var field = ref skip(fields,i);
+                ref readonly var field = ref skip(fields,i-1);
                 var dst = default(FieldDef);
                 var tag = field.Tag<RuleFieldAttribute>().Require();
                 var awidth = width(field.FieldType);

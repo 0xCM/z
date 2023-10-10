@@ -8,7 +8,7 @@ namespace Z0;
 partial class XedModels
 {
     [DataWidth(Width)]
-    public struct XedInstForm : IDataType<XedInstForm>
+    public record struct XedInstForm : IDataType<XedInstForm>
     {
         public const byte Width = Hex14.Width;
 
@@ -43,9 +43,6 @@ partial class XedModels
 
         public override int GetHashCode()
             =>(int)Kind;
-
-        public override bool Equals(object src)
-            => src is XedInstForm && Equals(src);
 
         public string Format()
             => Kind == 0 ? EmptyString :  Kind.ToString();
