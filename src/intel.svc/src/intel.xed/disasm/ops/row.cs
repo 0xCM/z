@@ -9,14 +9,13 @@ using Asm;
 
 using static sys;
 using static XedModels;
-using static XedRules;
 
 partial class XedDisasm
 {
     static Dictionary<OpNameKind,OpData> ops(in XedDisasmState state, in AsmHexCode code)
     {
         var dst = dict<OpNameKind,OpData>();
-        var ops = Xed.operands(state.RuleState, code);
+        var ops = XedFields.operands(state.RuleState, code);
         var count = ops.Count;
         for(var i=0; i<count; i++)
         {
@@ -57,7 +56,7 @@ partial class XedDisasm
         var dstate = new XedDisasmFieldParser().Parse(inst.Props);
         var opsLU = ops(dstate, code);
         ref readonly var state = ref dstate.RuleState;
-        dst.Offsets = Xed.offsets(state);
+        dst.Offsets = XedFields.offsets(state);
         dst.OpCode = state.NOMINAL_OPCODE;
         dst.Ops = new OpDetails(alloc<OpDetail>(src.Block.OpCount));
         var ocpos = state.POS_NOMINAL_OPCODE;

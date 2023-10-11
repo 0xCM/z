@@ -254,7 +254,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             writer.AppendLineFormat(LabeledValue, nameof(detail.Encoded), detail.Encoded);
 
             var ocbyte = XedFields.ocbyte(state);
-            var encoding  = Xed.encoding(state, asmhex);
+            var encoding  = XedFields.encoding(state, asmhex);
 
             var prefix = slice(detail.PrefixBytes.Bytes,0, detail.PrefixSize);
             if(detail.PrefixSize != 0)

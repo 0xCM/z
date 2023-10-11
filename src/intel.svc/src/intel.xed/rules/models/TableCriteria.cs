@@ -14,25 +14,25 @@ partial class XedRules
     {
         public readonly uint TableId;
 
-        public readonly RuleIdentity Sig;
+        public readonly RuleIdentity Rule;
 
-        public readonly Index<RowCriteria> Rows;
+        public readonly ReadOnlySeq<RowCriteria> Rows;
 
-        public TableCriteria(RuleIdentity sig, RowCriteria[] rows)
+        public TableCriteria(RuleIdentity rule, ReadOnlySeq<RowCriteria> rows)
         {
             TableId = 0u;
-            Require.invariant(sig.IsNonEmpty);
+            Require.invariant(rule.IsNonEmpty);
             Require.invariant(rows.Length != 0);
-            Sig = sig;
+            Rule = rule;
             Rows = rows;
         }
 
-        public TableCriteria(uint id, RuleIdentity sig, RowCriteria[] rows)
+        public TableCriteria(uint id, RuleIdentity rule, ReadOnlySeq<RowCriteria> rows)
         {
             TableId = id;
-            Require.invariant(sig.IsNonEmpty);
+            Require.invariant(rule.IsNonEmpty);
             Require.invariant(rows.Length != 0);
-            Sig = sig;
+            Rule = rule;
             Rows = rows;
         }
 
@@ -40,20 +40,20 @@ partial class XedRules
         TableCriteria(uint id)
         {
             TableId = id;
-            Sig = RuleIdentity.Empty;
+            Rule = RuleIdentity.Empty;
             Rows = sys.empty<RowCriteria>();
         }
 
         public RuleIdentity SigKey
         {
             [MethodImpl(Inline)]
-            get => Sig;
+            get => Rule;
         }
 
         public RuleTableKind TableKind
         {
             [MethodImpl(Inline)]
-            get => Sig.TableKind;
+            get => Rule.TableKind;
         }
 
         public RuleName TableName
@@ -83,32 +83,32 @@ partial class XedRules
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => Sig.IsEmpty;
+            get => Rule.IsEmpty;
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => Sig.IsNonEmpty;
+            get => Rule.IsNonEmpty;
         }
 
         public uint RenderLines(ITextEmitter dst)
         {
-            var src = Lines();
+            var src = ToLines();
             for(var i=0; i<src.Length; i++)
                 dst.AppendLineFormat("# {0}", skip(src,i).Content);
             return (uint)src.Length;
         }
 
         public TableCriteria Merge(in TableCriteria src)
-            => new TableCriteria(Require.equal(Sig, src.Sig), Rows.Append(src.Rows));
+            => new (Require.equal(Rule, src.Rule), Rows.Append(src.Rows));
 
         [MethodImpl(Inline)]
         public TableCriteria WithId(uint id)
-            => new TableCriteria(id, Sig, Rows);
+            => new (id, Rule, Rows);
 
-        public ReadOnlySpan<TextLine> Lines()
-            => Z0.Lines.read(Format(), trim:false);
+        public ReadOnlySpan<TextLine> ToLines()
+            => Lines.read(Format(), trim:false);
 
         public string Format()
             => XedRender.format(this);
@@ -117,7 +117,7 @@ partial class XedRules
             => Format();
 
         public int CompareTo(TableCriteria src)
-            => Sig.CompareTo(src.Sig);
+            => Rule.CompareTo(src.Rule);
 
         public static TableCriteria Empty => new TableCriteria(0);
     }

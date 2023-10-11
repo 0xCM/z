@@ -9,7 +9,6 @@ using Asm;
 
 using static XedModels;
 using static XedRules;
-using static sys;
 
 using K = XedRules.FieldKind;
 

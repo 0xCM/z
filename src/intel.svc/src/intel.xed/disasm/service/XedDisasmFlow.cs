@@ -67,7 +67,7 @@ readonly struct XedDisasmFlow : IXedDisasmFlow
         XedFieldParser.update(fields, kinds, ref state);
         dst.Computed(seq, state);
 
-        var encoding = Xed.encoding(state, asmhex);
+        var encoding = XedFields.encoding(state, asmhex);
         dst.Computed(seq, encoding);
         dst.Computed(seq, src.Instruction);
     }

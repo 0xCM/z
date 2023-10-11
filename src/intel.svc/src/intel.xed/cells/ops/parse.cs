@@ -102,5 +102,4 @@ partial struct XedCells
 
         return result;
     }
-
 }

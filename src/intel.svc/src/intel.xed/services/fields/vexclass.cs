@@ -5,20 +5,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using Asm;
-
-using static XedModels;
 using static sys;
-
-using M = XedModels;
 
 public partial class XedFields
 {
     [MethodImpl(Inline), Op]
-    public static ref readonly HintKind hint(in XedFieldState src)
-        => ref @as<HintKind>(src.HINT);
-
-    [MethodImpl(Inline), Op]
-    public static ref readonly M.RepPrefix rep(in XedFieldState src)
-        => ref @as<M.RepPrefix>(src.REP);
+    public static ref readonly XedVexClass vexclass(in XedFieldState src)
+        => ref @as<XedVexClass>(src.VEXVALID);
 }

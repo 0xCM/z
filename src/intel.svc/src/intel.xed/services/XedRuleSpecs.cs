@@ -243,7 +243,7 @@ public readonly struct XedRuleSpecs
             ref readonly var table = ref src[i];
             var tix = i;
             var tk = table.TableKind;
-            ref readonly var sig = ref table.Sig;
+            ref readonly var sig = ref table.Rule;
             var rows = alloc<RowSpec>(table.RowCount);
             for(ushort j=0; j<table.RowCount; j++)
             {

@@ -474,7 +474,7 @@ public partial class XedImport : WfSvc<XedImport>
     static void EmitRulePage(in TableCriteria src)
     {
         var formatter = CsvTables.formatter<TableDefRow>();
-        using var emitter = XedPaths.RuleTable(src.Sig).AsciEmitter();
+        using var emitter = XedPaths.RuleTable(src.Rule).AsciEmitter();
         emitter.AppendLine(formatter.FormatHeader());
         var k=0u;
         for(var j=0u; j<src.RowCount; j++, k++)
