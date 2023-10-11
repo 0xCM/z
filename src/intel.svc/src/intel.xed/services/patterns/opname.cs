@@ -11,7 +11,7 @@ using static XedRules;
 using K = XedRules.FieldKind;
 using N = XedModels.OpNameKind;
 
-partial class Xed
+partial class XedPatterns
 {
     [Op]
     public static OpName opname(FieldKind src)

@@ -86,7 +86,7 @@ partial class XedModels
 
         [MethodImpl(Inline)]
         public bool Scale(out MemoryScale dst)
-            => Xed.scale(this, out dst);
+            => XedPatterns.scale(this, out dst);
 
         [MethodImpl(Inline)]
         public bool Broadcast(out BroadcastKind dst)

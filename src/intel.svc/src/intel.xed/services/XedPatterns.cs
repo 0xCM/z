@@ -22,7 +22,131 @@ public partial class XedPatterns : AppService<XedPatterns>
             XedVexClass.XOPV => AsmOpCodeClass.Xop,
             _ => AsmOpCodeClass.Legacy
         };
-            
+
+    [MethodImpl(Inline), Op]
+    public static bool scale(in PatternOp src, out MemoryScale dst)
+    {
+        var result = first(src.Attribs, OpAttribKind.Scale, out var attrib);
+        if(result)
+            dst = attrib.ToScale();
+        else
+            dst = default;
+        return result;
+    }
+
+    public static PatternOpInfo opinfo(MachineMode mode, in PatternOp src)
+    {
+        var dst = PatternOpInfo.Empty;
+        dst.Index = src.Index;
+        dst.Kind = src.Kind;
+        dst.Name = src.Name;
+        var wc = WidthCode.INVALID;
+        ref readonly var attribs = ref src.Attribs;
+        nonterm(src, out dst.NonTerminal);
+        visibility(src, out dst.Visibility);
+        action(src, out dst.Action);
+        modifier(src, out dst.Modifier);
+        if(widthcode(src, out wc))
+        {
+            dst.WidthCode = wc;
+            var w = XedWidths.width(mode,wc);
+            dst.BitWidth = w.Bits;
+            var wi = XedWidths.describe(wc);
+            dst.SegType = wi.SegType;
+            dst.ElementType = wi.ElementType;
+            dst.ElementWidth = wi.ElementWidth;
+        }
+
+        var gpr = GprWidth.Empty;
+        if(GprWidth.width(dst.NonTerminal, out gpr))
+            dst.GprWidth = gpr;
+        else
+            dst.GprWidth = GprWidth.Empty;
+
+        if(src.RegLiteral(out dst.RegLit))
+            dst.BitWidth = XedWidths.width(dst.RegLit);
+
+        if(dst.BitWidth == 0 && gpr.IsNonEmpty && gpr.IsInvariant)
+            dst.BitWidth = (ushort)gpr.InvariantWidth.Width;
+
+        return dst;
+    }    
+
+    public static Index<InstOpDetail> opdetails(InstPattern src)
+    {
+        ref readonly var ops = ref src.Ops;
+        var count = (byte)ops.Count;
+        var dst = alloc<InstOpDetail>(count);
+        for(var j=0; j<count; j++)
+            seek(dst,j) = opdetail(src, count, ops[j]);
+        return dst;
+    }
+
+    public static Index<InstOpDetail> opdetails(Index<InstPattern> src)
+    {
+        var buffer = list<InstOpDetail>();
+        for(var i=0; i<src.Count; i++)
+        {
+            ref readonly var pattern = ref src[i];
+            ref readonly var ops = ref pattern.Ops;
+            var count = (byte)ops.Count;
+            for(var j=0; j<count; j++)
+                buffer.Add(XedPatterns.opdetail(pattern, count, ops[j]));
+        }
+
+        return buffer.ToArray().Sort(new PatternOrder());
+    }
+
+    public static InstOpDetail opdetail(InstPattern pattern, byte opcount, in PatternOp op)
+    {
+        ref readonly var fields = ref pattern.Cells;
+        var info = opinfo(pattern.Mode,op);
+        var wcode = info.WidthCode;
+        var dst = InstOpDetail.Empty;
+        dst.Pattern = op.PatternId;
+        Require.nonzero(pattern.InstClass.Kind);
+        dst.InstClass = pattern.InstClass;
+        dst.OpCode = pattern.OpCode;
+        dst.Mode = pattern.Mode;
+        dst.Lock = XedCells.@lock(fields);
+        dst.Mod = XedCells.mod(fields);
+        dst.RexW = XedCells.rexw(fields);
+        dst.Rep = XedCells.rep(fields);
+        dst.Attribs = op.Attribs;
+        dst.OpCount = opcount;
+        dst.Index = info.Index;
+        dst.Name = info.Name;
+        dst.Kind = info.Kind;
+        dst.Action = info.Action;
+        dst.WidthCode = wcode;
+        dst.GrpWidth = info.GprWidth;
+        dst.Scalable = info.GprWidth.IsScalable;
+        dst.ElementType = info.ElementType;
+        dst.ElementWidth = info.ElementWidth;
+        dst.RegLit = info.RegLit;
+        dst.Modifier = info.Modifier;
+        dst.Visibility = info.Visibility;
+        dst.Rule = info.NonTerminal;
+        dst.BitWidth = info.BitWidth;
+        if(wcode !=0)
+        {
+            dst.SegInfo =  XedWidths.describe(wcode).SegType;
+            dst.ElementCount = dst.SegInfo.CellCount;
+        }
+        if(info.RegLit.IsNonEmpty && dst.BitWidth == 0)
+        {
+            var regop = XedPatterns.regop(info.RegLit);
+            if(regop.IsNonEmpty)
+                dst.BitWidth = (ushort)regop.Size.Width;
+        }
+
+        var expr = op.SourceExpr.Value;
+        var exprFmt = op.SourceExpr.Format();
+        Demand.lteq(text.quote(exprFmt), exprFmt.Length, asci64.Size);
+        dst.SourceExpr = expr;
+        return dst;
+    }
+
     [MethodImpl(Inline), Op]
     public static bool etype(in PatternOp src, out ElementType dst)
     {

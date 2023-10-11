@@ -90,7 +90,7 @@ partial class XedModels
             OpNames = spec.Ops.Names;
             FieldDeps = deps;
             Lock = XedCells.@lock(fields);
-            OpDetails = Xed.opdetails(this);
+            OpDetails = XedPatterns.opdetails(this);
             Scalable = OpDetails.Any(x => x.Scalable);
             Layout = new XedCells(layout.ToArray(), (byte)layout.Length);
             Expr  = new XedCells(expr.ToArray(), 0);

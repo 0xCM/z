@@ -10,7 +10,6 @@ using System.Linq;
 using static sys;
 using static XedModels;
 using static XedRules;
-using static XedFlows;
 using static XedZ;
 
 using CK = XedRules.RuleCellKind;
@@ -84,7 +83,7 @@ public partial class XedImport : WfSvc<XedImport>
         );
     
         var cellT = CellTables.tables(cells);
-        var opdetail = Xed.opdetails(patterns);
+        var opdetail = XedPatterns.opdetails(patterns);
         exec(true, 
             () => Emit(grids(cellT)),
             () => EmitRuleDocs(cellT),
@@ -98,11 +97,28 @@ public partial class XedImport : WfSvc<XedImport>
         );
     }
 
+    static InstOpSpec spec(in InstOpDetail src)
+    {
+        var dst = InstOpSpec.Empty;
+        dst.Pattern = src.Pattern;
+        dst.Index = src.Index;
+        dst.Name = src.Name;
+        dst.ElementType = src.ElementType;
+        dst.Width = new OpWidth(src.WidthCode, src.BitWidth);
+        dst.BitWidth = src.BitWidth;
+        dst.RegLit = src.RegLit;
+        dst.Rule = src.Rule;
+        dst.GprWidth = src.GrpWidth;
+        var wi = XedWidths.describe(src.WidthCode);
+        if(wi.SegType.CellCount > 1)
+            dst.Seg = new InstOpSpec.Segmentation(wi.SegType.DataWidth, wi.SegType.CellWidth, src.ElementType.Indicator, wi.SegType.CellCount);
+        return dst;
+    }
     static ReadOnlySeq<InstOpSpec> CalcOpSpecs(ReadOnlySeq<InstOpDetail> src)
     {
         var dst = alloc<InstOpSpec>(src.Count);
         for(var i=0; i<src.Count; i++)
-            seek(dst,i) = Xed.spec(src[i]);
+            seek(dst,i) = spec(src[i]);
         return dst;
     }
 
@@ -764,10 +780,23 @@ public partial class XedImport : WfSvc<XedImport>
         return rows;
     }    
 
+    static InstOpClass opclass(in InstOpDetail src)
+    {
+        var dst = InstOpClass.Empty;
+        dst.Kind = src.Kind;
+        dst.BitWidth = src.BitWidth;
+        dst.ElementType = src.ElementType;
+        dst.ElementCount = src.SegInfo.CellCount;
+        dst.IsRegLit = src.IsRegLit;
+        dst.IsRule = src.IsNonterm;
+        dst.WidthCode = src.WidthCode;
+        return dst;
+    }
+
     static ReadOnlySeq<InstOpClass> CalcOpClasses(ReadOnlySeq<InstOpDetail> src)
     {
         var buffer = sys.bag<InstOpClass>();
-        iter(src, op => buffer.Add(Xed.opclass(op)), true);
+        iter(src, op => buffer.Add(opclass(op)), true);
         var dst = buffer.Array().Distinct().Sort();
         for(var i=0u; i<dst.Length; i++)
             seek(dst,i).Seq = i;

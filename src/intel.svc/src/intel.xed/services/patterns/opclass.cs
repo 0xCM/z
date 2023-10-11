@@ -7,7 +7,7 @@ namespace Z0;
 
 using static XedModels;
 
-partial class Xed
+partial class XedPatterns
 {
     [MethodImpl(Inline), Op]
     public static bit IsRegLit(OpType src)
@@ -39,28 +39,15 @@ partial class Xed
         var desc = XedWidths.describe(spec.WidthCode);
         var width = XedWidths.width(mode, spec.WidthCode);
         var dst =  new InstOpClass {
-                    Kind = spec.Kind,
-                    BitWidth = width.Bits,
-                    ElementType = desc.ElementType,
-                    IsRegLit = IsRegLit(spec.OpType),
-                    IsRule = IsRule(spec.OpType),
-                    ElementCount = desc.ElementCount,
-                    WidthCode = spec.WidthCode,
-                };
+            Kind = spec.Kind,
+            BitWidth = width.Bits,
+            ElementType = desc.ElementType,
+            IsRegLit = IsRegLit(spec.OpType),
+            IsRule = IsRule(spec.OpType),
+            ElementCount = desc.ElementCount,
+            WidthCode = spec.WidthCode,
+            };
 
-        return dst;
-    }
-
-    public static InstOpClass opclass(in InstOpDetail src)
-    {
-        var dst = InstOpClass.Empty;
-        dst.Kind = src.Kind;
-        dst.BitWidth = src.BitWidth;
-        dst.ElementType = src.ElementType;
-        dst.ElementCount = src.SegInfo.CellCount;
-        dst.IsRegLit = src.IsRegLit;
-        dst.IsRule = src.IsNonterm;
-        dst.WidthCode = src.WidthCode;
         return dst;
     }
 }

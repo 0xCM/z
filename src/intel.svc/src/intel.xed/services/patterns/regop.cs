@@ -7,7 +7,7 @@ namespace Z0;
 
 using Asm;
 
-partial class Xed
+partial class XedPatterns
 {
     public static RegOp regop(XedRegId src)
         => XedRegMap.Service.Map(src);

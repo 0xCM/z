@@ -126,11 +126,11 @@ partial class XedDisasm
         }
 
         if(state.REX)
-            dst.RexPrefix = Xed.rex(state);
+            dst.RexPrefix = XedFields.rex(state);
 
         if(state.HAS_MODRM)
         {
-            var modrm = Xed.modrm(state);
+            var modrm = XedFields.modrm(state);
             dst.ModRm = modrm;
             if(modrm != code[state.POS_MODRM])
             {
@@ -141,7 +141,7 @@ partial class XedDisasm
 
         if(state.HAS_SIB)
         {
-            var sib = Xed.sib(state);
+            var sib = XedFields.sib(state);
             dst.Sib = sib;
             var sibenc = Sib.init(code[state.POS_SIB]);
             if(sibenc.Value() != sib)

@@ -10,7 +10,7 @@ using static XedModels.OpNameKind;
 
 using K = XedModels.OpKind;
 
-partial class Xed
+partial class XedPatterns
 {
     [Op]
     public static K opkind(OpNameKind src)

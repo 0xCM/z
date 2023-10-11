@@ -84,7 +84,7 @@ partial class XedDisasm
         if(result.Fail)
             return (false, AppMsg.ParseFailure.Format(nameof(dst.Name), skip(parts,i-1)));
 
-        dst.Kind = Xed.opkind(dst.Name);
+        dst.Kind = XedPatterns.opkind(dst.Name);
 
         result = DataParser.eparse(skip(parts,i++), out dst.Action);
         if(result.Fail)

@@ -16,7 +16,7 @@ partial class XedDisasm
     {
         var buffer = hashset<InstOpClass>();
         foreach(var (summary,detail) in src)
-            buffer.AddRange(detail.Blocks.Select(x => x.DetailRow).SelectMany(x => x.Ops).Select(x => Xed.opclass(MachineModeClass.Mode64, x.Spec)).Distinct());
+            buffer.AddRange(detail.Blocks.Select(x => x.DetailRow).SelectMany(x => x.Ops).Select(x => XedPatterns.opclass(MachineModeClass.Mode64, x.Spec)).Distinct());
         var dst = buffer.Array();
         return resequence(dst);
     }
@@ -25,6 +25,6 @@ partial class XedDisasm
         => resequence(
             src.Detail.Blocks.Select(x => x.DetailRow)
                 .SelectMany(x => x.Ops)
-                .Select(x => Xed.opclass(MachineModeClass.Mode64, x.Spec))
+                .Select(x => XedPatterns.opclass(MachineModeClass.Mode64, x.Spec))
                 .Distinct());
 }
