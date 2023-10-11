@@ -444,7 +444,7 @@ public class XedRender
     public static string format(OpAttrib src)
     {
         var dst = EmptyString;
-        switch(src.Class)
+        switch(src.Kind)
         {
             case OC.None:
                 dst = EmptyString;
@@ -482,7 +482,7 @@ public class XedRender
             break;
 
             default:
-                Errors.Throw(string.Format("Unhandled class:{0}", src.Class));
+                Errors.Throw(string.Format("Unhandled class:{0}", src.Kind));
             break;
         }
         return dst;

@@ -3,35 +3,34 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedRules
 {
-    partial class XedGrids
+    public enum ColKind : byte
     {
-        public enum ColKind : byte
-        {
-            None = 0,
+        None = 0,
 
-            Keyword,
+        Keyword,
 
-            Field,
+        Field,
 
-            FieldSeg,
+        FieldSeg,
 
-            Rule,
+        Rule,
 
-            Operator,
+        Operator,
 
-            BitLiteral,
+        BitLiteral,
 
-            HexLiteral,
+        HexLiteral,
 
-            Expr,
+        Expr,
 
-            SegVal,
+        SegVal,
 
-            SegVar,
+        SegVar,
 
-            RuleExpr
-        }
+        RuleExpr
     }
 }

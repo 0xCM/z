@@ -7,6 +7,7 @@ namespace Z0;
 
 using static XedModels;
 using static XedRules;
+using static sys;
 
 partial struct XedCells
 {

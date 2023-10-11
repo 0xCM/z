@@ -12,7 +12,7 @@ partial class XedGrids
         [MethodImpl(Inline)]
         public static Value untype<T>(T src)
             where T : unmanaged, IValue<T>
-                => new Value(sys.bw32(src.Value));
+                => new (sys.bw32(src.Value));
 
         readonly ByteBlock4 Storage;
 

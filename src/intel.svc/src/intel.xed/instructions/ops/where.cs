@@ -18,7 +18,7 @@ partial class XedPatterns
         for(var i=0; i<count; i++)
         {
             ref readonly var a = ref src[i];
-            if(a.Class == @class)
+            if(a.Kind == @class)
                 seek(dst,j++) = a;
         }
         return j;

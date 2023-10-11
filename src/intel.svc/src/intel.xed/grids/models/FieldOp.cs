@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static XedRules;
+using static XedGrids;
 
-partial class XedGrids
+partial class XedRules
 {
     [StructLayout(LayoutKind.Sequential,Pack=1)]
     public readonly record struct FieldOp : ILogicOperand<Value>

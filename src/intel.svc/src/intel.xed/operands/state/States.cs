@@ -8,7 +8,7 @@ namespace Z0;
 using Asm;
 
 using static MachineModes;
-
+using static XedModels;
 using M = XedModels;
 using B = ReadOnlySpan<bit>;
 using U2 = ReadOnlySpan<uint2>;
@@ -19,27 +19,13 @@ partial class XedOps
 {
     public readonly struct States
     {
-        public const XedVexClass MaxVexClass = XedVexClass.VV1;
-
-        public const XedVexKind MaxVexKind = XedVexKind.VF3;
-
         public const M.EASZ MaxEASZ = M.EASZ.EASZNot16;
 
         public const M.SMODE MaxSMODE = M.SMODE.SMode64;
 
         public const MachineModeClass MaxMode = MachineModeClass.Default;
 
-        public const M.SegPrefixKind MaxSegPrefixKind = M.SegPrefixKind.SS;
-
-        public const M.RoundingKind MaxRoundingKind = M.RoundingKind.RzSae;
-
         public const M.RepPrefix MaxRepPrefix = M.RepPrefix.REPF3;
-
-        public const M.LLRC MaxLLRC = M.LLRC.LLRC3;
-
-        public const BroadcastKind MaxBCastKind = BroadcastKind.BCast_1TO4_16;
-
-        public const AsmVL MaxVexLength = AsmVL.VL512;
 
         public static B DF32
         {
@@ -83,10 +69,16 @@ partial class XedOps
             get => Bytes.sequential<bit>(0, 1);
         }
 
-        public static ReadOnlySpan<M.EASZ> EASZ
+        public static ReadOnlySpan<EASZ> EASZ
         {
             [MethodImpl(Inline), Op]
-            get => Bytes.sequential<M.EASZ>(0, (byte)MaxEASZ);
+            get => Bytes.sequential<EASZ>(0, (byte)M.EASZ.EASZNot16);
+        }
+
+        public static ReadOnlySpan<EOSZ> EOSZ
+        {
+            [MethodImpl(Inline), Op]
+            get => Bytes.sequential<EOSZ>(0, (byte)M.EOSZ.EOSZ64);
         }
 
         public static B IMM0
@@ -377,19 +369,19 @@ partial class XedOps
             get => Bytes.sequential<M.RepPrefix>(0, (byte)MaxRepPrefix);
         }
 
-        public static ReadOnlySpan<M.DispWidth> DISP_WIDTH
+        public static ReadOnlySpan<DispWidth> DISP_WIDTH
         {
             [MethodImpl(Inline)]
-            get => new M.DispWidth[]{M.DispWidth.None, M.DispWidth.DW8, M.DispWidth.DW16, M.DispWidth.DW32, M.DispWidth.DW64};
+            get => new DispWidth[]{DispWidth.None, DispWidth.DW8, DispWidth.DW16, DispWidth.DW32, DispWidth.DW64};
         }
 
-        public static ReadOnlySpan<M.DispWidth> BRDISP_WIDTH
+        public static ReadOnlySpan<DispWidth> BRDISP_WIDTH
         {
             [MethodImpl(Inline)]
             get => DISP_WIDTH;
         }
 
-        public static ReadOnlySpan<M.DispWidth> NEED_MEMDISP
+        public static ReadOnlySpan<DispWidth> NEED_MEMDISP
         {
             [MethodImpl(Inline)]
             get => DISP_WIDTH;
@@ -404,37 +396,37 @@ partial class XedOps
         public static ReadOnlySpan<XedVexClass> VEXVALID
         {
             [MethodImpl(Inline)]
-            get => Bytes.sequential<XedVexClass>(0, (byte)MaxVexClass);
+            get => Bytes.sequential<XedVexClass>(0, (byte)XedVexClass.XOPV);
         }
 
         public static ReadOnlySpan<XedVexKind> VEX_PREFIX
         {
             [MethodImpl(Inline)]
-            get => Bytes.sequential<XedVexKind>(0, (byte)MaxVexKind);
+            get => Bytes.sequential<XedVexKind>(0, (byte)XedVexKind.VF3);
         }
 
-        public static ReadOnlySpan<M.RoundingKind> ROUNDC
+        public static ReadOnlySpan<RoundingKind> ROUNDC
         {
             [MethodImpl(Inline)]
-            get => Bytes.sequential<M.RoundingKind>(0, (byte)MaxRoundingKind);
+            get => Bytes.sequential<RoundingKind>(0, (byte)RoundingKind.RzSae);
         }
 
-        public static ReadOnlySpan<M.LLRC> LLRC
+        public static ReadOnlySpan<LLRC> LLRC
         {
             [MethodImpl(Inline)]
-            get => Bytes.sequential<M.LLRC>(0, (byte)MaxLLRC);
+            get => Bytes.sequential<LLRC>(0, (byte)M.LLRC.LLRC3);
         }
 
         public static ReadOnlySpan<AsmVL> VL
         {
             [MethodImpl(Inline)]
-            get => Bytes.sequential<AsmVL>(0, (byte)MaxVexLength);
+            get => Bytes.sequential<AsmVL>(0, (byte)AsmVL.VL512);
         }
 
         public static ReadOnlySpan<BroadcastKind> BCAST
         {
             [MethodImpl(Inline)]
-            get => Bytes.sequential<BroadcastKind>(0, (byte)MaxBCastKind);
+            get => Bytes.sequential<BroadcastKind>(0, (byte)BroadcastKind.BCast_1TO4_16);
         }
 
         public static REGS Reg0
