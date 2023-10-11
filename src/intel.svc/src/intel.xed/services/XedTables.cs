@@ -19,7 +19,6 @@ using U3 = ReadOnlySpan<uint3>;
 
 public class XedTables
 {
-
     static readonly ReadOnlySeq<OpName> _OpNames = Symbols.index<OpNameKind>().Kinds.Map(x => new OpName(x));
 
     static readonly ReadOnlySeq<XedRegId> _Regs = Symbols.index<XedRegId>().Kinds.ToArray();

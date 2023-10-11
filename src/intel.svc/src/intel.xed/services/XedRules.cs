@@ -5,11 +5,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using Asm;
-
-using static sys;
-using static XedModels;
-
 [ApiHost]
 public partial class XedRules : WfSvc<XedRules>
 {

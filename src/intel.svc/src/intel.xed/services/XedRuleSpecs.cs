@@ -108,7 +108,7 @@ public readonly struct XedRuleSpecs
         return specs;
     }
 
-    public static bool criteria(string src, out RowCriteria dst)
+    static bool criteria(string src, out RowCriteria dst)
     {
         var input = normalize(src);
         var i = text.index(input,"=>");
@@ -166,7 +166,7 @@ public readonly struct XedRuleSpecs
         return cells.Map(cellinfo);
     }
 
-    public static bool parse(string data, out CellTypeInfo dst)
+    static bool parse(string data, out CellTypeInfo dst)
     {
         Require.nonempty(data);
         Require.invariant(data.Length < 48);

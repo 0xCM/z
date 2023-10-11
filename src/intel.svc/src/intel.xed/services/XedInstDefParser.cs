@@ -12,7 +12,7 @@ using P = XedModels.InstPartKind;
 
 public struct XedInstDefParser
 {
-    public static Index<InstDef> parse(FilePath src)
+    public static ReadOnlySeq<InstDef> parse(FilePath src)
     {
         const string LogPattern = "{0,-8} | {1,-8} | {2,-10} | {3}";
 

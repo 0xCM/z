@@ -58,6 +58,53 @@ partial class XedRules
     [ApiHost("xed.rules.macros")]
     public class RuleMacros
     {
+
+        public static ReadOnlySeq<MacroDef> defs()
+        {
+            var src = RuleMacros.specs();
+            var count = src.Length;
+            var buffer = alloc<MacroDef>(count);
+            for(var i=0u; i<count; i++)
+            {
+                ref readonly var m = ref src[i];
+                var expansions = m.Expansions;
+                var j=0;
+                var k = m.Expansions.Count;
+                ref var dst = ref seek(buffer,i);
+                dst.Seq = i;
+                dst.Fields = (byte)expansions.Count;
+                dst.MacroName = m.Name;
+                if(k >= 1)
+                {
+                    var e = expansions[j++];
+                    dst.E0 = new MacroExpansion(e.Field, e.Operator, e.Value);
+                }
+                if(k >= 2)
+                {
+                    var e = expansions[j++];
+                    dst.E1 = new MacroExpansion(e.Field, e.Operator, e.Value);
+                }
+                if(k >= 3)
+                {
+                    var e = expansions[j++];
+                    dst.E2 = new MacroExpansion(e.Field, e.Operator, e.Value);
+                }
+                if(k >= 4)
+                {
+                    var e = expansions[j++];
+                    dst.E3 = new MacroExpansion(e.Field, e.Operator, e.Value);
+
+                }
+                if(k >= 5)
+                {
+                    var e = expansions[j++];
+                    dst.E4 = new MacroExpansion(e.Field, e.Operator, e.Value);
+                }
+            }
+
+            return buffer;
+        }
+
         [MethodImpl(Inline), Op]
         public static ConstLookup<string,MacroMatch> matches()
             => Matches;
@@ -94,7 +141,7 @@ partial class XedRules
 
         [MethodImpl(Inline)]
         static MacroMatch match(RuleMacroKind macro, FieldKind field, MacroMatchKind match, string value, string expansion)
-            => new MacroMatch(0, macro, field, match, value, expansion);
+            => new (0, macro, field, match, value, expansion);
 
         static string expand(in MacroSpec spec)
         {

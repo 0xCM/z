@@ -9,9 +9,9 @@ partial class XedRules
 {
     public readonly struct RowCriteria
     {
-        public readonly Index<CellInfo> Antecedant;
+        public readonly ReadOnlySeq<CellInfo> Antecedant;
 
-        public readonly Index<CellInfo> Consequent;
+        public readonly ReadOnlySeq<CellInfo> Consequent;
 
         [MethodImpl(Inline)]
         public RowCriteria(CellInfo[] p, CellInfo[] c)
@@ -38,6 +38,6 @@ partial class XedRules
         public override string ToString()
             => Format();
 
-        public static RowCriteria Empty => new RowCriteria(sys.empty<CellInfo>(), sys.empty<CellInfo>());
+        public static RowCriteria Empty => new (sys.empty<CellInfo>(), sys.empty<CellInfo>());
     }
 }
