@@ -6,9 +6,9 @@
 namespace Z0;
 
 using static sys;
+using static XedModels;
 
 using CK = XedRules.RuleCellKind;
-using static XedModels;
 
 partial class XedRules
 {
@@ -241,7 +241,7 @@ partial class XedRules
             var dst = CellValue.Empty;
             var data = Data;
             data[PosIndex] = pos;
-            return new CellValue(data);
+            return new(data);
         }
 
         [MethodImpl(Inline)]
@@ -284,7 +284,7 @@ partial class XedRules
 
         [MethodImpl(Inline)]
         public CellExpr ToCellExpr()
-            => new CellExpr((OperatorKind)Data[OpIndex], new FieldValue(Field, @as<ulong>(Data.First), CellKind));
+            => new ((OperatorKind)Data[OpIndex], new FieldValue(Field, @as<ulong>(Data.First), CellKind));
 
         [MethodImpl(Inline), UnscopedRef]
         public uint5 AsBitLit()
@@ -308,7 +308,7 @@ partial class XedRules
 
         [MethodImpl(Inline)]
         public FieldSeg ToFieldSeg()
-            => new FieldSeg(SegVar.parse(AsInstSeg().Type.Format()), Field);
+            => new (SegVar.parse(AsInstSeg().Type.Format()), Field);
 
         public string Format()
             => XedRender.format(this);
@@ -322,51 +322,51 @@ partial class XedRules
 
         [MethodImpl(Inline)]
         public static implicit operator CellValue(byte src)
-            => new CellValue(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator CellValue(ushort src)
-            => new CellValue(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator CellValue(Hex8 src)
-            => new CellValue(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator CellValue(uint5 src)
-            => new CellValue(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator CellValue(RuleKeyword src)
-            => new CellValue(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator CellValue(RuleOperator src)
-            => new CellValue(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator CellValue(CellExpr src)
-            => new CellValue(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator CellValue(FieldSeg src)
-            => new CellValue(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator CellValue(InstFieldSeg src)
-            => new CellValue(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator CellValue(SegVar src)
-            => new CellValue(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator CellValue(WidthVar src)
-            => new CellValue(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator CellValue(Nonterminal src)
-            => new CellValue(src);
+            => new (src);
 
         public static CellValue Empty => default;
     }

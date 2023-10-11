@@ -18,7 +18,7 @@ partial class XedPatterns
         {
             ref readonly var pattern = ref src[i];
             ref readonly var body = ref pattern.Body;
-            ref readonly var fields = ref body.Cells;
+            ref readonly var fields = ref body;
             for(var k=z8; k<fields.Count; k++)
                 dst.Add(fieldrow(pattern, fields[k], k));
         }

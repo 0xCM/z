@@ -9,14 +9,14 @@ using static XedModels;
 partial class XedRules
 {
     [StructLayout(LayoutKind.Sequential,Pack=1)]
-    public readonly record struct FieldUsage : IArrow<RuleSig,RuleField>, IComparable<FieldUsage>
+    public readonly record struct FieldUsage : IArrow<RuleIdentity,RuleField>, IComparable<FieldUsage>
     {
         [MethodImpl(Inline)]
-        public static FieldUsage left(RuleSig rule, RuleField field)
+        public static FieldUsage left(RuleIdentity rule, RuleField field)
             => new (rule.IsEncTable ? UsageKind.EncLeft : UsageKind.DecLeft, rule.TableName, field);
 
         [MethodImpl(Inline)]
-        public static FieldUsage right(RuleSig rule, RuleField field)
+        public static FieldUsage right(RuleIdentity rule, RuleField field)
             => new (rule.IsEncTable ? UsageKind.EncRight : UsageKind.DecRight, rule.TableName, field);
 
         public readonly UsageKind Kind;
@@ -51,10 +51,10 @@ partial class XedRules
             get => (RuleTableKind)((byte)Kind & num2.MaxValue);
         }
 
-        public readonly RuleSig Rule
+        public readonly RuleIdentity Rule
         {
             [MethodImpl(Inline)]
-            get => new RuleSig(TableKind, RuleName);
+            get => new RuleIdentity(TableKind, RuleName);
         }
 
         public Hash32 Hash
@@ -67,10 +67,10 @@ partial class XedRules
         public bool Equals(FieldUsage src)
             => Rule == src.Rule && Field == src.Field;
 
-        RuleSig IArrow<RuleSig,RuleField>.Source
+        RuleIdentity IArrow<RuleIdentity,RuleField>.Source
             => Rule;
 
-        RuleField IArrow<RuleSig,RuleField>.Target
+        RuleField IArrow<RuleIdentity,RuleField>.Target
             => Field;
 
         public override int GetHashCode()

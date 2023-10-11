@@ -17,8 +17,6 @@ partial class XedZ
 
         public Index<InstBlockImport> Imports = sys.empty<InstBlockImport>();
 
-        public Index<InstBlockImport> Duplicates = sys.empty<InstBlockImport>();
-
         public InstBlockLines BlockLines = new();
 
         public LineMap<InstBlockLineSpec> LineMap = new();

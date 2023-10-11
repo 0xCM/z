@@ -44,30 +44,28 @@ partial class XedModels
         [MethodImpl(Inline)]
         public PatternSort(in InstPatternRecord src, bool ocfirst = false)
         {
-            ref readonly var fields = ref src.Body.Cells;
             InstClass = src.InstClass;
             OpCode = src.OpCode;
             Mode = src.Mode;
             Lock = src.Lock;
-            Mod = XedCells.mod(fields);
-            RexW = XedCells.rexw(fields);
+            Mod = XedCells.mod(src.Body);
+            RexW = XedCells.rexw(src.Body);
             Rep = RepIndicator.Empty;
-            Rep = XedCells.rep(fields);
+            Rep = XedCells.rep(src.Body);
             OpCodeFirst = ocfirst;
         }
 
         [MethodImpl(Inline)]
         public PatternSort(in InstPatternSpec src, bool ocfirst = false)
         {
-            ref readonly var fields = ref src.Body.Cells;
             InstClass = src.InstClass;
             OpCode = src.OpCode;
             Mode = src.Mode;
-            Lock = XedCells.@lock(fields);
-            Mod = XedCells.mod(fields);
-            RexW = XedCells.rexw(fields);
+            Lock = XedCells.@lock(src.Body);
+            Mod = XedCells.mod(src.Body);
+            RexW = XedCells.rexw(src.Body);
             Rep = RepIndicator.Empty;
-            Rep = XedCells.rep(fields);
+            Rep = XedCells.rep(src.Body);
             OpCodeFirst = ocfirst;
         }
 

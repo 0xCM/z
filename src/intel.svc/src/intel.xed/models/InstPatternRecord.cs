@@ -39,7 +39,7 @@ partial class XedModels
         public XedInstForm InstForm;
 
         [Render(1)]
-        public InstPatternBody Body;
+        public InstCells Body;
 
         public int CompareTo(InstPatternRecord src)
             => Sort().CompareTo(src.Sort());

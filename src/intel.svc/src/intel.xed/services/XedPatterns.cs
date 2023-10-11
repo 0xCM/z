@@ -15,6 +15,17 @@ using static XedRules;
 
 public partial class XedPatterns : AppService<XedPatterns>
 {
+    public IEnumerable<Nonterminal> nonterminals(PatternOps src)
+    {
+        var storage = sys.alloc<byte>(32);
+        for(var i=0; i<src.Count; i++)
+        {
+            var op = src[i];
+            if(op.Nonterminal(out var nt))
+                yield return nt;
+        }
+    }
+
     public static AsmOpCodeClass occlass(XedVexClass src)
         => src switch {
             XedVexClass.VV1 =>AsmOpCodeClass.Vex,
@@ -91,7 +102,7 @@ public partial class XedPatterns : AppService<XedPatterns>
             ref readonly var ops = ref pattern.Ops;
             var count = (byte)ops.Count;
             for(var j=0; j<count; j++)
-                buffer.Add(XedPatterns.opdetail(pattern, count, ops[j]));
+                buffer.Add(opdetail(pattern, count, ops[j]));
         }
 
         return buffer.ToArray().Sort(new PatternOrder());
@@ -103,7 +114,7 @@ public partial class XedPatterns : AppService<XedPatterns>
         var info = opinfo(pattern.Mode,op);
         var wcode = info.WidthCode;
         var dst = InstOpDetail.Empty;
-        dst.Pattern = op.PatternId;
+        dst.Pattern = pattern.PatternId;
         Require.nonzero(pattern.InstClass.Kind);
         dst.InstClass = pattern.InstClass;
         dst.OpCode = pattern.OpCode;
@@ -154,7 +165,7 @@ public partial class XedPatterns : AppService<XedPatterns>
         if(result)
             dst = attrib.ToElementType();
         else
-            dst = XedModels.ElementType.Empty;
+            dst = ElementType.Empty;
 
         return result;
     }
@@ -293,7 +304,7 @@ public partial class XedPatterns : AppService<XedPatterns>
     [MethodImpl(Inline), Op]
     public static bool nonterm(in PatternOp src, out Nonterminal dst)
     {
-        var result = XedPatterns.first(src.Attribs, OpAttribKind.Nonterminal, out var attrib);
+        var result = first(src.Attribs, OpAttribKind.Nonterminal, out var attrib);
         if(result)
             dst = attrib.ToNonTerm();
         else

@@ -203,7 +203,7 @@ partial class XedRules
                 if(fk == 0)
                     Errors.Throw(AppMsg.ParseFailure.Format(nameof(FieldKind), left));
 
-                var result = XedParsers.parse(fk, right, out fv);
+                var result = XedFields.parse(fk, right, out fv);
                 if(!result)
                     Errors.Throw(AppMsg.ParseFailure.Format(nameof(CellExpr), src));
 

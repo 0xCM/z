@@ -86,7 +86,7 @@ public readonly struct XedRuleSpecs
 
     public static Index<TableCriteria> merge(Index<TableCriteria> src)
     {
-        var dst = dict<RuleSig,TableCriteria>(src.Count);
+        var dst = dict<RuleIdentity,TableCriteria>(src.Count);
         for(var i=0u; i<src.Count; i++)
         {
             ref readonly var table = ref src[i];
@@ -235,7 +235,7 @@ public readonly struct XedRuleSpecs
 
     public static TableSpecs tables(Index<TableCriteria> src)
     {
-        var dst = dict<RuleSig,TableSpec>();
+        var dst = dict<RuleIdentity,TableSpec>();
         var specs = alloc<TableSpec>(src.Count);
         var seq = z16;
         for(var i=z16; i<src.Count; i++)

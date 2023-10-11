@@ -38,7 +38,7 @@ partial class XedZ
         public XedInstForm Form;
         
         [Render(1)]
-        public InstPatternBody Pattern;
+        public InstCells Pattern;
 
         public override int GetHashCode()
             => (int)Seq;

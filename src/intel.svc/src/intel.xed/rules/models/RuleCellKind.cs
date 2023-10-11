@@ -3,43 +3,42 @@
 // Author : Chris Moore
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XedRules
 {
-    partial class XedRules
+    public enum RuleCellKind : byte
     {
-        public enum RuleCellKind : byte
-        {
-            Void = 0,
+        Void = 0,
 
-            BitVal,
+        BitVal,
 
-            IntVal,
+        IntVal,
 
-            HexVal,
+        HexVal,
 
-            BitLit,
+        BitLit,
 
-            HexLit,
+        HexLit,
 
-            SegVar,
+        SegVar,
 
-            FieldSeg,
+        FieldSeg,
 
-            Keyword,
+        Keyword,
 
-            NtCall,
+        NtCall,
 
-            Operator,
+        Operator,
 
-            InstSeg,
+        InstSeg,
 
-            NeqExpr,
+        NeqExpr,
 
-            EqExpr,
+        EqExpr,
 
-            NtExpr,
+        NtExpr,
 
-            WidthVar,
-        }
-   }
+        WidthVar,
+    }
 }

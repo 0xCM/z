@@ -10,7 +10,7 @@ using static sys;
 
 public class XedRuleDocRender
 {
-    static SectionHeader TableHeader(RuleSig sig)
+    static SectionHeader TableHeader(RuleIdentity sig)
         => new(3, sig.Format());
 
     public static XedRuleDocRender create(CellTables src)
@@ -24,7 +24,7 @@ public class XedRuleDocRender
         
     }
 
-    void Render(RuleSig sig, Index<RuleCell> src, ITextEmitter dst)
+    void Render(RuleIdentity sig, Index<RuleCell> src, ITextEmitter dst)
     {
         dst.AppendLine(TableHeader(sig));
         dst.AppendLine();

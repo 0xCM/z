@@ -55,9 +55,9 @@ partial class XedRules
 
         Index<RuleCell> _Cells;
 
-        Index<RuleSig> _Sigs;
+        Index<RuleIdentity> _Sigs;
 
-        Pairings<RuleSig,Index<RuleCell>> _TableCells;
+        Pairings<RuleIdentity,Index<RuleCell>> _TableCells;
 
         public CellTables(XedRuleCells src)
         {
@@ -124,9 +124,9 @@ partial class XedRules
         }
 
         /// <summary>
-        /// Specifies the <see cref='RuleSig'/> for each defined table
+        /// Specifies the <see cref='RuleIdentity'/> for each defined table
         /// </summary>
-        public ref readonly Index<RuleSig> Sigs
+        public ref readonly Index<RuleIdentity> Sigs
         {
             [MethodImpl(Inline)]
             get => ref _Sigs;
@@ -140,24 +140,24 @@ partial class XedRules
             => ref _Cells;
 
         /// <summary>
-        /// Returns <see cref='RuleCell'/> values in a <see cref='CellTable'/> paired with the identifying and index-defined <see cref='RuleSig'>
+        /// Returns <see cref='RuleCell'/> values in a <see cref='CellTable'/> paired with the identifying and index-defined <see cref='RuleIdentity'>
         /// </summary>
         [MethodImpl(Inline)]
-        public ref readonly Pairings<RuleSig,Index<RuleCell>> TableCells()
+        public ref readonly Pairings<RuleIdentity,Index<RuleCell>> TableCells()
             => ref _TableCells;
 
         /// <summary>
-        /// Returns <see cref='RuleCell'/> values in an index-identified <see cref='CellTable'/> paired with the identifying and index-defined <see cref='RuleSig'>
+        /// Returns <see cref='RuleCell'/> values in an index-identified <see cref='CellTable'/> paired with the identifying and index-defined <see cref='RuleIdentity'>
         /// </summary>
         [MethodImpl(Inline)]
-        public ref readonly Paired<RuleSig,Index<RuleCell>> TableCells(int i)
+        public ref readonly Paired<RuleIdentity,Index<RuleCell>> TableCells(int i)
             => ref _TableCells[i];
 
         /// <summary>
-        /// Returns <see cref='RuleCell'/> values in an index-identified <see cref='CellTable'/> paired with the identifying and index-defined <see cref='RuleSig'>
+        /// Returns <see cref='RuleCell'/> values in an index-identified <see cref='CellTable'/> paired with the identifying and index-defined <see cref='RuleIdentity'>
         /// </summary>
         [MethodImpl(Inline)]
-        public ref readonly Paired<RuleSig,Index<RuleCell>> TableCells(uint i)
+        public ref readonly Paired<RuleIdentity,Index<RuleCell>> TableCells(uint i)
             => ref _TableCells[i];
 
         /// <summary>
@@ -165,7 +165,7 @@ partial class XedRules
         /// </summary>
         /// <param name="table">The table index</param>
         [MethodImpl(Inline)]
-        public ref readonly RuleSig Sig(int table)
+        public ref readonly RuleIdentity Sig(int table)
             => ref _Tables[table].Sig;
 
         /// <summary>
@@ -173,7 +173,7 @@ partial class XedRules
         /// </summary>
         /// <param name="table">The table index</param>
         [MethodImpl(Inline)]
-        public ref readonly RuleSig Sig(uint table)
+        public ref readonly RuleIdentity Sig(uint table)
             => ref _Tables[table].Sig;
 
         /// <summary>

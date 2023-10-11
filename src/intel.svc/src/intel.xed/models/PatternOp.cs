@@ -14,8 +14,6 @@ partial class XedModels
     [StructLayout(LayoutKind.Sequential,Pack=1)]
     public struct PatternOp : IComparable<PatternOp>
     {
-        public uint PatternId;
-
         public byte Index;
 
         public OpName Name;
@@ -28,7 +26,6 @@ partial class XedModels
 
         public PatternOp()
         {
-            PatternId = 0u;
             Index = z8;
             Name = OpName.Empty;
             Kind = 0;
@@ -100,12 +97,7 @@ partial class XedModels
 
         [MethodImpl(Inline)]
         public int CompareTo(PatternOp src)
-        {
-            var result = PatternId.CompareTo(src.PatternId);
-            if(result == 0)
-                result = Index.CompareTo(src.Index);
-            return result;
-        }
+            => Index.CompareTo(src.Index);
 
         public static PatternOp Empty => new();
     }

@@ -11,7 +11,7 @@ using static XedRules;
 partial struct XedCells
 {
     [MethodImpl(Inline), Op]
-    public static ChipCode chip(in XedCells src)
+    public static ChipCode chip(in InstCells src)
     {
         var dst = ChipCode.INVALID;
         for(var i=0; i<src.Count; i++)

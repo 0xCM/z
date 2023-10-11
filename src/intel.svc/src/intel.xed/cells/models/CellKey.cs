@@ -27,7 +27,7 @@ partial class XedRules
 
         public readonly RuleCellType CellType;
 
-        public readonly RuleSig Rule;
+        public readonly RuleIdentity Rule;
 
         public readonly KeywordKind Keyword;
 

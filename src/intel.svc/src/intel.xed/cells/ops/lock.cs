@@ -10,7 +10,7 @@ using static XedModels;
 partial struct XedCells
 {
     [MethodImpl(Inline), Op]
-    public static LockIndicator @lock(in XedCells src)
+    public static LockIndicator @lock(in InstCells src)
         => new (lockable(src), locked(src));
 }
 

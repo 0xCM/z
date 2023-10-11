@@ -5,10 +5,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static XedModels;
+
 partial struct XedCells
 {
     [MethodImpl(Inline), Op]
-    public static XedCells sort(in XedCells src)
+    public static InstCells sort(in InstCells src)
     {
         var data = src.Data;
         var count = (byte)data.Count;
@@ -34,7 +36,7 @@ partial struct XedCells
                 field = field.WithPosition(lIx++);
         }
 
-        return new XedCells(data.Sort(), lCount);
+        return new (data.Sort(), lCount);
     }
 }
 

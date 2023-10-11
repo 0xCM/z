@@ -175,7 +175,7 @@ public class XedMachines : IDisposable
 
         }
 
-        void Load(in XedCells src)
+        void Load(in InstCells src)
         {
             for(var i=z8; i<src.Count; i++)
             {
@@ -235,13 +235,13 @@ public class XedMachines : IDisposable
             Pattern = src;
         }
 
-        public ref readonly XedCells Layout
+        public ref readonly InstCells Layout
         {
             [MethodImpl(Inline)]
             get => ref Pattern.Layout;
         }
 
-        public ref readonly XedCells Expr
+        public ref readonly InstCells Expr
         {
             [MethodImpl(Inline)]
             get => ref Pattern.Layout;
@@ -313,7 +313,7 @@ public class XedMachines : IDisposable
         /// <summary>
         /// Specifies the expression-related <see cref='R.XedCells'/>  of the current <see cref='P'/>
         /// </summary>
-        public ref readonly XedCells InstExpr
+        public ref readonly InstCells InstExpr
         {
             [MethodImpl(Inline)]
             get => ref Pattern.Expr;
@@ -367,7 +367,7 @@ public class XedMachines : IDisposable
         /// <summary>
         /// Specifies layout <see cref='R.XedCells'/> associated with the current <see cref='P'/>
         /// </summary>
-        public ref readonly XedCells LayoutFields
+        public ref readonly InstCells LayoutFields
         {
             [MethodImpl(Inline)]
             get => ref Pattern.Layout;

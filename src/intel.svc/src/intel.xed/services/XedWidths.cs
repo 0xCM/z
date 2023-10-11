@@ -22,6 +22,9 @@ using static sys;
 
 public class XedWidths
 {
+    public static bool detail(WidthCode code, out OpWidthDetail dst)
+        => XedTables.Widths.Detail(code, out dst);
+
     [Op]
     public static NativeClass nclass(WidthCode src)
     {
@@ -294,11 +297,12 @@ public class XedWidths
         return result;
     }        
 
+
     [MethodImpl(Inline)]
     public static OpWidthDetail describe(WidthCode code)
     {
         var dst = OpWidthDetail.Empty;
-        XedImport.detail(code, out dst);
+        detail(code, out dst);
         return dst;
     }
 
@@ -307,7 +311,7 @@ public class XedWidths
         var dst = OpWidth.Empty;
         if(code == 0)
             return dst;
-        else if(XedImport.detail(code, out var info))
+        else if(detail(code, out var info))
         {
             switch(mode.Class)
             {

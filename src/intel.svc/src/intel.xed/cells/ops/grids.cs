@@ -11,7 +11,7 @@ using static sys;
 partial struct XedCells
 {
     [MethodImpl(Inline), Op]
-    public static RuleGrid grid(RuleSig sig, ushort rows, byte cols, GridCell[] cells)
+    public static RuleGrid grid(RuleIdentity sig, ushort rows, byte cols, GridCell[] cells)
         => new (sig, rows, cols, cells);
 
     public static RuleGrids grids(CellTables src)

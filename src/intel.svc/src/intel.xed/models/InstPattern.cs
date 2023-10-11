@@ -37,34 +37,6 @@ partial class XedModels
             return dst;
         }
 
-        public static Index<InstPattern> patterns(Index<InstDef> defs)
-        {
-            var count = 0u;
-            iter(defs, def => count += def.PatternSpecs.Count);
-            var dst = alloc<InstPattern>(count);
-            var k=0u;
-            for(var i=0; i<defs.Count; i++)
-            {
-                ref readonly var def = ref defs[i];
-                var specs = def.PatternSpecs;
-                for(var j=0; j<specs.Count; j++, k++)
-                {
-                    ref var spec = ref specs[j];
-                    var fields = XedCells.sort(spec.Body.Cells);
-                    spec.Body = new(fields);
-                    seek(dst,k) = new InstPattern(spec, XedCells.usage(fields));
-                }
-            }
-            return dst.Sort();
-        }
-
-        // static InstPattern load(ref InstPatternSpec spec)
-        // {
-        //     var fields = XedCells.sort(spec.Body.Cells);
-        //     spec.Body = new (fields);
-        //     return new InstPattern(spec, XedCells.usage(fields));
-        // }
-
         public readonly InstPatternSpec Spec;
 
         public readonly Index<OpName> OpNames;
@@ -75,15 +47,15 @@ partial class XedModels
 
         public readonly Index<InstOpDetail> OpDetails;
 
-        public readonly XedCells Layout;
+        public readonly InstCells Layout;
 
-        public readonly XedCells Expr;
+        public readonly InstCells Expr;
 
         public readonly bit Scalable;
 
         public InstPattern(in InstPatternSpec spec, FieldSet deps)
         {
-            ref readonly var fields = ref spec.Body.Cells;
+            ref readonly var fields = ref spec.Body;
             var layout = fields.Layout;
             var expr = fields.Expr;
             Spec = spec;
@@ -92,20 +64,20 @@ partial class XedModels
             Lock = XedCells.@lock(fields);
             OpDetails = XedPatterns.opdetails(this);
             Scalable = OpDetails.Any(x => x.Scalable);
-            Layout = new XedCells(layout.ToArray(), (byte)layout.Length);
-            Expr  = new XedCells(expr.ToArray(), 0);
+            Layout = new (layout.ToArray(), (byte)layout.Length);
+            Expr  = new (expr.ToArray(), 0);
         }
 
-        public ref readonly InstPatternBody Body
+        public ref readonly InstCells Body
         {
             [MethodImpl(Inline)]
             get => ref Spec.Body;
         }
 
-        public ref readonly XedCells Cells
+        public ref readonly InstCells Cells
         {
             [MethodImpl(Inline)]
-            get => ref Body.Cells;
+            get => ref Body;
         }
 
         public ref readonly MachineMode Mode

@@ -44,7 +44,7 @@ partial class XedRules
         public bit Homogenous;
 
         [MethodImpl(Inline)]
-        public XedTableStats(uint seq,RuleSig rule, DataSize tsz, DataSize mrsz, ushort rows, ushort cells, byte maxcc)
+        public XedTableStats(uint seq,RuleIdentity rule, DataSize tsz, DataSize mrsz, ushort rows, ushort cells, byte maxcc)
         {
             Seq = seq;
             Rule = rule.TableName;
@@ -58,10 +58,10 @@ partial class XedRules
             Homogenous = TableSize == UniformSize;
         }
 
-        public RuleSig Sig
+        public RuleIdentity Sig
         {
             [MethodImpl(Inline)]
-            get => new RuleSig(Kind,Rule);
+            get => new RuleIdentity(Kind,Rule);
         }
 
         public int CompareTo(XedTableStats src)

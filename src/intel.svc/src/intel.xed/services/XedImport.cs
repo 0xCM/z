@@ -58,8 +58,8 @@ public partial class XedImport : WfSvc<XedImport>
                 Emit(inst);
             },
             () => {
-                EmitOpWidths(Widths.Details);
-                EmitPointerWidths(Widths.Pointers.Where(x => x.Kind != 0).Map(x => x.ToRecord()));
+                EmitOpWidths(XedTables.Widths.Details);
+                EmitPointerWidths(XedTables.Widths.Pointers.Where(x => x.Kind != 0).Map(x => x.ToRecord()));
             }
         );
 
@@ -141,9 +141,9 @@ public partial class XedImport : WfSvc<XedImport>
             for(var j=0; j<specs.Count; j++, k++)
             {
                 ref var spec = ref specs[j];
-                var fields = XedCells.sort(spec.Body.Cells);
-                spec.Body = new(fields);
-                seek(dst,k) = new InstPattern(spec, XedCells.usage(fields));
+                var cells = XedCells.sort(spec.Body);
+                spec.Body = cells;
+                seek(dst,k) = new InstPattern(spec, XedCells.usage(cells));
             }
         }
         return dst.Sort();
@@ -269,7 +269,7 @@ public partial class XedImport : WfSvc<XedImport>
         emitter.AppendLine(string.Format("{0,-5} | {1,-5} | {2,-48} | {3}", "Seq", "Lix", "Key", "Value"));
         ref readonly var src = ref tables.Specs();
         var sigs = src.Keys;
-        var dst = dict<RuleSig,Index<RuleCell>>();
+        var dst = dict<RuleIdentity,Index<RuleCell>>();
         for(var i=z16; i<sigs.Length; i++)
         {
             ref readonly var sig = ref skip(sigs,i);
@@ -442,21 +442,13 @@ public partial class XedImport : WfSvc<XedImport>
         return new XedRuleTables(dst, XedRuleSpecs.tables(dst));
     }
 
-    static XedWidths _Widths;
-
     static XedImport Instance;
 
     static XedImport()
     {
         Instance = new();
-        _Widths = XedWidths.FromSource(XedPaths.DocSource(XedDocKind.Widths));
     }
     
-    public static bool detail(WidthCode code, out OpWidthDetail dst)
-        => _Widths.Detail(code, out dst);
-
-    public static ref readonly XedWidths Widths => ref _Widths;
-
     ChipInstructions CalcChipInstructions(ReadOnlySeq<FormImport> forms, ChipMap map)
     {
         var codes = Symbols.index<ChipCode>();

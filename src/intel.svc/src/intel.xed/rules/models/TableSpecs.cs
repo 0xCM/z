@@ -7,13 +7,13 @@ namespace Z0
 {
     partial class XedRules
     {
-        public class TableSpecs : SortedLookup<RuleSig,TableSpec>
+        public class TableSpecs : SortedLookup<RuleIdentity,TableSpec>
         {
             public readonly uint TableCount;
 
             public readonly uint RowCount;
 
-            public TableSpecs(Dictionary<RuleSig,TableSpec> src)
+            public TableSpecs(Dictionary<RuleIdentity,TableSpec> src)
                 : base(src)
             {
                 TableCount = (uint)src.Count;
@@ -21,9 +21,9 @@ namespace Z0
             }
 
             public new static TableSpecs Empty
-                => new TableSpecs(sys.dict<RuleSig,TableSpec>());
+                => new TableSpecs(sys.dict<RuleIdentity,TableSpec>());
 
-            public static implicit operator TableSpecs(Dictionary<RuleSig,TableSpec> src)
+            public static implicit operator TableSpecs(Dictionary<RuleIdentity,TableSpec> src)
                 => new TableSpecs(src);
         }
     }

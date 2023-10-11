@@ -415,7 +415,7 @@ public class XedRender
     public static string format(in InstOpDetail src)
     {
         var dst = text.buffer();
-        dst.Append(XedRender.format(src.Name));
+        dst.Append(format(src.Name));
         if(src.Attribs.IsNonEmpty)
             dst.Append(Chars.Colon);
         dst.Append(format(src.Attribs));
@@ -433,7 +433,7 @@ public class XedRender
         else
         {
             var dst = text.buffer();
-            dst.Append(XedRender.format(src.Name));
+            dst.Append(format(src.Name));
             if(src.Attribs.IsNonEmpty)
                 dst.Append(Chars.Colon);
             dst.Append(format(src.Attribs));
@@ -498,10 +498,10 @@ public class XedRender
             return string.Format("{0}{1}{2}", format(src.Field), format(src.Operator), format(src.Value));
     }
 
-    public static string format(in InstPatternBody src)
+    public static string format(in InstCells src)
     {
         var dst = text.buffer();
-        render(src.Storage, dst);
+        render(src.Values, dst);
         return dst.Emit();
     }
 

@@ -11,11 +11,11 @@ using static XedModels;
 partial class XedPatterns
 {
     [Op]
-    public static bool mode(in InstPatternBody src, out MachineMode dst)
+    public static bool mode(in InstCells src, out MachineMode dst)
     {
         dst = MachineMode.Default;
         var found = false;
-        for(var i=0; i<src.CellCount; i++)
+        for(var i=0; i<src.Count; i++)
         {
             ref readonly var cell = ref src[i];
             if(cell.Field == FieldKind.MODE)

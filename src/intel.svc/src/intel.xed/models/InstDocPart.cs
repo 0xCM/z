@@ -53,13 +53,13 @@ partial class XedModels
             get => ref Inst.PatternId;
         }
 
-        public ref readonly XedCells Layout
+        public ref readonly InstCells Layout
         {
             [MethodImpl(Inline)]
             get => ref Inst.Layout;
         }
 
-        public ref readonly XedCells Expr
+        public ref readonly InstCells Expr
         {
             [MethodImpl(Inline)]
             get => ref Inst.Expr;

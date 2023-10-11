@@ -12,7 +12,7 @@ using static sys;
 partial struct XedCells
 {
     [MethodImpl(Inline), Op]
-    public static RepIndicator @rep(in XedCells src)
+    public static RepIndicator @rep(in InstCells src)
     {
         var dst = RepIndicator.Empty;
         for(var i=0; i<src.Count; i++)
@@ -25,6 +25,6 @@ partial struct XedCells
             }
         }
         return dst;
-    }
+    }    
 }
 

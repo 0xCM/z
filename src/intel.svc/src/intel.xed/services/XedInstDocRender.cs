@@ -32,7 +32,7 @@ public class XedInstDocRender
     static SectionHeader ClassHeader(in InstDocPart part)
         => new(3, part.Classifier.Format());
 
-    AbsoluteLink Link(RuleSig key)
+    AbsoluteLink Link(RuleIdentity key)
         => Markdown.link(key.TableName.ToString() + "()", XedPaths.CheckedRulePage(key));
 
     static void RenderSigHeader(in InstDocPart part, ITextBuffer dst)
@@ -119,4 +119,3 @@ public class XedInstDocRender
         return dst.Emit();
     }
 }
-

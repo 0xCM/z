@@ -31,7 +31,7 @@ partial class XedModels
             get => ref Pattern.InstForm;
         }
 
-        public ref readonly XedCells Fields
+        public ref readonly InstCells Fields
         {
             [MethodImpl(Inline)]
             get => ref Pattern.Cells;

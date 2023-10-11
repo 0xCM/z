@@ -26,7 +26,7 @@ partial class XedRules
         }
 
         [MethodImpl(Inline)]
-        public RuleCaller(RuleSig src)
+        public RuleCaller(RuleIdentity src)
             => this = Bitfields.join((ushort)Kind.Rule, (ushort)src);
 
         [MethodImpl(Inline)]
@@ -37,7 +37,7 @@ partial class XedRules
         {
             var dst = EmptyString;
             if(Sort == Kind.Rule)
-                dst = ((RuleSig)this).Format();
+                dst = ((RuleIdentity)this).Format();
             else
                 dst = string.Format("Inst_{0:D5}", (ushort)Value);
             return dst;
@@ -62,8 +62,8 @@ partial class XedRules
         }
 
         [MethodImpl(Inline)]
-        public RuleSig ToRule()
-            => @as<ushort,RuleSig>(Value);
+        public RuleIdentity ToRule()
+            => @as<ushort,RuleIdentity>(Value);
 
         public override string ToString()
             => Format();
@@ -81,7 +81,7 @@ partial class XedRules
             if(result == 0)
             {
                 if(Sort == Kind.Rule)
-                    result = ((RuleSig)this).CompareTo((RuleSig)src);
+                    result = ((RuleIdentity)this).CompareTo((RuleIdentity)src);
                 else
                     result = Value.CompareTo(src.Value);
             }
@@ -93,7 +93,7 @@ partial class XedRules
             => @as<uint,RuleCaller>(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator RuleCaller(RuleSig src)
+        public static implicit operator RuleCaller(RuleIdentity src)
             => new (src);
 
         [MethodImpl(Inline)]
@@ -101,8 +101,8 @@ partial class XedRules
             => new (src);
 
         [MethodImpl(Inline)]
-        public static explicit operator RuleSig(RuleCaller src)
-            => (RuleSig)src.Value;
+        public static explicit operator RuleIdentity(RuleCaller src)
+            => (RuleIdentity)src.Value;
 
         [MethodImpl(Inline)]
         public static explicit operator uint(RuleCaller src)

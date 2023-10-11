@@ -129,7 +129,7 @@ partial class XedRules
             get => Rule.TableName;
         }
 
-        public RuleSig Rule
+        public RuleIdentity Rule
         {
             [MethodImpl(Inline)]
             get => Key.Rule;

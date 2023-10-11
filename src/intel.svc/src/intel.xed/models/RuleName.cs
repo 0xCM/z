@@ -707,7 +707,5 @@ partial class XedModels
         XSAVE,
 
         NELEM_QUARTER,
-
-
     }
 }

@@ -65,7 +65,7 @@ partial class XedModels
         public string Format()
         {
             var uri = _FileUri.Empty;
-            var sig = RuleSig.Empty;
+            var sig = RuleIdentity.Empty;
             var detail = EmptyString;
             var bw = BitWidth.ToString();
             if(IsRule)

@@ -70,7 +70,7 @@ public class XedPaths
     public static FilePath DbTarget(string name, FileKind kind)
         => DbTargets().Root + FS.file(string.Format("xed.db.{0}",name), kind.Ext());
 
-    public static AbsoluteLink MarkdownLink(RuleSig sig)
+    public static AbsoluteLink MarkdownLink(RuleIdentity sig)
         => Markdown.link(string.Format("{0}::{1}()", sig.TableKind, sig.TableName), RuleTable(sig));
 
     public static RuleTableKind tablekind(FileName src)
@@ -101,35 +101,35 @@ public class XedPaths
     public static FilePath DisasmOpsPath(FilePath src)
         => src.FolderPath + FS.file(string.Format("{0}.ops", src.FileName.WithoutExtension.Format()), FS.Txt);
 
-    public static FileUri RuleTable(RuleSig sig)
+    public static FileUri RuleTable(RuleIdentity sig)
         => RuleTables().Path(FS.file(sig.Format(), FS.Csv));
 
-    public static FileUri CheckedRulePage(RuleSig sig)
+    public static FileUri CheckedRulePage(RuleIdentity sig)
     {
         var uri = RuleTable(sig);
         return uri.Exists ? uri : FileUri.Empty;
     }
 
-    public static FileUri CheckedTableDef(RuleName rule, bit decfirst, out RuleSig sig)
+    public static FileUri CheckedTableDef(RuleName rule, bit decfirst, out RuleIdentity sig)
     {
         var dst = FileUri.Empty;
         if(decfirst)
         {
-            sig = new RuleSig(RuleTableKind.DEC, rule);
+            sig = new RuleIdentity(RuleTableKind.DEC, rule);
             dst = CheckedRulePage(sig);
             if(dst.IsEmpty)
             {
-                sig = new RuleSig(RuleTableKind.ENC,rule);
+                sig = new RuleIdentity(RuleTableKind.ENC,rule);
                 dst = CheckedRulePage(sig);
             }
         }
         else
         {
-            sig = new RuleSig(RuleTableKind.ENC,rule);
+            sig = new RuleIdentity(RuleTableKind.ENC,rule);
             dst = CheckedRulePage(sig);
             if(dst.IsEmpty)
             {
-                sig = new RuleSig(RuleTableKind.DEC,rule);
+                sig = new RuleIdentity(RuleTableKind.DEC,rule);
                 dst = CheckedRulePage(sig);
             }
         }

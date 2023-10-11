@@ -29,7 +29,7 @@ partial class XedRules
         public readonly string Body;
 
         [MethodImpl(Inline)]
-        public RuleExpr(ushort seq, RuleSig sig, byte row, string body)
+        public RuleExpr(ushort seq, RuleIdentity sig, byte row, string body)
         {
             Seq = seq;
             Name = sig.TableName;
@@ -38,7 +38,7 @@ partial class XedRules
             Body = body;
         }
 
-        public RuleSig Sig
+        public RuleIdentity Sig
         {
             [MethodImpl(Inline)]
             get => (Kind,Name);

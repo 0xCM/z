@@ -7,11 +7,12 @@ namespace Z0;
 
 using static MachineModes;
 using static XedRules;
+using static XedModels;
 
 partial struct XedCells
 {
     [MethodImpl(Inline), Op]
-    public static MachineMode mode(in XedCells src)
+    public static MachineMode mode(in InstCells src)
     {
         var result = MachineModeClass.Default;
         for(var i=0; i<src.Count; i++)
@@ -21,5 +22,5 @@ partial struct XedCells
                 result = f.ToCellExpr().Value;
         }
         return result;
-    }
+    }    
 }

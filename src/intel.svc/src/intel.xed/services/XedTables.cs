@@ -28,8 +28,11 @@ public class XedTables
 
     static readonly Index<AsmBroadcast> _BroadcastDefs = XedTables.broadcasts(Symbols.kinds<BroadcastKind>());
 
+    static XedWidths _Widths = XedWidths.FromSource(XedPaths.DocSource(XedDocKind.Widths));
+
     public static ReadOnlySpan<OpName> OpNames => _OpNames.View;
 
+    public static ref readonly XedWidths Widths => ref _Widths;
 
     public static B DF32
     {

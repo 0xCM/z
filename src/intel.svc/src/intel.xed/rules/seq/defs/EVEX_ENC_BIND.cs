@@ -22,6 +22,10 @@ partial class XedRuleSeq
         EVEX_UPP_ENC_BIND
         EVEX_LL_ENC_BIND
         AVX512_EVEX_BYTE3_ENC_BIND
+
+         # R,X,B R map(mmm) (byte 1)
+         # W, vvvv, U, pp  (byte 2)
+         # z, LL/RC, b   V', aaa ( byte 3)
     */
     public static SeqDef EVEX_ENC_BIND() => bind(nameof(EVEX_ENC_BIND), new RuleName[]{
         EVEX_62_REXR_ENC,

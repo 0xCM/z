@@ -32,7 +32,7 @@ partial class XedModels
 
         public TextBlock RawBody;
 
-        public InstPatternBody Body;
+        public InstCells Body;
 
         public PatternOps Ops;
 

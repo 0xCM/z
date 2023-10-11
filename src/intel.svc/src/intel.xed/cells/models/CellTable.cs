@@ -11,7 +11,7 @@ partial class XedRules
 {
     public readonly struct CellTable : IComparable<CellTable>
     {
-        public readonly RuleSig Sig;
+        public readonly RuleIdentity Sig;
 
         public readonly ushort TableIndex;
 
@@ -22,7 +22,7 @@ partial class XedRules
         public readonly uint RowCount;
 
         [MethodImpl(Inline)]
-        public CellTable(RuleSig sig, ushort index, CellRow[] src)
+        public CellTable(RuleIdentity sig, ushort index, CellRow[] src)
         {
             Sig = sig;
             TableIndex = index;
@@ -81,6 +81,6 @@ partial class XedRules
             return result;
         }
 
-        public static CellTable Empty => new CellTable(RuleSig.Empty, 0, sys.empty<CellRow>());
+        public static CellTable Empty => new CellTable(RuleIdentity.Empty, 0, sys.empty<CellRow>());
     }
 }

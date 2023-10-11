@@ -11,10 +11,10 @@ partial class XedRules
     {
         public readonly RuleCaller Source;
 
-        public readonly RuleSig Target;
+        public readonly RuleIdentity Target;
 
         [MethodImpl(Inline)]
-        public NontermCall(RuleSig src, RuleSig dst)
+        public NontermCall(RuleIdentity src, RuleIdentity dst)
         {
             Source = src;
             Target = dst;
@@ -35,11 +35,11 @@ partial class XedRules
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator NontermCall<RuleSig>(NontermCall src)
-            => new NontermCall<RuleSig>(src.Source.ToRule(), src.Target);
+        public static implicit operator NontermCall<RuleIdentity>(NontermCall src)
+            => new NontermCall<RuleIdentity>(src.Source.ToRule(), src.Target);
 
         [MethodImpl(Inline)]
-        public static implicit operator NontermCall(NontermCall<RuleSig> src)
+        public static implicit operator NontermCall(NontermCall<RuleIdentity> src)
             => new NontermCall(src.Source, src.Target);
     }
 }

@@ -11,7 +11,7 @@ partial class XedRules
     [StructLayout(LayoutKind.Sequential,Pack=1)]
     public readonly struct RuleGrid
     {
-        public readonly RuleSig Rule;
+        public readonly RuleIdentity Rule;
 
         public readonly ushort RowCount;
 
@@ -24,7 +24,7 @@ partial class XedRules
         public readonly _FileUri TablePath;
 
         [MethodImpl(Inline)]
-        public RuleGrid(RuleSig sig, ushort rows, byte cols, Index<GridCell> cells)
+        public RuleGrid(RuleIdentity sig, ushort rows, byte cols, Index<GridCell> cells)
         {
             Rule = sig;
             RowCount = rows;

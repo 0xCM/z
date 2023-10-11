@@ -7,7 +7,6 @@ namespace Z0;
 
 using static sys;
 using static XedModels;
-using static XedPatterns;
 
 using P = XedModels.InstPartKind;
 
@@ -123,10 +122,10 @@ public struct XedInstDefParser
                                     spec.Isa = isa;
                                     InstPatternSpec.FixIsa(ref spec);
                                     spec.RawBody = rawbody;
-                                    XedInstParser.parse(rawbody, out spec.Body);
-                                    spec.Mode = XedCells.mode(spec.Body.Cells);
-                                    PatternOpParser.parse(spec.Seq, opexpr, out spec.Ops);
-                                    spec.OpCode = XedCells.opcode(spec.Body.Cells);
+                                    XedCells.parse(rawbody, out spec.Body);
+                                    spec.Mode = XedCells.mode(spec.Body);
+                                    XedPatterns.parse(spec.Seq, opexpr, out spec.Ops);
+                                    spec.OpCode = XedCells.opcode(spec.Body);
                                     specs.Add(spec);
                                 }
                                 break;
@@ -157,9 +156,7 @@ public struct XedInstDefParser
                 ref var spec = ref specs[j];
                 forms.TryGetValue(spec.Seq, out spec.InstForm);
                 spec.Seq = pid;
-                spec.Ops = new (pid, spec.Ops);
-                for(var k=0; k<spec.Ops.Count; k++)
-                    spec.Ops[k].PatternId = pid;
+                spec.Ops = new (spec.Ops);
             }
         }
 

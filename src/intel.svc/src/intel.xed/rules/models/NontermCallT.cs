@@ -7,15 +7,15 @@ namespace Z0;
 
 partial class XedRules
 {
-    public readonly record struct NontermCall<T> : IArrow<T,RuleSig>, IComparable<NontermCall<T>>
+    public readonly record struct NontermCall<T> : IArrow<T,RuleIdentity>, IComparable<NontermCall<T>>
         where T : unmanaged, IComparable<T>
     {
         public readonly T Source;
 
-        public readonly RuleSig Target;
+        public readonly RuleIdentity Target;
 
         [MethodImpl(Inline)]
-        public NontermCall(T src, RuleSig dst)
+        public NontermCall(T src, RuleIdentity dst)
         {
             Source = src;
             Target = dst;
@@ -31,16 +31,16 @@ partial class XedRules
 
         public string Format()
             => string.Format("{0} -> {1}",
-                (Source is RuleSig s ? s.TableName.ToString() : Source.ToString()) ,
+                (Source is RuleIdentity s ? s.TableName.ToString() : Source.ToString()) ,
                 Target.TableName);
 
         public override string ToString()
             => Format();
 
-        T IArrow<T,RuleSig>.Source
+        T IArrow<T,RuleIdentity>.Source
             => Source;
 
-        RuleSig IArrow<T,RuleSig>.Target
+        RuleIdentity IArrow<T,RuleIdentity>.Target
             => Target;
     }
 }

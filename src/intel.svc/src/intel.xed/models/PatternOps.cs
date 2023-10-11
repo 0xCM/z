@@ -5,22 +5,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static sys;
-using static XedRules;
-
 partial class XedModels
 {
-    public readonly struct PatternOps : IComparable<PatternOps>
+    public readonly struct PatternOps
     {
-        public readonly uint PatternId;
-
-        readonly Index<PatternOp> Data;
+        readonly Seq<PatternOp> Data;
 
         [MethodImpl(Inline)]
-        public PatternOps(uint pattern, PatternOp[] src)
+        public PatternOps(PatternOp[] src)
         {
             Data = src;
-            PatternId = pattern;
         }
 
         public bool IsEmpty
@@ -33,12 +27,6 @@ partial class XedModels
         {
             [MethodImpl(Inline)]
             get => Data.IsNonEmpty;
-        }
-
-        public PatternOp[] Storage
-        {
-            [MethodImpl(Inline)]
-            get => Data;
         }
 
         public uint Count
@@ -62,22 +50,23 @@ partial class XedModels
         public Index<OpName> Names
             => Data.Select(x => x.Name);
 
-        public byte Nonterminals(out Span<Nonterminal> dst)
+        public string Format()
         {
-            var storage = sys.span<byte>(32);
-            dst = sys.recover<Nonterminal>(storage);
-            var j=z8;
+            var dst = text.emitter();
+            dst.Append(Chars.LParen);
             for(var i=0; i<Count; i++)
             {
-                ref readonly var op = ref this[i];
-                if(op.Nonterminal(out var nt))
-                    seek(dst,j++) = nt;
+                if(i != 0)
+                    dst.Append(", ");
+                
+                dst.Append(this[i]);
             }
-            return j;
+            dst.Append(Chars.RParen);
+            return dst.Emit();
         }
 
-        public int CompareTo(PatternOps src)
-            => PatternId.CompareTo(src.PatternId);
+        public override string ToString()
+            => Format();
 
         [MethodImpl(Inline)]
         public static implicit operator PatternOp[](PatternOps src)
@@ -87,6 +76,10 @@ partial class XedModels
         public static implicit operator Index<PatternOp>(PatternOps src)
             => src.Data;
 
-        public static PatternOps Empty => new(0u,sys.empty<PatternOp>());
+        [MethodImpl(Inline)]
+        public static implicit operator PatternOps(PatternOp[] src)
+            => new(src);
+
+        public static PatternOps Empty => new(sys.empty<PatternOp>());
     }
 }

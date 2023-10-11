@@ -5,14 +5,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static sys;
-using static XedParsers;
-using static XedModels;
 using static XedRules;
+using static XedModels;
+using static XedParsers;
+using static sys;
 
-public readonly struct XedInstParser
-{
-    public static bool parse(ReadOnlySpan<char> src, out InstPatternBody dst)
+partial struct XedCells
+{    
+    public static bool parse(ReadOnlySpan<char> src, out InstCells dst)
         => inner(RuleMacros.expand(normalize(src)), out dst);
 
     static string normalize(ReadOnlySpan<char> body)
@@ -35,23 +35,23 @@ public readonly struct XedInstParser
         return buffer.Emit();
     }
 
-    static bool inner(string src, out InstPatternBody dst)
+    static bool inner(string src, out InstCells dst)
     {
         var result = Outcome.Success;
         var parts = text.trim(text.split(text.despace(src), Chars.Space));
         var count = parts.Length;
-        dst = alloc<CellValue>(count);
+        dst = new(alloc<CellValue>(count));
         for(var i=0; i<count; i++)
         {
             ref readonly var part = ref skip(parts,i);
-            result = field(part, out dst[i]);
+            result = parse(part, out dst[i]);
             if(result.Fail)
                 Errors.Throw(result.Message);
         }
         return true;
-    }
-
-    static Outcome field(string src, out CellValue dst)
+    }    
+    
+    public static Outcome parse(string src, out CellValue dst)
     {
         dst = CellValue.Empty;
         Outcome result = (false, string.Format("Unrecognized segment '{0}'", src));
@@ -102,5 +102,5 @@ public readonly struct XedInstParser
 
         return result;
     }
-}
 
+}

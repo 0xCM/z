@@ -10,7 +10,7 @@ using static XedModels;
 partial class XedRules
 {
     [DataWidth(PackedWidth)]
-    public readonly record struct RuleSig : IComparable<RuleSig>
+    public readonly record struct RuleIdentity : IComparable<RuleIdentity>
     {
         public const byte PackedWidth = num2.Width + num9.Width;
 
@@ -23,13 +23,13 @@ partial class XedRules
         readonly ushort Data;
 
         [MethodImpl(Inline)]
-        public RuleSig(RuleTableKind kind, RuleName name)
+        public RuleIdentity(RuleTableKind kind, RuleName name)
         {
             Data = (ushort)((ushort)name | ((ushort)kind << KindOffset));
         }
 
         [MethodImpl(Inline)]
-        public RuleSig(ushort data)
+        public RuleIdentity(ushort data)
         {
             Data = data;
         }
@@ -76,20 +76,11 @@ partial class XedRules
             get => TableKind != 0 && TableName != 0;
         }
 
-        [MethodImpl(Inline)]
-        public NontermCall<T> CallFrom<T>(T src)
-            where T : unmanaged, IComparable<T>
-                => Xed.call(src,this);
-
-        [MethodImpl(Inline)]
-        public NontermCall CallTo(RuleSig dst)
-            => Xed.call(this, dst);
-
         public override int GetHashCode()
             => Hash;
 
         [MethodImpl(Inline)]
-        public int CompareTo(RuleSig src)
+        public int CompareTo(RuleIdentity src)
         {
             var result = Xed.cmp(TableName,src.TableName);
             if(result == 0)
@@ -104,17 +95,17 @@ partial class XedRules
             => Format();
 
         [MethodImpl(Inline)]
-        public static explicit operator ushort(RuleSig src)
+        public static explicit operator ushort(RuleIdentity src)
             => src.Data;
 
         [MethodImpl(Inline)]
-        public static explicit operator RuleSig(ushort src)
+        public static explicit operator RuleIdentity(ushort src)
             => new (src);
 
         [MethodImpl(Inline)]
-        public static implicit operator RuleSig((RuleTableKind kind, RuleName name) src)
+        public static implicit operator RuleIdentity((RuleTableKind kind, RuleName name) src)
             => new (src.kind,src.name);
 
-        public static RuleSig Empty => default;
+        public static RuleIdentity Empty => default;
     }
 }

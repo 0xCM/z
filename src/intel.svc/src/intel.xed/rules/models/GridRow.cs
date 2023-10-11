@@ -9,14 +9,14 @@ partial class XedRules
     [StructLayout(LayoutKind.Sequential,Pack=1)]
     public readonly struct GridRow
     {
-        public readonly RuleSig Rule;
+        public readonly RuleIdentity Rule;
 
         public readonly ushort Row;
 
         public readonly Index<GridCol> Cols;
 
         [MethodImpl(Inline)]
-        public GridRow(RuleSig rule, ushort row, GridCol[] cols)
+        public GridRow(RuleIdentity rule, ushort row, GridCol[] cols)
         {
             Rule = rule;
             Row = row;

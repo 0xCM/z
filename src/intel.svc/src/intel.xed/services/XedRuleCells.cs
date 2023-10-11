@@ -11,7 +11,7 @@ using static XedRules;
 
 public class XedRuleCells
 {
-    public static XedRuleCells create(Dictionary<RuleSig,Index<RuleCell>> src, string desc)
+    public static XedRuleCells create(Dictionary<RuleIdentity,Index<RuleCell>> src, string desc)
     {
         var dst = new XedRuleCells();
         var keys = src.Keys;
@@ -27,7 +27,7 @@ public class XedRuleCells
         return dst;
     }
 
-    static CellTable table(ConcurrentDictionary<RuleSig,Index<RuleCell>> src, RuleSig rule)
+    static CellTable table(ConcurrentDictionary<RuleIdentity,Index<RuleCell>> src, RuleIdentity rule)
     {
         var dst = CellTable.Empty;
         if(src.TryGetValue(rule, out var cells))
@@ -47,18 +47,18 @@ public class XedRuleCells
     {
         _Tables = sys.empty<CellTable>();
         _Cells = sys.empty<RuleCell>();
-        _Sigs = sys.empty<RuleSig>();
+        _Sigs = sys.empty<RuleIdentity>();
         _RawFormat = EmptyString;
-        _TableCells = Pairings.empty<RuleSig,Index<RuleCell>>();
+        _TableCells = Pairings.empty<RuleIdentity,Index<RuleCell>>();
     }
 
     Index<CellTable> _Tables;
 
     Index<RuleCell> _Cells;
 
-    Index<RuleSig> _Sigs;
+    Index<RuleIdentity> _Sigs;
 
-    Pairings<RuleSig,Index<RuleCell>> _TableCells;
+    Pairings<RuleIdentity,Index<RuleCell>> _TableCells;
 
     string _RawFormat;
 
@@ -79,7 +79,7 @@ public class XedRuleCells
         => ref _Tables;
 
     [MethodImpl(Inline)]
-    public ref readonly Index<RuleSig> Sigs()
+    public ref readonly Index<RuleIdentity> Sigs()
         => ref _Sigs;
 
     [MethodImpl(Inline)]
@@ -87,7 +87,7 @@ public class XedRuleCells
         => ref _Cells;
 
     [MethodImpl(Inline)]
-    public ref readonly Pairings<RuleSig,Index<RuleCell>> TableCells()
+    public ref readonly Pairings<RuleIdentity,Index<RuleCell>> TableCells()
         => ref _TableCells;
 
     public static XedRuleCells Empty => new();

@@ -16,25 +16,43 @@ partial class XedZ
 
         readonly dynamic Value;
 
-        public BlockField(BlockFieldName name, uint2 value)
+        public BlockField(BlockFieldName name, bit value)
         {
             Name = name;
             Value = value;
         }
 
-        public BlockField(BlockFieldName name, uint3 value)
+        public BlockField(BlockFieldName name, InstAttribs value)
         {
             Name = name;
             Value = value;
         }
 
-        public BlockField(BlockFieldName name, InstPatternBody value)
+        public BlockField(BlockFieldName name, WidthCode value)
         {
             Name = name;
             Value = value;
         }
 
-        public BlockField(BlockFieldName name, ASZ value)
+        public BlockField(BlockFieldName name, NativeSize value)
+        {
+            Name = name;
+            Value = value;
+        }
+
+        public BlockField(BlockFieldName name, PatternOps value)
+        {
+            Name = name;
+            Value = value;
+        }
+
+        public BlockField(BlockFieldName name, byte value)
+        {
+            Name = name;
+            Value = value;
+        }
+
+        public BlockField(BlockFieldName name, InstCells value)
         {
             Name = name;
             Value = value;
@@ -127,7 +145,7 @@ partial class XedZ
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => Name == 0 || Value == null;
+            get => Name == 0;
         }
 
         public bool IsNonEmpty
@@ -137,10 +155,52 @@ partial class XedZ
         }
 
         public string Format()
-            => $"{Value}";
+            => $"{Name}: {Value}";
 
         public override string ToString()
             => Format();
+
+        public static explicit operator InstExtension(BlockField src)
+            => (InstExtension)src.Value;
+
+        public static explicit operator InstIsa(BlockField src)
+            => (InstIsa)src.Value;
+
+        public static explicit operator EASZ(BlockField src)
+            => (EASZ)src.Value;
+
+        public static explicit operator EOSZ(BlockField src)
+            => (EOSZ)src.Value;
+
+        public static explicit operator InstCells(BlockField src)
+            => (InstCells)src.Value;
+
+        public static explicit operator PatternOps(BlockField src)
+            => (PatternOps)src.Value;
+
+        public static explicit operator byte(BlockField src)
+            => (byte)src.Value;
+
+        public static explicit operator Hex8(BlockField src)
+            => (Hex8)src.Value;
+
+        public static explicit operator AsmOpCodeClass(BlockField src)
+            => (AsmOpCodeClass)src.Value;
+
+        public static explicit operator XedInstClass(BlockField src)
+            => (XedInstClass)src.Value;
+
+        public static explicit operator VsibKind(BlockField src)
+            => (VsibKind)src.Value;
+
+        public static explicit operator MachineMode(BlockField src)
+            => (MachineMode)src.Value;
+
+        public static explicit operator XedInstForm(BlockField src)
+            => (XedInstForm)src.Value;
+
+        public static explicit operator bit(BlockField src)
+            => (bit)src.Value;
 
         public static BlockField Empty => new(0,EmptyString);
     }

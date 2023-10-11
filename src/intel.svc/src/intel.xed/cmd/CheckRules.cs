@@ -29,10 +29,10 @@ partial class XedChecks
 
     void CheckInstDefs()
     {
-        var a = "0x83 MOD[mm] MOD!=3 REG[0b010] RM[nnn] MODRM() SIMM8() LOCK=0";
-        XedInstParser.parse(a, out var body);
+        var a = span("0x83 MOD[mm] MOD!=3 REG[0b010] RM[nnn] MODRM() SIMM8() LOCK=0");
+        XedCells.parse(a, out var body);
         var dst = text.emitter();
-        for(var i=0; i<body.CellCount; i++)
+        for(var i=0; i<body.Count; i++)
         {
             ref readonly var cell = ref body[i];
             if(i != 0)

@@ -6,11 +6,12 @@
 namespace Z0;
 
 using static XedRules;
+using static XedModels;
 
 partial struct XedCells
 {
     [MethodImpl(Inline), Op]
-    public static BitIndicator rexw(in XedCells src)
+    public static BitIndicator rexw(in InstCells src)
     {
         var dst = BitIndicator.Empty;
         for(var i=0; i<src.Count; i++)
@@ -26,7 +27,7 @@ partial struct XedCells
     }
 
     [MethodImpl(Inline), Op]
-    public static BitIndicator rexr(in XedCells src)
+    public static BitIndicator rexr(in InstCells src)
     {
         var dst = BitIndicator.Empty;
         for(var i=0; i<src.Count; i++)
@@ -42,7 +43,7 @@ partial struct XedCells
     }
 
     [MethodImpl(Inline), Op]
-    public static BitIndicator rexb(in XedCells src)
+    public static BitIndicator rexb(in InstCells src)
     {
         var dst = BitIndicator.Empty;
         for(var i=0; i<src.Count; i++)
@@ -58,7 +59,7 @@ partial struct XedCells
     }
 
     [MethodImpl(Inline), Op]
-    public static BitIndicator rexx(in XedCells src)
+    public static BitIndicator rexx(in InstCells src)
     {
         var dst = BitIndicator.Empty;
         for(var i=0; i<src.Count; i++)

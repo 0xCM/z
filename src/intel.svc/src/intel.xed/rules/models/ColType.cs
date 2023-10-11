@@ -142,11 +142,6 @@ partial class XedRules
             get => IsNontermCall || IsNontermExpr;
         }
 
-        [MethodImpl(Inline)]
-        public K Refined<K>()
-            where K : unmanaged
-                => generic<K>(Upper);
-
         uint Upper
         {
             [MethodImpl(Inline)]

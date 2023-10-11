@@ -11,7 +11,7 @@ using static XedRules;
 partial struct XedCells
 {
     [MethodImpl(Inline), Op]
-    public static ModIndicator mod(in XedCells src)
+    public static ModIndicator mod(in InstCells src)
     {
         var result = false;
         var dst = ModIndicator.Empty;
@@ -36,5 +36,5 @@ partial struct XedCells
             }
         }
         return dst;
-    }
+    }    
 }

@@ -13,12 +13,12 @@ namespace Z0
         {
             public readonly ushort TableId;
 
-            public readonly RuleSig Sig;
+            public readonly RuleIdentity Sig;
 
             public readonly Index<RowSpec> Rows;
 
             [MethodImpl(Inline)]
-            public TableSpec(ushort id, RuleSig key, RowSpec[] rows)
+            public TableSpec(ushort id, RuleIdentity key, RowSpec[] rows)
             {
                 TableId = id;
                 Sig = key;
@@ -80,7 +80,7 @@ namespace Z0
             public static implicit operator Index<RowSpec>(TableSpec src)
                 => src.Rows;
 
-            public static TableSpec Empty => new TableSpec(z16, RuleSig.Empty, sys.empty<RowSpec>());
+            public static TableSpec Empty => new TableSpec(z16, RuleIdentity.Empty, sys.empty<RowSpec>());
         }
     }
 }

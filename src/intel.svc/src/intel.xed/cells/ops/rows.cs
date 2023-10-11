@@ -11,10 +11,10 @@ using static sys;
 partial struct XedCells
 {
     [MethodImpl(Inline), Op]
-    public static GridRow row(RuleSig rule, ushort row, GridCol[] cols)
+    public static GridRow row(RuleIdentity rule, ushort row, GridCol[] cols)
         => new (rule, row, cols);
 
-    public static Index<GridRow> rows(RuleSig rule, ushort rows, byte cols, Index<GridCell> src)
+    public static Index<GridRow> rows(RuleIdentity rule, ushort rows, byte cols, Index<GridCell> src)
     {
         var dst = alloc<GridRow>(rows);
         var k=0u;

@@ -9,6 +9,7 @@ using static XedRules;
 using static XedModels;
 using static XedModels.RuleName;
 
+
 partial class XedRuleSeq
 {
     /*
@@ -24,6 +25,7 @@ partial class XedRuleSeq
         AVX512_EVEX_BYTE3_ENC_EMIT
     */
 
+    
     public static SeqDef EVEX_ENC_EMIT() => emit(nameof(EVEX_ENC_EMIT), new RuleName[]{
         EVEX_62_REXR_ENC,
         EVEX_REXX_ENC,

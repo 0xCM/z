@@ -15,17 +15,17 @@ partial class XedRules
 
         public readonly SeqEffect Effect;
 
-        public readonly Index<RuleSig> Rules;
+        public readonly Index<RuleIdentity> Rules;
 
         [MethodImpl(Inline)]
         public SeqDef(asci32 name, SeqEffect effect, RuleName[] rules, RuleTableKind kind = RuleTableKind.ENC)
         {
             SeqName = name;
             Effect = effect;
-            Rules = rules.Map(r => new RuleSig(kind,r));
+            Rules = rules.Map(r => new RuleIdentity(kind,r));
         }
 
-        _FileUri Uri(RuleSig src)
+        _FileUri Uri(RuleIdentity src)
             => XedPaths.RuleTable(src);
 
         public string Format()

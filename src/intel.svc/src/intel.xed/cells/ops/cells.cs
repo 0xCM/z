@@ -5,8 +5,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static XedModels;
 using static XedRules;
 using static sys;
+
+using R = XedRules;
 
 partial struct XedCells
 {
@@ -25,4 +28,26 @@ partial struct XedCells
 
     public static byte cols(in CellTable src)
         => (byte)src.Rows.Select(row => cells(row).Count).Storage.Max();
+
+    public static bool reg(FieldKind field, string value, out FieldValue dst)
+    {
+        var result = false;
+        dst = R.FieldValue.Empty;
+        if(XedParsers.IsNonterm(value))
+        {
+            result = XedParsers.parse(value, out RuleName name);
+            dst = new(field, name);
+        }
+        else if(XedParsers.parse(value, out XedRegId reg))
+        {
+            dst = new (field, reg);
+            result = true;
+        }
+        else if(XedParsers.parse(value, out RuleKeyword kw))
+        {
+            dst = new(kw);
+            result = true;
+        }
+        return result;
+    }
 }

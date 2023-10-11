@@ -47,10 +47,10 @@ public record struct XedInstOpCode : IComparable<XedInstOpCode>
     public RepIndicator Rep;
 
     [Render(112)]
-    public XedCells Layout;
+    public InstCells Layout;
 
     [Render(1)]
-    public XedCells Expr;
+    public InstCells Expr;
 
     [Ignore]
     public AsmOpCode OpCode;

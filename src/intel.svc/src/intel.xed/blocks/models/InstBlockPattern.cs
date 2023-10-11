@@ -26,13 +26,13 @@ partial class XedZ
         public byte Index;
 
         [Render(1)]
-        public InstPatternBody Body;
+        public InstCells Body;
 
         public int CompareTo(InstBlockPattern src)
         {
             var result = Form.CompareTo(src.Form);
             if(result == 0)
-                result = Body.CellCount.CompareTo(src.Body.CellCount);
+                result = Body.Count.CompareTo(src.Body.Count);
             return result;
         }
 

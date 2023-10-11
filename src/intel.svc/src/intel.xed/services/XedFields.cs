@@ -18,6 +18,27 @@ using K = XedRules.FieldKind;
 
 public partial class XedFields
 {
+    public static bool reg(K field, string value, out FieldValue dst)
+    {
+        var result = false;
+        dst = FieldValue.Empty;
+        if(XedParsers.IsNonterm(value))
+        {
+            result = XedParsers.parse(value, out RuleName name);
+            dst = new(field, name);
+        }
+        else if(XedParsers.parse(value, out XedRegId reg))
+        {
+            dst = new (field, reg);
+            result = true;
+        }
+        else if(XedParsers.parse(value, out RuleKeyword kw))
+        {
+            dst = new(kw);
+            result = true;
+        }
+        return result;
+    }    
     [MethodImpl(Inline), Op]
     public static ref readonly XedVexKind vexkind(in XedFieldState src)
         => ref @as<XedVexKind>(src.VEX_PREFIX);

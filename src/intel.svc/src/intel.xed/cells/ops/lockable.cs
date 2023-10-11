@@ -6,11 +6,12 @@
 namespace Z0;
 
 using static XedRules;
+using static XedModels;
 
 partial struct XedCells
 {
     [MethodImpl(Inline), Op]
-    public static bit lockable(in XedCells src)
+    public static bit lockable(in InstCells src)
     {
         var result = bit.Off;
         for(var i=0; i<src.Count; i++)
@@ -21,5 +22,5 @@ partial struct XedCells
                 break;
         }
         return result;
-    }
+    }    
 }

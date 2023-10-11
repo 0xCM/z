@@ -9,7 +9,7 @@ partial class XedRules
 {
     public readonly struct CellRow : IComparable<CellRow>
     {
-        public readonly RuleSig TableSig;
+        public readonly RuleIdentity TableSig;
 
         public readonly ushort TableIndex;
 
@@ -22,7 +22,7 @@ partial class XedRules
         public readonly RowExpr Expression;
 
         [MethodImpl(Inline)]
-        public CellRow(RuleSig sig, ushort table, ushort row, RuleCell[] src)
+        public CellRow(RuleIdentity sig, ushort table, ushort row, RuleCell[] src)
         {
             TableIndex = table;
             RowIndex = row;
@@ -127,6 +127,6 @@ partial class XedRules
             return result;
         }
 
-        public static CellRow Empty => new CellRow(RuleSig.Empty, 0, 0, sys.empty<RuleCell>());
+        public static CellRow Empty => new CellRow(RuleIdentity.Empty, 0, 0, sys.empty<RuleCell>());
     }
 }

@@ -10,8 +10,8 @@ using static sys;
 public class XedSigs
 {
     [MethodImpl(Inline)]
-    public static InstOperand op(num3 pos, OpName name, InstOpSymbol ind, OpKind kind, ushort width)
-        => new(pos, name, ind,kind, width);
+    public static InstOperand op(num3 pos, OpName name, OpKind kind, ushort width)
+        => new(pos, name, name.Indicator, kind, width);
 
     public static InstSig sig(InstPattern src)
     {
@@ -21,7 +21,7 @@ public class XedSigs
         for(var i=z8; i<count; i++)
         {
             ref readonly var operand = ref ops[i];
-            dst[i] = op(operand.Index, operand.Name, indicator(operand.Name), operand.Kind, operand.BitWidth);
+            dst[i] = op(operand.Index, operand.Name, operand.Kind, operand.BitWidth);
         }
         return dst;
     }

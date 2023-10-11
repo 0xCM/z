@@ -8,9 +8,9 @@ namespace Z0;
 using static sys;
 using static XedModels;
 
-partial class XedRules
+partial class XedPatterns
 {
-    public static Index<XedInstOpCode> poc(Index<InstPattern> src)
+    public static Index<XedInstOpCode> opcodes(Index<InstPattern> src)
     {
         var count = src.Count;
         var buffer = alloc<XedInstOpCode>(count);

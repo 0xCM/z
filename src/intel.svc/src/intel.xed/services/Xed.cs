@@ -15,11 +15,6 @@ using I = Asm.RFlagSymbol;
 
 public partial class Xed : WfSvc<Xed>
 {
-    [MethodImpl(Inline), Op]
-    public static NontermCall<T> call<T>(T src, RuleSig dst)
-        where T : unmanaged, IComparable<T>
-            => new (src,dst);
-
     public static XedInstClass classifier(XedInstClass src)
     {
         var dst = src;
@@ -190,8 +185,8 @@ public partial class Xed : WfSvc<Xed>
     }
 
     [Op]
-    public static Index<RuleSig> sigs(params (RuleTableKind kind, RuleName rule)[] src)
-        => src.Select(x => new RuleSig(x.kind,x.rule));
+    public static Index<RuleIdentity> sigs(params (RuleTableKind kind, RuleName rule)[] src)
+        => src.Select(x => new RuleIdentity(x.kind,x.rule));
 
     [MethodImpl(Inline), Op]
     public static CellExpr expr(OperatorKind op, FieldValue value)

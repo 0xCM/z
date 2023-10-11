@@ -24,15 +24,14 @@ partial class XedCmd
         });
     }
 
-
     [CmdOp("xed/blocks")]
     void EmitBlockLines()
     {
-        var blocks = XedImport.blocks();
-        XedImport.Emit(blocks);
-        var domain = XedImport.domain(blocks);
-        XedImport.Emit(domain);
-        //EmitInstPatterns();
+        //var blocks = XedImport.blocks();
+        //XedImport.Emit(blocks);
+        //var domain = XedImport.domain(blocks);
+        //XedImport.Emit(domain);
+        EmitInstPatterns();
 
     }
 
@@ -47,42 +46,48 @@ partial class XedCmd
         var path =  XedPaths.DocSource(XedDocKind.RuleBlocks);
         var patterns = bag<InstBlockPattern>();
         XedZ.lines(path, spec => {
-            var attribs = list<Attribute>();
+            var fields = list<BlockField>();
             var result = true;
-            var pattern = new InstBlockPattern{Form = spec.Form};
+            var pattern = new InstBlockPattern();
             patterns.Add(pattern);
 
+            var field = BlockField.Empty;
             foreach(var line in spec.Lines)
             {                
-                if(XedZ.parse(line, out Attribute attrib))
+                if(BlockFieldParser.parse(line, out field))
                 {
-                    attribs.Add(attrib);
-                    switch(attrib.Field)
+                    fields.Add(field);
+                    switch(field.Name)
                     {
                         case BlockFieldName.iclass:
-                        {
-                            XedParsers.parse(attrib.Value, out pattern.Instruction);
-                        }
-                        break;
+                            pattern.Instruction = (XedInstClass)field;
+                            break;
+                        case BlockFieldName.iform:
+                            pattern.Form = (XedInstForm)field;
+                            break;
                         case BlockFieldName.pattern:
-                        {
-                            result = XedInstParser.parse(attrib.Value, out pattern.Body);
-                        }
-                        break;
-                        
+                            pattern.Body = (InstCells)field;
+                            break;
+
                         case BlockFieldName.operands:
+                        {
+                            var ops = (PatternOps)field;
+                            for(var i=z8; i<ops.Count; i++)
+                            {
+                                ref readonly var op = ref ops[i];
+                                if(op.Nonterminal(out var nonterm))
+                                {
+                                    Channel.Row(nonterm);
+                                }   
+                            }
+                        }
                         break;
                     }
                 }
-                if(!result)                
-                {
-                    Channel.Error(line);
-                    break;
-                }                
             }
         });
 
-        var records = patterns.OrderBy(x => x.Form).ThenBy(x => x.Body.CellCount).Array().Sort();
+        var records = patterns.OrderBy(x => x.Form).ThenBy(x => x.Body.Count).Array().Sort();
         var form = XedInstForm.Empty;
         var j=z8;
         for(var i=0u; i<records.Length; i++)

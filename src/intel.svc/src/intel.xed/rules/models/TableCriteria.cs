@@ -14,11 +14,11 @@ partial class XedRules
     {
         public readonly uint TableId;
 
-        public readonly RuleSig Sig;
+        public readonly RuleIdentity Sig;
 
         public readonly Index<RowCriteria> Rows;
 
-        public TableCriteria(RuleSig sig, RowCriteria[] rows)
+        public TableCriteria(RuleIdentity sig, RowCriteria[] rows)
         {
             TableId = 0u;
             Require.invariant(sig.IsNonEmpty);
@@ -27,7 +27,7 @@ partial class XedRules
             Rows = rows;
         }
 
-        public TableCriteria(uint id, RuleSig sig, RowCriteria[] rows)
+        public TableCriteria(uint id, RuleIdentity sig, RowCriteria[] rows)
         {
             TableId = id;
             Require.invariant(sig.IsNonEmpty);
@@ -40,11 +40,11 @@ partial class XedRules
         TableCriteria(uint id)
         {
             TableId = id;
-            Sig = RuleSig.Empty;
+            Sig = RuleIdentity.Empty;
             Rows = sys.empty<RowCriteria>();
         }
 
-        public RuleSig SigKey
+        public RuleIdentity SigKey
         {
             [MethodImpl(Inline)]
             get => Sig;

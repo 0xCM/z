@@ -87,7 +87,7 @@ partial class XedModels
 
         [MethodImpl(Inline)]
         public static implicit operator OpAttribs(OpAttrib[] src)
-            => new OpAttribs(src);
+            => new (src);
 
         public static OpAttribs Empty => sys.empty<OpAttrib>();
     }

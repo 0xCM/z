@@ -6,24 +6,11 @@ namespace Z0;
 
 using static XedModels;
 using static sys;
+
 using N = XedZ.BlockFieldName;
+
 public partial class XedZ
 {        
-    public class BlockFieldNames
-    {
-        public const string attributes = nameof(attributes);
-
-        public const string comment = nameof(comment);
-
-        public const string flags = nameof(flags);
-
-        public const string opcode_base10 = nameof(opcode_base10);
-
-        public const string operands = nameof(operands);
-
-        public const string pattern = nameof(pattern);
-    }    
-
     public static BlockDomain domain(RuleBlocks src)
     {
         var imports = src.Imports;
@@ -38,7 +25,7 @@ public partial class XedZ
                 {
                     if(rule.IsNonEmpty)
                     {
-                        if(BlockFieldParser.parse(rule.Name, out BlockFieldName name))
+                        if(BlockFieldParser.parse(rule.Name, out N name))
                         {
                             var _rules = hashset<RuleAttribute>();
                             if(!domain.TryGetValue(name, out _rules))
@@ -68,52 +55,12 @@ public partial class XedZ
                 if(block.Count != rules.Count)
                     @throw("block.Count != _rules.Rules.Count");
             }
-
-
-                // if(parse(block, out List<RuleAttribute> rules))
-                // {
-                //     foreach(var rule in rules)
-                //     {
-                //         if(rule.IsNonEmpty)
-                //         {
-                //             if(BlockFieldParser.parse(rule.Name, out BlockFieldName name))
-                //             {
-
-                //                 var _rules = hashset<RuleAttribute>();
-                //                 if(!domain.TryGetValue(name, out _rules))
-                //                     domain[name] = _rules;
-                                
-                //                 switch(name)                          
-                //                 {
-                //                     case N.attributes:
-                //                     {
-                //                         if(BlockFieldParser.parse(rule.Value, out InstAttribs value))          
-                //                         {
-                //                             domain.InstAttribs.AddRange(value);
-                //                         }   
-                //                     }
-                //                     break;
-                //                     default:
-                //                         _rules.Add(rule);
-                //                     break;
-                //                 }
-                //             }
-                //             else
-                //                 @throw($"Unknown field:{rule.Name}");
-
-                //         }
-                //     }
-                // }
-
-                // if(block.Count != rules.Count)
-                //     @throw("block.Count != _rules.Rules.Count");
-
         });
 
         return domain;        
     }
 
-    public static bool parse(List<string> lines, out List<RuleAttribute> dst)
+    static bool parse(List<string> lines, out List<RuleAttribute> dst)
     {
         dst = new();
         foreach(var line in lines)
@@ -124,46 +71,6 @@ public partial class XedZ
                 var name = text.left(line,i);
                 var value = text.trim(text.right(line,i));
                 dst.Add(new(name,value));
-                // switch(name)
-                // {
-                //     case BlockFieldNames.pattern:
-                //     case BlockFieldNames.operands:
-                //     {
-                //         var parts = text.trim(text.split(value, Chars.Space));
-                //         dst.Rules.Add(new Vector(name,parts));
-                //     }                    
-                //     break;
-                //     case BlockFieldNames.flags:
-                //     {
-                //         var m = text.index(value,Chars.LBracket);
-                //         var n = text.index(value,Chars.RBracket);
-                //         if(m > 0 && n > m)
-                //         {
-                //             var parts = text.trim(text.split(text.inside(value,m,n),Chars.Space));
-                //             dst.Rules.Add(new List(name,parts));
-                //         }
-                //     }
-                //     break;
-                //     case BlockFieldNames.attributes:
-                //         dst.Rules.Add(new List(name,text.trim(text.split(value, Chars.Space))));
-                //     break;
-                //     default:
-                //     {
-                //         if(nonempty(value))
-                //         {
-
-                //             if(value[0] == Chars.LBracket && value[value.Length - 1] == Chars.RBracket)
-                //                 dst.Rules.Add(new List(name,text.trim(text.split(text.inside(value,0, value.Length - 1), Chars.Comma))));
-                //             else
-                //                 dst.Rules.Add(new RuleAttribute(name,value));
-                //         }
-                //         else
-                //         {
-                //             dst.Rules.Add(new RuleAttribute(name,EmptyString));
-                //         }        
-                //     }
-                //     break;
-                // }
             }
         }
         
@@ -211,21 +118,6 @@ public partial class XedZ
         }
 
         protected override Fence<char> Boundary => ('<', '>');
-    }
-
-    public static bool parse(string src, out Attribute dst)
-    {
-        var i = text.index(src,Chars.Colon);
-        if(i > 0)
-        {
-            var name = text.trim(text.left(src,i));
-            var value = text.trim(text.right(src,i));
-            BlockFieldParser.parse(name, out BlockFieldName field);
-            dst = new(field, value);
-        }
-        else
-            dst = Attribute.Empty;
-        return dst.IsNonEmpty;
     }
 
     public static RuleBlocks rules(FilePath path)
@@ -456,8 +348,8 @@ public partial class XedZ
             {
                 try
                 {
-                    XedInstParser.parse(src.Value, out dst.Pattern);
-                    dst.Pattern = new (XedCells.sort(dst.Pattern.Cells));
+                    XedCells.parse(src.Value, out dst.Pattern);
+                    dst.Pattern = XedCells.sort(dst.Pattern);
                     XedPatterns.mode(dst.Pattern, out dst.Mode);
                 }
                 catch(Exception e)
@@ -487,7 +379,7 @@ public partial class XedZ
                 ref readonly var line = ref skip(src,k++);
                 lines.Add(line);
 
-                parse(line, out Attribute attrib);
+                BlockFieldParser.parse(line, out Attribute attrib);
                 absorb(attrib, ref import);
             }
             import.OpCodeKind = AsmOpCodes.kind(import.OpCodeClass, import.OpCodeMap);

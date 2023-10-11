@@ -17,6 +17,36 @@ partial class XedZ
 {
     public class BlockFieldParser
     {
+        public static bool parse(string src, out Attribute dst)
+        {
+            var i = text.index(src,Chars.Colon);
+            if(i > 0)
+            {
+                var name = text.trim(text.left(src,i));
+                var value = text.trim(text.right(src,i));
+                parse(name, out N field);
+                dst = new(field, value);
+            }
+            else
+                dst = Attribute.Empty;
+            return dst.IsNonEmpty;
+        }        
+
+        public static bool parse(string src, out BlockField dst)
+        {
+            dst = BlockField.Empty;
+            var name = default(N);
+            var i = text.index(src,Chars.Colon);
+            if(i>0)
+            {
+                if(parse(text.left(src,i), out name))
+                {
+                    parse(name,text.trim(text.right(src,i)), out dst);
+                }    
+            }
+            return dst.IsNonEmpty;
+        }        
+
         static readonly EnumParser<BlockFieldName> FieldNameParser = new();
 
         static readonly EnumParser<InstAttribKind> AttribKindParser = new();
@@ -40,24 +70,8 @@ partial class XedZ
             return true;
         }
 
-        public static bool parse(string src, out BlockField dst)
-        {
-            dst = BlockField.Empty;
-            var name = default(N);
-            var i = text.index(src,Chars.Colon);
-            if(i>0)
-            {
-                if(parse(text.left(src,i), out name))
-                {
-                    var value = text.trim(text.right(src,i));
-                    parse(name,text.trim(text.right(src,i)), out dst);
-                }    
-            }
-            return dst.IsEmpty;
-        }        
-
-        public static bool parse(ReadOnlySpan<char> src, out InstPatternBody dst)
-            => XedInstParser.parse(src, out dst);
+        public static bool parse(ReadOnlySpan<char> src, out InstCells dst)
+            => XedCells.parse(src, out dst);
 
         public static bool parse(ReadOnlySpan<char> src, out MachineMode dst)
         {
@@ -156,6 +170,10 @@ partial class XedZ
                 break;
 
                 case attributes:
+                {
+                    if(parse(src, out InstAttribs value))
+                        dst = new(field,value);
+                }
                 break;
 
                 case avx512_tuple:
@@ -185,8 +203,6 @@ partial class XedZ
                 case cpuid:
                 break;
 
-                case default_64b:
-                break;
 
                 case easz:
                 {
@@ -195,7 +211,16 @@ partial class XedZ
                 }
                 break;
 
+                case memop_width:
                 case element_size:
+                {
+                    if(src != "None")
+                    {
+                        if(byte.TryParse(src, out byte value))
+                            dst = new(field, (NativeSizeCode)value);
+
+                    }
+                }
                 break;
 
                 case eosz:
@@ -215,12 +240,17 @@ partial class XedZ
                 }
                 break;
 
+                case default_64b:
                 case f2_required:
                 case f3_required:
                 case has_imm8:
                 case has_imm8_2:
                 case has_immz:
                 case has_modrm:
+                case no_prefixes_allowed:
+                case osz_required:
+                case N.scalar:
+                case sibmem:
                 {
                     if(parse(src, out bool value))
                         dst = new(field,value);
@@ -232,7 +262,6 @@ partial class XedZ
 
                 case iclass:
                 {
-
                     if(XedParsers.parse(src, out XedInstClass value))
                         dst = new(field,value);
                 }
@@ -240,7 +269,6 @@ partial class XedZ
 
                 case iform:
                 {
-
                     if(XedParsers.parse(src, out XedInstForm value))
                         dst = new(field,value);
                 }
@@ -264,12 +292,19 @@ partial class XedZ
                 break;
 
                 case N.map:
+                {                    
+                    if(byte.TryParse(src, out byte value))
+                        dst = new(field, value);
+                }
                 break;
 
                 case memop_rw:
                 break;
 
                 case mod_required:
+                {
+
+                }
                 break;
 
                 case mode_restriction:
@@ -279,10 +314,12 @@ partial class XedZ
                 }
                 break;
 
-                case no_prefixes_allowed:
-                break;
 
                 case ntname:
+                {
+                    if(XedParsers.parse(src, out RuleName value))
+                        dst = new(field,value);
+                }
                 break;
 
                 case opcode_base10:
@@ -292,47 +329,49 @@ partial class XedZ
                 break;
 
                 case operands:
-                break;
-
-                case osz_required:
-                break;
-
-                case parsed_operands:
-                break;
-
-                case partial_opcode:
+                {
+                    var input = text.split(src, Chars.Space);
+                    var count = input.Length;
+                    PatternOps value =  sys.alloc<PatternOp>(count);
+                    for(var i=0; i<count; i++)
+                    {
+                        XedPatterns.parse(skip(input,i), ref value[i]);
+                    }
+                    dst = new(field,value);
+                }
                 break;
 
                 case pattern:
                 {
-                    if(parse(src, out InstPatternBody value))
+                    if(parse(src, out InstCells value))
                         dst = new(field,value);
                 }
-                break;
-
-                case real_opcode:
                 break;
 
                 case reg_required:
                 break;
 
                 case rexw_prefix:
+                {
+                    if(src != "unspecified")
+                    {
+                        if(DataParser.parse(src, out bit value))
+                            dst = new(field,value);
+                    }
+                }
                 break;
 
                 case rm_required:
-                break;
-
-                case N.scalar:
                 {
-                    
+                    if(src != "unspecified")
+                    {
+                        if(byte.TryParse(src, out var value))
+                            dst = new(field,value);
+                    }
+
                 }
                 break;
 
-                case sibmem:
-                {
-
-                }
-                break;
 
                 case space:
                 {
@@ -341,11 +380,6 @@ partial class XedZ
                 }
                 break;
 
-                case undocumented:
-                break;
-
-                case upper_nibble:
-                break;
 
                 case vl:
                 break;
@@ -353,19 +387,16 @@ partial class XedZ
                 case exceptions:
                 break;
 
-                case memop_width:
-                break;
-
                 case memop_width_code:
+                {
+                    if(XedParsers.parse(src, out WidthCode value))
+                    {
+                        dst = new(field,value);
+                    }
+                }
                 break;
 
                 case disasm:
-                break;
-
-                case disasm_intel:
-                break;
-
-                case disasm_attsv:
                 break;
 
                 case uname:
@@ -380,9 +411,18 @@ partial class XedZ
                 case EOSZ_LIST:
                 break;
 
+                case partial_opcode:
+                case real_opcode:
+                case parsed_operands:
+                case disasm_intel:
+                case disasm_attsv:
+                case upper_nibble:
+                case undocumented:
+                break;
+
             }
 
-            return dst.IsEmpty;
+            return dst.IsNonEmpty;
         }
     }
 }

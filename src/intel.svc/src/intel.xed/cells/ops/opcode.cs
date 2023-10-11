@@ -5,14 +5,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using Asm;
-
 using static XedRules;
+using static XedModels;
 
 partial struct XedCells
 {    
     [MethodImpl(Inline), Op]
-    public static AsmOpCode opcode(in XedCells src)
+    public static AsmOpCode opcode(in InstCells src)
     {
         var vc = XedVexClass.None;
         var number = z8;
