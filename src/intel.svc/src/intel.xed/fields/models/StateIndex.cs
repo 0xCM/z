@@ -5,34 +5,34 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static XedOps;
+using static XedRules;
 
-partial class XedRules
+partial class XedFields
 {
-    public partial class OperandStates : IIndex<StateRecord>
+    public partial class StateIndex : IIndex<States>
     {
-        readonly Index<StateRecord> Data;
+        readonly Index<States> Data;
 
         [MethodImpl(Inline)]
-        public ref readonly Index<StateRecord> Entries()
+        public ref readonly Index<States> Entries()
             => ref Data;
 
         [MethodImpl(Inline)]
         public bool Field(uint i, FieldKind kind, out FieldValue dst)
             => Data[i].Field(kind, out dst);
 
-        public OperandStates(StateRecord[] src)
+        public StateIndex(States[] src)
         {
             Data = src;
         }
 
-        public ref StateRecord this[uint i]
+        public ref States this[uint i]
         {
             [MethodImpl(Inline)]
             get => ref Data[i];
         }
 
-        public ref StateRecord this[int i]
+        public ref States this[int i]
         {
             [MethodImpl(Inline)]
             get => ref Data[i];
@@ -44,7 +44,7 @@ partial class XedRules
             get => Data.Count;
         }
 
-        StateRecord[] IIndex<StateRecord>.Storage
+        States[] IIndex<States>.Storage
             => Data;
     }
 }

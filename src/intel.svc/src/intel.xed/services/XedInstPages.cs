@@ -16,7 +16,7 @@ using static XedInstRender;
 public class XedInstPages
 {
     public static XedInstPages create()
-        => new XedInstPages();
+        => new ();
 
     public string Format(InstPattern pattern)
         => page(pattern);

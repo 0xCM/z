@@ -106,7 +106,7 @@ partial class XedRules
 
         static FieldDefs fields()
         {
-            var fields = typeof(XedFields).InstanceFields().Tagged<RuleFieldAttribute>();
+            var fields = typeof(XedFieldState).InstanceFields().Tagged<RuleFieldAttribute>();
             var count = fields.Length + 1;
             var defs = new FieldDefs(sys.alloc<FieldDef>(count));
             var indexed = defs.Indexed;

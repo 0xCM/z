@@ -189,7 +189,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         var counter = 0;
         for(var j=0; j<count; j++)
         {
-            var state = XedFields.Empty;
+            var state = XedFieldState.Empty;
             buffer.Clear();
 
             ref readonly var detail = ref doc[j].DetailRow;

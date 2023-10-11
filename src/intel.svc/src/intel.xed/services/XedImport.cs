@@ -30,6 +30,7 @@ public class XedImport : WfSvc<XedImport>
             () => Emit(XedRuleSeq.controls(), XedRuleSeq.defs()),
             () => Emit(MacroMatches()),
             () => Emit(MacroDefs()),
+            () => Emit(CalcFieldImports()),
             () => Channel.TableEmit(XedRegMap.Service.REntries, XedPaths.ImportTable<RegMapEntry>("rmap")),
             () => Channel.TableEmit(XedRegMap.Service.XEntries, XedPaths.ImportTable<RegMapEntry>("xmap")),
             () => EmitChipCodes(Symbols.symkinds<ChipCode>()),
@@ -1053,4 +1054,50 @@ public class XedImport : WfSvc<XedImport>
         }
         Channel.FileEmit(dst.Emit(), counter, XedPaths.Imports().Path("xed.rules.grids", FileKind.Csv));
     }    
+
+
+    public Index<FieldImport> CalcFieldImports()
+    {
+        var src = XedPaths.FieldSource();
+        var dst = list<FieldImport>();
+        var result = Outcome.Success;
+        var line = EmptyString;
+        var lines = src.ReadLines().Reader();
+        while(lines.Next(out line))
+        {
+            var content = line.Trim();
+            if(text.empty(content) || text.begins(content,Chars.Hash))
+                continue;
+
+            var cells = text.split(text.despace(content), Chars.Space).Reader();
+            var record = FieldImport.Empty;
+            record.Name = cells.Next();
+
+            cells.Next();
+            result = FieldTypes.ExprKind(cells.Next(), out XedFieldKind ft);
+            if(result.Fail)
+                Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.FieldType), cells.Prior()));
+            else
+                record.FieldType = ft;
+
+            result = DataParser.parse(cells.Next(), out record.Width);
+            if(result.Fail)
+                Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.Width), cells.Prior()));
+
+            if(!Visibilities.ExprKind(cells.Next(), out record.Visibility))
+                Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.Visibility), cells.Prior()));
+
+            dst.Add(record);
+        }
+
+        return dst.ToArray().Sort();
+    }
+
+    void Emit(ReadOnlySpan<FieldImport> src)
+        => Channel.TableEmit(src, XedPaths.ImportTable<FieldImport>());
+
+    static readonly Symbols<XedFieldKind> FieldTypes = Symbols.index<XedFieldKind>();
+
+    static readonly Symbols<VisibilityKind> Visibilities = Symbols.index<VisibilityKind>();
+
 }

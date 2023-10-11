@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static XedRules;
+using static XedFields;
 using static XedDisasm;
 
 public readonly record struct XedDisasmFile : IComparable<XedDisasmFile>
@@ -39,7 +39,7 @@ public readonly record struct XedDisasmFile : IComparable<XedDisasmFile>
         get => ref Blocks[i];
     }
 
-    public OperandStates ParseStates()
+    public StateIndex ParseStates()
         => states(this);
 
     public int CompareTo(XedDisasmFile src)

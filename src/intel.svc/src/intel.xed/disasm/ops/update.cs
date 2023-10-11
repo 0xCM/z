@@ -6,18 +6,17 @@ namespace Z0;
 
 using static sys;
 using static XedRules;
-using static XedOps;
 using static XedModels;
 
 partial class XedDisasm
 {    
-    public static void update(in XedDisasmBlock src, ref XedFields dst)
-        => XedOps.update(values(src), ref dst);
+    public static void update(in XedDisasmBlock src, ref XedFieldState dst)
+        => XedFieldParser.update(values(src), ref dst);
 
     static Index<FieldValue> values(in XedDisasmBlock src)
     {
         parse(src, out InstFieldValues props);
-        var state = XedFields.Empty;
+        var state = XedFieldState.Empty;
         var names = props.Keys.Array();
         var count = names.Length;
         var dst = alloc<FieldValue>(count - 2);
@@ -29,7 +28,7 @@ partial class XedDisasm
                 continue;
 
             if(XedParsers.parse(name, out FieldKind kind))
-                seek(dst,k++) = FieldParser.parse(props[name], kind, ref state);
+                seek(dst,k++) = XedFieldParser.parse(props[name], kind, ref state);
             else
                 Errors.Throw(AppMsg.ParseFailure.Format(nameof(FieldKind), name));
         }

@@ -10,13 +10,13 @@ partial class XedModels
     [Record(TableId), StructLayout(LayoutKind.Sequential, Pack=1)]
     public struct FieldImport : IComparable<FieldImport>
     {
-        const string TableId = "xed.fields.import";
+        const string TableId = "xed.fields";
 
         [Render(32)]
         public asci32 Name;
 
         [Render(32)]
-        public EnumFormat<XedFieldType> FieldType;
+        public EnumFormat<XedFieldKind> FieldType;
 
         [Render(8)]
         public byte Width;

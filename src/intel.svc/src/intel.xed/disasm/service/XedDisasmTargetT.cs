@@ -84,7 +84,7 @@ public class XedDisasmTarget<T> : WfSvc<T>, IXedDisasmTarget
     void IXedDisasmTarget.Computed(uint seq, in Instruction src)
         => ComputedInst(seq, src);
 
-    void IXedDisasmTarget.Computed(uint seq, in XedFields src)
+    void IXedDisasmTarget.Computed(uint seq, in XedFieldState src)
         => Buffer.State(seq, src, OpStateComputed);
 
     void IXedDisasmTarget.Computed(uint seq, in AsmInfo src)
@@ -124,7 +124,7 @@ public class XedDisasmTarget<T> : WfSvc<T>, IXedDisasmTarget
     void IXedDisasmTarget.Finished(XedDisasmToken token)
         => Ran(token);
 
-    void StateComputed(uint seq, in XedFields state, ReadOnlySpan<FieldKind> fields)
+    void StateComputed(uint seq, in XedFieldState state, ReadOnlySpan<FieldKind> fields)
     {
         for(var i=0; i<fields.Length; i++)
         {
@@ -132,7 +132,7 @@ public class XedDisasmTarget<T> : WfSvc<T>, IXedDisasmTarget
             if(Exclusions.Contains(kind))
                 continue;
 
-            var cell = Xed.extract(state, skip(fields,i));
+            var cell = XedFields.extract(state, skip(fields,i));
             inc(ref Counter);
         }
     }

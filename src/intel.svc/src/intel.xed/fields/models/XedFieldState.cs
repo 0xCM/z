@@ -15,9 +15,9 @@ using K = XedRules.FieldKind;
 using M = XedModels;
 
 [Record(TableId), StructLayout(LayoutKind.Sequential,Pack=1)]
-public record struct XedFields
+public record struct XedFieldState
 {
-    public const string TableId = "xed.operands.state";
+    public const string TableId = "xed.fields.state";
 
     [RuleField(K.DF32, 1, typeof(bit))]
     public bit DF32;
@@ -400,5 +400,5 @@ public record struct XedFields
     [RuleField(K.OUTREG, 9, typeof(XedRegId))]
     public XedRegId OUTREG;
 
-    public static XedFields Empty => default;
+    public static XedFieldState Empty => default;
 }

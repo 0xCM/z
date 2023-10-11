@@ -18,7 +18,7 @@ namespace Z0
 
         void Computed(uint seq, in OpDetails src);
 
-        void Computed(uint seq, in XedFields src);
+        void Computed(uint seq, in XedFieldState src);
 
         void Computed(uint seq, in AsmInfo src);
 

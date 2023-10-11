@@ -8,26 +8,26 @@ namespace Z0;
 using static XedModels;
 using static XedRules;
 
-partial class XedOps
+partial class XedFields
 {
     [StructLayout(LayoutKind.Sequential,Pack=1)]
-    public record struct StateRecord : IComparable<StateRecord>
+    public record struct States : IComparable<States>
     {
-        public XedFields State;
+        public XedFieldState Fields;
 
         public Index<OpSpec> Ops;
 
         public AsmInfo Asm;
 
-        public Index<FieldValue> Fields;
+        public Index<FieldValue> FieldValues;
 
         [MethodImpl(Inline)]
         public bool Field(FieldKind kind, out FieldValue dst)
         {
             dst = FieldValue.Empty;
-            for(var i=0; i<Fields.Count; i++)
+            for(var i=0; i<FieldValues.Count; i++)
             {
-                ref readonly var f = ref Fields[i];
+                ref readonly var f = ref FieldValues[i];
                 if(f.Field == kind)
                 {
                     dst = f;
@@ -38,9 +38,10 @@ partial class XedOps
         }
 
         [MethodImpl(Inline)]
-        public int CompareTo(StateRecord src)
+        public int CompareTo(States src)
             => Asm.IP.CompareTo(src.Asm.IP);
 
-        public static StateRecord Empty => default;
+        public static States Empty => default;
     }
+
 }

@@ -87,7 +87,7 @@ public class XedMachines : IDisposable
     {
         InstPattern Pattern;
 
-        XedFields OpState;
+        XedFieldState OpState;
 
         MachineMode MachineMode;
 
@@ -132,7 +132,7 @@ public class XedMachines : IDisposable
 
         public void Reset()
         {
-            OpState = XedFields.Empty;
+            OpState = XedFieldState.Empty;
             Pattern = InstPattern.Empty;
             MachineMode = default;
             Form = XedInstForm.Empty;
@@ -253,7 +253,7 @@ public class XedMachines : IDisposable
             get => ref Id;
         }
 
-        public ref readonly XedFields Operands
+        public ref readonly XedFieldState Operands
         {
             [MethodImpl(Inline)]
             get => ref OpState;

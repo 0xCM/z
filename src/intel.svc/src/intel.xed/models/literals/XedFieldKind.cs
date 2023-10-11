@@ -7,8 +7,39 @@ namespace Z0;
 
 partial class XedModels
 {
+    public static ReadOnlySeq<XedFeldType> FieldTypes => new XedFeldType[]{
+        new(XedFieldKind.Bits,"bit"),
+    };
+
+    public readonly record struct XedFeldType
+    {
+        public readonly XedFieldKind Kind;
+
+        public readonly asci8 Name;
+
+        internal XedFeldType(XedFieldKind kind, asci8 name)
+        {
+            Kind = kind;
+            Name = name;
+        }
+
+        public Hash32 Hash
+        {
+            get => Name.Hash;
+        }
+
+        public override int GetHashCode()
+            => Hash;
+
+        public string Format()
+            => Name.Format();
+
+        public override string ToString()
+            => Format();
+    }
+
     [SymSource(xed), DataWidth(4,8)]
-    public enum XedFieldType : byte
+    public enum XedFieldKind : byte
     {
         [Symbol("xed_bits_t")]
         Bits,

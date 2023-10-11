@@ -9,10 +9,10 @@ using static XedRules;
 
 using K = XedRules.FieldKind;
 
-partial class Xed
+partial class XedFields
 {
     [Op]
-    public static FieldValue extract(in XedFields src, FieldKind kind)
+    public static FieldValue extract(in XedFieldState src, FieldKind kind)
     {
         var dst = FieldValue.Empty;
         switch(kind)

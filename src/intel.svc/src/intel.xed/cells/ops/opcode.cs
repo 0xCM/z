@@ -10,8 +10,7 @@ using Asm;
 using static XedRules;
 
 partial struct XedCells
-{
-    
+{    
     [MethodImpl(Inline), Op]
     public static AsmOpCode opcode(in XedCells src)
     {

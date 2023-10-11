@@ -32,8 +32,8 @@ partial class XedRules
             InstForm = form;
         }
 
-        public Index<FieldValue> ParseFields(out XedFields state)
-            => FieldParser.parse(this, out state);
+        public Index<FieldValue> ParseFields(out XedFieldState state)
+            => XedFieldParser.parse(this, out state);
 
         public static InstFieldValues Empty
             => new (XedInstClass.Empty, XedInstForm.Empty, dict<string,string>());

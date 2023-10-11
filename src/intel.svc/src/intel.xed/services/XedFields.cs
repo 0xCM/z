@@ -5,18 +5,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-[StructLayout(LayoutKind.Sequential,Pack=1)]
-public record struct XedDisasmState
+public partial class XedFields
 {
-    public Disp RELBRVal;
 
-    public asci32 AGENVal;
-
-    public asci32 MEM0Val;
-
-    public asci32 MEM1Val;
-
-    public XedFieldState RuleState;
-
-    public static XedDisasmState Empty => default;
+    
 }

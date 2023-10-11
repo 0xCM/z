@@ -139,7 +139,6 @@ public class XedPaths
     public static FilePath RuleSpecs()
         => RuleTargets().Path(FS.file("xed.rules.specs", FS.Csv));
 
-
     public static FilePath InstTarget(string name, FileKind kind)
         => InstTargets().Path(FS.file(string.Format("xed.inst.{0}", name), kind.Ext()));
 
@@ -171,6 +170,9 @@ public class XedPaths
             RuleTableKind.ENC => Sources().Path(FS.file("all-enc-patterns", FS.Txt)),
             _ => Sources().Path(FS.file("all-enc-dec-patterns", FS.Txt)),
         };
+
+    public static FilePath FieldSource()
+        => Sources().Path(FS.file("all-fields", FS.Txt));
 
     public static FilePath DocSource(XedDocKind kind)
         => Sources().Path(kind switch{

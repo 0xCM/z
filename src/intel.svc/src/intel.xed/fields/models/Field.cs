@@ -13,7 +13,7 @@ using DT = XedRules.FieldDataKind;
 partial class XedRules
 {
     /// <summary>
-    /// Specifies the value of a <see cref='XedFields'/> field for a specified <see cref='FieldKind'/>
+    /// Specifies the value of a <see cref='XedFieldState'/> field for a specified <see cref='FieldKind'/>
     /// </summary>
     [StructLayout(LayoutKind.Sequential,Pack=1)]
     public readonly struct Field

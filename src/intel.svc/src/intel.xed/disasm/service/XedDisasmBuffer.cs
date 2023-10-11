@@ -65,7 +65,7 @@ class XedDisasmBuffer : IXedDisasmBuffer
     uint IXedDisasmBuffer.FieldCount
         => FieldCount;
 
-    public void State(uint seq, in XedFields state, OpStateReceiver receiver)
+    public void State(uint seq, in XedFieldState state, OpStateReceiver receiver)
     {
         lock(StateLock)
             receiver(seq, state, slice(_FieldKinds.View, 0, FieldCount));

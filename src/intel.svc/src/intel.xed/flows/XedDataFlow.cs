@@ -17,19 +17,9 @@ public partial class XedFlows : WfSvc<XedFlows>
         get => ref _BroadcastDefs;
     }
 
-    public void Run()
-    {            
-        exec(PllExec,
-            () => Emit(CalcFieldImports())
-        );
-    }
 
     void Emit(ReadOnlySpan<FieldImport> src)
         => Channel.TableEmit(src, XedPaths.Imports().Table<FieldImport>());
-
-    static readonly Symbols<VisibilityKind> Visibilities = Symbols.index<VisibilityKind>();
-
-    static readonly Symbols<XedFieldType> FieldTypes = Symbols.index<XedFieldType>();
 
     static readonly Index<AsmBroadcast> _BroadcastDefs = Xed.broadcasts(Symbols.kinds<BroadcastKind>());
 }
