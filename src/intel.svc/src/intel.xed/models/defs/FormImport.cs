@@ -31,7 +31,7 @@ partial class XedModels
         public InstIsaKind IsaKind;
 
         [Render(16)]
-        public Extension Extension;
+        public InstExtension Extension;
 
         [Render(1)]
         public InstAttribs Attributes;

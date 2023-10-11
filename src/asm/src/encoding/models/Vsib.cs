@@ -6,14 +6,27 @@ namespace Z0.Asm;
 
 using F = AsmPrefixTokens.VsibField;
 
+public enum VsibKind : byte
+{
+    [Symbol("")]
+    None,
+
+    [Symbol("xmm")]
+    Xmm,
+
+    [Symbol("ymm")]
+    Ymm,
+
+    [Symbol("zmm")]
+    Zmm    
+}
+
 /// <summary>
 /// Represents a VSIB address
 /// </summary>
 /// <remarks>
 /// Documentation taken from vol 4 of ADM reference manuals, p. 6
 /// </remarks>
-[DataTypeAttributeD("asm.vsib")]
-
 public readonly record struct Vsib
 {
     [MethodImpl(Inline), Op]

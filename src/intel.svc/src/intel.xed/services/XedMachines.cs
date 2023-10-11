@@ -347,9 +347,9 @@ public class XedMachines : IDisposable
         }
 
         /// <summary>
-        /// Specifies the <see cref='M.Extension'/> of the current <see cref='P'/>
+        /// Specifies the <see cref='M.InstExtension'/> of the current <see cref='P'/>
         /// </summary>
-        public ref readonly Extension Extension
+        public ref readonly InstExtension Extension
         {
             [MethodImpl(Inline)]
             get => ref Pattern.Extension;

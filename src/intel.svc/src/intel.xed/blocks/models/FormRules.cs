@@ -4,7 +4,18 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-partial class XedModels
-{
+using static XedModels;
 
+partial class XedZ
+{
+    public record FormRules
+    {
+
+        public readonly List<FormRule> Rules;
+
+        public FormRules()
+        {
+            Rules = new();
+        }
+    }
 }

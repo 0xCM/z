@@ -9,7 +9,7 @@ using Asm;
 
 using static XedModels;
 using static XedRules;
-
+using static XedZ;
 using static sys;
 
 using R = XedRules;
@@ -17,8 +17,6 @@ using RFK = XedRules.FieldKind;
 
 public partial class XedParsers
 {
-    static readonly EnumParser<InstBlockField> BlockFields = new();
-
     static readonly EnumParser<WidthCode> OpWidthParser = new();
 
     static readonly EnumParser<OpAction> OpActions = new();
@@ -439,14 +437,14 @@ public partial class XedParsers
             return default;
 
         var counter = 0u;
-        var _dst = span<InstAttribKind>(count);
+        var _dst = span<InstAttrib>(count);
         for(var i=0; i<count; i++)
         {
             ref var target = ref seek(_dst,i);
             var result = DataParser.eparse(skip(parts,i), out target);
             if(result)
             {
-                if(target != 0)
+                if(target.IsNonEmpty)
                     counter++;
             }
             else
@@ -497,9 +495,7 @@ public partial class XedParsers
     public static bool parse(string src, out OpType dst)
         => OpTypes.Parse(src, out dst);
 
-    public static bool parse(string src, out InstBlockField dst)
-        => BlockFields.Parse(src, out dst);
-
+ 
     public static void parse(string src, out Index<XedFlagEffect> dst)
     {
         var i = text.index(src,Chars.LBracket);
@@ -839,7 +835,7 @@ public partial class XedParsers
     public static bool parse(string src, out ExtensionKind dst)
         => ExtensionKinds.Parse(src, out dst);
 
-    public static bool parse(string src, out Extension dst)
+    public static bool parse(string src, out InstExtension dst)
     {
         dst = default;
         var result = false;

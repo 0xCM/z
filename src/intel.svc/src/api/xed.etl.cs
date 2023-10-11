@@ -9,8 +9,6 @@ using System.Linq;
 
 using static sys;
 using static XedModels;
-using static XedRules;
-using static XedFlows;
 using static XedZ;
 
 partial class XedCmd
@@ -30,7 +28,12 @@ partial class XedCmd
     [CmdOp("xed/blocks")]
     void EmitBlockLines()
     {
-        EmitInstPatterns();
+        var blocks = XedImport.blocks();
+        XedImport.Emit(blocks);
+        var domain = XedImport.domain(blocks);
+        XedImport.Emit(domain);
+        //EmitInstPatterns();
+
     }
 
     [CmdOp("xed/etl")]
@@ -39,15 +42,14 @@ partial class XedCmd
         XedImport.Run();        
     }
 
-
     void EmitInstPatterns()
     {
         var path =  XedPaths.DocSource(XedDocKind.RuleBlocks);
-        var patterns = bag<XedInstBlockPattern>();
-        XedZ.BlockLines(path, spec => {
+        var patterns = bag<InstBlockPattern>();
+        XedZ.lines(path, spec => {
             var attribs = list<Attribute>();
             var result = true;
-            var pattern = new XedInstBlockPattern{Form = spec.Form};
+            var pattern = new InstBlockPattern{Form = spec.Form};
             patterns.Add(pattern);
 
             foreach(var line in spec.Lines)
@@ -57,18 +59,18 @@ partial class XedCmd
                     attribs.Add(attrib);
                     switch(attrib.Field)
                     {
-                        case InstBlockField.iclass:
+                        case BlockFieldName.iclass:
                         {
                             XedParsers.parse(attrib.Value, out pattern.Instruction);
                         }
                         break;
-                        case InstBlockField.pattern:
+                        case BlockFieldName.pattern:
                         {
                             result = XedInstParser.parse(attrib.Value, out pattern.Body);
                         }
                         break;
                         
-                        case InstBlockField.operands:
+                        case BlockFieldName.operands:
                         break;
                     }
                 }
@@ -95,7 +97,7 @@ partial class XedCmd
             record.Index=j++;
         }
 
-        Channel.TableEmit(records, XedPaths.ImportTable<XedInstBlockPattern>());
+        Channel.TableEmit(records, XedPaths.ImportTable<InstBlockPattern>());
     }
 
 }

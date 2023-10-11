@@ -24,7 +24,7 @@ public struct XedInstDefParser
         var @class = XedInstClass.Empty;
         var category = InstCategory.Empty;
         var isa = InstIsa.Empty;
-        var ext = Extension.Empty;
+        var ext = InstExtension.Empty;
         var attribs = InstAttribs.Empty;
         var effects = Index<XedFlagEffect>.Empty;
         while(reader.Next(out var line))
@@ -60,7 +60,7 @@ public struct XedInstDefParser
                                         category = _category;
                                 break;
                                 case P.Extension:
-                                    if(XedParsers.parse(text.despace(value), out Extension _ext))
+                                    if(XedParsers.parse(text.despace(value), out InstExtension _ext))
                                         ext = _ext;
                                 break;
                                 case P.Flags:
@@ -75,7 +75,7 @@ public struct XedInstDefParser
                                             Require.nonzero(_class.Kind);
                                             category = InstCategory.Empty;
                                             isa = InstIsa.Empty;
-                                            ext = Extension.Empty;
+                                            ext = InstExtension.Empty;
                                             attribs = InstAttribs.Empty;
                                             effects = Index<XedFlagEffect>.Empty;
                                             form = XedInstForm.Empty;

@@ -1,11 +1,12 @@
 //-----------------------------------------------------------------------------
-// Derivative Work based on https://github.com/intelxed/xed
-// Author : Chris Moore
-// License: https://github.com/intelxed/xed/blob/main/LICENSE
+// Copyright   :  (c) Chris Moore, 2020
+// License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-partial class XedModels
+using static XedModels;
+
+partial class XedZ
 {
     [StructLayout(StructLayout,Pack=1), Record(TableId)]
     public struct InstBlockImport : ISequential<InstBlockImport>, IComparable<InstBlockImport>
@@ -62,4 +63,3 @@ partial class XedModels
         public static InstBlockImport Empty => default;
     }
 }
-

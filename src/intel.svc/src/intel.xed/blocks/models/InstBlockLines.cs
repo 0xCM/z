@@ -4,7 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-partial class XedModels
+using static XedModels;
+
+partial class XedZ
 {
     public sealed class InstBlockLines : ConcurrentDictionary<XedInstForm,InstBlockLineSpec>
     {
@@ -25,6 +27,6 @@ partial class XedModels
 
         [MethodImpl(Inline)]
         public static implicit operator InstBlockLines(InstBlockLineSpec[] src)
-            => new InstBlockLines(src);
+            => new (src);
     }
 }

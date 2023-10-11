@@ -251,7 +251,7 @@ public class XedWidths
     public static uint bitwidth(EOSZ src)
         => src switch
         {
-            EOSZ8 => 8,
+            EOSZAll => 8,
             EOSZ16 => 16,
             EOSZ32 => 32,
             EOSZ64 => 64,

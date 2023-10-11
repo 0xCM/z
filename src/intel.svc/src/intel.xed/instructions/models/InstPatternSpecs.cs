@@ -7,14 +7,14 @@ namespace Z0;
 
 partial class XedModels
 {
-    public readonly struct PatternSpecs
+    public readonly struct InstPatternSpecs
     {
         public readonly uint PatternId;
 
         readonly Index<InstPatternSpec> Data;
 
         [MethodImpl(Inline)]
-        public PatternSpecs(uint pattern, InstPatternSpec[] src)
+        public InstPatternSpecs(uint pattern, InstPatternSpec[] src)
         {
             PatternId = pattern;
             Data = src;
@@ -57,13 +57,13 @@ partial class XedModels
         }
 
         [MethodImpl(Inline)]
-        public static implicit operator InstPatternSpec[](PatternSpecs src)
+        public static implicit operator InstPatternSpec[](InstPatternSpecs src)
             => src.Data;
 
         [MethodImpl(Inline)]
-        public static implicit operator Index<InstPatternSpec>(PatternSpecs src)
+        public static implicit operator Index<InstPatternSpec>(InstPatternSpecs src)
             => src.Data;
 
-        public static PatternSpecs Empty => new(0u,sys.empty<InstPatternSpec>());
+        public static InstPatternSpecs Empty => new(0u,sys.empty<InstPatternSpec>());
     }
 }

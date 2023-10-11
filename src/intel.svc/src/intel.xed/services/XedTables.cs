@@ -26,6 +26,7 @@ public class XedTables
 
     public static ReadOnlySpan<OpName> OpNames => _OpNames.View;
 
+
     public static B DF32
     {
         [MethodImpl(Inline)]
@@ -170,6 +171,12 @@ public class XedTables
         get => Bytes.sequential<RoundingKind>(0, (byte)RoundingKind.RzSae);
     }
 
+    public static ReadOnlySpan<VsibKind> VsibKinds
+    {
+        [MethodImpl(Inline)]
+        get => Bytes.sequential<VsibKind>(0, (byte)VsibKind.Zmm);
+    }
+    
     public static ReadOnlySpan<LLRC> LLRC
     {
         [MethodImpl(Inline)]

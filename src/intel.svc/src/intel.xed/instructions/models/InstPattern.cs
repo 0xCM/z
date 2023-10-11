@@ -184,7 +184,7 @@ partial class XedModels
             get => ref Spec.Category;
         }
 
-        public ref readonly Extension Extension
+        public ref readonly InstExtension Extension
         {
             [MethodImpl(Inline)]
             get => ref Spec.Extension;

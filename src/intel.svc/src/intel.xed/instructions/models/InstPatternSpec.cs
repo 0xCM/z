@@ -18,7 +18,7 @@ partial class XedModels
 
         public InstCategory Category;
 
-        public Extension Extension;
+        public InstExtension Extension;
 
         public XedInstClass InstClass;
 

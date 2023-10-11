@@ -11,19 +11,33 @@ using static sys;
 using static XedModels;
 using static XedRules;
 using static XedFlows;
+using static XedZ;
 
 using CK = XedRules.RuleCellKind;
 
 public class XedImport : WfSvc<XedImport>
 {     
+    public static RuleBlocks blocks()
+        => XedZ.rules(XedPaths.DocSource(XedDocKind.RuleBlocks));
+
+    public static BlockDomain domain(RuleBlocks src)
+        => XedZ.domain(src);
+
+    public void Emit(RuleBlocks src)
+        => XedZ.emit(Channel, src);
+
+    public void Emit(BlockDomain src)
+        => Channel.FileEmit(src.Format(), XedPaths.Imports().Path("xed.instblocks.domain", FS.ext("txt")));
+
     public void Run()
     {
+        var blocks = RuleBlocks.Empty;
         var ruleT = XedRuleTables.Empty;
         exec(true, 
             () => {
-                var blocks = XedZ.rules(XedPaths.DocSource(XedDocKind.RuleBlocks));
-                XedZ.emit(Channel, blocks);
-                Channel.FileEmit(XedZ.domain(blocks).Format(), XedPaths.Imports().Path("xed.instblocks.domain", FS.ext("txt")));
+                blocks = XedImport.blocks();
+                Emit(blocks);
+                Emit(domain(blocks));
             },
             () => ruleT = CalcRuleTables(),
             () => EmitSeq(CellParser.ruleseq()),
@@ -45,8 +59,8 @@ public class XedImport : WfSvc<XedImport>
                 Emit(inst);
             },
             () => {
-                EmitOpWidths(XedImport.Widths.Details);
-                EmitPointerWidths(XedImport.Widths.Pointers.Where(x => x.Kind != 0).Map(x => x.ToRecord()));
+                EmitOpWidths(Widths.Details);
+                EmitPointerWidths(Widths.Pointers.Where(x => x.Kind != 0).Map(x => x.ToRecord()));
             }
         );
 

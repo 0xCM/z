@@ -6,84 +6,116 @@ namespace Z0;
 
 using static XedModels;
 using static sys;
-
-public class XedZ
-{
-    public sealed class BlockDomain : Dictionary<string,HashSet<RuleAttribute>>
+using N = XedZ.BlockFieldName;
+public partial class XedZ
+{        
+    public class BlockFieldNames
     {
-        public readonly Dictionary<XedFormType,FormRules> Rules = new();
+        public const string attributes = nameof(attributes);
 
-        public string Format()
-        {
-            var dst = text.emitter();
-            foreach(var name in Keys.Array().Sort())
-            {
-                switch(name)
-                {
-                    case BlockFieldNames.opcode_base10:
-                    case BlockFieldNames.comment:
-                        break;
-                    default:
-                    {
-                        var values = this[name].Map(x => x.Value).Sort();
-                        dst.AppendLine($"{name}:["); 
-                        foreach(var value in values)
-                        {
-                            dst.AppendLine($"    {value},");
-                        }
-                        dst.AppendLine("],");
+        public const string comment = nameof(comment);
 
-                    }
-                    break;
-                }
-            }
-            return dst.Emit();
-        }
-    }
+        public const string flags = nameof(flags);
 
-    public static BlockDomain domain(XedRuleBlocks src)
+        public const string opcode_base10 = nameof(opcode_base10);
+
+        public const string operands = nameof(operands);
+
+        public const string pattern = nameof(pattern);
+    }    
+
+    public static BlockDomain domain(RuleBlocks src)
     {
         var imports = src.Imports;
         var domain = new BlockDomain();
         var counter = 0u;
-        iter(imports, import => {            
+        iter(imports, import => {                        
             var block = src.FormBlocks[import.Form];
-            if(parse(import.Form, block, out FormRules rules))
+            Require.notnull(block);
+            if(parse(block, out List<RuleAttribute> rules))
             {
-                domain.Rules.TryAdd(import.Form, rules);
-                foreach(var rule in rules.Rules)
+                foreach(var rule in rules)
                 {
-                    if(rule is RuleAttribute a)
+                    if(rule.IsNonEmpty)
                     {
-                        if(domain.TryGetValue(a.Name, out var _values))
-                            _values.Add(a);
-                        else
-                            domain[a.Name] = hashset(a);
+                        if(BlockFieldParser.parse(rule.Name, out BlockFieldName name))
+                        {
+                            var _rules = hashset<RuleAttribute>();
+                            if(!domain.TryGetValue(name, out _rules))
+                            {
+                                _rules = hashset<RuleAttribute>();
+                                domain[name] = _rules;
+                            }
+
+                            switch(name)
+                            {
+                                case N.attributes:
+                                {
+                                    if(BlockFieldParser.parse(rule.Value, out InstAttribs value))          
+                                    {
+                                        domain.InstAttribs.AddRange(value);
+                                    }   
+                                }
+                                break;
+                                default:
+                                    _rules.Add(rule);
+                                break;
+                            }                            
+                        }
+
                     }
                 }
+                if(block.Count != rules.Count)
+                    @throw("block.Count != _rules.Rules.Count");
             }
 
-            if(block.Count != rules.Rules.Count)
-                @throw("block.Count != _rules.Rules.Count");
+
+                // if(parse(block, out List<RuleAttribute> rules))
+                // {
+                //     foreach(var rule in rules)
+                //     {
+                //         if(rule.IsNonEmpty)
+                //         {
+                //             if(BlockFieldParser.parse(rule.Name, out BlockFieldName name))
+                //             {
+
+                //                 var _rules = hashset<RuleAttribute>();
+                //                 if(!domain.TryGetValue(name, out _rules))
+                //                     domain[name] = _rules;
+                                
+                //                 switch(name)                          
+                //                 {
+                //                     case N.attributes:
+                //                     {
+                //                         if(BlockFieldParser.parse(rule.Value, out InstAttribs value))          
+                //                         {
+                //                             domain.InstAttribs.AddRange(value);
+                //                         }   
+                //                     }
+                //                     break;
+                //                     default:
+                //                         _rules.Add(rule);
+                //                     break;
+                //                 }
+                //             }
+                //             else
+                //                 @throw($"Unknown field:{rule.Name}");
+
+                //         }
+                //     }
+                // }
+
+                // if(block.Count != rules.Count)
+                //     @throw("block.Count != _rules.Rules.Count");
+
         });
 
         return domain;        
     }
 
-    public static bool parse(string src, out AsmOpCodeClass dst)
+    public static bool parse(List<string> lines, out List<RuleAttribute> dst)
     {
-        dst = src switch {
-            "evex" => AsmOpCodeClass.Evex,
-            "vex" => AsmOpCodeClass.Vex,
-            "xop" => AsmOpCodeClass.Xop,
-            _ => AsmOpCodeClass.Legacy
-        };
-        return true;
-    }
-    
-    public static bool parse(XedInstForm form, List<string> lines, out FormRules dst)
-    {
-        dst = new(form);
+        dst = new();
         foreach(var line in lines)
         {
             var i = text.index(line, Chars.Colon);
@@ -91,104 +123,51 @@ public class XedZ
             {
                 var name = text.left(line,i);
                 var value = text.trim(text.right(line,i));
-                switch(name)
-                {
-                    case BlockFieldNames.pattern:
-                    case BlockFieldNames.operands:
-                    {
-                        var parts = text.trim(text.split(value, Chars.Space));
-                        dst.Rules.Add(new Vector(name,parts));
-                    }                    
-                    break;
-                    case BlockFieldNames.flags:
-                    {
-                        var m = text.index(value,Chars.LBracket);
-                        var n = text.index(value,Chars.RBracket);
-                        if(m > 0 && n > m)
-                        {
-                            var parts = text.trim(text.split(text.inside(value,m,n),Chars.Space));
-                            dst.Rules.Add(new List(name,parts));
-                        }
-                    }
-                    break;
-                    case BlockFieldNames.attributes:
-                        dst.Rules.Add(new List(name,text.trim(text.split(value, Chars.Space))));
-                    break;
-                    default:
-                    {
-                        if(nonempty(value))
-                        {
+                dst.Add(new(name,value));
+                // switch(name)
+                // {
+                //     case BlockFieldNames.pattern:
+                //     case BlockFieldNames.operands:
+                //     {
+                //         var parts = text.trim(text.split(value, Chars.Space));
+                //         dst.Rules.Add(new Vector(name,parts));
+                //     }                    
+                //     break;
+                //     case BlockFieldNames.flags:
+                //     {
+                //         var m = text.index(value,Chars.LBracket);
+                //         var n = text.index(value,Chars.RBracket);
+                //         if(m > 0 && n > m)
+                //         {
+                //             var parts = text.trim(text.split(text.inside(value,m,n),Chars.Space));
+                //             dst.Rules.Add(new List(name,parts));
+                //         }
+                //     }
+                //     break;
+                //     case BlockFieldNames.attributes:
+                //         dst.Rules.Add(new List(name,text.trim(text.split(value, Chars.Space))));
+                //     break;
+                //     default:
+                //     {
+                //         if(nonempty(value))
+                //         {
 
-                            if(value[0] == Chars.LBracket && value[value.Length - 1] == Chars.RBracket)
-                                dst.Rules.Add(new List(name,text.trim(text.split(text.inside(value,0, value.Length - 1), Chars.Comma))));
-                            else
-                                dst.Rules.Add(new RuleAttribute(name,value));
-                        }
-                        else
-                        {
-                            dst.Rules.Add(new RuleAttribute(name,EmptyString));
-                        }        
-                    }
-                    break;
-                }
+                //             if(value[0] == Chars.LBracket && value[value.Length - 1] == Chars.RBracket)
+                //                 dst.Rules.Add(new List(name,text.trim(text.split(text.inside(value,0, value.Length - 1), Chars.Comma))));
+                //             else
+                //                 dst.Rules.Add(new RuleAttribute(name,value));
+                //         }
+                //         else
+                //         {
+                //             dst.Rules.Add(new RuleAttribute(name,EmptyString));
+                //         }        
+                //     }
+                //     break;
+                // }
             }
         }
         
         return true;
-    }
-
-    public abstract class FormRule
-    {
-        public readonly string Name;
-
-        protected FormRule(string name)
-        {
-            Name = name;
-        }
-
-        public abstract string Format();
-
-        public override string ToString()
-            => Format();
-    }
-
-    public class RuleAttribute : FormRule, IEquatable<RuleAttribute>, IComparable<RuleAttribute>
-    {
-        public readonly string Value;
-
-        public RuleAttribute(string name, string value)
-            : base(name)
-        {
-            Value = value;
-        }
-
-        public Hash32 Hash
-        {
-            get => hash(Name) | hash(Value);
-        }
-        
-        public override int GetHashCode()
-            => Hash;
-
-        public override string Format()
-            => $"{Name}: {Value}";
-
-        public override string ToString()
-            => Format();
-
-        public int CompareTo(RuleAttribute src)
-        {
-            var result = Name.CompareTo(src.Name);
-            if(result == 0)
-                result = Value.CompareTo(src.Value);
-            return result;
-        }
-
-        public bool Equals(RuleAttribute src)
-            => Name == src.Name && Value == src.Value;
-
-        public override bool Equals(object src)
-            => src is RuleAttribute x && Equals(x);
     }
 
     public abstract class Sequence : FormRule
@@ -233,48 +212,6 @@ public class XedZ
 
         protected override Fence<char> Boundary => ('<', '>');
     }
-    
-    public class List : Sequence
-    {
-        public List(string name, string[] terms)
-            : base(name, terms)
-        {
-        }        
-        
-        protected override Fence<char> Boundary => ('[', ']');
-    }
-
-    public record FormRules
-    {
-        public readonly XedInstForm Form;
-
-        public readonly List<FormRule> Rules;
-
-        public FormRules(XedInstForm form)
-        {
-            Form = form;
-            Rules = new();
-        }
-    }
-
-    public readonly record struct Attribute
-    {
-        public readonly InstBlockField Field;
-
-        public readonly string Value;
-
-        public Attribute(InstBlockField name, string value)
-        {
-            Field = name;
-            Value = value;
-        }
-
-        public bool IsNonEmpty
-        {
-            get => Field != 0 || nonempty(Value);
-        }
-        public static Attribute Empty => new(default,EmptyString);
-    }
 
     public static bool parse(string src, out Attribute dst)
     {
@@ -283,7 +220,7 @@ public class XedZ
         {
             var name = text.trim(text.left(src,i));
             var value = text.trim(text.right(src,i));
-            XedParsers.parse(name, out InstBlockField field);
+            BlockFieldParser.parse(name, out BlockFieldName field);
             dst = new(field, value);
         }
         else
@@ -291,11 +228,11 @@ public class XedZ
         return dst.IsNonEmpty;
     }
 
-    public static XedRuleBlocks rules(FilePath path)
+    public static RuleBlocks rules(FilePath path)
     {
         using var src = MemoryFiles.map(path);
         var stats = AsciLines.stats(src.Bytes, 400000);
-        var dst = new XedRuleBlocks();
+        var dst = new RuleBlocks();
         var ds = new BlockImportDatasets();
         var lines = Lines.lines(src);
         CalcBlockLines(lines, ds);
@@ -311,10 +248,10 @@ public class XedZ
         return dst;
     }
 
-    public static void emit(IWfChannel channel, XedRuleBlocks src)
+    public static void emit(IWfChannel channel, RuleBlocks src)
     {
         exec(true,
-            () => EmitRecords(channel,src),
+            () => channel.TableEmit(src.Imports, XedPaths.Imports().Table<InstBlockImport>()),
             () => EmitBlockDetail(channel, src),
             () => EmitLineMap(channel, src),
             () => EmitStats(channel, src.Stats));
@@ -323,20 +260,13 @@ public class XedZ
     static void EmitStats(IWfChannel channel, ReadOnlySpan<LineStats> src)
         => Emit(channel, src);
 
-    static void EmitLineMap(IWfChannel channel, XedRuleBlocks src)
+    static void EmitLineMap(IWfChannel channel, RuleBlocks src)
         => EmitLineMap(channel, src.LineMap);
 
     static void Emit(IWfChannel channel, ReadOnlySpan<LineStats> src)
         => AsciLines.emit(src, XedPaths.Imports().Path("xed.instblocks.stats", FileKind.Csv));
 
-    static void EmitRecords(IWfChannel channel, XedRuleBlocks src)
-    {
-        channel.TableEmit(src.Imports, XedPaths.Imports().Table<InstBlockImport>());
-        var file = FS.file($"{CsvTables.filename<InstBlockImport>().WithoutExtension.Format()}.duplicates", FS.Csv);
-        channel.TableEmit(src.Duplicates, XedPaths.Imports().Path(file));
-    }
-
-    static void EmitBlockDetail(IWfChannel channel, XedRuleBlocks src)
+    static void EmitBlockDetail(IWfChannel channel, RuleBlocks src)
     {
         var path = XedPaths.Imports().Path("xed.instblocks.detail", FileKind.Txt);
         var emitter = text.emitter();
@@ -400,13 +330,13 @@ public class XedZ
         return result;
     }
 
-    public static void BlockLines(FilePath path, Action<InstBlockLineSpec> dst)
+    public static void lines(FilePath path, Action<InstBlockLineSpec> dst)
     {
         using var src = MemoryFiles.map(path);
-        BlockLines(Lines.lines(src), dst);        
+        lines(Lines.lines(src), dst);        
     }
 
-    static void BlockLines(ReadOnlySpan<string> src, Action<InstBlockLineSpec> dst)
+    static void lines(ReadOnlySpan<string> src, Action<InstBlockLineSpec> dst)
     {
         const string FirstItemMarker = "amd_3dnow_opcode:";
         const string LastItemMarker = "EOSZ_LIST:";
@@ -417,7 +347,7 @@ public class XedZ
         var form = XedInstForm.Empty;
         var name = EmptyString;
         var value = EmptyString;
-        var field = InstBlockField.amd_3dnow_opcode;
+        var field = BlockFieldName.amd_3dnow_opcode;
         var counter = 0u;
         var min = 0u;
         var seq = 0u;
@@ -428,7 +358,7 @@ public class XedZ
             counter += (uint)line.Length;
             if(split(line, out name, out value))
             {
-                if(XedParsers.parse(name, out field))
+                if(BlockFieldParser.parse(name, out field))
                     fields.Fields[field] = bit.On;
             }
             if(text.begins(line,FirstItemMarker))
@@ -465,7 +395,7 @@ public class XedZ
         var form = XedInstForm.Empty;
         var name = EmptyString;
         var value = EmptyString;
-        var field = InstBlockField.amd_3dnow_opcode;
+        var field = BlockFieldName.amd_3dnow_opcode;
         var counter = 0u;
         var min = 0u;
         var seq = 0u;
@@ -476,7 +406,7 @@ public class XedZ
             counter += (uint)line.Length;
             if(split(line, out name, out value))
             {
-                if(XedParsers.parse(name, out field))
+                if(BlockFieldParser.parse(name, out field))
                     fields.Fields[field] = bit.On;
             }
             if(text.begins(line,FirstItemMarker))
@@ -509,20 +439,20 @@ public class XedZ
         switch(src.Field)
         {
             
-            case InstBlockField.iclass:
+            case BlockFieldName.iclass:
                 XedParsers.parse(src.Value, out dst.Class);
             break;
-            case InstBlockField.opcode:
+            case BlockFieldName.opcode:
                 HexParser.parse(src.Value, out dst.OpCodeValue);
             break;
-            case InstBlockField.space:
-                parse(src.Value, out dst.OpCodeClass);
+            case BlockFieldName.space:
+                BlockFieldParser.parse(src.Value, out dst.OpCodeClass);
             break;
-            case InstBlockField.map:
+            case BlockFieldName.map:
                 DataParser.parse(src.Value, out dst.OpCodeMap);
             break;
 
-            case InstBlockField.pattern:
+            case BlockFieldName.pattern:
             {
                 try
                 {
@@ -566,38 +496,6 @@ public class XedZ
         }
     }
 
-    public class XedRuleBlocks
-    {
-        public ReadOnlySeq<LineStats> Stats = sys.empty<LineStats>();
-
-        public SortedLookup<XedInstForm,uint> Forms = dict<XedInstForm,uint>();
-
-        public Index<InstBlockImport> Imports = sys.empty<InstBlockImport>();
-
-        public Index<InstBlockImport> Duplicates = sys.empty<InstBlockImport>();
-
-        public InstBlockLines BlockLines = new();
-
-        public LineMap<InstBlockLineSpec> LineMap = new();
-
-        public ConcurrentDictionary<XedInstForm,List<string>> FormBlocks = new();
-
-        public ConcurrentDictionary<XedInstForm,string> FormHeaders = new();
-
-        public XedRuleBlocks()
-        {
-
-        }
-
-        public List<string> Description(XedInstForm form)
-            => FormBlocks[form];
-
-        public string Header(XedInstForm form)
-            => FormHeaders[form];
-
-        public static XedRuleBlocks Empty => new();
-    }
-
     class FormImportDatasets
     {
         public ConcurrentDictionary<XedInstForm,List<string>> Descriptions = new();
@@ -616,6 +514,11 @@ public class XedZ
                 var seq = Sorted[form];
                 Descriptions[form] = content;
                 Headers[form] = string.Format("{0,-64} | {1:D5} | {2:D2} | {3:D6} | {4:D6}", form, seq, line.LineCount, line.MinLine, line.MaxLine);
+            }
+            else
+            {
+                Descriptions[form] = list<string>();
+                Headers[form] = EmptyString;
             }
         }
     }

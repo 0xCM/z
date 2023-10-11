@@ -4,7 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-partial class XedModels
+using static XedModels;
+
+partial class XedZ
 {
     [StructLayout(LayoutKind.Sequential,Pack=1), Record(TableId)]
     public struct InstBlockLineSpec
@@ -33,7 +35,7 @@ partial class XedModels
         public XedInstForm Form;
 
         [Render(128)]
-        public BitVector64<InstBlockField> Fields;
+        public BitVector64<BlockFieldName> Fields;
 
         [Render(1)]
         public ReadOnlySeq<string> Lines;

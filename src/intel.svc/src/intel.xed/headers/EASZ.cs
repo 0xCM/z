@@ -8,10 +8,10 @@ namespace Z0;
 partial class XedModels
 {
     [SymSource(xed), DataWidth(3,8)]
-    public enum EASZ : sbyte
+    public enum EASZ : byte
     {
         [Symbol("")]
-        None = 0,
+        EASZAll = 0,
 
         [Symbol("16", "EASZ=1")]
         EASZ16 = 1,

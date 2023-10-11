@@ -7,16 +7,16 @@ namespace Z0;
 
 partial class XedModels
 {
-    public readonly struct InstAttribs : IIndex<InstAttribKind>
+    public readonly struct InstAttribs
     {
         [MethodImpl(Inline)]
-        public Bitset128<InstAttribKind> Bitset()
+        public Bitset128<InstAttrib> Bitset()
             => Bitsets.init(n128, Storage);
 
-        readonly Index<InstAttribKind> Data;
+        readonly Index<InstAttrib> Data;
 
         [MethodImpl(Inline)]
-        public InstAttribs(InstAttribKind[] src)
+        public InstAttribs(InstAttrib[] src)
         {
             Data = src;
         }
@@ -33,7 +33,7 @@ partial class XedModels
             get => Data.IsNonEmpty;
         }
 
-        public InstAttribKind[] Storage
+        public InstAttrib[] Storage
         {
             [MethodImpl(Inline)]
             get => Data;
@@ -45,13 +45,13 @@ partial class XedModels
             get => Data.Count;
         }
 
-        public ref InstAttribKind this[int i]
+        public ref InstAttrib this[int i]
         {
             [MethodImpl(Inline)]
             get => ref Data[i];
         }
 
-        public ref InstAttribKind this[uint i]
+        public ref InstAttrib this[uint i]
         {
             [MethodImpl(Inline)]
             get => ref Data[i];
@@ -70,17 +70,17 @@ partial class XedModels
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator InstAttribs(InstAttribKind[] src)
-            => new InstAttribs(src);
+        public static implicit operator InstAttribs(InstAttrib[] src)
+            => new (src);
 
         [MethodImpl(Inline)]
-        public static implicit operator InstAttribKind[](InstAttribs src)
+        public static implicit operator InstAttrib[](InstAttribs src)
             => src.Data;
 
         [MethodImpl(Inline)]
-        public static implicit operator Index<InstAttribKind>(InstAttribs src)
+        public static implicit operator Index<InstAttrib>(InstAttribs src)
             => src.Data;
 
-        public static InstAttribs Empty => sys.empty<InstAttribKind>();
+        public static InstAttribs Empty => sys.empty<InstAttrib>();
     }
 }

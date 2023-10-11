@@ -8,12 +8,12 @@ namespace Z0;
 partial class XedModels
 {
     [DataWidth(8)]
-    public readonly record struct Extension
+    public readonly record struct InstExtension
     {
         public readonly ExtensionKind Kind;
 
         [MethodImpl(Inline)]
-        public Extension(ExtensionKind src)
+        public InstExtension(ExtensionKind src)
         {
             Kind = src;
         }
@@ -25,13 +25,13 @@ partial class XedModels
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator Extension(ExtensionKind src)
-            => new Extension(src);
+        public static implicit operator InstExtension(ExtensionKind src)
+            => new InstExtension(src);
 
         [MethodImpl(Inline)]
-        public static implicit operator ExtensionKind(Extension src)
+        public static implicit operator ExtensionKind(InstExtension src)
             => src.Kind;
 
-        public static Extension Empty => default;
+        public static InstExtension Empty => default;
     }
 }

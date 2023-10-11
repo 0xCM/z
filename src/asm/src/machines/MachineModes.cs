@@ -60,7 +60,7 @@ public class MachineModes
     }
 
     [SymSource("xed"), DataWidth(3)]
-    public enum MachineModeClass : sbyte
+    public enum MachineModeClass : byte
     {
         [Symbol("16", "MODE=0")]
         Mode16 = 0,
