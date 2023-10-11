@@ -122,7 +122,7 @@ partial class XedZ
                 case "o16": dst = EOSZ.EOSZ16; break;
                 case "o32": dst = EOSZ.EOSZ32; break;
                 case "o64": dst = EOSZ.EOSZ64; break;
-                case "oszall": dst = EOSZ.EOSZAll; break;
+                case "oszall": dst = EOSZ.EOSZ8; break;
             }
 
             return dst <= EOSZ.EOSZ64;

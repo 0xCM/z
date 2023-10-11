@@ -229,7 +229,7 @@ partial class XedRules
 
         [MethodImpl(Inline), Op]
         static MacroSpec eosz8()
-            => assign(M.eosz8, K.EOSZ, EOSZAll);
+            => assign(M.eosz8, K.EOSZ, EOSZ8);
 
         [MethodImpl(Inline), Op]
         static MacroSpec eosz16()
@@ -415,7 +415,7 @@ partial class XedRules
 
         [MethodImpl(Inline), Op]
         static MacroSpec no66_prefix()
-            => assign(M.no66_prefix, K.OSZ, EOSZAll);
+            => assign(M.no66_prefix, K.OSZ, EOSZ8);
 
         [MethodImpl(Inline), Op]
         static MacroSpec f2_prefix()
@@ -468,7 +468,7 @@ partial class XedRules
         static MacroSpec osz_refining_prefix()
             => assign(M.osz_refining_prefix,
                 assign(K.REP, P.None),
-                assign(K.EOSZ, EOSZAll)
+                assign(K.EOSZ, EOSZ8)
                 );
 
         [MethodImpl(Inline), Op]

@@ -57,32 +57,32 @@ partial class XedModels
         public bool IsNonTerminal
         {
             [MethodImpl(Inline)]
-            get => Xed.nonterm(this, out _);
+            get => XedPatterns.nonterm(this, out _);
         }
 
         [MethodImpl(Inline)]
         public bool Nonterminal(out Nonterminal dst)
-            => Xed.nonterm(this, out dst);
+            => XedPatterns.nonterm(this, out dst);
 
         [MethodImpl(Inline)]
         public bool RegLiteral(out Register dst)
-            => Xed.reglit(this, out dst);
+            => XedPatterns.reglit(this, out dst);
 
         [MethodImpl(Inline)]
         public bool WidthCode(out WidthCode dst)
-            => Xed.widthcode(this, out dst);
+            => XedPatterns.widthcode(this, out dst);
 
         [MethodImpl(Inline)]
         public bool ElementType(out ElementType dst)
-            => Xed.etype(this, out dst);
+            => XedPatterns.etype(this, out dst);
 
         [MethodImpl(Inline)]
         public bool Visibility(out Visibility dst)
-            => Xed.visibility(this, out dst);
+            => XedPatterns.visibility(this, out dst);
 
         [MethodImpl(Inline)]
         public bool Action(out OpAction dst)
-            => Xed.action(this, out dst);
+            => XedPatterns.action(this, out dst);
 
         [MethodImpl(Inline)]
         public bool Scale(out MemoryScale dst)
@@ -90,7 +90,7 @@ partial class XedModels
 
         [MethodImpl(Inline)]
         public bool Broadcast(out BroadcastKind dst)
-            => Xed.broadcast(this, out dst);
+            => XedPatterns.broadcast(this, out dst);
 
         public string Format()
             => XedRender.format(this);

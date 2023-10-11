@@ -5,9 +5,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static XedModels;
 using Asm;
 
+using static XedModels;
+using static sys;
 using static MachineModes;
 
 using M = XedModels;
@@ -18,11 +19,14 @@ using U3 = ReadOnlySpan<uint3>;
 
 public class XedTables
 {
+
     static readonly ReadOnlySeq<OpName> _OpNames = Symbols.index<OpNameKind>().Kinds.Map(x => new OpName(x));
 
     static readonly ReadOnlySeq<XedRegId> _Regs = Symbols.index<XedRegId>().Kinds.ToArray();
 
     static ReadOnlySpan<byte> _DISP_WIDTH => new byte[]{(byte)DispWidth.None, (byte)DispWidth.DW8, (byte)DispWidth.DW16, (byte)DispWidth.DW32, (byte)DispWidth.DW64};
+
+    static readonly Index<AsmBroadcast> _BroadcastDefs = XedTables.broadcasts(Symbols.kinds<BroadcastKind>());
 
     public static ReadOnlySpan<OpName> OpNames => _OpNames.View;
 
@@ -344,4 +348,19 @@ public class XedTables
         [MethodImpl(Inline)]
         get => Bytes.sequential<bit>(0, 1);
     }
+
+    public static ref readonly Index<AsmBroadcast> Broadcasts
+    {
+        [MethodImpl(Inline), Op]
+        get => ref _BroadcastDefs;
+    }
+
+
+    public static Index<AsmBroadcast> broadcasts(ReadOnlySpan<BroadcastKind> src)
+    {
+        var dst = alloc<AsmBroadcast>(src.Length);
+        for(var j=0; j<src.Length; j++)
+            seek(dst,j) = asm.broadcast(skip(src,j));
+        return dst;
+    }    
 }

@@ -17,11 +17,11 @@ partial class Xed
         dst.Name = src.Name;
         var wc = WidthCode.INVALID;
         ref readonly var attribs = ref src.Attribs;
-        Xed.nonterm(src, out dst.NonTerminal);
-        Xed.visibility(src, out dst.Visibility);
-        Xed.action(src, out dst.Action);
-        Xed.modifier(src, out dst.Modifier);
-        if(Xed.widthcode(src, out wc))
+        XedPatterns.nonterm(src, out dst.NonTerminal);
+        XedPatterns.visibility(src, out dst.Visibility);
+        XedPatterns.action(src, out dst.Action);
+        XedPatterns.modifier(src, out dst.Modifier);
+        if(XedPatterns.widthcode(src, out wc))
         {
             dst.WidthCode = wc;
             var w = XedWidths.width(mode,wc);

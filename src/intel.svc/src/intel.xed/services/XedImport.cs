@@ -15,7 +15,7 @@ using static XedZ;
 
 using CK = XedRules.RuleCellKind;
 
-public class XedImport : WfSvc<XedImport>
+public partial class XedImport : WfSvc<XedImport>
 {     
     public static RuleBlocks blocks()
         => XedZ.rules(XedPaths.DocSource(XedDocKind.RuleBlocks));
@@ -48,7 +48,7 @@ public class XedImport : WfSvc<XedImport>
             () => Channel.TableEmit(XedRegMap.Service.REntries, XedPaths.ImportTable<RegMapEntry>("rmap")),
             () => Channel.TableEmit(XedRegMap.Service.XEntries, XedPaths.ImportTable<RegMapEntry>("xmap")),
             () => EmitChipCodes(Symbols.symkinds<ChipCode>()),
-            () => EmitBroadcastDefs(Xed.broadcasts(Symbols.kinds<BroadcastKind>())),
+            () => EmitBroadcastDefs(XedTables.broadcasts(Symbols.kinds<BroadcastKind>())),
             () => EmitCpuIdDataset(CalcCpuIdDataset(XedPaths.DocSource(XedDocKind.CpuId))),
             () => {
                 var chips = Chips(XedPaths.DocSource(XedDocKind.ChipMap));

@@ -26,7 +26,7 @@ public class XedInstRender
         src.WidthCode(out var w);
         var bw = XedWidths.width(mode,w).Bits;
         var wi = XedWidths.describe(w);
-        if(Xed.reglit(src, out Register reg))
+        if(XedPatterns.reglit(src, out Register reg))
             bw = XedWidths.width(reg);
 
         var seg = EmptyString;

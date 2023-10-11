@@ -29,16 +29,4 @@ partial class Xed
 
     static Dictionary<AsmOpCodeClass,Index<InstGroupSeq>> groupseq(Index<InstGroup> src)
         => src.SelectMany(x => x.Members.Select(x => x.Seq)).GroupBy(x => x.OpCodeClass).Select(x => (x.Key, x.Index())).ToDictionary();
-
-    [MethodImpl(Inline), Op]
-    public static bool etype(in PatternOp src, out ElementType dst)
-    {
-        var result = XedPatterns.first(src.Attribs, OpAttribKind.ElementType, out var attrib);
-        if(result)
-            dst = attrib.ToElementType();
-        else
-            dst = XedModels.ElementType.Empty;
-
-        return result;
-    }
 }

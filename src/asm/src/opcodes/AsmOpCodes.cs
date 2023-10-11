@@ -25,6 +25,7 @@ public partial class AsmOpCodes
 {
     public const string group = "asm.opcodes";
 
+
     public static K kind(AsmOpCodeClass @class, byte number)
     {
         var kind = K.None;

@@ -7,11 +7,5 @@ namespace Z0;
 
 partial class Xed
 {
-    public static AsmOpCodeClass occlass(XedVexClass src)
-        => src switch {
-            XedVexClass.VV1 =>AsmOpCodeClass.Vex,
-            XedVexClass.EVV => AsmOpCodeClass.Evex,
-            XedVexClass.XOPV => AsmOpCodeClass.Xop,
-            _ => AsmOpCodeClass.Legacy
-        };
+
 }

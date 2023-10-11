@@ -29,7 +29,7 @@ public readonly struct XedFormImports
         {
             var result = parse(skip(src,i), i, out seek(dst,i));
             if(result.Fail)
-                term.warn(Events.warn(typeof(XedFlows), result.Message).Format());
+                term.warn(Events.warn(typeof(XedFormImports), result.Message).Format());
         }
     }
 
