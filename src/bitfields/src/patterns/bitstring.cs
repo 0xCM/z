@@ -12,7 +12,7 @@ namespace Z0
         {
             var segments = segs(src.Pattern);
             var count = segments.Count;
-            Span<char> buffer = stackalloc char[src.Pattern.Length];
+            Span<char> buffer = stackalloc char[src.Pattern.PatternLength];
             var j=0u;
             for(var i=0; i<count; i++)
             {

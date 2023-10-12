@@ -105,21 +105,6 @@ public partial class XedZ
         }
     }
 
-    public class Vector : Sequence
-    {
-        public Vector(string name)
-            : base(name)
-        {
-        }        
-
-        public Vector(string name, string[] terms)
-            : base(name, terms)
-        {
-        }
-
-        protected override Fence<char> Boundary => ('<', '>');
-    }
-
     public static RuleBlocks rules(FilePath path)
     {
         using var src = MemoryFiles.map(path);

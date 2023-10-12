@@ -5,20 +5,20 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static XedModels;
 using static XedRules;
 using static XedModels.RuleName;
 
 partial class XedRuleSeq
 {
     /*
-    SEQUENCE ISA_EMIT
-        PREFIX_ENC_EMIT()
-        REX_PREFIX_ENC_EMIT() | VEXED_REX_EMIT()
-        INSTRUCTIONS_EMIT()
+    ISA()::
+    PREFIXES() OSZ_NONTERM() ASZ_NONTERM() EVEX_SPLITTER() |
     */
-    public static SeqDef ISA_EMIT() => emit(nameof(ISA_EMIT), new []{
-        PREFIX_ENC,
-        VEXED_REX,
-        INSTRUCTIONS
-    });
+    public static SeqDef ISA() => def(nameof(ISA), RuleTableKind.DEC,
+        PREFIXES,
+        OSZ_NONTERM,
+        ASZ_NONTERM,
+        EVEX_SPLITTER
+        );
 }

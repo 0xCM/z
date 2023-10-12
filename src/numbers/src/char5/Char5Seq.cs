@@ -207,19 +207,19 @@ public readonly record struct Char5Seq
 
     [MethodImpl(Inline)]
     public static explicit operator Char5Seq(ulong src)
-        => new Char5Seq(src);
+        => new (src);
 
     [MethodImpl(Inline)]
     public static implicit operator Char5Seq(char c)
-        => new Char5Seq(Char5.parse(c));
+        => new (Char5.parse(c));
 
     [MethodImpl(Inline)]
     public static implicit operator Char5Seq(ReadOnlySpan<Char5> src)
-        => new Char5Seq(src);
+        => new (src);
 
     [MethodImpl(Inline)]
     public static implicit operator Char5Seq(Span<Char5> src)
-        => new Char5Seq(src);
+        => new (src);
 
     public static Char5Seq Empty => default;
 }

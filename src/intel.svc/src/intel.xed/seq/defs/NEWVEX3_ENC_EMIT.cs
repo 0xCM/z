@@ -12,12 +12,20 @@ using static XedModels.RuleName;
 partial class XedRuleSeq
 {
     /*
-    SEQUENCE UISA_VMODRM_XMM_EMIT
-        VSIB_ENC_EMIT()
-        DISP_NT_EMIT()
+    SEQUENCE NEWVEX3_ENC_EMIT
+        VEX_TYPE_ENC_EMIT
+        VEX_REXR_ENC_EMIT
+        VEX_REXXB_ENC_EMIT
+        VEX_MAP_ENC_EMIT
+        VEX_REG_ENC_EMIT
+        VEX_ESCVL_ENC_EMIT
     */
-    public static SeqDef UISA_VMODRM_XMM_EMIT() => emit(nameof(UISA_VMODRM_XMM_EMIT), new RuleName[]{
-        VSIB_ENC,
-        DISP_NT,
+    public static SeqDef NEWVEX3_ENC_EMIT() => emit(nameof(NEWVEX3_ENC_EMIT), new RuleName[]{
+        VEX_TYPE_ENC_EMIT,
+        VEX_REXR_ENC_EMIT,
+        VEX_REXXB_ENC_EMIT,
+        VEX_MAP_ENC_EMIT,
+        VEX_REG_ENC_EMIT,
+        VEX_ESCVL_ENC_EMIT,
         });
 }

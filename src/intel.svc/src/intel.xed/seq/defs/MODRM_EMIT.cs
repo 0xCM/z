@@ -12,21 +12,12 @@ using static XedModels.RuleName;
 partial class XedRuleSeq
 {
     /*
-    SEQUENCE NEWVEX_ENC_EMIT
-        VEX_TYPE_ENC_EMIT
-        VEX_REXR_ENC_EMIT
-        VEX_REXXB_ENC_EMIT
-        VEX_MAP_ENC_EMIT
-        VEX_REG_ENC_EMIT
-        VEX_ESCVL_ENC_EMIT
+    SEQUENCE MODRM_EMIT
+        SIB_NT_EMIT()
+        DISP_NT_EMIT()
     */
-    public static SeqDef NEWVEX_ENC_EMIT() => emit(nameof(NEWVEX_ENC_EMIT), new RuleName[]{
-        VEX_TYPE_ENC,
-        VEX_REXR_ENC,
-        VEX_REXXB_ENC,
-        VEX_MAP_ENC,
-        VEX_REG_ENC,
-        VEX_ESCVL_ENC,
+    public static SeqDef MODRM_EMIT() => emit(nameof(MODRM_EMIT), new RuleName[]{
+        SIB_NT_EMIT,
+        DISP_NT_EMIT,
     });
-
 }

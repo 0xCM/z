@@ -12,12 +12,12 @@ using static XedModels.RuleName;
 partial class XedRuleSeq
 {
     /*
-    SEQUENCE VMODRM_YMM_EMIT
+    SEQUENCE UISA_VMODRM_XMM_EMIT
         VSIB_ENC_EMIT()
         DISP_NT_EMIT()
     */
-    public static SeqDef VMODRM_YMM_EMIT() => emit(nameof(VMODRM_YMM_EMIT), new RuleName[]{
-        VSIB_ENC,
-        DISP_NT,
+    public static SeqDef UISA_VMODRM_XMM_EMIT() => emit(nameof(UISA_VMODRM_XMM_EMIT), new RuleName[]{
+        VSIB_ENC_EMIT,
+        DISP_NT_EMIT,
         });
 }
