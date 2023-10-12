@@ -9,7 +9,7 @@ using static MachineModes;
 using static XedRules;
 using static XedModels;
 
-partial struct XedCells
+partial class XedCells
 {
     [MethodImpl(Inline), Op]
     public static MachineMode mode(in InstCells src)

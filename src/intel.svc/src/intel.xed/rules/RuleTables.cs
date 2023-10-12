@@ -9,12 +9,12 @@ partial class XedRules
 {
     public class XedRuleTables
     {
-        Index<TableCriteria> _Criteria;
+        Seq<TableCriteria> _Criteria;
 
         TableSpecs _Specs;
 
         [MethodImpl(Inline)]
-        internal ref readonly Index<TableCriteria> Criteria()
+        internal ref readonly Seq<TableCriteria> Criteria()
             => ref _Criteria;
 
         [MethodImpl(Inline)]
@@ -27,7 +27,7 @@ partial class XedRules
             _Specs = TableSpecs.Empty;
         }
 
-        public XedRuleTables(Index<TableCriteria> criteria, TableSpecs specs)
+        public XedRuleTables(Seq<TableCriteria> criteria, TableSpecs specs)
         {
             _Criteria = criteria;
             _Specs = specs;

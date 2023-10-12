@@ -17,6 +17,8 @@ public partial class XedParsers
 
     static readonly EnumParser<OpAction> OpActions = new();
 
+    static readonly EnumParser<AsmVL> AsmVLParser = new();
+
     static readonly EnumParser<MmxRegId> MmxRegs = new();
 
     static readonly EnumParser<OpType> OpTypes = new();
@@ -105,6 +107,9 @@ public partial class XedParsers
 
     }
 
+    public static bool parse(string src, out AsmVL dst)
+        => AsmVLParser.Parse(src, out dst);
+        
     public static bool parse(string src, out InstAttribs dst)
     {
         dst = InstAttribs.Empty;

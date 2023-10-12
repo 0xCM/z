@@ -7,7 +7,7 @@ namespace Z0;
 
 using Asm;
 
-partial class XedFields
+partial class XedFieldWriter
 {
     [Op]
     public static ref XedFieldState update(in EncodingOffsets src, AsmHexCode code, ref XedFieldState dst)

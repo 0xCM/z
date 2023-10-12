@@ -27,50 +27,47 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         return new XedDisasmDoc(summary, detail(summary));
     }
 
-    public bool Import(XedDisasmDoc src)
+    public XedDisasmDoc Import(XedDisasmContext context, XedDisasmDoc src)
     {
-        var path = src.SourcePath;
-        var flow = Channel.Running($"Collecting disassembly content from {path.ToUri()}");
-        EmitDetails(src);
-        EmitOps(src);
-        EmitSummaries(src);
-        EmitChecks(src);
-        Channel.Ran(flow,$"Collected disassembly content from {path.ToUri()}");
-        return true;
+        exec(true, 
+            () => EmitDetails(context, src),
+            () => EmitOps(context, src),
+            () => EmitSummaries(context, src),
+            () => EmitChecks(context, src)
+            );
+        return src;
     }
 
-    public void EmitDetails(XedDisasmDoc src)
+    public void EmitDetails(XedDisasmContext context, XedDisasmDoc src)
     {
         var path = XedPaths.DisasmDetailPath(src.SourcePath);
         var emitting = Channel.EmittingFile(path);
         var te = text.emitter();
+        iter(src.DetailBlocks, detail => context.Blocks.Add(detail));
         XedDisasmRender.render(src.DetailBlocks, te);
         using var ae = path.AsciEmitter();
         ae.Write(te.Emit());
         Channel.EmittedFile(emitting, src.DetailBlocks.Count);
     }
     
-
-    public ParallelQuery<XedDisasmDoc> Import(IDbArchive root)
-        => from path in sources(root)
-            let d = doc(path)
-            let success = Import(d)
-            where success
-            select d;
+    public ParallelQuery<XedDisasmDoc> Import(XedDisasmContext context)
+        => from path in sources(context.ProjectRoot) select Import(context, doc(path));
 
     public ParallelQuery<XedDisasmDoc> Collect(IDbArchive root)
     {
-        var docs = Import(root);
-        Consolidate(docs, root);
+        var context = new XedDisasmContext(root);
+        var docs = Import(context);
+        piter(docs, doc => {});
+        Consolidate(context, docs);
         return docs;
     }
 
-    void EmitSummaries(XedDisasmDoc doc)
+    void EmitSummaries(XedDisasmContext context, XedDisasmDoc doc)
         => Channel.TableEmit(doc.Summary.Rows, XedPaths.DisasmSummaryPath(doc.SourcePath));
 
     const string OperandFormat = "{0} | {1,-20} | {2}";
 
-    public void EmitOps(XedDisasmDoc src)
+    public void EmitOps(XedDisasmContext context, XedDisasmDoc src)
     {
         var path = XedPaths.DisasmOpsPath(src.Detail.DataFile.Source);
         var doc = src.Detail;
@@ -81,12 +78,11 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         var count = doc.Count;
         for(var i=0; i<count;i++)
         {
-            ref readonly var row = ref doc[i];
-            ref readonly var detail = ref row.DetailRow;
-            var inst = detail.Instruction;
+            ref readonly var block = ref doc[i];
+            ref readonly var row = ref block.DetailRow;
             emitter.AppendLine(RP.PageBreak80);
-            XedRender.describe(detail, emitter);
-            operands(detail, emitter);
+            XedRender.describe(row, emitter);
+            operands(row, emitter);
             emitter.WriteLine();
         }
 
@@ -139,43 +135,32 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         return buffer;
     }
 
-    void Consolidate(ParallelQuery<XedDisasmDoc> src, IDbArchive root)
+    void Consolidate(XedDisasmContext context, ParallelQuery<XedDisasmDoc> src)
     {
-        var summaries = bag<XedDisasmRow>();
-        var details = bag<XedDisasmDetailBlock>();
-        piter(src, pair => {
-            iter(pair.Summary.Rows, r => summaries.Add(r));
-            iter(pair.Detail.Blocks, b => details.Add(b));
-        });
-
+        var dst = context.ProjectRoot.Scoped("build");
+        var summaries = from block in context.Blocks select block.SummaryRow;
         exec(PllExec,
-            () => EmitOpClasses(root, src),
-            () => EmitConsolidated(root, details.ToArray()),
-            () => EmitConsolidated(root, summaries.ToArray()));
+            () => EmitConsolidated(resequence(context.Blocks.ToArray()), dst),
+            () => EmitConsolidated(resequence(summaries.ToArray()), dst));
     }
 
-    void EmitOpClasses(IDbArchive project, ParallelQuery<XedDisasmDoc> src)
+    void EmitConsolidated(ReadOnlySeq<XedDisasmDetailBlock> src, IDbArchive dst)
     {
-        Channel.TableEmit(opclasses(src).View, XedPaths.DisasmTargets(project).Table<InstOpClass>());
-    }
-
-    void EmitConsolidated(IDbArchive project, Index<XedDisasmDetailBlock> src)
-    {
-        var dst = XedPaths.DisasmTargets(project).Table<XedDisasmDetailRow>();
+        var path = dst.Table<XedDisasmDetailRow>();
         var buffer = text.buffer();
-        XedDisasmRender.render(resequence(src), buffer);
-        var emitting = Channel.EmittingFile(dst);
-        using var emitter = dst.AsciEmitter();
+        XedDisasmRender.render(src, buffer);
+        var emitting = Channel.EmittingFile(path);
+        using var emitter = path.AsciEmitter();
         emitter.Write(buffer.Emit());
         Channel.EmittedFile(emitting, src.Count);
     }
 
-    void EmitConsolidated(IDbArchive project, Index<XedDisasmRow> src)
-        => Channel.TableEmit(resequence(src), XedPaths.DisasmTargets(project).Table<XedDisasmRow>());
+    void EmitConsolidated(ReadOnlySeq<XedDisasmRow> src, IDbArchive dst)
+        => Channel.TableEmit(src, dst.Table<XedDisasmRow>());
 
     public const string RenderCol2 = XedFieldRender.Columns;
 
-    public void EmitChecks(XedDisasmDoc src)
+    public void EmitChecks(XedDisasmContext context, XedDisasmDoc src)
     {
         const string LabeledValue = "{0,-24} | {1}";
         var doc = src.Detail;
@@ -193,7 +178,6 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             buffer.Clear();
 
             ref readonly var detail = ref doc[j].DetailRow;
-            ref readonly var ops = ref doc[j].Ops;
             ref readonly var block = ref doc[j].SummaryLines;
             ref readonly var summary = ref block.Row;
             ref readonly var lines = ref block.Block;
@@ -252,8 +236,9 @@ public partial class XedDisasm : WfSvc<XedDisasm>
                 writer.AppendLineFormat(LabeledValue, nameof(detail.PrefixSize), detail.PrefixSize);
             writer.AppendLineFormat(LabeledValue, nameof(detail.Offsets), detail.Offsets);
             writer.AppendLineFormat(LabeledValue, nameof(detail.Encoded), detail.Encoded);
+            writer.AppendLineFormat(LabeledValue, EmptyString, detail.Encoded.BitString);
 
-            var ocbyte = XedFields.ocbyte(state);
+            var ocbyte = XedFields.opcode(state);
             var encoding  = XedFields.encoding(state, asmhex);
 
             var prefix = slice(detail.PrefixBytes.Bytes,0, detail.PrefixSize);

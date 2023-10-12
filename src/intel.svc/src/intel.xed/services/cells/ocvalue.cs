@@ -10,7 +10,7 @@ using static XedRules;
 using static AsmOpCodes;
 using static XedModels;
 
-partial struct XedCells
+partial class XedCells
 {
     public static OpCodeValue ocvalue(in InstCells src)
     {

@@ -8,7 +8,7 @@ namespace Z0;
 using static XedModels;
 using static XedRules;
 
-partial struct XedCells
+partial class XedCells
 {
     [MethodImpl(Inline), Op]
     public static ChipCode chip(in InstCells src)

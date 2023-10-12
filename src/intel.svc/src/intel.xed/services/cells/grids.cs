@@ -8,7 +8,7 @@ namespace Z0;
 using static XedRules;
 using static sys;
 
-partial struct XedCells
+partial class XedCells
 {
     [MethodImpl(Inline), Op]
     public static RuleGrid grid(RuleIdentity sig, ushort rows, byte cols, GridCell[] cells)

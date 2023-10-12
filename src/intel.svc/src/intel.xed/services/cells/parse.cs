@@ -10,7 +10,7 @@ using static XedModels;
 using static XedParsers;
 using static sys;
 
-partial struct XedCells
+partial class XedCells
 {    
     public static bool parse(ReadOnlySpan<char> src, out InstCells dst)
         => inner(RuleMacros.expand(normalize(src)), out dst);

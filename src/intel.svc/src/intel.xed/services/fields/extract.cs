@@ -9,7 +9,7 @@ using static XedRules;
 
 using K = XedRules.FieldKind;
 
-public partial class XedFields
+partial class XedFields
 {
     [Op]
     public static FieldValue extract(in XedFieldState src, FieldKind kind)

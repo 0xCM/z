@@ -7,7 +7,7 @@ namespace Z0;
 partial class XedRules
 {
     [StructLayout(LayoutKind.Sequential,Pack=1)]
-    public readonly struct InstLayout
+    public struct InstLayout
     {
         public readonly ushort PatternId;
 
@@ -17,9 +17,9 @@ partial class XedRules
 
         public readonly byte Count;
 
-        public readonly SegRef<LayoutCell> Block;
+        public InstLayoutBlock Block;
 
-        public InstLayout(ushort pid, XedInstClass inst, AsmOpCode oc, byte count, SegRef<LayoutCell> block)
+        public InstLayout(ushort pid, XedInstClass inst, AsmOpCode oc, byte count, InstLayoutBlock block)
         {
             PatternId = pid;
             Instruction = inst;
@@ -28,28 +28,17 @@ partial class XedRules
             Block = block;
         }
 
-        public MemoryAddress BaseAddress
-        {
-            [MethodImpl(Inline)]
-            get => Block.BaseAddress;
-        }
-
-        public Span<LayoutCell> Cells
-        {
-            [MethodImpl(Inline)]
-            get => Block.Data;
-        }
 
         public ref LayoutCell this[int i]
         {
-            [MethodImpl(Inline)]
+            [MethodImpl(Inline), UnscopedRef]
             get => ref Block[i];
         }
 
         public ref LayoutCell this[uint i]
         {
-            [MethodImpl(Inline)]
-            get => ref Block[(int)i];
+            [MethodImpl(Inline), UnscopedRef]
+            get => ref Block[i];
         }
 
         public string Format()

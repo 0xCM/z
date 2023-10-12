@@ -7,9 +7,16 @@ namespace Z0;
 
 using static sys;
 
+partial class XedFieldWriter
+{
+    [MethodImpl(Inline), Op]
+    public static ref Hex8 opcode(ref XedFieldState src)
+        => ref @as<Hex8>(src.NOMINAL_OPCODE);
+}
+
 partial class XedFields
 {
     [MethodImpl(Inline), Op]
-    public static ref readonly Hex8 ocbyte(in XedFieldState src)
+    public static ref readonly Hex8 opcode(in XedFieldState src)
         => ref @as<Hex8>(src.NOMINAL_OPCODE);
 }

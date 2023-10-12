@@ -124,6 +124,22 @@ partial class XedRules
             CellKind = 0;
         }
 
+        [MethodImpl(Inline)]
+        public FieldValue(FieldKind kind, AsmVL data)
+        {
+            Field = kind;
+            Data = (uint)data;
+            CellKind = 0;
+        }
+
+        [MethodImpl(Inline)]
+        public FieldValue(FieldKind kind, BroadcastKind data)
+        {
+            Field = kind;
+            Data = (uint)data;
+            CellKind = 0;
+        }
+
         public readonly bit IsNontermCall
         {
             [MethodImpl(Inline)]
@@ -178,7 +194,7 @@ partial class XedRules
             => (XedVexClass)Data;
 
         [MethodImpl(Inline)]
-        public AsmVL ToVexLength()
+        public AsmVL ToVL()
             => (AsmVL)Data;
 
         [MethodImpl(Inline)]
@@ -279,7 +295,7 @@ partial class XedRules
 
         [MethodImpl(Inline)]
         public static implicit operator AsmVL(FieldValue src)
-            => src.ToVexLength();
+            => src.ToVL();
 
         [MethodImpl(Inline)]
         public static implicit operator XedVexKind(FieldValue src)

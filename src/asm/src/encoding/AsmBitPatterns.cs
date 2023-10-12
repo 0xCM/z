@@ -93,5 +93,4 @@ public readonly struct AsmBitPatterns
         pp + sep + d1 + sep + vvvv + sep + W + sep + 
         aaa + sep + f + sep + b + sep  + VL + sep + z 
         );
-
 }

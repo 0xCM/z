@@ -338,10 +338,10 @@ public record struct XedFieldState
     public byte VEX_PREFIX;
 
     [RuleField(K.VL, 3, typeof(AsmVL), "Specifies one of {V128,V256,V512}, if applicable")]
-    public byte VL;
+    public AsmVL VL;
 
     [RuleField(K.BCAST,5, typeof(BroadcastKind))]
-    public byte BCAST;
+    public BroadcastKind BCAST;
 
     [RuleField(K.ERROR, 1, typeof(M.ErrorKind))]
     public ErrorKind ERROR;

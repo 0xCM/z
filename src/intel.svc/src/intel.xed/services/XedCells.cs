@@ -5,9 +5,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static XedRules;
-
-public readonly partial struct XedCells
+[Free]
+public partial class XedCells
 {
 
 }

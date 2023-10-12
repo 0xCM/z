@@ -121,6 +121,10 @@ partial class XedRules
             => (BroadcastKind)Data;
 
         [MethodImpl(Inline)]
+        AsmVL VL()
+            => (AsmVL)Data;
+
+        [MethodImpl(Inline)]
         RuleOperator Operator()
             => (OperatorKind)Data;
 
@@ -189,6 +193,10 @@ partial class XedRules
         [MethodImpl(Inline)]
         public static implicit operator ChipCode(Field src)
             => src.Chip();
+
+        [MethodImpl(Inline)]
+        public static implicit operator AsmVL(Field src)
+            => src.VL();
 
         [MethodImpl(Inline)]
         public static implicit operator bit(Field src)

@@ -7,7 +7,12 @@ namespace Z0;
 
 using static sys;
 
-public partial class XedFields
+partial class XedFieldWriter
+{
+
+}
+
+partial class XedFields
 {
     [MethodImpl(Inline), Op]
     public static ref readonly XedVexKind vexkind(in XedFieldState src)

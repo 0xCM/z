@@ -102,7 +102,10 @@ public class XedPaths
         => src.FolderPath + FS.file(string.Format("{0}.ops", src.FileName.WithoutExtension.Format()), FS.Txt);
 
     public static FileUri RuleTable(RuleIdentity sig)
-        => RuleTables().Path(FS.file(sig.Format(), FS.Csv));
+    {
+        var name =sig.Format();
+        return RuleTables().Path(FS.file(sig.Format(), FS.Csv));
+    }
 
     public static FileUri CheckedRulePage(RuleIdentity sig)
     {

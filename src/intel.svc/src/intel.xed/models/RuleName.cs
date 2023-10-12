@@ -646,7 +646,6 @@ partial class XedModels
 
         VMODRM_MOD_ENCODE,
 
-
         VMODRM_MOD_ENCODE_BIND,
 
         VSIB_ENC_INDEX_XMM_BIND,
@@ -804,15 +803,5 @@ partial class XedModels
         XSAVE,
 
         NELEM_QUARTER,
-
-
-        MODRM_RM_ENCODE_BIND,
-        MODRM_MOD_ENCODE_BIND,
-        SEGMENT_DEFAULT_ENCODE_BIND,
-        SEGMENT_ENCODE_BIND,
-        SIB_NT_BIND,
-        DISP_NT_BIND,
-
-
     }
 }

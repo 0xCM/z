@@ -11,7 +11,7 @@ using static sys;
 
 using CK = XedRules.RuleCellKind;
 
-partial struct XedCells
+partial class XedCells
 {
     public static XedRuleCells cells(XedRuleTables tables)
     {
@@ -101,7 +101,7 @@ partial struct XedCells
                             }
                             else
                             {
-                                result = XedRuleSpecs.ruleop(data, out RuleOperator value);
+                                result = ruleop(data, out RuleOperator value);
                                 cell = new RuleCell(key, value, size);
                             }
                         }

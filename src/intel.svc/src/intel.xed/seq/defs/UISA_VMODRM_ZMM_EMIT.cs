@@ -18,7 +18,7 @@ partial class XedRuleSeq
     */
 
     public static SeqDef UISA_VMODRM_ZMM_EMIT() => emit(nameof(UISA_VMODRM_ZMM_EMIT), new RuleName[]{
-            VSIB_ENC_EMIT,
-            DISP_NT_EMIT,
+            VSIB_ENC,
+            DISP_NT,
         });
 }

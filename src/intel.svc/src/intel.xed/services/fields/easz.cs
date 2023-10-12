@@ -8,6 +8,13 @@ namespace Z0;
 using static XedModels;
 using static sys;
 
+partial class XedFieldWriter
+{
+    [MethodImpl(Inline), Op]
+    public static ref EASZ easz(ref XedFieldState src)
+        => ref @as<EASZ>(src.EASZ);
+}
+
 partial class XedFields
 {
     [MethodImpl(Inline), Op]

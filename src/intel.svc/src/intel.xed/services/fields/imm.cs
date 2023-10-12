@@ -7,6 +7,11 @@ namespace Z0;
 
 using Asm;
 
+partial class XedFieldWriter
+{
+
+}
+
 partial class XedFields
 {
     [Op]

@@ -18,7 +18,7 @@ partial class XedRules
         public readonly Index<RuleIdentity> Rules;
 
         [MethodImpl(Inline)]
-        public SeqDef(asci32 name, SeqEffect effect, RuleName[] rules, RuleTableKind kind = RuleTableKind.ENC)
+        public SeqDef(asci32 name, SeqEffect effect, RuleName[] rules, RuleTableKind kind )
         {
             SeqName = name;
             Effect = effect;
@@ -32,18 +32,11 @@ partial class XedRules
         {
             var dst = text.buffer();
             dst.AppendLineFormat("{0}(){{", SeqName);
-            if(Effect == 0)
-                for(var i=0; i<Rules.Count; i++)
-                    dst.IndentLineFormat(4, "{0,-42} {1}",
-                        Rules[i].TableName,
-                        Uri(Rules[i])
-                        );
-            else
-                for(var i=0; i<Rules.Count; i++)
-                    dst.IndentLineFormat(4, "{0,-42} {1}",
-                        string.Format("{0}_{1}", Rules[i].TableName, Effect),
-                        Uri(Rules[i])
-                        );
+            for(var i=0; i<Rules.Count; i++)
+                dst.IndentLineFormat(4, "{0,-42} {1}",
+                    Effect == 0 ? Rules[i].TableName : string.Format("{0}_{1}", Rules[i].TableName, Effect),
+                    Uri(Rules[i])
+                    );
             dst.AppendLine("}");
             return dst.Emit();
         }

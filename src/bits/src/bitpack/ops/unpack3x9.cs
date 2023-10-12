@@ -10,7 +10,7 @@ namespace Z0
     partial struct BitPack
     {
         /// <summary>
-        /// Distributes the first 27-bits of a 32-bit source evenly over the lower 3 bit of 9 8-bit segments
+        /// Distributes the first 27-bits of a 32-bit source evenly over the lower 3 bits of 9 8-bit segments
         /// </summary>
         /// <param name="src">The source</param>
         /// <param name="dst">The target</param>

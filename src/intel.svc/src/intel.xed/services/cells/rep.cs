@@ -9,7 +9,7 @@ using static XedModels;
 using static XedRules;
 using static sys;
 
-partial struct XedCells
+partial class XedCells
 {
     [MethodImpl(Inline), Op]
     public static RepIndicator @rep(in InstCells src)

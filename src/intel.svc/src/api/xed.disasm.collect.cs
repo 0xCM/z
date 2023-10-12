@@ -12,7 +12,6 @@ partial class XedDisasmCmd
     void CollectDisasm(CmdArgs args)
     {
         var dst = FS.archive(args[0]);
-        var docs = XedDisasm.Collect(dst);
-        piter(docs, doc => {});
+        XedDisasm.Collect(dst);
     }
 }

@@ -9,9 +9,16 @@ using Asm;
 
 using static sys;
 
+partial class XedFieldWriter
+{
+    [MethodImpl(Inline), Op]
+    public static ref BroadcastKind broadcast(ref XedFieldState state)
+        => ref state.BCAST;    
+}
+
 partial class XedFields
 {
     [MethodImpl(Inline), Op]
     public static AsmBroadcast broadcast(in XedFieldState src)
-        => asm.broadcast(@as<BroadcastKind>(src.BCAST));
+        => asm.broadcast(src.BCAST);
 }

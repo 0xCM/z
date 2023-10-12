@@ -14,11 +14,45 @@ using static XedZ;
 
 public partial class XedImport : WfSvc<XedImport>
 {     
-    public void Emit(RuleBlocks src)
-        => XedZ.emit(Channel, src);
+    public static XedRuleTables RuleTables()
+    {
+       var dst = new XedRuleBuffers();
+        exec(PllExec,
+            () => dst.Target.TryAdd(RuleTableKind.ENC, XedCells.criteria(RuleTableKind.ENC)),
+            () => dst.Target.TryAdd(RuleTableKind.DEC, XedCells.criteria(RuleTableKind.DEC))
+            );
 
-    public void Emit(BlockDomain src)
-        => Channel.FileEmit(src.Format(), XedPaths.Imports().Path("xed.instblocks.domain", FS.ext("txt")));
+        return tables(dst);
+    }
+
+
+    public static RuleBlocks blocks()
+        => XedZ.rules(XedPaths.DocSource(XedDocKind.RuleBlocks));
+
+    public static ReadOnlySeq<InstDef> instructions()
+        => XedInstDefParser.parse(XedPaths.DocSource(XedDocKind.EncInstDef));
+
+
+    public static Index<InstPattern> patterns(ReadOnlySeq<InstDef> defs)
+    {
+        var count = 0u;
+        iter(defs, def => count += def.PatternSpecs.Count);
+        var dst = alloc<InstPattern>(count);
+        var k=0u;
+        for(var i=0; i<defs.Count; i++)
+        {
+            ref readonly var def = ref defs[i];
+            var specs = def.PatternSpecs;
+            for(var j=0; j<specs.Count; j++, k++)
+            {
+                ref var spec = ref specs[j];
+                var cells = XedCells.sort(spec.Body);
+                spec.Body = cells;
+                seek(dst,k) = new InstPattern(spec, XedCells.usage(cells));
+            }
+        }
+        return dst.Sort();
+    }
 
     public void Run()
     {
@@ -64,7 +98,7 @@ public partial class XedImport : WfSvc<XedImport>
             () => EmitPatternDocs(patterns),            
             () => Emit(CalcDefRows(ruleT)),
             () => cells = XedCells.cells(ruleT),
-            () => Emit(LayoutCalcs.layouts(patterns)),
+            () => Emit(XedPatterns.layouts(patterns)),
             () => Emit(InstPattern.records(patterns)),
             () => Emit(XedPatterns.fieldrows(patterns)),
             () => {                
@@ -90,35 +124,15 @@ public partial class XedImport : WfSvc<XedImport>
         );
     }
 
-    public static RuleBlocks blocks()
-        => XedZ.rules(XedPaths.DocSource(XedDocKind.RuleBlocks));
+    public void Emit(RuleBlocks src)
+        => XedZ.emit(Channel, src);
+
+    public void Emit(BlockDomain src)
+        => Channel.FileEmit(src.Format(), XedPaths.Imports().Path("xed.instblocks.domain", FS.ext("txt")));
 
     public static BlockDomain domain(RuleBlocks src)
         => XedZ.domain(src);
 
-    public static ReadOnlySeq<InstDef> instructions()
-        => XedInstDefParser.parse(XedPaths.DocSource(XedDocKind.EncInstDef));
-
-    public static Index<InstPattern> patterns(ReadOnlySeq<InstDef> defs)
-    {
-        var count = 0u;
-        iter(defs, def => count += def.PatternSpecs.Count);
-        var dst = alloc<InstPattern>(count);
-        var k=0u;
-        for(var i=0; i<defs.Count; i++)
-        {
-            ref readonly var def = ref defs[i];
-            var specs = def.PatternSpecs;
-            for(var j=0; j<specs.Count; j++, k++)
-            {
-                ref var spec = ref specs[j];
-                var cells = XedCells.sort(spec.Body);
-                spec.Body = cells;
-                seek(dst,k) = new InstPattern(spec, XedCells.usage(cells));
-            }
-        }
-        return dst.Sort();
-    }
 
     static InstOpSpec spec(in InstOpDetail src)
     {
@@ -211,7 +225,7 @@ public partial class XedImport : WfSvc<XedImport>
 
     class XedRuleBuffers
     {
-        public readonly ConcurrentDictionary<RuleTableKind,Index<TableCriteria>> Target = new();
+        public readonly ConcurrentDictionary<RuleTableKind,Seq<TableCriteria>> Target = new();
     }
 
     static IDbArchive Targets
@@ -269,10 +283,10 @@ public partial class XedImport : WfSvc<XedImport>
         ref readonly var src = ref buffers.Target;
         var enc = src[RuleTableKind.ENC];
         var dec = src[RuleTableKind.DEC];
-        var dst = enc.Append(dec).Where(x => x.IsNonEmpty).Sort();
+        var dst = enc.Storage.Append(dec.Storage).Where(x => x.IsNonEmpty).Sort().ToSeq();
         for(var i=0u; i<dst.Count; i++)
             dst[i] = dst[i].WithId(i);
-        return new XedRuleTables(dst, XedRuleSpecs.tables(dst));
+        return new XedRuleTables(dst, XedCells.tables(dst));
     }
 
     ChipInstructions CalcChipInstructions(ReadOnlySeq<FormImport> forms, ChipMap map)
@@ -324,17 +338,6 @@ public partial class XedImport : WfSvc<XedImport>
     void EmitRuleTables(XedRuleTables src)
         => iter(src.Criteria(), table => EmitRulePage(table), PllExec);
     
-    public static XedRuleTables RuleTables()
-    {
-       var dst = new XedRuleBuffers();
-        exec(PllExec,
-            () => dst.Target.TryAdd(RuleTableKind.ENC, XedRuleSpecs.criteria(RuleTableKind.ENC)),
-            () => dst.Target.TryAdd(RuleTableKind.DEC, XedRuleSpecs.criteria(RuleTableKind.DEC))
-            );
-
-        return tables(dst);
-    }
-
     void EmitBroadcastDefs(ReadOnlySeq<AsmBroadcast> src)
         => Channel.TableEmit(src, XedPaths.ImportTable<AsmBroadcast>());
 

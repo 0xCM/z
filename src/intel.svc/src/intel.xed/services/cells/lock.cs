@@ -7,7 +7,7 @@ namespace Z0;
 
 using static XedModels;
 
-partial struct XedCells
+partial class XedCells
 {
     [MethodImpl(Inline), Op]
     public static LockIndicator @lock(in InstCells src)

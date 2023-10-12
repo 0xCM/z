@@ -8,15 +8,15 @@ using static XedModels;
 
 partial class XedRules
 {
-    public class InstLayouts : IDisposable
+    public class InstLayouts
     {
-        readonly NativeCells<InstLayoutBlock> Blocks;
+        readonly Seq<InstLayoutBlock> Blocks;
 
         readonly Index<InstLayout> Layouts;
 
         public readonly Index<InstLayoutRecord> Records;
 
-        public InstLayouts(InstLayout[] src, NativeCells<InstLayoutBlock> blocks)
+        public InstLayouts(InstLayout[] src, InstLayoutBlock[] blocks)
         {
             Layouts = src;
             Blocks = blocks;
@@ -26,7 +26,7 @@ partial class XedRules
         public uint BlockCount
         {
             [MethodImpl(Inline)]
-            get => Blocks.CellCount;
+            get => Blocks.Count;
         }
 
         [MethodImpl(Inline)]
@@ -108,9 +108,6 @@ partial class XedRules
         public override string ToString()
             => Format();
 
-        public void Dispose()
-        {
-            Blocks.Dispose();
-        }
+
     }
 }

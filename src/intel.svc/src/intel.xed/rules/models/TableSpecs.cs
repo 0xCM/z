@@ -20,10 +20,10 @@ partial class XedRules
             RowCount = src.Values.Map(x => x.RowCount).Sum();
         }
 
-        public new static TableSpecs Empty
-            => new (sys.dict<RuleIdentity,TableSpec>());
-
         public static implicit operator TableSpecs(Dictionary<RuleIdentity,TableSpec> src)
             => new (src);
+
+        public new static TableSpecs Empty
+            => new (sys.dict<RuleIdentity,TableSpec>());
     }
 }

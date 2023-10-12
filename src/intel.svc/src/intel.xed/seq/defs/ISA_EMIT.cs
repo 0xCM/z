@@ -17,8 +17,8 @@ partial class XedRuleSeq
         INSTRUCTIONS_EMIT()
     */
     public static SeqDef ISA_EMIT() => emit(nameof(ISA_EMIT), new []{
-        PREFIX_ENC_EMIT,
-        VEXED_REX_EMIT,
-        INSTRUCTIONS_EMIT
+        PREFIX_ENC,
+        VEXED_REX,
+        INSTRUCTIONS
     });
 }

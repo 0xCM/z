@@ -22,7 +22,7 @@ class XedDisasmRender
         "Op[{0}].Specifier"
         };
 
-    public static void render(Index<XedDisasmDetailBlock> src, ITextEmitter dst, bool header = true)
+    public static void render(ReadOnlySeq<XedDisasmDetailBlock> src, ITextEmitter dst, bool header = true)
     {
         var formatter = CsvTables.formatter<XedDisasmDetailRow>();
         if(header)

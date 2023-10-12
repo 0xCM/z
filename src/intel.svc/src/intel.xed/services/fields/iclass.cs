@@ -7,6 +7,13 @@ namespace Z0;
 
 using static sys;
 
+partial class XedFieldWriter
+{
+    [MethodImpl(Inline), Op]
+    public static ref XedInstClass iclass(ref XedFieldState src)
+        => ref @as<XedInstKind,XedInstClass>(src.ICLASS);
+}
+
 partial class XedFields
 {
     [MethodImpl(Inline), Op]

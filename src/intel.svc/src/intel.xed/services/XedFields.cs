@@ -12,6 +12,18 @@ using static sys;
 
 using M = XedModels;
 
+public partial class XedFieldReader
+{
+
+    
+}
+
+public partial class XedFieldWriter
+{
+
+    
+}
+
 public partial class XedFields
 {
     [MethodImpl(Inline), Op]

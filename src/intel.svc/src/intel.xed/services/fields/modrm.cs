@@ -9,6 +9,13 @@ using Asm;
 
 using static sys;
 
+partial class XedFieldWriter
+{
+    [MethodImpl(Inline), Op]
+    public static ref ModRm modrm(ref XedFieldState src)
+        => ref @as<Hex8,ModRm>(src.MODRM_BYTE);
+}
+
 partial class XedFields
 {
     [MethodImpl(Inline), Op]

@@ -7,6 +7,21 @@ namespace Z0;
 
 using Asm;
 
+partial class XedFieldWriter
+{
+    public static ref bit rexx(ref XedFieldState state)
+        => ref state.REXX;
+
+    public static ref bit rexr(ref XedFieldState state)
+        => ref state.REXR;
+
+    public static ref bit rexb(ref XedFieldState state)
+        => ref state.REXB;
+
+    public static ref bit rexw(ref XedFieldState state)
+        => ref state.REXX;
+}
+
 partial class XedFields
 {
     [MethodImpl(Inline), Op]

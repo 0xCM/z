@@ -8,7 +8,7 @@ namespace Z0;
 using static XedRules;
 using static XedModels;
 
-partial struct XedCells
+partial class XedCells
 {
     [MethodImpl(Inline), Op]
     public static bit @locked(in InstCells src)

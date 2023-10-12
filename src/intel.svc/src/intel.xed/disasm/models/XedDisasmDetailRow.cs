@@ -15,8 +15,6 @@ public record struct XedDisasmDetailRow : IComparable<XedDisasmDetailRow>
 {
     const string TableName = "xed.disasm.detail";
 
-    public const byte FieldCount = 24;
-
     [Render(AsmColWidths.Seq)]
     public uint Seq;
 
