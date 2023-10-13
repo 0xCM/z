@@ -11,6 +11,7 @@ using static XedModels;
 using static sys;
 using static MachineModes;
 using static XedRules;
+using static XedZ;
 
 using M = XedModels;
 using R = XedRules;
@@ -35,19 +36,190 @@ public class XedTables : AppService<XedTables>
         RuleCells,
 
         OpCodes,
+
+        InstBlocks,
+
+        MacroMatches,
+
+        MacroDefs,
+
+        FormImports,
+
+        CellTables,
+
+        OpDetails,
+
+        TableDefRows,
+
+        ChipMap,
+
+        ChipInstructions,
+
+        FieldImports,
+        
+        FieldDeps,
+
+        OpRows,
     }
+
+    public static ChipMap ChipMap()
+        => data(DatasetName.ChipMap,XedChips.Map);
+
+    public static ReadOnlySeq<FieldImport> FieldImports()
+        => data(DatasetName.FieldImports,CalcFieldImports);
+
+    public static ReadOnlySeq<FormImport> FormImports()
+        => data(DatasetName.FormImports,() => XedFormImports.calc(XedPaths.InstFormSource()));
+
+    public static ReadOnlySeq<MacroDef> MacroDefs()
+         => data(DatasetName.MacroDefs,RuleMacros.defs);
+
+    public static ReadOnlySeq<MacroMatch> MacroMatches()
+        => data(DatasetName.MacroMatches,CalcMacroMatches);
+
+    public static ReadOnlySeq<InstBlockPattern> InstBlocks()
+        => data(DatasetName.InstBlocks,XedZ.patterns);
+
+    public static ReadOnlySeq<InstOpRow> OpRows(ReadOnlySeq<InstOpDetail> src)
+        => data(DatasetName.OpRows, () => CalcOpRows(src));
+        
+    public static ChipInstructions ChipInstructions(ReadOnlySeq<FormImport> forms, ChipMap map)
+        => data(DatasetName.ChipInstructions,() => XedChips.ChipInstructions(forms, map));
+
+    public static ReadOnlySeq<TableDefRow> TableDefRows(XedRuleTables src)
+        => data(DatasetName.TableDefRows,() => CalcDefRows(src));
+
+    public static ReadOnlySeq<InstOpDetail> OpDetails(ReadOnlySeq<InstPattern> src)
+        => data(DatasetName.OpDetails,() => XedPatterns.opdetails(src));
+
+    public static ReadOnlySeq<FieldUsage> FieldDeps(CellTables src)
+        => data(DatasetName.FieldDeps,() => CalcFieldDeps(src));
+        
+    public static CellTables CellTables(XedRuleCells src)
+        => data(DatasetName.CellTables, () => new CellTables(src));
+
+    static ReadOnlySeq<InstOpRow> CalcOpRows(ReadOnlySeq<InstOpDetail> src)
+    {
+        var count = src.Count;
+        var rows = alloc<InstOpRow>(count);
+        for(var i=0; i<count; i++)
+        {
+            ref readonly var detail = ref src[i];
+            ref var dst = ref rows[i];
+            Require.invariant(detail.InstClass.Kind != 0);
+            dst.Pattern = detail.Pattern;
+            dst.InstClass = Xed.classifier(detail.InstClass);
+            dst.OpCode = detail.OpCode;
+            dst.Mode = detail.Mode;
+            dst.Lock = detail.Lock;
+            dst.Mod = detail.Mod;
+            dst.RexW = detail.RexW;
+            dst.OpCount = detail.OpCount;
+            dst.Index = detail.Index;
+            dst.Name = detail.Name;
+            dst.Kind = detail.Kind;
+            dst.Action = detail.Action;
+            dst.WidthCode = detail.WidthCode;
+            dst.EType = detail.ElementType;
+            dst.EWidth = detail.ElementWidth;
+            dst.RegLit = detail.RegLit;
+            dst.Modifier = detail.Modifier;
+            dst.Visibility = detail.Visibility;
+            dst.NonTerminal = detail.Rule;
+            dst.BitWidth = detail.BitWidth;
+            dst.GprWidth = detail.GrpWidth;
+            dst.SegInfo = detail.SegInfo;
+            dst.ECount = detail.ElementCount;
+            dst.SourceExpr = detail.SourceExpr;
+        }
+        return rows;
+    }    
+
+    static ReadOnlySeq<FieldUsage> CalcFieldDeps(CellTables src)
+    {
+        var buffer = sys.bag<FieldUsage>();
+        iter(src.View, table => collect(table,buffer),true);
+        return buffer.Index().Sort();
+    }
+
+    static void collect(in CellTable src, ConcurrentBag<FieldUsage> dst)
+    {
+        ref readonly var rows = ref src.Rows;
+        var usage = hashset<FieldUsage>();
+        var sig = src.Sig;
+        for(var i=0; i<rows.Count; i++)
+        {
+            ref readonly var row = ref rows[i];
+            var antecedants = row.Antecedants();
+            for(var j=0; j<antecedants.Length; j++)
+            {
+                ref readonly var antecedant = ref skip(antecedants,j);
+                if(antecedant.Field != 0)
+                    usage.Add(FieldUsage.left(sig, antecedant.Field));
+            }
+
+            var consequents = row.Consequents();
+            for(var j=0; j<consequents.Length; j++)
+            {
+                ref readonly var consequent = ref skip(consequents,j);
+                if(consequent.Field != 0)
+                    usage.Add(FieldUsage.right(sig, consequent.Field));
+            }
+        }
+
+        iter(usage, u => dst.Add(u));
+    }
+        
+
+    static ReadOnlySeq<FieldImport> CalcFieldImports()
+    {
+        var src = XedPaths.FieldSource();
+        var dst = list<FieldImport>();
+        var result = Outcome.Success;
+        var line = EmptyString;
+        var lines = src.ReadLines().Reader();
+        while(lines.Next(out line))
+        {
+            var content = line.Trim();
+            if(text.empty(content) || text.begins(content,Chars.Hash))
+                continue;
+
+            var cells = text.split(text.despace(content), Chars.Space).Reader();
+            var record = FieldImport.Empty;
+            record.Name = cells.Next();
+
+            cells.Next();
+            result = FieldTypes.ExprKind(cells.Next(), out XedFieldKind ft);
+            if(result.Fail)
+                Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.FieldType), cells.Prior()));
+            else
+                record.FieldType = ft;
+
+            result = DataParser.parse(cells.Next(), out record.Width);
+            if(result.Fail)
+                Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.Width), cells.Prior()));
+
+            if(!Visibilities.ExprKind(cells.Next(), out record.Visibility))
+                Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.Visibility), cells.Prior()));
+
+            dst.Add(record);
+        }
+
+        return dst.ToArray().Sort();
+    }
+
 
     public static ReadOnlySeq<RuleSeq> RuleSeq()
         => data(DatasetName.RuleSeq, CellParser.ruleseq);
-
-    public static ReadOnlySeq<InstDef> InstDefs()
-        => data(DatasetName.InstDefs, () => XedInstDefParser.parse(XedPaths.DocSource(XedDocKind.EncInstDef)));
 
     public static XedRuleTables RuleTables()
         => data(DatasetName.RuleTables,CalcRuleTables);
 
     public static ReadOnlySeq<SeqDef> SeqReflected()
         => data(DatasetName.SeqReflected,XedRuleSeq.defs);
+
+    public static ReadOnlySeq<InstDef> InstDefs()
+        => data(DatasetName.InstDefs, () => XedInstDefParser.parse(XedPaths.DocSource(XedDocKind.EncInstDef)));
 
     public static XedRuleCells RuleCells(XedRuleTables tables)
         => data(DatasetName.RuleCells, () => XedCells.cells(tables));
@@ -57,6 +229,33 @@ public class XedTables : AppService<XedTables>
 
     public static ReadOnlySeq<XedInstOpCode> OpCodes(ReadOnlySeq<InstPattern> src)
         => data(DatasetName.OpCodes, () => CalcOpCodes(src));
+
+    static ReadOnlySeq<MacroMatch> CalcMacroMatches()
+        => mapi(RuleMacros.matches().Values.ToArray().Sort(), (i,m) => m.WithSeq((uint)i));
+
+    static ReadOnlySeq<TableDefRow> CalcDefRows(XedRuleTables src)
+    {
+        var buffer = list<TableDefRow>();
+        ref readonly var specs = ref src.Specs();
+        var k=0u;
+        for(var i=0u; i<specs.TableCount; i++)
+        {
+            ref readonly var spec = ref specs[i];
+            for(var j=0u; j<spec.RowCount; j++, k++)
+            {
+                ref readonly var row = ref spec[j];
+                var dst = TableDefRow.Empty;
+                dst.Seq = k;
+                dst.TableId = spec.TableId;
+                dst.Index = j;
+                dst.Kind = spec.TableKind;
+                dst.Name = spec.Name;
+                dst.Statement = row.Format();
+                buffer.Add(dst);
+            }
+        }
+        return buffer.ToArray();
+    }
 
     static ReadOnlySeq<XedInstOpCode> CalcOpCodes(ReadOnlySeq<InstPattern> src)
     {
@@ -499,4 +698,9 @@ public class XedTables : AppService<XedTables>
     static readonly Index<AsmBroadcast> _BroadcastDefs = XedTables.broadcasts(Symbols.kinds<BroadcastKind>());
 
     static XedWidths _Widths = XedWidths.FromSource(XedPaths.DocSource(XedDocKind.Widths));
+
+    static readonly Symbols<XedFieldKind> FieldTypes = Symbols.index<XedFieldKind>();
+
+    static readonly Symbols<VisibilityKind> Visibilities = Symbols.index<VisibilityKind>();
+
 }

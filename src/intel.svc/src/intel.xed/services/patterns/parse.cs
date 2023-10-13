@@ -21,7 +21,7 @@ partial class XedPatterns
         var right = text.right(src,i);
         if(opexpr(src, out dst.Name, out var expr))
         {
-            Parse(expr, text.split(right, Chars.Colon).Where(text.nonempty), opkind(dst.Name), ref dst);
+            parse(expr, text.split(right, Chars.Colon).Where(text.nonempty), opkind(dst.Name), ref dst);
             return true;
         }
         else
@@ -30,6 +30,25 @@ partial class XedPatterns
 
     public static void parse(uint pattern, string ops, out PatternOps dst)
         => dst = parse(pattern, ops);
+
+    static bool opexpr(string src, out OpName name, out string expr)
+    {
+        var input = text.despace(src);
+        var i = text.index(input, Chars.Colon);
+        var j = text.index(input, Chars.Eq);
+        var index = -1;
+        if(i > 0 && j > 0)
+            index = i < j ? i : j;
+        else if(i>0 && j<0)
+            index = i;
+        else if(j>0 && i<0)
+            index = j;
+
+        var left = text.left(input, index);
+        expr = text.right(input,index);
+        return XedParsers.parse(left, out name);
+    }
+
 
     static PatternOps parse(uint pattern, string ops)
     {
@@ -70,25 +89,7 @@ partial class XedPatterns
         return new(buffer.ToArray());
     }
 
-    static bool opexpr(string src, out OpName name, out string expr)
-    {
-        var input = text.despace(src);
-        var i = text.index(input, Chars.Colon);
-        var j = text.index(input, Chars.Eq);
-        var index = -1;
-        if(i > 0 && j > 0)
-            index = i < j ? i : j;
-        else if(i>0 && j<0)
-            index = i;
-        else if(j>0 && i<0)
-            index = j;
-
-        var left = text.left(input, index);
-        expr = text.right(input,index);
-        return XedParsers.parse(left, out name);
-    }
-
-    static void Parse(string expr, string[] props, OpKind opkind, ref PatternOp dst)
+    static void parse(string expr, string[] props, OpKind opkind, ref PatternOp dst)
     {
         dst.Kind = opkind;
         switch(opkind)

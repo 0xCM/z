@@ -5,8 +5,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static XedModels;
 using Asm;
+
+using static XedModels;
 
 using DT = XedRules.FieldDataKind;
 
@@ -204,6 +205,18 @@ partial class XedRules
 
         [MethodImpl(Inline)]
         public static implicit operator byte(Field src)
+            => src.Byte();
+
+        [MethodImpl(Inline)]
+        public static implicit operator uint3(Field src)
+            => src.Byte();
+
+        [MethodImpl(Inline)]
+        public static implicit operator LLRC(Field src)
+            => (LLRC)src.Byte();
+
+        [MethodImpl(Inline)]
+        public static implicit operator uint2(Field src)
             => src.Byte();
 
         [MethodImpl(Inline)]

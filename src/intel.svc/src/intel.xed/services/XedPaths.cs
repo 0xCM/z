@@ -63,10 +63,6 @@ public class XedPaths
         where T : struct
             => CsvTables.filename<T>().ChangeExtension(FS.ext(string.Format("{0}.{1}", suffix, FS.Csv)));
 
-    public static FilePath DbTable<T>()
-        where T : struct
-                => DbTargets().Root + CsvTables.filename<T>("xed.db");
-
     public static FilePath DbTarget(string name, FileKind kind)
         => DbTargets().Root + FS.file(string.Format("xed.db.{0}",name), kind.Ext());
 
@@ -82,9 +78,6 @@ public class XedPaths
             _ => 0
         };
     }
-
-    public static IDbArchive DisasmTargets(IDbArchive root)
-        => root.Targets("xed.disasm");
 
     public static FilePath DisasmSummaryPath(FilePath src)
         => src.FolderPath + FS.file(string.Format("{0}.summary", src.FileName.WithoutExtension), FS.Csv);
@@ -103,8 +96,12 @@ public class XedPaths
 
     public static FileUri RuleTable(RuleIdentity sig)
     {
-        var name =sig.Format();
-        return RuleTables().Path(FS.file(sig.Format(), FS.Csv));
+        var dst = RuleTables();
+        if(sig.IsDecTable)
+            dst = dst.Scoped("dec");
+        else if(sig.IsEncTable)
+            dst = dst.Scoped("enc");
+        return dst.Path(FS.file(sig.Format(), FS.Csv));
     }
 
     public static FileUri CheckedRulePage(RuleIdentity sig)
@@ -151,9 +148,6 @@ public class XedPaths
     public static FilePath RuleTarget(string name, FileExt ext)
         => RuleTargets().Path(FS.file("xed.rules." + name, ext));
 
-    public static FilePath Target(string name, FileExt ext)
-        => Targets().Path(FS.file(name, ext));
-
     public static IDbArchive DocTargets()
         => Targets().Scoped("docs");
 
@@ -180,6 +174,18 @@ public class XedPaths
 
     public static FilePath CpuidSource()
         => Sources().Path(FS.file("all-cpuid", FileKind.Txt));
+
+    public static FilePath ChipMapSource()
+        => Sources().Path(FS.file("cdata", FS.Txt));
+
+    public static FilePath WidthSource()
+        => Sources().Path(FS.file("all-widths", FS.Txt));
+
+    public static FilePath RuleBlockSource()
+        => Sources().Path(FS.file("xed-dump", FileKind.Txt));
+
+    public static FilePath InstFormSource()
+        => Sources().Path(FS.file("idata", FS.Txt));
 
     public static FilePath DocSource(XedDocKind kind)
         => Sources().Path(kind switch{

@@ -14,7 +14,7 @@ public readonly struct XedFormImports
 
     const char FieldDelimiter = Chars.Space;
 
-    public static Index<FormImport> calc(FilePath path)
+    public static ReadOnlySeq<FormImport> calc(FilePath path)
     {
         var src = CalcFormSources(path);
         var count = src.Count;

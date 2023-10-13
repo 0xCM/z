@@ -58,7 +58,6 @@ partial class XedRules
     [ApiHost("xed.rules.macros")]
     public class RuleMacros
     {
-
         public static ReadOnlySeq<MacroDef> defs()
         {
             var src = RuleMacros.specs();

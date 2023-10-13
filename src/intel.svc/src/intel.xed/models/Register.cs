@@ -5,47 +5,80 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static XedRules;
+
 partial class XedModels
 {
     public readonly struct Register
-    {
-        public readonly XedRegId Value;
+    {        
+        readonly XedRegId RegId;
+
+        readonly RuleName Rule;
 
         [MethodImpl(Inline)]
         public Register(XedRegId src)
         {
-            Value = src;
+            RegId = src;
+            Rule = 0;
+        }
+
+        [MethodImpl(Inline)]
+        public Register(RuleName src)
+        {
+            RegId = 0;
+            Rule = src;
+        }
+
+        public bool IsNonterminal
+        {
+            [MethodImpl(Inline)]
+            get => Rule != 0;
         }
 
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => Value == 0;
+            get => RegId == 0 && Rule == 0;
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => Value != 0;
+            get => RegId != 0 || Rule != 0;
         }
 
         public string Format()
-            => Value == 0 ? EmptyString : XedRender.format(this);
+        {
+            var dst = EmptyString;
+            if(IsNonterminal)
+                dst = $"{XedRender.format(Rule)}()";
+            else if(RegId != 0)
+                dst = XedRender.format(RegId);
+            return dst;
+        }
 
         public override string ToString()
             => Format();
 
         [MethodImpl(Inline)]
         public static implicit operator Register(XedRegId src)
-            => new Register(src);
+            => new (src);
+
+        [MethodImpl(Inline)]
+        public static implicit operator Register(RuleName src)            
+            => new (src);
+
+        [MethodImpl(Inline)]
+        public static implicit operator Register(Nonterminal src)            
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator XedRegId(Register src)
-            => src.Value;
+            => src.RegId;
 
         [MethodImpl(Inline)]
         public static explicit operator ushort(Register src)
-            => (ushort)src.Value;
+            => (ushort)src.RegId;
 
         [MethodImpl(Inline)]
         public static explicit operator Register(ushort src)

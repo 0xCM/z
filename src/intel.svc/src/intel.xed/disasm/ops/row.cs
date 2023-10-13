@@ -61,7 +61,7 @@ partial class XedDisasm
         dst.Ops = new OpDetails(alloc<OpDetail>(src.Block.OpCount));
         var ocpos = state.POS_NOMINAL_OPCODE;
         var opcode = state.NOMINAL_OPCODE;
-        var ocsrm = math.and((byte)state.SRM, opcode);
+        var ocsrm = (uint3)math.and((byte)state.SRM, opcode);
         Require.equal(state.SRM, ocsrm);
 
         if(opcode != code[ocpos])

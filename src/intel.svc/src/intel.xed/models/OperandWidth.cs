@@ -17,6 +17,18 @@ partial class XedModels
             Code = code;
         }
 
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Code == 0;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => Code != 0;
+        }
+
         public Hash32 Hash
         {
             [MethodImpl(Inline)]

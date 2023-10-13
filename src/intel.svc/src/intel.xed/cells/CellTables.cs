@@ -11,9 +11,6 @@ partial class XedRules
 {
     public class CellTables
     {
-        public static CellTables tables(XedRuleCells src)
-            => new (src);
-
         public static Index<RuleCellRecord> records(CellTables src)
         {
             var seq = z16;

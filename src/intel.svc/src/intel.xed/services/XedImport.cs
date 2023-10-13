@@ -18,26 +18,25 @@ public partial class XedImport : WfSvc<XedImport>
         var ruleT = XedRuleTables.Empty;
         var instdefs = ReadOnlySeq<InstDef>.Empty;
         exec(true, 
-            () => XedZ.emit(Channel, XedZ.patterns()),
+            () => Emit(XedTables.InstBlocks()),
             () => ruleT = XedTables.RuleTables(),
             () => Emit(XedTables.RuleSeq()),
             () => Emit(XedTables.SeqReflected()),
-            () => Emit(MacroMatches()),
+            () => Emit(XedTables.MacroMatches()),
             () => instdefs = XedTables.InstDefs(),
-            () => Emit(RuleMacros.defs()),
-            () => Emit(FieldImports()),
+            () => Emit(XedTables.MacroDefs()),
+            () => Emit(XedTables.FieldImports()),
             () => Channel.TableEmit(XedRegMap.Service.REntries, XedPaths.ImportTable<RegMapEntry>("rmap")),
             () => Channel.TableEmit(XedRegMap.Service.XEntries, XedPaths.ImportTable<RegMapEntry>("xmap")),
             () => EmitChipCodes(Symbols.symkinds<ChipCode>()),
             () => Emit(XedTables.broadcasts(Symbols.kinds<BroadcastKind>())),
             () => Emit(CalcCpuIdDataset(XedPaths.CpuidSource())),
             () => {
-                var chips = Chips(XedPaths.DocSource(XedDocKind.ChipMap));
+                var chips = XedTables.ChipMap();
                 Emit(chips);
-                var forms = XedFormImports.calc(XedPaths.DocSource(XedDocKind.FormData));
+                var forms = XedTables.FormImports();
                 EmitFormImports(forms);
-                var inst = CalcChipInstructions(forms, chips);
-                Emit(inst);
+                Emit(XedTables.ChipInstructions(forms, chips));
             },
             () => {
                 Emit(XedTables.Widths.Details);
@@ -50,7 +49,7 @@ public partial class XedImport : WfSvc<XedImport>
         exec(true,
             () => EmitRuleTables(ruleT),
             () => EmitPatternDocs(patterns),            
-            () => Emit(CalcDefRows(ruleT)),
+            () => Emit(XedTables.TableDefRows(ruleT)),
             () => cells = XedTables.RuleCells(ruleT),
             () => Emit(XedPatterns.layouts(patterns)),
             () => Emit(InstPattern.records(patterns.Storage)),
@@ -63,17 +62,17 @@ public partial class XedImport : WfSvc<XedImport>
             }
         );
     
-        var cellT = CellTables.tables(cells);
-        var opdetail = XedPatterns.opdetails(patterns.Storage);
+        var cellT = XedTables.CellTables(cells);
+        var opdetail = XedTables.OpDetails(patterns);
         exec(true, 
             () => Emit(grids(cellT)),
             () => EmitRuleDocs(cellT),
-            () => Emit(Xed.fields(cellT)),
+            () => Emit(XedTables.FieldDeps(cellT)),
             () => Emit(CellTables.records(cellT)),
             () => EmitRuleMetrics(cellT),
             () => EmitTableStats(cellT),
             () => Emit(CalcOpSpecs(opdetail)),
-            () => Emit(CalcInstOpRows(opdetail)),
+            () => Emit(XedTables.OpRows(opdetail)),
             () => Emit(CalcOpClasses(opdetail))
         );
     }
@@ -81,7 +80,7 @@ public partial class XedImport : WfSvc<XedImport>
     static InstOpSpec spec(in InstOpDetail src)
     {
         var dst = InstOpSpec.Empty;
-        dst.Pattern = src.Pattern;
+        dst.Form = src.InstForm;
         dst.Index = src.Index;
         dst.Name = src.Name;
         dst.ElementType = src.ElementType;
@@ -134,97 +133,57 @@ public partial class XedImport : WfSvc<XedImport>
 
     void Emit(ReadOnlySeq<FieldUsage> src)
     {
-        const string RenderPattern = "{0,-6} | {1,-6} | {2,-6} | {3,-3} | {4,-32} | {5,-32}";
-        var headers = new string[]{"Seq", "Index", "Kind", "C", "Rule", "Field"};
-        var dst = text.emitter();
-        dst.AppendLineFormat(RenderPattern, headers);
-        var j=z8;
-        var rule = src.First.Rule;
-        for(var i=0; i<src.Count; i++,j++)
+        var antecedants = dict<RuleIdentity,HashSet<RuleField>>();
+        var consequents = dict<RuleIdentity,HashSet<RuleField>>();
+        foreach(var usage in src)
         {
-            ref readonly var u = ref src[i];
-            if(u.Rule != rule)
+            if(usage.Kind == UsageKind.DecLeft || usage.Kind == UsageKind.EncLeft)
             {
-                j=0;
-                rule = u.Rule;
-            }
-
-            dst.AppendLineFormat(RenderPattern, i, j, u.TableKind, u.Consequent, u.RuleName, u.Field);
-        }
-
-        Channel.FileEmit(dst.Emit(), XedPaths.Imports().Path("xed.rules.fields.deps", FileKind.Csv));
-    }
-
-    static IDbArchive Targets
-        => XedPaths.Imports();
-
-    ChipMap Chips(FilePath src)
-    {
-        var kinds = Symbols.index<InstIsaKind>();
-        var chip = ChipCode.INVALID;
-        var chips = dict<ChipCode,ChipIsaKinds>();
-        using var reader = src.LineReader(TextEncodingKind.Asci);
-        while(reader.Next(out var line))
-        {
-            if(line.StartsWith(Chars.Hash))
-                continue;
-
-            var i = line.Index(Chars.Colon);
-            if(i != -1)
-            {
-                var name = line.Left(i).Trim();
-                if(blank(name))
-                    continue;
-
-                if(XedParsers.parse(name, out chip))
+                if(!antecedants.TryGetValue(usage.Rule, out _))
                 {
-                    if(!chips.TryAdd(chip, new ChipIsaKinds(chip)))
-                        Errors.Throw(Msg.DuplicateChipCode.Format(chip));
+                    antecedants[usage.Rule] = hashset<RuleField>();
                 }
-                else
-                    Errors.Throw(Msg.ChipCodeNotFound.Format(name));
+                antecedants[usage.Rule].Add(usage.Field);        
             }
-            else
+            else if(usage.Kind == UsageKind.DecRight || usage.Kind == UsageKind.EncRight)
             {
-                var isaKinds = line.Content.SplitClean(Chars.Tab).Trim().Select(x => Enums.parse<InstIsaKind>(x,0)).Where(x => x != 0).Array();
-                chips[chip].Add(isaKinds);
-                if(chips.TryGetValue(chip, out var entry))
-                    entry.Add(isaKinds);
+                if(!consequents.TryGetValue(usage.Rule, out _))
+                {
+                    consequents[usage.Rule] = hashset<RuleField>();
+                }
+                consequents[usage.Rule].Add(usage.Field);        
             }
         }
-        var codes = Symbols.index<ChipCode>();
-        var buffer = dict<ChipCode,InstIsaKinds>();
-        for(var i=0; i<codes.Count; i++)
+                    
+        var dst = text.emitter();
+        var rules = antecedants.Keys.Array().Sort();
+        foreach(var rule in rules)                    
         {
-            var code = codes[i].Kind;
-            if(chips.TryGetValue(code, out var entry))
-                buffer[code] = entry.Kinds;
-            else
-                buffer[code] = InstIsaKinds.Empty;
-        }
-        return new ChipMap(buffer);
-    }
- 
-    ChipInstructions CalcChipInstructions(ReadOnlySeq<FormImport> forms, ChipMap map)
-    {
-        var codes = Symbols.index<ChipCode>();
-        var formisa = forms.Select(x => (x.InstForm.Kind, x.IsaKind)).ToDictionary();
-        var isakinds = formisa.Values.ToHashSet();
-        var isaforms = cdict<InstIsaKind,HashSet<FormImport>>();
-        var dst = cdict<ChipCode,ReadOnlySeq<FormImport>>();
-        iter(isakinds, k => isaforms[k] = new());
-        iter(forms, f => isaforms[f.IsaKind].Add(f));
-        iter(codes.Kinds, chip => {
-            var kinds = map[chip];
-            var matches = sys.bag<FormImport>();
-            iter(kinds, k => {
-                if(isaforms.TryGetValue(k, out var forms))
-                    matches.AddRange(forms);
-            });
-                dst.TryAdd(chip,matches.ToArray().Sort().Resequence());         
+            dst.Append($"{rule,-48} | ");
+            var af = antecedants[rule].Array().Sort();
+            for(var i=0; i<af.Length; i++)
+            {
+                if(i != 0)
+                    dst.Append(", ");                
+                dst.Append(skip(af,i).Format());
             }
-        ,true);
-        return new (dst);
+
+            if(consequents.TryGetValue(rule, out var cf))
+            {
+                dst.Append(" => ");
+                var _cf = cf.Array().Sort();
+                for(var i=0; i<_cf.Length; i++)
+                {
+                    if(i != 0)
+                        dst.Append(", ");                
+                    dst.Append(skip(_cf,i).Format());
+                }
+            }
+    
+            dst.AppendLine();
+        }
+        Channel.FileEmit(dst.Emit(), XedPaths.Imports().Path("xed.rules.fields.deps", FileKind.Csv));
+
     }
 
     static void EmitRulePage(in TableCriteria src)
@@ -344,42 +303,6 @@ public partial class XedImport : WfSvc<XedImport>
         Channel.TableEmit(stats, XedPaths.ImportTable<XedTableStats>(), TextEncodingKind.Asci);
     }     
 
-    static ReadOnlySeq<InstOpRow> CalcInstOpRows(ReadOnlySeq<InstOpDetail> src)
-    {
-        var count = src.Count;
-        var rows = alloc<InstOpRow>(count);
-        for(var i=0; i<count; i++)
-        {
-            ref readonly var detail = ref src[i];
-            ref var dst = ref rows[i];
-            Require.invariant(detail.InstClass.Kind != 0);
-            dst.Pattern = detail.Pattern;
-            dst.InstClass = Xed.classifier(detail.InstClass);
-            dst.OpCode = detail.OpCode;
-            dst.Mode = detail.Mode;
-            dst.Lock = detail.Lock;
-            dst.Mod = detail.Mod;
-            dst.RexW = detail.RexW;
-            dst.OpCount = detail.OpCount;
-            dst.Index = detail.Index;
-            dst.Name = detail.Name;
-            dst.Kind = detail.Kind;
-            dst.Action = detail.Action;
-            dst.WidthCode = detail.WidthCode;
-            dst.EType = detail.ElementType;
-            dst.EWidth = detail.ElementWidth;
-            dst.RegLit = detail.RegLit;
-            dst.Modifier = detail.Modifier;
-            dst.Visibility = detail.Visibility;
-            dst.NonTerminal = detail.Rule;
-            dst.BitWidth = detail.BitWidth;
-            dst.GprWidth = detail.GrpWidth;
-            dst.SegInfo = detail.SegInfo;
-            dst.ECount = detail.ElementCount;
-            dst.SourceExpr = detail.SourceExpr;
-        }
-        return rows;
-    }    
 
     static InstOpClass opclass(in InstOpDetail src)
     {
@@ -419,6 +342,9 @@ public partial class XedImport : WfSvc<XedImport>
     void Emit(ReadOnlySeq<InstOpSpec> src)
         => Channel.TableEmit(src, XedPaths.ImportTable<InstOpSpec>());
 
+    void Emit(ReadOnlySeq<XedZ.InstBlockPattern> src)
+        => XedZ.emit(Channel,src);
+
     void Emit(InstLayouts src)
         => Channel.TableEmit(src.Records.View, XedPaths.ImportTable<InstLayoutRecord>(), TextEncodingKind.Asci);
 
@@ -450,7 +376,7 @@ public partial class XedImport : WfSvc<XedImport>
     }
 
     void EmitChipCodes(ReadOnlySeq<SymKindRow> src)
-        => Channel.TableEmit(src, Targets.Path("xed.chips", FileKind.Csv));
+        => Channel.TableEmit(src, XedPaths.Imports().Path("xed.chips", FileKind.Csv));
 
     void Emit(ReadOnlySpan<MacroMatch> src)
         => Channel.TableEmit(src, XedPaths.ImportTable<MacroMatch>());
@@ -561,9 +487,6 @@ public partial class XedImport : WfSvc<XedImport>
         Channel.FileEmit(dst.Emit(), src.Count, XedPaths.Imports().Path(FS.file("xed.inst.attributes", FS.Csv)));
     }
 
-    static ReadOnlySeq<MacroMatch> MacroMatches()
-        => mapi(RuleMacros.matches().Values.ToArray().Sort(), (i,m) => m.WithSeq((uint)i));
-
     void EmitFlagEffects(ReadOnlySeq<InstPattern> src)
     {
         const string RenderPattern = "{0,-16} | {1,-4} | {2, -4}";
@@ -580,57 +503,12 @@ public partial class XedImport : WfSvc<XedImport>
             for(var k=0; k<effects.Count; k++)
             {
                 ref readonly var e = ref effects[k];
-                writer.AppendLineFormat(RenderPattern,
-                    XedRender.format(pattern.InstClass),
-                    e.Flag.ToString().ToLower(),
-                    XedRender.format(e.Effect)
-                    );
+                writer.AppendLineFormat(RenderPattern, XedRender.format(pattern.InstClass), e.Flag.ToString().ToLower(), XedRender.format(e.Effect));
                 counter++;
             }
         }
 
         Channel.EmittedFile(emitting,counter);
-    }
-
-    static Index<RuleExpr> RuleExpressions(CellTables src)
-    {
-        var dst = sys.alloc<RuleExpr>(src.RowCount);
-        var k=z16;
-        for(var i=0; i<src.TableCount; i++)
-        {
-            ref readonly var table = ref src[i];
-            for(var j=0; j<table.RowCount; j++, k++)
-            {
-                ref readonly var row = ref table[j];
-                seek(dst,k) = new RuleExpr(k, table.Sig, (byte)row.RowIndex, row.Expression.Format());
-            }
-        }
-
-        return dst;
-    }
-
-    static Index<TableDefRow> CalcDefRows(XedRuleTables src)
-    {
-        var buffer = list<TableDefRow>();
-        ref readonly var specs = ref src.Specs();
-        var k=0u;
-        for(var i=0u; i<specs.TableCount; i++)
-        {
-            ref readonly var spec = ref specs[i];
-            for(var j=0u; j<spec.RowCount; j++, k++)
-            {
-                ref readonly var row = ref spec[j];
-                var dst = TableDefRow.Empty;
-                dst.Seq = k;
-                dst.TableId = spec.TableId;
-                dst.Index = j;
-                dst.Kind = spec.TableKind;
-                dst.Name = spec.Name;
-                dst.Statement = row.Format();
-                buffer.Add(dst);
-            }
-        }
-        return buffer.ToArray();
     }
 
     void Emit(ReadOnlySeq<TableDefRow> src)
@@ -724,45 +602,4 @@ public partial class XedImport : WfSvc<XedImport>
         }
         Channel.FileEmit(dst.Emit(), counter, XedPaths.Imports().Path("xed.rules.grids", FileKind.Csv));
     }    
-
-    public static ReadOnlySeq<FieldImport> FieldImports()
-    {
-        var src = XedPaths.FieldSource();
-        var dst = list<FieldImport>();
-        var result = Outcome.Success;
-        var line = EmptyString;
-        var lines = src.ReadLines().Reader();
-        while(lines.Next(out line))
-        {
-            var content = line.Trim();
-            if(text.empty(content) || text.begins(content,Chars.Hash))
-                continue;
-
-            var cells = text.split(text.despace(content), Chars.Space).Reader();
-            var record = FieldImport.Empty;
-            record.Name = cells.Next();
-
-            cells.Next();
-            result = FieldTypes.ExprKind(cells.Next(), out XedFieldKind ft);
-            if(result.Fail)
-                Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.FieldType), cells.Prior()));
-            else
-                record.FieldType = ft;
-
-            result = DataParser.parse(cells.Next(), out record.Width);
-            if(result.Fail)
-                Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.Width), cells.Prior()));
-
-            if(!Visibilities.ExprKind(cells.Next(), out record.Visibility))
-                Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.Visibility), cells.Prior()));
-
-            dst.Add(record);
-        }
-
-        return dst.ToArray().Sort();
-    }
-
-    static readonly Symbols<XedFieldKind> FieldTypes = Symbols.index<XedFieldKind>();
-
-    static readonly Symbols<VisibilityKind> Visibilities = Symbols.index<VisibilityKind>();
 }

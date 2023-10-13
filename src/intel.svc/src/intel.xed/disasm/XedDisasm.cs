@@ -232,9 +232,10 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             writer.AppendLineFormat(LabeledValue, nameof(state.MODE), AsmRender.format(XedFields.mode(state)));
             writer.AppendLineFormat(LabeledValue, "OcMap", AsmOpCodes.kind(XedFields.ocindex(state)));
 
+            var offsets = detail.Offsets;
             if(detail.PrefixSize != 0)
                 writer.AppendLineFormat(LabeledValue, nameof(detail.PrefixSize), detail.PrefixSize);
-            writer.AppendLineFormat(LabeledValue, nameof(detail.Offsets), detail.Offsets);
+            writer.AppendLineFormat(LabeledValue, nameof(detail.Offsets), offsets);
             writer.AppendLineFormat(LabeledValue, nameof(detail.Encoded), detail.Encoded);
             writer.AppendLineFormat(LabeledValue, EmptyString, detail.Encoded.BitString);
 
@@ -248,11 +249,11 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             writer.AppendLineFormat(LabeledValue, "OpCode", string.Format("{0} [{1}]", XedRender.format(ocbyte), BitRender.format8x4(ocbyte)));
 
             if(state.SRM != 0)
-                writer.AppendLineFormat(LabeledValue, nameof(state.SRM), string.Format("{0} [{1}]", XedRender.format((Hex8)state.SRM), BitRender.format8x4(state.SRM)));
+                writer.AppendLineFormat(LabeledValue, nameof(state.SRM), string.Format("{0} [{1}]", XedRender.format(state.SRM), BitRender.format8x4(state.SRM)));
 
             if(state.HAS_MODRM)
             {
-                var modrm = XedFields.modrm(state);
+                var modrm = Require.equal(XedFields.modrm(state), detail.ModRm);
                 writer.AppendLineFormat(LabeledValue, "ModRm", string.Format("{0} [{1}]", modrm.Format(), modrm.Bitstring()));
             }
 
@@ -305,11 +306,11 @@ public partial class XedDisasm : WfSvc<XedDisasm>
 
             var rc = (RoundingKind)state.ROUNDC;
             if(rc == 0 && state.LLRC != 0)
-                writer.AppendLineFormat(LabeledValue, nameof(state.LLRC), XedRender.format((Hex8)state.LLRC));
+                writer.AppendLineFormat(LabeledValue, nameof(state.LLRC), XedRender.format(state.LLRC));
 
             if(rc != 0)
             {
-                var llrc = (LLRC)state.LLRC;
+                var llrc = state.LLRC;
                 Require.equal(state.BCRC, bit.On);
                 switch(rc)
                 {
@@ -335,7 +336,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             var vc = XedFields.vexclass(state);
             if(vc != 0)
             {
-                var vex5 = BitNumbers.join((uint3)state.VEXDEST210, state.VEXDEST4, state.VEXDEST3);
+                var vex5 = BitNumbers.join(state.VEXDEST210, state.VEXDEST4, state.VEXDEST3);
                 var vexBits = string.Format("[{0} {1} {2}]", state.VEXDEST4, state.VEXDEST3, (uint3)state.VEXDEST210);
                 var vexHex = XedRender.format((Hex8)(byte)vex5);
                 if(vc == XedVexClass.VV1)

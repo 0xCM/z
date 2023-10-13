@@ -23,6 +23,8 @@ public partial class XedParsers
 
     static readonly EnumParser<OpType> OpTypes = new();
 
+    static readonly EnumParser<LLRC> LLRCParser = new();
+
     static readonly EnumParser<PointerWidthKind> PointerWidths = new();
 
     static readonly EnumParser<XedRegId> Regs = new();
@@ -109,7 +111,10 @@ public partial class XedParsers
 
     public static bool parse(string src, out AsmVL dst)
         => AsmVLParser.Parse(src, out dst);
-        
+
+    public static bool parse(string src, out LLRC dst)
+        => LLRCParser.Parse(src, out dst);
+
     public static bool parse(string src, out InstAttribs dst)
     {
         dst = InstAttribs.Empty;

@@ -14,8 +14,8 @@ partial class XedModels
     {
         const string TableId = "xed.inst.ops.specs";
 
-        [Render(12)]
-        public uint Pattern;
+        [Render(52)]
+        public XedInstForm Form;
 
         [Render(8)]
         public byte Index;
@@ -26,13 +26,13 @@ partial class XedModels
         [Render(12)]
         public ElementType ElementType;
 
-        [Render(6)]
+        [Render(16)]
         public OpWidth Width;
 
         [Render(8)]
         public ushort BitWidth;
 
-        [Render(8)]
+        [Render(16)]
         public Register RegLit;
 
         [Render(32)]
@@ -88,7 +88,7 @@ partial class XedModels
         [MethodImpl(Inline)]
         public int CompareTo(InstOpSpec src)
         {
-            var result = Pattern.CompareTo(src.Pattern);
+            var result = Form.CompareTo(src.Form);
             if(result == 0)
                 result = Index.CompareTo(src.Index);
             return result;

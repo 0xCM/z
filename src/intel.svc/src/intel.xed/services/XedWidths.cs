@@ -188,8 +188,9 @@ public class XedWidths
 
         return dst;
     }
+
     public static XedWidths FromSource()
-        => FromSource(XedPaths.DocSource(XedDocKind.Widths));
+        => FromSource(XedPaths.WidthSource());
 
     public static XedWidths FromSource(FilePath src)
     {
@@ -306,6 +307,31 @@ public class XedWidths
         return dst;
     }
 
+    public static ushort bitwidth(MachineMode mode, WidthCode code)
+    {
+        var dst = z16;
+        if(code == 0)        
+            return dst;
+        
+        else if(detail(code, out var info))
+        {
+            switch(mode.Class)
+            {
+                case MachineModeClass.Mode16:
+                    dst = info.Width16;
+                break;
+                case MachineModeClass.Not64:
+                case MachineModeClass.Mode32:
+                    dst = info.Width32;
+                break;
+
+                default:
+                    dst = info.Width64;
+                break;
+            }
+        }        
+        return dst;
+    }
     public static OpWidth width(MachineMode mode, WidthCode code)
     {
         var dst = OpWidth.Empty;

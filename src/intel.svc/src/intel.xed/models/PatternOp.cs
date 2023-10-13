@@ -14,14 +14,19 @@ partial class XedModels
     [StructLayout(LayoutKind.Sequential,Pack=1)]
     public struct PatternOp : IComparable<PatternOp>
     {
+        [Render(8)]
         public byte Index;
 
+        [Render(8)]
         public OpName Name;
 
+        [Render(8)]
         public OpKind Kind;
 
+        [Render(92)]
         public OpAttribs Attribs;
 
+        [Render(1)]
         public @string SourceExpr;
 
         public PatternOp()
@@ -56,7 +61,7 @@ partial class XedModels
             [MethodImpl(Inline)]
             get => XedPatterns.nonterm(this, out _);
         }
-
+    
         [MethodImpl(Inline)]
         public bool Nonterminal(out Nonterminal dst)
             => XedPatterns.nonterm(this, out dst);
@@ -68,6 +73,10 @@ partial class XedModels
         [MethodImpl(Inline)]
         public bool WidthCode(out WidthCode dst)
             => XedPatterns.widthcode(this, out dst);
+
+        [MethodImpl(Inline)]
+        public bool Width(out OperandWidth dst)
+            => XedPatterns.width(this, out dst);
 
         [MethodImpl(Inline)]
         public bool ElementType(out ElementType dst)

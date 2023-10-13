@@ -278,13 +278,13 @@ public record struct XedFieldState
     public Hex8 MODRM_BYTE;
 
     [RuleField(K.MOD, 2, typeof(uint2), "Specifies the value of the MOD segment of the ModRM bitfield, if applicable")]
-    public byte MOD;
+    public uint2 MOD;
 
     [RuleField(K.REG, 3, typeof(uint3), "Specifies the value of the REG segment of the ModRM bitfield, if applicable")]
-    public byte REG;
+    public uint3 REG;
 
     [RuleField(K.RM, 3, typeof(uint3), "Specifies the value of the RM segment of the ModRM bitfield, if applicable")]
-    public byte RM;
+    public uint3 RM;
 
     [RuleField(K.SIBSCALE, 2, typeof(uint2))]
     public byte SIBSCALE;
@@ -317,16 +317,16 @@ public record struct XedFieldState
     public bit VEXDEST3;
 
     [RuleField(K.VEXDEST210, 3, typeof(uint3))]
-    public byte VEXDEST210;
+    public uint3 VEXDEST210;
 
     [RuleField(K.ROUNDC, 3, typeof(RoundingKind))]
     public byte ROUNDC;
 
     [RuleField(K.LLRC, 2, typeof(LLRC))]
-    public byte LLRC;
+    public LLRC LLRC;
 
     [RuleField(K.SRM, 3, typeof(uint3))]
-    public byte SRM;
+    public uint3 SRM;
 
     [RuleField(K.ESRC, 4, typeof(ESRC))]
     public byte ESRC;

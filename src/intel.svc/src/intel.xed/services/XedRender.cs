@@ -87,6 +87,8 @@ public class XedRender
 
     static EnumRender<ASZ> AszKinds = new();
 
+    static EnumRender<LLRC> LLRCKinds = new();
+
     static EnumRender<CategoryKind> CategoryKinds = new();
 
     static EnumRender<InstIsaKind> IsaKinds = new();
@@ -133,6 +135,8 @@ public class XedRender
         }
         return dst;
     }
+
+
 
     public static string format(Nonterminal src)
         => src.IsEmpty ? EmptyString : string.Format("{0}()", XedRender.format(src.Name));
@@ -193,6 +197,9 @@ public class XedRender
             dst = "B";
         return dst;
     }
+
+    public static string format(LLRC src)
+        => LLRCKinds.Format(src);
 
     public static string format(FlagEffectKind src)
         => FlagEffects.Format(src);

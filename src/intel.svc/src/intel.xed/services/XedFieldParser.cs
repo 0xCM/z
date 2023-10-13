@@ -231,47 +231,47 @@ public class XedFieldParser
 
             case K.DEFAULT_SEG:
                 result = DataParser.parse(src, out dst.DEFAULT_SEG);
-                fieldval = value(kind, dst.DEFAULT_SEG);
+                fieldval = new(kind, dst.DEFAULT_SEG);
             break;
 
             case K.DF32:
                 dst.DF32 = bit.On;
-                fieldval = value(kind, bit.On);
+                fieldval = new(kind, bit.On);
             break;
 
             case K.DF64:
                 dst.DF64 = bit.On;
-                fieldval = value(kind, bit.On);
+                fieldval = new(kind, bit.On);
             break;
 
             case K.DISP_WIDTH:
                 result = DataParser.parse(src, out dst.DISP_WIDTH);
-                fieldval = value(kind, dst.DISP_WIDTH);
+                fieldval = new(kind, dst.DISP_WIDTH);
             break;
 
             case K.DUMMY:
                 dst.DUMMY = bit.On;
-                fieldval = value(kind, bit.On);
+                fieldval = new(kind, bit.On);
             break;
 
             case K.EASZ:
                 result = DataParser.parse(src, out dst.EASZ);
-                fieldval = value(kind, dst.EASZ);
+                fieldval = new(kind, dst.EASZ);
             break;
 
             case K.ELEMENT_SIZE:
                 result = DataParser.parse(src, out dst.ELEMENT_SIZE);
-                fieldval = value(kind, dst.ELEMENT_SIZE);
+                fieldval = new(kind, dst.ELEMENT_SIZE);
             break;
 
             case K.ENCODER_PREFERRED:
                 dst.ENCODER_PREFERRED = bit.On;
-                fieldval = value(kind, bit.On);
+                fieldval = new(kind, bit.On);
             break;
 
             case K.ENCODE_FORCE:
                 dst.ENCODE_FORCE = bit.On;
-                fieldval = value(kind, bit.On);
+                fieldval = new(kind, bit.On);
             break;
 
             case K.EOSZ:
@@ -281,12 +281,12 @@ public class XedFieldParser
 
             case K.ESRC:
                 result = DataParser.parse(src, out dst.ESRC);
-                fieldval = value(kind, dst.ESRC);
+                fieldval = new(kind, dst.ESRC);
             break;
 
             case K.FIRST_F2F3:
                 result = DataParser.parse(src, out dst.FIRST_F2F3);
-                fieldval = value(kind, dst.FIRST_F2F3);
+                fieldval = new(kind, dst.FIRST_F2F3);
             break;
 
             case K.HAS_MODRM:
@@ -346,22 +346,22 @@ public class XedFieldParser
 
             case K.IMM_WIDTH:
                 result = DataParser.parse(src, out dst.IMM_WIDTH);
-                fieldval = value(kind, dst.IMM_WIDTH);
+                fieldval = new(kind, dst.IMM_WIDTH);
             break;
 
             case K.INDEX:
                 result = XedParsers.parse(src, out dst.INDEX);
-                fieldval = value(kind, dst.INDEX);
+                fieldval = new(kind, dst.INDEX);
             break;
 
             case K.LAST_F2F3:
                 result = DataParser.parse(src, out dst.LAST_F2F3);
-                fieldval = value(kind, dst.LAST_F2F3);
+                fieldval = new(kind, dst.LAST_F2F3);
             break;
 
             case K.LLRC:
-                result = DataParser.parse(src, out dst.LLRC);
-                fieldval = value(kind, dst.LLRC);
+                result = XedParsers.parse(src, out dst.LLRC);
+                fieldval = new(kind, dst.LLRC);
             break;
 
             case K.LOCK:
@@ -396,21 +396,21 @@ public class XedFieldParser
 
             case K.MEM0:
                 dst.MEM0 = bit.On;
-                fieldval = value(kind, bit.On);
+                fieldval = new(kind, bit.On);
             break;
 
             case K.MEM1:
                 dst.MEM1 = bit.On;
-                fieldval = value(kind, bit.On);
+                fieldval = new(kind, bit.On);
             break;
 
             case K.MOD:
-                result = DataParser.parse(src, out dst.MOD);
+                result = XedParsers.parse(src, out dst.MOD);
                 fieldval = value(kind, dst.MOD);
             break;
 
             case K.REG:
-                result = DataParser.parse(src, out dst.REG);
+                result = XedParsers.parse(src, out dst.REG);
                 fieldval = value(kind, dst.REG);
             break;
 
@@ -432,12 +432,12 @@ public class XedFieldParser
 
             case K.MODEP55C:
                 dst.MODEP55C = bit.On;
-                fieldval = value(kind, bit.On);
+                fieldval = new(kind, bit.On);
             break;
 
             case K.MODE_FIRST_PREFIX:
                 dst.MODE_FIRST_PREFIX = bit.On;
-                fieldval = value(kind, bit.On);
+                fieldval = new(kind, bit.On);
             break;
 
             case K.MPXMODE:
@@ -452,27 +452,27 @@ public class XedFieldParser
 
             case K.NEEDREX:
                 dst.NEEDREX = bit.On;
-                fieldval = value(kind, bit.On);
+                fieldval = new(kind, bit.On);
             break;
 
             case K.NEED_MEMDISP:
                 result = XedParsers.parse(src, out dst.NEED_MEMDISP);
-                fieldval = value(kind, dst.NEED_MEMDISP);
+                fieldval = new(kind, dst.NEED_MEMDISP);
             break;
 
             case K.NEED_SIB:
                 dst.NEED_SIB = bit.On;
-                fieldval = value(kind, bit.On);
+                fieldval = new(kind, bit.On);
             break;
 
             case K.NELEM:
                 result = XedParsers.parse(src, out dst.NELEM);
-                fieldval = value(kind, dst.NELEM);
+                fieldval = new(kind, dst.NELEM);
             break;
 
             case K.NOMINAL_OPCODE:
                 result = XedParsers.parse(src, out dst.NOMINAL_OPCODE);
-                fieldval = value(kind, dst.NOMINAL_OPCODE);
+                fieldval = new(kind, dst.NOMINAL_OPCODE);
             break;
 
             case K.NOREX:
@@ -517,22 +517,22 @@ public class XedFieldParser
 
             case K.POS_DISP:
                 result = DataParser.parse(src, out dst.POS_DISP);
-                fieldval = value(kind, dst.POS_DISP);
+                fieldval = new(kind, dst.POS_DISP);
             break;
 
             case K.POS_IMM:
                 result = DataParser.parse(src, out dst.POS_IMM);
-                fieldval = value(kind, dst.POS_IMM);
+                fieldval = new(kind, dst.POS_IMM);
             break;
 
             case K.POS_IMM1:
                 result = DataParser.parse(src, out dst.POS_IMM1);
-                fieldval = value(kind, dst.POS_IMM1);
+                fieldval = new(kind, dst.POS_IMM1);
             break;
 
             case K.POS_MODRM:
                 result = DataParser.parse(src, out dst.POS_MODRM);
-                fieldval = value(kind, dst.POS_MODRM);
+                fieldval = new(kind, dst.POS_MODRM);
             break;
 
             case K.POS_NOMINAL_OPCODE:
@@ -587,17 +587,17 @@ public class XedFieldParser
 
             case K.REG4:
                 result = XedParsers.parse(src, out dst.REG4);
-                fieldval = value(kind, dst.REG4);
+                fieldval = new(kind, dst.REG4);
             break;
 
             case K.REG5:
                 result = XedParsers.parse(src, out dst.REG5);
-                fieldval = value(kind, dst.REG5);
+                fieldval = new(kind, dst.REG5);
             break;
 
             case K.REG6:
                 result = XedParsers.parse(src, out dst.REG6);
-                fieldval = value(kind, dst.REG6);
+                fieldval = new(kind, dst.REG6);
             break;
 
             case K.REG7:
@@ -655,7 +655,7 @@ public class XedFieldParser
             break;
 
             case K.RM:
-                result = DataParser.parse(src, out dst.RM);
+                result = XedParsers.parse(src, out dst.RM);
                 fieldval = value(kind, dst.RM);
             break;
 
@@ -690,17 +690,17 @@ public class XedFieldParser
             break;
 
             case K.SIBBASE:
-                result = DataParser.parse(src, out dst.SIBBASE);
+                result = XedParsers.parse(src, out dst.SIBBASE);
                 fieldval = value(kind, dst.SIBBASE);
             break;
 
             case K.SIBINDEX:
-                result = DataParser.parse(src, out dst.SIBINDEX);
+                result = XedParsers.parse(src, out dst.SIBINDEX);
                 fieldval = value(kind, dst.SIBINDEX);
             break;
 
             case K.SIBSCALE:
-                result = DataParser.parse(src, out dst.SIBSCALE);
+                result = XedParsers.parse(src, out dst.SIBSCALE);
                 fieldval = value(kind, dst.SIBSCALE);
             break;
 
@@ -710,7 +710,7 @@ public class XedFieldParser
                 break;
 
             case K.SRM:
-                result = DataParser.parse(src, out dst.SRM);
+                result = XedParsers.parse(src, out dst.SRM);
                 fieldval = value(kind, dst.SRM);
             break;
 
@@ -736,7 +736,7 @@ public class XedFieldParser
             break;
 
             case K.VEXDEST210:
-                result = DataParser.parse(src, out dst.VEXDEST210);
+                result = XedParsers.parse(src, out dst.VEXDEST210);
                 fieldval = value(kind, dst.VEXDEST210);
             break;
 
@@ -1460,7 +1460,7 @@ public class XedFieldParser
             break;
 
             case K.LLRC:
-                dst.LLRC = src.ToByte();
+                dst.LLRC = (LLRC)src.ToByte();
             break;
 
             case K.LOCK:

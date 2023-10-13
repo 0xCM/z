@@ -10,13 +10,13 @@ public readonly record struct BitSegType
 
     [MethodImpl(Inline)]
     public static BitSegType define(NativeClass @class, ushort total, ushort cell)
-        => new BitSegType(@class, total, cell == 0 ? (ushort)1 : cell);
+        => new (@class, total, cell == 0 ? (ushort)1 : cell);
 
     [MethodImpl(Inline)]
     internal BitSegType(NativeClass @class, ushort total, ushort cell)
     {
         var count = ((uint)total)/((uint)cell);
-        Data = (uint)((uint)@class | ((uint)total << 3) | (count << 24));
+        Data = (uint)@class | ((uint)total << 3) | (count << 24);
     }
 
     public bool IsEmpty
@@ -58,10 +58,8 @@ public readonly record struct BitSegType
     public static string format(BitSegType src)
     {
         var dst = EmptyString;
-        if(src.CellCount <= 1)
-            dst = EmptyString;
-        else
-            dst = string.Format("{0}x{1}{2}", src.DataWidth, src.CellWidth, src.Class.ToString().ToLower());
+        if(src.IsNonEmpty)
+            dst = string.Format("{0}x{1}{2}", src.CellCount, src.CellWidth, src.Class != 0 ? src.Class.ToString().ToLower() : EmptyString);
         return dst;
     }
 

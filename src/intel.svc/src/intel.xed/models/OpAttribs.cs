@@ -82,6 +82,26 @@ partial class XedModels
             get => ref seek(Edit,i);
         }
 
+        public string Format()
+        {
+            var dst = text.emitter();
+            if(Count != 0)
+            {
+                dst.Append(Chars.LBrace);
+                for(var i=0; i<Count; i++)
+                {
+                    if(i != 0)
+                        dst.Append(", ");
+                    dst.Append($"{this[i].Kind}:{this[i].Format()}");
+                }
+                dst.Append(Chars.RBrace);
+            }
+            return dst.Emit();
+        }
+
+        public override string ToString()
+            => Format();
+            
         public bool Search(OpAttribKind @class, out OpAttrib dst)
             => XedPatterns.first(this, @class, out dst);
 

@@ -50,7 +50,7 @@ public partial class XedCmd : WfAppCmd<XedCmd>
     [CmdOp("xed/inst/parse")]
     void ParseInstructions()
     {
-        var src = XedPaths.DocSource(XedDocKind.EncInstDef);
+        var src = XedPaths.InstDefSource(RuleTableKind.ENC);
         if(!src.Exists)
         {
             Channel.Error(FS.missing(src));

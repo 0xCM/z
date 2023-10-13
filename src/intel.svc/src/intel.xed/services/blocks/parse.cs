@@ -335,11 +335,7 @@ public partial class XedZ
             {
                 if(XedParsers.parse(src, out InstIsaKind value))   
                     dst = new(field,value);
-
             }
-            break;
-
-            case lower_nibble:
             break;
 
             case N.map:
@@ -378,8 +374,11 @@ public partial class XedZ
                 var input = text.split(src, Chars.Space);
                 var count = input.Length;
                 PatternOps value =  sys.alloc<PatternOp>(count);
-                for(var i=0; i<count; i++)
+                for(var i=z8; i<count; i++)
+                {
                     XedPatterns.parse(skip(input,i), ref value[i]);
+                    value[i].Index = i;
+                }
                 dst = new(field,value);
             }
             break;
@@ -409,7 +408,6 @@ public partial class XedZ
             {
                 if(src != "unspecified" && byte.TryParse(src, out var value))
                     dst = new(field,value);
-
             }
             break;
 
@@ -454,6 +452,7 @@ public partial class XedZ
             case EOSZ_LIST:
             break;
 
+            case lower_nibble:
             case opcode_base10:
             case operand_list:
             case partial_opcode:

@@ -12,16 +12,52 @@ using static XedModels;
 using static XedRules;
 using static XedZ;
 
-public readonly record struct InstSegPattern
+public record InstSegPattern
 {
-    readonly ReadOnlySeq<CellValue> Cells;
-
-    public readonly XedInstForm Form;
-
-    public InstSegPattern(XedInstForm form, ReadOnlySeq<CellValue> src)
+    [Record(TableName)]
+    public struct Operand
     {
-        Form = form;
-        Cells = src;
+        const string TableName = "xed.instblock.operands";
+
+        [Render(64)]
+        public XedInstForm Form;
+
+        [Render(8)]
+        public byte Index;
+
+        [Render(8)]
+        public OpName Name;
+
+        [Render(8)]
+        public OpKind Kind;
+
+        [Render(12)]
+        public OperandWidth Indicator;
+
+        [Render(8)]
+        public ushort BitWidth;
+
+        [Render(16)]
+        public BitSegType SegType;
+
+        [Render(16)]
+        public Register Register;
+
+        [Render(1)]
+        public string SourceExpr;
+    }
+
+    public Seq<CellValue> Cells;
+
+    public XedInstForm Form;
+
+    public Seq<Operand> Operands;
+
+    public InstSegPattern()
+    {
+        Cells = sys.empty<CellValue>();
+        Form = default;
+        Operands = sys.empty<Operand>();
     }
 
     public string Format()
@@ -40,7 +76,6 @@ public readonly record struct InstSegPattern
 
     public override string ToString()
         => Format();
-
 }
 
 partial class XedCmd
@@ -59,34 +94,20 @@ partial class XedCmd
     [CmdOp("xed/blocks")]
     void EmitBlockLines()
     {
-        Channel.TableEmit(XedZ.patterns(), XedPaths.ImportTable<InstBlockPattern>());
+        var patterns = CollectSegPatterns();
+        var operands = list<InstSegPattern.Operand>();
+        foreach(var pattern in patterns)
+        {   
+            var count = pattern.Operands.Count;
+            for(var i=0; i<count; i++)
+            {
+                operands.Add(pattern.Operands[i]);
+            }
+        }
 
-        // var lines = XedZ.lines(XedPaths.DocSource(XedDocKind.RuleBlocks));
-        // foreach(var spec in lines)
-        // {
-        //     var fields = XedZ.fields(spec);
-        //     foreach(var field in fields)
-        //     {
-        //         switch(field.Name)
-        //         {
-        //             case BlockFieldName.operands:
-        //                 Channel.Row($"{spec.Form,-64} {field}");
-        //             break;
-        //         }
-        //     }
-        // }
 
-        //var blocks = XedImport.blocks();
-        //XedImport.Emit(blocks);
-        //var domain = XedImport.domain(blocks);
-        //XedImport.Emit(domain);
-        //EmitInstPatterns();
-        // var patterns = CollectSegPatterns();
-        // var dst = text.emitter();
-        // dst.AppendLineFormat("{0,-54} | {1}", "Form", "Segments");
-        // foreach(var pattern in patterns)
-        //     dst.AppendLine(pattern.Format());
-        // Channel.FileEmit(dst.Emit(), XedPaths.Imports().Path("xed.instblock.segs", FileKind.Csv));
+        Channel.TableEmit(operands.ViewDeposited(), XedPaths.ImportTable<InstSegPattern.Operand>());
+        
     }
 
     [CmdOp("xed/etl")]
@@ -97,17 +118,25 @@ partial class XedCmd
 
     ReadOnlySeq<InstSegPattern> CollectSegPatterns()
     {
-        var path =  XedPaths.DocSource(XedDocKind.RuleBlocks);
+        var path =  XedPaths.RuleBlockSource();
         var patterns = list<InstSegPattern>();
         var lines = XedZ.lines(path);
         iter(lines, spec => {
             var field = BlockField.Empty;
+            var mode = MachineMode.Default;
+            var pattern = new InstSegPattern{
+                Form = spec.Form
+            };
+            patterns.Add(pattern);
             foreach(var line in spec.Lines)
             {                
                 if(XedZ.parse(line, out field))
                 {
                     switch(field.Name)                
                     {
+                        case BlockFieldName.mode_restriction:
+                            mode = (MachineMode)field;
+                        break;
                         case BlockFieldName.pattern:
                         {
                             var cells = (InstCells)field;
@@ -125,7 +154,41 @@ partial class XedCmd
                                     break;
                                 }
                             }
-                            patterns.Add(new (spec.Form, segs.Array()));
+                            pattern.Cells = segs.Array();
+                        }
+                        break;
+                        case BlockFieldName.operands:
+                        {
+                            var ops = (PatternOps)field;
+                            pattern.Operands = sys.alloc<InstSegPattern.Operand>(ops.Count);
+                            for(var i=z8; i<ops.Count;i++)
+                            {
+                                ref var target = ref pattern.Operands[i];
+                                ref readonly var op = ref ops[i];
+                                target.Index = i;
+                                target.Form = spec.Form;
+                                target.Name = op.Name;
+                                target.Kind = op.Kind;
+                                target.SourceExpr = op.SourceExpr;
+                                op.Width(out target.Indicator);
+                                op.RegLiteral(out target.Register);
+                                if(target.Register.IsNonEmpty && !target.Register.IsNonterminal)
+                                {
+                                    target.BitWidth = XedWidths.width(target.Register);
+                                }
+                                if(target.Register.IsEmpty && op.Nonterminal(out var nt))
+                                {   
+                                    target.Register = nt;
+                                }
+                                if(target.Indicator.IsNonEmpty)
+                                {
+                                    var wi = XedWidths.describe(target.Indicator);
+                                    if(wi.ElementCount > 1 && wi.ElementWidth != 0)
+                                        target.SegType = wi.SegType;
+                                    if(target.BitWidth == 0)
+                                        target.BitWidth = XedWidths.bitwidth(mode,target.Indicator);
+                                }                                                                 
+                            }
                         }
                         break;
                     }            
@@ -138,7 +201,7 @@ partial class XedCmd
     
     void EmitInstPatterns()
     {
-        var path =  XedPaths.DocSource(XedDocKind.RuleBlocks);
+        var path =  XedPaths.RuleBlockSource();
         var patterns = bag<InstBlockPattern>();
         var lines = XedZ.lines(path);
         piter(lines.AsParallel(), spec => {

@@ -117,6 +117,14 @@ partial class XedRules
         }
 
         [MethodImpl(Inline)]
+        public FieldValue(FieldKind kind, LLRC data)
+        {
+            Field = kind;
+            Data = (ushort)data;
+            CellKind = 0;
+        }
+
+        [MethodImpl(Inline)]
         public FieldValue(FieldKind kind, ChipCode data)
         {
             Field = kind;
@@ -242,6 +250,10 @@ partial class XedRules
             => (BroadcastKind)Data;
 
         [MethodImpl(Inline)]
+        public LLRC ToLLRC()
+            => (LLRC)Data;
+
+        [MethodImpl(Inline)]
         public EOSZ ToEOSZ()
             => (EOSZ)Data;
 
@@ -284,6 +296,10 @@ partial class XedRules
         [MethodImpl(Inline)]
         public static implicit operator EASZ(FieldValue src)
             => src.ToEASZ();
+
+        [MethodImpl(Inline)]
+        public static implicit operator LLRC(FieldValue src)
+            => src.ToLLRC();
 
         [MethodImpl(Inline)]
         public static implicit operator EOSZ(FieldValue src)

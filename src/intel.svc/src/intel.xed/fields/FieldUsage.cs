@@ -54,7 +54,7 @@ partial class XedRules
         public readonly RuleIdentity Rule
         {
             [MethodImpl(Inline)]
-            get => new RuleIdentity(TableKind, RuleName);
+            get => new (TableKind, RuleName);
         }
 
         public Hash32 Hash

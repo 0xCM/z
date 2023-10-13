@@ -18,6 +18,9 @@ partial class XedModels
         [Render(18)]
         public XedInstClass InstClass;
 
+        [Render(52)]
+        public XedInstForm InstForm;
+
         [Render(26)]
         public AsmOpCode OpCode;
 

@@ -117,6 +117,7 @@ public partial class XedPatterns : AppService<XedPatterns>
         dst.Pattern = pattern.PatternId;
         Require.nonzero(pattern.InstClass.Kind);
         dst.InstClass = pattern.InstClass;
+        dst.InstForm = pattern.InstForm;
         dst.OpCode = pattern.OpCode;
         dst.Mode = pattern.Mode;
         dst.Lock = XedCells.@lock(fields);
@@ -218,6 +219,7 @@ public partial class XedPatterns : AppService<XedPatterns>
         }
         return result;
     }
+
     public static string specifier(in OpSpec src)
     {
         const string Pattern = "/{0}";
@@ -269,6 +271,17 @@ public partial class XedPatterns : AppService<XedPatterns>
     }
 
     [MethodImpl(Inline), Op]
+    public static bool width(in PatternOp src, out OperandWidth dst)
+    {
+        var result = first(src.Attribs, OpAttribKind.Width, out var attrib);
+        if(result)
+            dst= attrib.ToWidthCode();
+        else
+            dst = WidthCode.INVALID;;
+        return result;
+    }
+
+    [MethodImpl(Inline), Op]
     public static bool widthcode(in PatternOp src, out WidthCode dst)
     {
         var result = first(src.Attribs, OpAttribKind.Width, out var attrib);
@@ -299,7 +312,6 @@ public partial class XedPatterns : AppService<XedPatterns>
                 return true;
         return false;
     }
-
 
     [MethodImpl(Inline), Op]
     public static bool nonterm(in PatternOp src, out Nonterminal dst)

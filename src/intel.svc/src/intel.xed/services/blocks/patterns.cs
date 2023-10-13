@@ -7,10 +7,7 @@ namespace Z0;
 using System.Linq;
 
 using static XedModels;
-using static XedRules;
 using static sys;
-
-using N = XedZ.BlockFieldName;
 
 partial class XedZ
 {        
