@@ -8,13 +8,15 @@ using static sys;
 
 public partial class XedZ
 {
-    public class RuleAttribute : FormRule, IEquatable<RuleAttribute>, IComparable<RuleAttribute>
+    public class RuleAttribute : IEquatable<RuleAttribute>, IComparable<RuleAttribute>
     {
+        public readonly string Name;
+
         public readonly string Value;
 
         public RuleAttribute(string name, string value)
-            : base(name)
         {
+            Name = name;
             Value = value;
         }
 
@@ -27,6 +29,7 @@ public partial class XedZ
         {
             get => text.nonempty(Name);
         }
+
         public Hash32 Hash
         {
             get => hash(Name) | hash(Value);
@@ -35,7 +38,7 @@ public partial class XedZ
         public override int GetHashCode()
             => Hash;
 
-        public override string Format()
+        public string Format()
             => $"{Name}: {Value}";
 
         public override string ToString()

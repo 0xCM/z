@@ -55,13 +55,6 @@ public class XedMachines : IDisposable
     public void Dispose()
         => iter(Allocations.Values, machine => machine.Dispose());
 
-    public XedMachine Run(XedRuntime xed)
-    {
-        XedRt = xed;
-        Allocate();
-        return new XedMachine(xed);
-    }
-
     public void Reset()
     {
         iter(Allocations.Values, machine => machine.Reset());
@@ -436,16 +429,6 @@ public class XedMachines : IDisposable
         uint IXedMachine.MachineId
             => Id;
 
-        void LoadLookups(ReadOnlySeq<InstPattern> patterns)
-        {
-            var rules = XedRt.Rules;
-            var groups = rules.CalcInstGroups(patterns);
-            var members = groups.SelectMany(x => x.Members);
-            _GroupMemberLookup = members.Select(x => (x.PatternId,x)).ToDictionary();
-            _ClassPatternLookup = patterns.ClassPatterns();
-            _ClassFormLookup = patterns.ClassForms();
-            _ClassGroupLookup = groups.ClassGroups();
-        }
 
         ConstLookup<ushort,InstGroupMember> _GroupMemberLookup;
 

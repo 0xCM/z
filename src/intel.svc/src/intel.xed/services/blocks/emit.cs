@@ -4,61 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using System.Linq;
+
 using static XedModels;
 using static sys;
 
-using N = XedZ.BlockFieldName;
-
 public partial class XedZ
 {        
-    public static BlockDomain domain(RuleBlocks src)
-    {
-        var imports = src.Imports;
-        var domain = new BlockDomain();
-        var counter = 0u;
-        iter(imports, import => {                        
-            var block = src.FormBlocks[import.Form];
-            Require.notnull(block);
-            if(parse(block, out List<RuleAttribute> rules))
-            {
-                foreach(var rule in rules)
-                {
-                    if(rule.IsNonEmpty)
-                    {
-                        if(BlockFieldParser.parse(rule.Name, out N name))
-                        {
-                            var _rules = hashset<RuleAttribute>();
-                            if(!domain.TryGetValue(name, out _rules))
-                            {
-                                _rules = hashset<RuleAttribute>();
-                                domain[name] = _rules;
-                            }
-
-                            switch(name)
-                            {
-                                case N.attributes:
-                                {
-                                    if(BlockFieldParser.parse(rule.Value, out InstAttribs value))          
-                                    {
-                                        domain.InstAttribs.AddRange(value);
-                                    }   
-                                }
-                                break;
-                                default:
-                                    _rules.Add(rule);
-                                break;
-                            }                            
-                        }
-
-                    }
-                }
-                if(block.Count != rules.Count)
-                    @throw("block.Count != _rules.Rules.Count");
-            }
-        });
-
-        return domain;        
-    }
 
     static bool parse(List<string> lines, out List<RuleAttribute> dst)
     {
@@ -75,34 +27,6 @@ public partial class XedZ
         }
         
         return true;
-    }
-
-    public abstract class Sequence : FormRule
-    {
-        public readonly List<string> Terms = new();
-
-        protected Sequence(string name, params string[] terms)
-            : base(name)
-        {
-            Terms.AddRange(terms);
-        }
-
-        protected abstract Fence<char> Boundary {get;}
-
-        public override string Format()
-        {
-            var dst = text.emitter();
-            dst.Append($"{Name}: {Boundary.Left}");
-            for(var i=0; i<Terms.Count; i++)
-            {
-                if(i != 0)
-                    dst.Append(", ");
-                dst.Append($"{Terms[i]}");
-            }
-            dst.Append(Boundary.Right);
-
-            return dst.Emit();
-        }
     }
 
     public static RuleBlocks rules(FilePath path)
@@ -125,7 +49,12 @@ public partial class XedZ
         return dst;
     }
 
-    public static void emit(IWfChannel channel, RuleBlocks src)
+    public static void emit(IWfChannel channel, ReadOnlySeq<InstBlockPattern> src)
+    {
+        channel.TableEmit(src, XedPaths.ImportTable<InstBlockPattern>());
+    }
+
+    static void emit(IWfChannel channel, RuleBlocks src)
     {
         exec(true,
             () => channel.TableEmit(src.Imports, XedPaths.Imports().Table<InstBlockImport>()),
@@ -206,61 +135,7 @@ public partial class XedZ
         }
         return result;
     }
-
-    public static void lines(FilePath path, Action<InstBlockLineSpec> dst)
-    {
-        using var src = MemoryFiles.map(path);
-        lines(Lines.lines(src), dst);        
-    }
-
-    static void lines(ReadOnlySpan<string> src, Action<InstBlockLineSpec> dst)
-    {
-        const string FirstItemMarker = "amd_3dnow_opcode:";
-        const string LastItemMarker = "EOSZ_LIST:";
-        const string Pattern = "{0,-6} | {1,-6} | {2,-6} | {3,-6} | {4,-64}";
-        const string IFormMarker = "iform:";
-        var fields = InstBlockLineSpec.Empty;
-        var buffer = list<LineInterval<InstBlockLineSpec>>();
-        var form = XedInstForm.Empty;
-        var name = EmptyString;
-        var value = EmptyString;
-        var field = BlockFieldName.amd_3dnow_opcode;
-        var counter = 0u;
-        var min = 0u;
-        var seq = 0u;
-
-        for(var i=0u; i<src.Length; i++)
-        {
-            var line = text.trim(skip(src,i));
-            counter += (uint)line.Length;
-            if(split(line, out name, out value))
-            {
-                if(BlockFieldParser.parse(name, out field))
-                    fields.Fields[field] = bit.On;
-            }
-            if(text.begins(line,FirstItemMarker))
-                fields.MinLine = i;
-            else if(text.begins(line, LastItemMarker))
-            {
-                fields.MaxLine = i;
-                fields.MinChar = min;
-                fields.MaxChar = counter;
-                fields.Seq = seq++;
-                fields.LineCount = fields.MaxLine - fields.MinLine + 1;
-                fields.Lines = slice(src,fields.MinLine, fields.LineCount).ToArray();
-                dst(fields);
-                fields = InstBlockLineSpec.Empty;
-                min = counter+1;
-            }
-            else
-            {
-                var j = text.index(line,IFormMarker);
-                if(j >= 0)
-                    XedParsers.parse(value, out fields.Form);
-            }
-        }
-    }
-
+    
     static void CalcBlockLines(ReadOnlySpan<string> src, BlockImportDatasets dst)
     {
         const string FirstItemMarker = "amd_3dnow_opcode:";
@@ -283,7 +158,7 @@ public partial class XedZ
             counter += (uint)line.Length;
             if(split(line, out name, out value))
             {
-                if(BlockFieldParser.parse(name, out field))
+                if(XedZ.parse(name, out field))
                     fields.Fields[field] = bit.On;
             }
             if(text.begins(line,FirstItemMarker))
@@ -323,7 +198,7 @@ public partial class XedZ
                 HexParser.parse(src.Value, out dst.OpCodeValue);
             break;
             case BlockFieldName.space:
-                BlockFieldParser.parse(src.Value, out dst.OpCodeClass);
+                parse(src.Value, out dst.OpCodeClass);
             break;
             case BlockFieldName.map:
                 DataParser.parse(src.Value, out dst.OpCodeMap);
@@ -364,7 +239,7 @@ public partial class XedZ
                 ref readonly var line = ref skip(src,k++);
                 lines.Add(line);
 
-                BlockFieldParser.parse(line, out Attribute attrib);
+                XedZ.parse(line, out Attribute attrib);
                 absorb(attrib, ref import);
             }
             import.OpCodeKind = AsmOpCodes.kind(import.OpCodeClass, import.OpCodeMap);

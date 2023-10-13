@@ -94,6 +94,18 @@ partial class XedZ
             Value = value;
         }
 
+        public BlockField(BlockFieldName name, OperandClasses value)
+        {
+            Name = name;
+            Value = value;
+        }
+
+        public BlockField(BlockFieldName name, AsmVL value)
+        {
+            Name = name;
+            Value = value;
+        }
+
         public BlockField(BlockFieldName name, XedInstClass value)
         {
             Name = name;
@@ -201,6 +213,9 @@ partial class XedZ
 
         public static explicit operator bit(BlockField src)
             => (bit)src.Value;
+
+        public static explicit operator InstAttribs(BlockField src)
+            => (InstAttribs)src.Value;
 
         public static BlockField Empty => new(0,EmptyString);
     }

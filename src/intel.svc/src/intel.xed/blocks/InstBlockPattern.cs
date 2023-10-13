@@ -25,8 +25,16 @@ partial class XedZ
         [Render(8)]
         public byte Index;
 
-        [Render(1)]
+        [Render(128)]
         public InstCells Body;
+
+        public MachineMode Mode;
+
+        public Hex8 OpCode;
+
+        public InstAttribs InstAttribs;
+
+        public PatternOps Operands;
 
         public int CompareTo(InstBlockPattern src)
         {
@@ -42,5 +50,4 @@ partial class XedZ
             set => Seq = value;
         }
     }
-
 }

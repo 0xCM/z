@@ -143,7 +143,6 @@ public class XedFieldParser
     static FieldValue value(K kind, bit value)
         => new (kind, value);
 
-
     [MethodImpl(Inline)]
     static FieldValue value(K kind, byte value)
         => new (kind, value);

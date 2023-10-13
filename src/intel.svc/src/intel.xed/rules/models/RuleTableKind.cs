@@ -17,5 +17,7 @@ partial class XedModels
 
         [Symbol("DEC")]
         DEC = 2,
+
+        ENCDEC = 3,
     }
 }

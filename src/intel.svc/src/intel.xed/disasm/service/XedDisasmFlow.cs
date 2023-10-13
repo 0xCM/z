@@ -7,7 +7,6 @@ namespace Z0;
 
 using static sys;
 using static XedRules;
-using static XedOps;
 
 readonly struct XedDisasmFlow : IXedDisasmFlow
 {

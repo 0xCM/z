@@ -52,7 +52,7 @@ partial class XedImport
 
         [MethodImpl(Inline)]
         CpuIdSpec CpuIdRecord(asci64 spec, asci32 isa)
-            => new CpuIdSpec((ushort)inc(ref CpuIdSeq), spec, isa);
+            => new ((ushort)inc(ref CpuIdSeq), spec, isa);
 
         void Parse(string src)
         {

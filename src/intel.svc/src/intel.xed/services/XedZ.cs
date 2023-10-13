@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-partial class XedModels
+public partial class XedZ
 {
 
 }

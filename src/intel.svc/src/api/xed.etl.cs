@@ -24,7 +24,6 @@ public readonly record struct InstSegPattern
         Cells = src;
     }
 
-
     public string Format()
     {
         var dst = text.emitter();
@@ -60,17 +59,34 @@ partial class XedCmd
     [CmdOp("xed/blocks")]
     void EmitBlockLines()
     {
+        Channel.TableEmit(XedZ.patterns(), XedPaths.ImportTable<InstBlockPattern>());
+
+        // var lines = XedZ.lines(XedPaths.DocSource(XedDocKind.RuleBlocks));
+        // foreach(var spec in lines)
+        // {
+        //     var fields = XedZ.fields(spec);
+        //     foreach(var field in fields)
+        //     {
+        //         switch(field.Name)
+        //         {
+        //             case BlockFieldName.operands:
+        //                 Channel.Row($"{spec.Form,-64} {field}");
+        //             break;
+        //         }
+        //     }
+        // }
+
         //var blocks = XedImport.blocks();
         //XedImport.Emit(blocks);
         //var domain = XedImport.domain(blocks);
         //XedImport.Emit(domain);
         //EmitInstPatterns();
-        var patterns = CollectSegPatterns();
-        var dst = text.emitter();
-        dst.AppendLineFormat("{0,-54} | {1}", "Form", "Segments");
-        foreach(var pattern in patterns)
-            dst.AppendLine(pattern.Format());
-        Channel.FileEmit(dst.Emit(), XedPaths.Imports().Path("xed.instblock.segs", FileKind.Csv));
+        // var patterns = CollectSegPatterns();
+        // var dst = text.emitter();
+        // dst.AppendLineFormat("{0,-54} | {1}", "Form", "Segments");
+        // foreach(var pattern in patterns)
+        //     dst.AppendLine(pattern.Format());
+        // Channel.FileEmit(dst.Emit(), XedPaths.Imports().Path("xed.instblock.segs", FileKind.Csv));
     }
 
     [CmdOp("xed/etl")]
@@ -83,11 +99,12 @@ partial class XedCmd
     {
         var path =  XedPaths.DocSource(XedDocKind.RuleBlocks);
         var patterns = list<InstSegPattern>();
-        XedZ.lines(path, spec => {
+        var lines = XedZ.lines(path);
+        iter(lines, spec => {
             var field = BlockField.Empty;
             foreach(var line in spec.Lines)
             {                
-                if(BlockFieldParser.parse(line, out field))
+                if(XedZ.parse(line, out field))
                 {
                     switch(field.Name)                
                     {
@@ -118,82 +135,16 @@ partial class XedCmd
         return patterns.Array();
     }
 
+    
     void EmitInstPatterns()
     {
         var path =  XedPaths.DocSource(XedDocKind.RuleBlocks);
         var patterns = bag<InstBlockPattern>();
-        XedZ.lines(path, spec => {
+        var lines = XedZ.lines(path);
+        piter(lines.AsParallel(), spec => {
             var fields = list<BlockField>();
             var result = true;
-            var pattern = new InstBlockPattern();
-            patterns.Add(pattern);
-
-            var field = BlockField.Empty;
-            foreach(var line in spec.Lines)
-            {                
-                if(BlockFieldParser.parse(line, out field))
-                {
-                    fields.Add(field);
-                    switch(field.Name)
-                    {
-                        case BlockFieldName.iclass:
-                            pattern.Instruction = (XedInstClass)field;
-                            break;
-                        case BlockFieldName.iform:
-                            pattern.Form = (XedInstForm)field;
-                            break;
-                        case BlockFieldName.pattern:
-                        {
-                            pattern.Body = (InstCells)field;
-                            var cells = pattern.Body;
-                            var segexpr = EmptyString;
-                            for(var i=0; i<cells.Count; i++)
-                            {
-                                ref readonly var cell = ref cells[i];
-                                switch(cell.CellKind)
-                                {
-                                    case RuleCellKind.InstSeg:
-                                    {
-                                        if(nonempty(segexpr))
-                                            segexpr += " ";
-                                         segexpr += cell.AsInstSeg();
-                                    }
-                                    break;
-                                    case RuleCellKind.HexLit:
-                                    {
-                                        if(nonempty(segexpr))
-                                            segexpr += " ";
-                                         
-                                         segexpr += "0x";
-                                         segexpr += cell.AsHexLit();
-                                    }                                    
-                                    break;
-                                    case RuleCellKind.BitLit:
-                                        if(nonempty(segexpr))
-                                            segexpr += " ";
-                                        segexpr += cell.AsBitLit();
-                                    break;
-                                }
-                            }
-                            Channel.Row($"{spec.Form,-54} {segexpr}");
-                        }
-                        break;
-
-                        case BlockFieldName.operands:
-                        {
-                            var ops = (PatternOps)field;
-                            for(var i=z8; i<ops.Count; i++)
-                            {
-                                ref readonly var op = ref ops[i];
-                                if(op.Nonterminal(out var nonterm))
-                                {
-                                }   
-                            }
-                        }
-                        break;
-                    }
-                }
-            }
+            patterns.Add(XedZ.pattern(spec));
         });
 
         var records = patterns.OrderBy(x => x.Form).ThenBy(x => x.Body.Count).Array().Sort();
@@ -213,5 +164,4 @@ partial class XedCmd
 
         Channel.TableEmit(records, XedPaths.ImportTable<InstBlockPattern>());
     }
-
 }

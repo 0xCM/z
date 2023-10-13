@@ -501,13 +501,7 @@ partial class XedModels
 
         SIB_REQUIRED_ENCODE,
 
-        SIB_REQUIRED_ENCODE_BIND,
-
         SIBBASE_ENCODE,
-
-        SIBBASE_ENCODE_BIND,
-
-        SIBINDEX_ENCODE_BIND,
 
         SIBBASE_ENCODE_SIB1,
 
@@ -516,9 +510,6 @@ partial class XedModels
         SIBINDEX_ENCODE_SIB1,
 
         SIBSCALE_ENCODE,
-
-        SIBSCALE_ENCODE_BIND,
-
 
         SIMM8,
 

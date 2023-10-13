@@ -74,44 +74,9 @@ public class XedMachine : IDisposable
         }
     }        
 
-    ConstLookup<ushort,InstGroupMember> _GroupMemberLookup;
-
-    SortedLookup<XedInstClass,Index<InstGroupMember>> _ClassGroupLookup;
-
-    SortedLookup<XedInstClass,Index<InstPattern>> _ClassPatternLookup;
-
-    SortedLookup<XedInstClass,Index<XedInstForm>> _ClassFormLookup;
-
     [MethodImpl(Inline)]
     ref MachineState State()
         => ref RuntimeState;
-
-    void LoadLookups(ReadOnlySeq<InstPattern> patterns)
-    {
-        var rules = Rules;
-        var groups = rules.CalcInstGroups(patterns);
-        var members = groups.SelectMany(x => x.Members);
-        _GroupMemberLookup = members.Select(x => (x.PatternId,x)).ToDictionary();
-        _ClassPatternLookup = patterns.ClassPatterns();
-        _ClassFormLookup = patterns.ClassForms();
-        _ClassGroupLookup = groups.ClassGroups();
-    }
-
-    static AppDb AppDb => AppDb.Service;
-
-    public InstGroupMember PatternGroup(ushort id)
-        => _GroupMemberLookup.Find(id, out var dst) ? dst : InstGroupMember.Empty;
-
-    public Index<XedInstForm> ClassForms(XedInstClass @class)
-        => _ClassFormLookup.Find(@class, out var dst) ? dst : sys.empty<XedInstForm>();
-
-    public Index<InstGroupMember> ClassGroups(XedInstClass @class)
-        => _ClassGroupLookup.Find(@class, out var dst) ? dst : sys.empty<InstGroupMember>();
-
-    public Index<InstPattern> ClassPatterns(XedInstClass @class)
-        => _ClassPatternLookup.Find(@class, out var x) ? x : sys.empty<InstPattern>();
-
-    XedRuntime Xed;
 
     MachineState RuntimeState;
 
@@ -121,14 +86,6 @@ public class XedMachine : IDisposable
 
     [MethodImpl(Inline)]
     static uint NextId() => (uint)inc(ref Seq);
-
-    const string Identifier = "xed.machine";
-
-    public ref readonly uint Id
-    {
-        [MethodImpl(Inline)]
-        get => ref State().Id;
-    }
 
     public Channel Emissions
     {
@@ -146,20 +103,14 @@ public class XedMachine : IDisposable
 
     internal XedMachine(XedRuntime xed)
     {
-        Xed = xed;
         RuntimeState = new(NextId());
         _Emitter = Channel.create(this, StatusWriter);
-        //LoadLookups();
     }
 
-    [MethodImpl(Inline)]
-    T Service<T>(Func<T> factory)
-        => Xed.Service(factory);
+    void StatusWriter(object src)
+    {
 
-    [MethodImpl(Inline)]
-    void StatusWriter(object message)
-        => Xed.Wf.Channel.Row(message,FlairKind.StatusData);
-
+    }
     public void Reset()
     {
         RuntimeState.Reset();
@@ -167,7 +118,5 @@ public class XedMachine : IDisposable
     }
 
     public void Dispose()
-        => _Emitter.Dispose();
-
-    XedRules Rules => Xed.Rules;
+        => _Emitter.Dispose();    
 }

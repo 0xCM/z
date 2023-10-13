@@ -171,11 +171,15 @@ public class XedPaths
         => kind switch {
             RuleTableKind.DEC => Sources().Path(FS.file("all-dec-patterns", FS.Txt)),
             RuleTableKind.ENC => Sources().Path(FS.file("all-enc-patterns", FS.Txt)),
-            _ => Sources().Path(FS.file("all-enc-dec-patterns", FS.Txt)),
+            RuleTableKind.ENCDEC => Sources().Path(FS.file("all-enc-dec-patterns", FS.Txt)),
+            _ => throw new Exception($"Unknown: {kind}")
         };
 
     public static FilePath FieldSource()
         => Sources().Path(FS.file("all-fields", FS.Txt));
+
+    public static FilePath CpuidSource()
+        => Sources().Path(FS.file("all-cpuid", FileKind.Txt));
 
     public static FilePath DocSource(XedDocKind kind)
         => Sources().Path(kind switch{
@@ -184,7 +188,6 @@ public class XedPaths
             XedDocKind.DecInstDef => FS.file("all-dec-instructions", FS.Txt),
             XedDocKind.EncRuleTable => FS.file("all-enc-patterns", FS.Txt),
             XedDocKind.DecRuleTable => FS.file("all-dec-patterns", FS.Txt),
-            //XedDocKind.EncDecRuleTable => FS.file("all-enc-dec-patterns", FS.Txt),
             XedDocKind.Widths => FS.file("all-widths", FS.Txt),
             XedDocKind.PointerWidths => FS.file("all-pointer-names", FS.Txt),
             XedDocKind.Fields => FS.file("all-fields", FS.Txt),
@@ -214,8 +217,6 @@ public class XedPaths
             return XedDocKind.EncRuleTable;
         else if(src == DecRuleTable)
             return XedDocKind.DecRuleTable;
-        // else if(src == EncDecRuleTable)
-        //     return XedDocKind.EncDecRuleTable;
         else
             return 0;
     }

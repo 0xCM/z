@@ -10,7 +10,6 @@ using System.Linq;
 using static sys;
 using static XedModels;
 using static XedRules;
-using static XedZ;
 
 public partial class XedImport : WfSvc<XedImport>
 {     
@@ -25,13 +24,8 @@ public partial class XedImport : WfSvc<XedImport>
         return tables(dst);
     }
 
-
-    public static RuleBlocks blocks()
-        => XedZ.rules(XedPaths.DocSource(XedDocKind.RuleBlocks));
-
-    public static ReadOnlySeq<InstDef> instructions()
+    public static ReadOnlySeq<InstDef> InstDefs()
         => XedInstDefParser.parse(XedPaths.DocSource(XedDocKind.EncInstDef));
-
 
     public static Index<InstPattern> patterns(ReadOnlySeq<InstDef> defs)
     {
@@ -56,27 +50,22 @@ public partial class XedImport : WfSvc<XedImport>
 
     public void Run()
     {
-        var blocks = RuleBlocks.Empty;
         var ruleT = XedRuleTables.Empty;
         var instdefs = ReadOnlySeq<InstDef>.Empty;
         exec(true, 
-            () => {
-                blocks = XedImport.blocks();
-                Emit(blocks);
-                Emit(domain(blocks));
-            },
+            () => XedZ.emit(Channel, XedZ.patterns()),
             () => ruleT = RuleTables(),
             () => EmitSeq(CellParser.ruleseq()),
             () => Emit(XedRuleSeq.controls(), XedRuleSeq.defs()),
             () => Emit(MacroMatches()),
-            () => instdefs = instructions(),
+            () => instdefs = InstDefs(),
             () => Emit(RuleMacros.defs()),
             () => Emit(FieldImports()),
             () => Channel.TableEmit(XedRegMap.Service.REntries, XedPaths.ImportTable<RegMapEntry>("rmap")),
             () => Channel.TableEmit(XedRegMap.Service.XEntries, XedPaths.ImportTable<RegMapEntry>("xmap")),
             () => EmitChipCodes(Symbols.symkinds<ChipCode>()),
             () => EmitBroadcastDefs(XedTables.broadcasts(Symbols.kinds<BroadcastKind>())),
-            () => EmitCpuIdDataset(CalcCpuIdDataset(XedPaths.DocSource(XedDocKind.CpuId))),
+            () => EmitCpuIdDataset(CalcCpuIdDataset(XedPaths.CpuidSource())),
             () => {
                 var chips = Chips(XedPaths.DocSource(XedDocKind.ChipMap));
                 Emit(chips);
@@ -123,16 +112,6 @@ public partial class XedImport : WfSvc<XedImport>
             () => Emit(CalcOpClasses(opdetail))
         );
     }
-
-    public void Emit(RuleBlocks src)
-        => XedZ.emit(Channel, src);
-
-    public void Emit(BlockDomain src)
-        => Channel.FileEmit(src.Format(), XedPaths.Imports().Path("xed.instblocks.domain", FS.ext("txt")));
-
-    public static BlockDomain domain(RuleBlocks src)
-        => XedZ.domain(src);
-
 
     static InstOpSpec spec(in InstOpDetail src)
     {
