@@ -28,7 +28,7 @@ public unsafe partial class XedRuleSeq
     public static SeqControl control(asci32 name, params SeqDef[] src)
         => new (name, src);
 
-    public static Index<SeqDef> defs()
+    public static ReadOnlySeq<SeqDef> defs()
     {
         var src = typeof(XedRuleSeq).StaticMethods().Public().WithArity(0).Where(x => x.ReturnType == typeof(SeqDef));
         var dst = alloc<SeqDef>(src.Length);

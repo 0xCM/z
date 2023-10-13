@@ -4,14 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using System.Linq;
-
-using static XedModels;
-using static XedRules;
-using static sys;
-
-using N = XedZ.BlockFieldName;
-
 partial class XedZ
 {        
     public static IEnumerable<BlockField> fields(InstBlockLineSpec src)
@@ -21,6 +13,4 @@ partial class XedZ
             if(parse(line, out field))
                 yield return field;
     }
-
-
 }

@@ -12,7 +12,7 @@ partial class XedModels
 {
     public class InstPattern : IComparable<InstPattern>
     {
-        public static Index<InstPatternRecord> records(Index<InstPattern> src, bool pll = true)
+        public static ReadOnlySeq<InstPatternRecord> records(ReadOnlySeq<InstPattern> src, bool pll = true)
         {
             var count = src.Count;
             var dst = sys.bag<InstPatternRecord>();

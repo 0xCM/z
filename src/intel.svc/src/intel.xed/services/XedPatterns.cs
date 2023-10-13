@@ -93,7 +93,7 @@ public partial class XedPatterns : AppService<XedPatterns>
         return dst;
     }
 
-    public static Index<InstOpDetail> opdetails(Index<InstPattern> src)
+    public static ReadOnlySeq<InstOpDetail> opdetails(ReadOnlySeq<InstPattern> src)
     {
         var buffer = list<InstOpDetail>();
         for(var i=0; i<src.Count; i++)

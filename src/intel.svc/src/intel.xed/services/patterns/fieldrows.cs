@@ -11,7 +11,7 @@ using static XedModels;
 
 partial class XedPatterns
 {
-    public static Index<InstFieldRow> fieldrows(Index<InstPattern> src)
+    public static Index<InstFieldRow> fieldrows(ReadOnlySeq<InstPattern> src)
     {
         var dst = list<InstFieldRow>();
         for(var i=0; i<src.Count; i++)

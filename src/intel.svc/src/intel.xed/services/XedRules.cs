@@ -12,13 +12,5 @@ public partial class XedRules : WfSvc<XedRules>
 
     const NumericKind Closure = UnsignedInts;
 
-    XedRuntime XedRuntime => Wf.XedRuntime();
 
-    [MethodImpl(Inline)]
-    StringRef String(string src)
-        => XedRuntime.Alloc.String(src);
-
-    public XedRules()
-    {
-    }
 }

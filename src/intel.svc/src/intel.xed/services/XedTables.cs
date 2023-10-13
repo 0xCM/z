@@ -10,6 +10,7 @@ using Asm;
 using static XedModels;
 using static sys;
 using static MachineModes;
+using static XedRules;
 
 using M = XedModels;
 using R = XedRules;
@@ -17,17 +18,105 @@ using B = ReadOnlySpan<bit>;
 using U2 = ReadOnlySpan<uint2>;
 using U3 = ReadOnlySpan<uint3>;
 
-public class XedTables
+public class XedTables : AppService<XedTables>
 {
-    static readonly ReadOnlySeq<OpName> _OpNames = Symbols.index<OpNameKind>().Kinds.Map(x => new OpName(x));
+    public enum DatasetName
+    {
+        InstDefs,
 
-    static readonly ReadOnlySeq<XedRegId> _Regs = Symbols.index<XedRegId>().Kinds.ToArray();
+        InstPatterns,
 
-    static ReadOnlySpan<byte> _DISP_WIDTH => new byte[]{(byte)DispWidth.None, (byte)DispWidth.DW8, (byte)DispWidth.DW16, (byte)DispWidth.DW32, (byte)DispWidth.DW64};
+        RuleTables,
 
-    static readonly Index<AsmBroadcast> _BroadcastDefs = XedTables.broadcasts(Symbols.kinds<BroadcastKind>());
+        RuleSeq,
 
-    static XedWidths _Widths = XedWidths.FromSource(XedPaths.DocSource(XedDocKind.Widths));
+        SeqReflected,
+
+        RuleCells,
+
+        OpCodes,
+    }
+
+    public static ReadOnlySeq<RuleSeq> RuleSeq()
+        => data(DatasetName.RuleSeq, CellParser.ruleseq);
+
+    public static ReadOnlySeq<InstDef> InstDefs()
+        => data(DatasetName.InstDefs, () => XedInstDefParser.parse(XedPaths.DocSource(XedDocKind.EncInstDef)));
+
+    public static XedRuleTables RuleTables()
+        => data(DatasetName.RuleTables,CalcRuleTables);
+
+    public static ReadOnlySeq<SeqDef> SeqReflected()
+        => data(DatasetName.SeqReflected,XedRuleSeq.defs);
+
+    public static XedRuleCells RuleCells(XedRuleTables tables)
+        => data(DatasetName.RuleCells, () => XedCells.cells(tables));
+
+    public static Index<InstPattern> InstPatterns(ReadOnlySeq<InstDef> defs)
+        => data(DatasetName.InstPatterns,() =>  CalcInstPatterns(defs));
+
+    public static ReadOnlySeq<XedInstOpCode> OpCodes(ReadOnlySeq<InstPattern> src)
+        => data(DatasetName.OpCodes, () => CalcOpCodes(src));
+
+    static ReadOnlySeq<XedInstOpCode> CalcOpCodes(ReadOnlySeq<InstPattern> src)
+    {
+        var count = src.Count;
+        var buffer = alloc<XedInstOpCode>(count);
+
+        for(var i=0u; i<count; i++)
+        {
+            ref var dst = ref seek(buffer,i);
+            poc(src[i], out seek(buffer,i));
+        }
+
+        buffer.Sort(new PatternOrder(true));
+
+        var oc = AsmOpCode.Empty;
+        var @class = XedInstClass.Empty;
+        var oci = z8;
+        for(var i=0u; i<count; i++)
+        {
+            ref var dst = ref seek(buffer,i);
+            if(i == 0)
+            {
+                oc = dst.OpCode;
+                @class = dst.InstClass;
+            }
+
+            if(oc != dst.OpCode || @class != dst.InstClass)
+            {
+                oc = dst.OpCode;
+                @class = dst.InstClass;
+                oci = z8;
+            }
+
+            dst.Index = oci++;
+        }
+
+        buffer.Sort(new PatternOrder());
+        for(var i=0u; i<count; i++)
+            seek(buffer,i).Seq = i;
+
+        return buffer;
+    }
+
+    static void poc(InstPattern src, out XedInstOpCode dst)
+    {
+        dst.Seq = 0u;
+        dst.Index = z8;
+        dst.PatternId = (ushort)src.PatternId;
+        dst.MapName = AsmOpCodes.name(src.OpCode.Kind);
+        dst.Value = src.OpCode.Value;
+        dst.InstClass = src.InstClass.Classifier;
+        dst.Mode = XedCells.mode(src.Cells);
+        dst.Lock = XedCells.@lock(src.Cells);
+        dst.Mod = XedCells.mod(src.Cells);
+        dst.RexW = XedCells.rexw(src.Cells);
+        dst.Rep = XedCells.rep(src.Cells);
+        dst.Layout = src.Layout;
+        dst.Expr = src.Expr;
+        dst.OpCode = src.OpCode;
+    }
 
     public static ReadOnlySpan<OpName> OpNames => _OpNames.View;
 
@@ -357,7 +446,6 @@ public class XedTables
         get => ref _BroadcastDefs;
     }
 
-
     public static Index<AsmBroadcast> broadcasts(ReadOnlySpan<BroadcastKind> src)
     {
         var dst = alloc<AsmBroadcast>(src.Length);
@@ -365,4 +453,50 @@ public class XedTables
             seek(dst,j) = asm.broadcast(skip(src,j));
         return dst;
     }    
+
+    static Index<InstPattern> CalcInstPatterns(ReadOnlySeq<InstDef> defs)
+    {
+        var count = 0u;
+        iter(defs, def => count += def.PatternSpecs.Count);
+        var dst = alloc<InstPattern>(count);
+        var k=0u;
+        for(var i=0; i<defs.Count; i++)
+        {
+            ref readonly var def = ref defs[i];
+            var specs = def.PatternSpecs;
+            for(var j=0; j<specs.Count; j++, k++)
+            {
+                ref var spec = ref specs[j];
+                var cells = XedCells.sort(spec.Body);
+                spec.Body = cells;
+                seek(dst,k) = new InstPattern(spec, XedCells.usage(cells));
+            }
+        }
+        return dst.Sort();
+    }
+
+    static XedRuleTables CalcRuleTables()
+    {
+       var enc = Seq<TableCriteria>.Empty;
+       var dec = Seq<TableCriteria>.Empty;
+        exec(PllExec,
+            () => enc = XedCells.criteria(RuleTableKind.ENC),
+            () => dec = XedCells.criteria(RuleTableKind.DEC)
+            );
+
+        var dst = enc.Storage.Append(dec.Storage).Where(x => x.IsNonEmpty).Sort().ToSeq();
+        for(var i=0u; i<dst.Count; i++)
+            dst[i] = dst[i].WithId(i);
+        return new XedRuleTables(dst, XedCells.tables(dst));
+    }
+
+    static readonly ReadOnlySeq<OpName> _OpNames = Symbols.index<OpNameKind>().Kinds.Map(x => new OpName(x));
+
+    static readonly ReadOnlySeq<XedRegId> _Regs = Symbols.index<XedRegId>().Kinds.ToArray();
+
+    static ReadOnlySpan<byte> _DISP_WIDTH => new byte[]{(byte)DispWidth.None, (byte)DispWidth.DW8, (byte)DispWidth.DW16, (byte)DispWidth.DW32, (byte)DispWidth.DW64};
+
+    static readonly Index<AsmBroadcast> _BroadcastDefs = XedTables.broadcasts(Symbols.kinds<BroadcastKind>());
+
+    static XedWidths _Widths = XedWidths.FromSource(XedPaths.DocSource(XedDocKind.Widths));
 }

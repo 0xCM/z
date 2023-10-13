@@ -579,18 +579,6 @@ partial class XedModels
 
         VEXED_REX_EMIT,
 
-        VEX_TYPE_ENC_BIND,
-
-        VEX_REXR_ENC_BIND,
-
-        VEX_REXXB_ENC_BIND,
-
-        VEX_MAP_ENC_BIND,
-
-        VEX_REG_ENC_BIND,
-
-        VEX_ESCVL_ENC_BIND,
-
         VEX_TYPE_ENC_EMIT,
         
         VEX_REXR_ENC_EMIT,
