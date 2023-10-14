@@ -24,7 +24,9 @@ using E = EvexMapKind;
 public partial class AsmOpCodes
 {
     public const string group = "asm.opcodes";
-
+    
+    public static AsmOpCode opcode(MachineMode mode, AsmOpCodeIndex index, uint value)
+        => new(mode,kind(index), value);
 
     public static K kind(AsmOpCodeClass @class, byte number)
     {
@@ -233,10 +235,6 @@ public partial class AsmOpCodes
         return new (symbol, selector(kind), $"{symbol}[{value(kind)}]");
     }
 
-    // [MethodImpl(Inline), Op]
-    // public static LegacyMapKind? basemap(byte code)
-    //     => code <= 4? (LegacyMapKind)code : null;
-
     [MethodImpl(Inline), Op]
     public static LegacyMapKind basemap(OpCodeValue value)
     {
@@ -322,15 +320,6 @@ public partial class AsmOpCodes
             _ => 0
         };
 
-    // public static I? index(byte code)
-    // {
-    //     var kind = basemap(code);
-    //     if(kind != null)
-    //         return index(kind.Value);
-    //     else
-    //         return null;
-    // }
-
     [Op]
     public static K kind(I src)
         => src switch {
@@ -352,10 +341,6 @@ public partial class AsmOpCodes
             I.Evex6 => Evex6,
             _=> AsmOpCodeKind.None
         };
-
-    // [Op]
-    // public static AsmOpCodeClass @class(I src)
-    //     => @class(kind(src));
 
     [Op]
     public static AsmOpCodeClass @class(K src)

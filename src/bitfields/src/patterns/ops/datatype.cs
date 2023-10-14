@@ -7,7 +7,7 @@ namespace Z0;
 partial struct BitPatterns
 {
     [Op]
-    public static Type datatype(in BitPattern src)
+    public static Type datatype(in BpExpr src)
     {
         var w = bitwidth(src);
         var dst = typeof(void);

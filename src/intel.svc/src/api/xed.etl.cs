@@ -19,20 +19,19 @@ partial class XedCmd
     [CmdOp("xed/check/bits")]
     void CheckBitfields()
     {
-        var pattern = BitPatterns.def<ModRm>();
-        var segs = pattern.Segments();
-        var symbols = pattern.Symbols();
-        for(var i=0; i<segs.Count; i++)
+        // var pattern = BitPatterns.def<RexPrefix>();
+        // var dst = text.emitter();
+        // pattern.Symbolic(dst);
+        // Channel.Row(dst.Emit());
+
+        var a = num3.One;
+        for(var i=0; i<50; i++)
         {
-            ref readonly var seg = ref segs[i];
-            Channel.Row($"{i,-2} {seg.SegName,-8} {seg.MinPos,-3} {seg.MaxPos,-3} {seg.Mask}");
+            a++;
+            Channel.Row($"{(byte)a} | {a}");
         }
 
-        //var calcs = InstFieldBits.Calcs;
         
-        // Channel.Write(calcs.Description().Format());
-        // Channel.Write(calcs.Descriptor());
-        //Channel.Row(calcs.Model().Format());
     }
 
     [CmdOp("xed/ock")]

@@ -214,6 +214,8 @@ public readonly struct num5 : INumber<T>
     public string Bitstring()
         => bitstring(this);
 
+    public string Hex()
+        => Value.FormatHex();
     public override string ToString()
         => Format();
 

@@ -100,7 +100,7 @@ partial class XedZ
             Value = value;
         }
 
-        public BlockField(BlockFieldName name, AsmVL value)
+        public BlockField(BlockFieldName name, VL value)
         {
             Name = name;
             Value = value;
@@ -189,6 +189,9 @@ partial class XedZ
 
         public static explicit operator PatternOps(BlockField src)
             => (PatternOps)src.Value;
+
+        public static explicit operator VL(BlockField src)
+            => (VL)src.Value;
 
         public static explicit operator byte(BlockField src)
             => (byte)src.Value;

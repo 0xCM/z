@@ -19,7 +19,7 @@ public class MachineModes
             {   MachineModeClass.Mode16 => 0,
                 MachineModeClass.Mode32 => 1,
                 MachineModeClass.Not64 => 2,
-                MachineModeClass.Default => 3,
+                MachineModeClass.Mode32x64 => 3,
                 MachineModeClass.Mode64 => 4,
                 _ => 0,
             };
@@ -75,7 +75,7 @@ public class MachineModes
         Not64 = 3,
 
         [Symbol("32/64")]
-        Default = 4,
+        Mode32x64 = 4,
     }
 
     [SymSource("xed"), DataWidth(4), Flags]

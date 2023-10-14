@@ -10,13 +10,13 @@ public struct SibBitfieldRow
     const string TableId = "sib.bits";
 
     [Render(5)]
-    public uint2 scale;
+    public num2 scale;
 
     [Render(5)]
-    public uint3 index;
+    public num3 index;
 
     [Render(5)]
-    public uint3 @base;
+    public num3 @base;
 
     [Render(3)]
     public Hex8 hex;

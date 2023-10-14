@@ -61,8 +61,8 @@ partial class XedDisasm
         dst.Ops = new OpDetails(alloc<OpDetail>(src.Block.OpCount));
         var ocpos = state.POS_NOMINAL_OPCODE;
         var opcode = state.NOMINAL_OPCODE;
-        var ocsrm = (uint3)math.and((byte)state.SRM, opcode);
-        Require.equal(state.SRM, ocsrm);
+        var ocsrm = math.and(state.SRM, opcode);
+        Require.equal((byte)state.SRM, ocsrm);
 
         if(opcode != code[ocpos])
             Errors.Throw(string.Format("Extracted opcode value {0} differs from parsed opcode value {1}", state.NOMINAL_OPCODE, state.MODRM_BYTE));
@@ -155,7 +155,7 @@ partial class XedDisasm
             var vexcode = VexPrefix.code(prefix);
             var vexsize = VexPrefix.size(vexcode.Value);
             var vexbytes = slice(prefix, vexcode.Offset, vexsize);
-            var vexdest = (uint5)((uint3)state.VEXDEST210 | (byte)state.VEXDEST3 << 3 | (byte)state.VEXDEST4 << 4);
+            var vexdest = (num5)(state.VEXDEST210 | (byte)state.VEXDEST3 << 3 | (byte)state.VEXDEST4 << 4);
             Require.equal(vexbytes.Length, vexsize);
 
             if(vexcode.Value == AsmPrefixTokens.VexPrefixKind.xC4)

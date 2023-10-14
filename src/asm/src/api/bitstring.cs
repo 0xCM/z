@@ -21,9 +21,14 @@ partial struct asm
         if(src.IsEmpty)
             return EmptyString;
         Span<char> dst = stackalloc char[256];
-        var count = bitstring(src, dst);
-        if(count == 0)
-            return EmptyString;
-        return sys.@string(slice(dst, 0, count));
+        var data = src.Bytes;
+        var j = 0u;
+        for(var i=0; i<src.Size; i++)
+        {
+            if(i!=0)
+                seek(dst,j++) = Chars.Space;                
+            BitRender.render8(skip(data,i), ref j, dst);            
+        }
+        return new(slice(dst,0,j));
     }
 }

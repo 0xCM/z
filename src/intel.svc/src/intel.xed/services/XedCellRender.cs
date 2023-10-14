@@ -166,7 +166,7 @@ public readonly partial struct XedCellRender
     {
         var dst = EmptyString;
         var data = bytes(src.Data);
-        var code = XedCellRender.fcode(src.Field);
+        var code = fcode(src.Field);
         switch(src.Field)
         {
             case K.MASK:
@@ -578,9 +578,7 @@ public readonly partial struct XedCellRender
             case K.DEFAULT_SEG:
             case K.REP:
             case K.VL:
-            {
                 dst = C.U2;
-            }
             break;
 
             case K.HINT:

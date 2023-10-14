@@ -7,15 +7,15 @@ namespace Z0;
 partial struct BitPatterns
 {
     [Op]
-    public static uint bitwidth(BitPattern src)
+    public static uint bitwidth(BpExpr src)
         => (uint)text.remove(src.Data, Chars.Space).Length;
 
     [MethodImpl(Inline), Op]
-    public static DataSize size(BitPattern src)
+    public static DataSize size(BpExpr src)
         => Sizes.datasize(bitwidth(src));
 
     [MethodImpl(Inline), Op]
-    public static NativeSize packedsize(BitPattern src)
+    public static NativeSize packedsize(BpExpr src)
     {
         var width = bitwidth(src);
         if(width <= 8)

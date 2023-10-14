@@ -4,9 +4,9 @@
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
 namespace Z0;
+using System.Linq;
 
 using static sys;
-using static XedOps;
 using static XedModels;
 
 partial class XedRules
@@ -32,6 +32,22 @@ partial class XedRules
             InstForm = form;
         }
 
+        public string Format()
+        {
+            var keys = Keys.Array().Sort();            
+            var dst = text.emitter();
+            dst.Append(Chars.LBrace);
+            for(var i=0; i<keys.Length; i++)
+            {
+                dst.Append($"{keys[i]}:{this[keys[i]]}");
+            }
+            dst.Append(Chars.RBrace);
+            return dst.Emit();
+        }
+
+        public override string ToString()
+            => Format();
+            
         public Index<FieldValue> ParseFields(out XedFieldState state)
             => XedFieldParser.parse(this, out state);
 

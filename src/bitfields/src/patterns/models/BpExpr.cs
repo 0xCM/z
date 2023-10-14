@@ -4,12 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-public readonly record struct BitPattern : IComparable<BitPattern>
+public readonly record struct BpExpr : IComparable<BpExpr>
 {
     public readonly @string Data;
 
     [MethodImpl(Inline)]
-    public BitPattern(string src)
+    public BpExpr(string src)
     {
         Data = src;
     }
@@ -33,17 +33,17 @@ public readonly record struct BitPattern : IComparable<BitPattern>
         => Format();
 
     [MethodImpl(Inline)]
-    public bool Equals(BitPattern src)
+    public bool Equals(BpExpr src)
         => Data.Equals(src.Data);
 
     [MethodImpl(Inline)]
-    public int CompareTo(BitPattern src)
+    public int CompareTo(BpExpr src)
         => Data.CompareTo(src.Data);
 
     public override int GetHashCode()
         => Data.GetHashCode();
 
     [MethodImpl(Inline)]
-    public static implicit operator BitPattern(string src)
+    public static implicit operator BpExpr(string src)
         => new (src);
 }

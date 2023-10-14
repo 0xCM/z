@@ -98,29 +98,6 @@ namespace Z0
         public static U uint3(byte src)
             => new U(src);
 
-        /// <summary>
-        /// Creates a 3-bit unsigned integer from the least 3 source bits
-        /// </summary>
-        /// <param name="src">The source value</param>
-        [MethodImpl(Inline), Op]
-        public static U uint3(sbyte src)
-            => new U(src);
-
-        /// <summary>
-        /// Creates a 3-bit unsigned integer from the least 3 source bits
-        /// </summary>
-        /// <param name="src">The source value</param>
-        [MethodImpl(Inline), Op]
-        public static U uint3(ushort src)
-            => new U(src);
-
-        /// <summary>
-        /// Creates a 3-bit unsigned integer from the least 3 source bits
-        /// </summary>
-        /// <param name="src">The source value</param>
-        [MethodImpl(Inline), Op]
-        public static U uint3(short src)
-            => new U(src);
 
         /// <summary>
         /// Creates a 3-bit unsigned integer from the least 3 source bits
@@ -128,23 +105,7 @@ namespace Z0
         /// <param name="src">The source value</param>
         [MethodImpl(Inline), Op]
         public static U uint3(int src)
-            => new U(src);
-
-        /// <summary>
-        /// Creates a 3-bit unsigned integer from the least 3 source bits
-        /// </summary>
-        /// <param name="src">The source value</param>
-        [MethodImpl(Inline), Op]
-        public static U uint3(uint src)
-            => new U(src);
-
-        /// <summary>
-        /// Creates a 3-bit unsigned integer from the least 3 source bits
-        /// </summary>
-        /// <param name="src">The source value</param>
-        [MethodImpl(Inline), Op]
-        public static U uint3(long src)
-            => new U(src);
+            => new U((byte)src);
 
         /// <summary>
         /// Creates a 3-bit unsigned integer from the least 3 source bits
@@ -241,10 +202,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         internal static U wrap3(byte src)
-            => new U(src, false);
-
-        [MethodImpl(Inline)]
-        internal static U wrap3(uint src)
             => new U(src, false);
 
         [MethodImpl(Inline)]

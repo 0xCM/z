@@ -280,19 +280,19 @@ public record struct XedFieldState
     [RuleField(K.MOD, 2, typeof(uint2), "Specifies the value of the MOD segment of the ModRM bitfield, if applicable")]
     public uint2 MOD;
 
-    [RuleField(K.REG, 3, typeof(uint3), "Specifies the value of the REG segment of the ModRM bitfield, if applicable")]
-    public uint3 REG;
+    [RuleField(K.REG, 3, typeof(num3), "Specifies the value of the REG segment of the ModRM bitfield, if applicable")]
+    public num3 REG;
 
-    [RuleField(K.RM, 3, typeof(uint3), "Specifies the value of the RM segment of the ModRM bitfield, if applicable")]
-    public uint3 RM;
+    [RuleField(K.RM, 3, typeof(num3), "Specifies the value of the RM segment of the ModRM bitfield, if applicable")]
+    public num3 RM;
 
     [RuleField(K.SIBSCALE, 2, typeof(uint2))]
     public byte SIBSCALE;
 
-    [RuleField(K.SIBINDEX, 3, typeof(uint3))]
+    [RuleField(K.SIBINDEX, 3, typeof(num3))]
     public byte SIBINDEX;
 
-    [RuleField(K.SIBBASE, 3, typeof(uint3))]
+    [RuleField(K.SIBBASE, 3, typeof(num3))]
     public byte SIBBASE;
 
     [RuleField(K.REXW, 1, typeof(bit), "Specifies the 'W' bit of the REX prefix, if applicable")]
@@ -316,8 +316,8 @@ public record struct XedFieldState
     [RuleField(K.VEXDEST3, 1, typeof(bit))]
     public bit VEXDEST3;
 
-    [RuleField(K.VEXDEST210, 3, typeof(uint3))]
-    public uint3 VEXDEST210;
+    [RuleField(K.VEXDEST210, 3, typeof(num3))]
+    public num3 VEXDEST210;
 
     [RuleField(K.ROUNDC, 3, typeof(RoundingKind))]
     public byte ROUNDC;
@@ -325,8 +325,8 @@ public record struct XedFieldState
     [RuleField(K.LLRC, 2, typeof(LLRC))]
     public LLRC LLRC;
 
-    [RuleField(K.SRM, 3, typeof(uint3))]
-    public uint3 SRM;
+    [RuleField(K.SRM, 3, typeof(num3))]
+    public num3 SRM;
 
     [RuleField(K.ESRC, 4, typeof(ESRC))]
     public byte ESRC;
@@ -338,7 +338,7 @@ public record struct XedFieldState
     public byte VEX_PREFIX;
 
     [RuleField(K.VL, 3, typeof(AsmVL), "Specifies one of {V128,V256,V512}, if applicable")]
-    public AsmVL VL;
+    public byte VL;
 
     [RuleField(K.BCAST,5, typeof(BroadcastKind))]
     public BroadcastKind BCAST;

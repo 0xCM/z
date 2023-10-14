@@ -58,20 +58,30 @@ public readonly struct MachineMode : IComparable<MachineMode>, IEquatable<Machin
         var dst = MachineModeKind.None;
         switch(src)
         {
-            case Mode16:
+            case MachineModeClass.Mode16:
                 dst = LONG_COMPAT_16;
             break;
-            case MachineModeClass.Default:
-            case Not64:
-            case Mode32:
+            case MachineModeClass.Not64:
+            case MachineModeClass.Mode32:
                 dst = LONG_COMPAT_32;
             break;
-            case Mode64:
+            case MachineModeClass.Mode32x64:
+            case MachineModeClass.Mode64:
                 dst = LONG_64;
             break;
         }
         return dst;
     }
+
+    public static MachineMode Mode16 => MachineModeClass.Mode16;
+
+    public static MachineMode Mode32 => MachineModeClass.Mode32;
+
+    public static MachineMode Mode64 => MachineModeClass.Mode64;
+
+    public static MachineMode Not64 => MachineModeClass.Not64;
+
+    public static MachineMode Mode32x64 => MachineModeClass.Mode32x64;
 
     public readonly MachineModeClass Class;
 
@@ -139,5 +149,5 @@ public readonly struct MachineMode : IComparable<MachineMode>, IEquatable<Machin
     public static bool operator!=(MachineMode a, MachineMode b)
         => !a.Equals(b);
 
-    public static MachineMode Default => new (MachineModeClass.Default);
+    public static MachineMode Default => new (MachineModeClass.Mode32x64);
 }

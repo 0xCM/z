@@ -14,12 +14,15 @@ partial class XedCells
     [MethodImpl(Inline), Op]
     public static MachineMode mode(in InstCells src)
     {
-        var result = MachineModeClass.Default;
+        var result = MachineModeClass.Mode64;
         for(var i=0; i<src.Count; i++)
         {
             ref readonly var f = ref src[i];
             if(f.IsExpr && f.Field == FieldKind.MODE)
+            {
                 result = f.ToCellExpr().Value;
+                break;
+            }
         }
         return result;
     }    

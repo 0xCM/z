@@ -51,4 +51,8 @@ partial class PolyBits
     [MethodImpl(Inline), Op]
     public static num8 pack(num6 a, num2 b)
         => (num8)a | ((num8)b << num6.Width);
+
+    [MethodImpl(Inline), Op]
+    public static num8 pack(bit a, bit b, bit c, bit d, num4 e)
+        => (num8) ((uint)a | sll((uint)b,1) | sll((uint)c,2) | sll((uint)d,3) | sll((uint)e,4));
 }

@@ -53,52 +53,52 @@ partial class XedDisasmParse
         return result;
     }
 
-    internal static Outcome parse(in XedDisasmBlock src, out XedInstClass dst)
-    {
-        var result = Outcome.Success;
-        dst = XedInstClass.Empty;
-        ref readonly var content = ref src.Props.Content;
-        if(text.nonempty(content))
-        {
-            var j = text.index(content, Chars.Space);
-            if(j > 0)
-            {
-                var expr = text.left(content,j);
-                if(!XedParsers.parse(expr, out dst))
-                {
-                    result = (false, AppMsg.ParseFailure.Format(nameof(XedInstClass), content));
-                    return result;
-                }
-            }
-        }
-        return result;
-    }
+    // internal static Outcome parse(in XedDisasmBlock src, out XedInstClass dst)
+    // {
+    //     var result = Outcome.Success;
+    //     dst = XedInstClass.Empty;
+    //     ref readonly var content = ref src.Props.Content;
+    //     if(text.nonempty(content))
+    //     {
+    //         var j = text.index(content, Chars.Space);
+    //         if(j > 0)
+    //         {
+    //             var expr = text.left(content,j);
+    //             if(!XedParsers.parse(expr, out dst))
+    //             {
+    //                 result = (false, AppMsg.ParseFailure.Format(nameof(XedInstClass), content));
+    //                 return result;
+    //             }
+    //         }
+    //     }
+    //     return result;
+    // }
 
-    internal static Outcome parse(in XedDisasmBlock src, out XedInstForm dst)
-    {
-        var result = Outcome.Success;
-        dst = XedInstForm.Empty;
-        ref readonly var content = ref src.Props.Content;
-        if(text.nonempty(content))
-        {
-            var j = text.index(content, Chars.Space);
-            if(j > 0)
-            {
-                var expr = text.left(content,j);
-                var k = text.index(content, j+1, Chars.Space);
-                if(k > 0)
-                {
-                    expr = text.inside(content, j, k);
-                    if(!XedParsers.parse(expr, out dst))
-                    {
-                        result = (false, AppMsg.ParseFailure.Format(nameof(XedInstForm), expr));
-                        return result;
-                    }
-                }
-            }
-        }
-        return result;
-    }
+    // internal static Outcome parse(in XedDisasmBlock src, out XedInstForm dst)
+    // {
+    //     var result = Outcome.Success;
+    //     dst = XedInstForm.Empty;
+    //     ref readonly var content = ref src.Props.Content;
+    //     if(text.nonempty(content))
+    //     {
+    //         var j = text.index(content, Chars.Space);
+    //         if(j > 0)
+    //         {
+    //             var expr = text.left(content,j);
+    //             var k = text.index(content, j+1, Chars.Space);
+    //             if(k > 0)
+    //             {
+    //                 expr = text.inside(content, j, k);
+    //                 if(!XedParsers.parse(expr, out dst))
+    //                 {
+    //                     result = (false, AppMsg.ParseFailure.Format(nameof(XedInstForm), expr));
+    //                     return result;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return result;
+    // }
 
     internal static void parse(in XedDisasmBlock src, out XedInstClass @class, out XedInstForm form)
     {

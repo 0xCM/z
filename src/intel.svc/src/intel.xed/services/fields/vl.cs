@@ -11,15 +11,12 @@ using static sys;
 
 partial class XedFieldWriter
 {
-    [MethodImpl(Inline), Op]
-    public static ref AsmVL vl(ref XedFieldState src)
-        => ref src.VL;
 }
 
 partial class XedFields
 {
     [MethodImpl(Inline), Op]
     public static ref readonly AsmVL vl(in XedFieldState src)
-        => ref src.VL;
+        => ref @as<AsmVL>(src.VL);
 }
 

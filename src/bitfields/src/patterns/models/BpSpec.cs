@@ -43,7 +43,7 @@ public record struct BpSpec
     /// The pattern content
     /// </summary>
     [Render(32)]
-    public BitPattern Content;
+    public BpExpr Content;
 
     /// <summary>
     /// The pattern content

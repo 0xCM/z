@@ -30,5 +30,5 @@ partial class PolyBits
 
     [MethodImpl(Inline), Op]
     public static num9 pack(num8 a, bit b)
-        => (num9)((uint)a | ((uint)b << num8.Width));
+        => (num9)((uint)a | (sll((uint)b,num8.Width)));
 }

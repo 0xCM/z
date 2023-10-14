@@ -15,10 +15,10 @@ public readonly partial struct BitPatterns
             => new (default(P));
 
     [MethodImpl(Inline), Op]
-    public static BitPattern define(string src)
+    public static BpExpr define(string src)
         => new(src);
 
-    public static BfModel model(string name, BitPattern src, BfOrigin origin)
+    public static BfModel model(string name, BpExpr src, BfOrigin origin)
         => PolyBits.model(origin, name, segs(src));
 
     public static ReadOnlySeq<BpInfo> reflected(Type src)

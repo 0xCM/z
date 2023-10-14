@@ -547,10 +547,26 @@ partial class XedModels
 
         UISA_VSIB_ZMM,
 
+        /*
+        VEX_ESCVL_ENC()::
+            VL=0 VEX_PREFIX=0  ->	emit 0b000 emit_type=numeric value=0x0 nbits=3
+            VL=0 VEX_PREFIX=1  ->	emit 0b001 emit_type=numeric value=0x1 nbits=3
+            VL=0 VEX_PREFIX=3  ->	emit 0b010 emit_type=numeric value=0x2 nbits=3
+            VL=0 VEX_PREFIX=2  ->	emit 0b011 emit_type=numeric value=0x3 nbits=3
+            VL=1 VEX_PREFIX=0  ->	emit 0b100 emit_type=numeric value=0x4 nbits=3
+            VL=1 VEX_PREFIX=1  ->	emit 0b101 emit_type=numeric value=0x5 nbits=3
+            VL=1 VEX_PREFIX=3  ->	emit 0b110 emit_type=numeric value=0x6 nbits=3
+            VL=1 VEX_PREFIX=2  ->	emit 0b111 emit_type=numeric value=0x7 nbits=3
+        */
         VEX_ESCVL_ENC,
 
         VEX_MAP_ENC,
 
+        /*
+        VEX_REG_ENC()::
+	        MODE=2 VEXDEST3[u]=* VEXDEST210[ddd]=*  ->	emit u_ddd emit_type=letters nbits=4
+	        MODE!=2 VEXDEST3[u]=* VEXDEST210[ddd]=*  ->	emit 1_ddd emit_type=letters nbits=4
+        */
         VEX_REG_ENC,
 
         VEX_REXR_ENC,
@@ -607,23 +623,197 @@ partial class XedModels
 
         VGPRy_R,
 
+        /*
+        VMODRM_MOD_ENCODE()::
+            EASZ=2 DISP_WIDTH=8 -> MOD=1 value=0x1
+            EASZ=2 DISP_WIDTH=32 BASE0=@ -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=32 BASE0=@ -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_AX EASZ=1 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_EAX EASZ=2 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_RAX EASZ=3 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_BX EASZ=1 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_EBX EASZ=2 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_RBX EASZ=3 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_CX EASZ=1 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_ECX EASZ=2 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_RCX EASZ=3 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_DX EASZ=1 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_EDX EASZ=2 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_RDX EASZ=3 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_SI EASZ=1 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_ESI EASZ=2 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_RSI EASZ=3 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_DI EASZ=1 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_EDI EASZ=2 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_RDI EASZ=3 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_SP EASZ=1 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_ESP EASZ=2 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_RSP EASZ=3 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R8W EASZ=1 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R8D EASZ=2 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R8 EASZ=3 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R9W EASZ=1 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R9D EASZ=2 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R9 EASZ=3 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R10W EASZ=1 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R10D EASZ=2 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R10 EASZ=3 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R11W EASZ=1 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R11D EASZ=2 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R11 EASZ=3 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R12W EASZ=1 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R12D EASZ=2 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R12 EASZ=3 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R14W EASZ=1 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R14D EASZ=2 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R14 EASZ=3 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R15W EASZ=1 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R15D EASZ=2 -> MOD=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 MODE=2 BASE0=XED_REG_R15 EASZ=3 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_AX EASZ=1 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_EAX EASZ=2 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_RAX EASZ=3 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_BX EASZ=1 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_EBX EASZ=2 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_RBX EASZ=3 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_CX EASZ=1 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_ECX EASZ=2 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_RCX EASZ=3 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_DX EASZ=1 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_EDX EASZ=2 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_RDX EASZ=3 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_SI EASZ=1 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_ESI EASZ=2 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_RSI EASZ=3 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_DI EASZ=1 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_EDI EASZ=2 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_RDI EASZ=3 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_SP EASZ=1 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_ESP EASZ=2 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_RSP EASZ=3 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R8W EASZ=1 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R8D EASZ=2 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R8 EASZ=3 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R9W EASZ=1 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R9D EASZ=2 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R9 EASZ=3 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R10W EASZ=1 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R10D EASZ=2 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R10 EASZ=3 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R11W EASZ=1 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R11D EASZ=2 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R11 EASZ=3 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R12W EASZ=1 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R12D EASZ=2 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R12 EASZ=3 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R14W EASZ=1 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R14D EASZ=2 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R14 EASZ=3 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R15W EASZ=1 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R15D EASZ=2 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R15 EASZ=3 -> MOD=0 value=0x0
+            EASZ=3 DISP_WIDTH=8 BASE0=XED_REG_RAX -> MOD=1 value=0x1
+            EASZ=3 DISP_WIDTH=8 BASE0=XED_REG_RBX -> MOD=1 value=0x1
+            EASZ=3 DISP_WIDTH=8 BASE0=XED_REG_RCX -> MOD=1 value=0x1
+            EASZ=3 DISP_WIDTH=8 BASE0=XED_REG_RDX -> MOD=1 value=0x1
+            EASZ=3 DISP_WIDTH=8 BASE0=XED_REG_RSP -> MOD=1 value=0x1
+            EASZ=3 DISP_WIDTH=8 BASE0=XED_REG_RBP -> MOD=1 value=0x1
+            EASZ=3 DISP_WIDTH=8 BASE0=XED_REG_RSI -> MOD=1 value=0x1
+            EASZ=3 DISP_WIDTH=8 BASE0=XED_REG_RDI -> MOD=1 value=0x1
+            EASZ=3 DISP_WIDTH=8 BASE0=XED_REG_R8 -> MOD=1 value=0x1
+            EASZ=3 DISP_WIDTH=8 BASE0=XED_REG_R9 -> MOD=1 value=0x1
+            EASZ=3 DISP_WIDTH=8 BASE0=XED_REG_R10 -> MOD=1 value=0x1
+            EASZ=3 DISP_WIDTH=8 BASE0=XED_REG_R11 -> MOD=1 value=0x1
+            EASZ=3 DISP_WIDTH=8 BASE0=XED_REG_R12 -> MOD=1 value=0x1
+            EASZ=3 DISP_WIDTH=8 BASE0=XED_REG_R13 -> MOD=1 value=0x1
+            EASZ=3 DISP_WIDTH=8 BASE0=XED_REG_R14 -> MOD=1 value=0x1
+            EASZ=3 DISP_WIDTH=8 BASE0=XED_REG_R15 -> MOD=1 value=0x1
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_AX EASZ=1 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_EAX EASZ=2 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_RAX EASZ=3 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_BX EASZ=1 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_EBX EASZ=2 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_RBX EASZ=3 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_CX EASZ=1 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_ECX EASZ=2 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_RCX EASZ=3 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_DX EASZ=1 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_EDX EASZ=2 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_RDX EASZ=3 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_SI EASZ=1 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_ESI EASZ=2 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_RSI EASZ=3 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_DI EASZ=1 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_EDI EASZ=2 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_RDI EASZ=3 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_SP EASZ=1 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_ESP EASZ=2 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_RSP EASZ=3 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_BP EASZ=1 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_EBP EASZ=2 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_RBP EASZ=3 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R8W EASZ=1 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R8D EASZ=2 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R8 EASZ=3 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R9W EASZ=1 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R9D EASZ=2 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R9 EASZ=3 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R10W EASZ=1 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R10D EASZ=2 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R10 EASZ=3 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R11W EASZ=1 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R11D EASZ=2 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R11 EASZ=3 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R12W EASZ=1 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R12D EASZ=2 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R12 EASZ=3 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R13W EASZ=1 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R13D EASZ=2 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R13 EASZ=3 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R14W EASZ=1 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R14D EASZ=2 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R14 EASZ=3 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R15W EASZ=1 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R15D EASZ=2 -> MOD=2 value=0x2
+            EASZ=3 DISP_WIDTH=32 BASE0=XED_REG_R15 EASZ=3 -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=1 BASE0=XED_REG_EAX -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=1 BASE0=XED_REG_EBX -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=1 BASE0=XED_REG_ECX -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=1 BASE0=XED_REG_EDX -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=1 BASE0=XED_REG_ESP -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=1 BASE0=XED_REG_EBP -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=1 BASE0=XED_REG_ESI -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=1 BASE0=XED_REG_EDI -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=2 BASE0=XED_REG_EAX -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=2 BASE0=XED_REG_EBX -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=2 BASE0=XED_REG_ECX -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=2 BASE0=XED_REG_EDX -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=2 BASE0=XED_REG_ESP -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=2 BASE0=XED_REG_EBP -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=2 BASE0=XED_REG_ESI -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=2 BASE0=XED_REG_EDI -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=2 BASE0=XED_REG_R8D -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=2 BASE0=XED_REG_R9D -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=2 BASE0=XED_REG_R10D -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=2 BASE0=XED_REG_R11D -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=2 BASE0=XED_REG_R12D -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=2 BASE0=XED_REG_R13D -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=2 BASE0=XED_REG_R14D -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=32 MODE=2 BASE0=XED_REG_R15D -> MOD=2 value=0x2
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_BP EASZ=1 -> MOD=1 value=0x1  DISP_WIDTH=8 value=0x8  DISP=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_EBP EASZ=2 -> MOD=1 value=0x1  DISP_WIDTH=8 value=0x8  DISP=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_RBP EASZ=3 -> MOD=1 value=0x1  DISP_WIDTH=8 value=0x8  DISP=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_R13W EASZ=1 -> MOD=1 value=0x1  DISP_WIDTH=8 value=0x8  DISP=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_R13D EASZ=2 -> MOD=1 value=0x1  DISP_WIDTH=8 value=0x8  DISP=0 value=0x0
+            EASZ=2 DISP_WIDTH=0 BASE0=XED_REG_R13 EASZ=3 -> MOD=1 value=0x1  DISP_WIDTH=8 value=0x8  DISP=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_BP EASZ=1 -> MOD=1 value=0x1  DISP_WIDTH=8 value=0x8  DISP=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_EBP EASZ=2 -> MOD=1 value=0x1  DISP_WIDTH=8 value=0x8  DISP=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_RBP EASZ=3 -> MOD=1 value=0x1  DISP_WIDTH=8 value=0x8  DISP=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R13W EASZ=1 -> MOD=1 value=0x1  DISP_WIDTH=8 value=0x8  DISP=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R13D EASZ=2 -> MOD=1 value=0x1  DISP_WIDTH=8 value=0x8  DISP=0 value=0x0
+            EASZ=3 DISP_WIDTH=0 BASE0=XED_REG_R13 EASZ=3 -> MOD=1 value=0x1  DISP_WIDTH=8 value=0x8  DISP=0 value=0x0
+        */
         VMODRM_MOD_ENCODE,
-
-        VMODRM_MOD_ENCODE_BIND,
-
-        VSIB_ENC_INDEX_XMM_BIND,
-
-        VSIB_ENC_BASE_BIND,
-        
-        UISA_ENC_INDEX_XMM_BIND,
-        
-        VSIB_ENC_SCALE_BIND,
-        
-        UISA_ENC_INDEX_ZMM_BIND,
-        
-        VSIB_ENC_BIND,
-
-        VSIB_ENC_INDEX_YMM_BIND,
 
         VMODRM_XMM,
 

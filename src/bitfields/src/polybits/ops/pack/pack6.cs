@@ -10,7 +10,7 @@ partial class PolyBits
 {
     [MethodImpl(Inline), Op]
     public static num6 pack(num2 a, num2 b, num2 c)
-        => (num6)((uint)a | ((uint)b << 2) | ((uint)c << 4));
+        => (num6)((uint)a | (sll((uint)b, num2.Width)) | (sll((uint)c, num2.Width*2)));
 
     [MethodImpl(Inline), Op]
     public static num6 pack(num2 a, num4 b)

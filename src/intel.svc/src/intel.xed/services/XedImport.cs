@@ -10,6 +10,7 @@ using System.Linq;
 using static sys;
 using static XedModels;
 using static XedRules;
+using static XedZ;
 
 public partial class XedImport : WfSvc<XedImport>
 {     
@@ -304,7 +305,6 @@ public partial class XedImport : WfSvc<XedImport>
         Channel.TableEmit(stats, XedPaths.ImportTable<XedTableStats>(), TextEncodingKind.Asci);
     }     
 
-
     static InstOpClass opclass(in InstOpDetail src)
     {
         var dst = InstOpClass.Empty;
@@ -343,8 +343,8 @@ public partial class XedImport : WfSvc<XedImport>
     void Emit(ReadOnlySeq<InstOpSpec> src)
         => Channel.TableEmit(src, XedPaths.ImportTable<InstOpSpec>());
 
-    void Emit(ParallelQuery<XedZ.InstBlockPattern> src)
-        => XedZ.emit(Channel,src);
+    void Emit(InstBlockPatterns src)
+        => Channel.TableEmit(src.View,XedPaths.ImportTable<InstBlockPattern>());
 
     void Emit(InstLayouts src)
         => Channel.TableEmit(src.Records.View, XedPaths.ImportTable<InstLayoutRecord>(), TextEncodingKind.Asci);

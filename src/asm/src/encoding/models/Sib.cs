@@ -6,9 +6,11 @@ namespace Z0.Asm;
 
 using static sys;
 
-[ApiComplete, DataWidth(8)]
-public record struct Sib : IAsmByte<Sib>
+[ApiComplete, BitPattern(Pattern)]
+public record struct Sib : IAsmByte<Sib>, IBitPattern<Sib>
 {
+    const string Pattern = "ss iii bbb";
+
     public const byte RenderWidth = 10;
 
     public const byte Base_Mask = 0b00_000_111;
@@ -35,7 +37,6 @@ public record struct Sib : IAsmByte<Sib>
 
     public const byte Scale_Width = Scale_Max - Scale_Min + 1;
 
-    public const string Pattern = "ss iii bbb";
 
     [MethodImpl(Inline), Op]
     public static ScaleFactor factor(Sib src)
@@ -54,24 +55,24 @@ public record struct Sib : IAsmByte<Sib>
     }
 
     [MethodImpl(Inline)]
-    public Sib(uint3 @base, uint3 index, uint2 scale)
+    public Sib(num3 @base, num3 index, num2 scale)
     {
-        _Value = BitNumbers.join(@base,index,scale);
+        _Value = PolyBits.pack(@base,index,scale);
     }
 
-    public uint3 Base
+    public num3 Base
     {
         [MethodImpl(Inline)]
-        get => (uint3)bits.extract(_Value, Base_Min, Base_Max);
+        get => (num3)bits.extract(_Value, Base_Min, Base_Max);
 
         [MethodImpl(Inline)]
         set => _Value = math.or(bits.scatter((byte)value, Base_Mask), math.and(_Value, math.not(Base_Mask)));
     }
 
-    public uint3 Index
+    public num3 Index
     {
         [MethodImpl(Inline)]
-        get => (uint3)bits.extract(_Value, Index_Min, Index_Max);
+        get => (num3)bits.extract(_Value, Index_Min, Index_Max);
 
         [MethodImpl(Inline)]
         set => _Value = math.or(bits.scatter((byte)value, Index_Mask), math.and(_Value, math.not(Index_Mask)));

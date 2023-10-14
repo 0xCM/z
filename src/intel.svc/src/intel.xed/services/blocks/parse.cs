@@ -98,7 +98,7 @@ public partial class XedZ
             "unspecified" => dst = MachineMode.Default,
             _ => dst = (MachineModeClass)byte.MaxValue
         };
-        return dst.Class <= MachineModeClass.Default;
+        return dst.Class <= MachineModeClass.Mode32x64;
     }
 
     static bool parse(ReadOnlySpan<char> src, out AsmOpCodeClass dst)
@@ -171,35 +171,35 @@ public partial class XedZ
         return dst <= VsibKind.Zmm;
     }
 
-    static bool parse(string src, out AsmVL dst)
+    static bool parse(string src, out VL dst)
     {
-        dst = (AsmVL)byte.MinValue;
+        dst = VL.None;
         if(src != "n/a")
-        switch(src)
-        {
-            case "LIG":
-            case "LLIG":
-            break;
-            default:
+            switch(src)
             {
-                if(ushort.TryParse(src, out ushort width))
+                case "LIG":
+                case "LLIG":
+                break;
+                default:
                 {
-                    switch(width)
+                    if(ushort.TryParse(src, out ushort width))
                     {
-                        case 128:
-                            dst = AsmVL.VL128;
-                        break;
-                        case 256:
-                            dst = AsmVL.VL256;
-                        break;
-                        case 512:
-                            dst = AsmVL.VL512;
-                        break;                        
+                        switch(width)
+                        {
+                            case 128:
+                                dst = AsmVL.VL128;
+                            break;
+                            case 256:
+                                dst = AsmVL.VL256;
+                            break;
+                            case 512:
+                                dst = AsmVL.VL512;
+                            break;                        
+                        }
                     }
                 }
+                break;
             }
-            break;
-        }
         return dst <= AsmVL.VL512;
     }
 
@@ -242,9 +242,6 @@ public partial class XedZ
                 if(XedParsers.parse(src, out CategoryKind value))
                     dst = new(field,value);
             }
-            break;
-
-            case cpl:
             break;
 
             case cpuid:
@@ -420,7 +417,7 @@ public partial class XedZ
 
             case vl:
             {
-                if(parse(src, out AsmVL value))
+                if(parse(src, out VL value))
                     dst = new(field,value);
             }
             break;
@@ -452,6 +449,7 @@ public partial class XedZ
             case EOSZ_LIST:
             break;
 
+            case cpl:
             case lower_nibble:
             case opcode_base10:
             case operand_list:

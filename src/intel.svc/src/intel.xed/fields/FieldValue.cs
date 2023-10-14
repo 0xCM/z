@@ -37,6 +37,15 @@ partial class XedRules
         }
 
         [MethodImpl(Inline)]
+        public FieldValue(FieldKind field, num3 data)
+        {
+            Field = field;
+            Data = data;
+            CellKind = 0;
+        }
+
+
+        [MethodImpl(Inline)]
         public FieldValue(FieldKind kind, ushort data)
         {
             Field = kind;

@@ -173,15 +173,15 @@ partial class XedRules
             => src.Byte();
 
         [MethodImpl(Inline)]
-        public static implicit operator uint3(Field src)
-            => src.Byte();
-
-        [MethodImpl(Inline)]
         public static implicit operator LLRC(Field src)
             => (LLRC)src.Byte();
 
         [MethodImpl(Inline)]
         public static implicit operator uint2(Field src)
+            => src.Byte();
+
+        [MethodImpl(Inline)]
+        public static implicit operator num3(Field src)
             => src.Byte();
 
         [MethodImpl(Inline)]

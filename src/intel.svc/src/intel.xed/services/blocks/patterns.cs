@@ -8,6 +8,6 @@ using System.Linq;
 
 partial class XedZ
 {        
-    public static ParallelQuery<InstBlockPattern> patterns(ParallelQuery<InstBlockLineSpec> lines)
-        => from line in lines select XedZ.pattern(line);
+    public static InstBlockPatterns patterns(ParallelQuery<InstBlockLineSpec> lines)
+        => new(from line in lines select XedZ.pattern(line));
 }

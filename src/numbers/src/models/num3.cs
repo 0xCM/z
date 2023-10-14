@@ -211,6 +211,9 @@ public readonly struct num3 : INumber<T>
     public string Bitstring()
         => bitstring(this);
 
+    public string Hex()
+        => Value.FormatHex();
+
     public override string ToString()
         => Format();
 
@@ -242,6 +245,10 @@ public readonly struct num3 : INumber<T>
 
     [MethodImpl(Inline)]
     public static implicit operator uint(T src)
+        => src.Value;
+
+    [MethodImpl(Inline)]
+    public static implicit operator Hex8(T src)
         => src.Value;
 
     [MethodImpl(Inline)]

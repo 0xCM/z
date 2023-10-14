@@ -9,10 +9,21 @@ using Asm;
 
 using static sys;
 using static XedModels;
+using static XedRules;
 
 public partial class XedDisasm : WfSvc<XedDisasm>
 {
     static long DisasmTokens;    
+
+    static readonly BpDef<ModRm> ModRmPattern = BitPatterns.def<ModRm>();
+
+    static readonly BpDef<VexC4> VexC4Pattern = BitPatterns.def<VexC4>();
+
+    static readonly BpDef<VexC5> VexC5Pattern = BitPatterns.def<VexC5>();
+
+    static readonly BpDef<RexPrefix> RexPattern = BitPatterns.def<RexPrefix>();
+
+    static readonly BpDef<EvexPrefix> EvexPattern = BitPatterns.def<EvexPrefix>();
 
     public static ParallelQuery<FilePath> sources(IDbArchive src)
         => src.Files(FileKind.XedRawDisasm).AsParallel();        
@@ -160,6 +171,20 @@ public partial class XedDisasm : WfSvc<XedDisasm>
 
     public const string RenderCol2 = XedFieldRender.Columns;
 
+    static string format(ReadOnlySpan<FieldValue> src)
+    {
+        var dst = text.emitter();
+        dst.Append(Chars.LBrace);
+        for(var i=0; i<src.Length; i++)
+        {
+            if(i!=0)
+                dst.Append(", ");
+            dst.Append($"{src[i].Field}:{src[i].Format()}");
+        }
+        dst.Append(Chars.RBrace);
+        return dst.Emit();        
+    }
+
     public void EmitChecks(XedDisasmContext context, XedDisasmDoc src)
     {
         const string LabeledValue = "{0,-24} | {1}";
@@ -172,10 +197,13 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         var emitting = Channel.EmittingFile(outpath);
         writer.AppendLineFormat(RenderCol2, "DataSource", doc.Source.ToUri().Format());
         var counter = 0;
+        var fields = span<FieldValue>(148);
         for(var j=0; j<count; j++)
         {
             var state = XedFieldState.Empty;
+            //state.VL = byte.MaxValue;
             buffer.Clear();
+            fields.Clear();
 
             ref readonly var detail = ref doc[j].DetailRow;
             ref readonly var block = ref doc[j].SummaryLines;
@@ -183,7 +211,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             ref readonly var lines = ref block.Block;
             ref readonly var asmhex = ref summary.Encoded;
             ref readonly var ip = ref summary.IP;
-            update(lines, ref state);
+            var fieldcount = update(lines, fields, ref state);
 
             writer.WriteLine(RP.PageBreak240);
             for(var i=0; i<lines.Lines.Count; i++)
@@ -192,10 +220,15 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             writer.WriteLine(RP.PageBreak80);
 
             writer.AppendLineFormat(LabeledValue, nameof(detail.InstructionId), detail.InstructionId);
-            writer.AppendLineFormat(LabeledValue, nameof(detail.Instruction), detail.Instruction);
+            //writer.AppendLineFormat(LabeledValue, "Fields", format(slice(fields,0, fieldcount)));
+            writer.AppendLineFormat(LabeledValue, nameof(detail.Instruction), detail.Instruction);            
             writer.AppendLineFormat(LabeledValue, nameof(detail.Form), detail.Form);
             writer.AppendLineFormat(LabeledValue, nameof(detail.IP), detail.IP);
             writer.AppendLineFormat(LabeledValue, nameof(detail.Asm), detail.Asm);
+            foreach(var pattern in context.InstPatterns.Match(detail.Form, context.Mode))
+            {
+                writer.AppendLineFormat(LabeledValue, "Pattern", pattern.Body.Format());
+            }
 
             if(state.OSZ)
             {
@@ -230,31 +263,30 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             writer.AppendLineFormat(LabeledValue, nameof(state.EASZ), XedRender.format(XedFields.easz(state)));
             writer.AppendLineFormat(LabeledValue, nameof(state.EOSZ), XedRender.format(XedFields.eosz(state)));
             writer.AppendLineFormat(LabeledValue, nameof(state.MODE), AsmRender.format(XedFields.mode(state)));
-            writer.AppendLineFormat(LabeledValue, "OcMap", AsmOpCodes.kind(XedFields.ocindex(state)));
+            writer.AppendLineFormat(LabeledValue, "OpCode", AsmOpCodes.opcode(context.Mode, XedFields.ocindex(state), XedFields.opcode(state)));
 
             var offsets = detail.Offsets;
+            var encoding  = XedFields.encoding(state, asmhex);
             if(detail.PrefixSize != 0)
                 writer.AppendLineFormat(LabeledValue, nameof(detail.PrefixSize), detail.PrefixSize);
             writer.AppendLineFormat(LabeledValue, nameof(detail.Offsets), offsets);
             writer.AppendLineFormat(LabeledValue, nameof(detail.Encoded), detail.Encoded);
             writer.AppendLineFormat(LabeledValue, EmptyString, detail.Encoded.BitString);
 
-            var ocbyte = XedFields.opcode(state);
-            var encoding  = XedFields.encoding(state, asmhex);
-
-            var prefix = slice(detail.PrefixBytes.Bytes,0, detail.PrefixSize);
+            var prefix = slice(detail.PrefixBytes.Bytes, 0, detail.PrefixSize);
             if(detail.PrefixSize != 0)
                 writer.AppendLineFormat(LabeledValue, nameof(detail.PrefixBytes), prefix.FormatHex());
 
-            writer.AppendLineFormat(LabeledValue, "OpCode", string.Format("{0} [{1}]", XedRender.format(ocbyte), BitRender.format8x4(ocbyte)));
-
             if(state.SRM != 0)
-                writer.AppendLineFormat(LabeledValue, nameof(state.SRM), string.Format("{0} [{1}]", XedRender.format(state.SRM), BitRender.format8x4(state.SRM)));
+                writer.AppendLineFormat(LabeledValue, nameof(state.SRM), string.Format("{0} [{1}]", state.SRM.Hex(), state.SRM.Bitstring()));
 
             if(state.HAS_MODRM)
             {
                 var modrm = Require.equal(XedFields.modrm(state), detail.ModRm);
-                writer.AppendLineFormat(LabeledValue, "ModRm", string.Format("{0} [{1}]", modrm.Format(), modrm.Bitstring()));
+
+                writer.AppendLineFormat(LabeledValue, "ModRm", modrm.Format());
+                writer.AppendLineFormat(LabeledValue, EmptyString, ModRmPattern.Symbolic());
+                writer.AppendLineFormat(LabeledValue, EmptyString, ModRmPattern.BitString(modrm));
             }
 
             if(state.HAS_SIB)
@@ -264,8 +296,10 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             {
                 var rex = XedFields.rex(state);
                 Require.invariant(state.NREXES != 0);
-                writer.AppendLineFormat(LabeledValue, "Rex", string.Format("{0} [{1}]", rex, rex.ToBitString()));
-                writer.AppendLineFormat(LabeledValue, "RexBits", string.Format("[0100 | W:{0} | R:{1} | X:{2} | B:{3}]", state.REXW, state.REXR, state.REXX, state.REXB));
+                writer.AppendLineFormat(LabeledValue, "Rex", rex);
+                writer.AppendLineFormat(LabeledValue, EmptyString, RexPattern.Symbolic());
+                writer.AppendLineFormat(LabeledValue, EmptyString, RexPattern.BitString(rex));
+
             }
 
             if(encoding.Disp != 0)
@@ -336,15 +370,15 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             var vc = XedFields.vexclass(state);
             if(vc != 0)
             {
-                var vex5 = BitNumbers.join(state.VEXDEST210, state.VEXDEST4, state.VEXDEST3);
-                var vexBits = string.Format("[{0} {1} {2}]", state.VEXDEST4, state.VEXDEST3, (uint3)state.VEXDEST210);
-                var vexHex = XedRender.format((Hex8)(byte)vex5);
                 if(vc == XedVexClass.VV1)
                 {
+                    var vex5 = PolyBits.pack((num3)(byte)state.VEXDEST210, state.VEXDEST4, state.VEXDEST3);
+                    IBitPattern vp = detail.VexPrefix.VexKind == AsmPrefixTokens.VexPrefixKind.xC4 ? VexC4Pattern : VexC5Pattern;
                     writer.AppendLineFormat(LabeledValue, nameof(detail.VexPrefix.VexKind), detail.VexPrefix.VexKind);
-                    writer.AppendLineFormat(LabeledValue, nameof(detail.VexPrefix), 
-                        detail.VexPrefix.VexKind == AsmPrefixTokens.VexPrefixKind.xC4 ? AsmBitPatterns.VexC4 : AsmBitPatterns.VexC5);
-                    writer.AppendLineFormat(LabeledValue, EmptyString, detail.VexPrefix.Bitstring());
+                    writer.AppendLineFormat(LabeledValue, nameof(detail.VexPrefix), vp.Symbolic());
+                    writer.AppendLineFormat(LabeledValue, EmptyString, vp.BitString(detail.VexPrefix));
+                    writer.AppendLineFormat(LabeledValue, "VEXDEST", string.Format("{0} {1}", vex5.Hex(), vex5.Bitstring()));
+
                 }
                 else if(vc == XedVexClass.EVV)
                 {
@@ -355,19 +389,11 @@ public partial class XedDisasm : WfSvc<XedDisasm>
                     else
                     {
                         var evex = @as<EvexPrefix>(prefix);
-                        writer.AppendLineFormat(LabeledValue, "Evex",  AsmBitPatterns.Evex);
-                        var dat = @as<EvexPrefix,uint>(evex) >> 8;                                                
-                        writer.AppendLineFormat(LabeledValue, "", string.Format("0x{0} [{1} {2} {3} {4}] [{5} {6} {7} {8}] [{9} {10} {11} {12} {13}]", evex[0], 
-                            // mmm[2:0]                   0[3]              q[4]              RXB[7:5] 
-                            (uint3)bits.extract(dat,0,2), bits.test(dat,3), ~bits.test(dat,4), ~(uint3)bits.extract(dat,5,7),
-                            // pp[9:8]             1[10]              vvvv[14:11]                     W[15]                             
-                            bits.extract(dat,8,9), bits.test(dat,10), ~(uint4)bits.extract(dat,11,14), bits.test(dat,15),
-                            // aaa[18:16]                   f[19]              b[20]              VL[22:21]                      z[23]
-                            (uint3)bits.extract(dat,16,18), ~bits.test(dat,19), bits.test(dat,20), (uint2)bits.extract(dat,21,22), bits.test(dat,23)
-                            ));
+                         writer.AppendLineFormat(LabeledValue, "Evex",  evex.Format());
+                         writer.AppendLineFormat(LabeledValue, EmptyString, EvexPattern.Symbolic());
+                         writer.AppendLineFormat(LabeledValue, EmptyString, EvexPattern.BitString(evex));
                     }
                 }
-                writer.AppendLineFormat(LabeledValue, "VEXDEST", string.Format("{0} {1}", vexHex, vexBits));
                 writer.AppendLineFormat(LabeledValue, "VL", XedRender.format(XedFields.vl(state)));
             }
 

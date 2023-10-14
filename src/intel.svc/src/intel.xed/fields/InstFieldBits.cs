@@ -11,7 +11,7 @@ partial class XedRules
     /// FieldKind[0,2] ValueKind[3,10] Operator[11,12] Value[16,31]
     /// </summary>
     [BitPattern(PatternText)]
-    public readonly struct InstFieldBits : IBpDef<InstFieldBits>
+    public readonly struct InstFieldBits : IBitPattern<InstFieldBits>
     {
         //public const string PatternName = nameof(InstFieldBits);
 
@@ -24,7 +24,7 @@ partial class XedRules
         // public string Name
         //     => PatternName;
 
-        public BitPattern Pattern
+        public BpExpr Pattern
             => PatternText;
 
         // public const byte KindWidth = num3.Width;

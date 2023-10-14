@@ -73,7 +73,7 @@ public readonly struct AsmBitPatterns
 
     public static readonly BpInfo Sib = describe<P>(nameof(Asm.Sib), ss, iii, bbb);
 
-    public static readonly BpInfo ModRm = describe<P>(nameof(Asm.ModRm), mm, rrr, nnn);
+    //public static readonly BpInfo ModRm = describe<P>(nameof(Asm.ModRm), mm, rrr, nnn);
 
     public static readonly BpInfo Rex = describe<P>(nameof(Rex), WRXB, W, R, X, B);
 

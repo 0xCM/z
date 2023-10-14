@@ -4,12 +4,25 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using static sys;
-
 public readonly record struct VL : IComparable<VL>
 {
+    public static VL VL128 => new(z8);
+
+    public static VL V256 => new(1);
+
+    public static VL VL512 => new(2);
+
+    public static VL None => new(byte.MaxValue);
+
     readonly byte _Value;
 
+    [MethodImpl(Inline)]
+    VL(byte code)
+    {
+        _Value = code;
+    }
+
+    [MethodImpl(Inline)]
     public VL(AsmVL code)
     {
         _Value = (byte)code;
@@ -18,7 +31,7 @@ public readonly record struct VL : IComparable<VL>
     public uint Width
     {
         [MethodImpl(Inline)]
-        get => (uint)Pow2.log(_Value) << 7;
+        get => _Value == byte.MaxValue ? 0 :  (uint)Pow2.log(_Value) << 7;
     }
 
     public readonly AsmVL Value
@@ -49,4 +62,21 @@ public readonly record struct VL : IComparable<VL>
     [MethodImpl(Inline)]
     public static explicit operator uint2(VL src)
         => src._Value;
+
+    [MethodImpl(Inline)]
+    public static bool operator < (VL a, VL b)
+        => a.Value < b.Value;
+
+    [MethodImpl(Inline)]
+    public static bool operator <= (VL a, VL b)
+        => a.Value <= b.Value;
+
+    [MethodImpl(Inline)]
+    public static bool operator > (VL a, VL b)
+        => a.Value > b.Value;
+
+    [MethodImpl(Inline)]
+    public static bool operator >= (VL a, VL b)
+        => a.Value >= b.Value;
+
 }

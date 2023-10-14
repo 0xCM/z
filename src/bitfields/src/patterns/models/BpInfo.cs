@@ -64,7 +64,7 @@ public class BpInfo
     /// <summary>
     /// The pattern specification
     /// </summary>
-    public ref readonly BitPattern Pattern
+    public ref readonly BpExpr Pattern
     {
         [MethodImpl(Inline)]
         get => ref Def.Pattern;

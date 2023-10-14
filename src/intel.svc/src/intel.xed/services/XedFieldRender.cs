@@ -65,16 +65,16 @@ public class XedFieldRender
                 case K.CET:
                 case K.CLDEMOTE:
                 case K.BCRC:
-                    r.Functions[kind] = (x => ((bit)x).Format());
+                    r.Functions[kind] = x => ((bit)x).Format();
                 break;
 
                 case K.DISP_WIDTH:
                 case K.BRDISP_WIDTH:
-                    r.Functions[kind] = (x => format((DispWidth)x));
+                    r.Functions[kind] = x => format((DispWidth)x);
                 break;
 
                 case K.CHIP:
-                    r.Functions[kind] = (x => format((ChipCode)x));
+                    r.Functions[kind] = x => format((ChipCode)x);
                 break;
 
                 case K.MODE:
@@ -86,7 +86,7 @@ public class XedFieldRender
                 break;
 
                 case K.EASZ:
-                    r.Functions[kind] = (x => format((EASZ)x, DataFormatCode.BitWidth));
+                    r.Functions[kind] = x => format((EASZ)x, DataFormatCode.BitWidth);
                 break;
 
                 case K.EOSZ:
@@ -143,24 +143,24 @@ public class XedFieldRender
 
                 case K.SIBBASE:
                 case K.REG:
-                    r.Functions[kind] = x => format((uint3)x);
+                    r.Functions[kind] = x => format((num3)x);
                 break;
 
                 case K.SIBINDEX:
                 case K.RM:
-                    r.Functions[kind] = x => format((uint3)x);
+                    r.Functions[kind] = x => format((num3)x);
                 break;
 
                 case K.SRM:
-                    r.Functions[kind] = x => format((uint3)x);
+                    r.Functions[kind] = x => format((num3)x);
                 break;
 
                 case K.VEXDEST210:
-                    r.Functions[kind] = x => format((uint3)x);
+                    r.Functions[kind] = x => format((num3)x);
                 break;
                 case K.VEXDEST4:
                 case K.VEXDEST3:
-                    r.Functions[kind] = x => format((uint1)x);
+                    r.Functions[kind] = x => format((bit)x);
                 break;
                 case K.VEXVALID:
                     r.Functions[kind] = x => format((XedVexClass)x);

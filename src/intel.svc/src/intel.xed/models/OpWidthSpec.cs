@@ -12,15 +12,6 @@ partial class XedModels
 {
     public readonly struct OpWidthSpec
     {
-        [MethodImpl(Inline)]
-        public static OpWidthSpec spec(GprWidth gpr)
-        {
-            var w0 = (ushort)gpr[w16].Width;
-            var w1 = (ushort)gpr[w32].Width;
-            var w2 = (ushort)gpr[w64].Width;
-            return new OpWidthSpec(0, MachineModeClass.Default, gpr, ElementType.Empty, 1);
-        }
-
         public static OpWidthSpecs specs(ReadOnlySeq<OpWidthDetail> src)
         {
             var count = src.Count*3;
@@ -48,20 +39,6 @@ partial class XedModels
             CellType = t;
             CellWidth = cw;
             Width = bw;
-        }
-
-        [MethodImpl(Inline)]
-        OpWidthSpec(WidthCode code, MachineMode mode, GprWidth gpr, ElementType ct, ushort n)
-        {
-            Code = code;
-            Gpr = gpr;
-            CellType = ct;
-            CellWidth = default;
-            Seg = BitSegType.Empty;
-            N = n;
-            Width = default;
-            Mode = default;
-            Name = default;
         }
 
         public readonly WidthCode Code;

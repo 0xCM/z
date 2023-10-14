@@ -3,6 +3,7 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0;
+using static sys;
 
 using static XedModels;
 using static XedRules;

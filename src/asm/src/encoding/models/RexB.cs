@@ -19,6 +19,8 @@ public readonly record struct RexB
         Value = math.or((byte)token, math.sll((byte)r,2), math.sll((byte)gpHi, 7));
     }
 
+    public BpExpr BitPattern => $"{(RexBToken)(Value & 0b111)}";
+    
     public bit Enabled
     {
         [MethodImpl(Inline)]

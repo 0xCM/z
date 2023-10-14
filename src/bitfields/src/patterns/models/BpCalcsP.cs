@@ -7,7 +7,7 @@ namespace Z0;
 using api = BitPatterns;
 
 public readonly struct BpCalcs<P>
-    where P : unmanaged, IBpDef<P>
+    where P : unmanaged, IBitPattern<P>
 {
     public readonly BpDef<P> Def;
 
@@ -80,12 +80,12 @@ public readonly struct BpCalcs<P>
 
     [MethodImpl(Inline)]
     public string BitString(ulong value)
-        => Untyped.BitString(value);
+        => api.bitstring(Def.Pattern, value);
 
     [MethodImpl(Inline)]
     public string BitString<T>(T value)
         where T : unmanaged
-            => Untyped.BitString(value);
+            => api.bitstring(Def.Pattern, value);
 
     [MethodImpl(Inline)]
     public static implicit operator BpCalcs(BpCalcs<P> src)

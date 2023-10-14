@@ -7,9 +7,11 @@ namespace Z0.Asm;
 using static AsmPrefixTokens;
 using static sys;
 
-[DataWidth(24), ApiComplete]
-public record struct VexC4
+[BitPattern(Pattern), ApiComplete]
+public record struct VexC4 : IBitPattern<VexC4>
 {
+    const string Pattern = "cccccccc R X B mmmmm W vvvv L pp";
+    
     // ~ RXB
     const byte RXB_Mask = 0b1110_0000;
 

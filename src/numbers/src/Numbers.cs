@@ -10,6 +10,38 @@ using static NumericParser;
 [ApiHost]
 public readonly partial struct Numbers
 {
+    [MethodImpl(Inline), Op]
+    public static ReadOnlySpan<num1> bits(N1 n)
+        => recover<byte,num1>(BitSeq.W1);
+
+    [MethodImpl(Inline), Op]
+    public static ReadOnlySpan<num2> bits(N2 n)
+        => recover<byte,num2>(BitSeq.W2);
+
+    [MethodImpl(Inline), Op]
+    public static ReadOnlySpan<num3> bits(N3 n)
+        => recover<byte,num3>(BitSeq.W3);
+
+    [MethodImpl(Inline), Op]
+    public static ReadOnlySpan<num4> bits(N4 n)
+            => recover<byte,num4>(BitSeq.W4);
+
+    [MethodImpl(Inline), Op]
+    public static ReadOnlySpan<num5> bits(N5 n)
+            => recover<byte,num5>(BitSeq.W5);
+
+    [MethodImpl(Inline), Op]
+    public static ReadOnlySpan<num6> bits(N6 n)
+        => recover<byte,num6>(BitSeq.W6);
+
+    [MethodImpl(Inline), Op]
+    public static ReadOnlySpan<num7> bits(N7 n)
+        => recover<byte,num7>(BitSeq.W7);
+
+    [MethodImpl(Inline), Op]
+    public static ReadOnlySpan<num8> bits(N8 n)
+            => recover<byte,num8>(BitSeq.W8);
+ 
     internal const NumericKind Closure = UnsignedInts;
 
     internal const NumericKind Closure8 = NumericKind.U8;

@@ -7,8 +7,8 @@ namespace Z0;
 using api = BitPatterns;
 
 [StructLayout(StructLayout,Pack=1), Record(TableId)]
-public readonly record struct BpDef<P> : IBpDef<P>
-    where P : unmanaged, IBpDef<P>
+public readonly record struct BpDef<P> : IBitPattern<P>
+    where P : unmanaged, IBitPattern<P>
 {
     const string TableId = "bits.patterns.defs";
 
@@ -28,10 +28,10 @@ public readonly record struct BpDef<P> : IBpDef<P>
     /// The pattern content
     /// </summary>
     [Render(1)]
-    public readonly BitPattern Pattern;
+    public readonly BpExpr Pattern;
 
     [MethodImpl(Inline)]
-    public BpDef(string name, in BitPattern pattern, BfOrigin<P> origin)
+    public BpDef(string name, in BpExpr pattern, BfOrigin<P> origin)
     {
         Name = name;
         Pattern = pattern;
@@ -96,29 +96,32 @@ public readonly record struct BpDef<P> : IBpDef<P>
 
     [MethodImpl(Inline)]
     public string BitString(ulong value)
-        => Calcs.BitString(value);
+        => api.bitstring(Pattern, value);
 
     [MethodImpl(Inline)]
     public string BitString<T>(T value)
         where T : unmanaged
-            => Calcs.BitString(value);
+            => api.bitstring(Pattern, value);
 
     public string Format()
         => api.format(this);
 
+    public void Symbolic(ITextEmitter dst)
+        => api.symbolic(this,dst);
+        
+    public string Symbolic()
+        => api.symbolic(this);
+        
     public override string ToString()
         => Format();
 
-    BpCalcs IBpDef.Calcs
-        => api.calcs(this);
-
-    string IBpDef.Name
+    string IBitPattern.Name
         => Name;
 
-    BitPattern IBpDef.Pattern
+    BpExpr IBitPattern.Pattern
         => Pattern;
 
-    BfOrigin IBpDef.Origin
+    BfOrigin IBitPattern.Origin
         => Origin;
 
     [MethodImpl(Inline)]

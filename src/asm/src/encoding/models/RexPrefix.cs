@@ -13,9 +13,11 @@ using static AsmPrefixTokens;
 /// <summary>
 /// REX = [0100 | W:4 | R:3 | X:2 | B:1]
 /// </summary>
-[ApiComplete]
-public record struct RexPrefix : IAsmPrefix<RexPrefix>, IAsmByte<RexPrefix>
+[ApiComplete, BitPattern(Pattern)]
+public record struct RexPrefix : IAsmPrefix<RexPrefix>, IAsmByte<RexPrefix>, IBitPattern<RexPrefix>
 {
+    const string Pattern = "0100 W R X B";
+
     [MethodImpl(Inline)]
     public static RexPrefix init()
         => new (0x40);

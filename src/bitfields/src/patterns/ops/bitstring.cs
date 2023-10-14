@@ -8,13 +8,13 @@ using static sys;
 
 partial struct BitPatterns
 {
-    public static string bitstring(in BpDef src, ulong value)
+    public static string bitstring(BpExpr src, ulong value)
     {
-        var segments = segs(src.Pattern);
+        var segments = segs(src);
         var count = (int)segments.Count;
-        Span<char> buffer = stackalloc char[src.Pattern.PatternLength];
+        Span<char> buffer = stackalloc char[src.PatternLength];
         var j=0u;
-        for(var i=0; i<count; i++)
+        for(var i=count-1; i>=0; i--)
         {
             ref readonly var seg = ref segments[i];
             var bits = math.srl(seg.Mask.Apply(value), (byte)seg.MinPos);
@@ -24,12 +24,7 @@ partial struct BitPatterns
         return new string(buffer);
     }
 
-    public static string bitstring<T>(in BpDef def, T value)
+    public static string bitstring<T>(BpExpr pattern, T value)
         where T : unmanaged
-            => bitstring(def, bw64(value));
-
-    public static string bitstring<P,T>(in BpDef<P> def, T value)
-        where P : unmanaged, IBpDef<P>
-        where T : unmanaged
-            => bitstring(def.Untyped, bw64(value));
+            => bitstring(pattern, bw64(value));
 }

@@ -19,4 +19,8 @@ partial class PolyBits
     [MethodImpl(Inline), Op]
     public static num5 pack(num2 a, num3 b)
         => (num5)((uint)a | sll((uint)b, num2.Width));
+
+    [MethodImpl(Inline), Op]
+    public static num5 pack(num3 a, bit b, bit c)
+        => (num5)((uint)a | sll((uint)b, num3.Width) | sll((uint)c, num3.Width + 1));
 }

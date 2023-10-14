@@ -241,9 +241,9 @@ public class AsmBytes
     public static Index<SibBitfieldRow> SibRows()
     {
         var buffer = sys.alloc<SibBitfieldRow>(256);
-        var f0 = BitSeq.bits(n3);
-        var f1 = BitSeq.bits(n3);
-        var f2 = BitSeq.bits(n2);
+        var f0 = Numbers.bits(n3);
+        var f1 = Numbers.bits(n3);
+        var f2 = Numbers.bits(n2);
         ref var dst = ref first(buffer);
         var m = 0u;
         for(var k=0; k<f2.Length; k++)
@@ -256,7 +256,7 @@ public class AsmBytes
                     row.@base = skip(f0, i);
                     row.index = skip(f1, j);
                     row.scale = skip(f2, k);
-                    var sib = new Sib(BitNumbers.join(row.@base, row.index, row.scale));
+                    var sib = new Sib(PolyBits.pack(row.@base, row.index, row.scale));
                     row.bitstring = bitstring(sib);
                     row.hex = (byte)m;
                     m++;
@@ -301,22 +301,6 @@ public class AsmBytes
             }
         }
         return counter;
-    }
-
-    [MethodImpl(Inline), Op]
-    public static uint vsib(Vsib src, Span<char> dst)
-    {
-        const char Open = Chars.LBracket;
-        const char Close = Chars.RBracket;
-        var i=0u;
-        seek(dst,i++) = Open;
-        BitNumbers.render(src.SS(), ref i, dst);
-        seek(dst,i++) = Chars.Space;
-        BitNumbers.render(src.Index(), ref i, dst);
-        seek(dst,i++) = Chars.Space;
-        BitNumbers.render(src.Base(), ref i, dst);
-        seek(dst,i++) = Close;
-        return i;
     }
 
     [MethodImpl(Inline), Op]

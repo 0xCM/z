@@ -6,8 +6,11 @@ namespace Z0.Asm;
 
 using static sys;
 
-public readonly record struct EvexPrefix
+[BitPattern(Pattern)]
+public readonly record struct EvexPrefix : IBitPattern<EvexPrefix>
 {
+    const string Pattern = "01100010" + "z VL b f aaa" +  "W vvvv 1 pp" + "RXB q 0 mmm";
+
     [MethodImpl(Inline)]
     public static bit test(ReadOnlySpan<byte> src)
     {
@@ -135,7 +138,7 @@ public readonly record struct EvexPrefix
         public num3 mmm => new(bits.extract(this, 0,2));
 
         public string Format()
-            => $"{RXB.Bitstring()} {q} {zero} {mmm.Bitstring()}";
+            => u8(this).FormatHex();
 
         public override string ToString()
             => Format();
@@ -160,8 +163,9 @@ public readonly record struct EvexPrefix
 
         public num2 pp => new(bits.extract(this, 0,1));
 
+
         public string Format()
-            => $"{W} {vvvv.Bitstring()} {one} {pp.Bitstring()}";
+            => u8(this).FormatHex();
 
         public override string ToString()
             => Format();
@@ -178,8 +182,6 @@ public readonly record struct EvexPrefix
     [StructLayout(LayoutKind.Sequential,Size=1)]
     readonly record struct P2
     {
-        public const string Pattern = "z VL b f aaa";
-
         public bit z => bits.test(this,7);
 
         public num2 VL => bits.extract(this,5, 6);
@@ -191,7 +193,7 @@ public readonly record struct EvexPrefix
         public num3 aaa => bits.extract(this,0,2);
 
         public string Format()
-            => $"{z} {VL.Bitstring()} {b} {f} {aaa.Bitstring()}";
+            => u8(this).FormatHex();        
         
         public override string ToString()
             => Format();
@@ -206,21 +208,11 @@ public readonly record struct EvexPrefix
     }
 
     public string Format()
-        => Data == 0 ? EmptyString : $"0x62 [{p0}] [{p1}] [{p2}]";
+        => Data == 0 ? EmptyString : $"{((byte)Data).FormatHex()} {p0} {p1} {p2}";
 
     public override string ToString()
         => Format();
 
-    public const string SemanticForm = "0x62 [RXB R mmm] [W vvvv pp] [z VL b V aaa]";
-    
-    public string FormatSemnantic()
-    {
-        var seg0 = $"[{RXB.Bitstring()} {Rp}  {mmm.Bitstring()}]";
-        var seg1 = $"[{W} {vvvv.Bitstring()} {pp.Bitstring()}]";
-        var seg2 = $"[{z} {VL.Bitstring()}  {b} {Vp}  {aaa.Bitstring()}]";
-        return $"{x62} {seg0} {seg1} {seg2}";
-    }
-    
     public ReadOnlySpan<char> Bitstring
         => BitRender.format32x4(Data);
 

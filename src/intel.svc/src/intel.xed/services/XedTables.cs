@@ -18,7 +18,7 @@ using M = XedModels;
 using R = XedRules;
 using B = ReadOnlySpan<bit>;
 using U2 = ReadOnlySpan<uint2>;
-using U3 = ReadOnlySpan<uint3>;
+using U3 = ReadOnlySpan<num3>;
 
 public class XedTables : AppService<XedTables>
 {
@@ -37,6 +37,8 @@ public class XedTables : AppService<XedTables>
         OpCodes,
 
         InstBlocks,
+
+        InstBlockLines,
 
         MacroMatches,
 
@@ -79,9 +81,12 @@ public class XedTables : AppService<XedTables>
         => data(DatasetName.MacroMatches,CalcMacroMatches);
 
     public static ParallelQuery<InstBlockLineSpec> BlockLines()
-        => XedZ.lines().AsParallel();
+        => data(DatasetName.InstBlockLines, () => XedZ.lines()).AsParallel();
     
-    public static ParallelQuery<InstBlockPattern> BlockPatterns(ParallelQuery<InstBlockLineSpec> lines)
+    public static InstBlockPatterns BlockPatterns()
+        => BlockPatterns(BlockLines());
+
+    public static InstBlockPatterns BlockPatterns(ParallelQuery<InstBlockLineSpec> lines)
         => data(DatasetName.InstBlocks,() => XedZ.patterns(lines));
 
     public static ReadOnlySeq<InstOpRow> OpRows(ReadOnlySeq<InstOpDetail> src)
@@ -439,7 +444,7 @@ public class XedTables : AppService<XedTables>
     public static ReadOnlySpan<MachineModeClass> MODE
     {
         [MethodImpl(Inline)]
-        get => Bytes.sequential<MachineModeClass>(0, (byte)MachineModeClass.Default);
+        get => Bytes.sequential<MachineModeClass>(0, (byte)MachineModeClass.Mode32x64);
     }
 
     public static ReadOnlySpan<M.RepPrefix> REP
@@ -535,19 +540,19 @@ public class XedTables : AppService<XedTables>
     public static U3 REG
     {
         [MethodImpl(Inline)]
-        get => Bytes.sequential<uint3>(0, uint3.MaxValue);
+        get => Bytes.sequential<num3>(0, num3.MaxValue);
     }
 
     public static U3 RM
     {
         [MethodImpl(Inline)]
-        get => Bytes.sequential<uint3>(0, uint3.MaxValue);
+        get => Bytes.sequential<num3>(0, num3.MaxValue);
     }
 
     public static U3 SRM
     {
         [MethodImpl(Inline)]
-        get => Bytes.sequential<uint3>(0, uint3.MaxValue);
+        get => Bytes.sequential<num3>(0, num3.MaxValue);
     }
 
     public static U2 SIBSCALE
@@ -559,13 +564,13 @@ public class XedTables : AppService<XedTables>
     public static U3 SIBINDEX
     {
         [MethodImpl(Inline)]
-        get => Bytes.sequential<uint3>(0, uint3.MaxValue);
+        get => Bytes.sequential<num3>(0, num3.MaxValue);
     }
 
     public static U3 SIBBASE
     {
         [MethodImpl(Inline)]
-        get => Bytes.sequential<uint3>(0, uint3.MaxValue);
+        get => Bytes.sequential<num3>(0, num3.MaxValue);
     }
 
     public static B REXW
@@ -613,7 +618,7 @@ public class XedTables : AppService<XedTables>
     public static U3 VEXDEST210
     {
         [MethodImpl(Inline)]
-        get => Bytes.sequential<uint3>(0, uint3.MaxValue);
+        get => Bytes.sequential<num3>(0, num3.MaxValue);
     }
 
     public static B ZEROING

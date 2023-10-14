@@ -60,8 +60,8 @@ public readonly record struct Vsib
     /// to specify the general-purpose register (base GPR) that contains the base address base
     /// to be used in the computation of each of the effective addresses
     /// </remarks>
-    public uint3 Base()
-        => (uint3)(Data >> (byte)F.Base);
+    public num3 Base()
+        => (num3)(Data >> (byte)F.Base);
 
     /// <summary>
     /// VSIB.index, Bits [5:3]
@@ -71,8 +71,8 @@ public readonly record struct Vsib
     /// register that contains the packed array of index values index[i] to be used in the computation of
     /// the array of effective addresses effective address[i].
     /// </remarks>
-    public uint3 Index()
-        => (uint3)(Data >> (byte)F.Index);
+    public num3 Index()
+        => (num3)(Data >> (byte)F.Index);
 
     /// <summary>
     /// VSIB.SS, Bits [7:6]
@@ -85,8 +85,8 @@ public readonly record struct Vsib
     /// SS = 10b => scale = 4
     /// SS = 11b => scale = 8
     /// </remarks>
-    public uint2 SS()
-        => (uint2)(Data >> (byte)F.SS);
+    public num2 SS()
+        => (num2)(Data >> (byte)F.SS);
 
     [MethodImpl(Inline)]
     public byte Scale()

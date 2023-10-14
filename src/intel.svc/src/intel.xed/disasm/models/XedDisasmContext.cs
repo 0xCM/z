@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static XedZ;
+using static XedRules;
 
 public class XedDisasmContext
 {
@@ -11,9 +13,15 @@ public class XedDisasmContext
 
     public readonly ConcurrentBag<XedDisasmDetailBlock> Blocks;
 
+    public readonly InstBlockPatterns InstPatterns;
+    
+    public readonly MachineMode Mode;
+
     public XedDisasmContext(IDbArchive root)
     {
         ProjectRoot = root;
-        Blocks = new();        
+        Mode = MachineMode.Default;
+        Blocks = new();
+        InstPatterns = XedTables.BlockPatterns();
     }
 }

@@ -2,106 +2,105 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+public enum DataFormatCode : byte
 {
-    public enum DataFormatCode : byte
-    {
-        None,
+    None,
 
-        Bit,
+    Bit,
 
-        B1,
+    B1,
 
-        B2,
+    B2,
 
-        B3,
+    B3,
 
-        B4,
+    B4,
 
-        B5,
+    B5,
 
-        B6,
+    B6,
 
-        B7,
+    B7,
 
-        B8,
+    B8,
 
-        U1,
+    U1,
 
-        U2,
+    U2,
 
-        U3,
+    U3,
 
-        U4,
+    U4,
 
-        U5,
+    U5,
 
-        U8,
+    U8,
 
-        U16,
+    U16,
 
-        U32,
+    U32,
 
-        U64,
+    U64,
 
-        I8,
+    I8,
 
-        I16,
+    I16,
 
-        I32,
+    I32,
 
-        I64,
+    I64,
 
-        X2,
+    X2,
 
-        X3,
+    X3,
 
-        X4,
+    X4,
 
-        X5,
+    X5,
 
-        X6,
+    X6,
 
-        X7,
+    X7,
 
-        X8,
+    X8,
 
-        X16,
+    X16,
 
-        X32,
+    X32,
 
-        X64,
+    X64,
 
-        Disp,
+    Disp,
 
-        Broadcast,
+    Broadcast,
 
-        Chip,
+    Chip,
 
-        Reg,
+    Reg,
 
-        InstClass,
+    InstClass,
 
-        VexClass,
+    VexClass,
 
-        MemWidth,
+    MemWidth,
 
-        Error,
+    Error,
 
-        Text,
+    Text,
 
-        A8,
+    A8,
 
-        UInt,
+    UInt,
 
-        SInt,
+    SInt,
 
-        Hex,
+    Hex,
 
-        Expr,
+    Expr,
 
-        Name,
+    Name,
 
-        BitWidth,
-    }   
-}
+    BitWidth,
+}   
