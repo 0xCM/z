@@ -69,16 +69,6 @@ public class XedPaths
     public static AbsoluteLink MarkdownLink(RuleIdentity sig)
         => Markdown.link(string.Format("{0}::{1}()", sig.TableKind, sig.TableName), RuleTable(sig));
 
-    public static RuleTableKind tablekind(FileName src)
-    {
-        return srckind(src) switch
-        {
-            XedDocKind.EncRuleTable => RuleTableKind.ENC,
-            XedDocKind.DecRuleTable => RuleTableKind.DEC,
-            _ => 0
-        };
-    }
-
     public static FilePath DisasmSummaryPath(FilePath src)
         => src.FolderPath + FS.file(string.Format("{0}.summary", src.FileName.WithoutExtension), FS.Csv);
 
@@ -97,10 +87,6 @@ public class XedPaths
     public static FileUri RuleTable(RuleIdentity sig)
     {
         var dst = RuleTables();
-        if(sig.IsDecTable)
-            dst = dst.Scoped("dec");
-        else if(sig.IsEncTable)
-            dst = dst.Scoped("enc");
         return dst.Path(FS.file(sig.Format(), FS.Csv));
     }
 
@@ -154,12 +140,11 @@ public class XedPaths
     public static FilePath DocTarget(string name, FileKind kind)
         => DocTargets().Path(FS.file(string.Format("xed.docs.{0}", name), kind.Ext()));
     
-    public static FilePath InstDefSource(RuleTableKind kind)
-        => kind switch {
-            RuleTableKind.DEC => Sources().Path(FS.file("all-dec-instructions", FS.Txt)),
-            RuleTableKind.ENC => Sources().Path(FS.file("all-enc-instructions", FS.Txt)),
-            _ => FilePath.Empty
-        };
+    public static FilePath EncInstDef()
+        => Sources().Path(FS.file("all-enc-instructions", FS.Txt));
+
+    public static FilePath DecInstDef()
+        => Sources().Path(FS.file("all-dec-instructions", FS.Txt));
 
     public static FilePath InstPatternSource(RuleTableKind kind)
         => kind switch {
@@ -187,6 +172,9 @@ public class XedPaths
     public static FilePath InstFormSource()
         => Sources().Path(FS.file("idata", FS.Txt));
 
+    public static FilePath RuleSeqSource()
+        => Sources().Path(FS.file("all-enc-patterns", FS.Txt));
+
     public static FilePath DocSource(XedDocKind kind)
         => Sources().Path(kind switch{
             XedDocKind.RuleBlocks => FS.file("xed-dump", FileKind.Txt),
@@ -204,28 +192,6 @@ public class XedPaths
             _ => FileName.Empty
         });
 
-
-    static FileName EncInstDef = FS.file("all-enc-instructions", FS.Txt);
-
-    static FileName DecInstDef = FS.file("all-dec-instructions", FS.Txt);
-
-    static FileName EncRuleTable = FS.file("all-enc-patterns", FS.Txt);
-
-    static FileName DecRuleTable = FS.file("all-dec-patterns", FS.Txt);
-
-    static XedDocKind srckind(FileName src)
-    {
-        if(src == EncInstDef)
-            return XedDocKind.EncInstDef;
-        else if(src == DecInstDef)
-            return XedDocKind.DecInstDef;
-        else if(src == EncRuleTable)
-            return XedDocKind.EncRuleTable;
-        else if(src == DecRuleTable)
-            return XedDocKind.DecRuleTable;
-        else
-            return 0;
-    }
 
 
     static XedPaths Instance = new();

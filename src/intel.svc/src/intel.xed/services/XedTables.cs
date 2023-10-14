@@ -29,9 +29,7 @@ public class XedTables : AppService<XedTables>
         InstPatterns,
 
         RuleTables,
-
-        RuleSeq,
-
+        
         SeqReflected,
 
         RuleCells,
@@ -61,6 +59,8 @@ public class XedTables : AppService<XedTables>
         FieldDeps,
 
         OpRows,
+
+        RuleSeqImports
     }
 
     public static ChipMap ChipMap()
@@ -213,8 +213,8 @@ public class XedTables : AppService<XedTables>
     }
 
 
-    public static ReadOnlySeq<RuleSeq> RuleSeq()
-        => data(DatasetName.RuleSeq, XedCellParser.ruleseq);
+    public static ReadOnlySeq<RuleSeq> RuleSeqImports()
+        => data(DatasetName.RuleSeqImports, XedCellParser.ruleseq);
 
     public static XedRuleTables RuleTables()
         => data(DatasetName.RuleTables,CalcRuleTables);
@@ -222,8 +222,11 @@ public class XedTables : AppService<XedTables>
     public static ReadOnlySeq<SeqDef> SeqReflected()
         => data(DatasetName.SeqReflected,XedRuleSeq.defs);
 
-    public static ReadOnlySeq<InstDef> InstDefs()
-        => data(DatasetName.InstDefs, () => XedInstDefParser.parse(XedPaths.DocSource(XedDocKind.EncInstDef)));
+    public static ReadOnlySeq<InstDef> EncInstDefs()
+        => data(DatasetName.InstDefs, () => XedInstDefParser.parse(XedPaths.EncInstDef()));
+
+    public static ReadOnlySeq<InstDef> DecInstDefs()
+        => data(DatasetName.InstDefs, () => XedInstDefParser.parse(XedPaths.DecInstDef()));
 
     public static XedRuleCells RuleCells(XedRuleTables tables)
         => data(DatasetName.RuleCells, () => XedCells.cells(tables));
@@ -701,7 +704,7 @@ public class XedTables : AppService<XedTables>
 
     static readonly Index<AsmBroadcast> _BroadcastDefs = XedTables.broadcasts(Symbols.kinds<BroadcastKind>());
 
-    static XedWidths _Widths = XedWidths.FromSource(XedPaths.DocSource(XedDocKind.Widths));
+    static XedWidths _Widths = XedWidths.FromSource(XedPaths.WidthSource());
 
     static readonly Symbols<XedFieldKind> FieldTypes = Symbols.index<XedFieldKind>();
 

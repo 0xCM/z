@@ -28,19 +28,8 @@ public class XedMachines
 
         AsmInfo Asm;
 
-        readonly XedRuntime XedRt;
-
         readonly uint Id;
 
-        static uint Seq;
-
-        public MachineState(XedRuntime xed)
-        {
-            Id = sys.inc(ref Seq);
-            Expressions = Fields.allocate();
-            XedRt = xed;
-            Reset();
-        }
 
         public void Reset()
         {

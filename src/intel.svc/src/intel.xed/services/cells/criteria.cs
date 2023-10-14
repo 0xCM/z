@@ -12,15 +12,14 @@ using static XedRules;
 partial class XedCells
 {
     public static Seq<TableCriteria> criteria(RuleTableKind kind, Action<object> status = null)
-        => criteria(XedPaths.InstPatternSource(kind), status);
+        => criteria(kind, XedPaths.InstPatternSource(kind), status);
 
-    public static Seq<TableCriteria> criteria(FilePath src, Action<object> status = null)
+    public static Seq<TableCriteria> criteria(RuleTableKind kind, FilePath src, Action<object> status = null)
     {
         var skip = hashset("XED_RESET");
         using var reader = src.Utf8LineReader();
         var counter = 0u;
         var dst = list<TableCriteria>();
-        var tkind = XedPaths.tablekind(src.FileName);
         var statements =list<RowCriteria>();
         var name = EmptyString;
         while(reader.Next(out var line))
@@ -50,7 +49,7 @@ partial class XedCells
                     if(!skip.Contains(name))
                     {
                         if(XedParsers.parse(name, out RuleName rn))
-                            dst.Add(new (new (tkind,rn), statements.ToArray()));
+                            dst.Add(new (new (kind,rn), statements.ToArray()));
                         else
                             sys.@throw($"UnknownRule:'{name}'");
                     }

@@ -15,9 +15,9 @@ using RF = XedRules.RuleFormKind;
 public class XedCellParser
 {
     public static Index<RuleSeq> ruleseq()
-        => ruleseq(XedPaths.DocSource(XedDocKind.RuleSeq));
+        => ruleseq(XedPaths.RuleSeqSource());
 
-    public static Index<RuleSeq> ruleseq(FilePath src)
+    static Index<RuleSeq> ruleseq(FilePath src)
         => ruleseq(src.ReadNumberedLines());
 
     static public Index<RuleSeq> ruleseq(ReadOnlySpan<TextLine> src)

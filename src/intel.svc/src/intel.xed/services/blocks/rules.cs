@@ -14,14 +14,14 @@ partial class XedZ
 {            
     public static ReadOnlySeq<InstRuleDef> rules(ParallelQuery<InstBlockLineSpec> lines)
     {
-        var patterns = list<InstRuleDef>();
+        var rules = list<InstRuleDef>();
         piter(lines, spec => {
             var field = BlockField.Empty;
             var mode = MachineMode.Default;
-            var pattern = new InstRuleDef{
+            var rule = new InstRuleDef{
                 Form = spec.Form
             };
-            patterns.Add(pattern);
+            rules.Add(rule);
             foreach(var line in spec.Lines)
             {                
                 if(XedZ.parse(line, out field))
@@ -48,16 +48,16 @@ partial class XedZ
                                     break;
                                 }
                             }
-                            pattern.Cells = segs.Array();
+                            rule.Cells = segs.Array();
                         }
                         break;
                         case BlockFieldName.operands:
                         {
                             var ops = (PatternOps)field;
-                            pattern.Operands = sys.alloc<InstRuleDef.Operand>(ops.Count);
+                            rule.Operands = sys.alloc<InstRuleDef.Operand>(ops.Count);
                             for(var i=z8; i<ops.Count;i++)
                             {
-                                ref var target = ref pattern.Operands[i];
+                                ref var target = ref rule.Operands[i];
                                 ref readonly var op = ref ops[i];
                                 target.Index = i;
                                 target.Form = spec.Form;
@@ -90,6 +90,6 @@ partial class XedZ
                 }
             }
         });
-        return patterns.Array();
+        return rules.Array();
     }
 }

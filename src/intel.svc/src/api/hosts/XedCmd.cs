@@ -13,10 +13,6 @@ public partial class XedCmd : WfAppCmd<XedCmd>
 {
     CsLang CsLang => Channel.Channeled<CsLang>();
 
-    XedRuntime XedRuntime => Wf.XedRuntime();
-
-    XedDb XedDb => XedRuntime.XedDb;
-
     public IDbArchive LlvmModels(string scope)
         => AppDb.Dev($"llvm.models/{scope}");
 
@@ -43,24 +39,6 @@ public partial class XedCmd : WfAppCmd<XedCmd>
         CsLang.StringLits().Emit("Data", src, writer);
         writer.WriteLine("}");
         return result;
-    }
-
-
-
-    [CmdOp("xed/inst/parse")]
-    void ParseInstructions()
-    {
-        var src = XedPaths.InstDefSource(RuleTableKind.ENC);
-        if(!src.Exists)
-        {
-            Channel.Error(FS.missing(src));
-        }
-        else
-        {
-            var running = Channel.Running($"Parsing {src}");
-            var defs = XedInstDefParser.parse(src);
-            Channel.Ran(running);
-        }
     }
 
     [CmdOp("xed/disasm/flow")]

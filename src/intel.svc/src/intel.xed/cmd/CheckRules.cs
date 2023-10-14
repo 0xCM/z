@@ -11,22 +11,6 @@ using static sys;
 
 partial class XedChecks
 {
-    [CmdOp("xed/db/check")]
-    void CheckMemDb()
-    {
-        DbBuilder.check(Channel);
-        var size = 1073741824ul;
-        var mb = size/1024;
-        var db = XedRuntime.XedDb.Store;
-
-        var src = XedDb.RuleDumpFile();
-        var data = src.View();
-        var token = db.Store(data);
-
-        CheckRuleNames();
-        CheckInstDefs();
-    }
-
     void CheckInstDefs()
     {
         var a = span("0x83 MOD[mm] MOD!=3 REG[0b010] RM[nnn] MODRM() SIMM8() LOCK=0");

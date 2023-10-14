@@ -11,19 +11,21 @@ using static sys;
 using static XedModels;
 using static XedRules;
 
+
 public partial class XedImport : WfSvc<XedImport>
 {     
     public void Run()
     {
+        XedPaths.Imports().Delete();
         var ruleT = XedRuleTables.Empty;
         var instdefs = ReadOnlySeq<InstDef>.Empty;
         exec(true, 
             () => Emit(XedTables.BlockPatterns(XedTables.BlockLines())),
             () => ruleT = XedTables.RuleTables(),
-            () => Emit(XedTables.RuleSeq()),
+            () => Emit(XedTables.RuleSeqImports()),
             () => Emit(XedTables.SeqReflected()),
             () => Emit(XedTables.MacroMatches()),
-            () => instdefs = XedTables.InstDefs(),
+            () => instdefs = XedTables.EncInstDefs(),
             () => Emit(XedTables.MacroDefs()),
             () => Emit(XedTables.FieldImports()),
             () => Channel.TableEmit(XedRegMap.Service.REntries, XedPaths.ImportTable<RegMapEntry>("rmap")),

@@ -19,38 +19,20 @@ public static class XSvc
         public IntelIntrinsics IntelInx(IWfRuntime wf)
             => Service<IntelIntrinsics>(wf);
 
-        public IntelCmd IntelCmd(IWfRuntime wf)
-            => Service<IntelCmd>(wf);
-
         public SdeSvc SdeSvc(IWfRuntime wf)
             => Service<SdeSvc>(wf);
 
         public IntelSdm IntelSdm(IWfRuntime wf)
             => Service<IntelSdm>(wf);
 
-        public XedRules XedRules(IWfRuntime wf)
-            => Service<XedRules>(wf);
-
-        public XedOps XedOps(IWfRuntime wf)
-            => Service<XedOps>(wf);
-
-        public XedDb XedDb(IWfRuntime wf)
-            => Service<XedDb>(wf);
-
         public XedDisasm XedDisasm(IWfRuntime wf)
             => Service<XedDisasm>(wf);
-
-        public XedPaths XedPaths(IWfRuntime wf)
-            => Z0.XedPaths.Service;
 
         public XedDisasmAnalyzer DisasmAnalyzer(IWfRuntime wf)
             => Service<XedDisasmAnalyzer>(wf);
 
         public IntelSdmPaths SdmPaths(IWfRuntime wf)
             => Service<IntelSdmPaths>(wf);
-
-        public XedRuntime XedRuntime(IWfRuntime wf)
-            => Service<XedRuntime>(wf);
 
         public XedImport XedImport(IWfRuntime wf)
             => Service<XedImport>(wf);
@@ -67,32 +49,14 @@ public static class XSvc
     public static IntelSdm IntelSdm(this IWfRuntime wf)
         => Services.IntelSdm(wf);
 
-    public static XedRuntime XedRuntime(this IWfRuntime wf)
-        => Services.XedRuntime(wf);
-
-    public static XedRules XedRules(this IWfRuntime wf)
-        => Services.XedRules(wf);
-
-    public static XedOps XedOps(this IWfRuntime wf)
-        => Services.XedOps(wf);
-
-    public static XedDb XedDb(this IWfRuntime wf)
-        => Services.XedDb(wf);
-
     public static XedDisasm XedDisasm(this IWfRuntime wf)
         => Services.XedDisasm(wf);
 
     public static XedDisasmAnalyzer DisasmAnalyser(this IWfRuntime wf)
         => Services.DisasmAnalyzer(wf);
 
-    public static XedPaths XedPaths(this IWfRuntime wf)
-        => Services.XedPaths(wf);
-
     public static IntelSdmPaths SdmPaths(this IWfRuntime wf)
         => Services.SdmPaths(wf);
-
-    public static IntelCmd IntelCmd(this IWfRuntime wf)
-        => Services.IntelCmd(wf);
 
     public static SdeCpuid CpuId(this IWfRuntime wf)
         => Services.CpuId(wf);
