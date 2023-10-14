@@ -15,7 +15,7 @@ public readonly record struct BfSegExpr
     /// <summary>
     /// The segment name
     /// </summary>
-    public readonly Char5Seq SegName;
+    public readonly @string SegName;
 
     /// <summary>
     /// The segment location and width
@@ -23,7 +23,7 @@ public readonly record struct BfSegExpr
     public readonly BfInterval SegBits;
 
     [MethodImpl(Inline)]
-    public BfSegExpr(Char5Seq name, BfInterval bits)
+    public BfSegExpr(string name, BfInterval bits)
     {
         SegName = name;
         SegBits = bits;
@@ -61,7 +61,7 @@ public readonly record struct BfSegExpr
         => Hash;
 
     public string Format()
-        => PbRender.format(this);
+        => format(this);
 
     public override string ToString()
         => Format();

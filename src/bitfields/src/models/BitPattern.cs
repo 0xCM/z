@@ -6,10 +6,10 @@ namespace Z0;
 
 public readonly record struct BitPattern : IComparable<BitPattern>
 {
-    public readonly asci64 Data;
+    public readonly @string Data;
 
     [MethodImpl(Inline)]
-    public BitPattern(asci64 src)
+    public BitPattern(string src)
     {
         Data = src;
     }
@@ -46,12 +46,4 @@ public readonly record struct BitPattern : IComparable<BitPattern>
     [MethodImpl(Inline)]
     public static implicit operator BitPattern(string src)
         => new (src);
-
-    [MethodImpl(Inline)]
-    public static implicit operator BitPattern(asci64 src)
-        => new (src);
-
-    [MethodImpl(Inline)]
-    public static implicit operator asci64(BitPattern src)
-        => src.Data;
 }

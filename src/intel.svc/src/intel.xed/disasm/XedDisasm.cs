@@ -342,7 +342,8 @@ public partial class XedDisasm : WfSvc<XedDisasm>
                 if(vc == XedVexClass.VV1)
                 {
                     writer.AppendLineFormat(LabeledValue, nameof(detail.VexPrefix.VexKind), detail.VexPrefix.VexKind);
-                    writer.AppendLineFormat(LabeledValue, nameof(detail.VexPrefix), detail.VexPrefix.VexKind == AsmPrefixTokens.VexPrefixKind.xC4 ? AsmBitPatterns.VexC4 : AsmBitPatterns.VexC5);
+                    writer.AppendLineFormat(LabeledValue, nameof(detail.VexPrefix), 
+                        detail.VexPrefix.VexKind == AsmPrefixTokens.VexPrefixKind.xC4 ? AsmBitPatterns.VexC4 : AsmBitPatterns.VexC5);
                     writer.AppendLineFormat(LabeledValue, EmptyString, detail.VexPrefix.Bitstring());
                 }
                 else if(vc == XedVexClass.EVV)

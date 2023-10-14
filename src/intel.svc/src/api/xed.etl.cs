@@ -16,6 +16,25 @@ partial class XedCmd
 {
     XedImport XedImport => Wf.XedImport();
 
+    [CmdOp("xed/check/bits")]
+    void CheckBitfields()
+    {
+        var pattern = BitPatterns.def<ModRm>();
+        var segs = pattern.Segments();
+        var symbols = pattern.Symbols();
+        for(var i=0; i<segs.Count; i++)
+        {
+            ref readonly var seg = ref segs[i];
+            Channel.Row($"{i,-2} {seg.SegName,-8} {seg.MinPos,-3} {seg.MaxPos,-3} {seg.Mask}");
+        }
+
+        //var calcs = InstFieldBits.Calcs;
+        
+        // Channel.Write(calcs.Description().Format());
+        // Channel.Write(calcs.Descriptor());
+        //Channel.Row(calcs.Model().Format());
+    }
+
     [CmdOp("xed/ock")]
     void ListOcKinds()
     {

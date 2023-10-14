@@ -10,28 +10,18 @@ using static sys;
 public readonly partial struct BitPatterns
 {
     [MethodImpl(Inline), Op]
-    public static BfOrigin<P> origin<P>(P src)
+    public static BfOrigin<P> origin<P>()
         where P: unmanaged
-            => new (src);
+            => new (default(P));
 
     [MethodImpl(Inline), Op]
     public static BitPattern define(string src)
         => new(src);
 
-    public static Index<string> indicators(in BitPattern src)
-        => text.split(src.Data, Chars.Space);
-
-    public static BfModel model(in asci64 name, in BitPattern src, BfOrigin origin)
+    public static BfModel model(string name, BitPattern src, BfOrigin origin)
         => PolyBits.model(origin, name, segs(src));
 
-    public static string format(in BpDef src)
-        => string.Format("{0}[{1}]", src.Name, src.Pattern);
-
-    public static string format<P>(in BpDef<P> src)
-        where P : unmanaged
-            => string.Format("{0}[{1}]", src.Name, src.Pattern);
-
-    public static Index<BpInfo> reflected(Type src)
+    public static ReadOnlySeq<BpInfo> reflected(Type src)
     {
         var target = typeof(BpInfo);
         var props = src.Properties().Ignore().Static().WithPropertyType(target).Index();

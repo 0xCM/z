@@ -20,10 +20,6 @@ public readonly struct num3 : INumber<T>
     public num3(D src)
         => Value = crop(src);
 
-    [MethodImpl(Inline)]
-    num3(uint src)
-        => Value = (byte)src;
-
     public const byte Width = 3;
 
     public const D MaxValue = Limit.Max3u;
@@ -46,7 +42,7 @@ public readonly struct num3 : INumber<T>
 
     [MethodImpl(Inline)]
     public static T create(ulong src)
-        => new T((D)src);
+        => new ((D)src);
 
     [MethodImpl(Inline)]
     static T cover(D src)
@@ -55,7 +51,7 @@ public readonly struct num3 : INumber<T>
     [MethodImpl(Inline)]
     public static T force<A>(A src)
         where A : unmanaged
-            => T.crop(bw8(src));
+            => crop(bw8(src));
 
     [MethodImpl(Inline), Op]
     public static bit test(T src, byte pos)
@@ -187,14 +183,14 @@ public readonly struct num3 : INumber<T>
 
     public bit IsZero
     {
-            [MethodImpl(Inline)]
-            get => Value == 0;
+        [MethodImpl(Inline)]
+        get => Value == 0;
     }
 
     public bit IsNonZero
     {
-            [MethodImpl(Inline)]
-            get => Value != 0;
+        [MethodImpl(Inline)]
+        get => Value != 0;
     }
 
     public bit IsMax

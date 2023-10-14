@@ -76,6 +76,6 @@ namespace Z0
         /// <param name="offset">The number of bits to shift leftwards</param>
         [MethodImpl(Inline), Sll]
         public static ulong sll(ulong src, byte offset)
-            => src << offset;
+            => src << offset;        
    }
 }

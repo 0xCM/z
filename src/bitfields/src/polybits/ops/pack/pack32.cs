@@ -4,11 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static math;
+
 partial class PolyBits
 {
     [MethodImpl(Inline), Op]
     public static num32 pack(num16 a, num16 b)
-        => (num32)((uint)a | (uint)b << num16.Width);
+        => (num32)((uint)a | sll((uint)b, num16.Width));
 
     [MethodImpl(Inline), Op]
     public static num32 pack(num3 a, num7 b, num2 c, num16 d)

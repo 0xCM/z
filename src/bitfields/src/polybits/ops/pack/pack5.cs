@@ -4,17 +4,19 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static math;
+
 partial class PolyBits
 {
     [MethodImpl(Inline), Op]
     public static num5 pack(bit a, num4 b)
-        => (num5)((uint)a | (uint)b << 1);
+        => (num5)((uint)a | sll((uint)b, num1.Width));
 
     [MethodImpl(Inline), Op]
     public static num5 pack(num3 a, num2 b)
-        => (num5)((uint)a | (uint)b << num3.Width);
+        => (num5)((uint)a | sll((uint)b, num3.Width));
 
     [MethodImpl(Inline), Op]
     public static num5 pack(num2 a, num3 b)
-        => (num5)((uint)a | (uint)b << num2.Width);
+        => (num5)((uint)a | sll((uint)b, num2.Width));
 }

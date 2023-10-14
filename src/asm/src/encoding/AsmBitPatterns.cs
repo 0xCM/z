@@ -71,26 +71,19 @@ public readonly struct AsmBitPatterns
 
     const string VL = "VL";
 
-    public static readonly BpInfo Sib = describe<P>(nameof(Sib),
-        ss + sep + iii + sep + bbb);
+    public static readonly BpInfo Sib = describe<P>(nameof(Asm.Sib), ss, iii, bbb);
 
-    public static readonly BpInfo ModRm = describe<P>(nameof(ModRm),
-        mm + sep + rrr + sep + nnn);
+    public static readonly BpInfo ModRm = describe<P>(nameof(Asm.ModRm), mm, rrr, nnn);
 
-    public static readonly BpInfo Rex = describe<P>(nameof(Rex),
-        WRXB + sep + W + sep + R + sep + X + sep + B);
+    public static readonly BpInfo Rex = describe<P>(nameof(Rex), WRXB, W, R, X, B);
 
-    public static readonly BpInfo VexC4 = describe<P>(nameof(VexC4),
-        cccccccc + sep + R + sep + X + sep + B + sep + mmmmm + sep + W + sep + vvvv + sep + L + sep + pp)
-        ;
+    public static readonly BpInfo VexC4 = describe<P>(nameof(Asm.VexC4), cccccccc, R, X, B, mmmmm, W, vvvv, L, pp);
 
-    public static readonly BpInfo VexC5 = describe<P>(nameof(VexC5),
-        cccccccc + sep + R + sep + vvvv + sep + L + sep + pp
-        );
+    public static readonly BpInfo VexC5 = describe<P>(nameof(Asm.VexC5), cccccccc, R, vvvv, L, pp);
 
     public static readonly BpInfo Evex = describe<P>(nameof(Evex),
-        mmm + sep + d0 + sep + q + sep + RXB + sep +
-        pp + sep + d1 + sep + vvvv + sep + W + sep + 
-        aaa + sep + f + sep + b + sep  + VL + sep + z 
+        mmm, d0, q, RXB,
+        pp, d1, vvvv, W, 
+        aaa, f, b, VL, z 
         );
 }

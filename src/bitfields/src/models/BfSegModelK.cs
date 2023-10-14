@@ -18,7 +18,7 @@ namespace Z0
         /// <summary>
         /// The segment name
         /// </summary>
-        public readonly asci64 SegName;
+        public readonly string SegName;
 
         /// <summary>
         /// The index of the first bit in the segment

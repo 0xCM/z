@@ -18,7 +18,7 @@ public struct BfSegModel
     /// The segment name
     /// </summary>
     [Render(16), Doc("The segment name")]
-    public asci64 SegName;
+    public string SegName;
 
     /// <summary>
     /// The index of the first bit in the segment
@@ -45,7 +45,7 @@ public struct BfSegModel
     public BitMask Mask;
 
     [MethodImpl(Inline)]
-    public BfSegModel(in asci64 name, uint min, uint max, BitMask mask)
+    public BfSegModel(string name, uint min, uint max, BitMask mask)
     {
         SegName = name;
         MinPos = min;

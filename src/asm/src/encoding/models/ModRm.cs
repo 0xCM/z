@@ -7,9 +7,11 @@ namespace Z0.Asm;
 /// <summary>
 /// ModRM[mod[7:6] | reg[5:3] | r/m[2:0]]
 /// </summary>
-[StructLayout(LayoutKind.Sequential,Size=1)]
-public record struct ModRm : IAsmByte<ModRm>
+[StructLayout(LayoutKind.Sequential,Size=1), BitPattern(BitPattern)]
+public record struct ModRm : IAsmByte<ModRm>, IBpDef<ModRm>
 {
+    const string BitPattern = "mm rrr nnn";
+
     const uint mmMask=0b11000000;
     
     const byte mmMinPos=6;

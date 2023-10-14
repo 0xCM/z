@@ -44,14 +44,6 @@ class AsmChecks : WfAppCmd<AsmChecks>
         iter(events, e => Channel.Raise(e));            
     }
 
-    [CmdOp("xed/check/bits")]
-    void CheckBitfields()
-    {
-        var calcs = InstFieldBits.Calcs;
-        Channel.Write(calcs.Description().Format());
-        Channel.Write(calcs.Descriptor());
-        Channel.Write(calcs.Model().Format());
-    }
 
     [CmdOp("asm/check/all")]
     void CheckAll()
