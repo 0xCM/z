@@ -8,49 +8,19 @@ using static XedModels;
 
 partial class XedRules
 {
-    public record InstRuleDef
+    public record InstRuleDef : IComparable<InstRuleDef>
     {
-        [Record(TableName)]
-        public struct Operand
-        {
-            const string TableName = "xed.instblock.operands";
-
-            [Render(64)]
-            public XedInstForm Form;
-
-            [Render(8)]
-            public byte Index;
-
-            [Render(8)]
-            public OpName Name;
-
-            [Render(8)]
-            public OpKind Kind;
-
-            [Render(12)]
-            public OperandWidth Width;
-
-            [Render(16)]
-            public BitSegType SegType;
-
-            [Render(16)]
-            public Register Register;
-
-            [Render(1)]
-            public string SourceExpr;
-        }
-
         public Seq<CellValue> Cells;
 
         public XedInstForm Form;
 
-        public Seq<Operand> Operands;
+        public InstBlockOperands Operands;
 
         public InstRuleDef()
         {
             Cells = sys.empty<CellValue>();
             Form = default;
-            Operands = sys.empty<Operand>();
+            Operands = InstBlockOperands.Empty;
         }
 
         public string Format()
@@ -69,5 +39,17 @@ partial class XedRules
 
         public override string ToString()
             => Format();
+        
+        public int CompareTo(InstRuleDef src)
+        {
+            var result = Form.CompareTo(src.Form);
+            if(result == 0)
+            {
+                result = Operands.Length.CompareTo(src.Operands.Length);
+                if(result == 0)
+                    result = Cells.Length.CompareTo(src.Cells.Length);
+            }
+            return result;
+        }
     }
 }

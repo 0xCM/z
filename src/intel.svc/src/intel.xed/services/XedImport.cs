@@ -11,7 +11,6 @@ using static sys;
 using static XedModels;
 using static XedRules;
 
-
 public partial class XedImport : WfSvc<XedImport>
 {     
     public void Run()

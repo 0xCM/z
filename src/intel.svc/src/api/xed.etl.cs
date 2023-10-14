@@ -29,8 +29,8 @@ partial class XedCmd
     void EmitBlockLines()
     {
         var lines =  XedZ.lines();
-        var rules = XedZ.rules(lines.AsParallel());
-        var operands = list<InstRuleDef.Operand>();
+        var rules = XedZ.instructions(lines.AsParallel()).Array().Sort();
+        var operands = list<InstBlockOperand>();
         foreach(var pattern in rules)
         {   
             var count = pattern.Operands.Count;
@@ -41,7 +41,7 @@ partial class XedCmd
         }
 
 
-        Channel.TableEmit(operands.ViewDeposited(), XedPaths.ImportTable<InstRuleDef.Operand>());        
+        Channel.TableEmit(operands.ViewDeposited(), XedPaths.ImportTable<InstBlockOperand>());        
     }
 
     [CmdOp("xed/etl")]

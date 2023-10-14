@@ -37,15 +37,6 @@ public class XedPaths
     public static IDbArchive Imports()
         => Targets("imports");
 
-    public static IDbArchive RuleTargets()
-        => Targets("rules");
-
-    public static IDbArchive InstTargets()
-        => Targets("instructions");
-
-    public static IDbArchive InstPages()
-        => InstTargets().Targets("pages");
-
     public static IDbArchive RuleTables()
         => Imports().Targets("rules.tables");
 
@@ -74,9 +65,6 @@ public class XedPaths
 
     public static FilePath DisasmDetailPath(FilePath src)
         => src.FolderPath +  FS.file(string.Format("{0}.details", src.FileName.WithoutExtension), FS.Csv);
-
-    public static FilePath DisasmFieldsPath(FilePath src)
-        => src.FolderPath +  FS.file(string.Format("{0}.fields", src.FileName.WithoutExtension), FS.Txt);
 
     public static FilePath DisasmChecksPath(FilePath src)
         => src.FolderPath + FS.file(string.Format("{0}.checks", src.FileName.WithoutExtension), FS.Txt);
@@ -122,18 +110,6 @@ public class XedPaths
         return dst;
     }
 
-    public static FilePath RuleSpecs()
-        => RuleTargets().Path(FS.file("xed.rules.specs", FS.Csv));
-
-    public static FilePath InstTarget(string name, FileKind kind)
-        => InstTargets().Path(FS.file(string.Format("xed.inst.{0}", name), kind.Ext()));
-
-    public static FilePath InstPagePath(InstIsa src)
-        => InstPages().Path(FS.file(text.ifempty(src.Format(), "UNKNOWN"), FS.Txt));
-
-    public static FilePath RuleTarget(string name, FileExt ext)
-        => RuleTargets().Path(FS.file("xed.rules." + name, ext));
-
     public static IDbArchive DocTargets()
         => Targets().Scoped("docs");
 
@@ -174,24 +150,6 @@ public class XedPaths
 
     public static FilePath RuleSeqSource()
         => Sources().Path(FS.file("all-enc-patterns", FS.Txt));
-
-    public static FilePath DocSource(XedDocKind kind)
-        => Sources().Path(kind switch{
-            XedDocKind.RuleBlocks => FS.file("xed-dump", FileKind.Txt),
-            XedDocKind.EncInstDef => FS.file("all-enc-instructions", FS.Txt),
-            XedDocKind.DecInstDef => FS.file("all-dec-instructions", FS.Txt),
-            XedDocKind.EncRuleTable => FS.file("all-enc-patterns", FS.Txt),
-            XedDocKind.DecRuleTable => FS.file("all-dec-patterns", FS.Txt),
-            XedDocKind.Widths => FS.file("all-widths", FS.Txt),
-            XedDocKind.PointerWidths => FS.file("all-pointer-names", FS.Txt),
-            XedDocKind.Fields => FS.file("all-fields", FS.Txt),
-            XedDocKind.ChipMap => FS.file("cdata", FS.Txt),
-            XedDocKind.FormData => FS.file("idata", FS.Txt),
-            XedDocKind.CpuId => FS.file("all-cpuid", FileKind.Txt),
-            XedDocKind.RuleSeq => FS.file("all-enc-patterns", FS.Txt),
-            _ => FileName.Empty
-        });
-
 
 
     static XedPaths Instance = new();

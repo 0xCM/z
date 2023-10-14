@@ -5,6 +5,7 @@
 namespace Z0;
 
 using static XedModels;
+using static XedRules;
 
 partial class XedZ
 {
@@ -19,28 +20,32 @@ partial class XedZ
         [Render(20)]
         public XedInstClass Instruction;
 
+        [Render(8)]
+        public MachineMode Mode;
+
+        [Render(8)]
+        public Hex8 OpCode;
+
         [Render(58)]
         public XedInstForm Form;
 
         [Render(8)]
         public byte Index;
 
-        [Render(128)]
+        [Render(220)]
         public InstCells Body;
 
-        public MachineMode Mode;
-
-        public Hex8 OpCode;
-
+        [Render(92)]
         public InstAttribs InstAttribs;
 
-        public PatternOps Operands;
+        [Render(1)]
+        public InstBlockOperands Operands;
 
         public int CompareTo(InstBlockPattern src)
         {
             var result = Form.CompareTo(src.Form);
             if(result == 0)
-                result = Body.Count.CompareTo(src.Body.Count);
+                result = Operands.Format().CompareTo(src.Operands.Format());
             return result;
         }
 

@@ -14,8 +14,6 @@ using N = XedZ.BlockFieldName;
 
 partial class XedZ
 {            
-
-
     public static InstBlockPattern pattern(in InstBlockLineSpec spec)
     {
         var pattern = new InstBlockPattern();
@@ -42,7 +40,36 @@ partial class XedZ
                     pattern.InstAttribs = (InstAttribs)field;
                 break;
                 case N.operands:
-                    pattern.Operands = (PatternOps)field;
+                {
+                    var ops = (PatternOps)field;
+                    pattern.Operands = new(sys.alloc<InstBlockOperand>(ops.Count));
+                    for(var i=z8; i<ops.Count;i++)
+                    {
+                        ref var target = ref pattern.Operands[i];
+                        ref readonly var op = ref ops[i];
+                        target.Index = i;
+                        target.Form = spec.Form;
+                        target.Name = op.Name;
+                        target.Kind = op.Kind;
+                        target.SourceExpr = op.SourceExpr;
+                        op.WidthCode(out var wc);
+                        op.RegLiteral(out target.Register);
+                        if(wc != 0)
+                        {
+                            target.Width = new(wc, XedWidths.bitwidth(pattern.Mode,wc));
+                            var wi = XedWidths.describe(target.Width);
+                            if(wi.ElementCount > 1 && wi.ElementWidth != 0)
+                                target.SegType = wi.SegType;
+                        }
+
+                        if(target.Register.IsNonEmpty && !target.Register.IsNonterminal && target.Width.Bits == 0)
+                            target.Width = new(target.Width.Code, XedWidths.width(target.Register));
+
+                        if(target.Register.IsEmpty && op.Nonterminal(out var nt))
+                            target.Register = nt;
+                    }
+                    //pattern.Operands = (PatternOps)field;
+                }
                 break;
                 case N.pattern:
                 {
