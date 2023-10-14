@@ -41,7 +41,7 @@ partial class XedRules
             => ref Keys[i];
 
         public string Format()
-            => CellRender.expression(this);
+            => XedCellRender.expression(this);
 
         public override string ToString()
             => Format();

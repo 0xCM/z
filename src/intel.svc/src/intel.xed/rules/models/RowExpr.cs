@@ -19,7 +19,7 @@ partial class XedRules
         public string Format()
         {
             var dst = text.emitter();
-            CellRender.render(this, dst);
+            XedCellRender.render(this, dst);
             return dst.Emit();
         }
 

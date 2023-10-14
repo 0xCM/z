@@ -11,7 +11,6 @@ using static sys;
 
 public partial class XedZ
 {        
-
     static bool parse(List<string> lines, out List<RuleAttribute> dst)
     {
         dst = new();
@@ -49,9 +48,24 @@ public partial class XedZ
         return dst;
     }
 
-    public static void emit(IWfChannel channel, ReadOnlySeq<InstBlockPattern> src)
+    public static void emit(IWfChannel channel, ParallelQuery<InstBlockPattern> patterns)
     {
-        channel.TableEmit(src, XedPaths.ImportTable<InstBlockPattern>());
+        var records = patterns.OrderBy(x => x.Form).ThenBy(x => x.Body.Count).Array().Sort();
+        var form = XedInstForm.Empty;
+        var j=z8;
+        for(var i=0u; i<records.Length; i++)
+        {
+            ref var record = ref seek(records,i);
+            if(record.Form != form)
+            {
+                j=0;
+                form = record.Form;
+            }
+            record.Seq = i;
+            record.Index=j++;
+        }
+
+        channel.TableEmit(records, XedPaths.ImportTable<InstBlockPattern>());
     }
 
     static void emit(IWfChannel channel, RuleBlocks src)

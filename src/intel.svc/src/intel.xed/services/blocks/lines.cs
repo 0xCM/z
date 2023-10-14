@@ -13,6 +13,9 @@ using N = XedZ.BlockFieldName;
 
 partial class XedZ
 {        
+    public static IEnumerable<InstBlockLineSpec> lines()
+        => lines(XedPaths.RuleBlockSource());
+
     public static IEnumerable<InstBlockLineSpec> lines(FilePath path)
     {
         using var src = MemoryFiles.map(path);

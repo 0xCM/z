@@ -68,7 +68,7 @@ partial class XedRules
         }
 
         public string Format()
-            => CellRender.expressions(this);
+            => XedCellRender.expressions(this);
 
         public override string ToString()
             => Format();

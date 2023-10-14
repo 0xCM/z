@@ -73,11 +73,7 @@ partial class XedModels
         [MethodImpl(Inline)]
         public bool WidthCode(out WidthCode dst)
             => XedPatterns.widthcode(this, out dst);
-
-        [MethodImpl(Inline)]
-        public bool Width(out OperandWidth dst)
-            => XedPatterns.width(this, out dst);
-
+    
         [MethodImpl(Inline)]
         public bool ElementType(out ElementType dst)
             => XedPatterns.etype(this, out dst);

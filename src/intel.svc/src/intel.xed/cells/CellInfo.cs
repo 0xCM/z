@@ -122,7 +122,7 @@ partial class XedRules
         }
 
         public string Format()
-            => CellRender.format(this);
+            => XedCellRender.format(this);
 
         public override string ToString()
             => Format();

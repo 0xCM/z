@@ -129,10 +129,6 @@ partial class XedModels
 
         EVEX_62_REXR_ENC,
 
-        EVEX_62_EXR_ENC_BIND,
-
-        EVEX_62_REXR_ENC_EMIT,
-
         EVEX_REXX_ENC_EMIT,
         
         EVEX_REXB_ENC_EMIT,
@@ -163,19 +159,11 @@ partial class XedModels
 
         EVEX_MAP_ENC,
 
-        EVEX_MAP_ENC_BIND,
-
         EVEX_REXB_ENC,
-
-        EVEX_REXB_ENC_BIND,
 
         EVEX_REXRR_ENC,
 
-        EVEX_REXRR_ENC_BIND,
-
         EVEX_REXW_VVVV_ENC,
-
-        EVEX_REXW_VVVV_ENC_BIND,
 
         EVEX_REXX_ENC,
 
@@ -222,10 +210,6 @@ partial class XedModels
         FIXUP_EASZ_ENC,
 
         FIXUP_EOSZ_ENC,
-
-        FIXUP_EOSZ_ENC_BIND,
-
-        FIXUP_EASZ_ENC_BIND,
 
         FIXUP_SMODE_ENC,
 

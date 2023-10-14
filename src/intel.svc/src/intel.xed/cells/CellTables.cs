@@ -246,7 +246,7 @@ partial class XedRules
             => ref _Tables[table].Rows[row].Cells[cell];
 
         public string Format()
-            => CellRender.Tables.format(this);
+            => XedCellRender.Tables.format(this);
 
         public override string ToString()
             => Format();

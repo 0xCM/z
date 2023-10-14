@@ -43,41 +43,6 @@ partial class XedRules
         public static Field init(FieldKind kind, XedInstClass value)
             => new ((ushort)value, kind, FieldDataKind.InstClass);
 
-        [MethodImpl(Inline), Op]
-        public static XedInstClass value(Field src, out XedInstClass dst)
-        {
-            dst = src;
-            return dst;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static Register value(Field src, out Register dst)
-        {
-            dst = src;
-            return dst;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static bit value(Field src, out bit dst)
-        {
-            dst = src;
-            return dst;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static byte value(Field src, out byte dst)
-        {
-            dst = src;
-            return dst;
-        }
-
-        [MethodImpl(Inline), Op]
-        public static ushort value(Field src, out ushort dst)
-        {
-            dst = src;
-            return dst;
-        }
-
         readonly ushort Data;
 
         public readonly FieldKind Kind;

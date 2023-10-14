@@ -607,7 +607,7 @@ public class XedRender
         else if(src.CellKind == RuleCellKind.FieldSeg)
             return format(src.ToSegField());
         else
-            return CellRender.format(src);
+            return XedCellRender.format(src);
     }
 
     public static string format(in CellExpr src)

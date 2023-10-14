@@ -12,70 +12,8 @@ using P = XedModels.InstPattern;
 using M = XedModels;
 using R = XedRules;
 
-public class XedMachines : IDisposable
+public class XedMachines
 {        
-    static IXedMachine allocate(XedRuntime xed)
-        => new MachineState(xed);
-
-    XedRuntime XedRt;
-
-    uint6 Current = 0;
-
-    int Counter = 0;
-
-    ConcurrentDictionary<uint, IXedMachine> Allocations = new();
-
-    const byte Capacity = uint6.MaxValue + 1;
-
-    bool Allocated = false;
-
-    public bool Machine(uint id, out IXedMachine dst)
-        => Allocations.TryGetValue(id, out dst);
-
-    public IXedMachine Machine()
-    {
-        var m =  XedMachines.allocate(XedRt);
-        Allocations.TryAdd(m.MachineId,m);
-        return m;
-    }
-
-    void Allocate()
-    {
-        if(!Allocated)
-        {
-            for(var i=0; i<Capacity; i++)
-            {
-                var machine = XedMachines.allocate(XedRt);
-                Allocations[machine.MachineId] = machine;
-            }
-            Allocated = true;
-        }
-    }
-
-    public void Dispose()
-        => iter(Allocations.Values, machine => machine.Dispose());
-
-    public void Reset()
-    {
-        iter(Allocations.Values, machine => machine.Reset());
-    }
-
-    public void Run(bool rent, Action<IXedMachine> f)
-    {
-        var machine = default(IXedMachine);
-        if(rent)
-        {
-            Current = (byte)inc(ref Counter);
-            machine = Allocations[Current];
-            if(Counter > Capacity)
-                machine.Reset();
-        }
-        else
-            machine = XedMachines.allocate(XedRt);
-
-        f(machine);
-    }
-
     internal class MachineState : IXedMachine<InstPattern>
     {
         InstPattern Pattern;
@@ -83,25 +21,6 @@ public class XedMachines : IDisposable
         XedFieldState OpState;
 
         MachineMode MachineMode;
-
-        ConcurrentDictionary<uint,MachineState> Allocations = new();
-
-        bool Allocated = false;
-
-        const byte Capacity = uint6.MaxValue + 1;
-
-        void Allocate()
-        {
-            if(!Allocated)
-            {
-                for(var i=0; i<Capacity; i++)
-                {
-                    var machine = new MachineState(XedRt);
-                    Allocations[machine.Id] = machine;
-                }
-                Allocated = true;
-            }
-        }
 
         XedInstForm Form;
 

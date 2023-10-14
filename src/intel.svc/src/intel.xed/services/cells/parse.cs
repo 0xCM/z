@@ -74,13 +74,13 @@ partial class XedCells
         }
         else if(IsSeg(src))
         {
-            result = CellParser.parse(src, out InstFieldSeg x);
+            result = XedCellParser.parse(src, out InstFieldSeg x);
             if(result)
                 dst = x;
         }
         else if(IsExpr(src))
         {
-            result = CellParser.expr(src, out CellExpr x);
+            result = XedCellParser.expr(src, out CellExpr x);
             if(result)
                 dst = x;
             else

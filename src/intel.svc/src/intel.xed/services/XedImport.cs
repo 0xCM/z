@@ -18,7 +18,7 @@ public partial class XedImport : WfSvc<XedImport>
         var ruleT = XedRuleTables.Empty;
         var instdefs = ReadOnlySeq<InstDef>.Empty;
         exec(true, 
-            () => Emit(XedTables.InstBlocks()),
+            () => Emit(XedTables.BlockPatterns(XedTables.BlockLines())),
             () => ruleT = XedTables.RuleTables(),
             () => Emit(XedTables.RuleSeq()),
             () => Emit(XedTables.SeqReflected()),
@@ -342,7 +342,7 @@ public partial class XedImport : WfSvc<XedImport>
     void Emit(ReadOnlySeq<InstOpSpec> src)
         => Channel.TableEmit(src, XedPaths.ImportTable<InstOpSpec>());
 
-    void Emit(ReadOnlySeq<XedZ.InstBlockPattern> src)
+    void Emit(ParallelQuery<XedZ.InstBlockPattern> src)
         => XedZ.emit(Channel,src);
 
     void Emit(InstLayouts src)

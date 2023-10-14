@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using System.Linq;
 using Asm;
 
 using static XedModels;
@@ -77,8 +78,11 @@ public class XedTables : AppService<XedTables>
     public static ReadOnlySeq<MacroMatch> MacroMatches()
         => data(DatasetName.MacroMatches,CalcMacroMatches);
 
-    public static ReadOnlySeq<InstBlockPattern> InstBlocks()
-        => data(DatasetName.InstBlocks,XedZ.patterns);
+    public static ParallelQuery<InstBlockLineSpec> BlockLines()
+        => XedZ.lines().AsParallel();
+    
+    public static ParallelQuery<InstBlockPattern> BlockPatterns(ParallelQuery<InstBlockLineSpec> lines)
+        => data(DatasetName.InstBlocks,() => XedZ.patterns(lines));
 
     public static ReadOnlySeq<InstOpRow> OpRows(ReadOnlySeq<InstOpDetail> src)
         => data(DatasetName.OpRows, () => CalcOpRows(src));
@@ -210,7 +214,7 @@ public class XedTables : AppService<XedTables>
 
 
     public static ReadOnlySeq<RuleSeq> RuleSeq()
-        => data(DatasetName.RuleSeq, CellParser.ruleseq);
+        => data(DatasetName.RuleSeq, XedCellParser.ruleseq);
 
     public static XedRuleTables RuleTables()
         => data(DatasetName.RuleTables,CalcRuleTables);

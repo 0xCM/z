@@ -27,7 +27,7 @@ partial class XedCells
         {
             status?.Invoke(line);
             
-            if(CellParser.RuleForm(line.Content) == RuleFormKind.SeqDecl)
+            if(XedCellParser.RuleForm(line.Content) == RuleFormKind.SeqDecl)
             {
                 while(reader.Next(out line))
                     if(line.IsEmpty)

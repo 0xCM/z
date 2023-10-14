@@ -11,38 +11,52 @@ partial class XedModels
     {
         public readonly WidthCode Code;
 
+        public readonly ushort Bits;
+
         [MethodImpl(Inline)]
-        public OperandWidth(WidthCode code)        
+        public OperandWidth(WidthCode code, ushort bits)
         {
             Code = code;
+            Bits = bits;
         }
 
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => Code == 0;
+            get => Code == 0 && Bits == 0;
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => Code != 0;
+            get => !IsEmpty;
         }
 
         public Hash32 Hash
         {
             [MethodImpl(Inline)]
-            get => (uint)Code;
+            get => ((uint)Code << 16) | (uint)Bits;
         }
 
         public string Format()
-            => EnumRender.format(Code);
+        {
+            var dst = EmptyString;
+            if(Code != 0)
+                dst = EnumRender.format(Code);
+            
+            if(Bits != 0)
+            {
+                if(text.nonempty(dst))
+                    dst += ":";
+                dst += $"{Bits}";
+            }
+            return dst;
+            //Bits == 0 ? EnumRender.format(Code) : $"{EnumRender.format(Code)}:{Bits}";
+
+        }
+
         public override string ToString()
             => Format();
-
-        [MethodImpl(Inline)]
-        public static implicit operator OperandWidth(WidthCode code)
-            => new(code);
 
         [MethodImpl(Inline)]
         public static implicit operator WidthCode(OperandWidth src)

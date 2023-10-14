@@ -13,7 +13,9 @@ using static sys;
 using N = XedZ.BlockFieldName;
 
 partial class XedZ
-{        
+{            
+
+
     public static InstBlockPattern pattern(in InstBlockLineSpec spec)
     {
         var pattern = new InstBlockPattern();

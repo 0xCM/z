@@ -115,7 +115,7 @@ partial class XedCells
                         break;
                         case CK.InstSeg:
                         {
-                            result = CellParser.parse(data, out InstFieldSeg value);
+                            result = XedCellParser.parse(data, out InstFieldSeg value);
                             cell = new RuleCell(key, value, size);
                         }
                         break;
@@ -124,7 +124,7 @@ partial class XedCells
                         case CK.EqExpr:
                         case CK.NeqExpr:
                         {
-                            result = CellParser.expr(data, out CellExpr value);
+                            result = XedCellParser.expr(data, out CellExpr value);
                             if(value.Field == 0)
                                 term.warn(AppMsg.ParseFailure.Format(nameof(FieldKind), data));
                             cell = new RuleCell(key, value, size);

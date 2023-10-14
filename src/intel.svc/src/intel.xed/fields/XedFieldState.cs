@@ -262,7 +262,7 @@ public record struct XedFieldState
     [RuleField(K.MAP, 4, typeof(XedMapNumber))]
     public byte MAP;
 
-    [RuleField(FieldKind.MAX_BYTES, 4, typeof(num4))]
+    [RuleField(K.MAX_BYTES, 4, typeof(num4))]
     public byte MAX_BYTES;
 
     [RuleField(K.MEM_WIDTH, 7, typeof(num7), "The size of referenced memory, in bytes")]
