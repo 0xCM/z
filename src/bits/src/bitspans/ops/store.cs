@@ -9,6 +9,6 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static void store<T>(T src, BitSpan dst)
             where T : unmanaged
-               => BitPack.unpack(src, dst.Storage);
+               => gpack.unpack(src, dst.Storage);
     }
 }

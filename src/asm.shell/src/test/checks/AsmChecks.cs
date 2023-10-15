@@ -127,7 +127,7 @@ class AsmChecks : WfAppCmd<AsmChecks>
         if(result.Fail)
             return (false, string.Format("Parsed bitstring value incorrect: {0} != {1}", a2.FormatPacked(), a3.FormatPacked()));
 
-        var a4 = BitPack.scalar<byte>(a3);
+        var a4 = gpack.scalar<byte>(a3);
         result = (a4 == a1);
         if(result.Fail)
             return (false, string.Format("Incorrect scalar extracted: {0} != {1}", a4, a1));
@@ -144,7 +144,7 @@ class AsmChecks : WfAppCmd<AsmChecks>
         var input = vcpu.vload(w256,x7ffaa76f0ae0);
         var mask = vcpu.vindices(input, Target);
         var bits = recover<bit>(bytes(new Cell256<byte>()));
-        BitPack.unpack1x32x8(mask, bits);
+        SpanPack.unpack1x32x8(mask, bits);
         var buffer = ByteBlock32.Empty;
         var j=z8;
         for(byte i=0; i<count; i++)

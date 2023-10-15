@@ -8,6 +8,49 @@ namespace Z0
 
     public class t_bitspan_ops : t_bits<t_bitspan_ops>
     {
+    /// <summary>
+    /// Unpacks each primal source bit to a 32-bit target
+    /// </summary>
+    /// <param name="src">The packed bit source</param>
+    /// <param name="dst">The unpacked bit target</param>
+    [MethodImpl(Inline)]
+    public static void unpack1x32<T>(ReadOnlySpan<T> src, SpanBlock256<uint> dst)
+        where T : unmanaged
+    {
+        var blockcount = dst.BlockCount;
+        var bytes = src.Bytes();
+        ref readonly var input = ref first(bytes);
+        for(var block=0; block<blockcount; block++)
+            SpanPack.unpack8x32(skip(input, block), dst.CellBlock(block));
+    }
+
+    /// <summary>
+    /// Unpacks each primal source bit to a 32-bit blocked target
+    /// </summary>
+    /// <param name="src">The packed bit source</param>
+    /// <param name="dst">The unpacked bit target</param>
+    /// <param name="block">The target block index</param>
+    /// <typeparam name="T">The source type</typeparam>
+    [MethodImpl(Inline)]
+    public static void unpack1x32<T>(ReadOnlySpan<T> src, SpanBlock256<uint> dst, int block)
+        where T : unmanaged
+    {
+        const int blocklen = 8;
+        const int blockcount = 1;
+        gpack.unpack1x32(skip(src, block), dst.CellBlock(block));
+    }
+
+    /// <summary>
+    /// Unpacks each primal source bit to a 32-bit target
+    /// </summary>
+    /// <param name="src">The packed bit source</param>
+    /// <param name="dst">The unpacked bit target</param>
+    [MethodImpl(Inline)]
+    public static void unpack1x32<T>(Span<T> src, SpanBlock256<uint> dst)
+        where T : unmanaged
+            => unpack1x32(src.ReadOnly(),dst);
+
+
         public override bool Enabled => true;
 
         public void bitspan_scalar32_bench()
@@ -101,7 +144,7 @@ namespace Z0
             for(var i=0; i<RepCount; i++)
             {
                 Random.Fill(packed);
-                gpack.unpack1x32(packed, unpacked);
+                unpack1x32(packed, unpacked);
                 var bitspan = BitSpans32.load(unpacked.As<Bit32>());
                 bitspan_check(packed,bitspan);
             }

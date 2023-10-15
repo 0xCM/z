@@ -12,7 +12,7 @@ partial class XedRules
     {
         [MethodImpl(Inline)]
         public static num6 pack(Label name, Kind kind, Width width)
-            => PolyBits.pack((num2)(byte)kind, (num2)(byte)width, (num2)(byte)name);
+            => BitPack.pack((num2)(byte)kind, (num2)(byte)width, (num2)(byte)name);
 
         static string inside(string src)
         {

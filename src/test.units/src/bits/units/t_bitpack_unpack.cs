@@ -13,7 +13,7 @@ namespace Z0
             for(var i=0; i< RepCount; i++)
             {
                 var src = Random.Next<ulong>();
-                BitPack.unpack1x64x8(src, dst);
+                SpanPack.unpack1x64x8(src, dst);
                 var bitsPC = dst.PopCount();
                 var bytes = sys.bytes(src);
                 var bytesPC = bytes.PopCount();

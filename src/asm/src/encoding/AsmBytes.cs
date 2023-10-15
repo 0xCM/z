@@ -137,17 +137,24 @@ public class AsmBytes
     public static void pack(in EncodingOffsets src, Span<byte> dst)
     {
         var offsets = @readonly(bytes(src));
-        Bitfields.pack4x4(
-            skip(offsets,0),
-            skip(offsets,1),
-            skip(offsets,2),
-            skip(offsets,3),
-            ref seek16(dst,0)
-            );
-
-        Bitfields.pack4x2(skip(offsets,4), skip(offsets,5), ref seek(dst,4));
+        pack4x4(skip(offsets,0), skip(offsets,1), skip(offsets,2), skip(offsets,3), ref seek16(dst,0));
+        pack4x2(skip(offsets,4), skip(offsets,5), ref seek(dst,4));
     }
-        
+
+    [MethodImpl(Inline), Op]
+    static ref byte pack4x2(byte a, byte b, ref byte dst)
+    {
+        dst = (byte)((a & 0xF) | (b >> 4));
+        return ref dst;
+    }
+
+    [MethodImpl(Inline), Op]
+    static ref ushort pack4x4(byte a0, byte a1, byte a2, byte a3, ref ushort dst)
+    {
+        dst = (ushort)((a0 & 0xF) | ((a1 & 0xF0) >> 4)  | ((a2 & 0xF00) >> 8)  | ((a3 & 0xF000) >> 12));
+        return ref dst;
+    }
+    
     [MethodImpl(Inline), Op]
     public static ModRm modrm(byte mod, byte reg, byte rm)
         => new (join((rm, 0), (reg, 3), (mod, 6)));
@@ -167,7 +174,6 @@ public class AsmBytes
     // RexBBits:[Index[00000] | Token[000]]
     public static RexB rexb(RexBToken token, RegIndexCode r, bit gpHi)
         => new (token, r, gpHi);
-
 
     public static string bitstring(Sib src)
         => string.Format("{0} {1} {2}", BitRender.format2(src.Scale), BitRender.format3(src.Index), BitRender.format3(src.Base));
@@ -256,7 +262,7 @@ public class AsmBytes
                     row.@base = skip(f0, i);
                     row.index = skip(f1, j);
                     row.scale = skip(f2, k);
-                    var sib = new Sib(PolyBits.pack(row.@base, row.index, row.scale));
+                    var sib = new Sib(BitPack.pack(row.@base, row.index, row.scale));
                     row.bitstring = bitstring(sib);
                     row.hex = (byte)m;
                     m++;

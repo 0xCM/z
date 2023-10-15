@@ -34,7 +34,7 @@ public static class BitVectorsK
         var storage = ByteBlock32.Empty;
         var dst = recover<T>(storage.Bytes);
         vgcpu.vstore(src.State, dst);
-        BitPack.unpack(dst, buffer);
+        gpack.unpack(dst, buffer);
         return new BitSpan(buffer);
     }
     

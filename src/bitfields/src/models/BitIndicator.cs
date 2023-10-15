@@ -27,7 +27,7 @@ public readonly record struct BitIndicator : IIndicator<BitIndicator,bit>
     [MethodImpl(Inline)]
     public BitIndicator(bit state, bit enabled)
     {
-        Data = PolyBits.pack(state,enabled);
+        Data = BitPack.pack(state,enabled);
     }
 
     public bit Value

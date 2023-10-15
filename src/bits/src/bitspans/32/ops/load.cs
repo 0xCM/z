@@ -9,6 +9,22 @@ namespace Z0
     partial class BitSpans32
     {
         /// <summary>
+        /// Unpacks each primal source bit to a 32-bit blocked target
+        /// </summary>
+        /// <param name="src">The packed bit source</param>
+        /// <param name="dst">The unpacked bit target</param>
+        /// <param name="block">The target block index</param>
+        /// <typeparam name="T">The source type</typeparam>
+        [MethodImpl(Inline), Op, Closures(Closure)]
+        static void unpack1x32<T>(ReadOnlySpan<T> src, SpanBlock256<uint> dst, int block)
+            where T : unmanaged
+        {
+            const int blocklen = 8;
+            const int blockcount = 1;
+            gpack.unpack1x32(skip(src, block), dst.CellBlock(block));
+        }
+
+        /// <summary>
         /// Wraps a bitspan over a span of extant bits
         /// </summary>
         /// <param name="src">The source bits</param>
@@ -46,7 +62,7 @@ namespace Z0
             var dst = SpanBlocks.alloc<uint>(n256,blocks);
 
             for(var block=0; block<blocks; block++)
-                gpack.unpack1x32(packed, dst, block);
+                unpack1x32(packed, dst, block);
 
             return load(dst.As<Bit32>());
         }

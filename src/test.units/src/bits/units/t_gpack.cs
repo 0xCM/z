@@ -75,7 +75,7 @@ namespace Z0
             {
                 var src = Random.Next<S>();
                 Span<T> dst = new T[width<S>()];
-                BitPack.unpack(src,dst);
+                gpack.unpack(src,dst);
                 var bs = BitStrings.scalar(src);
                 for(var i = 0; i< bs.Length; i++)
                 {
@@ -112,7 +112,7 @@ namespace Z0
             {
                 var src = Random.Next<S>();
                 counter.Start();
-                BitPack.unpack(src, dst);
+                gpack.unpack(src, dst);
                 counter.Stop();
             }
 

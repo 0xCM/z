@@ -122,11 +122,11 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public T Extract(F field, T src)
-            => api.extract(this, field, src);
+            => BitPatterns.extract(this, field, src);
 
         [MethodImpl(Inline)]
         public K Extract<K>(F field, T src)
             where K : unmanaged
-                => sys.@as<T,K>(api.extract(this, field, src));
+                => sys.@as<T,K>(BitPatterns.extract(this, field, src));
     }
 }

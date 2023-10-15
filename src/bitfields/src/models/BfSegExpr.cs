@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static PolyBits;
-
 /// <summary>
 /// Defines a bitfield segment
 /// </summary>
@@ -61,7 +59,7 @@ public readonly record struct BfSegExpr
         => Hash;
 
     public string Format()
-        => format(this);
+        => BitPatterns.format(this);
 
     public override string ToString()
         => Format();

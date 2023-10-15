@@ -42,7 +42,7 @@ namespace Z0
                     }
 
                     if(result)
-                        dst = new LiteralBits(n, BitPack.scalar<byte>(buffer));
+                        dst = new LiteralBits(n, gpack.scalar<byte>(buffer));
                 }
             }
             return result;

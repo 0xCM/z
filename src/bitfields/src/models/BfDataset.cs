@@ -166,5 +166,5 @@ public class BfDataset : IBfDataset
     [MethodImpl(Inline)]
     public T Extract<T>(uint index, T src)
         where T : unmanaged
-            => api.extract(Offset(index), Width(index), src);
+            => gpack.extract(Offset(index), Width(index), src);
 }

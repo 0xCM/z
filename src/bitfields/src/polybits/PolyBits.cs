@@ -47,7 +47,7 @@ public partial class PolyBits : AppService<PolyBits>
     {
         var emitter = text.emitter();
         for(var i=0u; i<src.Length; i++)
-            render(skip(src,i), i, emitter);
+            BitPatterns.render(skip(src,i), i, emitter);
         Channel.FileEmit(emitter.Emit(), 12, dst.Path(name, FileKind.Txt));
     }
 

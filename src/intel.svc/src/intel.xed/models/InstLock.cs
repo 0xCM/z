@@ -22,7 +22,7 @@ partial class XedModels
         [MethodImpl(Inline)]
         public LockIndicator(bit lockable, bit locked)
         {
-            Data = PolyBits.pack(lockable,locked);
+            Data = BitPack.pack(lockable,locked);
         }
 
         public bit Lockable

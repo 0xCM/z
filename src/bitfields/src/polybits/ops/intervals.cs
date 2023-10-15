@@ -10,7 +10,7 @@ partial class PolyBits
 {
     [MethodImpl(Inline)]
     public static BfInterval interval(uint offset, byte width)
-        => new BfInterval(offset,width);
+        => new (offset,width);
 
     /// <summary>
     /// Computes a <see cref='BfInterval'/> sequence given a paired offset/width seqence

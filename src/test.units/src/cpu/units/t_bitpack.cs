@@ -36,7 +36,7 @@ namespace Z0
     [MethodImpl(Inline)]
     public static ulong pack64x8x1<T>(in SpanBlock512<T> src, uint block)
         where T : unmanaged
-            => BitPack.pack64x8x1(src.BlockLead((int)block));
+            => gpack.pack64x8x1(src.BlockLead((int)block));
 
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static SpanBlock512<byte> unpack1x64(ulong src, in SpanBlock512<byte> dst, int block)
         {
-            BitPack.unpack1x64x8(src, dst.CellBlock(block));
+            SpanPack.unpack1x64x8(src, dst.CellBlock(block));
             return dst;
         }
         public void unpack_64()
@@ -122,7 +122,7 @@ namespace Z0
         [MethodImpl(Inline), Op]
         public static ushort pack16x8x1<T>(SpanBlock128<T> src, uint block = 0)
             where T : unmanaged
-                => BitPack.pack16x8x1(src.BlockLead((int)block));
+                => gpack.pack16x8x1(src.BlockLead((int)block));
 
         public void pack_8x1_basecase()
         {

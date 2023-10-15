@@ -57,7 +57,7 @@ public record struct Sib : IAsmByte<Sib>, IBitPattern<Sib>
     [MethodImpl(Inline)]
     public Sib(num3 @base, num3 index, num2 scale)
     {
-        _Value = PolyBits.pack(@base,index,scale);
+        _Value = BitPack.pack(@base,index,scale);
     }
 
     public num3 Base

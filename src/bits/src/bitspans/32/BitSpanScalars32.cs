@@ -61,7 +61,7 @@ namespace Z0
         public static BitSpan32 from(ulong src)
         {
             Span<uint> dst = new uint[64];
-            BitPack.unpack1x64x32_3(src, dst);
+            SpanPack.unpack1x64x32_3(src, dst);
             return BitSpans32.load(dst.Recover<Bit32>());
         }
 

@@ -26,5 +26,5 @@ partial class XedFields
 {
     [MethodImpl(Inline), Op]
     public static RexPrefix rex(in XedFieldState src)
-        => new (PolyBits.pack(src.REXB, src.REXX, src.REXR, src.REXW,0b100));
+        => new (BitPack.pack(src.REXB, src.REXX, src.REXR, src.REXW,0b100));
 }

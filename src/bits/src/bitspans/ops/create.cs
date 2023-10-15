@@ -9,23 +9,23 @@ partial class BitSpans
     [Op, Closures(Closure)]
     public static BitSpan create<T>(T src)
         where T : unmanaged
-            => BitPack.unpack(src);
+            => gpack.unpack(src);
 
     [Op, Closures(Closure)]
     public static BitSpan create<T>(ReadOnlySpan<T> src)
         where T : unmanaged
-            => BitPack.unpack(src);
+            => gpack.unpack(src);
 
     [Op, Closures(Closure)]
     public static BitSpan create<T>(Span<T> src)
         where T : unmanaged
-            => BitPack.unpack(src.ReadOnly());
+            => gpack.unpack(src.ReadOnly());
 
     [Op, Closures(Closure)]
     public static BitSpan create<T>(ReadOnlySpan<T> src, Span<bit> buffer)
         where T : unmanaged
     {
-        BitPack.unpack(src, buffer);
+        gpack.unpack(src, buffer);
         return buffer;
     }
 }

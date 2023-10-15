@@ -372,7 +372,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             {
                 if(vc == XedVexClass.VV1)
                 {
-                    var vex5 = PolyBits.pack((num3)(byte)state.VEXDEST210, state.VEXDEST4, state.VEXDEST3);
+                    var vex5 = BitPack.pack((num3)(byte)state.VEXDEST210, state.VEXDEST4, state.VEXDEST3);
                     IBitPattern vp = detail.VexPrefix.VexKind == AsmPrefixTokens.VexPrefixKind.xC4 ? VexC4Pattern : VexC5Pattern;
                     writer.AppendLineFormat(LabeledValue, nameof(detail.VexPrefix.VexKind), detail.VexPrefix.VexKind);
                     writer.AppendLineFormat(LabeledValue, nameof(detail.VexPrefix), vp.Symbolic());

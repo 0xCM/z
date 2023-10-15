@@ -192,8 +192,8 @@ public class BitCheckers
         i=0;
         storage = 0;
         buffer.Clear();
-        BitPack.unpack1x4(src,buffer);
-        output = BitPack.scalar<uint>(buffer);
+        SpanPack.unpack1x4(src,buffer);
+        output = gpack.scalar<uint>(buffer);
         Require.equal(input,output);
         count = BitRender.render32x4(sep, storage, ref i, dst);
         bitstring = text.format(slice(dst, 0, count));
@@ -209,8 +209,8 @@ public class BitCheckers
         i=0;
         storage = 0;
         buffer.Clear();
-        BitPack.unpack1x4(src, buffer);
-        output = BitPack.scalar<uint>(buffer);
+        SpanPack.unpack1x4(src, buffer);
+        output = gpack.scalar<uint>(buffer);
         Require.equal(input,output);
         count = BitRender.render32x4(sep, storage, ref i, dst);
         bitstring = text.format(slice(dst, 0, count));
@@ -226,8 +226,8 @@ public class BitCheckers
         i=0;
         storage = 0;
         buffer.Clear();
-        BitPack.unpack1x4(src,buffer);
-        output = BitPack.scalar<uint>(buffer);
+        SpanPack.unpack1x4(src,buffer);
+        output = gpack.scalar<uint>(buffer);
         Require.equal(input,output);
         count = BitRender.render32x4(sep, storage, ref i, dst);
         bitstring = text.format(slice(dst, 0, count));
@@ -243,8 +243,8 @@ public class BitCheckers
         i=0;
         storage = 0;
         buffer.Clear();
-        BitPack.unpack1x4(src,buffer);
-        output = BitPack.scalar<uint>(buffer);
+        SpanPack.unpack1x4(src,buffer);
+        output = gpack.scalar<uint>(buffer);
         Require.equal(input,output);
         count = BitRender.render32x4(sep, storage, ref i, dst);
         bitstring = text.format(slice(dst, 0, count));
@@ -260,8 +260,8 @@ public class BitCheckers
         i=0;
         storage = 0;
         buffer.Clear();
-        BitPack.unpack1x4(src,buffer);
-        output = BitPack.scalar<uint>(buffer);
+        SpanPack.unpack1x4(src,buffer);
+        output = gpack.scalar<uint>(buffer);
         Require.equal(input,output);
         count = BitRender.render32x4(sep, storage, ref i, dst);
         bitstring = text.format(slice(dst, 0, count));
@@ -282,8 +282,8 @@ public class BitCheckers
     {
         var storage = ByteBlock64.Empty;
         var unpacked = recover<bit>(storage.Bytes);
-        BitPack.unpack1x64((ulong)input, unpacked);
-        BitVector64 packed = Bitfields.pack64x1(unpacked);
+        SpanPack.unpack1x64((ulong)input, unpacked);
+        BitVector64 packed = SpanPack.pack64x1(unpacked);
 
         Require.equal(input, packed);
         for(var i=z8; i<64; i++)

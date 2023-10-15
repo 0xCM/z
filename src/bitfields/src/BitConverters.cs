@@ -13,12 +13,32 @@ namespace Z0
 
         public static N16 MaxWidth => default;
 
+        /// <summary>
+        /// Allocates and populates a character span, comprising each value covered by an <typeparamref name='N'>-bit number, expressed as a bitstring of length <typeparamref name='N'>
+        /// </summary>
+        /// <param name="n">The natural bit width</param>
+        /// <typeparam name="N">The natural with type</typeparam>
+        public static Span<char> bitstrings<N>(N n)
+            where N : unmanaged, ITypeNat
+        {
+            var width = (uint)n.NatValue;
+            var count = Numbers.count(n);
+            var buffer = span<char>(count*width);
+            for(var i=0; i<count; i++)
+            {
+                ref var c = ref seek(buffer,i*width);
+                for(byte j=0; j<width; j++)
+                    seek(c,width-1-j) = bit.test(i,(byte)j).ToChar();
+            }
+            return buffer;
+        }
+
         static Index<asci32> rows<N>(N n = default)
             where N : unmanaged, ITypeNat
         {
             var width = (byte)n.NatValue;
             var count = Numbers.count(n);
-            var src = PolyBits.bitstrings(n);
+            var src = bitstrings(n);
             var dst = alloc<asci32>(count);
 
             for(var i=0; i<count; i++)

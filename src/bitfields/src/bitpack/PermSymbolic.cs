@@ -16,7 +16,7 @@ public readonly struct PermSymbolic
     {
         var storage = 0ul;
         var bits8u = cover(@as<byte>(storage),8);
-        BitPack.unpack1x8((byte)src, bits8u);
+        SpanPack.unpack1x8((byte)src, bits8u);
         var bits = recover<bit>(bits8u);
         var block = CharBlock16.Null;
         var chars = block.Data;
@@ -61,7 +61,7 @@ public readonly struct PermSymbolic
         var n = n4;
         var storage = 0ul;
         var bitbuffer = cover(@as<byte>(storage),BitCount);
-        BitPack.unpack1x8((byte)src, bitbuffer);
+        SpanPack.unpack1x8((byte)src, bitbuffer);
         var bits = recover<bit>(bitbuffer);
         var block = bitblock(src, true);
         var codomain = CharBlock4.Null;
@@ -171,7 +171,7 @@ public readonly struct PermSymbolic
             => throw new Exception($"The value {key}:{typeof(T).DisplayName()} does not exist in the index");
 }
 
-partial class XTend
+public static partial class XTend
 {
     /// <summary>
     /// Formats a permutation literal as one would hope
