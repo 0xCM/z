@@ -10,14 +10,12 @@ partial class XedModels
     [DataWidth(num2.Width)]
     public enum RuleTableKind : byte
     {
-        None = 0,
+        None =0,
 
         [Symbol("ENC")]
         ENC = 1,
 
         [Symbol("DEC")]
         DEC = 2,
-
-        ENCDEC = 3,
     }
 }

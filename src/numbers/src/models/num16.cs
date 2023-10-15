@@ -45,6 +45,11 @@ public readonly struct num16 : INumber<T>
 
     public static N N => default;
 
+    [MethodImpl(Inline), Op]
+    public static T number<S>(S src)
+        where S : unmanaged
+            => @as<S,T>(src);
+
     [MethodImpl(Inline)]
     public static D crop(D src)
         => (D)(MaxValue & src);
@@ -206,6 +211,9 @@ public readonly struct num16 : INumber<T>
     public S Force<S>()
         where S : unmanaged
             => @as<T,S>(this);
+
+    public string Hex()
+        => Value.FormatHex();
 
     [MethodImpl(Inline)]
     public string Format()

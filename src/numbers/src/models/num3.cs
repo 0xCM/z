@@ -48,6 +48,11 @@ public readonly struct num3 : INumber<T>
     static T cover(D src)
         => @as<D,T>(src);
 
+    [MethodImpl(Inline), Op]
+    public static T number<S>(S src)
+        where S : unmanaged
+            => @as<S,T>(src);
+
     [MethodImpl(Inline)]
     public static T force<A>(A src)
         where A : unmanaged

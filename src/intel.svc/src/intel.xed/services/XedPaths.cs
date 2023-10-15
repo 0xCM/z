@@ -114,7 +114,6 @@ public class XedPaths
         => kind switch {
             RuleTableKind.DEC => Sources().Path(FS.file("all-dec-patterns", FS.Txt)),
             RuleTableKind.ENC => Sources().Path(FS.file("all-enc-patterns", FS.Txt)),
-            RuleTableKind.ENCDEC => Sources().Path(FS.file("all-enc-dec-patterns", FS.Txt)),
             _ => throw new Exception($"Unknown: {kind}")
         };
 

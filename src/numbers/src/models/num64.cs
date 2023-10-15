@@ -46,7 +46,12 @@ public readonly struct num64 : INumber<T>
 
     [MethodImpl(Inline)]
     public static T create(D src)
-        => new T(src);
+        => new (src);
+
+    [MethodImpl(Inline), Op]
+    public static T number<S>(S src)
+        where S : unmanaged
+            => @as<S,T>(src);
 
     [MethodImpl(Inline)]
     static T cover(D src)
@@ -198,6 +203,9 @@ public readonly struct num64 : INumber<T>
 
     public string Bitstring()
         => bitstring(this);
+
+    public string Hex()
+        => Value.FormatHex();
 
     public override string ToString()
         => Format();

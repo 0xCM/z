@@ -66,7 +66,6 @@ public partial class XedImport : WfSvc<XedImport>
         var cellT = XedTables.CellTables(cells);
         var opdetail = XedTables.OpDetails(patterns);
         exec(true, 
-            () => Emit(XedTables.Grids(cellT)),
             () => EmitRuleDocs(cellT),
             () => Emit(XedTables.FieldDeps(cellT)),
             () => Emit(CellTables.records(cellT)),
@@ -486,10 +485,10 @@ public partial class XedImport : WfSvc<XedImport>
             Demand.lteq(acount, AttribCount);
 
             var m=0;
-            seek(cells,m++) = pattern.PatternId;
-            seek(cells,m++) = pattern.InstClass;
-            seek(cells,m++) = pattern.OpCode;
-            seek(cells,m++) = acount;
+            seek(cells, m++) = pattern.PatternId;
+            seek(cells, m++) = pattern.InstClass;
+            seek(cells, m++) = pattern.OpCode;
+            seek(cells, m++) = acount;
             if(set.IsNonEmpty)
             {
                 var _attribs = set.Format("|").Split(Chars.Pipe);
@@ -498,7 +497,6 @@ public partial class XedImport : WfSvc<XedImport>
 
                 for(var q=m; q<CellCount; q++,m++)
                     seek(cells,m) = EmptyString;
-
             }
             else
             {
@@ -555,30 +553,30 @@ public partial class XedImport : WfSvc<XedImport>
         Channel.EmittedFile(emitting, src.Count);
     }
 
-    void Emit(ReadOnlySeq<RuleGrid> src)
-    {
-        var kGrid = src.Count;
-        var dst = text.emitter();
-        var counter = 0u;
-        for(var i=0; i<kGrid; i++)
-        {
-            ref readonly var grid = ref src[i];
-            ref readonly var kRows = ref grid.RowCount;
-            ref readonly var kCols = ref grid.ColCount;
-            ref readonly var cells = ref grid.Cells;
-            var gc = 0;
-            for(var j=0; j<kRows; j++)
-            {
-                for(var k=0; k<kCols; k++,gc++, counter++)
-                {
-                    ref readonly var cell = ref cells[gc];
-                    if(cell.IsEmpty)
-                        continue;
+    // void Emit(ReadOnlySeq<RuleGrid> src)
+    // {
+    //     var kGrid = src.Count;
+    //     var dst = text.emitter();
+    //     var counter = 0u;
+    //     for(var i=0; i<kGrid; i++)
+    //     {
+    //         ref readonly var grid = ref src[i];
+    //         ref readonly var kRows = ref grid.RowCount;
+    //         ref readonly var kCols = ref grid.ColCount;
+    //         ref readonly var cells = ref grid.Cells;
+    //         var gc = 0;
+    //         for(var j=0; j<kRows; j++)
+    //         {
+    //             for(var k=0; k<kCols; k++,gc++, counter++)
+    //             {
+    //                 ref readonly var cell = ref cells[gc];
+    //                 if(cell.IsEmpty)
+    //                     continue;
 
-                    dst.WriteLine(cell.Format());
-                }
-            }
-        }
-        Channel.FileEmit(dst.Emit(), counter, XedPaths.Imports().Path("xed.rules.grids", FileKind.Csv));
-    }    
+    //                 dst.WriteLine(cell.Format());
+    //             }
+    //         }
+    //     }
+    //     Channel.FileEmit(dst.Emit(), counter, XedPaths.Imports().Path("xed.rules.grids", FileKind.Csv));
+    // }    
 }

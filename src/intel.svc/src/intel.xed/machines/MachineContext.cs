@@ -23,26 +23,34 @@ partial class XedMachines
             return matched != null;
         }
 
-        internal MachineContext(MachineMode mode)
+        internal MachineContext(Action<RuleIdentity> activation, MachineMode mode)
         {
+            ActivationHandler = activation ?? (r => {});
             RuleTables = XedTables.CellTables(XedTables.RuleCells(XedTables.RuleTables()));
-
-            MachineMode = MachineMode.Mode64;
+            MachineMode = mode;
             Instructions = XedTables.Instructions();
-            RuleDecls = RuleTables.View.Map(x => new RuleDecl(x));
-            RuleNames = RuleTables.RuleNames;
+            RuleDecls = RuleTables.View.Map(x => new RuleDecl(x));         
         }
         
+        readonly Action<RuleIdentity> ActivationHandler;
+
         public readonly InstructionRules Instructions;
 
         public readonly CellTables RuleTables;
 
-        public readonly ReadOnlySeq<RuleIdentity> RuleNames;
+        public ref readonly ReadOnlySeq<RuleIdentity> RuleNames
+        {
+            [MethodImpl(Inline)]
+            get => ref RuleTables.RuleNames;
+        }
 
         public readonly ReadOnlySeq<RuleDecl> RuleDecls;
 
         public MachineMode MachineMode;
 
         public InstBlockPattern Instruction;
+
+        public void RuleActivated(RuleIdentity rule)
+            => ActivationHandler(rule);
     }
 }

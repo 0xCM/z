@@ -43,6 +43,11 @@ public readonly struct num7 : INumber<T>
     public static D crop(D src)
         => (D)(MaxValue & src);
 
+    [MethodImpl(Inline), Op]
+    public static T number<S>(S src)
+        where S : unmanaged
+            => @as<S,T>(src);
+
     [MethodImpl(Inline)]
     public static T create(ulong src)
         => new T((D)src);
@@ -213,6 +218,9 @@ public readonly struct num7 : INumber<T>
 
     public string Bitstring()
         => bitstring(this);
+
+    public string Hex()
+        => Value.FormatHex();
 
     public override string ToString()
         => Format();

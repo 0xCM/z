@@ -14,6 +14,11 @@ using N = N2;
 [DataWidth(Width), ApiComplete]
 public readonly struct num2 : INumber<T>
 {
+    [MethodImpl(Inline), Op]
+    public static T number<S>(S src)
+        where S : unmanaged
+            => @as<S,T>(src);
+
     public readonly D Value;
 
     [MethodImpl(Inline)]

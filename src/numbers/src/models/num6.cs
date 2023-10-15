@@ -66,6 +66,11 @@ public readonly struct num6 : INumber<T>
     public static D crop(D src)
         => (D)(MaxValue & src);
 
+    [MethodImpl(Inline), Op]
+    public static T number<S>(S src)
+        where S : unmanaged
+            => @as<S,T>(src);
+
     [MethodImpl(Inline)]
     public static T create(D src)
         => new (src);

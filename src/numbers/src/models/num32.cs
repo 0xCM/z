@@ -61,6 +61,11 @@ public readonly struct num32 : INumber<T>
     static T cover(D src)
         => @as<D,T>(src);
 
+    [MethodImpl(Inline), Op]
+    public static T number<S>(S src)
+        where S : unmanaged
+            => @as<S,T>(src);
+
     [MethodImpl(Inline)]
     public static T force<A>(A src)
         where A : unmanaged
@@ -213,6 +218,10 @@ public readonly struct num32 : INumber<T>
 
     public string Bitstring()
         => bitstring(this);
+
+    public string Hex()
+        => Value.FormatHex();
+
     public override string ToString()
         => Format();
 

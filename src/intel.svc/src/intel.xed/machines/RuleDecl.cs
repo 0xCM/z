@@ -21,4 +21,15 @@ partial class XedMachines
             Rule = table.Identity;
         }
     }
+
+    public readonly record struct SeqDecl
+    {
+        public readonly SeqDef Def;
+
+        public SeqDecl(SeqDef def)
+        {
+            Def = def;
+        }
+
+    }
 }

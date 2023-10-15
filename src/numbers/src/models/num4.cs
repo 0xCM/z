@@ -43,6 +43,11 @@ public readonly struct num4 : INumber<T>
     public static D crop(D src)
         => (D)(MaxValue & src);
 
+    [MethodImpl(Inline), Op]
+    public static T number<S>(S src)
+        where S : unmanaged
+            => @as<S,T>(src);
+
     [MethodImpl(Inline)]
     public static T force<A>(A src)
         where A : unmanaged
@@ -186,14 +191,14 @@ public readonly struct num4 : INumber<T>
 
     public bit IsZero
     {
-            [MethodImpl(Inline)]
-            get => Value == 0;
+        [MethodImpl(Inline)]
+        get => Value == 0;
     }
 
     public bit IsNonZero
     {
-            [MethodImpl(Inline)]
-            get => Value != 0;
+        [MethodImpl(Inline)]
+        get => Value != 0;
     }
 
     public bit IsMax
@@ -207,7 +212,6 @@ public readonly struct num4 : INumber<T>
         where S : unmanaged
             => @as<T,S>(this);
 
-
     [MethodImpl(Inline)]
     public string Format()
         => Value.ToString();
@@ -215,6 +219,8 @@ public readonly struct num4 : INumber<T>
     public string Bitstring()
         => bitstring(this);
 
+    public string Hex()
+        => Value.FormatHex();
     public override string ToString()
         => Format();
 
@@ -374,13 +380,13 @@ public readonly struct num4 : INumber<T>
 
     [MethodImpl(Inline)]
     public static explicit operator char(num4 src)
-        => (char)Hex.upper(src.Value);
+        => (char)Z0.Hex.upper(src.Value);
 
     [MethodImpl(Inline)]
     public static explicit operator HexUpperSym(num4 src)
-        => (HexUpperSym)Hex.upper(src.Value);
+        => (HexUpperSym)Z0.Hex.upper(src.Value);
 
     [MethodImpl(Inline)]
     public static explicit operator HexLowerSym(num4 src)
-        => (HexLowerSym)Hex.lower(src.Value);
+        => (HexLowerSym)Z0.Hex.lower(src.Value);
 }

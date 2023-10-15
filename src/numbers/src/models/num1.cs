@@ -40,6 +40,11 @@ public readonly struct num1 : INumber<T>
 
     public static N N => default;
 
+    [MethodImpl(Inline), Op]
+    public static T number<S>(S src)
+        where S : unmanaged
+            => @as<S,T>(src);
+            
     [MethodImpl(Inline)]
     public static D crop(D src)
         => (D)(MaxValue & src);
@@ -181,14 +186,14 @@ public readonly struct num1 : INumber<T>
 
     public bit IsZero
     {
-            [MethodImpl(Inline)]
-            get => Value == 0;
+        [MethodImpl(Inline)]
+        get => Value == 0;
     }
 
     public bit IsNonZero
     {
-            [MethodImpl(Inline)]
-            get => Value != 0;
+        [MethodImpl(Inline)]
+        get => Value != 0;
     }
 
     public bit IsMax
@@ -214,6 +219,9 @@ public readonly struct num1 : INumber<T>
 
     public string Bitstring()
         => bitstring(this);
+
+    public string Hex()
+        => Value.FormatHex();
     public override string ToString()
         => Format();
 
