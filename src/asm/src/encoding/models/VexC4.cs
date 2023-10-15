@@ -10,7 +10,7 @@ using static sys;
 [BitPattern(Pattern), ApiComplete]
 public record struct VexC4 : IBitPattern<VexC4>
 {
-    const string Pattern = "cccccccc R X B mmmmm W vvvv L pp";
+    const string Pattern = "11000100 R X B mmmmm W vvvv L pp";
     
     // ~ RXB
     const byte RXB_Mask = 0b1110_0000;

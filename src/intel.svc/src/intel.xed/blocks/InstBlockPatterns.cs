@@ -9,9 +9,61 @@ using static XedModels;
 
 partial class XedZ
 {
+    public readonly record struct PatternKey
+    {
+        readonly XedInstForm Form;
+
+        readonly MachineMode Mode;
+
+        readonly ushort Index;
+
+        readonly bit Lock;
+
+        public PatternKey(XedInstForm form, MachineMode mode, bool @lock, byte index)
+        {
+            Form = form;
+            Mode = mode;
+            Lock = @lock;
+            Index = index;
+        }
+
+        public Hash32 Hash
+        {
+            [MethodImpl(Inline)]
+            get => (uint)Form | ((uint)Index << 16) | ((uint)Mode.Class << 24) | ((uint)Lock << 28);
+        }
+
+        public override int GetHashCode()
+            => Hash;
+
+        public bool Equals(PatternKey src)
+            => Form == src.Form && Index == src.Index && Mode == src.Mode && Lock == src.Lock;
+    }   
+
+    public static int cmp(InstBlockPattern a, InstBlockPattern b)
+    {
+        var result = a.Form.CompareTo(b.Form);
+        if(result == 0)
+        {
+            result = a.Mode.CompareTo(b.Mode);
+            if(result == 0)
+            {
+                result = a.Lock.CompareTo(b.Lock);
+                if(result == 0)
+                    result = a.Operands.Format().CompareTo(b.Operands.Format());
+            }
+        }
+        return result;
+    }
+
+    public static PatternKey key(InstBlockPattern pattern)
+    {
+        return new(pattern.Form, pattern.Mode, pattern.Lock, pattern.Index);
+    }
+
     public sealed class InstBlockPatterns
     {
-        readonly ConcurrentDictionary<Key,InstBlockPattern> Lookup;
+        readonly ConcurrentDictionary<PatternKey,InstBlockPattern> Lookup;
 
         readonly Seq<InstBlockPattern> Data;
 
@@ -31,7 +83,7 @@ partial class XedZ
                 }
                 pattern.Seq = i;
                 pattern.Index = index++;
-                Require.invariant(Lookup.TryAdd(new(pattern.Form, pattern.Index), pattern));
+                Require.invariant(Lookup.TryAdd(key(pattern), pattern));
             }            
         }
         
@@ -59,40 +111,16 @@ partial class XedZ
             get => ref Data[i];
         }
 
-
-        public IEnumerable<InstBlockPattern> Match(XedInstForm form, MachineMode mode)
+        public IEnumerable<InstBlockPattern> Match(XedInstForm form, MachineMode mode, bool @lock = false)
         {
             var i = z8;
-            while(Lookup.TryGetValue(new Key(form,i++), out var pattern))
+            while(Lookup.TryGetValue(new PatternKey(form, mode, @lock, i++), out var pattern))
             {
                 if(pattern.Mode != MachineMode.Not64)
                     yield return pattern;
             }
         }
 
-        readonly record struct Key
-        {
-            readonly XedInstForm Form;
-
-            readonly ushort Index;
-
-            public Key(XedInstForm form, byte index)
-            {
-                Form = form;
-                Index = index;
-            }
-
-            public Hash32 Hash
-            {
-                [MethodImpl(Inline)]
-                get => (uint)Form | ((uint)Index << 16);
-            }
-
-            public override int GetHashCode()
-                => Hash;
-
-            public bool Equals(Key src)
-                => Form == src.Form && Index == src.Index;
-        }   
+        public static InstBlockPatterns Empty => new(sys.empty<InstBlockPattern>().AsParallel());
     }
 }

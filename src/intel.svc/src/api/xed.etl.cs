@@ -29,10 +29,9 @@ partial class XedCmd
         {
             a++;
             Channel.Row($"{(byte)a} | {a}");
-        }
-
-        
+        }       
     }
+
 
     [CmdOp("xed/ock")]
     void ListOcKinds()
@@ -46,20 +45,8 @@ partial class XedCmd
     [CmdOp("xed/blocks")]
     void EmitBlockLines()
     {
-        var lines =  XedZ.lines();
-        var rules = XedZ.instructions(lines.AsParallel()).Array().Sort();
-        var operands = list<InstBlockOperand>();
-        foreach(var pattern in rules)
-        {   
-            var count = pattern.Operands.Count;
-            for(var i=0; i<count; i++)
-            {
-                operands.Add(pattern.Operands[i]);
-            }
-        }
-
-
-        Channel.TableEmit(operands.ViewDeposited(), XedPaths.ImportTable<InstBlockOperand>());        
+        var rules = XedTables.Instructions();
+        XedImport.Emit(rules);
     }
 
     [CmdOp("xed/etl")]

@@ -12,15 +12,44 @@ using static XedModels;
 using static XedRules;
 using static XedZ;
 
+partial class XedRules
+{
+    public class InstructionRules
+    {
+        readonly InstBlockPatterns _Patterns;
+
+        readonly ReadOnlySeq<InstRuleDef> _Defs;
+
+        readonly ReadOnlySeq<InstBlockOperand> _Ops;
+
+        public InstructionRules(InstBlockPatterns patterns, ReadOnlySeq<InstRuleDef> src, ReadOnlySeq<InstBlockOperand> operands)
+        {
+            _Patterns = patterns;
+            _Defs = src;
+            _Ops = operands;
+        }        
+
+        public ref readonly InstBlockPatterns Patterns => ref _Patterns;
+
+        public ref readonly ReadOnlySeq<InstRuleDef> Definitions => ref _Defs;
+
+        public ref readonly ReadOnlySeq<InstBlockOperand> Operands => ref _Ops;
+
+        public static InstructionRules Empty => new (InstBlockPatterns.Empty, sys.empty<InstRuleDef>(), sys.empty<InstBlockOperand>());
+    }
+}
+
+
 public partial class XedImport : WfSvc<XedImport>
 {     
+
     public void Run()
     {
         XedPaths.Imports().Delete();
         var ruleT = XedRuleTables.Empty;
         var instdefs = ReadOnlySeq<InstDef>.Empty;
         exec(true, 
-            () => Emit(XedTables.BlockPatterns(XedTables.BlockLines())),
+            () => Emit(XedTables.Instructions()),
             () => ruleT = XedTables.RuleTables(),
             () => Emit(XedTables.RuleSeqImports()),
             () => Emit(XedTables.SeqReflected()),
@@ -67,7 +96,7 @@ public partial class XedImport : WfSvc<XedImport>
         var cellT = XedTables.CellTables(cells);
         var opdetail = XedTables.OpDetails(patterns);
         exec(true, 
-            () => Emit(grids(cellT)),
+            () => Emit(XedTables.Grids(cellT)),
             () => EmitRuleDocs(cellT),
             () => Emit(XedTables.FieldDeps(cellT)),
             () => Emit(CellTables.records(cellT)),
@@ -96,6 +125,13 @@ public partial class XedImport : WfSvc<XedImport>
             dst.Seg = new InstOpSpec.Segmentation(wi.SegType.DataWidth, wi.SegType.CellWidth, src.ElementType.Indicator, wi.SegType.CellCount);
         return dst;
     }
+
+    public void Emit(InstructionRules src)
+    {
+        Emit(src.Operands);
+        Emit(src.Patterns);
+    }
+
 
     static ReadOnlySeq<InstOpSpec> CalcOpSpecs(ReadOnlySeq<InstOpDetail> src)
     {
@@ -328,6 +364,9 @@ public partial class XedImport : WfSvc<XedImport>
         return dst;
     }    
 
+    void Emit(ReadOnlySeq<InstBlockOperand> src)
+        => Channel.TableEmit(src, XedPaths.ImportTable<InstBlockOperand>());        
+
     void Emit(ReadOnlySeq<XedInstOpCode> src)
         => Channel.TableEmit(src, XedPaths.ImportTable<XedInstOpCode>());
 
@@ -394,6 +433,21 @@ public partial class XedImport : WfSvc<XedImport>
         iter(src, x => dst.AppendLine(x.Format()));
         Channel.FileEmit(dst.Emit(), src.Count, XedPaths.Imports().Path("xed.rules.seq", FS.Txt));
     }
+
+    void Emit(ReadOnlySeq<TableDefRow> src)
+        => Channel.TableEmit(src, XedPaths.ImportTable<TableDefRow>());
+
+    void EmitPatternDocs(ReadOnlySeq<InstPattern> src)
+    {
+        EmitDetails(src);
+        EmitSummary(src);
+    }
+
+    void EmitRuleDocs(CellTables src)
+        => Channel.FileEmit(XedRuleDocRender.create(src).Format(), 1, XedPaths.DocTarget("rules", FileKind.Md), TextEncodingKind.Asci);
+
+    void Emit(ReadOnlySpan<FieldImport> src)
+        => Channel.TableEmit(src, XedPaths.ImportTable<FieldImport>());
 
     static CpuIdDataset CalcCpuIdDataset(FilePath src)
     {
@@ -512,21 +566,6 @@ public partial class XedImport : WfSvc<XedImport>
         Channel.EmittedFile(emitting,counter);
     }
 
-    void Emit(ReadOnlySeq<TableDefRow> src)
-        => Channel.TableEmit(src, XedPaths.ImportTable<TableDefRow>());
-
-    void EmitPatternDocs(ReadOnlySeq<InstPattern> src)
-    {
-        EmitDetails(src);
-        EmitSummary(src);
-    }
-
-    void EmitRuleDocs(CellTables src)
-        => Channel.FileEmit(XedRuleDocRender.create(src).Format(), 1, XedPaths.DocTarget("rules", FileKind.Md), TextEncodingKind.Asci);
-
-    void Emit(ReadOnlySpan<FieldImport> src)
-        => Channel.TableEmit(src, XedPaths.ImportTable<FieldImport>());
-
     void EmitSummary(ReadOnlySeq<InstPattern> src)
     {
         var dst = XedPaths.DocTarget("instructions", FileKind.Md);
@@ -544,38 +583,6 @@ public partial class XedImport : WfSvc<XedImport>
             writer.Write(formatter.Format(src[j]));
         Channel.EmittedFile(emitting, src.Count);
     }
-
-    static Index<RuleGrid> grids(CellTables src)
-    {
-        var kGrid = src.TableCount;
-        var grids = alloc<RuleGrid>(kGrid);
-        var gt=0u;
-        var gr=0u;
-        for(var i=0; i<kGrid; i++)
-        {
-            ref readonly var cTable = ref src[i];
-            ref readonly var sig = ref cTable.Sig;
-            var kCol = XedCells.cols(cTable);
-            var kRow = cTable.RowCount;
-            var kCells = kRow*kCol;
-            var gRowCols = alloc<Index<GridCol>>(kRow);
-            seek(grids,i) = XedCells.grid(sig, (ushort)kRow, (byte)kCol, alloc<GridCell>(kCells));
-            ref readonly var gCells = ref skip(grids,i).Cells;
-            for(ushort j=0,gc=0; j<kRow; j++)
-            {
-                ref readonly var cRow = ref cTable[j];
-                seek(gRowCols, j) = alloc<GridCol>(cRow.CellCount);
-
-                for(var k=0; k<cRow.CellCount; k++, gc++)
-                {
-                    ref readonly var cell = ref cRow[k];
-                    gCells[gc] = GridCell.from(cell);
-                    gRowCols[j][k] = gCells[gc].Def;
-                }
-            }
-        }
-        return grids;
-    }    
 
     void Emit(ReadOnlySeq<RuleGrid> src)
     {

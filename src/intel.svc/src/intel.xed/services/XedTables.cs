@@ -24,7 +24,9 @@ public class XedTables : AppService<XedTables>
 {
     public enum DatasetName
     {
-        InstDefs,
+        EncInstDefs,
+
+        DecInstDefs,
 
         InstPatterns,
 
@@ -62,8 +64,13 @@ public class XedTables : AppService<XedTables>
 
         OpRows,
 
-        RuleSeqImports
+        RuleSeqImports,
+
+        Instructions,
+
+        RuleGrids,
     }
+
 
     public static ChipMap ChipMap()
         => data(DatasetName.ChipMap,XedChips.Map);
@@ -82,6 +89,81 @@ public class XedTables : AppService<XedTables>
 
     public static ParallelQuery<InstBlockLineSpec> BlockLines()
         => data(DatasetName.InstBlockLines, () => XedZ.lines()).AsParallel();
+
+    public static ReadOnlySeq<RuleGrid> Grids(CellTables src)
+        => data(DatasetName.RuleGrids,() => CalcGrids(src));
+    
+    public static InstructionRules Instructions()
+    {
+        var instructions =  CalcInstructions();
+        data(DatasetName.Instructions,() => instructions);
+        return instructions;
+    }
+
+    static ReadOnlySeq<RuleGrid> CalcGrids(CellTables src)
+    {
+        var kGrid = src.TableCount;
+        var grids = alloc<RuleGrid>(kGrid);
+        var gt=0u;
+        var gr=0u;
+        for(var i=0; i<kGrid; i++)
+        {
+            ref readonly var cTable = ref src[i];
+            ref readonly var sig = ref cTable.Sig;
+            var kCol = XedCells.cols(cTable);
+            var kRow = cTable.RowCount;
+            var kCells = kRow*kCol;
+            var gRowCols = alloc<Index<GridCol>>(kRow);
+            seek(grids,i) = XedCells.grid(sig, (ushort)kRow, (byte)kCol, alloc<GridCell>(kCells));
+            ref readonly var gCells = ref skip(grids,i).Cells;
+            for(ushort j=0,gc=0; j<kRow; j++)
+            {
+                ref readonly var cRow = ref cTable[j];
+                seek(gRowCols, j) = alloc<GridCol>(cRow.CellCount);
+
+                for(var k=0; k<cRow.CellCount; k++, gc++)
+                {
+                    ref readonly var cell = ref cRow[k];
+                    gCells[gc] = GridCell.from(cell);
+                    gRowCols[j][k] = gCells[gc].Def;
+                }
+            }
+        }
+        return grids;
+    }    
+
+    static InstructionRules CalcInstructions()
+    {
+        var lines = BlockLines();
+        var blockpatterns = InstBlockPatterns.Empty;
+        var instruledefs = ReadOnlySeq<InstRuleDef>.Empty;
+        exec(true, 
+            () => blockpatterns = BlockPatterns(lines),
+            () => instruledefs = Instructions(lines).Array().Sort()
+            );
+
+        return new InstructionRules(blockpatterns, instruledefs, Operands(instruledefs));
+    }
+
+    static ReadOnlySeq<InstBlockOperand> Operands(ReadOnlySeq<InstRuleDef> src)
+    {
+        var operands = list<InstBlockOperand>();
+        foreach(var pattern in src)
+        {   
+            var count = pattern.Operands.Count;
+            for(var i=0; i<count; i++)
+                operands.Add(pattern.Operands[i]);
+        }
+        return operands.Array();
+    }
+
+    static ParallelQuery<InstRuleDef> Instructions(ParallelQuery<InstBlockLineSpec> lines)
+    {
+        var query = from line in lines
+                    let f = fields(line)
+                    select instruction(line.Form,f);    
+        return query;
+    }
     
     public static InstBlockPatterns BlockPatterns()
         => BlockPatterns(BlockLines());
@@ -107,117 +189,6 @@ public class XedTables : AppService<XedTables>
     public static CellTables CellTables(XedRuleCells src)
         => data(DatasetName.CellTables, () => new CellTables(src));
 
-    static ReadOnlySeq<InstOpRow> CalcOpRows(ReadOnlySeq<InstOpDetail> src)
-    {
-        var count = src.Count;
-        var rows = alloc<InstOpRow>(count);
-        for(var i=0; i<count; i++)
-        {
-            ref readonly var detail = ref src[i];
-            ref var dst = ref rows[i];
-            Require.invariant(detail.InstClass.Kind != 0);
-            dst.Pattern = detail.Pattern;
-            dst.InstClass = Xed.classifier(detail.InstClass);
-            dst.OpCode = detail.OpCode;
-            dst.Mode = detail.Mode;
-            dst.Lock = detail.Lock;
-            dst.Mod = detail.Mod;
-            dst.RexW = detail.RexW;
-            dst.OpCount = detail.OpCount;
-            dst.Index = detail.Index;
-            dst.Name = detail.Name;
-            dst.Kind = detail.Kind;
-            dst.Action = detail.Action;
-            dst.WidthCode = detail.WidthCode;
-            dst.EType = detail.ElementType;
-            dst.EWidth = detail.ElementWidth;
-            dst.RegLit = detail.RegLit;
-            dst.Modifier = detail.Modifier;
-            dst.Visibility = detail.Visibility;
-            dst.NonTerminal = detail.Rule;
-            dst.BitWidth = detail.BitWidth;
-            dst.GprWidth = detail.GrpWidth;
-            dst.SegInfo = detail.SegInfo;
-            dst.ECount = detail.ElementCount;
-            dst.SourceExpr = detail.SourceExpr;
-        }
-        return rows;
-    }    
-
-    static ReadOnlySeq<FieldUsage> CalcFieldDeps(CellTables src)
-    {
-        var buffer = sys.bag<FieldUsage>();
-        iter(src.View, table => collect(table,buffer),true);
-        return buffer.Index().Sort();
-    }
-
-    static void collect(in CellTable src, ConcurrentBag<FieldUsage> dst)
-    {
-        ref readonly var rows = ref src.Rows;
-        var usage = hashset<FieldUsage>();
-        var sig = src.Sig;
-        for(var i=0; i<rows.Count; i++)
-        {
-            ref readonly var row = ref rows[i];
-            var antecedants = row.Antecedants();
-            for(var j=0; j<antecedants.Length; j++)
-            {
-                ref readonly var antecedant = ref skip(antecedants,j);
-                if(antecedant.Field != 0)
-                    usage.Add(FieldUsage.left(sig, antecedant.Field));
-            }
-
-            var consequents = row.Consequents();
-            for(var j=0; j<consequents.Length; j++)
-            {
-                ref readonly var consequent = ref skip(consequents,j);
-                if(consequent.Field != 0)
-                    usage.Add(FieldUsage.right(sig, consequent.Field));
-            }
-        }
-
-        iter(usage, u => dst.Add(u));
-    }
-        
-
-    static ReadOnlySeq<FieldImport> CalcFieldImports()
-    {
-        var src = XedPaths.FieldSource();
-        var dst = list<FieldImport>();
-        var result = Outcome.Success;
-        var line = EmptyString;
-        var lines = src.ReadLines().Reader();
-        while(lines.Next(out line))
-        {
-            var content = line.Trim();
-            if(text.empty(content) || text.begins(content,Chars.Hash))
-                continue;
-
-            var cells = text.split(text.despace(content), Chars.Space).Reader();
-            var record = FieldImport.Empty;
-            record.Name = cells.Next();
-
-            cells.Next();
-            result = FieldTypes.ExprKind(cells.Next(), out XedFieldKind ft);
-            if(result.Fail)
-                Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.FieldType), cells.Prior()));
-            else
-                record.FieldType = ft;
-
-            result = DataParser.parse(cells.Next(), out record.Width);
-            if(result.Fail)
-                Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.Width), cells.Prior()));
-
-            if(!Visibilities.ExprKind(cells.Next(), out record.Visibility))
-                Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.Visibility), cells.Prior()));
-
-            dst.Add(record);
-        }
-
-        return dst.ToArray().Sort();
-    }
-
-
     public static ReadOnlySeq<RuleSeq> RuleSeqImports()
         => data(DatasetName.RuleSeqImports, XedCellParser.ruleseq);
 
@@ -228,10 +199,10 @@ public class XedTables : AppService<XedTables>
         => data(DatasetName.SeqReflected,XedRuleSeq.defs);
 
     public static ReadOnlySeq<InstDef> EncInstDefs()
-        => data(DatasetName.InstDefs, () => XedInstDefParser.parse(XedPaths.EncInstDef()));
+        => data(DatasetName.EncInstDefs, () => XedInstDefParser.parse(XedPaths.EncInstDef()));
 
     public static ReadOnlySeq<InstDef> DecInstDefs()
-        => data(DatasetName.InstDefs, () => XedInstDefParser.parse(XedPaths.DecInstDef()));
+        => data(DatasetName.DecInstDefs, () => XedInstDefParser.parse(XedPaths.DecInstDef()));
 
     public static XedRuleCells RuleCells(XedRuleTables tables)
         => data(DatasetName.RuleCells, () => XedCells.cells(tables));
@@ -242,92 +213,6 @@ public class XedTables : AppService<XedTables>
     public static ReadOnlySeq<XedInstOpCode> OpCodes(ReadOnlySeq<InstPattern> src)
         => data(DatasetName.OpCodes, () => CalcOpCodes(src));
 
-    static ReadOnlySeq<MacroMatch> CalcMacroMatches()
-        => mapi(RuleMacros.matches().Values.ToArray().Sort(), (i,m) => m.WithSeq((uint)i));
-
-    static ReadOnlySeq<TableDefRow> CalcDefRows(XedRuleTables src)
-    {
-        var buffer = list<TableDefRow>();
-        ref readonly var specs = ref src.Specs();
-        var k=0u;
-        for(var i=0u; i<specs.TableCount; i++)
-        {
-            ref readonly var spec = ref specs[i];
-            for(var j=0u; j<spec.RowCount; j++, k++)
-            {
-                ref readonly var row = ref spec[j];
-                var dst = TableDefRow.Empty;
-                dst.Seq = k;
-                dst.TableId = spec.TableId;
-                dst.Index = j;
-                dst.Kind = spec.TableKind;
-                dst.Name = spec.Name;
-                dst.Statement = row.Format();
-                buffer.Add(dst);
-            }
-        }
-        return buffer.ToArray();
-    }
-
-    static ReadOnlySeq<XedInstOpCode> CalcOpCodes(ReadOnlySeq<InstPattern> src)
-    {
-        var count = src.Count;
-        var buffer = alloc<XedInstOpCode>(count);
-
-        for(var i=0u; i<count; i++)
-        {
-            ref var dst = ref seek(buffer,i);
-            poc(src[i], out seek(buffer,i));
-        }
-
-        buffer.Sort(new PatternOrder(true));
-
-        var oc = AsmOpCode.Empty;
-        var @class = XedInstClass.Empty;
-        var oci = z8;
-        for(var i=0u; i<count; i++)
-        {
-            ref var dst = ref seek(buffer,i);
-            if(i == 0)
-            {
-                oc = dst.OpCode;
-                @class = dst.InstClass;
-            }
-
-            if(oc != dst.OpCode || @class != dst.InstClass)
-            {
-                oc = dst.OpCode;
-                @class = dst.InstClass;
-                oci = z8;
-            }
-
-            dst.Index = oci++;
-        }
-
-        buffer.Sort(new PatternOrder());
-        for(var i=0u; i<count; i++)
-            seek(buffer,i).Seq = i;
-
-        return buffer;
-    }
-
-    static void poc(InstPattern src, out XedInstOpCode dst)
-    {
-        dst.Seq = 0u;
-        dst.Index = z8;
-        dst.PatternId = (ushort)src.PatternId;
-        dst.MapName = AsmOpCodes.name(src.OpCode.Kind);
-        dst.Value = src.OpCode.Value;
-        dst.InstClass = src.InstClass.Classifier;
-        dst.Mode = XedCells.mode(src.Cells);
-        dst.Lock = XedCells.@lock(src.Cells);
-        dst.Mod = XedCells.mod(src.Cells);
-        dst.RexW = XedCells.rexw(src.Cells);
-        dst.Rep = XedCells.rep(src.Cells);
-        dst.Layout = src.Layout;
-        dst.Expr = src.Expr;
-        dst.OpCode = src.OpCode;
-    }
 
     public static ReadOnlySpan<OpName> OpNames => _OpNames.View;
 
@@ -665,6 +550,76 @@ public class XedTables : AppService<XedTables>
         return dst;
     }    
 
+    static InstRuleDef instruction(XedInstForm form, IEnumerable<BlockField> fields)
+    {
+        var mode = MachineMode.Default;
+        var rule = new InstRuleDef{
+            Form = form
+        };
+
+        foreach(var field in fields)
+        {
+            switch(field.Name)                
+            {
+                case BlockFieldName.mode_restriction:
+                    mode = (MachineMode)field;
+                break;
+                case BlockFieldName.pattern:
+                {
+                    var cells = (InstCells)field;
+                    var segs = list<CellValue>();
+                    var segexpr = EmptyString;
+                    for(var i=0; i<cells.Count; i++)
+                    {
+                        ref readonly var cell = ref cells[i];
+                        switch(cell.CellKind)
+                        {
+                            case RuleCellKind.BitLit:
+                            case RuleCellKind.HexLit:
+                            case RuleCellKind.InstSeg:
+                                segs.Add(cell);
+                            break;
+                        }
+                    }
+                    rule.Cells = segs.Array();
+                }
+                break;
+                case BlockFieldName.operands:
+                {
+                    var ops = (PatternOps)field;
+                    rule.Operands = new(sys.alloc<InstBlockOperand>(ops.Count));
+                    for(var i=z8; i<ops.Count;i++)
+                    {
+                        ref var target = ref rule.Operands[i];
+                        ref readonly var op = ref ops[i];
+                        target.Index = i;
+                        target.Form = form;
+                        target.Name = op.Name;
+                        target.Kind = op.Kind;
+                        target.SourceExpr = op.SourceExpr;
+                        op.WidthCode(out var wc);
+                        op.RegLiteral(out target.Register);
+                        if(wc != 0)
+                        {
+                            target.Width = new(wc, XedWidths.bitwidth(mode,wc));
+                            var wi = XedWidths.describe(target.Width);
+                            if(wi.ElementCount > 1 && wi.ElementWidth != 0)
+                                target.SegType = wi.SegType;
+                        }
+
+                        if(target.Register.IsNonEmpty && !target.Register.IsNonterminal && target.Width.Bits == 0)
+                            target.Width = new(target.Width.Code, XedWidths.width(target.Register));
+
+                        if(target.Register.IsEmpty && op.Nonterminal(out var nt))
+                            target.Register = nt;
+                    }
+                }
+                break;
+            }                             
+        }
+        return rule;
+    }
+
     static Index<InstPattern> CalcInstPatterns(ReadOnlySeq<InstDef> defs)
     {
         var count = 0u;
@@ -686,6 +641,115 @@ public class XedTables : AppService<XedTables>
         return dst.Sort();
     }
 
+    static ReadOnlySeq<InstOpRow> CalcOpRows(ReadOnlySeq<InstOpDetail> src)
+    {
+        var count = src.Count;
+        var rows = alloc<InstOpRow>(count);
+        for(var i=0; i<count; i++)
+        {
+            ref readonly var detail = ref src[i];
+            ref var dst = ref rows[i];
+            Require.invariant(detail.InstClass.Kind != 0);
+            dst.Pattern = detail.Pattern;
+            dst.InstClass = Xed.classifier(detail.InstClass);
+            dst.OpCode = detail.OpCode;
+            dst.Mode = detail.Mode;
+            dst.Lock = detail.Lock;
+            dst.Mod = detail.Mod;
+            dst.RexW = detail.RexW;
+            dst.OpCount = detail.OpCount;
+            dst.Index = detail.Index;
+            dst.Name = detail.Name;
+            dst.Kind = detail.Kind;
+            dst.Action = detail.Action;
+            dst.WidthCode = detail.WidthCode;
+            dst.EType = detail.ElementType;
+            dst.EWidth = detail.ElementWidth;
+            dst.RegLit = detail.RegLit;
+            dst.Modifier = detail.Modifier;
+            dst.Visibility = detail.Visibility;
+            dst.NonTerminal = detail.Rule;
+            dst.BitWidth = detail.BitWidth;
+            dst.GprWidth = detail.GrpWidth;
+            dst.SegInfo = detail.SegInfo;
+            dst.ECount = detail.ElementCount;
+            dst.SourceExpr = detail.SourceExpr;
+        }
+        return rows;
+    }    
+
+    static ReadOnlySeq<FieldUsage> CalcFieldDeps(CellTables src)
+    {
+        var buffer = sys.bag<FieldUsage>();
+        iter(src.View, table => collect(table,buffer),true);
+        return buffer.Index().Sort();
+    }
+
+    static void collect(in CellTable src, ConcurrentBag<FieldUsage> dst)
+    {
+        ref readonly var rows = ref src.Rows;
+        var usage = hashset<FieldUsage>();
+        var sig = src.Sig;
+        for(var i=0; i<rows.Count; i++)
+        {
+            ref readonly var row = ref rows[i];
+            var antecedants = row.Antecedants();
+            for(var j=0; j<antecedants.Length; j++)
+            {
+                ref readonly var antecedant = ref skip(antecedants,j);
+                if(antecedant.Field != 0)
+                    usage.Add(FieldUsage.left(sig, antecedant.Field));
+            }
+
+            var consequents = row.Consequents();
+            for(var j=0; j<consequents.Length; j++)
+            {
+                ref readonly var consequent = ref skip(consequents,j);
+                if(consequent.Field != 0)
+                    usage.Add(FieldUsage.right(sig, consequent.Field));
+            }
+        }
+
+        iter(usage, u => dst.Add(u));
+    }
+        
+    static ReadOnlySeq<FieldImport> CalcFieldImports()
+    {
+        var src = XedPaths.FieldSource();
+        var dst = list<FieldImport>();
+        var result = Outcome.Success;
+        var line = EmptyString;
+        var lines = src.ReadLines().Reader();
+        while(lines.Next(out line))
+        {
+            var content = line.Trim();
+            if(text.empty(content) || text.begins(content,Chars.Hash))
+                continue;
+
+            var cells = text.split(text.despace(content), Chars.Space).Reader();
+            var record = FieldImport.Empty;
+            record.Name = cells.Next();
+
+            cells.Next();
+            result = FieldTypes.ExprKind(cells.Next(), out XedFieldKind ft);
+            if(result.Fail)
+                Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.FieldType), cells.Prior()));
+            else
+                record.FieldType = ft;
+
+            result = DataParser.parse(cells.Next(), out record.Width);
+            if(result.Fail)
+                Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.Width), cells.Prior()));
+
+            if(!Visibilities.ExprKind(cells.Next(), out record.Visibility))
+                Errors.Throw(AppMsg.ParseFailure.Format(nameof(record.Visibility), cells.Prior()));
+
+            dst.Add(record);
+        }
+
+        return dst.ToArray().Sort();
+    }
+
     static XedRuleTables CalcRuleTables()
     {
        var enc = Seq<TableCriteria>.Empty;
@@ -699,6 +763,93 @@ public class XedTables : AppService<XedTables>
         for(var i=0u; i<dst.Count; i++)
             dst[i] = dst[i].WithId(i);
         return new XedRuleTables(dst, XedCells.tables(dst));
+    }
+
+    static ReadOnlySeq<MacroMatch> CalcMacroMatches()
+        => mapi(RuleMacros.matches().Values.ToArray().Sort(), (i,m) => m.WithSeq((uint)i));
+
+    static ReadOnlySeq<TableDefRow> CalcDefRows(XedRuleTables src)
+    {
+        var buffer = list<TableDefRow>();
+        ref readonly var specs = ref src.Specs();
+        var k=0u;
+        for(var i=0u; i<specs.TableCount; i++)
+        {
+            ref readonly var spec = ref specs[i];
+            for(var j=0u; j<spec.RowCount; j++, k++)
+            {
+                ref readonly var row = ref spec[j];
+                var dst = TableDefRow.Empty;
+                dst.Seq = k;
+                dst.TableId = spec.TableId;
+                dst.Index = j;
+                dst.Kind = spec.TableKind;
+                dst.Name = spec.Name;
+                dst.Statement = row.Format();
+                buffer.Add(dst);
+            }
+        }
+        return buffer.ToArray();
+    }
+
+    static ReadOnlySeq<XedInstOpCode> CalcOpCodes(ReadOnlySeq<InstPattern> src)
+    {
+        var count = src.Count;
+        var buffer = alloc<XedInstOpCode>(count);
+
+        for(var i=0u; i<count; i++)
+        {
+            ref var dst = ref seek(buffer,i);
+            poc(src[i], out seek(buffer,i));
+        }
+
+        buffer.Sort(new PatternOrder(true));
+
+        var oc = AsmOpCode.Empty;
+        var @class = XedInstClass.Empty;
+        var oci = z8;
+        for(var i=0u; i<count; i++)
+        {
+            ref var dst = ref seek(buffer,i);
+            if(i == 0)
+            {
+                oc = dst.OpCode;
+                @class = dst.InstClass;
+            }
+
+            if(oc != dst.OpCode || @class != dst.InstClass)
+            {
+                oc = dst.OpCode;
+                @class = dst.InstClass;
+                oci = z8;
+            }
+
+            dst.Index = oci++;
+        }
+
+        buffer.Sort(new PatternOrder());
+        for(var i=0u; i<count; i++)
+            seek(buffer,i).Seq = i;
+
+        return buffer;
+    }
+
+    static void poc(InstPattern src, out XedInstOpCode dst)
+    {
+        dst.Seq = 0u;
+        dst.Index = z8;
+        dst.PatternId = (ushort)src.PatternId;
+        dst.MapName = AsmOpCodes.name(src.OpCode.Kind);
+        dst.Value = src.OpCode.Value;
+        dst.InstClass = src.InstClass.Classifier;
+        dst.Mode = XedCells.mode(src.Cells);
+        dst.Lock = XedCells.@lock(src.Cells);
+        dst.Mod = XedCells.mod(src.Cells);
+        dst.RexW = XedCells.rexw(src.Cells);
+        dst.Rep = XedCells.rep(src.Cells);
+        dst.Layout = src.Layout;
+        dst.Expr = src.Expr;
+        dst.OpCode = src.OpCode;
     }
 
     static readonly ReadOnlySeq<OpName> _OpNames = Symbols.index<OpNameKind>().Kinds.Map(x => new OpName(x));

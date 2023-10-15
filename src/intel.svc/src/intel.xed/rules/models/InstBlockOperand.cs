@@ -52,6 +52,5 @@ partial class XedRules
 
         public override string ToString()
             => Format();
-
     }
 }

@@ -89,6 +89,21 @@ partial class XedModels
             get => (byte)(Count - LayoutCount);
         }
 
+        public bool Lock()
+        {
+            var result = false;
+            for(var i=0; i<Count; i++)
+            {
+                ref readonly var cell = ref this[i];
+                if(cell.Field == FieldKind.LOCK)
+                {
+                    result = cell.AsByte() == 1;
+                    break;
+                }
+            }
+            return result;
+        }
+        
         public string Format()
             => XedRender.format(this);
 

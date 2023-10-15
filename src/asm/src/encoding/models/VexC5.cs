@@ -10,7 +10,7 @@ using static sys;
 [BitPattern(Pattern), ApiComplete]
 public record struct VexC5 : IBitPattern<VexC5>
 {
-    const string Pattern = "cccccccc R vvvv L pp";
+    const string Pattern = "11000101 R vvvv L pp";
 
     // ~ R
 
@@ -20,8 +20,6 @@ public record struct VexC5 : IBitPattern<VexC5>
 
     const byte R_Max = 7;
 
-    const byte R_Width = R_Max - R_Min + 1;
-
     // ~ VVVV
 
     const byte VVVV_Mask = 0b0111_1000;
@@ -29,8 +27,6 @@ public record struct VexC5 : IBitPattern<VexC5>
     const byte VVVV_Min = 3;
 
     const byte VVVV_Max = 6;
-
-    const byte VVVV_Width = VVVV_Max - VVVV_Min + 1;
 
     // ~ L
 
@@ -40,7 +36,6 @@ public record struct VexC5 : IBitPattern<VexC5>
 
     const byte L_Max = 2;
 
-    const byte L_Width = L_Max - L_Min + 1;
 
     // ~ PP
     const byte PP_Mask = 0b0000_0011;
@@ -48,8 +43,6 @@ public record struct VexC5 : IBitPattern<VexC5>
     const byte PP_Min = 0;
 
     const byte PP_Max = 1;
-
-    const byte PP_Width = PP_Max - PP_Min + 1;
 
     [MethodImpl(Inline)]
     public static VexC5 init()

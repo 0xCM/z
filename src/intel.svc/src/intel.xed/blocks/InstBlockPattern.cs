@@ -18,6 +18,9 @@ partial class XedZ
         [Render(8)]
         public uint Seq;
 
+        [Render(8)]
+        public byte Index;
+
         [Render(20)]
         public XedInstClass Instruction;
 
@@ -25,13 +28,13 @@ partial class XedZ
         public MachineMode Mode;
 
         [Render(8)]
+        public bit Lock;
+
+        [Render(8)]
         public Hex8 OpCode;
 
         [Render(58)]
         public XedInstForm Form;
-
-        [Render(8)]
-        public byte Index;
 
         [Render(220)]
         public InstCells Body;
@@ -43,12 +46,7 @@ partial class XedZ
         public InstBlockOperands Operands;
 
         public int CompareTo(InstBlockPattern src)
-        {
-            var result = Form.CompareTo(src.Form);
-            if(result == 0)
-                result = Operands.Format().CompareTo(src.Operands.Format());
-            return result;
-        }
+            => XedZ.cmp(this, src);
 
         uint ISequential.Seq
         {

@@ -79,6 +79,9 @@ partial class XedZ
                     for(var i=0; i<cells.Count; i++)
                     {
                         ref readonly var cell = ref cells[i];
+                        if(cell.Field == FieldKind.LOCK)
+                            pattern.Lock = cell.AsByte();
+                            
                         switch(cell.CellKind)
                         {
                             case RuleCellKind.InstSeg:
