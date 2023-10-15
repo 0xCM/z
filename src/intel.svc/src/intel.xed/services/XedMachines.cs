@@ -4,346 +4,83 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static sys;
 using static XedModels;
 using static XedRules;
+using static sys;
 
-using P = XedModels.InstPattern;
-using M = XedModels;
-using R = XedRules;
+public partial class XedMachines
+{            
+    public static MachineContext context(MachineMode? mode = null)
+        => new(mode ?? MachineMode.Mode64);
 
-public class XedMachines
-{        
-    internal class MachineState : IXedMachine<InstPattern>
+    public static void gen(MachineContext context, ITextEmitter dst)
     {
-        InstPattern Pattern;
+        var indent = 0u;
+        dst.IndentLineFormat(indent,"namespace Z0;");
+        dst.AppendLine();
+        dst.IndentLine(indent, "using static sys;");
+        dst.IndentLine(indent, "using static XedModels;");
+        dst.IndentLine(indent, "using static XedRules;");
+        dst.IndentLine(indent, "using static XedMachines;");
+        dst.AppendLine();
+        dst.IndentLineFormat(indent, "public class XedMachine");
+        dst.IndentLine(indent, Chars.LBrace);
+        indent+=4;
 
-        XedFieldState OpState;
-
-        MachineMode MachineMode;
-
-        XedInstForm Form;
-
-        Fields Expressions;
-
-        AsmInfo Asm;
-
-        readonly uint Id;
-
-
-        public void Reset()
+        dst.IndentLineFormat(indent, "public XedFieldState FieldState;");
+        dst.AppendLine();
+        
+        var decls = context.RuleDecls;
+        for(var i=0; i<decls.Count; i++)
         {
-            OpState = XedFieldState.Empty;
-            Pattern = InstPattern.Empty;
-            MachineMode = default;
-            Form = XedInstForm.Empty;
-            Expressions.Clear();
-            Asm = AsmInfo.Empty;
+            ref readonly var decl = ref decls[i];
+            render(ref indent, decl.Table, dst);
+            dst.AppendLine();
         }
+        indent -=4;
 
-        public void Dispose()
+        dst.IndentLine(indent, Chars.RBrace);
+    }
+
+    static void render(ref uint indent, CellTable Table, ITextEmitter dst)
+    {
+        dst.IndentLineFormat(indent, "public void {0}_{1}()", Table.Name, Table.Kind);
+        dst.IndentLine(indent, Chars.LBrace);
+        indent += 4;
+        for(var i=0; i<Table.RowCount; i++)
         {
+            ref readonly var row = ref Table[i];
 
-        }
+            dst.Indent(indent,"// ");
+            var antecedants = row.Antecedants();
+            var consequents = row.Consequents();
 
-
-        void Load(in CellValue src)
-        {
-
-        }
-
-        /// <summary>
-        /// Specifies the encoding of the current instruction
-        /// </summary>
-        public ref readonly AsmHexCode Encoding
-        {
-            [MethodImpl(Inline)]
-            get => ref Asm.Encoded;
-        }
-
-        void Load(in InstFieldSeg src)
-        {
-
-        }
-
-        void Load(in CellExpr src)
-        {
-
-        }
-
-        void Load(in FieldSeg src)
-        {
-
-        }
-
-        void Load(in InstCells src)
-        {
-            for(var i=z8; i<src.Count; i++)
+            for(var j=0; j<antecedants.Length; j++)
             {
-                ref readonly var cell = ref src[i];
-                if(cell.IsExpr)
-                {
-                    Load(cell.ToCellExpr());
-                }
-                else if(cell.CellType.IsInstSeg)
-                {
-                    Load(cell.AsInstSeg());
-                }
-                else if(cell.CellType.IsFieldSeg)
-                {
-                    Load(cell.ToFieldSeg());
-
-                }
-
-                Load(cell);
+                if(j != 0)
+                    dst.Append(Chars.Space);
+                
+                dst.Append(skip(antecedants,j));
             }
+            if(antecedants.Length != 0 && consequents.Length != 0)
+            {                
+                dst.Append(Chars.Space);
+                dst.Append("=>");
+                dst.Append(Chars.Space);
+            }
+
+            for(var j=0; j<consequents.Length; j++)
+            {
+                if(j != 0)
+                    dst.Append(Chars.Space);
+
+                dst.Append(skip(consequents,j));
+            }
+
+            dst.Append(Chars.NL);
         }
 
-        void Load(in LayoutCell src)
-        {
-
-        }
-
-        void Load(in InstLayoutRecord src)
-        {
-            for(var i=z8; i<src.Count; i++)
-                Load(src[i]);
-        }
-
-        void Load(in PatternOp src)
-        {
-
-        }
-
-        void Load(in PatternOps src)
-        {
-            for(var i=z8; i<src.Count; i++)
-                Load(src[i]);
-        }
-
-        public void Load(in FieldBuffer src)
-        {
-            OpState = src.State;
-            Form = src.Form;
-        }
-
-        public void Run(InstPattern src)
-        {
-            Reset();
-            Form = src.InstForm;
-            Load(src.Cells);
-            Load(src.Ops);
-            Pattern = src;
-        }
-
-        public ref readonly InstCells Layout
-        {
-            [MethodImpl(Inline)]
-            get => ref Pattern.Layout;
-        }
-
-        public ref readonly InstCells Expr
-        {
-            [MethodImpl(Inline)]
-            get => ref Pattern.Layout;
-        }
-
-        public ref readonly uint MachineId
-        {
-            [MethodImpl(Inline)]
-            get => ref Id;
-        }
-
-        public ref readonly XedFieldState Operands
-        {
-            [MethodImpl(Inline)]
-            get => ref OpState;
-        }
-
-        public ref readonly MachineMode Mode
-        {
-            [MethodImpl(Inline)]
-            get => ref Pattern.Mode;
-        }
-
-        /// <summary>
-        /// Specifies the current <see cref='P'/>
-        /// </summary>
-        public ref readonly InstPattern InstPattern
-        {
-            [MethodImpl(Inline)]
-            get => ref Pattern;
-        }
-
-        public ref readonly XedInstForm InstForm
-        {
-            [MethodImpl(Inline)]
-            get => ref Form;
-        }
-
-        public ref readonly XedInstClass InstClass
-        {
-            [MethodImpl(Inline)]
-            get => ref XedFields.iclass(Operands);
-        }
-
-        /// <summary>
-        /// Specifies the dependency <see cref='M.OpName'/> of the current <see cref='P'/>
-        /// </summary>
-        public ref readonly Index<OpName> OpNames
-        {
-            [MethodImpl(Inline)]
-            get => ref Pattern.OpNames;
-        }
-
-        public byte OpCount
-        {
-            [MethodImpl(Inline)]
-            get => (byte)Pattern.Ops.Count;
-        }
-
-        /// <summary>
-        /// Specifies the dependency <see cref='R.FieldSet'/> of the current <see cref='P'/>
-        /// </summary>
-        public ref readonly FieldSet FieldDeps
-        {
-            [MethodImpl(Inline)]
-            get => ref Pattern.FieldDeps;
-        }
-
-        /// <summary>
-        /// Specifies the expression-related <see cref='R.XedCells'/>  of the current <see cref='P'/>
-        /// </summary>
-        public ref readonly InstCells InstExpr
-        {
-            [MethodImpl(Inline)]
-            get => ref Pattern.Expr;
-        }
-
-        /// <summary>
-        /// Specifies the <see cref='AsmOpCode'/> of the current <see cref='P'/>
-        /// </summary>
-        public ref readonly AsmOpCode OpCode
-        {
-            [MethodImpl(Inline)]
-            get => ref Pattern.OpCode;
-        }
-
-        /// <summary>
-        /// Specifies the <see cref='M.Isa'/> of the current <see cref='P'/>
-        /// </summary>
-        public ref readonly InstIsa Isa
-        {
-            [MethodImpl(Inline)]
-            get => ref Pattern.Isa;
-        }
-
-        /// <summary>
-        /// Specifies the <see cref='M.InstCategory'/> of the current <see cref='P'/>
-        /// </summary>
-        public ref readonly InstCategory Category
-        {
-            [MethodImpl(Inline)]
-            get => ref Pattern.Category;
-        }
-
-        /// <summary>
-        /// Specifies the <see cref='M.InstExtension'/> of the current <see cref='P'/>
-        /// </summary>
-        public ref readonly InstExtension Extension
-        {
-            [MethodImpl(Inline)]
-            get => ref Pattern.Extension;
-        }
-
-        /// <summary>
-        /// Specifies the pattern Id of the<see cref='P'/>
-        /// </summary>
-        public ref readonly ushort PatternId
-        {
-            [MethodImpl(Inline)]
-            get => ref Pattern.PatternId;
-        }
-
-        /// <summary>
-        /// Specifies layout <see cref='R.XedCells'/> associated with the current <see cref='P'/>
-        /// </summary>
-        public ref readonly InstCells LayoutFields
-        {
-            [MethodImpl(Inline)]
-            get => ref Pattern.Layout;
-        }
-
-        /// <summary>
-        /// Specifies <see cref='R.PatternOps'/> associated with the current <see cref='P'/>
-        /// </summary>
-        public ref readonly PatternOps Ops
-        {
-            [MethodImpl(Inline)]
-            get => ref Pattern.Ops;
-        }
-
-        /// <summary>
-        /// Specifies the asm source text of the current instruction
-        /// </summary>
-        public ref readonly asci64 AsmText
-        {
-            [MethodImpl(Inline)]
-            get => ref Asm.Asm;
-        }
-
-        /// <summary>
-        /// Specifies the IP of the current instruction
-        /// </summary>
-        public ref readonly MemoryAddress IP
-        {
-            [MethodImpl(Inline)]
-            get => ref Asm.IP;
-        }
-
-        /// <summary>
-        /// Specifies <see cref='R.InstOpDetail'/> associated with the current <see cref='P'/>
-        /// </summary>
-        public ref readonly Index<InstOpDetail> OpDetail
-        {
-            [MethodImpl(Inline)]
-            get => ref Pattern.OpDetails;
-        }
-
-        /// <summary>
-        /// Specifies <see cref='InstGroupMember'/> associated with the current <see cref='LoadPattern'/>
-        /// </summary>
-        public InstGroupMember PatternGroup
-            => _GroupMemberLookup.Find(PatternId, out var dst) ? dst : InstGroupMember.Empty;
-
-        /// <summary>
-        /// Specifies <see cref='InstForm'/> associated with the current <see cref='InstClass'/>
-        /// </summary>
-        public Index<XedInstForm> ClassForms
-            => _ClassFormLookup.Find(InstClass, out var dst) ? dst : sys.empty<XedInstForm>();
-
-        /// <summary>
-        /// Specifies <see cref='InstGroupMember'> associated with the current <see cref='InstClass'/>
-        /// </summary>
-        public Index<InstGroupMember> ClassGroups
-            => _ClassGroupLookup.Find(InstClass, out var dst) ? dst : sys.empty<InstGroupMember>();
-
-        /// <summary>
-        /// Specifies <see cref='LoadPattern'/> associated with the current <see cref='InstClass'/>
-        /// </summary>
-        public Index<InstPattern> ClassPatterns
-            => _ClassPatternLookup.Find(InstClass, out var x) ? x : sys.empty<InstPattern>();
-
-        uint IXedMachine.MachineId
-            => Id;
-
-
-        ConstLookup<ushort,InstGroupMember> _GroupMemberLookup;
-
-        SortedLookup<XedInstClass,Index<InstGroupMember>> _ClassGroupLookup;
-
-        SortedLookup<XedInstClass,Index<InstPattern>> _ClassPatternLookup;
-
-        SortedLookup<XedInstClass,Index<XedInstForm>> _ClassFormLookup;
+        indent-=4;
+        dst.IndentLine(indent, Chars.RBrace);            
     }
 }

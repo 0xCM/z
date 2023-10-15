@@ -60,18 +60,6 @@ public class XedPaths
     public static AbsoluteLink MarkdownLink(RuleIdentity sig)
         => Markdown.link(string.Format("{0}::{1}()", sig.TableKind, sig.TableName), RuleTable(sig));
 
-    public static FilePath DisasmSummaryPath(FilePath src)
-        => src.FolderPath + FS.file(string.Format("{0}.summary", src.FileName.WithoutExtension), FS.Csv);
-
-    public static FilePath DisasmDetailPath(FilePath src)
-        => src.FolderPath +  FS.file(string.Format("{0}.details", src.FileName.WithoutExtension), FS.Csv);
-
-    public static FilePath DisasmChecksPath(FilePath src)
-        => src.FolderPath + FS.file(string.Format("{0}.checks", src.FileName.WithoutExtension), FS.Txt);
-
-    public static FilePath DisasmOpsPath(FilePath src)
-        => src.FolderPath + FS.file(string.Format("{0}.ops", src.FileName.WithoutExtension.Format()), FS.Txt);
-
     public static FileUri RuleTable(RuleIdentity sig)
     {
         var dst = RuleTables();

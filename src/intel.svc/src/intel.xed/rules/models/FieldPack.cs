@@ -7,7 +7,7 @@ namespace Z0;
 using static XedModels;
 using static XedRules;
 
-using DK = XedRules.FieldDataKind;
+using K = XedRules.FieldDataKind;
 
 [StructLayout(LayoutKind.Sequential,Pack=1)]
 public struct XedFieldPack
@@ -26,19 +26,19 @@ public struct XedFieldPack
 
     public XedInstClass Class;
 
-    public FieldDataKind DataKind()
+    public K DataKind()
     {
-        var dst = DK.Bit;
+        var dst = K.Bit;
         if(Class.IsNonEmpty)
-            dst = DK.InstClass;
+            dst = K.InstClass;
         else if(Chip != 0)
-            dst = DK.Chip;
+            dst = K.Chip;
         else if(Reg.IsNonEmpty)
-            dst = DK.Reg;
+            dst = K.Reg;
         else if(Word !=0)
-            dst = DK.Word;
+            dst = K.Word;
         else if(Byte !=0)
-            dst = DK.Byte;
+            dst = K.Byte;
         return dst;
     }
 
@@ -48,22 +48,22 @@ public struct XedFieldPack
         var kind = DataKind();
         switch(kind)
         {
-            case DK.Bit:
+            case K.Bit:
                 dst = (byte)Bit;
             break;
-            case DK.Byte:
+            case K.Byte:
                 dst = Byte;
             break;
-            case DK.Chip:
+            case K.Chip:
                 dst = (byte)Chip;
             break;
-            case DK.InstClass:
+            case K.InstClass:
                 dst = (ushort)Class;
             break;
-            case DK.Reg:
+            case K.Reg:
                 dst = (ushort)Reg;
             break;
-            case DK.Word:
+            case K.Word:
                 dst = Word;
             break;
         }
@@ -75,22 +75,22 @@ public struct XedFieldPack
         var dst = EmptyString;
         switch(DataKind())
         {
-            case DK.Bit:
+            case K.Bit:
                 dst = Bit.ToString();
             break;
-            case DK.Byte:
+            case K.Byte:
                 dst = Byte.ToString();
             break;
-            case DK.Chip:
+            case K.Chip:
                 dst = XedRender.format(Chip);
             break;
-            case DK.InstClass:
+            case K.InstClass:
                 dst = XedRender.format(Class);
             break;
-            case DK.Reg:
+            case K.Reg:
                 dst = XedRender.format(Reg);
             break;
-            case DK.Word:
+            case K.Word:
                 dst = Word.ToString();
             break;
         }

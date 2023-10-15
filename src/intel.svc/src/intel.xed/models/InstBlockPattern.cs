@@ -3,12 +3,10 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0;
-using static sys;
 
-using static XedModels;
 using static XedRules;
 
-partial class XedZ
+partial class XedModels
 {
     [Record(TableName)]
     public record InstBlockPattern : IComparable<InstBlockPattern>, ISequential
@@ -46,7 +44,7 @@ partial class XedZ
         public InstBlockOperands Operands;
 
         public int CompareTo(InstBlockPattern src)
-            => XedZ.cmp(this, src);
+            => InstBlockPatterns.cmp(this, src);
 
         uint ISequential.Seq
         {

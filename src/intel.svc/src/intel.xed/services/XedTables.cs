@@ -9,9 +9,9 @@ using System.Linq;
 using Asm;
 
 using static XedModels;
+using static XedRules;
 using static sys;
 using static MachineModes;
-using static XedRules;
 using static XedZ;
 
 using M = XedModels;
@@ -109,7 +109,7 @@ public class XedTables : AppService<XedTables>
         for(var i=0; i<kGrid; i++)
         {
             ref readonly var cTable = ref src[i];
-            ref readonly var sig = ref cTable.Sig;
+            ref readonly var sig = ref cTable.Identity;
             var kCol = XedCells.cols(cTable);
             var kRow = cTable.RowCount;
             var kCells = kRow*kCol;
@@ -689,7 +689,7 @@ public class XedTables : AppService<XedTables>
     {
         ref readonly var rows = ref src.Rows;
         var usage = hashset<FieldUsage>();
-        var sig = src.Sig;
+        var sig = src.Identity;
         for(var i=0; i<rows.Count; i++)
         {
             ref readonly var row = ref rows[i];
@@ -769,7 +769,7 @@ public class XedTables : AppService<XedTables>
         => mapi(RuleMacros.matches().Values.ToArray().Sort(), (i,m) => m.WithSeq((uint)i));
 
     static ReadOnlySeq<TableDefRow> CalcDefRows(XedRuleTables src)
-    {
+    {        
         var buffer = list<TableDefRow>();
         ref readonly var specs = ref src.Specs();
         var k=0u;
@@ -783,6 +783,7 @@ public class XedTables : AppService<XedTables>
                 dst.Seq = k;
                 dst.TableId = spec.TableId;
                 dst.Index = j;
+                dst.Rule = spec.Identity;
                 dst.Kind = spec.TableKind;
                 dst.Name = spec.Name;
                 dst.Statement = row.Format();

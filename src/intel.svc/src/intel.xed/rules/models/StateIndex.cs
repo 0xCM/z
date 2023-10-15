@@ -5,21 +5,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static XedRules;
+using static XedFields;
 
-partial class XedFields
+partial class XedRules
 {
-    public partial class StateIndex : IIndex<States>
+    public class StateIndex
     {
-        readonly Index<States> Data;
-
-        [MethodImpl(Inline)]
-        public ref readonly Index<States> Entries()
-            => ref Data;
-
-        [MethodImpl(Inline)]
-        public bool Field(uint i, FieldKind kind, out FieldValue dst)
-            => Data[i].Field(kind, out dst);
+        readonly Seq<States> Data;
 
         public StateIndex(States[] src)
         {
@@ -43,8 +35,5 @@ partial class XedFields
             [MethodImpl(Inline)]
             get => Data.Count;
         }
-
-        States[] IIndex<States>.Storage
-            => Data;
     }
 }

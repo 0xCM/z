@@ -11,11 +11,11 @@ partial class XedRules
 {
     public readonly struct CellTable : IComparable<CellTable>
     {
-        public readonly RuleIdentity Sig;
+        public readonly RuleIdentity Identity;
 
         public readonly ushort TableIndex;
 
-        public readonly Index<CellRow> Rows;
+        public readonly Seq<CellRow> Rows;
 
         public readonly uint CellCount;
 
@@ -24,7 +24,7 @@ partial class XedRules
         [MethodImpl(Inline)]
         public CellTable(RuleIdentity sig, ushort index, CellRow[] src)
         {
-            Sig = sig;
+            Identity = sig;
             TableIndex = index;
             Rows = Require.notnull(src);
             RowCount = (ushort)src.Length;
@@ -34,13 +34,13 @@ partial class XedRules
         public RuleTableKind Kind
         {
             [MethodImpl(Inline)]
-            get => Sig.TableKind;
+            get => Identity.TableKind;
         }
 
         public RuleName Name
         {
             [MethodImpl(Inline)]
-            get => Sig.TableName;
+            get => Identity.TableName;
         }
 
         public ref CellRow this[uint i]
@@ -75,12 +75,12 @@ partial class XedRules
 
         public int CompareTo(CellTable src)
         {
-            var result = Sig.CompareTo(src.Sig);
+            var result = Identity.CompareTo(src.Identity);
             if(result == 0)
                 result = TableIndex.CompareTo(src.TableIndex);
             return result;
         }
 
-        public static CellTable Empty => new CellTable(RuleIdentity.Empty, 0, sys.empty<CellRow>());
+        public static CellTable Empty => new (RuleIdentity.Empty, 0, sys.empty<CellRow>());
     }
 }

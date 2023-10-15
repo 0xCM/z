@@ -5,7 +5,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static XedFields;
+using static XedRules;
 using static XedDisasm;
 
 public readonly record struct XedDisasmFile : IComparable<XedDisasmFile>

@@ -54,7 +54,7 @@ partial class XedRules
 
         [MethodImpl(Inline)]
         public CellKey WithKeyword(KeywordKind kw)
-            => new CellKey(Index, Table, Row, Col, Logic, CellType, Rule.TableKind, Rule.TableName, Field,kw);
+            => new (Index, Table, Row, Col, Logic, CellType, Rule.TableKind, Rule.TableName, Field,kw);
 
         public bool IsEmpty
         {

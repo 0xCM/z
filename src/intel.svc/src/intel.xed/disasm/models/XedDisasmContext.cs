@@ -4,8 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static XedZ;
-using static XedRules;
+using static XedModels;
 
 public class XedDisasmContext
 {
@@ -17,11 +16,26 @@ public class XedDisasmContext
     
     public readonly MachineMode Mode;
 
+    readonly IDbArchive DisasmTargets;
+     
     public XedDisasmContext(IDbArchive root)
     {
         ProjectRoot = root;
         Mode = MachineMode.Default;
         Blocks = new();
         InstPatterns = XedTables.BlockPatterns();
+        DisasmTargets = root.Scoped("xed");
     }
+
+    public FilePath DisasmSummaryPath(FilePath src)
+        =>  (DisasmTargets ?? src.FolderPath.DbArchive()).Path(FS.file(string.Format("{0}.summary", src.FileName.WithoutExtension), FS.Csv));
+
+    public FilePath DisasmDetailPath(FilePath src)
+        => (DisasmTargets ?? src.FolderPath.DbArchive()).Path(FS.file(string.Format("{0}.details", src.FileName.WithoutExtension), FS.Csv));
+
+    public FilePath DisasmChecksPath(FilePath src)
+        => (DisasmTargets ?? src.FolderPath.DbArchive()).Path(FS.file(string.Format("{0}.checks", src.FileName.WithoutExtension), FS.Txt));
+
+    public FilePath DisasmOpsPath(FilePath src)
+        => (DisasmTargets ?? src.FolderPath.DbArchive()).Path(FS.file(string.Format("{0}.ops", src.FileName.WithoutExtension.Format()), FS.Txt));
 }

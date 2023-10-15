@@ -32,6 +32,6 @@ partial class XedCells
             for(var j=k; j<kCol; j++, k++)
                 seek(dst, k) = GridCell.Empty;
         }
-        return grid(src.Sig, (ushort)src.RowCount, kCol, dst);
+        return grid(src.Identity, (ushort)src.RowCount, kCol, dst);
     }    
 }

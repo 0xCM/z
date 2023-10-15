@@ -7,10 +7,15 @@ namespace Z0;
 
 partial class XedRules
 {
-    [DataWidth(PackedWidth)]
     public readonly record struct LogicClass : IComparable<LogicClass>
     {
-        public const byte PackedWidth = num2.Width;
+        public static LogicClass Antecedant => new(LogicKind.Antecedant);
+
+        public static LogicClass Operator => new(LogicKind.Operator);
+
+        public static LogicClass Consequent => new(LogicKind.Consequent);
+
+        public static LogicClass Empty => new(LogicKind.None);
 
         public readonly LogicKind Kind;
 

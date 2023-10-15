@@ -22,7 +22,7 @@ public class XedRuleCells
         dst.CellCount = tables.Select(x => x.CellCount).Sum();
         dst._Tables = tables.Sort();
         dst._Cells = tables.SelectMany(x => x.Rows.SelectMany(x => x.Cells)).Sort();
-        dst._Sigs = tables.Select(x => x.Sig).Sort();
+        dst._Sigs = tables.Select(x => x.Identity).Sort();
         dst._TableCells = Tuples.pairings(src.Map(x => Tuples.paired(x.Key,x.Value)));
         return dst;
     }

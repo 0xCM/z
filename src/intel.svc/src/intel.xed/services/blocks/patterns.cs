@@ -6,6 +6,8 @@ namespace Z0;
 
 using System.Linq;
 
+using static XedModels;
+
 partial class XedZ
 {        
     public static InstBlockPatterns patterns(ParallelQuery<InstBlockLineSpec> lines)

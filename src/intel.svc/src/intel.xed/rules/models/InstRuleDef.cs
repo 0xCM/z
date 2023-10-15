@@ -10,9 +10,9 @@ partial class XedRules
 {
     public record InstRuleDef : IComparable<InstRuleDef>
     {
-        public Seq<CellValue> Cells;
-
         public XedInstForm Form;
+
+        public Seq<CellValue> Cells;
 
         public InstBlockOperands Operands;
 

@@ -17,7 +17,7 @@ partial class XedRules
 
         public readonly uint CellCount;
 
-        public readonly Index<RuleCell> Cells;
+        public readonly Seq<RuleCell> Cells;
 
         public readonly RowExpr Expression;
 
@@ -69,11 +69,11 @@ partial class XedRules
 
         [MethodImpl(Inline)]
         public ReadOnlySpan<RuleCell> Antecedants()
-            => sys.slice(Cells.View,0,AntecedantCount);
+            => sys.slice(Cells.View, 0, AntecedantCount);
 
         [MethodImpl(Inline)]
         public ReadOnlySpan<RuleCell> Consequents()
-            => sys.slice(Cells.View,ConsequentOffset);
+            => sys.slice(Cells.View, ConsequentOffset);
 
         public bool HasConsequent
         {

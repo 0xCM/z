@@ -23,6 +23,9 @@ partial class XedRules
         [Render(8)]
         public uint Index;
 
+        [Render(32)]
+        public RuleIdentity Rule;
+
         [Render(8)]
         public RuleTableKind Kind;
 

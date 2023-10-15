@@ -13,7 +13,7 @@ partial class XedRules
     {
         public readonly ushort TableId;
 
-        public readonly RuleIdentity Sig;
+        public readonly RuleIdentity Identity;
 
         public readonly ReadOnlySeq<RowSpec> Rows;
 
@@ -21,20 +21,20 @@ partial class XedRules
         public TableSpec(ushort id, RuleIdentity key, RowSpec[] rows)
         {
             TableId = id;
-            Sig = key;
+            Identity = key;
             Rows = rows;
         }
 
         public RuleName Name
         {
             [MethodImpl(Inline)]
-            get => Sig.TableName;
+            get => Identity.TableName;
         }
 
         public RuleTableKind TableKind
         {
             [MethodImpl(Inline)]
-            get => Sig.TableKind;
+            get => Identity.TableKind;
         }
 
         public bool IsEmpty
@@ -74,7 +74,7 @@ partial class XedRules
             => Format();
 
         public int CompareTo(TableSpec src)
-            => Sig.CompareTo(src.Sig);
+            => Identity.CompareTo(src.Identity);
 
         [MethodImpl(Inline)]
         public static implicit operator ReadOnlySeq<RowSpec>(TableSpec src)

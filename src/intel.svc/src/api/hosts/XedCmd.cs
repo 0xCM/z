@@ -13,6 +13,8 @@ public partial class XedCmd : WfAppCmd<XedCmd>
 {
     CsLang CsLang => Channel.Channeled<CsLang>();
 
+    XedDisasm XedDisasm => Wf.XedDisasm();
+
     public IDbArchive LlvmModels(string scope)
         => AppDb.Dev($"llvm.models/{scope}");
 

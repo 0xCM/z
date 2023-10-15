@@ -51,7 +51,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
 
     public void EmitDetails(XedDisasmContext context, XedDisasmDoc src)
     {
-        var path = XedPaths.DisasmDetailPath(src.SourcePath);
+        var path = context.DisasmDetailPath(src.SourcePath);
         var emitting = Channel.EmittingFile(path);
         var te = text.emitter();
         iter(src.DetailBlocks, detail => context.Blocks.Add(detail));
@@ -74,13 +74,13 @@ public partial class XedDisasm : WfSvc<XedDisasm>
     }
 
     void EmitSummaries(XedDisasmContext context, XedDisasmDoc doc)
-        => Channel.TableEmit(doc.Summary.Rows, XedPaths.DisasmSummaryPath(doc.SourcePath));
+        => Channel.TableEmit(doc.Summary.Rows, context.DisasmSummaryPath(doc.SourcePath));
 
     const string OperandFormat = "{0} | {1,-20} | {2}";
 
     public void EmitOps(XedDisasmContext context, XedDisasmDoc src)
     {
-        var path = XedPaths.DisasmOpsPath(src.Detail.DataFile.Source);
+        var path = context.DisasmOpsPath(src.Detail.DataFile.Source);
         var doc = src.Detail;
         var emitting = Channel.EmittingFile(path);
         using var emitter = path.AsciEmitter();
@@ -192,7 +192,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         ref readonly var file = ref doc.DataFile;
         var buffer = text.buffer();
         var count = doc.Count;
-        var outpath = XedPaths.DisasmChecksPath(file.Source);
+        var outpath = context.DisasmChecksPath(file.Source);
         using var writer = outpath.AsciWriter();
         var emitting = Channel.EmittingFile(outpath);
         writer.AppendLineFormat(RenderCol2, "DataSource", doc.Source.ToUri().Format());

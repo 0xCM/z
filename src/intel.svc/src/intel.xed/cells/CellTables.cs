@@ -50,9 +50,9 @@ partial class XedRules
 
         Index<CellTable> _Tables;
 
-        Index<RuleCell> _Cells;
+        ReadOnlySeq<RuleCell> _Cells;
 
-        Index<RuleIdentity> _Sigs;
+        ReadOnlySeq<RuleIdentity> _RuleNames;
 
         Pairings<RuleIdentity,Index<RuleCell>> _TableCells;
 
@@ -63,7 +63,7 @@ partial class XedRules
             CellCount = src.CellCount;
             _Tables = src.Tables();
             _Cells = src.Cells();
-            _Sigs = src.Sigs();
+            _RuleNames = src.Sigs();
             _TableCells = src.TableCells();
         }
 
@@ -123,17 +123,17 @@ partial class XedRules
         /// <summary>
         /// Specifies the <see cref='RuleIdentity'/> for each defined table
         /// </summary>
-        public ref readonly Index<RuleIdentity> Sigs
+        public ref readonly ReadOnlySeq<RuleIdentity> RuleNames
         {
             [MethodImpl(Inline)]
-            get => ref _Sigs;
+            get => ref _RuleNames;
         }
 
         /// <summary>
         /// Returns the defined <cref='RuleCell'/> values
         /// </summary>
         [MethodImpl(Inline)]
-        public ref readonly Index<RuleCell> Cells()
+        public ref readonly ReadOnlySeq<RuleCell> Cells()
             => ref _Cells;
 
         /// <summary>
@@ -163,7 +163,7 @@ partial class XedRules
         /// <param name="table">The table index</param>
         [MethodImpl(Inline)]
         public ref readonly RuleIdentity Sig(int table)
-            => ref _Tables[table].Sig;
+            => ref _Tables[table].Identity;
 
         /// <summary>
         /// Returns the see <cref='RuleSig'/> that is a logical identifier for an index-identified <see cref='CellTable'/>
@@ -171,14 +171,14 @@ partial class XedRules
         /// <param name="table">The table index</param>
         [MethodImpl(Inline)]
         public ref readonly RuleIdentity Sig(uint table)
-            => ref _Tables[table].Sig;
+            => ref _Tables[table].Identity;
 
         /// <summary>
         /// Returns the rows defined by an index-identified <see cref='CellTable'/>
         /// </summary>
         /// <param name="table">The table index</param>
         [MethodImpl(Inline)]
-        public ref readonly Index<CellRow> Rows(int table)
+        public ref readonly Seq<CellRow> Rows(int table)
             => ref _Tables[table].Rows;
 
         /// <summary>
@@ -186,7 +186,7 @@ partial class XedRules
         /// </summary>
         /// <param name="table">The table index</param>
         [MethodImpl(Inline)]
-        public ref readonly Index<CellRow> Rows(uint table)
+        public ref readonly Seq<CellRow> Rows(uint table)
             => ref _Tables[table].Rows;
 
         /// <summary>
@@ -213,7 +213,7 @@ partial class XedRules
         /// <param name="table">The table index</param>
         /// <param name="row">The table-relative row index</param>
         [MethodImpl(Inline)]
-        public ref readonly Index<RuleCell> Cells(int table, int row)
+        public ref readonly Seq<RuleCell> Cells(int table, int row)
             => ref _Tables[table].Rows[row].Cells;
 
         /// <summary>
@@ -222,7 +222,7 @@ partial class XedRules
         /// <param name="table">The table index</param>
         /// <param name="row">The table-relative row index</param>
         [MethodImpl(Inline)]
-        public ref readonly Index<RuleCell> Cells(uint table, uint row)
+        public ref readonly Seq<RuleCell> Cells(uint table, uint row)
             => ref _Tables[table].Rows[row].Cells;
 
         /// <summary>

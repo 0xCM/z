@@ -15,13 +15,18 @@ partial class XedRules
 
         public readonly ushort RowIndex;
 
-        public readonly Index<CellKey> Keys;
+        public readonly Seq<CellKey> Keys;
 
-        public readonly Index<CellInfo> CellInfo;
+        public readonly Seq<CellInfo> CellInfo;
 
         public readonly ushort ColCount;
 
-        [MethodImpl(Inline)]
+        readonly byte AntecedantCount;
+
+        readonly byte OperatorIndex;
+        
+        readonly byte ConsequentCount;
+
         public RowSpec(RuleIdentity sig, ushort tid, ushort rix, CellKey[] keys, CellInfo[] cells)
         {
             Sig = sig;
@@ -30,6 +35,40 @@ partial class XedRules
             Keys = keys;
             CellInfo = cells;
             ColCount = (ushort)Require.equal(keys.Length, cells.Length);
+            var a = z8;
+            var o = z8;
+            var c = z8;
+            for(var i=z8; i<ColCount; i++)
+            {
+                ref readonly var key = ref Keys[i];
+                if(key.Logic == LogicClass.Antecedant)
+                    a++;
+                else if(key.Logic == LogicClass.Operator)
+                    o=i;
+                else if(key.Logic == LogicClass.Consequent)
+                    c++;                
+            }
+            AntecedantCount = a;
+            OperatorIndex = o;
+            ConsequentCount = c;
+        }
+
+        public ReadOnlySpan<CellKey> Antecedants
+        {
+            [MethodImpl(Inline)]
+            get => sys.slice(Keys.View,0,AntecedantCount);
+        }
+
+        public ref readonly CellKey Operator
+        {
+            [MethodImpl(Inline)]
+            get => ref Keys[OperatorIndex];
+        }
+
+        public ReadOnlySpan<CellKey> Consequents
+        {
+            [MethodImpl(Inline)]
+            get => ConsequentCount != 0 ? sys.slice(Keys.View,OperatorIndex + 1,ConsequentCount) : sys.empty<CellKey>();
         }
 
         [MethodImpl(Inline)]

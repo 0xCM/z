@@ -10,39 +10,9 @@ using System.Linq;
 using static sys;
 using static XedModels;
 using static XedRules;
-using static XedZ;
-
-partial class XedRules
-{
-    public class InstructionRules
-    {
-        readonly InstBlockPatterns _Patterns;
-
-        readonly ReadOnlySeq<InstRuleDef> _Defs;
-
-        readonly ReadOnlySeq<InstBlockOperand> _Ops;
-
-        public InstructionRules(InstBlockPatterns patterns, ReadOnlySeq<InstRuleDef> src, ReadOnlySeq<InstBlockOperand> operands)
-        {
-            _Patterns = patterns;
-            _Defs = src;
-            _Ops = operands;
-        }        
-
-        public ref readonly InstBlockPatterns Patterns => ref _Patterns;
-
-        public ref readonly ReadOnlySeq<InstRuleDef> Definitions => ref _Defs;
-
-        public ref readonly ReadOnlySeq<InstBlockOperand> Operands => ref _Ops;
-
-        public static InstructionRules Empty => new (InstBlockPatterns.Empty, sys.empty<InstRuleDef>(), sys.empty<InstBlockOperand>());
-    }
-}
-
 
 public partial class XedImport : WfSvc<XedImport>
 {     
-
     public void Run()
     {
         XedPaths.Imports().Delete();
@@ -238,6 +208,7 @@ public partial class XedImport : WfSvc<XedImport>
             row.Seq = k;
             row.TableId = src.TableId;
             row.Index = j;
+            row.Rule = src.Rule;
             row.Kind = src.TableKind;
             row.Name = src.TableName;
             row.Statement = specFormat;
@@ -271,7 +242,7 @@ public partial class XedImport : WfSvc<XedImport>
         for(var i=0; i<src.TableCount; i++)
         {
             ref readonly var table = ref src[i];
-            dst.AppendLine(string.Format("{0,-32} {1}", table.Sig, XedPaths.CheckedRulePage(table.Sig)));
+            dst.AppendLine(string.Format("{0,-32} {1}", table.Identity, XedPaths.CheckedRulePage(table.Identity)));
             dst.AppendLine(RP.PageBreak120);
             dst.AppendLine();
             for(var j=0; j<table.RowCount; j++)

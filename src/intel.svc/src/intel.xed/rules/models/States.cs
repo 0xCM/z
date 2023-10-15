@@ -15,11 +15,11 @@ partial class XedFields
     {
         public XedFieldState Fields;
 
-        public Index<OpSpec> Ops;
+        public Seq<OpSpec> Ops;
 
         public AsmInfo Asm;
 
-        public Index<FieldValue> FieldValues;
+        public Seq<FieldValue> FieldValues;
 
         [MethodImpl(Inline)]
         public bool Field(FieldKind kind, out FieldValue dst)

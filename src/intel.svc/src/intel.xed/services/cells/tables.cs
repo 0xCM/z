@@ -20,7 +20,7 @@ partial class XedCells
             ref readonly var table = ref src[i];
             var tix = i;
             var tk = table.TableKind;
-            ref readonly var sig = ref table.Rule;
+            ref readonly var sig = ref table.Rule;            
             var rows = alloc<RowSpec>(table.RowCount);
             for(ushort j=0; j<table.RowCount; j++)
             {
@@ -63,6 +63,6 @@ partial class XedCells
             seek(specs,i) = spec;
             dst.Add(sig, spec);
         }
-        return specs.Select(x => (x.Sig,x)).ToDictionary();
+        return specs.Select(x => (x.Identity,x)).ToDictionary();
     }
 }

@@ -3,66 +3,34 @@
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0;
+
 using System.Linq;
 
-using static XedModels;
+using static XedZ;
 
-partial class XedZ
+partial class XedModels
 {
-    public readonly record struct PatternKey
-    {
-        readonly XedInstForm Form;
-
-        readonly MachineMode Mode;
-
-        readonly ushort Index;
-
-        readonly bit Lock;
-
-        public PatternKey(XedInstForm form, MachineMode mode, bool @lock, byte index)
-        {
-            Form = form;
-            Mode = mode;
-            Lock = @lock;
-            Index = index;
-        }
-
-        public Hash32 Hash
-        {
-            [MethodImpl(Inline)]
-            get => (uint)Form | ((uint)Index << 16) | ((uint)Mode.Class << 24) | ((uint)Lock << 28);
-        }
-
-        public override int GetHashCode()
-            => Hash;
-
-        public bool Equals(PatternKey src)
-            => Form == src.Form && Index == src.Index && Mode == src.Mode && Lock == src.Lock;
-    }   
-
-    public static int cmp(InstBlockPattern a, InstBlockPattern b)
-    {
-        var result = a.Form.CompareTo(b.Form);
-        if(result == 0)
-        {
-            result = a.Mode.CompareTo(b.Mode);
-            if(result == 0)
-            {
-                result = a.Lock.CompareTo(b.Lock);
-                if(result == 0)
-                    result = a.Operands.Format().CompareTo(b.Operands.Format());
-            }
-        }
-        return result;
-    }
-
-    public static PatternKey key(InstBlockPattern pattern)
-    {
-        return new(pattern.Form, pattern.Mode, pattern.Lock, pattern.Index);
-    }
-
     public sealed class InstBlockPatterns
     {
+        public static PatternKey key(InstBlockPattern pattern)
+            => new(pattern.Form, pattern.Mode, pattern.Lock, pattern.Index);
+
+        public static int cmp(InstBlockPattern a, InstBlockPattern b)
+        {
+            var result = a.Form.CompareTo(b.Form);
+            if(result == 0)
+            {
+                result = a.Mode.CompareTo(b.Mode);
+                if(result == 0)
+                {
+                    result = a.Lock.CompareTo(b.Lock);
+                    if(result == 0)
+                        result = a.Operands.Format().CompareTo(b.Operands.Format());
+                }
+            }
+            return result;
+        }
+
         readonly ConcurrentDictionary<PatternKey,InstBlockPattern> Lookup;
 
         readonly Seq<InstBlockPattern> Data;
