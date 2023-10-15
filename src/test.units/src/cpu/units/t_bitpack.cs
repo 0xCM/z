@@ -19,7 +19,7 @@ namespace Z0
                 var bitseq = bs.BitSeq.Blocked(block);
                 Claim.eq(bitseq.CellCount,n4);
 
-                var packed = BitPack.pack4x8x1(bitseq,0);
+                var packed = BitPack.pack4x8x1(bs.Scalar<uint>());
                 Trace("bitstring", bs, FlairKind.Running);
                 Trace("bitseq", bitseq.Format(), FlairKind.Running);
 
@@ -27,33 +27,42 @@ namespace Z0
             }
         }
 
-        public void unpack_16()
+
+
+    /// <summary>
+    /// Packs 64 1-bit values taken from the least significant bit of each source byte
+    /// </summary>
+    /// <param name="src">The data source</param>
+    [MethodImpl(Inline)]
+    public static ulong pack64x8x1<T>(in SpanBlock512<T> src, uint block)
+        where T : unmanaged
+            => BitPack.pack64x8x1(src.BlockLead((int)block));
+
+
+        /// <summary>
+        /// Distributes each packed source bit to the least significant bit of the corresponding target byte
+        /// </summary>
+        /// <param name="src">The packed source bits</param>
+        /// <param name="dst">The blocked target</param>
+        /// <param name="block">The block index</param>
+        /// <typeparam name="T">The source type</typeparam>
+        [MethodImpl(Inline), Op]
+        public static SpanBlock512<byte> unpack1x64(ulong src, in SpanBlock512<byte> dst, int block)
         {
-            for(var sample = 0; sample < RepCount; sample ++)
-            {
-                var src = Random.Next<ushort>();
-                var dst = SpanBlocks.alloc<byte>(n128,1);
-
-                BitPack.unpack1x16x8(src, dst, 0);
-                unpack_check(src,dst);
-
-                var rebound = BitPack.pack16x8x1(dst);
-                Claim.eq(src,rebound);
-            }
+            BitPack.unpack1x64x8(src, dst.CellBlock(block));
+            return dst;
         }
-
-
         public void unpack_64()
         {
             for(var sample=0; sample< RepCount; sample++)
             {
                 var src = Random.Next<ulong>();
                 var dst = SpanBlocks.alloc<byte>(n512,1);
-                BitPack.unpack1x64(src, dst,0);
+                unpack1x64(src, dst,0);
 
                 unpack_check(src,dst.Storage);
 
-                var rebound = BitPack.pack64x8x1(dst,0);
+                var rebound = pack64x8x1(dst,0);
 
                 ClaimPrimal.eq(src,rebound);
             }
@@ -106,13 +115,22 @@ namespace Z0
             }
         }
 
+        /// <summary>
+        /// Pack 16 1-bit values taken from the least significant bit of each source byte
+        /// </summary>
+        /// <param name="src">The pack source</param>
+        [MethodImpl(Inline), Op]
+        public static ushort pack16x8x1<T>(SpanBlock128<T> src, uint block = 0)
+            where T : unmanaged
+                => BitPack.pack16x8x1(src.BlockLead((int)block));
+
         public void pack_8x1_basecase()
         {
             void case2()
             {
                 var src = SpanBlocks.alloc<byte>(n128,1);
                 gcpu.vones<byte>(n128).StoreTo(src);
-                var dst = BitPack.pack16x8x1(src);
+                var dst = pack16x8x1(src);
                 Claim.eq(dst,ushort.MaxValue);
             }
 

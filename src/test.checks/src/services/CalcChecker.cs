@@ -55,7 +55,7 @@ namespace Z0
             var buffer = span<char>(Pow2.T12);
             var src = (uint)Masks.Hi32x16;
             var dst = ByteBlock32.Empty.Bytes;
-            BitPack.unpack1x32x8(src, dst);
+            gpack.unpack1x32x8(src, dst);
             var count = HexRender.render(UpperCase, dst, buffer);
             var hex = text.format(slice(buffer,0,count));
             Log(hex);

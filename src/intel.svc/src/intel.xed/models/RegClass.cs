@@ -7,7 +7,6 @@ namespace Z0;
 
 partial class XedModels
 {
-
     [SymSource(xed), DataWidth(num5.Width)]
     public enum RegClass : byte
     {

@@ -15,6 +15,9 @@ public partial class XedMachines
 
     public static void gen(MachineContext context, ITextEmitter dst)
     {
+        const string MachineName = "XedMachine";
+        var decls = context.RuleDecls;
+
         var indent = 0u;
         dst.IndentLineFormat(indent,"namespace Z0;");
         dst.AppendLine();
@@ -29,8 +32,27 @@ public partial class XedMachines
 
         dst.IndentLineFormat(indent, "public XedFieldState FieldState;");
         dst.AppendLine();
+        dst.IndentLineFormat(indent, "ReadOnlySeq<Action> Rules;");
+        dst.AppendLine();
         
-        var decls = context.RuleDecls;
+        dst.IndentLine(indent, $"public {MachineName}()");
+        dst.IndentLine(indent, Chars.LBrace);
+        indent+=4;
+        dst.IndentLine(indent, "Rules = new Action[]");
+
+        dst.IndentLine(indent, Chars.LBrace);
+        indent+=4;
+        for(var i=0; i<decls.Count; i++)
+        {
+            ref readonly var decl = ref decls[i];
+            dst.IndentLine(indent, $"{ActionName(decl.Table)},");
+        }
+        indent -=4;
+        dst.IndentLine(indent,  $"{Chars.RBrace}{Chars.Semicolon}");
+
+        indent -=4;
+        dst.IndentLine(indent, Chars.RBrace);
+
         for(var i=0; i<decls.Count; i++)
         {
             ref readonly var decl = ref decls[i];
@@ -42,14 +64,17 @@ public partial class XedMachines
         dst.IndentLine(indent, Chars.RBrace);
     }
 
-    static void render(ref uint indent, CellTable Table, ITextEmitter dst)
+    static string ActionName(CellTable src)
+        => string.Format("{0}_{1}", src.Name, src.Kind);
+
+    static void render(ref uint indent, CellTable table, ITextEmitter dst)
     {
-        dst.IndentLineFormat(indent, "public void {0}_{1}()", Table.Name, Table.Kind);
+        dst.IndentLineFormat(indent, "public void {0}()",  ActionName(table));
         dst.IndentLine(indent, Chars.LBrace);
         indent += 4;
-        for(var i=0; i<Table.RowCount; i++)
+        for(var i=0; i<table.RowCount; i++)
         {
-            ref readonly var row = ref Table[i];
+            ref readonly var row = ref table[i];
 
             dst.Indent(indent,"// ");
             var antecedants = row.Antecedants();
