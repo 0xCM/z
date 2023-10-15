@@ -13,6 +13,31 @@ using static vcpu;
 [ApiHost]
 public readonly struct gfcpu
 {
+    [MethodImpl(Inline)]
+    public static Vector256<T> vnor<T>(Vector256<T> x, Vector256<T> y)
+        where T : unmanaged
+    {
+        if(typeof(T) == typeof(float))
+            return generic<T>(fcpu.vnor(v32f(x), v32f(y)));
+        else if(typeof(T) == typeof(double))
+            return generic<T>(fcpu.vnor(v64f(x), v64f(y)));
+        else
+            throw no<T>();
+    }
+        
+    [MethodImpl(Inline)]
+    public static Vector256<T> vxnor<T>(Vector256<T> x, Vector256<T> y)
+        where T : unmanaged
+    {
+        if(typeof(T) == typeof(float))
+            return generic<T>(fcpu.vxnor(v32f(x), v32f(y)));
+        else if(typeof(T) == typeof(double))
+            return generic<T>(fcpu.vxnor(v64f(x), v64f(y)));
+        else
+            throw no<T>();
+    }
+
+
     [MethodImpl(Inline), Op, Closures(Floats)]
     public static Vector128<T> vadd<T>(Vector128<T> x, Vector128<T> y)
         where T : unmanaged

@@ -43,19 +43,8 @@ namespace Z0
             else if(typeof(T) == typeof(long))
                 return generic<T>(vcpu.vperm4x64(v64i(x), spec));
             else
-                return vperm4x64_f(x,spec);
-        }
-
-        [MethodImpl(Inline)]
-        static Vector256<T> vperm4x64_f<T>(Vector256<T> x, Perm4L spec)
-            where T : unmanaged
-        {
-            if(typeof(T) == typeof(float))
-                return generic<T>(v32f(vcpu.vperm4x64(v64f(x), spec)));
-            else if(typeof(T) == typeof(double))
-                return generic<T>(vcpu.vperm4x64(v64f(x), spec));
-            else
                 throw no<T>();
         }
+
     }
 }

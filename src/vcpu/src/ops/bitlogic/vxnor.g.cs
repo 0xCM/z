@@ -59,18 +59,6 @@ namespace Z0
             else if(typeof(T) == typeof(long))
                 return generic<T>(vcpu.vxnor(v64i(x), v64i(y)));
             else
-                return vxnor_f(x,y);
-        }
-
-        [MethodImpl(Inline)]
-        static Vector128<T> vxnor_f<T>(Vector128<T> x, Vector128<T> y)
-            where T : unmanaged
-        {
-            if(typeof(T) == typeof(float))
-                return generic<T>(vcpu.vxnor(v32f(x), v32f(y)));
-            else if(typeof(T) == typeof(double))
-                return generic<T>(vcpu.vxnor(v64f(x), v64f(y)));
-            else
                 throw no<T>();
         }
 
@@ -102,18 +90,6 @@ namespace Z0
                 return generic<T>(vcpu.vxnor(v32i(x), v32i(y)));
             else if(typeof(T) == typeof(long))
                 return generic<T>(vcpu.vxnor(v64i(x), v64i(y)));
-            else
-                return vxnor_f(x,y);
-        }
-
-        [MethodImpl(Inline)]
-        static Vector256<T> vxnor_f<T>(Vector256<T> x, Vector256<T> y)
-            where T : unmanaged
-        {
-            if(typeof(T) == typeof(float))
-                return generic<T>(vcpu.vxnor(v32f(x), v32f(y)));
-            else if(typeof(T) == typeof(double))
-                return generic<T>(vcpu.vxnor(v64f(x), v64f(y)));
             else
                 throw no<T>();
         }

@@ -2,8 +2,10 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
-{
+namespace Z0;
+
+
+
     public struct V256x2
     {
         Vector256<ushort> X0;
@@ -17,4 +19,3 @@ namespace Z0
             X1 = x1;
         }
     }
-}

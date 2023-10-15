@@ -836,4 +836,295 @@ public class fcpu
     [MethodImpl(Inline), Op]
     public static Vector256<double> vnegate(Vector256<double> x)
         => vsub(default, x);
+
+    /// <summary>
+    /// int _mm256_movemask_ps (__m256 a) VMOVMSKPS reg, ymm
+    /// Constructs an integer from the most significant bit of each source vector component
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Op]
+    public static int vmovemask(Vector256<float> src)
+        => MoveMask(src);
+
+    /// <summary>
+    /// int _mm256_movemask_pd (__m256d a) VMOVMSKPD reg, ymm
+    /// Constructs an integer from the most significant bit of each source vector component
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Op]
+    public static int vmovemask(Vector256<double> src)
+        => MoveMask(src);
+
+
+    /// <summary>
+    /// __m256 _mm256_permute2f128_ps (__m256 a, __m256 b, int imm8) VPERM2F128 ymm, ymm, ymm/m256, imm8
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The permutation spec</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vperm2x128(Vector256<float> x, Vector256<float> y, Perm2x4 spec)
+        => Permute2x128(x, y, (byte)spec);
+
+    /// <summary>
+    /// __m256d _mm256_permute2f128_pd (__m256d a, __m256d b, int imm8) VPERM2F128 ymm, ymm, ymm/m256, imm8
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The permutation spec</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vperm2x128(Vector256<double> x, Vector256<double> y, Perm2x4 spec)
+        => Permute2x128(x, y, (byte)spec);
+
+    /// <summary>
+    /// __m256 _mm256_permute2f128_ps (__m256 a, __m256 b, int imm8) VPERM2F128 ymm, ymm, ymm/m256, imm8
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The permutation spec</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vperm2x128(Vector256<float> x, Vector256<float> y, [Imm] byte spec)
+        => Permute2x128(x, y, spec);
+
+    /// <summary>
+    /// __m256d _mm256_permute2f128_pd (__m256d a, __m256d b, int imm8) VPERM2F128 ymm, ymm, ymm/m256, imm8
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The permutation spec</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vperm2x128(Vector256<double> x, Vector256<double> y, [Imm] byte spec)
+        => Permute2x128(x, y, spec);
+
+    /// <summary>
+    /// Swaps hi/lo 128-bit lanes
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vswaphl(Vector256<float> x)
+        => vperm2x128(x,x, Perm2x4.DA);
+
+    /// <summary>
+    /// Swaps hi/lo 128-bit lanes
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vswaphl(Vector256<double> x)
+        => vperm2x128(x,x, Perm2x4.DA);        
+
+
+    /// <summary>
+    /// __m256 _mm256_permutevar8x32_ps (__m256 a, __m256i idx) VPERMPS ymm, ymm/m256, ymm
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="spec">The perm spec</param>
+    [MethodImpl(Inline), Asm(ApiAsmClass.VPERMPS)]
+    public static Vector256<float> vperm8x32(Vector256<float> src, Vector256<uint> spec)
+        => PermuteVar8x32(src, spec.AsInt32());
+
+    /// <summary>
+    /// Permutes components in the source vector across lanes as specified by the control vector
+    /// __m256 _mm256_permutevar8x32_ps (__m256 a, __m256i idx) VPERMPS ymm, ymm/m256, ymm
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="spec">The control vector</param>
+    [MethodImpl(Inline), Asm(ApiAsmClass.VPERMPS)]
+    public static Vector256<float> vperm8x32(Vector256<float> src, Vector256<int> spec)
+        => PermuteVar8x32(src, spec);
+
+    /// <summary>
+    /// __m256d _mm256_permute4x64_pd (__m256d a, const int imm8) VPERMPD ymm, ymm/m256, imm8
+    /// Permutes vector content across lanes at 64-bit granularity
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="spec">The permutation spec</param>
+    [MethodImpl(Inline), Asm(ApiAsmClass.VPERMPD)]
+    public static Vector256<double> vperm4x64(Vector256<double> x, [Imm] Perm4L spec)
+        => Permute4x64(x,(byte)spec);
+
+    /// <summary>
+    /// __m256d _mm256_permute4x64_pd (__m256d a, const int imm8) VPERMPD ymm, ymm/m256, imm8
+    /// Permutes components in the source vector across lanes as specified by the control byte
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="spec">The control byte</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vperm4x64(Vector256<double> x, [Imm] byte spec)
+        => Permute4x64(x,spec);
+
+
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vreverse(Vector256<float> src)
+        => vperm8x32(src,MRev256f32);
+
+    /// <summary>
+    /// __m128 _mm_shuffle_ps (__m128 a, __m128 b, unsigned int control) SHUFPS xmm, xmm/m128, imm8
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec"></param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vshuffle(Vector128<float> x, Vector128<float> y, [Imm] byte spec)
+        => Shuffle(x, y, spec);
+
+    /// <summary>
+    /// __m128d _mm_shuffle_pd (__m128d a, __m128d b, int immediate) SHUFPD xmm, xmm/m128, imm8
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec"></param>
+    /// <remarks>
+    /// dst[63:0] := (imm8[0] == 0) ? a[63:0] : a[127:64]
+    /// dst[127:64] := (imm8[1] == 0) ? b[63:0] : b[127:64]
+    /// </remarks>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vshuffle(Vector128<double> x, Vector128<double> y, [Imm] byte spec)
+        => Shuffle(x, y, spec);
+
+    /// <summary>
+    /// Transposes a 4x4 matrix of floats, adapted from MSVC intrinsic headers
+    /// </summary>
+    /// <param name="row0">The first row</param>
+    /// <param name="row1">The second row</param>
+    /// <param name="row2">The third row</param>
+    /// <param name="row3">The fourth row</param>
+    [MethodImpl(Inline), Op]
+    public static void vtranspose(ref Vector128<float> row0, ref Vector128<float> row1, ref Vector128<float> row2, ref Vector128<float> row3)
+    {
+        var tmp0 = Shuffle(row0,row1, 0x44);
+        var tmp2 = Shuffle(row0, row1, 0xEE);
+        var tmp1 = Shuffle(row2, row3, 0x44);
+        var tmp3 = Shuffle(row2,row3, 0xEE);
+        row0 = Shuffle(tmp0,tmp1, 0x88);
+        row1 = Shuffle(tmp0,tmp1, 0xDD);
+        row2 = Shuffle(tmp2,tmp3, 0x88);
+        row3 = Shuffle(tmp2, tmp3, 0xDD);
+    }
+
+    /// <summary>
+    /// __m128 _mm_unpackhi_ps (__m128 a, __m128 b) UNPCKHPS xmm, xmm/m128
+    /// Creates a 128-bit vector where the lower 64 bits are taken from the
+    /// higher 64 bits of the first source vector and the higher 64 bits are taken
+    /// from the higher 64 bits of the second source vector
+    /// </summary>
+    /// <param name="x">The left source vector</param>
+    /// <param name="y">The right source vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vunpackhi(Vector128<float> x, Vector128<float> y)
+        => UnpackHigh(x,y);
+
+    /// <summary>
+    /// __m128d _mm_unpackhi_pd (__m128d a, __m128d b) UNPCKHPD xmm, xmm/m128
+    /// Creates a 128-bit vector where the lower 64 bits are taken from the
+    /// higher 64 bits of the first source vector and the higher 64 bits are taken
+    /// from the higher 64 bits of the second source vector
+    /// </summary>
+    /// <param name="x">The left source vector</param>
+    /// <param name="y">The right source vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vunpackhi(Vector128<double> x, Vector128<double> y)
+        => UnpackHigh(x,y);
+
+
+    /// <summary>
+    /// __m256 _mm256_unpackhi_ps (__m256 a, __m256 b) VUNPCKHPS ymm, ymm, ymm/m256
+    /// Creates a 256-bit vector where the lower 128 bits are taken from the
+    /// higher 128 bits of the first source vector and the higher 128 bits are taken
+    /// from the higher 128 bits of the second source vector
+    /// </summary>
+    /// <param name="x">The left source vector</param>
+    /// <param name="y">The right source vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vunpackhi(Vector256<float> x, Vector256<float> y)
+        => UnpackHigh(x,y);
+
+    /// <summary>
+    /// __m256d _mm256_unpackhi_pd (__m256d a, __m256d b) VUNPCKHPD ymm, ymm, ymm/m256
+    /// Creates a 256-bit vector where the lower 128 bits are taken from the
+    /// higher 128 bits of the first source vector and the higher 128 bits are taken
+    /// from the higher 128 bits of the second source vector
+    /// </summary>
+    /// <param name="x">The left source vector</param>
+    /// <param name="y">The right source vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vunpackhi(Vector256<double> x, Vector256<double> y)
+        => UnpackHigh(x,y);
+
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vnot(Vector128<float> a)
+        => Xor(a, CompareEqual(a, a));
+
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vnot(Vector128<double> a)
+        => Xor(a, CompareEqual(a, a));
+
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vnot(Vector256<float> a)
+        => Xor(a, Compare(a, a, FloatComparisonMode.OrderedEqualNonSignaling));
+
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vnot(Vector256<double> a)
+        => Xor(a, Compare(a, a, FloatComparisonMode.OrderedEqualNonSignaling));
+
+    /// <summary>
+    /// Computes the bitwise XOR between operands
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vxnor(Vector128<float> x, Vector128<float> y)
+        => vnot(Xor(x, y));
+
+    /// <summary>
+    /// Computes the bitwise XOR between operands
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vxnor(Vector128<double> x, Vector128<double> y)
+        => vnot(Xor(x, y));
+
+    /// <summary>
+    /// Computes the bitwise XOR between operands
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vxnor(Vector256<float> x, Vector256<float> y)
+        => vnot(Xor(x, y));
+
+    /// <summary>
+    /// Computes the bitwise XOR between operands
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vxnor(Vector256<double> x, Vector256<double> y)
+        => vnot(Xor(x, y));
+
+    /// <summary>
+    /// Computes ~(x | y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Nor]
+    public static Vector256<float> vnor(Vector256<float> x, Vector256<float> y)
+        => vnot(Or(x, y));
+
+    /// <summary>
+    /// Computes ~(x | y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Nor]
+    public static Vector256<double> vnor(Vector256<double> x, Vector256<double> y)
+        => vnot(Or(x, y));
+
+
+    static Vector256<int> MRev256f32
+    {
+        [MethodImpl(Inline), Op]
+        get => vcpu.vparts(w256i, 7, 6, 5, 4, 3, 2, 1, 0);
+    }
+
 }

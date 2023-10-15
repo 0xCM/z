@@ -13,6 +13,30 @@ using static vcpu;
 [ApiHost]
 public static class gfscpu
 {
+    [MethodImpl(Inline)]
+    public static Vector256<T> vperm4x64<T>(Vector256<T> x, Perm4L spec)
+        where T : unmanaged
+    {
+        if(typeof(T) == typeof(float))
+            return generic<T>(v32f(fcpu.vperm4x64(v64f(x), spec)));
+        else if(typeof(T) == typeof(double))
+            return generic<T>(fcpu.vperm4x64(v64f(x), spec));
+        else
+            throw no<T>();
+    }
+
+    [MethodImpl(Inline)]
+    public static Vector256<T> vperm2x128<T>(Vector256<T> lhs, Vector256<T> rhs, Perm2x4 spec)
+        where T : unmanaged
+    {
+        if(typeof(T) == typeof(float))
+            return generic<T>(fcpu.vperm2x128(v32f(lhs), v32f(rhs),spec));
+        else if(typeof(T) == typeof(double))
+            return generic<T>(fcpu.vperm2x128(v64f(lhs), v64f(rhs),spec));
+        else
+            throw no<T>();
+    }    
+
     [MethodImpl(Inline), Op, Closures(Floats)]
     public static Vector128<T> load<T>(T src)
         where T : unmanaged
