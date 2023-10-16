@@ -5,7 +5,6 @@
 namespace Z0;
 
 using static sys;
-using static Numbers;
 
 using T = num15;
 using D = System.UInt16;
@@ -28,10 +27,12 @@ public readonly struct num15 : INumber<T>
 
     public const byte Width = 15;
 
+    public const int AlignedSize = 2;
+
     /// <summary>
     /// 32,767
     /// </summary>
-    public const D MaxValue = Limit.Max15u;
+    public const D MaxValue = NumericLimits.Max15u;
 
     public const D Mod = (D)MaxValue + 1;
 
@@ -48,7 +49,7 @@ public readonly struct num15 : INumber<T>
     [MethodImpl(Inline), Op]
     public static T number<S>(S src)
         where S : unmanaged
-            => @as<S,T>(src);
+            => cover(crop(@as<S,D>(src)));
 
     [MethodImpl(Inline)]
     public static D crop(D src)
@@ -217,7 +218,7 @@ public readonly struct num15 : INumber<T>
         => Value.ToString();
 
     public string Bitstring()
-        => bitstring(this);
+        => Numbers.bitstring(this);
 
     public string Hex()
         => Value.FormatHex();

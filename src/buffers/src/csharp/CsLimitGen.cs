@@ -20,7 +20,7 @@ namespace Z0
             for(var i=1; i<=64; i++)
             {
                 emitter.Comment(offset, string.Format(CommentPattern, i, max));
-                max = Numbers.max((byte)i);
+                max = (ulong)Pow2.m1((byte)i);
                 if(i <= 8)
                     emitter.NumericLit(offset, string.Format(NamePattern,i), (byte)max);
                 else if(i <= 16)

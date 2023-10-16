@@ -25,7 +25,7 @@ public class VLut
 
     [MethodImpl(Inline), Op]
     public static Vector128<byte> select(VLut16 lut, Vector128<byte> items)
-        => vcpu.vshuf16x8(items, lut.Mask);
+        => vcpu.vshuffle(items, lut.Mask);
 
     [MethodImpl(Inline), Op]
     public static Vector256<byte> select(VLut32 lut, Vector256<byte> items)

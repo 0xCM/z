@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-partial class BitPack
+partial class Numbers
 {
     [MethodImpl(Inline), Op]
     public static num7 pack(num3 a, num4 b)

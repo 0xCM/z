@@ -31,7 +31,9 @@ public readonly struct num17 : INumber<T>
     /// </summary>
     public const byte Width = 17;
 
-    public const D MaxValue = Limit.Max17u;
+    public const int AlignedSize = 2;
+
+    public const D MaxValue = NumericLimits.Max17u;
 
     public const D Mod = (D)MaxValue + 1;
 
@@ -48,7 +50,7 @@ public readonly struct num17 : INumber<T>
     [MethodImpl(Inline), Op]
     public static T number<S>(S src)
         where S : unmanaged
-            => @as<S,T>(src);
+            => cover(crop(@as<S,D>(src)));
 
     [MethodImpl(Inline)]
     public static D crop(D src)

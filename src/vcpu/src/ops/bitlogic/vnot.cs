@@ -70,14 +70,6 @@ partial class vcpu
     public static Vector128<ulong> vnot(Vector128<ulong> a)
         => vnot(a.AsUInt32()).AsUInt64();
 
-    [MethodImpl(Inline), Op]
-    public static Vector128<float> vnot(Vector128<float> a)
-        => Xor(a, CompareEqual(a, a));
-
-    [MethodImpl(Inline), Op]
-    public static Vector128<double> vnot(Vector128<double> a)
-        => Xor(a, CompareEqual(a, a));
-
     /// <summary>
     /// Computes the bitwise negation of the source vector
     /// </summary>
@@ -141,15 +133,6 @@ partial class vcpu
     [MethodImpl(Inline), Not]
     public static Vector256<ulong> vnot(Vector256<ulong> a)
         => Xor(a, CompareEqual(a, a));
-
-    [MethodImpl(Inline), Op]
-    public static Vector256<float> vnot(Vector256<float> a)
-        => Xor(a, Compare(a, a, FloatComparisonMode.OrderedEqualNonSignaling));
-
-    [MethodImpl(Inline), Op]
-    public static Vector256<double> vnot(Vector256<double> a)
-        => Xor(a, Compare(a, a, FloatComparisonMode.OrderedEqualNonSignaling));
-
 
     /// <summary>
     /// Computes the bitwise negation of the source vector

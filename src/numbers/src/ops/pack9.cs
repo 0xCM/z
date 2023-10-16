@@ -6,7 +6,7 @@ namespace Z0;
 
 using static math;
 
-partial class BitPack
+partial class Numbers
 {
     [MethodImpl(Inline), Op]
     public static num9 pack(num2 a, num7 b)

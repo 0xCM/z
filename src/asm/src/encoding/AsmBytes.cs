@@ -247,9 +247,9 @@ public class AsmBytes
     public static Index<SibBitfieldRow> SibRows()
     {
         var buffer = sys.alloc<SibBitfieldRow>(256);
-        var f0 = Numbers.bits(n3);
-        var f1 = Numbers.bits(n3);
-        var f2 = Numbers.bits(n2);
+        var f0 = BitSeq.nbits(n3);
+        var f1 = BitSeq.nbits(n3);
+        var f2 = BitSeq.nbits(n2);
         ref var dst = ref first(buffer);
         var m = 0u;
         for(var k=0; k<f2.Length; k++)
@@ -262,7 +262,7 @@ public class AsmBytes
                     row.@base = skip(f0, i);
                     row.index = skip(f1, j);
                     row.scale = skip(f2, k);
-                    var sib = new Sib(BitPack.pack(row.@base, row.index, row.scale));
+                    var sib = new Sib(Numbers.pack(row.@base, row.index, row.scale));
                     row.bitstring = bitstring(sib);
                     row.hex = (byte)m;
                     m++;

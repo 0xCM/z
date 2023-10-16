@@ -5,7 +5,7 @@
 namespace Z0;
 
 using static sys;
-using static Numbers;
+//using static Numbers;
 
 using T = num64;
 using D = System.UInt64;
@@ -28,7 +28,9 @@ public readonly struct num64 : INumber<T>
 
     public const byte Width = 64;
 
-    public const D MaxValue = Limit.Max64u;
+    public const int AlignedSize = 2;
+
+    public const D MaxValue = NumericLimits.Max64u;
 
     public static T Zero => default;
 
@@ -182,8 +184,8 @@ public readonly struct num64 : INumber<T>
 
     public bit IsNonZero
     {
-            [MethodImpl(Inline)]
-            get => Value != 0;
+        [MethodImpl(Inline)]
+        get => Value != 0;
     }
 
     public bit IsMax
@@ -202,7 +204,7 @@ public readonly struct num64 : INumber<T>
         => Value.ToString();
 
     public string Bitstring()
-        => bitstring(this);
+        => Numbers.bitstring(this);
 
     public string Hex()
         => Value.FormatHex();

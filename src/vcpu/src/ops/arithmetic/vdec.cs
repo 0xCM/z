@@ -136,7 +136,6 @@ partial class vcpu
     public static Vector256<ulong> vdec(Vector256<ulong> src)
         => vsub(src, vunits<ulong>(w256));
 
-
     /// <summary>
     /// Creates a 128-bit vector with component values k - 1, ..., 1, 0  where k is the length of the target vector
     /// </summary>

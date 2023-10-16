@@ -4,9 +4,122 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+
 [ApiHost, Free]
 public class fcpu
 {
+
+    /// <summary>
+    /// __m128 _mm_andnot_ps (__m128 a, __m128 b) ANDNPS xmm, xmm/m128
+    /// Effects the composite operation x & (~y) for the left and right operands
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vcnonimpl(Vector128<float> x, Vector128<float> y)
+        => AndNot(y, x);
+
+    /// <summary>
+    ///  __m128d _mm_andnot_pd (__m128d a, __m128d b) ADDNPD xmm, xmm/m128
+    /// Effects the composite operation x & (~y) for the left and right operands
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vcnonimpl(Vector128<double> x, Vector128<double> y)
+        => AndNot(y, x);
+
+    /// <summary>
+    /// __m256 _mm256_andnot_ps (__m256 a, __m256 b) VANDNPS ymm, ymm, ymm/m256
+    /// Effects the composite operation x & (~y) for the left and right operands
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vcnonimpl(Vector256<float> x, Vector256<float> y)
+        => AndNot(y, x);
+
+    /// <summary>
+    /// __m256d _mm256_andnot_pd (__m256d a, __m256d b) VANDNPD ymm, ymm, ymm/m256
+    /// Effects the composite operation x & (~y) for the left and right operands
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vcnonimpl(Vector256<double> x, Vector256<double> y)
+        => AndNot(y, x);
+
+    /// <summary>
+    /// Computes ~(x & y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Nand]
+    public static Vector128<float> vnand(Vector128<float> x, Vector128<float> y)
+        => vnot(And(x, y));
+
+    /// <summary>
+    /// Computes ~(x & y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Nand]
+    public static Vector128<double> vnand(Vector128<double> x, Vector128<double> y)
+        => vnot(And(x, y));
+
+    /// <summary>
+    /// Computes ~(x & y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Nand]
+    public static Vector256<float> vnand(Vector256<float> x, Vector256<float> y)
+        => vnot(And(x, y));
+
+    /// <summary>
+    /// Computes ~(x & y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Nand]
+    public static Vector256<double> vnand(Vector256<double> x, Vector256<double> y)
+        => vnot(And(x, y));
+
+    /// <summary>
+    /// Computes XOR(x,NOT(y)) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vxornot(Vector128<float> x, Vector128<float> y)
+        => Xor(x, vnot(y));
+
+    /// <summary>
+    /// Computes XOR(x,NOT(y)) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vxornot(Vector128<double> x, Vector128<double> y)
+        => Xor(x, vnot(y));
+
+    /// <summary>
+    /// Computes XOR(x,NOT(y)) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vxornot(Vector256<float> x, Vector256<float> y)
+        => Xor(x, vnot(y));
+
+    /// <summary>
+    /// Computes XOR(x,NOT(y)) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vxornot(Vector256<double> x, Vector256<double> y)
+        => Xor(x, vnot(y));        
     /// <summary>
     /// __m128d _mm_cmp_pd (__m128d a, __m128d b, const int imm8)
     /// VCMPPD xmm, xmm, xmm/m128, imm8

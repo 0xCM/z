@@ -25,9 +25,11 @@ public readonly struct num12 : INumber<T>
 
     public const byte Width = 12;
 
+    public const int AlignedSize = 2;
+
     /// <summary>
     /// 4,095
-    public const D MaxValue = Limit.Max12u;
+    public const D MaxValue = NumericLimits.Max12u;
 
     public const D Mod = (D)MaxValue + 1;
 
@@ -60,12 +62,8 @@ public readonly struct num12 : INumber<T>
     [MethodImpl(Inline), Op]
     public static T number<S>(S src)
         where S : unmanaged
-            => @as<S,T>(src);
+            => cover(crop(@as<S,D>(src)));
 
-    [MethodImpl(Inline)]
-    public static T force<A>(A src)
-        where A : unmanaged
-            => T.crop(bw16(src));
 
     [MethodImpl(Inline), Op]
     public static bit test(T src, byte pos)

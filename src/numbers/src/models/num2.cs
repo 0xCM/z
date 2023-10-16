@@ -5,20 +5,14 @@
 namespace Z0;
 
 using static sys;
-using static Numbers;
 
 using T = num2;
 using D = System.Byte;
 using N = N2;
 
-[DataWidth(Width), ApiComplete]
+[DataWidth(Width), ApiComplete, StructLayout(LayoutKind.Sequential,Size=AlignedSize)]
 public readonly struct num2 : INumber<T>
 {
-    [MethodImpl(Inline), Op]
-    public static T number<S>(S src)
-        where S : unmanaged
-            => @as<S,T>(src);
-
     public readonly D Value;
 
     [MethodImpl(Inline)]
@@ -27,7 +21,9 @@ public readonly struct num2 : INumber<T>
 
     public const byte Width = 2;
 
-    public const D MaxValue = Limit.Max2u;
+    public const int AlignedSize = 1;
+
+    public const D MaxValue = NumericLimits.Max2u;
 
     public const D Mod = (D)MaxValue + 1;
 
@@ -42,21 +38,21 @@ public readonly struct num2 : INumber<T>
     public static N N => default;
 
     [MethodImpl(Inline)]
+    static T cover(D src)
+        => @as<D,T>(src);
+
+    [MethodImpl(Inline), Op]
+    public static T number<S>(S src)
+        where S : unmanaged
+            => cover(crop(@as<S,D>(src)));
+
+    [MethodImpl(Inline)]
     public static D crop(D src)
         => (D)(MaxValue & src);
 
     [MethodImpl(Inline)]
     public static T create(ulong src)
         => new ((D)src);
-
-    [MethodImpl(Inline)]
-    static T cover(D src)
-        => @as<D,T>(src);
-
-    [MethodImpl(Inline)]
-    public static T force<A>(A src)
-        where A : unmanaged
-            => T.crop(bw8(src));
 
     [MethodImpl(Inline), Op]
     public static bit test(T src, byte pos)
@@ -92,7 +88,7 @@ public readonly struct num2 : INumber<T>
 
     [MethodImpl(Inline), Op]
     public static T negate(T src)
-        => create(math.negate(src.Value));
+        => number(math.negate(src.Value));
 
     [MethodImpl(Inline)]
     public static T invert(T src)
@@ -161,18 +157,10 @@ public readonly struct num2 : INumber<T>
         => BitRender.format(N, src.Value);
 
     [Parser]
-    public static bool parse(string src, out T dst)
-    {
-        var outcome = byte.TryParse(src, out D x);
-        dst = new T((D)(x & MaxValue));
-        return outcome;
-    }
-
-    [Parser]
     public static bool parse(ReadOnlySpan<char> src, out T dst)
     {
         var result = byte.TryParse(src, out D x);
-        dst = new T((D)(x & MaxValue));
+        dst = number((D)(x & MaxValue));
         return result;
     }
 
@@ -182,14 +170,14 @@ public readonly struct num2 : INumber<T>
 
     public bit IsZero
     {
-            [MethodImpl(Inline)]
-            get => Value == 0;
+        [MethodImpl(Inline)]
+        get => Value == 0;
     }
 
     public bit IsNonZero
     {
-            [MethodImpl(Inline)]
-            get => Value != 0;
+        [MethodImpl(Inline)]
+        get => Value != 0;
     }
 
     public bit IsMax
@@ -258,15 +246,15 @@ public readonly struct num2 : INumber<T>
 
     [MethodImpl(Inline)]
     public static explicit operator T(ushort src)
-        => create((byte)src);
+        => number((byte)src);
 
     [MethodImpl(Inline)]
     public static explicit operator T(uint src)
-        => create((byte)src);
+        => number((byte)src);
 
     [MethodImpl(Inline)]
     public static explicit operator T(ulong src)
-        => create((byte)src);
+        => number((byte)src);
 
     [MethodImpl(Inline)]
     public static explicit operator bit(T src)

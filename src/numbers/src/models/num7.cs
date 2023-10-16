@@ -25,7 +25,9 @@ public readonly struct num7 : INumber<T>
     /// </summary>
     public const byte Width = 7;
 
-    public const D MaxValue = Limit.Max7u;
+    public const int AlignedSize = 1;
+
+    public const D MaxValue = NumericLimits.Max7u;
 
     public const D Mod = (D)MaxValue + 1;
 
@@ -46,7 +48,7 @@ public readonly struct num7 : INumber<T>
     [MethodImpl(Inline), Op]
     public static T number<S>(S src)
         where S : unmanaged
-            => @as<S,T>(src);
+            => cover(crop(@as<S,D>(src)));
 
     [MethodImpl(Inline)]
     public static T create(ulong src)

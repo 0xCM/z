@@ -12,8 +12,7 @@ using static BitMaskLiterals;
 
 [ApiHost,Free]
 public class gpack
-{
-    
+{    
     const NumericKind Closure = UnsignedInts;
 
     [MethodImpl(Inline), Op, Closures(Closure)]

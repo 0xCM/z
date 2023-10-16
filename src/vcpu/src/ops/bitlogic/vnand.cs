@@ -84,24 +84,6 @@ partial class vcpu
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
     [MethodImpl(Inline), Nand]
-    public static Vector128<float> vnand(Vector128<float> x, Vector128<float> y)
-        => vnot(And(x, y));
-
-    /// <summary>
-    /// Computes ~(x & y) for vectors x and y
-    /// </summary>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
-    [MethodImpl(Inline), Nand]
-    public static Vector128<double> vnand(Vector128<double> x, Vector128<double> y)
-        => vnot(And(x, y));
-
-    /// <summary>
-    /// Computes ~(x & y) for vectors x and y
-    /// </summary>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
-    [MethodImpl(Inline), Nand]
     public static Vector256<byte> vnand(Vector256<byte> x, Vector256<byte> y)
         => vnot(And(x, y));
 
@@ -166,23 +148,5 @@ partial class vcpu
     /// <param name="y">The right vector</param>
     [MethodImpl(Inline), Nand]
     public static Vector256<ulong> vnand(Vector256<ulong> x, Vector256<ulong> y)
-        => vnot(And(x, y));
-
-    /// <summary>
-    /// Computes ~(x & y) for vectors x and y
-    /// </summary>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
-    [MethodImpl(Inline), Nand]
-    public static Vector256<float> vnand(Vector256<float> x, Vector256<float> y)
-        => vnot(And(x, y));
-
-    /// <summary>
-    /// Computes ~(x & y) for vectors x and y
-    /// </summary>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
-    [MethodImpl(Inline), Nand]
-    public static Vector256<double> vnand(Vector256<double> x, Vector256<double> y)
         => vnot(And(x, y));
 }

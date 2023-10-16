@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-partial class BitPack
+partial class Numbers
 {
     [MethodImpl(Inline), Op]
-    public static num2 pack(bit a, bit b)
-        => (num2)((uint)a | ((uint)b << 1));
+    public static num15 pack(num9 a, num6 b)
+        => (num15)((uint)a | ((uint)b << num9.Width));
 }

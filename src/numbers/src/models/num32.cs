@@ -31,7 +31,9 @@ public readonly struct num32 : INumber<T>
     /// </summary>
     public const byte Width = 32;
 
-    public const D MaxValue = Limit.Max32u;
+    public const int AlignedSize = 2;
+
+    public const D MaxValue = NumericLimits.Max32u;
 
     public const ulong Mod = (ulong)MaxValue + 1;
 

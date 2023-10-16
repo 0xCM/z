@@ -129,13 +129,13 @@ public readonly record struct EvexPrefix : IBitPattern<EvexPrefix>
     [StructLayout(LayoutKind.Sequential,Size=1)]
     readonly record struct P0
     {
-        public num3 RXB => ~new num3(bits.extract(this,5,7));
+        public num3 RXB => ~ num3.number(bits.extract(this,5,7));
 
         public bit q => ~bits.test(this,4);
 
         public bit zero => bits.test(this,3);
 
-        public num3 mmm => new(bits.extract(this, 0,2));
+        public num3 mmm => num3.number(bits.extract(this, 0,2));
 
         public string Format()
             => u8(this).FormatHex();

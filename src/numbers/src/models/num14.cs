@@ -28,10 +28,12 @@ public readonly struct num14 : INumber<T>
 
     public const byte Width = 14;
 
+    public const int AlignedSize = 2;
+
     /// <summary>
     /// 16,383
     /// </summary>
-    public const D MaxValue = Limit.Max14u;
+    public const D MaxValue = NumericLimits.Max14u;
 
     public const D Mod = (D)MaxValue + 1;
 
@@ -48,7 +50,7 @@ public readonly struct num14 : INumber<T>
     [MethodImpl(Inline), Op]
     public static T number<S>(S src)
         where S : unmanaged
-            => @as<S,T>(src);
+            => cover(crop(@as<S,D>(src)));
 
     [MethodImpl(Inline)]
     public static D crop(D src)

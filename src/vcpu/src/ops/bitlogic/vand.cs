@@ -206,155 +206,35 @@ partial class vcpu
     public static Vector256<double> vand(Vector256<double> x, Vector256<double> y)
         => And(x, y);
 
-
-    /// <summary>
-    /// Compute the bitwise AND of 512 bits (representing integer data) in "a" and "b", and store the result in "dst".
-    /// </summary>
-    /// <name>_mm512_and_si512</name>
-    /// <isa>Avx512F</isa>
-    /// <sig>__m512i _mm512_and_si512(__m512i a, __m512i b)</sig>
-    /// <iform>VPANDD_ZMMu32_MASKmskw_ZMMu32_ZMMu32_AVX512</iform>
-    /// <instruction>vpandd zmm, zmm, zmm</instruction>
-    /// <algorithm>
-    /// dst[511:0] := (a[511:0] AND b[511:0])
-    /// dst[MAX:512] := 0
-    /// </algorithm>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
     [MethodImpl(Inline), And]
     public static Vector512<byte> vand(Vector512<byte> x, Vector512<byte> y)
         => And(x, y);
 
-    /// <summary>
-    /// Compute the bitwise AND of 512 bits (representing integer data) in "a" and "b", and store the result in "dst".
-    /// </summary>
-    /// <name>_mm512_and_si512</name>
-    /// <isa>Avx512F</isa>
-    /// <sig>__m512i _mm512_and_si512(__m512i a, __m512i b)</sig>
-    /// <iform>VPANDD_ZMMu32_MASKmskw_ZMMu32_ZMMu32_AVX512</iform>
-    /// <instruction>vpandd zmm, zmm, zmm</instruction>
-    /// <algorithm>
-    /// dst[511:0] := (a[511:0] AND b[511:0])
-    /// dst[MAX:512] := 0
-    /// </algorithm>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
     [MethodImpl(Inline), And]
     public static Vector512<short> vand(Vector512<short> x, Vector512<short> y)
         => And(x, y);
 
-    /// <summary>
-    /// Compute the bitwise AND of 512 bits (representing integer data) in "a" and "b", and store the result in "dst".
-    /// </summary>
-    /// <name>_mm512_and_si512</name>
-    /// <isa>Avx512F</isa>
-    /// <sig>__m512i _mm512_and_si512(__m512i a, __m512i b)</sig>
-    /// <iform>VPANDD_ZMMu32_MASKmskw_ZMMu32_ZMMu32_AVX512</iform>
-    /// <instruction>vpandd zmm, zmm, zmm</instruction>
-    /// <algorithm>
-    /// dst[511:0] := (a[511:0] AND b[511:0])
-    /// dst[MAX:512] := 0
-    /// </algorithm>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
     [MethodImpl(Inline), And]
     public static Vector512<sbyte> vand(Vector512<sbyte> x, Vector512<sbyte> y)
         => And(x, y);
 
-    /// <summary>
-    /// Compute the bitwise AND of 512 bits (representing integer data) in "a" and "b", and store the result in "dst".
-    /// </summary>
-    /// <name>_mm512_and_si512</name>
-    /// <isa>Avx512F</isa>
-    /// <sig>__m512i _mm512_and_si512(__m512i a, __m512i b)</sig>
-    /// <iform>VPANDD_ZMMu32_MASKmskw_ZMMu32_ZMMu32_AVX512</iform>
-    /// <instruction>vpandd zmm, zmm, zmm</instruction>
-    /// <algorithm>
-    /// dst[511:0] := (a[511:0] AND b[511:0])
-    /// dst[MAX:512] := 0
-    /// </algorithm>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
     [MethodImpl(Inline), And]
     public static Vector512<ushort> vand(Vector512<ushort> x, Vector512<ushort> y)
         => And(x, y);
 
-    /// <summary>
-    /// Compute the bitwise AND of packed 32-bit integers in "a" and "b", and store the results in "dst".
-    /// </summary>
-    /// <name>_mm512_and_epi32</name>
-    /// <isa>Avx512F</isa>
-    /// <sig>__m512i _mm512_and_epi32(__m512i a, __m512i b)</sig>
-    /// <iform>VPANDD_ZMMu32_MASKmskw_ZMMu32_ZMMu32_AVX512</iform>
-    /// <instruction>vpandd zmm, zmm, zmm</instruction>
-    /// <algorithm>
-    /// FOR j := 0 to 15
-    /// 	i := j*32
-    /// 	dst[i+31:i] := a[i+31:i] AND b[i+31:i]
-    /// ENDFOR
-    /// dst[MAX:512] := 0
-    /// </algorithm>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
     [MethodImpl(Inline), And]
     public static Vector512<int> vand(Vector512<int> x, Vector512<int> y)
         => And(x, y);
 
-    /// <summary>
-    /// Compute the bitwise AND of packed 32-bit integers in "a" and "b", and store the results in "dst".
-    /// </summary>
-    /// <name>_mm512_and_epi32</name>
-    /// <isa>Avx512F</isa>
-    /// <sig>__m512i _mm512_and_epi32(__m512i a, __m512i b)</sig>
-    /// <iform>VPANDD_ZMMu32_MASKmskw_ZMMu32_ZMMu32_AVX512</iform>
-    /// <instruction>vpandd zmm, zmm, zmm</instruction>
-    /// <algorithm>
-    /// FOR j := 0 to 15
-    /// 	i := j*32
-    /// 	dst[i+31:i] := a[i+31:i] AND b[i+31:i]
-    /// ENDFOR
-    /// dst[MAX:512] := 0
-    /// </algorithm>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
     [MethodImpl(Inline), And]
     public static Vector512<uint> vand(Vector512<uint> x, Vector512<uint> y)
         => And(x, y);
 
-    /// <summary>
-    /// Compute the bitwise AND of 512 bits (composed of packed 64-bit integers) in "a" and "b", and store the results in "dst".
-    /// </summary>
-    /// <name>_mm512_and_epi64</name>
-    /// <isa>Avx512F</isa>
-    /// <sig>__m512i _mm512_and_epi64(__m512i a, __m512i b)</sig>
-    /// <iform>VPANDQ_ZMMu64_MASKmskw_ZMMu64_ZMMu64_AVX512</iform>
-    /// <instruction>vpandq zmm, zmm, zmm</instruction>
-    /// <algorithm>
-    /// dst[511:0] := (a[511:0] AND b[511:0])
-    /// dst[MAX:512] := 0
-    /// </algorithm>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
     [MethodImpl(Inline), And]
     public static Vector512<long> vand(Vector512<long> x, Vector512<long> y)
         => And(x, y);
 
-    /// <summary>
-    /// Compute the bitwise AND of 512 bits (composed of packed 64-bit integers) in "a" and "b", and store the results in "dst".
-    /// </summary>
-    /// <name>_mm512_and_epi64</name>
-    /// <isa>Avx512F</isa>
-    /// <sig>__m512i _mm512_and_epi64(__m512i a, __m512i b)</sig>
-    /// <iform>VPANDQ_ZMMu64_MASKmskw_ZMMu64_ZMMu64_AVX512</iform>
-    /// <instruction>vpandq zmm, zmm, zmm</instruction>
-    /// <algorithm>
-    /// dst[511:0] := (a[511:0] AND b[511:0])
-    /// dst[MAX:512] := 0
-    /// </algorithm>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
     [MethodImpl(Inline), And]
     public static Vector512<ulong> vand(Vector512<ulong> x, Vector512<ulong> y)
         => And(x, y);
-
 }

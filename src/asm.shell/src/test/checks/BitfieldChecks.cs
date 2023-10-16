@@ -42,7 +42,7 @@ public class BitfieldChecks : Checker<BitfieldChecks>
         Targets.Delete();
         BitCheckers.run(Wf);
         var n = n8;
-        var count = Numbers.count(n);
+        var count = BitConverters.count(n);
         var convert = BitConverters.converter(n);
         for(var i=0; i<count; i++)
         {

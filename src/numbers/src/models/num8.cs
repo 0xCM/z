@@ -22,10 +22,12 @@ public readonly struct num8 : INumber<T>
 
     public const byte Width = 8;
 
+    public const int AlignedSize = 1;
+
     /// <summary>
     /// 255
     /// </summary>
-    public const D MaxValue = Limit.Max8u;
+    public const D MaxValue = NumericLimits.Max8u;
 
     public const ushort Mod = (D)MaxValue + 1;
 
@@ -46,8 +48,7 @@ public readonly struct num8 : INumber<T>
     [MethodImpl(Inline), Op]
     public static T number<S>(S src)
         where S : unmanaged
-            => @as<S,T>(src);
-
+            => cover(crop(@as<S,D>(src)));
 
     [MethodImpl(Inline)]
     public static T create(ulong src)

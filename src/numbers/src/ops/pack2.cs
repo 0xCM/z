@@ -4,8 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-
-partial class vcpu
+partial class Numbers
 {
-
+    [MethodImpl(Inline), Op]
+    public static num2 pack(bit a, bit b)
+        => (num2)((uint)a | ((uint)b << 1));
 }

@@ -194,4 +194,37 @@ partial class vcpu
     [MethodImpl(Inline), Or]
     public static Vector256<double> vor(Vector256<double> x, Vector256<double> y)
         => Or(x, y);
+
+
+    [MethodImpl(Inline), Or]
+    public static Vector512<byte> vor(Vector512<byte> x, Vector512<byte> y)
+        => Or(x, y);
+
+    [MethodImpl(Inline), Or]
+    public static Vector512<short> vor(Vector512<short> x, Vector512<short> y)
+        => Or(x, y);
+
+    [MethodImpl(Inline), Or]
+    public static Vector512<sbyte> vor(Vector512<sbyte> x, Vector512<sbyte> y)
+        => Or(x, y);
+
+    [MethodImpl(Inline), Or]
+    public static Vector512<ushort> vor(Vector512<ushort> x, Vector512<ushort> y)
+        => Or(x, y);
+
+    [MethodImpl(Inline), Or]
+    public static Vector512<int> vor(Vector512<int> x, Vector512<int> y)
+        => Or(x, y);
+
+    [MethodImpl(Inline), Or]
+    public static Vector512<uint> vor(Vector512<uint> x, Vector512<uint> y)
+        => Or(x, y);
+
+    [MethodImpl(Inline), Or]
+    public static Vector512<long> vor(Vector512<long> x, Vector512<long> y)
+        => Or(x, y);
+
+    [MethodImpl(Inline), Or]
+    public static Vector512<ulong> vor(Vector512<ulong> x, Vector512<ulong> y)
+        => Or(x, y);
 }

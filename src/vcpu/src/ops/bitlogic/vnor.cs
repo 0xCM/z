@@ -85,7 +85,7 @@ partial class vcpu
     /// <param name="y">The right vector</param>
     [MethodImpl(Inline), Nor]
     public static Vector128<float> vnor(Vector128<float> x, Vector128<float> y)
-        => vnot(Or(x, y));
+        => fcpu.vnot(Or(x, y));
 
     /// <summary>
     /// Computes ~(x | y) for vectors x and y
@@ -94,7 +94,7 @@ partial class vcpu
     /// <param name="y">The right vector</param>
     [MethodImpl(Inline), Nor]
     public static Vector128<double> vnor(Vector128<double> x, Vector128<double> y)
-        => vnot(Or(x, y));
+        => fcpu.vnot(Or(x, y));
 
     /// <summary>
     /// Computes ~(x | y) for vectors x and y

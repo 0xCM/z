@@ -6,17 +6,17 @@ namespace Z0;
 
 using static math;
 
-partial class BitPack
+partial class Numbers
 {
     [MethodImpl(Inline), Op]
-    public static num17 pack(num6 a, num11 b)
-        => (num17)a | ((num17)b << num6.Width);
+    public static num3 pack(num2 a, bit b)
+        => (num3)((uint)a | sll((uint)b, num2.Width));
 
     [MethodImpl(Inline), Op]
-    public static num17 pack(num16 a, num1 b)
-        => (num17)((uint)a | sll((uint)b, num16.Width));
+    public static num3 pack(bit a, num2 b)
+        => (num3)((uint)a | sll((uint)b, num1.Width));
 
     [MethodImpl(Inline), Op]
-    public static num17 pack(num9 a, num8 b)
-        => (num17)((uint)a | ((uint)b << num9.Width));
+    public static num3 pack(bit a, bit b, bit c)
+        => (num3)((uint)a | sll((uint)b, 1) | sll((uint)c, 2));    
 }

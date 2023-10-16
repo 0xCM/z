@@ -79,9 +79,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                return generic<T>(vcpu.vcnonimpl(v32f(x), v32f(y)));
+                return generic<T>(fcpu.vcnonimpl(v32f(x), v32f(y)));
             else if(typeof(T) == typeof(short))
-                return generic<T>(vcpu.vcnonimpl(v64f(x), v64f(y)));
+                return generic<T>(fcpu.vcnonimpl(v64f(x), v64f(y)));
             else
                 throw no<T>();
         }
@@ -123,9 +123,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                return generic<T>(vcpu.vcnonimpl(v32f(x), v32f(y)));
+                return generic<T>(fcpu.vcnonimpl(v32f(x), v32f(y)));
             else if(typeof(T) == typeof(short))
-                return generic<T>(vcpu.vcnonimpl(v64f(x), v64f(y)));
+                return generic<T>(fcpu.vcnonimpl(v64f(x), v64f(y)));
             else
                 throw no<T>();
         }

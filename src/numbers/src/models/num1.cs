@@ -5,13 +5,12 @@
 namespace Z0;
 
 using static sys;
-using static Numbers;
 
 using T = num1;
 using D = System.Byte;
 using N = N1;
 
-[DataWidth(Width), ApiComplete]
+[DataWidth(Width), ApiComplete, StructLayout(LayoutKind.Sequential,Size=AlignedSize)]
 public readonly struct num1 : INumber<T>
 {
     public readonly D Value;
@@ -20,13 +19,11 @@ public readonly struct num1 : INumber<T>
     public num1(D src)
         => Value = crop(src);
 
-    [MethodImpl(Inline)]
-    num1(uint src)
-        => Value = (byte)src;
-
     public const byte Width = 1;
 
-    public const D MaxValue = Limit.Max1u;
+    public const int AlignedSize = 1;
+
+    public const D MaxValue = NumericLimits.Max1u;
 
     public const D Mod = (D)MaxValue + 1;
 
@@ -40,27 +37,18 @@ public readonly struct num1 : INumber<T>
 
     public static N N => default;
 
-    [MethodImpl(Inline), Op]
-    public static T number<S>(S src)
-        where S : unmanaged
-            => @as<S,T>(src);
-            
-    [MethodImpl(Inline)]
-    public static D crop(D src)
-        => (D)(MaxValue & src);
-
-    [MethodImpl(Inline)]
-    public static T create(ulong src)
-        => new T((D)src);
-
     [MethodImpl(Inline)]
     static T cover(D src)
         => @as<D,T>(src);
 
+    [MethodImpl(Inline), Op]
+    public static T number<S>(S src)
+        where S : unmanaged
+            => cover(crop(@as<S,D>(src)));
+            
     [MethodImpl(Inline)]
-    public static T force<A>(A src)
-        where A : unmanaged
-            => T.crop(bw8(src));
+    public static D crop(D src)
+        => (D)(MaxValue & src);
 
     [MethodImpl(Inline), Op]
     public static bit test(T src, byte pos)
@@ -96,11 +84,11 @@ public readonly struct num1 : INumber<T>
 
     [MethodImpl(Inline), Op]
     public static T negate(T src)
-        => create(math.negate(src.Value));
+        => number(math.negate(src.Value));
 
     [MethodImpl(Inline)]
     public static T invert(T src)
-        => cover((D)(math.and(math.not(src.Value), MaxValue)));
+        => cover(math.and(math.not(src.Value), MaxValue));
 
     [MethodImpl(Inline), Op]
     public static T or(T a, T b)
@@ -261,15 +249,15 @@ public readonly struct num1 : INumber<T>
 
     [MethodImpl(Inline)]
     public static explicit operator T(ushort src)
-        => create((byte)src);
+        => number((byte)src);
 
     [MethodImpl(Inline)]
     public static explicit operator T(uint src)
-        => create((byte)src);
+        => number((byte)src);
 
     [MethodImpl(Inline)]
     public static explicit operator T(ulong src)
-        => create((byte)src);
+        => number((byte)src);
 
     [MethodImpl(Inline)]
     public static implicit operator bit(T src)

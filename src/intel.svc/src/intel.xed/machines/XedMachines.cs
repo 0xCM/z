@@ -34,7 +34,7 @@ public partial class XedMachines
     {
         var kind = num2.number(identity.TableKind);
         var name = num9.number(identity.TableName);
-        return BitPack.pack(name,kind);
+        return Numbers.pack(name,kind);
     }
 
 

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-partial class BitPack
+partial class Numbers
 {
     [MethodImpl(Inline), Op]
     public static void split(num8 src, out num4 a, out num4 b)

@@ -25,10 +25,12 @@ public readonly struct num11 : INumber<T>
 
     public const byte Width = 11;
 
+    public const int AlignedSize = 2;
+
     /// <summary>
     /// 2,047
     /// </summary>
-    public const D MaxValue = Limit.Max11u;
+    public const D MaxValue = NumericLimits.Max11u;
 
     public const D Mod = (D)MaxValue + 1;
 
@@ -57,7 +59,7 @@ public readonly struct num11 : INumber<T>
     [MethodImpl(Inline), Op]
     public static T number<S>(S src)
         where S : unmanaged
-            => @as<S,T>(src);
+            => cover(crop(@as<S,D>(src)));
 
     [MethodImpl(Inline)]
     static T cover(D src)
@@ -240,7 +242,7 @@ public readonly struct num11 : INumber<T>
 
     [MethodImpl(Inline)]
     public static implicit operator T(byte src)
-        => create(src);
+        => number(src);
 
     [MethodImpl(Inline)]
     public static explicit operator byte(T src)
@@ -248,7 +250,7 @@ public readonly struct num11 : INumber<T>
 
     [MethodImpl(Inline)]
     public static implicit operator T(sbyte src)
-        => create((ushort)src);
+        => number((ushort)src);
 
     [MethodImpl(Inline)]
     public static explicit operator sbyte(T src)
@@ -260,7 +262,7 @@ public readonly struct num11 : INumber<T>
 
     [MethodImpl(Inline)]
     public static implicit operator T(ushort src)
-        => new T(src);
+        => new (src);
 
     [MethodImpl(Inline)]
     public static implicit operator T(short src)
@@ -272,7 +274,7 @@ public readonly struct num11 : INumber<T>
 
     [MethodImpl(Inline)]
     public static explicit operator T(uint src)
-        => create(src);
+        => number(src);
 
     [MethodImpl(Inline)]
     public static implicit operator ulong(T src)
@@ -280,7 +282,7 @@ public readonly struct num11 : INumber<T>
 
     [MethodImpl(Inline)]
     public static explicit operator T(ulong src)
-        => create((ushort)src);
+        => number((ushort)src);
 
     [MethodImpl(Inline)]
     public static T operator + (T x, T y)

@@ -21,7 +21,7 @@ public class SpanPack
     /// <param name="dst">The target value</param>
     [MethodImpl(Inline), Op]
     public static byte pack8x1(ReadOnlySpan<uint> src)
-        => (byte)vpack.vpacklsb(vpack.vpack128x8u(vload(w256, first(src))));
+        => (byte)vpacklsb(vpack128x8u(vload(w256, first(src))));
 
     /// <summary>
     /// Packs 8 1-bit values taken from an index-identified bit of the leading byte
@@ -193,8 +193,8 @@ public class SpanPack
     [MethodImpl(Inline), Op]
     public static ref byte unpack5x3(ushort src, ref byte dst)
     {
-        seek32(dst, 0) = bits.scatter(src, Lsb32x8x3);
-        seek(dst, 4) = (byte)bits.scatter((byte)(src >> 12), Lsb8x8x3);
+        seek32(dst, 0) = scatter(src, Lsb32x8x3);
+        seek(dst, 4) = (byte)scatter((byte)(src >> 12), Lsb8x8x3);
         return ref dst;
     }
 
@@ -206,7 +206,7 @@ public class SpanPack
     [MethodImpl(Inline), Op]
     public static void unpack9x3(uint src, Span<byte> dst)
     {
-        seek64(dst, 0) = bits.scatter(src, Lsb64x8x3);
+        seek64(dst, 0) = scatter(src, Lsb64x8x3);
     }
 
     /// <summary>
@@ -218,9 +218,9 @@ public class SpanPack
     public static void unpack21x3(ulong src, Span<byte> dst)
     {
         var x = BitMasks.lo(n63) & src;
-        seek64(dst, 0) = bits.scatter(x, Lsb64x8x3);
-        seek64(dst, 1) = bits.scatter(x >> 24, Lsb64x8x3);
-        seek64(dst, 2) = bits.scatter(x >> 48, Lsb64x8x3);
+        seek64(dst, 0) = scatter(x, Lsb64x8x3);
+        seek64(dst, 1) = scatter(x >> 24, Lsb64x8x3);
+        seek64(dst, 2) = scatter(x >> 48, Lsb64x8x3);
     }
 
     /// <summary>
@@ -244,7 +244,7 @@ public class SpanPack
     /// <param name="dst">A target span of sufficient length</param>
     [MethodImpl(Inline), Op]
     public static void unpack4x4(ushort src, Span<byte> dst)
-        => seek32(dst, 0) = bits.scatter(src, Lsb32x8x4);
+        => seek32(dst, 0) = scatter(src, Lsb32x8x4);
 
     /// <summary>
     /// Partitions a 32-bit source into 8 segments, each of effective width 4
@@ -253,7 +253,7 @@ public class SpanPack
     /// <param name="dst">A target span of sufficient length</param>
     [MethodImpl(Inline), Op]
     public static void unpack8x4(uint src, Span<byte> dst)
-        => seek64(dst,0) = bits.scatter(src, Lsb64x8x4);
+        => seek64(dst,0) = scatter(src, Lsb64x8x4);
 
     /// <summary>
     /// Partitions the first 20 source bits into 4 segments, each of effective width 5
@@ -262,7 +262,7 @@ public class SpanPack
     /// <param name="dst">The partition target</param>
     [MethodImpl(Inline), Op]
     public static void unpack4x5(uint src, Span<byte> dst)
-        => seek32(dst, 0) = bits.scatter(src, Lsb32x8x5);
+        => seek32(dst, 0) = scatter(src, Lsb32x8x5);
 
     /// <summary>
     /// Partitions a 16-bit source value into 2 segments of effective width 8
@@ -321,19 +321,19 @@ public class SpanPack
         var j=7;
         var a = num4.Zero;
         var b = num4.Zero;
-        BitPack.split(skip(data,i++), out a, out b);
+        Numbers.split(skip(data,i++), out a, out b);
         seek(dst,j--) = a;
         seek(dst,j--) = b;
 
-        BitPack.split(skip(data,i++), out a, out b);
+        Numbers.split(skip(data,i++), out a, out b);
         seek(dst,j--) = a;
         seek(dst,j--) = b;
 
-        BitPack.split(skip(data,i++), out a, out b);
+        Numbers.split(skip(data,i++), out a, out b);
         seek(dst,j--) = a;
         seek(dst,j--) = b;
 
-        BitPack.split(skip(data,i++), out a, out b);
+        Numbers.split(skip(data,i++), out a, out b);
         seek(dst,j--) = a;
         seek(dst,j--) = b;
     }
@@ -384,7 +384,7 @@ public class SpanPack
     /// <param name="dst">The target buffer</param>
     [MethodImpl(Inline), Op]
     public static void unpack1x8(byte src, Span<bit> dst)
-        =>BitPack.unpack1x8(src, ref u8(first(dst)));
+        => BitPack.unpack1x8(src, ref u8(first(dst)));
 
     /// <summary>
     /// Sends each source bit to a corresponding target cell
@@ -454,7 +454,6 @@ public class SpanPack
         BitPack.unpack1x64(src, ref target);
     }
 
-
     /// <summary>
     /// Unpacks 32 source bits over 32 32-bit target segments
     /// </summary>
@@ -470,15 +469,14 @@ public class SpanPack
         ref var tmp = ref uint8(ref buffer);
         ref var lead = ref first(dst);
         BitPack.unpack1x8((byte)src, ref tmp);
-        vpack.vinflate8x256x32u(tmp).StoreTo(ref lead);
+        vinflate8x256x32u(tmp).StoreTo(ref lead);
         BitPack.unpack1x8((byte)(src >> 8), ref tmp);
-        vpack.vinflate8x256x32u(tmp).StoreTo(ref lead, 8);
+        vinflate8x256x32u(tmp).StoreTo(ref lead, 8);
         BitPack.unpack1x8((byte)(src >> 16), ref tmp);
-        vpack.vinflate8x256x32u(tmp).StoreTo(ref lead, 16);
+        vinflate8x256x32u(tmp).StoreTo(ref lead, 16);
         BitPack.unpack1x8((byte)(src >> 24), ref tmp);
-        vpack.vinflate8x256x32u(tmp).StoreTo(ref lead, 24);
+        vinflate8x256x32u(tmp).StoreTo(ref lead, 24);
     }
-
 
     /// <summary>
     /// Unpacks 16 source bits over 16 32-bit target segments
@@ -494,9 +492,9 @@ public class SpanPack
         ref var lead = ref first(dst);
 
         BitPack.unpack1x8((byte)src, ref tmp);
-        vpack.vinflate8x256x32u(tmp).StoreTo(ref lead);
+        vinflate8x256x32u(tmp).StoreTo(ref lead);
         BitPack.unpack1x8((byte)(src >> 8), ref tmp);
-        vpack.vinflate8x256x32u(tmp).StoreTo(ref lead, 8);
+        vinflate8x256x32u(tmp).StoreTo(ref lead, 8);
     }
 
     /// <summary>
@@ -629,7 +627,4 @@ public class SpanPack
         BitPack.unpack1x8(src, ref tmp);
         vpack.vinflate8x256x32u(tmp).StoreTo(ref lead);
     }
-
-
-
 }

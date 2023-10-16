@@ -31,7 +31,7 @@ namespace Z0
         /// <param name="count">The count selector</param>
         [MethodImpl(Inline), Rotrx]
         public static Vector128<byte> vrotlx(Vector128<byte> src, N8 count)
-            => vshuf16x8(src, vrotl(w128, count));
+            => vshuffle(src, vrotl(w128, count));
 
         /// <summary>
         /// Rotates the full 128-bit vector content leftward by 16 bits
@@ -40,7 +40,7 @@ namespace Z0
         /// <param name="count">The count selector</param>
         [MethodImpl(Inline), Rotrx]
         public static Vector128<byte> vrotlx(Vector128<byte> src, N16 count)
-            => vshuf16x8(src, vrotl(w128, count));
+            => vshuffle(src, vrotl(w128, count));
 
         /// <summary>
         /// Rotates the full 128-bit vector content leftward by 24 bits
@@ -49,7 +49,7 @@ namespace Z0
         /// <param name="count">The count selector</param>
         [MethodImpl(Inline), Rotrx]
         public static Vector128<byte> vrotlx(Vector128<byte> src, N24 count)
-            => vshuf16x8(src, vrotl(w128, count));
+            => vshuffle(src, vrotl(w128, count));
 
         /// <summary>
         /// Rotates the full 128-bit vector content leftward by 32 bits
@@ -58,6 +58,6 @@ namespace Z0
         /// <param name="count">The count selector</param>
         [MethodImpl(Inline), Rotrx]
         public static Vector128<byte> vrotlx(Vector128<byte> src, N32 count)
-            => vshuf16x8(src, vrotl(w128, count));
+            => vshuffle(src, vrotl(w128, count));
     }
 }

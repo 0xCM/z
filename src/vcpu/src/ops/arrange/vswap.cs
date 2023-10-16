@@ -17,7 +17,7 @@ namespace Z0
             var perm = vgcpu.vinc<byte>(w128);
             perm = perm.Cell((int)j,(byte)i);
             perm = perm.Cell((int)i,(byte)j);
-            return vshuf16x8(src,perm);
+            return vshuffle(src,perm);
         }
 
         [MethodImpl(Inline), Op]
@@ -35,7 +35,7 @@ namespace Z0
             perm = vset(j0, i0, perm);
             perm = vset(j1, i1, perm);
 
-            return vshuf16x8(src,perm);
+            return v16u(vshuffle(v8u(src),perm));
         }
 
         [MethodImpl(Inline)]

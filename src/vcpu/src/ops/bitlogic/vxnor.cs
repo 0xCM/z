@@ -149,4 +149,77 @@ partial class vcpu
     [MethodImpl(Inline), Xnor]
     public static Vector256<ulong> vxnor(Vector256<ulong> x, Vector256<ulong> y)
         => vnot(Xor(x, y));
+
+
+    /// <summary>
+    /// Computes ~ (x ^ y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Xnor]
+    public static Vector512<byte> vxnor(Vector512<byte> x, Vector512<byte> y)
+        => vnot(Xor(x, y));
+
+    /// <summary>
+    /// Computes ~ (x ^ y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Xnor]
+    public static Vector512<short> vxnor(Vector512<short> x, Vector512<short> y)
+        => vnot(Xor(x, y));
+
+    /// <summary>
+    /// Computes ~ (x ^ y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Xnor]
+    public static Vector512<sbyte> vxnor(Vector512<sbyte> x, Vector512<sbyte> y)
+        => vnot(Xor(x, y));
+
+    /// <summary>
+    /// Computes the bitwise XOR between operands
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Xnor]
+    public static Vector512<ushort> vxnor(Vector512<ushort> x, Vector512<ushort> y)
+        => vnot(Xor(x, y));
+
+    /// <summary>
+    /// Computes ~ (x ^ y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Xnor]
+    public static Vector512<int> vxnor(Vector512<int> x, Vector512<int> y)
+        => vnot(Xor(x, y));
+
+    /// <summary>
+    /// Computes ~ (x ^ y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Xnor]
+    public static Vector512<uint> vxnor(Vector512<uint> x, Vector512<uint> y)
+        => vnot(Xor(x, y));
+
+    /// <summary>
+    /// Computes ~ (x ^ y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Xnor]
+    public static Vector512<long> vxnor(Vector512<long> x, Vector512<long> y)
+        => vnot(Xor(x, y));
+
+    /// <summary>
+    /// Computes ~ (x ^ y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Xnor]
+    public static Vector512<ulong> vxnor(Vector512<ulong> x, Vector512<ulong> y)
+        => vnot(Xor(x, y));
 }

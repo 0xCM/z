@@ -5,13 +5,12 @@
 namespace Z0;
 
 using static sys;
-using static Numbers;
 
 using T = num4;
 using D = System.Byte;
 using N = N4;
 
-[DataWidth(Width), ApiComplete]
+[DataWidth(Width), ApiComplete, StructLayout(LayoutKind.Sequential,Size=AlignedSize)]
 public readonly struct num4 : INumber<T>
 {
     public readonly D Value;
@@ -22,10 +21,12 @@ public readonly struct num4 : INumber<T>
 
     public const byte Width = 4;
 
+    public const int AlignedSize = 1;
+
     /// <summary>
     /// 15
     /// </summary>
-    public const D MaxValue = Limit.Max4u;
+    public const D MaxValue = NumericLimits.Max4u;
 
     public const D Mod = (D)MaxValue + 1;
 
@@ -46,12 +47,7 @@ public readonly struct num4 : INumber<T>
     [MethodImpl(Inline), Op]
     public static T number<S>(S src)
         where S : unmanaged
-            => @as<S,T>(src);
-
-    [MethodImpl(Inline)]
-    public static T force<A>(A src)
-        where A : unmanaged
-            => T.crop(bw8(src));
+            => cover(crop(@as<S,D>(src)));
 
     [MethodImpl(Inline)]
     public static T create(ulong src)
@@ -95,11 +91,11 @@ public readonly struct num4 : INumber<T>
 
     [MethodImpl(Inline), Op]
     public static T negate(T src)
-        => create(math.negate(src.Value));
+        => number(math.negate(src.Value));
 
     [MethodImpl(Inline)]
     public static T invert(T src)
-        => cover((D)(math.and(math.not(src.Value), MaxValue)));
+        => number(math.not(src.Value));
 
     [MethodImpl(Inline), Op]
     public static T or(T a, T b)
@@ -143,8 +139,8 @@ public readonly struct num4 : INumber<T>
     [MethodImpl(Inline), Op]
     public static T sub(T a, T b)
     {
-        var c = math.sub((int)a.Value, (int)b.Value);
-        return cover(c < 0 ? math.add((D)c, Mod) : (D)c);
+        var c = math.sub(a.Value, b.Value);
+        return cover(c < 0 ? math.add(c, Mod) : c);
     }
 
     [MethodImpl(Inline), Op]
@@ -208,11 +204,6 @@ public readonly struct num4 : INumber<T>
     }
 
     [MethodImpl(Inline)]
-    public S Force<S>()
-        where S : unmanaged
-            => @as<T,S>(this);
-
-    [MethodImpl(Inline)]
     public string Format()
         => Value.ToString();
 
@@ -260,42 +251,42 @@ public readonly struct num4 : INumber<T>
 
     [MethodImpl(Inline)]
     public static explicit operator T(ushort src)
-        => create((byte)src);
+        => number((byte)src);
 
     [MethodImpl(Inline)]
     public static explicit operator T(uint src)
-        => create((byte)src);
+        => number((byte)src);
 
     [MethodImpl(Inline)]
     public static explicit operator T(ulong src)
-        => create((byte)src);
+        => number((byte)src);
 
     [MethodImpl(Inline)]
     public static explicit operator bit(T src)
         => (bit)(src.Value);
 
     [MethodImpl(Inline)]
-    public static explicit operator num1(num4 src)
+    public static explicit operator num1(T src)
         => new (src.Value);
 
     [MethodImpl(Inline)]
-    public static explicit operator num2(num4 src)
+    public static explicit operator num2(T src)
         => new (src.Value);
 
     [MethodImpl(Inline)]
     public static explicit operator num3(T src)
-        => new (src.Value);
+        => num3.number(src.Value);
 
     [MethodImpl(Inline)]
-    public static implicit operator num4(num1 src)
+    public static implicit operator T(num1 src)
         => src.Value;
 
     [MethodImpl(Inline)]
-    public static implicit operator num4(num2 src)
+    public static implicit operator T(num2 src)
         => src.Value;
 
     [MethodImpl(Inline)]
-    public static implicit operator num4(num3 src)
+    public static implicit operator T(num3 src)
         => src.Value;
 
     [MethodImpl(Inline)]
@@ -377,16 +368,4 @@ public readonly struct num4 : INumber<T>
     [MethodImpl(Inline)]
     public static bit operator >= (T a, T b)
         => a.Value >= b.Value;
-
-    [MethodImpl(Inline)]
-    public static explicit operator char(num4 src)
-        => (char)Z0.Hex.upper(src.Value);
-
-    [MethodImpl(Inline)]
-    public static explicit operator HexUpperSym(num4 src)
-        => (HexUpperSym)Z0.Hex.upper(src.Value);
-
-    [MethodImpl(Inline)]
-    public static explicit operator HexLowerSym(num4 src)
-        => (HexLowerSym)Z0.Hex.lower(src.Value);
 }

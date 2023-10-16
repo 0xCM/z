@@ -5,24 +5,21 @@
 namespace Z0;
 
 using static sys;
-using static Numbers;
 
 using T = num3;
 using D = System.Byte;
 using N = N3;
 
-[DataWidth(Width), ApiComplete]
+[DataWidth(Width), ApiComplete, StructLayout(LayoutKind.Sequential,Size=AlignedSize)]
 public readonly struct num3 : INumber<T>
 {
     public readonly D Value;
 
-    [MethodImpl(Inline)]
-    public num3(D src)
-        => Value = crop(src);
-
     public const byte Width = 3;
 
-    public const D MaxValue = Limit.Max3u;
+    public const int AlignedSize = 1;
+
+    public const D MaxValue = NumericLimits.Max3u;
 
     public const D Mod = (D)MaxValue + 1;
 
@@ -37,26 +34,17 @@ public readonly struct num3 : INumber<T>
     public static N N => default;
 
     [MethodImpl(Inline)]
-    public static D crop(D src)
-        => (D)(MaxValue & src);
-
-    [MethodImpl(Inline)]
-    public static T create(ulong src)
-        => new ((D)src);
-
-    [MethodImpl(Inline)]
     static T cover(D src)
         => @as<D,T>(src);
+
+    [MethodImpl(Inline)]
+    public static D crop(D src)
+        => (D)(MaxValue & src);
 
     [MethodImpl(Inline), Op]
     public static T number<S>(S src)
         where S : unmanaged
-            => @as<S,T>(src);
-
-    [MethodImpl(Inline)]
-    public static T force<A>(A src)
-        where A : unmanaged
-            => crop(bw8(src));
+            => cover(crop(@as<S,D>(src)));
 
     [MethodImpl(Inline), Op]
     public static bit test(T src, byte pos)
@@ -68,7 +56,7 @@ public readonly struct num3 : INumber<T>
 
     [MethodImpl(Inline), Op]
     public static T negate(T src)
-        => create(math.negate(src.Value));
+        => number(math.negate(src.Value));
 
     [MethodImpl(Inline)]
     public static bit eq(T a, T b)
@@ -96,7 +84,7 @@ public readonly struct num3 : INumber<T>
 
     [MethodImpl(Inline)]
     public static T invert(T src)
-        => cover((D)(math.and(math.not(src.Value), MaxValue)));
+        => number(math.not(src.Value));
 
     [MethodImpl(Inline), Op]
     public static T or(T a, T b)
@@ -140,8 +128,8 @@ public readonly struct num3 : INumber<T>
     [MethodImpl(Inline), Op]
     public static T sub(T a, T b)
     {
-        var c = math.sub((int)a.Value, (int)b.Value);
-        return cover(c < 0 ? math.add((D)c, Mod) : (D)c);
+        var c = math.sub(a.Value, b.Value);
+        return cover(c < 0 ? math.add(c, Mod) : c);
     }
 
     [MethodImpl(Inline), Op]
@@ -164,7 +152,7 @@ public readonly struct num3 : INumber<T>
     public static bool parse(string src, out T dst)
     {
         var outcome = byte.TryParse(src, out D x);
-        dst = new T((D)(x & MaxValue));
+        dst = number((D)(x & MaxValue));
         return outcome;
     }
 
@@ -172,7 +160,7 @@ public readonly struct num3 : INumber<T>
     public static bool parse(ReadOnlySpan<char> src, out T dst)
     {
         var result = byte.TryParse(src, out D x);
-        dst = new T((D)(x & MaxValue));
+        dst = number((D)(x & MaxValue));
         return result;
     }
 
@@ -234,7 +222,7 @@ public readonly struct num3 : INumber<T>
 
     [MethodImpl(Inline)]
     public static implicit operator T(D src)
-        => new T(src);
+        => number(src);
 
     [MethodImpl(Inline)]
     public static implicit operator D(T src)
@@ -262,15 +250,15 @@ public readonly struct num3 : INumber<T>
 
     [MethodImpl(Inline)]
     public static explicit operator T(ushort src)
-        => create((byte)src);
+        => number((byte)src);
 
     [MethodImpl(Inline)]
     public static explicit operator T(uint src)
-        => create((byte)src);
+        => number((byte)src);
 
     [MethodImpl(Inline)]
     public static explicit operator T(ulong src)
-        => create((byte)src);
+        => number((byte)src);
 
     [MethodImpl(Inline)]
     public static T operator + (T x, T y)
@@ -351,8 +339,4 @@ public readonly struct num3 : INumber<T>
     [MethodImpl(Inline)]
     public static bit operator >= (T a, T b)
         => a.Value >= b.Value;
-
-    [MethodImpl(Inline)]
-    public static explicit operator OctalDigitSym(num3 src)
-        => (OctalDigitSym)Digital.@char((OctalDigitValue)src.Value);
 }

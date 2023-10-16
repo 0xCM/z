@@ -31,7 +31,9 @@ public readonly struct num16 : INumber<T>
     /// </summary>
     public const byte Width = 16;
 
-    public const D MaxValue = Limit.Max16u;
+    public const int AlignedSize = 2;
+
+    public const D MaxValue = NumericLimits.Max16u;
 
     public const uint Mod = (D)MaxValue + 1;
 
@@ -48,7 +50,7 @@ public readonly struct num16 : INumber<T>
     [MethodImpl(Inline), Op]
     public static T number<S>(S src)
         where S : unmanaged
-            => @as<S,T>(src);
+            => cover(crop(@as<S,D>(src)));
 
     [MethodImpl(Inline)]
     public static D crop(D src)
@@ -486,4 +488,16 @@ public readonly struct num16 : INumber<T>
     [MethodImpl(Inline)]
     public static bit operator >= (T a, T b)
         => ge(a,b);
+
+    [MethodImpl(Inline), Op]
+    public static T pack(num6 a, num10 b)
+        => (T)a | ((T)b << num6.Width);
+
+    [MethodImpl(Inline), Op]
+    public static T pack(num9 a, num7 b)
+        => (T)((uint)a |((uint)b << num9.Width));
+
+    [MethodImpl(Inline), Op]
+    public static T pack(num8 a, num8 b)
+        => (T)a | ((T)b << num8.Width);        
 }

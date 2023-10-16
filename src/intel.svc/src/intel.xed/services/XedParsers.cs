@@ -571,7 +571,25 @@ public partial class XedParsers
         => RegFlags.Parse(src, out dst);
 
     public static bool parse(string src, out byte dst)
-        => Numbers.num8(src, out dst);
+    {
+        var result = false;
+        dst = default;
+        if(IsHexLiteral(src))
+        {
+            result = HexParser.parse(src, out Hex8 n);
+            dst = n;
+        }
+        else if(IsBinaryLiteral(src))
+        {
+            result = uint8b.parse(src, out uint8b n);
+            dst = n;
+        }
+        else
+        {
+            result = byte.TryParse(src, out dst);
+        }
+        return result;
+    }
 
     public static bool parse(string src, out ushort dst)
         => ushort.TryParse(src, out dst);

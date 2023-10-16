@@ -30,11 +30,11 @@ partial class XedRules
 
         [MethodImpl(Inline)]
         public ColType(FieldKind field, OperatorKind op, RuleName rule)
-            => this = Bitfields.join((byte)ColKind.RuleExpr, (byte)field, (ushort)BitPack.pack(num3.force(op),num9.force(rule)));
+            => this = Bitfields.join((byte)ColKind.RuleExpr, (byte)field, (ushort)Numbers.pack(num3.number(op),num9.number(rule)));
 
         [MethodImpl(Inline)]
         public ColType(FieldKind field, OperatorKind op, byte width)
-            => this = Bitfields.join((byte)ColKind.RuleExpr, (byte)field, (ushort)BitPack.pack(num3.force(op), (num8)width));
+            => this = Bitfields.join((byte)ColKind.RuleExpr, (byte)field, (ushort)Numbers.pack(num3.number(op), (num8)width));
 
         [MethodImpl(Inline)]
         public ColType(RuleName src)
@@ -54,11 +54,11 @@ partial class XedRules
 
         [MethodImpl(Inline)]
         public static ColType field(FieldKind field)
-            => new ColType(ColKind.Field, field);
+            => new (ColKind.Field, field);
 
         [MethodImpl(Inline)]
         public static ColType seg(FieldKind field)
-            => new ColType(ColKind.FieldSeg, field);
+            => new (ColKind.FieldSeg, field);
 
         [MethodImpl(Inline)]
         public static ColType segvar(FieldKind field)

@@ -10,8 +10,13 @@ namespace Z0
     public readonly partial struct BitSeq
     {
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<uint1> bits(N1 n)
-            => recover<byte,uint1>(W1);
+        public static ReadOnlySpan<num2> nbits(N2 n)
+            => recover<byte,num2>(BitSeq.W2);
+
+        [MethodImpl(Inline), Op]
+        public static ReadOnlySpan<num3> nbits(N3 n)
+            => recover<byte,num3>(BitSeq.W3);
+
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<uint2> bits(N2 n)

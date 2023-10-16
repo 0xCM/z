@@ -5,13 +5,12 @@
 namespace Z0;
 
 using static sys;
-using static Numbers;
 
 using T = num5;
 using D = System.Byte;
 using N = N5;
 
-[DataWidth(Width), ApiComplete]
+[DataWidth(Width), ApiComplete, StructLayout(LayoutKind.Sequential,Size=AlignedSize)]
 public readonly struct num5 : INumber<T>
 {
     public readonly D Value;
@@ -22,10 +21,12 @@ public readonly struct num5 : INumber<T>
 
     public const byte Width = 5;
 
+    public const int AlignedSize = 1;
+
     /// <summary>
     /// 31
     /// </summary>
-    public const D MaxValue = Limit.Max5u;
+    public const D MaxValue = NumericLimits.Max5u;
 
     public const D Mod = (D)MaxValue + 1;
 
@@ -42,7 +43,7 @@ public readonly struct num5 : INumber<T>
     [MethodImpl(Inline), Op]
     public static T number<S>(S src)
         where S : unmanaged
-            => @as<S,T>(src);
+            => cover(crop(@as<S,D>(src)));
 
     [MethodImpl(Inline)]
     public static D crop(D src)

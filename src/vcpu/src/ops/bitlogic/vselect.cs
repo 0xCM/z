@@ -6,7 +6,6 @@ namespace Z0;
 
 partial class vcpu 
 {
-
     [MethodImpl(Inline), Select]
     public static Vector128<byte> vselect(Vector128<byte> x, Vector128<byte> y, Vector128<byte> z)
         => vor(vand(x,y), vnonimpl(x,z));
@@ -37,5 +36,21 @@ partial class vcpu
 
     [MethodImpl(Inline), Select]
     public static Vector256<ulong> vselect(Vector256<ulong> x, Vector256<ulong> y, Vector256<ulong> z)
+        => vor(vand(x,y), vnonimpl(x,z));
+
+    [MethodImpl(Inline), Select]
+    public static Vector512<byte> vselect(Vector512<byte> x, Vector512<byte> y, Vector512<byte> z)
+        => vor(vand(x,y), vnonimpl(x,z));
+
+    [MethodImpl(Inline), Select]
+    public static Vector512<ushort> vselect(Vector512<ushort> x, Vector512<ushort> y, Vector512<ushort> z)
+        => vor(vand(x,y), vnonimpl(x,z));
+
+    [MethodImpl(Inline), Select]
+    public static Vector512<uint> vselect(Vector512<uint> x, Vector512<uint> y, Vector512<uint> z)
+        => vor(vand(x,y), vnonimpl(x,z));
+
+    [MethodImpl(Inline), Select]
+    public static Vector512<ulong> vselect(Vector512<ulong> x, Vector512<ulong> y, Vector512<ulong> z)
         => vor(vand(x,y), vnonimpl(x,z));
 }

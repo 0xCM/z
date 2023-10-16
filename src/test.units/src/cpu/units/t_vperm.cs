@@ -201,7 +201,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static Vector128<byte> vswap(Vector128<byte> src, params Swap[] swaps)
-            => cpu.vshuf16x8(src, vswapspec<byte>(w128, swaps));
+            => cpu.vshuffle(src, vswapspec<byte>(w128, swaps));
 
         public void perm_swaps()
         {

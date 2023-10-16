@@ -7,24 +7,75 @@ namespace Z0;
 partial class vcpu
 {
     /// <summary>
-    /// __m128d _mm_shuffle_pd (__m128d a, __m128d b, int immediate) SHUFPD xmm, xmm/m128, imm8
+    /// __m128i _mm_shuffle_epi32 (__m128i a, int immediate) PSHUFD xmm, xmm/m128, imm8
     /// </summary>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
-    /// <param name="spec"></param>
+    /// <param name="src">The source vector</param>
+    /// <param name="spec">The shuffle spec</param>
     [MethodImpl(Inline), Op]
-    public static Vector128<uint> vshuffle(Vector128<uint> x, Vector128<uint> y, [Imm] BitState spec)
-        => v32u(Shuffle(v32f(x), v32f(y), (byte)spec));
+    public static Vector128<int> vshuffle(Vector128<int> src, [Imm] byte spec)
+        => Shuffle(src, (byte)spec);
 
     /// <summary>
-    /// __m128d _mm_shuffle_pd (__m128d a, __m128d b, int immediate) SHUFPD xmm, xmm/m128, imm8
+    /// __m128i _mm_shuffle_epi32 (__m128i a, int immediate) PSHUFD xmm, xmm/m128, imm8
     /// </summary>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
-    /// <param name="spec"></param>
+    /// <param name="src">The source vector</param>
+    /// <param name="spec">The shuffle spec</param>
     [MethodImpl(Inline), Op]
-    public static Vector128<ulong> vshuffle(Vector128<ulong> x, Vector128<ulong> y, [Imm] BitState spec)
-        => v64u(Shuffle(v64f(x), v64f(y), (byte)spec));
+    public static Vector128<uint> vshuffle(Vector128<uint> src, [Imm] byte spec)
+        => Shuffle(src, (byte)spec);
+
+    /// <summary>
+    /// __m128i _mm_shuffle_epi8 (__m128i a, __m128i b) PSHUFB xmm, xmm/m128
+    /// For each component of the shuffle spec:
+    /// testbit(spec[i],7) == 1 => dst[i] = 0
+    /// testbit(spec[i],7) == 0 => dst[i] = src[i]
+    /// spec[i] = j := 0 | 1 | ... | 15 => dst[j] = src[i]
+    /// </summary>
+    /// <param name="src">The content vector</param>
+    /// <param name="spec">The shuffle spec</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<byte> vshuffle(Vector128<byte> src, Vector128<byte> spec)
+        => Shuffle(src, spec);
+
+    /// <summary>
+    /// __m128i _mm_shuffle_epi8 (__m128i a, __m128i b)
+    /// PSHUFB xmm, xmm/m128
+    ///</summary>
+    [MethodImpl(Inline), Op]
+    public static Vector128<sbyte> vshuffle(Vector128<sbyte> src, Vector128<sbyte> spec)
+        => Shuffle(src, spec);
+
+    ///<summary>
+    /// __m256i _mm256_shuffle_epi8 (__m256i a, __m256i b)
+    /// VPSHUFB ymm, ymm, ymm/m256
+    ///</summary>
+    [MethodImpl(Inline), Op]
+    public static Vector256<byte> vshuffle(Vector256<byte> src, Vector256<byte> spec)
+        => Shuffle(src, spec);
+
+    ///<summary>
+    /// __m256i _mm256_shuffle_epi8 (__m256i a, __m256i b)
+    /// VPSHUFB ymm, ymm, ymm/m256
+    ///</summary>
+    [MethodImpl(Inline), Op]
+    public static Vector256<sbyte> vshuffle(Vector256<sbyte> src, Vector256<sbyte> spec)
+        => Shuffle(src, spec);
+
+    /// <summary>
+    /// __m512i _mm512_shuffle_epi8 (__m512i a, __m512i b)
+    /// VPSHUFB zmm1 {k1}{z}, zmm2, zmm3/m512
+    /// </summary>
+    [MethodImpl(Inline), Op]
+    public static Vector512<byte> vshuffle(Vector512<byte> src, Vector512<byte> spec)
+        => Shuffle(src, spec);
+
+    /// <summary>
+    /// __m512i _mm512_shuffle_epi8 (__m512i a, __m512i b)
+    ///   VPSHUFB zmm1 {k1}{z}, zmm2, zmm3/m512
+    /// </summary>
+    [MethodImpl(Inline), Op]
+    public static Vector512<sbyte> vshuffle(Vector512<sbyte> src, Vector512<sbyte> spec)
+        => Shuffle(src, spec);
 
     /// <summary>
     /// __m512i _mm512_shuffle_epi32 (__m512i a, const int imm8)

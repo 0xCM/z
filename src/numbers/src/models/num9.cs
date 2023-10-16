@@ -22,10 +22,12 @@ public readonly struct num9 : INumber<T>
 
     public const byte Width = 9;
 
+    public const int AlignedSize = 2;
+
     /// <summary>
     /// 511
     /// </summary>
-    public const D MaxValue = Limit.Max9u;
+    public const D MaxValue = NumericLimits.Max9u;
 
     public const D Mod = (D)MaxValue + 1;
 
@@ -39,31 +41,18 @@ public readonly struct num9 : INumber<T>
 
     public static N N => default;
 
-    [MethodImpl(Inline), Op]
-    public static T number<S>(S src)
-        where S : unmanaged
-            => @as<S,T>(src);
-
-    [MethodImpl(Inline)]
-    public static D crop(D src)
-        => (D)(MaxValue & src);
-
-    [MethodImpl(Inline)]
-    public static T create(D src)
-        => new T(src);
-
-    [MethodImpl(Inline)]
-    public static T create(ulong src)
-        => new T((D)src);
-
     [MethodImpl(Inline)]
     static T cover(D src)
         => @as<D,T>(src);
 
+    [MethodImpl(Inline), Op]
+    public static T number<S>(S src)
+        where S : unmanaged
+            => cover(crop(@as<S,D>(src)));
+
     [MethodImpl(Inline)]
-    public static T force<A>(A src)
-        where A : unmanaged
-            => T.crop(bw16(src));
+    public static D crop(D src)
+        => (D)(MaxValue & src);
 
     [MethodImpl(Inline), Op]
     public static bit test(T src, byte pos)
@@ -97,13 +86,13 @@ public readonly struct num9 : INumber<T>
     public static bit le(T a, T b)
         => a.Value <= b.Value;
 
-    [MethodImpl(Inline), Op]
+    [MethodImpl(Inline)]
     public static T negate(T src)
-        => create(math.negate(src.Value));
+        => number(math.negate(src.Value));
 
     [MethodImpl(Inline)]
     public static T invert(T src)
-        => cover((D)(math.and(math.not(src.Value), MaxValue)));
+        => number(math.not(src.Value));
 
     [MethodImpl(Inline), Op]
     public static T or(T a, T b)
@@ -147,8 +136,8 @@ public readonly struct num9 : INumber<T>
     [MethodImpl(Inline), Op]
     public static T sub(T a, T b)
     {
-        var c = math.sub((int)a.Value, (int)b.Value);
-        return cover(c < 0 ? math.add((D)c, Mod) : (D)c);
+        var c = math.sub(a.Value, b.Value);
+        return cover(c < 0 ? math.add(c, Mod) : c);
     }
 
     [MethodImpl(Inline), Op]
@@ -162,14 +151,6 @@ public readonly struct num9 : INumber<T>
     [MethodImpl(Inline)]
     public static T mod(T a, T b)
         => cover(math.mod(a.Value, b.Value));
-
-    [Parser]
-    public static bool parse(string src, out T dst)
-    {
-        var outcome = D.TryParse(src, out D x);
-        dst = new T((D)(x & MaxValue));
-        return outcome;
-    }
 
     [Parser]
     public static bool parse(ReadOnlySpan<char> src, out T dst)
@@ -191,14 +172,14 @@ public readonly struct num9 : INumber<T>
 
     public bit IsZero
     {
-            [MethodImpl(Inline)]
-            get => Value == 0;
+        [MethodImpl(Inline)]
+        get => Value == 0;
     }
 
     public bit IsNonZero
     {
-            [MethodImpl(Inline)]
-            get => Value != 0;
+        [MethodImpl(Inline)]
+        get => Value != 0;
     }
 
     public bit IsMax
@@ -206,12 +187,6 @@ public readonly struct num9 : INumber<T>
         [MethodImpl(Inline)]
         get => Value == MaxValue;
     }
-
-
-    [MethodImpl(Inline)]
-    public S Force<S>()
-        where S : unmanaged
-            => @as<T,S>(this);
 
     [MethodImpl(Inline)]
     public string Format()
@@ -238,7 +213,7 @@ public readonly struct num9 : INumber<T>
 
     [MethodImpl(Inline)]
     public static implicit operator T(byte src)
-        => create(src);
+        => number(src);
 
     [MethodImpl(Inline)]
     public static explicit operator byte(T src)
@@ -246,7 +221,7 @@ public readonly struct num9 : INumber<T>
 
     [MethodImpl(Inline)]
     public static implicit operator T(sbyte src)
-        => create((ushort)src);
+        => number(src);
 
     [MethodImpl(Inline)]
     public static explicit operator sbyte(T src)
@@ -258,11 +233,11 @@ public readonly struct num9 : INumber<T>
 
     [MethodImpl(Inline)]
     public static implicit operator T(ushort src)
-        => new T(src);
+        => number(src);
 
     [MethodImpl(Inline)]
     public static implicit operator T(short src)
-        => cover((ushort)src);
+        => number(src);
 
     [MethodImpl(Inline)]
     public static implicit operator uint(T src)
@@ -270,7 +245,7 @@ public readonly struct num9 : INumber<T>
 
     [MethodImpl(Inline)]
     public static explicit operator T(uint src)
-        => create(src);
+        => number(src);
 
     [MethodImpl(Inline)]
     public static implicit operator ulong(T src)
@@ -278,7 +253,7 @@ public readonly struct num9 : INumber<T>
 
     [MethodImpl(Inline)]
     public static explicit operator T(ulong src)
-        => create((ushort)src);
+        => number(src);
 
     [MethodImpl(Inline)]
     public static T operator + (T x, T y)

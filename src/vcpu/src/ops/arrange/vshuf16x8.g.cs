@@ -18,7 +18,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Integers)]
         public static Vector128<T> vshuf16x8<T>(Vector128<T> src, Vector128<byte> spec)
             where T : unmanaged
-                => generic<T>(vcpu.vshuf16x8(v8u(src), spec));
+                => generic<T>(vcpu.vshuffle(v8u(src), spec));
 
         /// <summary>
         /// Shuffles unsigned 8-bit source segments within 128-bit lanes according to the shuffle spec
@@ -28,6 +28,6 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Integers)]
         public static Vector256<T> vshuf16x8<T>(Vector256<T> src, Vector256<byte> spec)
             where T : unmanaged
-                => generic<T>(vcpu.vshuf16x8(v8u(src), spec));
+                => generic<T>(vcpu.vshuffle(v8u(src), spec));
     }
 }

@@ -72,7 +72,8 @@ partial class PolyBits
         for(var i=0; i<src.FieldCount; i++)
         {
             ref readonly var field = ref fields[i];
-            var m = Numbers.max(src.Width(field));
+            ref readonly var width = ref src.Width(field);
+            var m = (ulong)Pow2.m1(width);
             seek(dst,i) = m << (int)src.Offset(field);
         }
         return dst;
@@ -100,7 +101,8 @@ partial class PolyBits
         for(var i=0; i<src.FieldCount; i++)
         {
             ref readonly var field = ref fields[i];
-            var m = Numbers.max(src.Width(field));
+            ref readonly var width = ref src.Width(field);
+            var m = (ulong)Pow2.m1(width);
             seek(dst,i) = m << (int)src.Offset(field);
         }
         return dst;

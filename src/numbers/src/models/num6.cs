@@ -45,10 +45,12 @@ public readonly struct num6 : INumber<T>
 
     public const byte Width = 6;
 
+    public const int AlignedSize = 1;
+
     /// <summary>
     /// 63
     /// </summary>
-    public const D MaxValue = Limit.Max6u;
+    public const D MaxValue = NumericLimits.Max6u;
 
     public const D Mod = (D)MaxValue + 1;
 
@@ -69,7 +71,7 @@ public readonly struct num6 : INumber<T>
     [MethodImpl(Inline), Op]
     public static T number<S>(S src)
         where S : unmanaged
-            => @as<S,T>(src);
+            => cover(crop(@as<S,D>(src)));
 
     [MethodImpl(Inline)]
     public static T create(D src)

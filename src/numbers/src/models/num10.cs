@@ -16,7 +16,7 @@ using N = N10;
 /// </summary>
 [DataWidth(Width), ApiComplete]
 public readonly struct num10 : INumber<T>
-{
+{    
     public readonly D Value;
 
     [MethodImpl(Inline)]
@@ -25,27 +25,29 @@ public readonly struct num10 : INumber<T>
 
     public const byte Width = 10;
 
+    public const int AlignedSize = 2;
+
     /// <summary>
     /// 1,023
     /// </summary>
-    public const D MaxValue = Limit.Max10u;
+    public const D MaxValue = NumericLimits.Max10u;
 
     public const D Mod = (D)MaxValue + 1;
 
     public static T Zero => default;
 
-    public static T One => cover(1);
+    public static T One => number(1);
 
-    public static T Min => cover(0);
+    public static T Min => number(0);
 
-    public static T Max => cover(MaxValue);
+    public static T Max => number(MaxValue);
 
     public static N N => default;
 
     [MethodImpl(Inline), Op]
     public static T number<S>(S src)
         where S : unmanaged
-            => @as<S,T>(src);
+            => @as<S,T>(src) & Max;
 
     [MethodImpl(Inline)]
     public static D crop(D src)
@@ -53,20 +55,11 @@ public readonly struct num10 : INumber<T>
 
     [MethodImpl(Inline)]
     public static T create(D src)
-        => new T(src);
+        => new (src);
 
     [MethodImpl(Inline)]
     public static T create(ulong src)
-        => new T((D)src);
-
-    [MethodImpl(Inline)]
-    static T cover(D src)
-        => @as<D,T>(src);
-
-    [MethodImpl(Inline)]
-    public static T force<A>(A src)
-        where A : unmanaged
-            => T.crop(bw16(src));
+        => new ((D)src);
 
     [MethodImpl(Inline), Op]
     public static bit test(T src, byte pos)
@@ -74,7 +67,7 @@ public readonly struct num10 : INumber<T>
 
     [MethodImpl(Inline), Op]
     public static T set(T src, byte pos, bit state)
-        => math.lt(pos, Width) ? cover(bit.set(src.Value, pos, state)) : src;
+        => math.lt(pos, Width) ? number(bit.set(src.Value, pos, state)) : src;
 
     [MethodImpl(Inline)]
     public static bit eq(T a, T b)
@@ -106,52 +99,52 @@ public readonly struct num10 : INumber<T>
 
     [MethodImpl(Inline)]
     public static T invert(T src)
-        => cover((D)(math.and(math.not(src.Value), MaxValue)));
+        => number(math.and(math.not(src.Value), MaxValue));
 
     [MethodImpl(Inline), Op]
     public static T or(T a, T b)
-        => cover((D)(a.Value | b.Value));
+        => number((D)(a.Value | b.Value));
 
     [MethodImpl(Inline), Op]
     public static T and(T a, T b)
-        => cover((D)(a.Value & b.Value));
+        => number((D)(a.Value & b.Value));
 
     [MethodImpl(Inline), Op]
     public static T xor(T a, T b)
-        => cover((D)(a.Value ^ b.Value));
+        => number((D)(a.Value ^ b.Value));
 
     [MethodImpl(Inline), Op]
     public static T srl(T src, byte count)
-        => cover((D)(src.Value >> count));
+        => number((D)(src.Value >> count));
 
     [MethodImpl(Inline), Op]
     public static T sll(T src, byte count)
-        => cover((D)(src.Value << count));
+        => number((D)(src.Value << count));
 
     [MethodImpl(Inline), Op]
     public static T inc(T src)
-        => src.Value != MaxValue ? cover(math.inc(src.Value)) : Min;
+        => src.Value != MaxValue ? number(math.inc(src.Value)) : Min;
 
     [MethodImpl(Inline), Op]
     public static T dec(T src)
-        => src.Value != 0 ? cover(math.dec(src.Value)) : Max;
+        => src.Value != 0 ? number(math.dec(src.Value)) : Max;
 
     [MethodImpl(Inline), Op]
     public static T reduce(T src)
-        => cover(math.mod(src.Value, Mod));
+        => number(math.mod(src.Value, Mod));
 
     [MethodImpl(Inline), Op]
     public static T add(T a, T b)
     {
         var c = math.add(a.Value, b.Value);
-        return cover(math.gteq(c, Mod) ? math.sub(c, Mod) : c);
+        return number(math.gteq(c, Mod) ? math.sub(c, Mod) : c);
     }
 
     [MethodImpl(Inline), Op]
     public static T sub(T a, T b)
     {
         var c = math.sub((int)a.Value, (int)b.Value);
-        return cover(c < 0 ? math.add((D)c, Mod) : (D)c);
+        return number(c < 0 ? math.add((D)c, Mod) : (D)c);
     }
 
     [MethodImpl(Inline), Op]
@@ -160,11 +153,11 @@ public readonly struct num10 : INumber<T>
 
     [MethodImpl(Inline), Op]
     public static T div(T a, T b)
-        => cover(math.div(a.Value, b.Value));
+        => number(math.div(a.Value, b.Value));
 
     [MethodImpl(Inline)]
     public static T mod(T a, T b)
-        => cover(math.mod(a.Value, b.Value));
+        => number(math.mod(a.Value, b.Value));
 
     [Parser]
     public static bool parse(string src, out T dst)
@@ -260,11 +253,11 @@ public readonly struct num10 : INumber<T>
 
     [MethodImpl(Inline)]
     public static implicit operator T(ushort src)
-        => new T(src);
+        => new (src);
 
     [MethodImpl(Inline)]
     public static implicit operator T(short src)
-        => cover((ushort)src);
+        => number((ushort)src);
 
     [MethodImpl(Inline)]
     public static implicit operator uint(T src)
@@ -361,4 +354,20 @@ public readonly struct num10 : INumber<T>
     [MethodImpl(Inline)]
     public static bit operator >= (T a, T b)
         => ge(a,b);
+
+    [MethodImpl(Inline), Op]
+    public static T pack(num2 a, num8 b)
+        => number((uint)a | math.sll((uint)b, num2.Width));
+
+    [MethodImpl(Inline), Op]
+    public static T pack(num5 a, num5 b)
+        => number((uint)a | math.sll((uint)b, num5.Width));
+
+    [MethodImpl(Inline), Op]
+    public static T pack(num9 a, bit b)
+        => number((uint)a |math.sll((uint)b, num9.Width));
+
+    [MethodImpl(Inline), Op]
+    public static T pack(num6 a, num4 b)
+        => number((uint)a | ((uint)b << num6.Width));
 }
