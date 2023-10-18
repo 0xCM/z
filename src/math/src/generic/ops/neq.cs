@@ -23,13 +23,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
-                return math.neq(uint8(a), uint8(b));
+                return math.ne(uint8(a), uint8(b));
             else if(typeof(T) == typeof(ushort))
-                return math.neq(uint16(a), uint16(b));
+                return math.ne(uint16(a), uint16(b));
             else if(typeof(T) == typeof(uint))
-                return math.neq(uint32(a), uint32(b));
+                return math.ne(uint32(a), uint32(b));
             else if(typeof(T) == typeof(ulong))
-                return math.neq(uint64(a), uint64(b));
+                return math.ne(uint64(a), uint64(b));
             else
                 return neq_i(a,b);
         }
@@ -39,13 +39,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(sbyte))
-                 return math.neq(int8(a), int8(b));
+                 return math.ne(int8(a), int8(b));
             else if(typeof(T) == typeof(short))
-                 return math.neq(int16(a), int16(b));
+                 return math.ne(int16(a), int16(b));
             else if(typeof(T) == typeof(int))
-                 return math.neq(int32(a), int32(b));
+                 return math.ne(int32(a), int32(b));
             else if(typeof(T) == typeof(long))
-                 return math.neq(int64(a), int64(b));
+                 return math.ne(int64(a), int64(b));
             else
                 return gfp.neq(a,b);
         }

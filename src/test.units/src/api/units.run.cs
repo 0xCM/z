@@ -4,11 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-partial class IntrinsicsDoc
+partial class ApiOps
 {
-    public class Parameters : List<Parameter>
+    [CmdOp("units/run")]
+    void RunUnits(CmdArgs args)
     {
-
-        
+        TestRunner.Run(sys.array(PartId.Lib, PartId.TestUnits));
     }
 }

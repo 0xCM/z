@@ -10,7 +10,7 @@ partial class IntrinsicsDoc
     {
         public readonly Return Return;
 
-        public readonly @string Name;
+        public readonly FunctionName Name;
 
         public readonly Parameters Params;
 
@@ -18,8 +18,10 @@ partial class IntrinsicsDoc
         public FunctionSig(Return ret, string name, Parameters ops)
         {
             Return = ret;
-            Name = name;
-            Params = ops;
+            if(text.nonempty(name))            
+                Require.equal(Chars.Underscore, name[0]);
+            Name = FunctionName.parse(name);
+            Params = ops ?? new();
         }
 
         public string Format()
@@ -28,6 +30,6 @@ partial class IntrinsicsDoc
         public override string ToString()
             => Format();
 
-        public static FunctionSig Empty => new FunctionSig(Return.Empty, EmptyString, new());
+        public static FunctionSig Empty => new (Return.Empty, EmptyString, new());
     }
 }

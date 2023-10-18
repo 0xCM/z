@@ -64,27 +64,6 @@ namespace Z0.Asm
         }
 
 
-        void EmitBitMasks()
-        {
-            var dst = AppDb.AppData(ApiAtomic.logs).Path("bitmasks", FileKind.Csv);
-            var src = BitMask.masks(typeof(BitMaskLiterals));
-            var formatter = CsvTables.formatter<BitMaskInfo>();
-            for(var i=0; i<src.Count; i++)
-            {
-                ref readonly var mask = ref src[i];
-                Channel.Row(formatter.Format(mask));
-                Channel.Write(mask.Text);
-            }
-            Channel.TableEmit(src,dst,TextEncodingKind.Unicode);
-
-        }
-
-        [CmdOp("calcs/check")]
-        void Hello()
-        {
-            EmitBitMasks();
-        }
-
 
         Outcome EmitTokenStrings(CmdArgs args)
         {

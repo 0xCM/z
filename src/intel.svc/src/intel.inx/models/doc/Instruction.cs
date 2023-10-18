@@ -41,6 +41,6 @@ partial class IntrinsicsDoc
         public override string ToString()
             => Format();
 
-        public static Instruction Empty => new Instruction(EmptyString, EmptyString, 0);
+        public static Instruction Empty => new (EmptyString, EmptyString, 0);
     }
 }

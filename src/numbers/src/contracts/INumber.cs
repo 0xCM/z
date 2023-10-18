@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using System.Numerics;
+
 [Free]
 public interface INumber
 {
@@ -17,14 +19,24 @@ public interface INumber
 
     public bit IsMax {get;}
 
-    string Format();
+    string Format();    
 
     string Bitstring();
 
+    string Hex();
 }
 
 [Free]
-public interface INumber<T> : INumber, IEquatable<T>, IComparable<T>
+public interface INumber<T> : INumber, 
+    IEquatable<T>, 
+    IComparable<T>, 
+    IAdditionOperators<T,T,T>,
+    ISubtractionOperators<T,T,T>,
+    IMultiplyOperators<T,T,T>,
+    IBitwiseOperators<T,T,T>,
+    IIncrementOperators<T>,
+    IDecrementOperators<T>,
+    IComparisonOperators<T,T,bit>    
     where T : unmanaged, INumber<T>
 {
     static abstract T Zero {get;}
@@ -35,6 +47,9 @@ public interface INumber<T> : INumber, IEquatable<T>, IComparable<T>
 
     static abstract T Max {get;}
 
+    static abstract T number<S>(S src)
+        where S : unmanaged;
+    
     static abstract T add(T a, T b);
 
     static abstract T sub(T a, T b);
@@ -79,5 +94,5 @@ public interface INumber<T> : INumber, IEquatable<T>, IComparable<T>
 
     static abstract T and(T a, T b);
 
-    static abstract bool parse(ReadOnlySpan<char> src, out T dst);
+    static abstract bool parse(ReadOnlySpan<char> src, out T dst);    
 }

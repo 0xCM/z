@@ -37,7 +37,7 @@ partial class IntrinsicsDoc
         public Header header;
 
         public FunctionSig Sig()
-            => new FunctionSig(@return, name, parameters);
+            => new (@return, name, parameters);
 
         public int CompareTo(IntrinsicDef src)
         {

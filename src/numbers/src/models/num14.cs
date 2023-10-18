@@ -47,6 +47,10 @@ public readonly struct num14 : INumber<T>
 
     public static N N => default;
 
+    [MethodImpl(Inline)]
+    public static T cover(D src)
+        => @as<D,T>(src);
+
     [MethodImpl(Inline), Op]
     public static T number<S>(S src)
         where S : unmanaged
@@ -63,15 +67,6 @@ public readonly struct num14 : INumber<T>
     [MethodImpl(Inline)]
     public static T create(ulong src)
         => new T((D)src);
-
-    [MethodImpl(Inline)]
-    static T cover(D src)
-        => @as<D,T>(src);
-
-    [MethodImpl(Inline)]
-    public static T force<A>(A src)
-        where A : unmanaged
-            => T.crop(bw16(src));
 
     [MethodImpl(Inline), Op]
     public static bit test(T src, byte pos)
@@ -149,7 +144,7 @@ public readonly struct num14 : INumber<T>
     public static T add(T a, T b)
     {
         var c = math.add(a.Value, b.Value);
-        return cover(math.gteq(c, Mod) ? math.sub(c, Mod) : c);
+        return cover(math.ge(c, Mod) ? math.sub(c, Mod) : c);
     }
 
     [MethodImpl(Inline), Op]

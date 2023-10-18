@@ -38,7 +38,7 @@ public readonly struct num2 : INumber<T>
     public static N N => default;
 
     [MethodImpl(Inline)]
-    static T cover(D src)
+    public static T cover(D src)
         => @as<D,T>(src);
 
     [MethodImpl(Inline), Op]
@@ -49,10 +49,6 @@ public readonly struct num2 : INumber<T>
     [MethodImpl(Inline)]
     public static D crop(D src)
         => (D)(MaxValue & src);
-
-    [MethodImpl(Inline)]
-    public static T create(ulong src)
-        => new ((D)src);
 
     [MethodImpl(Inline), Op]
     public static bit test(T src, byte pos)
@@ -130,7 +126,7 @@ public readonly struct num2 : INumber<T>
     public static T add(T a, T b)
     {
         var c = math.add(a.Value, b.Value);
-        return cover(math.gteq(c, Mod) ? math.sub(c, Mod) : c);
+        return cover(math.ge(c, Mod) ? math.sub(c, Mod) : c);
     }
 
     [MethodImpl(Inline), Op]
@@ -185,11 +181,6 @@ public readonly struct num2 : INumber<T>
         [MethodImpl(Inline)]
         get => Value == MaxValue;
     }
-
-    [MethodImpl(Inline)]
-    public S Force<S>()
-        where S : unmanaged
-            => @as<T,S>(this);
 
     byte INumber.PackedWidth
         => Width;

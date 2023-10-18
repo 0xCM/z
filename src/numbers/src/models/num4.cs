@@ -5,27 +5,24 @@
 namespace Z0;
 
 using static sys;
-
+using System.Numerics;
 using T = num4;
 using D = System.Byte;
 using N = N4;
 
 [DataWidth(Width), ApiComplete, StructLayout(LayoutKind.Sequential,Size=AlignedSize)]
-public readonly struct num4 : INumber<T>
+public readonly struct num4 : INumber<T>,
+    IShiftOperators<T,int,T>,
+    IIncrementOperators<T>,
+    IDecrementOperators<T>,
+    IComparisonOperators<T,T,bit>
 {
     public readonly D Value;
-
-    [MethodImpl(Inline)]
-    public num4(D src)
-        => Value = crop(src);
 
     public const byte Width = 4;
 
     public const int AlignedSize = 1;
 
-    /// <summary>
-    /// 15
-    /// </summary>
     public const D MaxValue = NumericLimits.Max4u;
 
     public const D Mod = (D)MaxValue + 1;
@@ -50,11 +47,7 @@ public readonly struct num4 : INumber<T>
             => cover(crop(@as<S,D>(src)));
 
     [MethodImpl(Inline)]
-    public static T create(ulong src)
-        => new T((D)src);
-
-    [MethodImpl(Inline)]
-    static T cover(D src)
+    public static T cover(D src)
         => @as<D,T>(src);
 
     [MethodImpl(Inline), Op]
@@ -67,27 +60,27 @@ public readonly struct num4 : INumber<T>
 
     [MethodImpl(Inline)]
     public static bit eq(T a, T b)
-        => a.Value == b.Value;
+        => math.eq(a.Value, b.Value);
 
     [MethodImpl(Inline)]
     public static bit ne(T a, T b)
-        => a.Value != b.Value;
+        => math.ne(a.Value, b.Value);
 
     [MethodImpl(Inline)]
     public static bit gt(T a, T b)
-        => a.Value > b.Value;
+        => math.gt(a.Value, b.Value);
 
     [MethodImpl(Inline)]
     public static bit ge(T a, T b)
-        => a.Value >= b.Value;
+        => math.ge(a.Value, b.Value);
 
     [MethodImpl(Inline)]
     public static bit lt(T a, T b)
-        => a.Value < b.Value;
+        => math.lt(a.Value, b.Value);
 
     [MethodImpl(Inline)]
     public static bit le(T a, T b)
-        => a.Value <= b.Value;
+        => math.le(a.Value, b.Value);
 
     [MethodImpl(Inline), Op]
     public static T negate(T src)
@@ -99,23 +92,23 @@ public readonly struct num4 : INumber<T>
 
     [MethodImpl(Inline), Op]
     public static T or(T a, T b)
-        => cover((D)(a.Value | b.Value));
+        => number(math.or(a.Value, b.Value));
 
     [MethodImpl(Inline), Op]
     public static T and(T a, T b)
-        => cover((D)(a.Value & b.Value));
+        => number(math.and(a.Value, b.Value));
 
     [MethodImpl(Inline), Op]
     public static T xor(T a, T b)
-        => cover((D)(a.Value ^ b.Value));
+        => number(math.xor(a,b));
 
     [MethodImpl(Inline), Op]
     public static T srl(T src, byte count)
-        => cover((D)(src.Value >> count));
-
+        => number(math.srl(src.Value, count));
+    
     [MethodImpl(Inline), Op]
     public static T sll(T src, byte count)
-        => cover((D)(src.Value << count));
+        => number(math.sll(src.Value, count));
 
     [MethodImpl(Inline), Op]
     public static T inc(T src)
@@ -133,15 +126,12 @@ public readonly struct num4 : INumber<T>
     public static T add(T a, T b)
     {
         var c = math.add(a.Value, b.Value);
-        return cover(math.gteq(c, Mod) ? math.sub(c, Mod) : c);
+        return cover(math.ge(c, Mod) ? math.sub(c, Mod) : c);
     }
 
     [MethodImpl(Inline), Op]
     public static T sub(T a, T b)
-    {
-        var c = math.sub(a.Value, b.Value);
-        return cover(c < 0 ? math.add(c, Mod) : c);
-    }
+        => a + (-b);
 
     [MethodImpl(Inline), Op]
     public static T mul(T a, T b)
@@ -155,23 +145,11 @@ public readonly struct num4 : INumber<T>
     public static T mod(T a, T b)
         => cover(math.mod(a.Value, b.Value));
 
-    [MethodImpl(Inline)]
-    public static string bitstring(T src)
-        => BitRender.format(N, src.Value);
-
-    [Parser]
-    public static bool parse(string src, out T dst)
-    {
-        var outcome = byte.TryParse(src, out D x);
-        dst = new T((D)(x & MaxValue));
-        return outcome;
-    }
-
     [Parser]
     public static bool parse(ReadOnlySpan<char> src, out T dst)
     {
         var result = byte.TryParse(src, out D x);
-        dst = new T((D)(x & MaxValue));
+        dst = number(x);
         return result;
     }
 
@@ -203,12 +181,18 @@ public readonly struct num4 : INumber<T>
         get => Value == MaxValue;
     }
 
+    public Hash32 Hash
+    {
+        [MethodImpl(Inline)]
+        get => nhash(Value);
+    }
+
     [MethodImpl(Inline)]
     public string Format()
         => Value.ToString();
 
     public string Bitstring()
-        => bitstring(this);
+        => BitRender.format(N, Value);
 
     public string Hex()
         => Value.FormatHex();
@@ -220,14 +204,14 @@ public readonly struct num4 : INumber<T>
         => Value.CompareTo(src.Value);
 
     public override int GetHashCode()
-        => (int)Value;
+        => Hash;
 
     public override bool Equals(object src)
         => src is T t && Equals(t);
 
     [MethodImpl(Inline)]
     public static implicit operator T(D src)
-        => new T(src);
+        => number(src);
 
     [MethodImpl(Inline)]
     public static implicit operator D(T src)
@@ -290,44 +274,48 @@ public readonly struct num4 : INumber<T>
         => src.Value;
 
     [MethodImpl(Inline)]
-    public static T operator + (T x, T y)
-        => add(x,y);
+    public static T operator + (T a, T b)
+        => add(a, b);
 
     [MethodImpl(Inline)]
-    public static T operator - (T x, T y)
-        => sub(x,y);
+    public static T operator - (T a, T b)
+        => sub(a, b);
 
     [MethodImpl(Inline)]
-    public static T operator * (T x, T y)
-        => mul(x,y);
+    public static T operator * (T a, T b)
+        => mul(a, b);
 
     [MethodImpl(Inline)]
-    public static T operator / (T x, T y)
-        => div(x,y);
+    public static T operator / (T a, T b)
+        => div(a, b);
 
     [MethodImpl(Inline)]
-    public static T operator % (T x, T y)
-        => mod(x,y);
+    public static T operator % (T a, T b)
+        => mod(a, b);
 
     [MethodImpl(Inline)]
-    public static T operator &(T x, T y)
-        => and(x,y);
+    public static T operator &(T a, T b)
+        => and(a, b);
 
     [MethodImpl(Inline)]
-    public static T operator |(T x, T y)
-        => or(x,y);
+    public static T operator |(T a, T b)
+        => or(a, b);
 
     [MethodImpl(Inline)]
     public static T operator ^(T a, T b)
-        => xor(a,b);
+        => xor(a, b);
 
     [MethodImpl(Inline)]
-    public static T operator >>(T x, int count)
-        => srl(x, (byte)count);
+    public static T operator >>(T a, int count)
+        => srl(a, (byte)count);
 
     [MethodImpl(Inline)]
-    public static T operator <<(T x, int count)
-        => sll(x, (byte)count);
+    public static T operator <<(T a, int count)
+        => sll(a, (byte)count);
+
+    [MethodImpl(Inline)]
+    public static T operator >>> (T a, int count)
+        => srl(a, (byte)count);
 
     [MethodImpl(Inline)]
     public static T operator ~(T src)
@@ -347,25 +335,26 @@ public readonly struct num4 : INumber<T>
 
     [MethodImpl(Inline)]
     public static bit operator ==(T a, T b)
-        => a.Value == b.Value;
+        => eq(a,b);
 
     [MethodImpl(Inline)]
     public static bit operator !=(T a, T b)
-        => a.Value != b.Value;
+        => ne(a,b);
 
     [MethodImpl(Inline)]
     public static bit operator < (T a, T b)
-        => a.Value < b.Value;
+        => lt(a,b);
 
     [MethodImpl(Inline)]
     public static bit operator <= (T a, T b)
-        => a.Value <= b.Value;
+        => le(a,b);
 
     [MethodImpl(Inline)]
     public static bit operator > (T a, T b)
-        => a.Value > b.Value;
+        => gt(a,b);
 
     [MethodImpl(Inline)]
     public static bit operator >= (T a, T b)
-        => a.Value >= b.Value;
+        => ge(a,b);
+
 }

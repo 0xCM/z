@@ -5,7 +5,6 @@
 namespace Z0;
 
 using static sys;
-using static Numbers;
 
 using T = num8;
 using D = System.Byte;
@@ -42,6 +41,10 @@ public readonly struct num8 : INumber<T>
     public static N N => default;
 
     [MethodImpl(Inline)]
+    public static T cover(D src)
+        => @as<D,T>(src);
+
+    [MethodImpl(Inline)]
     public static D crop(D src)
         => (D)(MaxValue & src);
 
@@ -53,15 +56,6 @@ public readonly struct num8 : INumber<T>
     [MethodImpl(Inline)]
     public static T create(ulong src)
         => new T((D)src);
-
-    [MethodImpl(Inline)]
-    static T cover(D src)
-        => @as<D,T>(src);
-
-    [MethodImpl(Inline)]
-    public static T force<A>(A src)
-        where A : unmanaged
-            => T.crop(bw8(src));
 
     [MethodImpl(Inline), Op]
     public static bit test(T src, byte pos)
@@ -139,7 +133,7 @@ public readonly struct num8 : INumber<T>
     public static T add(T a, T b)
     {
         var c = math.add(a.Value, b.Value);
-        return cover((byte)(math.gteq(c, Mod) ? math.sub(c, Mod) : c));
+        return cover((byte)(math.ge(c, Mod) ? math.sub(c, Mod) : c));
     }
 
     [MethodImpl(Inline), Op]
@@ -160,6 +154,16 @@ public readonly struct num8 : INumber<T>
     [MethodImpl(Inline)]
     public static T mod(T a, T b)
         => cover(math.mod(a.Value, b.Value));
+
+    [MethodImpl(Inline), Op]
+    public static T adc(T a, T b, out bit carry)
+    {
+        var parity = (byte)math.odd(add(a.Value, b.Value));
+        var x = math.add(b.Value, parity);
+        var y = math.add(a.Value, x);
+        carry = math.or(math.lt(x,b.Value), math.lt(y, a.Value));
+        return number(y);
+    }
 
     [MethodImpl(Inline)]
     public static string bitstring(T src)
@@ -209,17 +213,21 @@ public readonly struct num8 : INumber<T>
         get => Value == MaxValue;
     }
 
-    [MethodImpl(Inline)]
-    public S Force<S>()
-        where S : unmanaged
-            => @as<T,S>(this);
+    public bit IsMin
+    {
+        [MethodImpl(Inline)]
+        get => Value == D.MinValue;
+    }
 
     [MethodImpl(Inline)]
     public string Format()
         => Value.ToString();
 
+    public string Hex()
+        => Value.FormatHex();
+
     public string Bitstring()
-        => bitstring(this);
+        => BitRender.format(N, Value);
 
     public override string ToString()
         => Format();

@@ -5,7 +5,6 @@
 namespace Z0;
 
 using static sys;
-using static Numbers;
 
 using T = num7;
 using D = System.Byte;
@@ -16,13 +15,6 @@ public readonly struct num7 : INumber<T>
 {
     public readonly D Value;
 
-    [MethodImpl(Inline)]
-    public num7(D src)
-        => Value = crop(src);
-
-    /// <summary>
-    /// 127
-    /// </summary>
     public const byte Width = 7;
 
     public const int AlignedSize = 1;
@@ -42,6 +34,10 @@ public readonly struct num7 : INumber<T>
     public static N N => default;
 
     [MethodImpl(Inline)]
+    public static T cover(D src)
+        => @as<D,T>(src);
+
+    [MethodImpl(Inline)]
     public static D crop(D src)
         => (D)(MaxValue & src);
 
@@ -49,19 +45,6 @@ public readonly struct num7 : INumber<T>
     public static T number<S>(S src)
         where S : unmanaged
             => cover(crop(@as<S,D>(src)));
-
-    [MethodImpl(Inline)]
-    public static T create(ulong src)
-        => new T((D)src);
-
-    [MethodImpl(Inline)]
-    static T cover(D src)
-        => @as<D,T>(src);
-
-    [MethodImpl(Inline)]
-    public static T force<A>(A src)
-        where A : unmanaged
-            => T.crop(bw8(src));
 
     [MethodImpl(Inline)]
     public static bit test(T src, byte pos)
@@ -97,7 +80,7 @@ public readonly struct num7 : INumber<T>
 
     [MethodImpl(Inline)]
     public static T negate(T src)
-        => create(math.negate(src.Value));
+        => number(math.negate(src.Value));
 
     [MethodImpl(Inline)]
     public static T invert(T src)
@@ -139,7 +122,7 @@ public readonly struct num7 : INumber<T>
     public static T add(T a, T b)
     {
         var c = math.add(a.Value, b.Value);
-        return cover(math.gteq(c, Mod) ? math.sub(c, Mod) : c);
+        return cover(math.ge(c, Mod) ? math.sub(c, Mod) : c);
     }
 
     [MethodImpl(Inline)]
@@ -161,23 +144,11 @@ public readonly struct num7 : INumber<T>
     public static T mod(T a, T b)
         => cover(math.mod(a.Value, b.Value));
 
-    [MethodImpl(Inline)]
-    public static string bitstring(T src)
-        => BitRender.format(N, src.Value);
-
-    [Parser]
-    public static bool parse(string src, out T dst)
-    {
-        var outcome = byte.TryParse(src, out D x);
-        dst = new T((D)(x & MaxValue));
-        return outcome;
-    }
-
     [Parser]
     public static bool parse(ReadOnlySpan<char> src, out T dst)
     {
         var result = byte.TryParse(src, out D x);
-        dst = new T((D)(x & MaxValue));
+        dst = number((D)(x & MaxValue));
         return result;
     }
 
@@ -210,16 +181,11 @@ public readonly struct num7 : INumber<T>
     }
 
     [MethodImpl(Inline)]
-    public S Force<S>()
-        where S : unmanaged
-            => @as<T,S>(this);
-
-    [MethodImpl(Inline)]
     public string Format()
         => Value.ToString();
 
     public string Bitstring()
-        => bitstring(this);
+        => BitRender.format(N, Value);
 
     public string Hex()
         => Value.FormatHex();
@@ -239,7 +205,7 @@ public readonly struct num7 : INumber<T>
 
     [MethodImpl(Inline)]
     public static implicit operator T(D src)
-        => new T(src);
+        => number(src);
 
     [MethodImpl(Inline)]
     public static implicit operator D(T src)
@@ -263,15 +229,15 @@ public readonly struct num7 : INumber<T>
 
     [MethodImpl(Inline)]
     public static explicit operator T(ushort src)
-        => create((byte)src);
+        => number(src);
 
     [MethodImpl(Inline)]
     public static explicit operator T(uint src)
-        => create((byte)src);
+        => number(src);
 
     [MethodImpl(Inline)]
     public static explicit operator T(ulong src)
-        => create((byte)src);
+        => number(src);
 
     [MethodImpl(Inline)]
     public static explicit operator bit(T src)

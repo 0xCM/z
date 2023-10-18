@@ -24,7 +24,7 @@ public readonly record struct RexB
     public bit Enabled
     {
         [MethodImpl(Inline)]
-        get => math.lteq((byte)Token, (byte)RexBToken.ro);
+        get => math.le((byte)Token, (byte)RexBToken.ro);
     }
 
     public bit Hi

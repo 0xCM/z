@@ -19,7 +19,7 @@ public readonly struct num1 : INumber<T>
     public num1(D src)
         => Value = crop(src);
 
-    public const byte Width = 1;
+    public const int Width = 1;
 
     public const int AlignedSize = 1;
 
@@ -38,7 +38,7 @@ public readonly struct num1 : INumber<T>
     public static N N => default;
 
     [MethodImpl(Inline)]
-    static T cover(D src)
+    public static T cover(D src)
         => @as<D,T>(src);
 
     [MethodImpl(Inline), Op]
@@ -56,7 +56,7 @@ public readonly struct num1 : INumber<T>
 
     [MethodImpl(Inline), Op]
     public static T set(T src, byte pos, bit state)
-        => math.lt(pos, Width) ? cover(bit.set(src.Value, pos, state)) : src;
+        => math.lt((int)pos, Width) ? cover(bit.set(src.Value, pos, state)) : src;
 
     [MethodImpl(Inline)]
     public static bit eq(T a, T b)
@@ -126,7 +126,7 @@ public readonly struct num1 : INumber<T>
     public static T add(T a, T b)
     {
         var c = math.add(a.Value, b.Value);
-        return cover(math.gteq(c, Mod) ? math.sub(c, Mod) : c);
+        return cover(math.ge(c, Mod) ? math.sub(c, Mod) : c);
     }
 
     [MethodImpl(Inline), Op]
@@ -151,14 +151,6 @@ public readonly struct num1 : INumber<T>
     [MethodImpl(Inline)]
     public static string bitstring(T src)
         => src == 0 ? "0" : "1";
-
-    [Parser]
-    public static bool parse(string src, out T dst)
-    {
-        var outcome = byte.TryParse(src, out D x);
-        dst = new T((D)(x & MaxValue));
-        return outcome;
-    }
 
     [Parser]
     public static bool parse(ReadOnlySpan<char> src, out T dst)
@@ -195,11 +187,6 @@ public readonly struct num1 : INumber<T>
 
     ulong INumber.Value
         => Value;
-
-    [MethodImpl(Inline)]
-    public S Force<S>()
-        where S : unmanaged
-            => @as<T,S>(this);
 
     [MethodImpl(Inline)]
     public string Format()

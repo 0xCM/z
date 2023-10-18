@@ -39,14 +39,14 @@ namespace Z0
         public void neq()
         {
             const string name = "neq";
-            neq_check(S.predicate(math.neq, name, z8));
-            neq_check(S.predicate(math.neq, name, z8i));
-            neq_check(S.predicate(math.neq, name, z16));
-            neq_check(S.predicate(math.neq, name, z16i));
-            neq_check(S.predicate(math.neq, name, z32));
-            neq_check(S.predicate(math.neq, name, z32i));
-            neq_check(S.predicate(math.neq, name, z64));
-            neq_check(S.predicate(math.neq, name, z64i));
+            neq_check(S.predicate(math.ne, name, z8));
+            neq_check(S.predicate(math.ne, name, z8i));
+            neq_check(S.predicate(math.ne, name, z16));
+            neq_check(S.predicate(math.ne, name, z16i));
+            neq_check(S.predicate(math.ne, name, z32));
+            neq_check(S.predicate(math.ne, name, z32i));
+            neq_check(S.predicate(math.ne, name, z64));
+            neq_check(S.predicate(math.ne, name, z64i));
             neq_check(S.predicate(fmath.neq, name, z32f));
             neq_check(S.predicate(fmath.neq, name, z64f));
 
@@ -90,14 +90,14 @@ namespace Z0
         public void gteq()
         {
             const string name = "gteq";
-            gteq_check(S.predicate(math.gteq, name, z8));
-            gteq_check(S.predicate(math.gteq, name, z8i));
-            gteq_check(S.predicate(math.gteq, name, z16));
-            gteq_check(S.predicate(math.gteq, name, z16i));
-            gteq_check(S.predicate(math.gteq, name, z32));
-            gteq_check(S.predicate(math.gteq, name, z32i));
-            gteq_check(S.predicate(math.gteq, name, z64));
-            gteq_check(S.predicate(math.gteq, name, z64i));
+            gteq_check(S.predicate(math.ge, name, z8));
+            gteq_check(S.predicate(math.ge, name, z8i));
+            gteq_check(S.predicate(math.ge, name, z16));
+            gteq_check(S.predicate(math.ge, name, z16i));
+            gteq_check(S.predicate(math.ge, name, z32));
+            gteq_check(S.predicate(math.ge, name, z32i));
+            gteq_check(S.predicate(math.ge, name, z64));
+            gteq_check(S.predicate(math.ge, name, z64i));
             gteq_check(S.predicate(fmath.gteq, name, z32f));
             gteq_check(S.predicate(fmath.gteq, name, z64f));
         }
@@ -138,14 +138,14 @@ namespace Z0
         public void lteq()
         {
             const string name = "lteq";
-            lteq_check(S.predicate(math.lteq, name, z8));
-            lteq_check(S.predicate(math.lteq, name, z8i));
-            lteq_check(S.predicate(math.lteq, name, z16));
-            lteq_check(S.predicate(math.lteq, name, z16i));
-            lteq_check(S.predicate(math.lteq, name, z32));
-            lteq_check(S.predicate(math.lteq, name, z32i));
-            lteq_check(S.predicate(math.lteq, name, z64));
-            lteq_check(S.predicate(math.lteq, name, z64i));
+            lteq_check(S.predicate(math.le, name, z8));
+            lteq_check(S.predicate(math.le, name, z8i));
+            lteq_check(S.predicate(math.le, name, z16));
+            lteq_check(S.predicate(math.le, name, z16i));
+            lteq_check(S.predicate(math.le, name, z32));
+            lteq_check(S.predicate(math.le, name, z32i));
+            lteq_check(S.predicate(math.le, name, z64));
+            lteq_check(S.predicate(math.le, name, z64i));
             lteq_check(S.predicate(fmath.lteq, name, z32f));
             lteq_check(S.predicate(fmath.lteq, name, z64f));
         }

@@ -6,7 +6,7 @@ namespace Z0;
 
 partial class IntelCmd
 {
-    [CmdOp("intel/intrinsics/etl")]
+    [CmdOp("intel/inx/etl")]
     void RunIntrinsicsEtl()
     {
         Intrinsics.RunEtl();

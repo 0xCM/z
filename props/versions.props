@@ -1,8 +1,8 @@
 <Project>
   <PropertyGroup>
     <ZSysVer>0.0.185</ZSysVer>
-    <ZVer>0.0.634</ZVer>
-    <ZFxVer>0.0.1035</ZFxVer>
+    <ZVer>0.0.637</ZVer>
+    <ZFxVer>0.0.1036</ZFxVer>
 
     <AsmResolverVersion>5.4.0</AsmResolverVersion>
     <ClangSharpVersion>16.0.1-rc1</ClangSharpVersion>

@@ -105,8 +105,14 @@ public class IntelIntrinsics : WfSvc<IntelIntrinsics>
         for(var i=0; i<count; i++)
         {
             ref readonly var decl = ref skip(src,i);
-            if(DeclSkip.Contains(decl.name))
+            var sig = decl.Sig();
+            var name = Require.equal(decl.name.Format(), sig.Name.Format());
+
+            if(DeclSkip.Contains(name))
                 continue;
+
+            if(decl.CPUID != null && decl.CPUID.IsNonEmpty)
+                writer.WriteLine($"// {decl.CPUID}");
 
             foreach(var inst in decl.instructions)
             {
@@ -120,7 +126,7 @@ public class IntelIntrinsics : WfSvc<IntelIntrinsics>
             if(decl.description.IsNonEmpty)
                 writer.WriteLine($"// {decl.description}");
 
-            writer.WriteLine(string.Format("{0};", decl.Sig()));
+            writer.WriteLine(string.Format("{0};", sig));
             writer.WriteLine();
         }
         Channel.EmittedFile(flow, count);
@@ -291,10 +297,22 @@ public class IntelIntrinsics : WfSvc<IntelIntrinsics>
         if(src.header.IsNonEmpty)
             dst.AppendLineFormat("# Header: {0}", src.header);
 
-        iter(src.instructions, x => {
-            dst.AppendLineFormat("# Instruction: {0}", x);
-            dst.AppendLineFormat("# IForm: {0}", x.xed);
-        });
+        if(src.instructions.Count != 0)
+        {
+            if(src.instructions.Count > 1)
+            {
+                dst.AppendLine("# Instructions:");
+                var i=0;
+                iter(src.instructions, x => 
+                    dst.AppendLineFormat("# {0} {{sig:{1} {2}, iform:{3} }}", i++, x.name, x.form, x.xed)
+                );
+            }
+            else
+            {
+                var x = src.instructions[0];
+                dst.AppendLineFormat("# Instruction {{sig:{0} {1}, iform:{2} }}", x.name, x.form, x.xed);
+            }
+        }
 
         dst.AppendLineFormat("# Description: {0}", src.description);
     }

@@ -40,6 +40,10 @@ public readonly struct num5 : INumber<T>
 
     public static N N => default;
 
+    [MethodImpl(Inline)]
+    public static T cover(D src)
+        => @as<D,T>(src);
+
     [MethodImpl(Inline), Op]
     public static T number<S>(S src)
         where S : unmanaged
@@ -49,26 +53,13 @@ public readonly struct num5 : INumber<T>
     public static D crop(D src)
         => (D)(MaxValue & src);
 
-    [MethodImpl(Inline)]
-    public static T create(ulong src)
-        => new T((D)src);
-
-    [MethodImpl(Inline)]
-    static T cover(D src)
-        => @as<D,T>(src);
-
-    [MethodImpl(Inline)]
-    public static T force<A>(A src)
-        where A : unmanaged
-            => T.crop(bw8(src));
-
     [MethodImpl(Inline), Op]
     public static bit test(T src, byte pos)
         => bit.test(src.Value, pos);
 
     [MethodImpl(Inline), Op]
     public static T set(T src, byte pos, bit state)
-        => math.lt(pos, Width) ? cover(bit.set(src.Value, pos, state)) : src;
+        => math.lt((int)pos, Width) ? cover(bit.set(src.Value, pos, state)) : src;
 
     [MethodImpl(Inline)]
     public static bit eq(T a, T b)
@@ -96,7 +87,7 @@ public readonly struct num5 : INumber<T>
 
     [MethodImpl(Inline), Op]
     public static T negate(T src)
-        => create(math.negate(src.Value));
+        => number(math.negate(src.Value));
 
     [MethodImpl(Inline)]
     public static T invert(T src)
@@ -138,7 +129,7 @@ public readonly struct num5 : INumber<T>
     public static T add(T a, T b)
     {
         var c = math.add(a.Value, b.Value);
-        return cover(math.gteq(c, Mod) ? math.sub(c, Mod) : c);
+        return cover(math.ge(c, Mod) ? math.sub(c, Mod) : c);
     }
 
     [MethodImpl(Inline), Op]
@@ -160,16 +151,14 @@ public readonly struct num5 : INumber<T>
     public static T mod(T a, T b)
         => cover(math.mod(a.Value, b.Value));
 
-    [MethodImpl(Inline)]
-    public static string bitstring(T src)
-        => BitRender.format(N, src.Value);
-
-    [Parser]
-    public static bool parse(string src, out T dst)
+    [MethodImpl(Inline), Op]
+    public static T adc(T a, T b, out bit carry)
     {
-        var outcome = byte.TryParse(src, out D x);
-        dst = new T((D)(x & MaxValue));
-        return outcome;
+        var parity = (byte)math.odd(add(a.Value, b.Value));
+        var x = math.add(b.Value, parity);
+        var y = math.add(a.Value, x);
+        carry = math.or(math.lt(x,b.Value), math.lt(y, a.Value));
+        return number(y);
     }
 
     [Parser]
@@ -209,16 +198,11 @@ public readonly struct num5 : INumber<T>
     }
 
     [MethodImpl(Inline)]
-    public S Force<S>()
-        where S : unmanaged
-            => @as<T,S>(this);
-
-    [MethodImpl(Inline)]
     public string Format()
         => Value.ToString();
 
     public string Bitstring()
-        => bitstring(this);
+        => BitRender.format(N, Value);
 
     public string Hex()
         => Value.FormatHex();
@@ -261,15 +245,15 @@ public readonly struct num5 : INumber<T>
 
     [MethodImpl(Inline)]
     public static explicit operator T(ushort src)
-        => create((byte)src);
+        => number((byte)src);
 
     [MethodImpl(Inline)]
     public static explicit operator T(uint src)
-        => create((byte)src);
+        => number((byte)src);
 
     [MethodImpl(Inline)]
     public static explicit operator T(ulong src)
-        => create((byte)src);
+        => number((byte)src);
 
     [MethodImpl(Inline)]
     public static explicit operator bit(T src)

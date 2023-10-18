@@ -9,19 +9,15 @@ namespace Z0
     {
         [Op]
         public static SummaryComment comment(string content)
-            => new SummaryComment(content);
+            => new (content);
 
-         public static SwitchMap<S,T> @switch<S,T>(string name, S[] src, T[] dst)
-            where S : unmanaged
-            where T : unmanaged
-                => new SwitchMap<S,T>(name,src,dst);
 
         [Op]
         public static CsFunc func(Identifier ret, Identifier name, CsOperand[] ops, params string[] body)
-            => new CsFunc(ret, name, true, ops, body);
+            => new (ret, name, true, ops, body);
 
         [Op]
         public static CsOperand operand(Identifier type, Identifier name, params string[] mods)
-            => new CsOperand(type, name, mods);
+            => new (type, name, mods);
     }
 }

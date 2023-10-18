@@ -34,7 +34,7 @@ public readonly struct num3 : INumber<T>
     public static N N => default;
 
     [MethodImpl(Inline)]
-    static T cover(D src)
+    public static T cover(D src)
         => @as<D,T>(src);
 
     [MethodImpl(Inline)]
@@ -122,7 +122,7 @@ public readonly struct num3 : INumber<T>
     public static T add(T a, T b)
     {
         var c = math.add(a.Value, b.Value);
-        return cover(math.gteq(c, Mod) ? math.sub(c, Mod) : c);
+        return cover(math.ge(c, Mod) ? math.sub(c, Mod) : c);
     }
 
     [MethodImpl(Inline), Op]
@@ -147,14 +147,6 @@ public readonly struct num3 : INumber<T>
     [MethodImpl(Inline)]
     public static string bitstring(T src)
         => BitRender.format(N, src.Value);
-
-    [Parser]
-    public static bool parse(string src, out T dst)
-    {
-        var outcome = byte.TryParse(src, out D x);
-        dst = number((D)(x & MaxValue));
-        return outcome;
-    }
 
     [Parser]
     public static bool parse(ReadOnlySpan<char> src, out T dst)
@@ -192,17 +184,18 @@ public readonly struct num3 : INumber<T>
         get => Value == MaxValue;
     }
 
-    [MethodImpl(Inline)]
-    public S Force<S>()
-        where S : unmanaged
-            => @as<T,S>(this);
+    public Hash32 Hash
+    {
+        [MethodImpl(Inline)]
+        get => nhash(Value);
+    }
 
     [MethodImpl(Inline)]
     public string Format()
         => Value.ToString();
 
     public string Bitstring()
-        => bitstring(this);
+        => BitRender.format(N, Value);
 
     public string Hex()
         => Value.FormatHex();

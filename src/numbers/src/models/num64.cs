@@ -56,7 +56,7 @@ public readonly struct num64 : INumber<T>
             => @as<S,T>(src);
 
     [MethodImpl(Inline)]
-    static T cover(D src)
+    public static T cover(D src)
         => @as<D,T>(src);
 
     [MethodImpl(Inline)]

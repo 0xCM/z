@@ -399,7 +399,7 @@ namespace Z0
         /// <param name="y">The right vector</param>
         [MethodImpl(Inline)]
         public static bit operator !=(V x, V y)
-            => math.neq(x,y);
+            => math.ne(x,y);
 
         /// <summary>
         /// Determines whether the left operand is arithmetically less than the second
@@ -426,7 +426,7 @@ namespace Z0
         /// <param name="y">The right vector</param>
         [MethodImpl(Inline)]
         public static bit operator <=(V x, V y)
-            => math.lteq(x,y);
+            => math.le(x,y);
 
         /// <summary>
         /// Determines whether the left operand is arithmetically greater than or equal to the second
@@ -435,6 +435,6 @@ namespace Z0
         /// <param name="y">The right vector</param>
         [MethodImpl(Inline)]
         public static bit operator >=(V x, V y)
-            => math.gteq(x,y);
+            => math.ge(x,y);
    }
 }

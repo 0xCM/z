@@ -48,6 +48,10 @@ public readonly struct num32 : INumber<T>
     public static N N => default;
 
     [MethodImpl(Inline)]
+    public static T cover(D src)
+        => @as<D,T>(src);
+
+    [MethodImpl(Inline)]
     public static D crop(D src)
         => (D)(MaxValue & src);
 
@@ -55,23 +59,10 @@ public readonly struct num32 : INumber<T>
     public static T create(D src)
         => new T(src);
 
-    [MethodImpl(Inline)]
-    public static T create(ulong src)
-        => new T((D)src);
-
-    [MethodImpl(Inline)]
-    static T cover(D src)
-        => @as<D,T>(src);
-
     [MethodImpl(Inline), Op]
     public static T number<S>(S src)
         where S : unmanaged
             => @as<S,T>(src);
-
-    [MethodImpl(Inline)]
-    public static T force<A>(A src)
-        where A : unmanaged
-            => cover(bw32(src));
 
     [MethodImpl(Inline), Op]
     public static bit test(T src, byte pos)
@@ -107,7 +98,7 @@ public readonly struct num32 : INumber<T>
 
     [MethodImpl(Inline), Op]
     public static T negate(T src)
-        => create(math.negate(src.Value));
+        => number(math.negate(src.Value));
 
     [MethodImpl(Inline)]
     public static T invert(T src)
@@ -149,7 +140,7 @@ public readonly struct num32 : INumber<T>
     public static T add(T a, T b)
     {
         var c = math.add(a.Value, b.Value);
-        return cover((uint)(math.gteq(c, Mod) ? math.sub(c, Mod) : c));
+        return cover((uint)(math.ge(c, Mod) ? math.sub(c, Mod) : c));
     }
 
     [MethodImpl(Inline), Op]

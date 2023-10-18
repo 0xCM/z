@@ -27,9 +27,6 @@ public readonly struct num10 : INumber<T>
 
     public const int AlignedSize = 2;
 
-    /// <summary>
-    /// 1,023
-    /// </summary>
     public const D MaxValue = NumericLimits.Max10u;
 
     public const D Mod = (D)MaxValue + 1;
@@ -44,10 +41,14 @@ public readonly struct num10 : INumber<T>
 
     public static N N => default;
 
+    [MethodImpl(Inline)]
+    public static T cover(D src)
+        => @as<D,T>(src);
+
     [MethodImpl(Inline), Op]
     public static T number<S>(S src)
         where S : unmanaged
-            => @as<S,T>(src) & Max;
+            => cover(crop(@as<S,D>(src)));
 
     [MethodImpl(Inline)]
     public static D crop(D src)
@@ -137,7 +138,7 @@ public readonly struct num10 : INumber<T>
     public static T add(T a, T b)
     {
         var c = math.add(a.Value, b.Value);
-        return number(math.gteq(c, Mod) ? math.sub(c, Mod) : c);
+        return number(math.ge(c, Mod) ? math.sub(c, Mod) : c);
     }
 
     [MethodImpl(Inline), Op]

@@ -7,6 +7,7 @@ namespace Z0;
 [ApiHost, Free]
 public partial class Numbers
 {
+    
     [MethodImpl(Inline), Op]
     public static string bitstring<T>(T src)
         where T : unmanaged, INumber<T>

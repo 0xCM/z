@@ -97,11 +97,6 @@ partial class XedRules
         }
 
         [MethodImpl(Inline)]
-        public T Convert<T>()
-            where T : unmanaged
-                => Data.Force<T>();
-
-        [MethodImpl(Inline)]
         public string Format()
             => text.format(Render());
 

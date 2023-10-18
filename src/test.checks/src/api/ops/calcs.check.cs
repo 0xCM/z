@@ -4,11 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-partial class IntrinsicsDoc
+partial class ApiOps
 {
-    public class Parameters : List<Parameter>
+    [CmdOp("calcs/run")]
+    void RunChecks()
     {
-
-        
+        Run(sys.empty<string>());
     }
+
 }

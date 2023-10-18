@@ -5,7 +5,6 @@
 namespace Z0;
 
 using static sys;
-using static Numbers;
 
 using T = num6;
 using D = System.Byte;
@@ -65,6 +64,10 @@ public readonly struct num6 : INumber<T>
     public static N N => default;
 
     [MethodImpl(Inline)]
+    public static T cover(D src)
+        => @as<D,T>(src);
+
+    [MethodImpl(Inline)]
     public static D crop(D src)
         => (D)(MaxValue & src);
 
@@ -80,15 +83,6 @@ public readonly struct num6 : INumber<T>
     [MethodImpl(Inline)]
     public static T create(ulong src)
         => new ((D)src);
-
-    [MethodImpl(Inline)]
-    static T cover(D src)
-        => @as<D,T>(src);
-
-    [MethodImpl(Inline)]
-    public static T force<A>(A src)
-        where A : unmanaged
-            => T.crop(bw8(src));
 
     [MethodImpl(Inline), Op]
     public static bit test(T src, byte pos)
@@ -166,7 +160,7 @@ public readonly struct num6 : INumber<T>
     public static T add(T a, T b)
     {
         var c = math.add(a.Value, b.Value);
-        return cover(math.gteq(c, Mod) ? math.sub(c, Mod) : c);
+        return cover(math.ge(c, Mod) ? math.sub(c, Mod) : c);
     }
 
     [MethodImpl(Inline), Op]
@@ -211,17 +205,14 @@ public readonly struct num6 : INumber<T>
     }
 
     [MethodImpl(Inline)]
-    public S Force<S>()
-        where S : unmanaged
-            => @as<T,S>(this);
-
-    [MethodImpl(Inline)]
     public string Format()
         => Value.ToString();
 
-    public string Bitstring()
-        => bitstring(this);
+    public string Hex()
+        => Value.FormatHex();
 
+    public string Bitstring()
+        => BitRender.format(N, Value);
     public override string ToString()
         => Format();
 

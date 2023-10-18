@@ -131,13 +131,13 @@ namespace Z0
             where T : unmanaged
         {
             if(size<T>() == 1)
-                return M.gteq(uint8(a.Data), uint8(b.Data));
+                return M.ge(uint8(a.Data), uint8(b.Data));
             else if(size<T>() == 2)
-                return M.gteq(uint16(a.Data), uint16(b.Data));
+                return M.ge(uint16(a.Data), uint16(b.Data));
             else if(size<T>() == 4)
-                return M.gteq(uint32(a.Data), uint32(b.Data));
+                return M.ge(uint32(a.Data), uint32(b.Data));
             else if(size<T>() == 8)
-                return M.gteq(uint64(a.Data), uint64(b.Data));
+                return M.ge(uint64(a.Data), uint64(b.Data));
             else
                 throw no<T>();
         }
@@ -147,13 +147,13 @@ namespace Z0
             where T : unmanaged
         {
             if(size<T>() == 1)
-                return M.lteq(uint8(a.Data), uint8(b.Data));
+                return M.le(uint8(a.Data), uint8(b.Data));
             else if(size<T>() == 2)
-                return M.lteq(uint16(a.Data), uint16(b.Data));
+                return M.le(uint16(a.Data), uint16(b.Data));
             else if(size<T>() == 4)
-                return M.lteq(uint32(a.Data), uint32(b.Data));
+                return M.le(uint32(a.Data), uint32(b.Data));
             else if(size<T>() == 8)
-                return M.lteq(uint64(a.Data), uint64(b.Data));
+                return M.le(uint64(a.Data), uint64(b.Data));
             else
                 throw no<T>();
         }

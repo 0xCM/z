@@ -157,7 +157,7 @@ public readonly record struct EvexPrefix : IBitPattern<EvexPrefix>
     {
         public bit W => bits.test(this,7);
 
-        public num4 vvvv => ~new num4(bits.extract(this,3,6));
+        public num4 vvvv => ~num4.number(bits.extract(this,3,6));
 
         public bit one => bits.test(this,3);
 

@@ -25,13 +25,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(byte))
-                return math.lteq(force<T,uint>(a), force<T,uint>(b));
+                return math.le(force<T,uint>(a), force<T,uint>(b));
             else if(typeof(T) == typeof(ushort))
-                return math.lteq(force<T,uint>(a), force<T,uint>(b));
+                return math.le(force<T,uint>(a), force<T,uint>(b));
             else if(typeof(T) == typeof(uint))
-                return math.lteq(uint32(a), uint32(b));
+                return math.le(uint32(a), uint32(b));
             else if(typeof(T) == typeof(ulong))
-                return math.lteq(uint64(a), uint64(b));
+                return math.le(uint64(a), uint64(b));
             else
                 return lteq_i(a,b);
         }
@@ -41,13 +41,13 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(sbyte))
-                return math.lteq(force<T,int>(a), force<T,int>(b));
+                return math.le(force<T,int>(a), force<T,int>(b));
             else if(typeof(T) == typeof(short))
-                return math.lteq(force<T,int>(a), force<T,int>(b));
+                return math.le(force<T,int>(a), force<T,int>(b));
             else if(typeof(T) == typeof(int))
-                 return math.lteq(int32(a), int32(b));
+                 return math.le(int32(a), int32(b));
             else if(typeof(T) == typeof(long))
-                 return math.lteq(int64(a), int64(b));
+                 return math.le(int64(a), int64(b));
             else
                 return gfp.lteq(a,b);
         }
