@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-    using static System.Runtime.Intrinsics.X86.Sse41;
     using static sys;
 
     partial struct vpack

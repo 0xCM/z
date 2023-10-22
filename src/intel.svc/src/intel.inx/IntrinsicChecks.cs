@@ -174,7 +174,7 @@ public sealed class IntrinsicsChecks : PageBank16x4x4<IntrinsicsChecks>
         var specs = new Operand[3];
         using var alloc = Alloc.create();
 
-        var intrinsics = new Sigs();
+        var intrinsics = new IntrinsicSigs();
         var f0 = intrinsics._mm_add_epi8();
         Channel.Write(f0.Format(SigFormatStyle.C));
 

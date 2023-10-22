@@ -66,9 +66,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                return generic<T>(vcpu.vxornot(v32f(x), v32f(y)));
+                return generic<T>(fcpu.vxornot(v32f(x), v32f(y)));
             else if(typeof(T) == typeof(double))
-                return generic<T>(vcpu.vxornot(v64f(x), v64f(y)));
+                return generic<T>(fcpu.vxornot(v64f(x), v64f(y)));
             else
                 throw no<T>();
         }
@@ -110,9 +110,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                return generic<T>(vcpu.vxornot(v32f(x), v32f(y)));
+                return generic<T>(fcpu.vxornot(v32f(x), v32f(y)));
             else if(typeof(T) == typeof(double))
-                return generic<T>(vcpu.vxornot(v64f(x), v64f(y)));
+                return generic<T>(fcpu.vxornot(v64f(x), v64f(y)));
             else
                 throw Unsupported.define<T>();
         }

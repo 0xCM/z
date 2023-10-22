@@ -8,5 +8,6 @@ partial class IntrinsicsDoc
 {
     public class Instructions : List<Instruction>
     {
+        
     }
 }

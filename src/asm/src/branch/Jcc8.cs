@@ -33,12 +33,6 @@ public readonly record struct Jcc8 : IAsmInstruction<Jcc8>
         get  =>  bits.test(Data,7);
     }
 
-    public JccKind Kind
-    {
-        [MethodImpl(Inline)]
-        get =>  Alt ? JccKind.Jcc8Alt : JccKind.Jcc8;
-    }
-
     public Hex8 JccCode
     {
         [MethodImpl(Inline)]

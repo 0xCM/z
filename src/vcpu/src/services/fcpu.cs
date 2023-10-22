@@ -4,10 +4,234 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static sys;
 
 [ApiHost, Free]
-public class fcpu
+public unsafe class fcpu
 {
+    /// <summary>
+    /// __m128 _mm_cmpnge_ps (__m128 a, __m128 b) CMPPS xmm, xmm/m128, imm8(1)
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vngteq(Vector128<float> x, Vector128<float> y)
+        => CompareNotGreaterThanOrEqual(x, y);
+
+    /// <summary>
+    /// __m128d _mm_cmpnge_pd (__m128d a, __m128d b) CMPPD xmm, xmm/m128, imm8(1)
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vngteq(Vector128<double> x, Vector128<double> y)
+        => CompareNotGreaterThanOrEqual(x, y);    
+
+    /// <summary>
+    /// __m128 _mm_cmple_ps (__m128 a, __m128 b) CMPPS xmm, xmm/m128, imm8(2)
+    /// Computes a <= b
+    /// </summary>
+    /// <param name="a">The left vector</param>
+    /// <param name="b">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vle(Vector128<float> a, Vector128<float> b)
+        => CompareLessThanOrEqual(a, b);
+
+    /// <summary>
+    /// __m128d _mm_cmple_pd (__m128d a, __m128d b) CMPPD xmm, xmm/m128, imm8(2)
+    /// Computes a <= b
+    /// </summary>
+    /// <param name="a">The left vector</param>
+    /// <param name="b">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vle(Vector128<double> a, Vector128<double> b)
+        => CompareLessThanOrEqual(a, b);
+
+    /// <summary>
+    /// __m256 _mm256_cmp_ps (__m256 a, __m256 b, const int imm8) VCMPPS ymm, ymm, ymm/m256, imm8
+    /// Computes a <= b
+    /// </summary>
+    /// <param name="a">The left vector</param>
+    /// <param name="b">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vle(Vector256<float> a, Vector256<float> b)
+        => Compare(a, b, FloatComparisonMode.OrderedLessThanOrEqualNonSignaling);
+
+    /// <summary>
+    /// __m256d _mm256_cmp_pd (__m256d a, __m256d b, const int imm8) VCMPPD ymm, ymm, ymm/m256, imm8
+    /// Computes a <= b
+    /// </summary>
+    /// <param name="a">The left vector</param>
+    /// <param name="b">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vle(Vector256<double> a, Vector256<double> b)
+        => Compare(a, b,FloatComparisonMode.OrderedLessThanOrEqualNonSignaling);
+
+    /// <summary>
+    /// __m128 _mm_cmpgt_ps (__m128 a, __m128 b) CMPPS xmm, xmm/m128, imm8(6)
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vgt(Vector128<float> x, Vector128<float> y)
+        => CompareGreaterThan(x, y);
+
+    /// <summary>
+    /// __m128d _mm_cmpgt_pd (__m128d a, __m128d b) CMPPD xmm, xmm/m128, imm8(6)
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vgt(Vector128<double> x, Vector128<double> y)
+        => CompareGreaterThan(x, y);
+
+    /// <summary>
+    /// __m256 _mm256_cmp_ps (__m256 a, __m256 b, const int imm8) VCMPPS ymm, ymm, ymm/m256, imm8
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vgt(Vector256<float> x, Vector256<float> y)
+        => Compare(x, y, FloatComparisonMode.OrderedGreaterThanNonSignaling);
+
+    /// <summary>
+    /// __m256d _mm256_cmp_pd (__m256d a, __m256d b, const int imm8) VCMPPD ymm, ymm,ymm/m256, imm8
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vgt(Vector256<double> x, Vector256<double> y)
+        => Compare(x, y, FloatComparisonMode.OrderedGreaterThanNonSignaling);
+
+    /// <summary>
+    /// __m128 _mm_cmpge_ps (__m128 a, __m128 b) CMPPS xmm, xmm/m128, imm8(5)
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vgteq(Vector128<float> x, Vector128<float> y)
+        => CompareGreaterThanOrEqual(x, y);
+
+    /// <summary>
+    /// __m128d _mm_cmpge_pd (__m128d a, __m128d b) CMPPD xmm, xmm/m128, imm8(5)
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vgteq(Vector128<double> x, Vector128<double> y)
+        => CompareGreaterThanOrEqual(x, y);
+
+    /// <summary>
+    /// __m256 _mm256_cmp_ps (__m256 a, __m256 b, const int imm8) VCMPPS ymm, ymm, ymm/m256, imm8
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vgteq(Vector256<float> x, Vector256<float> y)
+        => Compare(x, y, FloatComparisonMode.OrderedGreaterThanOrEqualNonSignaling);
+
+    /// <summary>
+    /// __m256d _mm256_cmp_pd (__m256d a, __m256d b, const int imm8) VCMPPD ymm, ymm,ymm/m256, imm8
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vgteq(Vector256<double> x, Vector256<double> y)
+        => Compare(x, y, FloatComparisonMode.OrderedGreaterThanOrEqualNonSignaling);
+
+    /// <summary>
+    /// __m256 _mm256_cmp_ps (__m256 a, __m256 b, const int imm8) VCMPPS ymm, ymm, ymm/m256, imm8
+    /// Compares the source operands for equality. For equal components, the corresponding
+    /// component in the result vector has all bits enabled; otherwise all bits are disabled
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> veq(Vector256<float> x, Vector256<float> y)
+        => Compare(x, y, FloatComparisonMode.UnorderedEqualNonSignaling);
+
+    /// <summary>
+    /// __m256d _mm256_cmp_pd (__m256d a, __m256d b, const int imm8) VCMPPD ymm, ymm, ymm/m256, imm8
+    /// Compares the source operands for equality. For equal components, the corresponding
+    /// component in the result vector has all bits enabled; otherwise all bits are disabled
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> veq(Vector256<double> x, Vector256<double> y)
+        => Compare(x, y, FloatComparisonMode.UnorderedEqualNonSignaling);
+
+    /// <summary>
+    /// __m128 _mm_cmpneq_ps (__m128 a, __m128 b) CMPPS xmm, xmm/m128, imm8(4)
+    /// </summary>
+    /// <param name="a">The left vector</param>
+    /// <param name="b">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vneq(Vector128<float> a, Vector128<float> b)
+        => CompareNotEqual(a, b);
+
+    /// <summary>
+    /// __m128d _mm_cmpneq_pd (__m128d a, __m128d b) CMPPD xmm, xmm/m128, imm8(4)
+    /// </summary>
+    /// <param name="a">The left vector</param>
+    /// <param name="b">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vneq(Vector128<double> a, Vector128<double> b)
+        => CompareNotEqual(a, b);
+
+    /// <summary>
+    /// __m256 _mm256_cmp_ps (__m256 a, __m256 b, const int imm8) VCMPPS ymm, ymm, ymm/m256, imm8
+    /// </summary>
+    /// <param name="a">The left vector</param>
+    /// <param name="b">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vneq(Vector256<float> a, Vector256<float> b)
+        => Compare(a, b, FloatComparisonMode.OrderedNotEqualNonSignaling);
+
+    /// <summary>
+    /// __m256d _mm256_cmp_pd (__m256d a, __m256d b, const int imm8) VCMPPD ymm, ymm, ymm/m256, imm8
+    /// </summary>
+    /// <param name="a">The left vector</param>
+    /// <param name="b">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vneq(Vector256<double> a, Vector256<double> b)
+        => Compare(a, b, FloatComparisonMode.OrderedNotEqualNonSignaling);
+
+    /// <summary>
+    ///  __m128 _mm_cmplt_ps (__m128 a, __m128 b) CMPPS xmm, xmm/m128, imm8(1)
+    /// </summary>
+    /// <param name="lhs">The left vector</param>
+    /// <param name="rhs">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vlt(Vector128<float> lhs, Vector128<float> rhs)
+        => CompareLessThan(lhs, rhs);
+
+    /// <summary>
+    /// __m128d _mm_cmplt_pd (__m128d a, __m128d b) CMPPD xmm, xmm/m128, imm8(1)
+    /// </summary>
+    /// <param name="lhs">The left vector</param>
+    /// <param name="rhs">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vlt(Vector128<double> lhs, Vector128<double> rhs)
+        => CompareLessThan(lhs, rhs);
+
+    /// <summary>
+    /// __m256 _mm256_cmp_ps (__m256 a, __m256 b, const int imm8) VCMPPS ymm, ymm, ymm/m256, imm8
+    /// </summary>
+    /// <param name="lhs">The left vector</param>
+    /// <param name="rhs">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vlt(Vector256<float> lhs, Vector256<float> rhs)
+        => Compare(lhs, rhs, FloatComparisonMode.OrderedLessThanNonSignaling);
+
+    /// <summary>
+    /// __m256d _mm256_cmp_pd (__m256d a, __m256d b, const int imm8) VCMPPD ymm, ymm, ymm/m256, imm8
+    /// </summary>
+    /// <param name="lhs">The left vector</param>
+    /// <param name="rhs">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vlt(Vector256<double> lhs, Vector256<double> rhs)
+        => Compare(lhs, rhs,FloatComparisonMode.OrderedLessThanNonSignaling);
 
     /// <summary>
     /// __m128 _mm_andnot_ps (__m128 a, __m128 b) ANDNPS xmm, xmm/m128
@@ -1234,6 +1458,430 @@ public class fcpu
         => vnot(Or(x, y));
 
 
+    ///  __m128 _mm_max_ps (__m128 a, __m128 b) MAXPS xmm, xmm/m128
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vmax(Vector128<float> x, Vector128<float> y)
+        => Max(x, y);
+
+    /// <summary>
+    ///  __m128d _mm_max_pd (__m128d a, __m128d b)MAXPD xmm, xmm/m128
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vmax(Vector128<double> x, Vector128<double> y)
+        => Max(x, y);
+
+    /// <summary>
+    /// __m256 _mm256_max_ps (__m256 a, __m256 b) VMAXPS ymm, ymm, ymm/m256
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vmax(Vector256<float> x, Vector256<float> y)
+        => Max(x, y);
+
+    /// <summary>
+    /// __m256d _mm256_max_pd (__m256d a, __m256d b)VMAXPD ymm, ymm, ymm/m256
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vmax(Vector256<double> x, Vector256<double> y)
+        => Max(x, y);
+
+    /// <summary>
+    /// __m128 _mm_min_ps (__m128 a, __m128 b) MINPS xmm, xmm/m128
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vmin(Vector128<float> x, Vector128<float> y)
+        => Min(x, y);
+
+    /// <summary>
+    /// __m128d _mm_min_pd (__m128d a, __m128d b) MINPD xmm, xmm/m128
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vmin(Vector128<double> x, Vector128<double> y)
+        => Min(x, y);
+
+    /// <summary>
+    /// __m256 _mm256_min_ps (__m256 a, __m256 b) VMINPS ymm, ymm, ymm/m256
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vmin(Vector256<float> x, Vector256<float> y)
+        => Min(x, y);
+
+    /// <summary>
+    /// __m256d _mm256_min_pd (__m256d a, __m256d b) VMINPD ymm, ymm, ymm/m256
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vmin(Vector256<double> x, Vector256<double> y)
+        => Min(x, y);
+
+    /// <summary>
+    /// __m128 _mm_cmpngt_ps (__m128 a, __m128 b) CMPPS xmm, xmm/m128, imm8(2)
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vngt(Vector128<float> x, Vector128<float> y)
+        => CompareNotGreaterThan(x, y);
+
+    /// <summary>
+    /// __m128d _mm_cmpngt_pd (__m128d a, __m128d b) CMPPD xmm, xmm/m128, imm8(2)
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vngt(Vector128<double> x, Vector128<double> y)
+        => CompareNotGreaterThan(x, y);
+
+    /// <summary>
+    ///  __m128d _mm_cmpnlt_pd (__m128d a, __m128d b) CMPPD xmm, xmm/m128, imm8(5)
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vnlt(Vector128<double> x, Vector128<double> y)
+        => CompareNotLessThan(x, y);
+
+    /// <summary>
+    /// __m128 _mm_cmpnlt_ps (__m128 a, __m128 b) CMPPS xmm, xmm/m128, imm8(5)
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vnlt(Vector128<float> x, Vector128<float> y)
+        => CompareNotLessThan(x, y);
+
+    /// <summary>
+    /// Returns true if the source vector is nonzero, false otherwise
+    /// int _mm_testz_ps (__m128 a, __m128 b) VTESTPS xmm, xmm/m128
+    /// </summary>
+    /// <param name="src">The vector to test</param>
+    [MethodImpl(Inline), Nonz]
+    public static bool vnonz(Vector128<float> src)
+        => !TestZ(src, src);
+
+    /// <summary>
+    /// Returns true if the source vector is nonzero, false otherwise
+    /// int _mm_testz_pd (__m128d a, __m128d b) VTESTPD xmm, xmm/m128
+    /// </summary>
+    /// <param name="src">The vector to test</param>
+    [MethodImpl(Inline), Nonz]
+    public static bool vnonz(Vector128<double> src)
+        => !TestZ(src, src);
+
+    /// <summary>
+    /// int _mm256_testz_ps (__m256 a, __m256 b) VTESTPS ymm, ymm/m256
+    /// Returns true if the source vector is nonzero, false otherwise
+    /// </summary>
+    /// <param name="src">The vector to test</param>
+    [MethodImpl(Inline), Nonz]
+    public static bool vnonz(Vector256<float> src)
+        => !TestZ(src,src);
+
+    /// <summary>
+    /// int _mm256_testz_pd (__m256d a, __m256d b) VTESTPD ymm, ymm/m256
+    /// Returns true if the source vector is nonzero, false otherwise
+    /// </summary>
+    /// <param name="src">The vector to test</param>
+    [MethodImpl(Inline), Nonz]
+    public static bool vnonz(Vector256<double> src)
+        => !TestZ(src,src);
+
+    /// <summary>
+    /// int _mm_testc_ps (__m128 a, __m128 b) VTESTPS xmm, xmm/m128
+    /// Determines whether mask-specified source bits are all on
+    /// </summary>
+    /// <param name="src">The source bits</param>
+    /// <param name="mask">Specifies the bits in the source to test</param>
+    [MethodImpl(Inline), TestC]
+    public static bit vtestc(Vector128<float> src, Vector128<float> mask)
+        => TestC(src, mask);
+
+    /// <summary>
+    /// int _mm_testc_pd (__m128d a, __m128d b) VTESTPD xmm, xmm/m128
+    /// Determines whether mask-specified source bits are all on
+    /// </summary>
+    /// <param name="src">The source bits</param>
+    /// <param name="mask">Specifies the bits in the source to test</param>
+    [MethodImpl(Inline), TestC]
+    public static bit vtestc(Vector128<double> src, Vector128<double> mask)
+        => TestC(src, mask);
+
+    /// <summary>
+    /// int _mm256_testc_ps (__m256 a, __m256 b) VTESTPS ymm, ymm/m256
+    /// Determines whether mask-specified source bits are all on
+    /// </summary>
+    /// <param name="src">The source bits</param>
+    /// <param name="mask">Specifies the bits in the source to test</param>
+    [MethodImpl(Inline), TestC]
+    public static bit vtestc(Vector256<float> src, Vector256<float> mask)
+        => TestC(src, mask);
+
+    /// <summary>
+    /// int _mm256_testc_pd (__m256d a, __m256d b) VTESTPS ymm, ymm/m256
+    /// Determines whether mask-specified source bits are all on
+    /// </summary>
+    /// <param name="src">The source bits</param>
+    /// <param name="mask">Specifies the bits in the source to test</param>
+    [MethodImpl(Inline), TestC]
+    public static bit vtestc(Vector256<double> src, Vector256<double> mask)
+        => TestC(src, mask);
+
+    /// <summary>
+    /// int _mm256_testz_ps (__m256 a, __m256 b) VTESTPS ymm, ymm/m256
+    /// Determines whether all mask-specified source bits are off
+    /// </summary>
+    /// <param name="src">The bit source</param>
+    /// <param name="mask">The mask</param>
+    [MethodImpl(Inline), TestZ]
+    public static bit vtestz(Vector256<float> src, Vector256<float> mask)
+        => TestZ(src,mask);
+
+    /// <summary>
+    /// int _mm256_testz_pd (__m256d a, __m256d b) VTESTPD ymm, ymm/m256
+    /// Determines whether all mask-specified source bits are off
+    /// </summary>
+    /// <param name="src">The bit source</param>
+    /// <param name="mask">The mask</param>
+    [MethodImpl(Inline), TestZ]
+    public static bit vtestz(Vector256<double> src, Vector256<double> mask)
+        => TestZ(src,mask);
+
+    /// <summary>
+    /// int _mm_testz_ps (__m128 a, __m128 b) VTESTPS xmm, xmm/m128
+    /// Determines whether all mask-specified source bits are off
+    /// </summary>
+    /// <param name="src">The bit source</param>
+    /// <param name="mask">The mask</param>
+    [MethodImpl(Inline), TestZ]
+    public static bit vtestz(Vector128<float> src, Vector128<float> mask)
+        => TestZ(src,mask);
+
+    /// <summary>
+    /// int _mm_testz_pd (__m128d a, __m128d b) VTESTPD xmm, xmm/m128
+    /// Determines whether all mask-specified source bits are off
+    /// </summary>
+    /// <param name="src">The bit source</param>
+    /// <param name="mask">The mask</param>
+    [MethodImpl(Inline), TestZ]
+    public static bit vtestz(Vector128<double> src, Vector128<double> mask)
+        => TestZ(src,mask);
+
+    /// <summary>
+    /// int _mm_testnzc_ps (__m128 a, __m128 b) VTESTPS xmm, xmm/m128
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), TestZnC]
+    public static bool vtestznc(Vector128<float> x, Vector128<float> y)
+        => TestNotZAndNotC(x, y);
+
+    /// <summary>
+    /// int _mm_testnzc_pd (__m128d a, __m128d b) VTESTPD xmm, xmm/m128
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), TestZnC]
+    public static bool vtestznc(Vector128<double> x, Vector128<double> y)
+        => TestNotZAndNotC(x, y);
+
+    /// <summary>
+    /// int _mm256_testnzc_ps (__m256 a, __m256 b) VTESTPS ymm, ymm/m256
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), TestZnC]
+    public static bool vtestznc(Vector256<float> x, Vector256<float> y)
+        => TestNotZAndNotC(x, y);
+
+    /// <summary>
+    /// int _mm256_testnzc_pd (__m256d a, __m256d b)VTESTPD ymm, ymm/m256
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), TestZnC]
+    public static bool vtestznc(Vector256<double> x, Vector256<double> y)
+        => TestNotZAndNotC(x, y);
+
+    /// <summary>
+    ///  __m128 _mm_cmpeq_ps (__m128 a, __m128 b) CMPPS xmm, xmm/m128, imm8(0)
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> veq(Vector128<float> x, Vector128<float> y)
+        => CompareEqual(x, y);
+
+    /// <summary>
+    /// __m128d _mm_cmpeq_pd (__m128d a, __m128d b) CMPPD xmm, xmm/m128, imm8(0)
+    /// Compares the source operands for equality. For equal components, the corresponding
+    /// component in the result vector has all bits enabled; otherwise all bits are disabled
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> veq(Vector128<double> x, Vector128<double> y)
+        => CompareEqual(x, y);
+
+    /// <summary>
+    /// __m128 _mm_and_ps (__m128 a, __m128 b) ANDPS xmm, xmm/m128
+    /// Computes the logical and of the operands
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vand(Vector128<float> x, Vector128<float> y)
+        => And(x, y);
+
+    /// <summary>
+    /// __m128d _mm_and_pd (__m128d a, __m128d b) ANDPD xmm, xmm/m128
+    /// Computes the logical and of the operands
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vand(Vector128<double> x, Vector128<double> y)
+        => And(x, y);
+
+    /// <summary>
+    /// __m128 _mm_and_ps (__m128 a, __m128 b) ANDPS xmm, xmm/m128
+    /// Computes the logical and of the operands
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vand(Vector256<float> x, Vector256<float> y)
+        => And(x, y);
+
+    /// <summary>
+    /// __m128d _mm_and_pd (__m128d a, __m128d b) ANDPD xmm, xmm/m128
+    /// Computes the logical and of the operands
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vand(Vector256<double> x, Vector256<double> y)
+        => And(x, y);
+
+
+    /// <summary>
+    /// int _mm_movemask_ps (__m128 a) MOVMSKPS reg, xmm
+    /// Constructs an integer from the most significant bit of each source vector component
+    /// </summary>
+    [MethodImpl(Inline), Op]
+    public static int vmovemask(Vector128<float> src)
+        => MoveMask(src);
+
+    /// <summary>
+    /// int _mm_movemask_pd (__m128d a) MOVMSKPD reg, xmm
+    /// Constructs an integer from the most significant bit of each source vector component
+    /// </summary>
+    [MethodImpl(Inline), Op]
+    public static int vmovemask(Vector128<double> src)
+        => MoveMask(src);
+
+    /// <summary>
+    /// __m128 _mm_unpacklo_ps (__m128 a, __m128 b) UNPCKLPS xmm, xmm/m128
+    /// Creates a 128-bit vector where the lower 64 bits are taken from the
+    /// lower 64 bits of the first source vector and the higher 64 bits are taken
+    /// from the lower 64 bits of the second source vector
+    /// </summary>
+    /// <param name="x">The left source vector</param>
+    /// <param name="y">The right source vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vunpacklo(Vector128<float> x, Vector128<float> y)
+        => UnpackLow(x, y);
+
+    /// <summary>
+    /// __m128d _mm_unpacklo_pd (__m128d a, __m128d b) UNPCKLPD xmm, xmm/m128
+    /// Creates a 128-bit vector where the lower 64 bits are taken from the
+    /// lower 64 bits of the first source vector and the higher 64 bits are taken
+    /// from the lower 64 bits of the second source vector
+    /// </summary>
+    /// <param name="x">The left source vector</param>
+    /// <param name="y">The right source vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vunpacklo(Vector128<double> x, Vector128<double> y)
+        => UnpackLow(x, y);
+
+    /// <summary>
+    /// __m256 _mm256_unpacklo_ps (__m256 a, __m256 b) VUNPCKLPS ymm, ymm, ymm/m256
+    /// Creates a 256-bit vector where the lower 128 bits are taken from the
+    /// lower 128 bits of the first source vector and the higher 128 bits are taken
+    /// from the lower 128 bits of the second source vector
+    /// </summary>
+    /// <param name="x">The left source vector</param>
+    /// <param name="y">The right source vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vunpacklo(Vector256<float> x, Vector256<float> y)
+        => UnpackLow(x, y);
+
+    /// <summary>
+    /// __m256d _mm256_unpacklo_pd (__m256d a, __m256d b) VUNPCKLPD ymm, ymm, ymm/m256
+    /// Creates a 256-bit vector where the lower 128 bits are taken from the
+    /// lower 128 bits of the first source vector and the higher 128 bits are taken
+    /// from the lower 128 bits of the second source vector
+    /// </summary>
+    /// <param name="x">The left source vector</param>
+    /// <param name="y">The right source vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vunpacklo(Vector256<double> x, Vector256<double> y)
+        => UnpackLow(x,y);
+
+    /// <summary>
+    /// void _mm_maskstore_ps (float * mem_addr, __m128i mask, __m128 a) VMASKMOVPS m128, xmm, xmm
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="mask">The mask</param>
+    /// <param name="dst">The memory reference</param>
+    [MethodImpl(Inline), Op]
+    public static unsafe void maskstore(Vector128<float> src, Vector128<float> mask, ref float dst)
+        => MaskStore(gptr(dst), src,mask);
+
+    /// <summary>
+    /// void _mm_maskstore_pd (double * mem_addr, __m128i mask, __m128d a) VMASKMOVPD m128, xmm, xmm
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="mask">The mask</param>
+    /// <param name="dst">The memory reference</param>
+    [MethodImpl(Inline), Op]
+    public static unsafe void vmaskstore(Vector128<double> src, Vector128<double> mask, ref double dst)
+        => MaskStore(gptr(dst), src,mask);
+
+    /// <summary>
+    /// void _mm256_maskstore_ps (float * mem_addr, __m256i mask, __m256 a) VMASKMOVPS m256, ymm, ymm
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="mask">The mask</param>
+    /// <param name="dst">The memory reference</param>
+    [MethodImpl(Inline), Op]
+    public static unsafe void vmaskstore(Vector256<float> src, Vector256<float> mask, ref float dst)
+        => MaskStore(gptr(dst), src,mask);
+
+    /// <summary>
+    /// void _mm256_maskstore_pd (double * mem_addr, __m256i mask, __m256d a) VMASKMOVPD m256, ymm, ymm
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="mask">The mask</param>
+    /// <param name="dst">The memory reference</param>
+    [MethodImpl(Inline), Op]
+    public static unsafe void vmaskstore(Vector256<double> src, Vector256<double> mask, ref double dst)
+        => MaskStore(gptr(dst), src,mask);
+    
     static Vector256<int> MRev256f32
     {
         [MethodImpl(Inline), Op]

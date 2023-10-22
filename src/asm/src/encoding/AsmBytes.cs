@@ -329,10 +329,6 @@ public class AsmBytes
     }
 
     [MethodImpl(Inline), Op]
-    public static void encode(AsmRip a0, Jcc8 a1, AsmHexWriter dst)
-        => dst.Write(a1.JccCode, AsmRel.target(a0, a1.Disp));
-
-    [MethodImpl(Inline), Op]
     public static byte join(Pair<byte> a, Pair<byte> b, Pair<byte> c)
     {
         var dst = Bytes.sll(a.Left, a.Right);

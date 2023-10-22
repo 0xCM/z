@@ -5,10 +5,9 @@
 namespace Z0;
 
 using static sys;
-using static Sse41;
 
 partial struct vpack
-{
+{    
     /// <summary>
     /// PMOVZXBW xmm, m64
     /// 8x8i -> 8x16i

@@ -14,6 +14,31 @@ using static vcpu;
 public readonly struct gfcpu
 {
     [MethodImpl(Inline)]
+    public static Vector128<T> veq<T>(Vector128<T> x, Vector128<T> y)
+        where T : unmanaged
+    {
+        if(typeof(T) == typeof(float))
+            return generic<T>(fcpu.veq(v32f(x), v32f(y)));
+        else if(typeof(T) == typeof(double))
+            return generic<T>(fcpu.veq(v64f(x), v64f(y)));
+        else
+            throw no<T>();
+    }
+
+
+    [MethodImpl(Inline)]
+    public static Vector256<T> veq<T>(Vector256<T> x, Vector256<T> y)
+        where T : unmanaged
+    {
+        if(typeof(T) == typeof(float))
+            return generic<T>(fcpu.veq(v32f(x), v32f(y)));
+        else if(typeof(T) == typeof(double))
+            return generic<T>(fcpu.veq(v64f(x), v64f(y)));
+        else
+            throw no<T>();
+    }
+
+    [MethodImpl(Inline)]
     public static Vector256<T> vnor<T>(Vector256<T> x, Vector256<T> y)
         where T : unmanaged
     {
@@ -139,9 +164,9 @@ public readonly struct gfcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(float))
-            return generic<T>(vcpu.vand(v32f(x), v32f(y)));
+            return generic<T>(fcpu.vand(v32f(x), v32f(y)));
         else if(typeof(T) == typeof(double))
-            return generic<T>(vcpu.vand(v64f(x), v64f(y)));
+            return generic<T>(fcpu.vand(v64f(x), v64f(y)));
         else
             throw no<T>();
 
@@ -152,9 +177,9 @@ public readonly struct gfcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(float))
-            return generic<T>(vcpu.vand(v32f(x), v32f(y)));
+            return generic<T>(fcpu.vand(v32f(x), v32f(y)));
         else if(typeof(T) == typeof(double))
-            return generic<T>(vcpu.vand(v64f(x), v64f(y)));
+            return generic<T>(fcpu.vand(v64f(x), v64f(y)));
         else
             throw no<T>();
     }
@@ -212,9 +237,9 @@ public readonly struct gfcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(float))
-            return generic<T>(vcpu.vxornot(v32f(x), v32f(y)));
+            return generic<T>(fcpu.vxornot(v32f(x), v32f(y)));
         else if(typeof(T) == typeof(double))
-            return generic<T>(vcpu.vxornot(v64f(x), v64f(y)));
+            return generic<T>(fcpu.vxornot(v64f(x), v64f(y)));
         else
             throw no<T>();
     }
@@ -224,9 +249,9 @@ public readonly struct gfcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(float))
-            return generic<T>(vcpu.vxornot(v32f(x), v32f(y)));
+            return generic<T>(fcpu.vxornot(v32f(x), v32f(y)));
         else if(typeof(T) == typeof(double))
-            return generic<T>(vcpu.vxornot(v64f(x), v64f(y)));
+            return generic<T>(fcpu.vxornot(v64f(x), v64f(y)));
         else
             throw no<T>();
     }
@@ -236,9 +261,9 @@ public readonly struct gfcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(float))
-            return generic<T>(vcpu.vmin(v32f(x), v32f(y)));
+            return generic<T>(fcpu.vmin(v32f(x), v32f(y)));
         else if(typeof(T) == typeof(double))
-            return generic<T>(vcpu.vmin(v64f(x), v64f(y)));
+            return generic<T>(fcpu.vmin(v64f(x), v64f(y)));
         else
             throw no<T>();
     }
@@ -248,9 +273,9 @@ public readonly struct gfcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(float))
-            return generic<T>(vcpu.vmin(v32f(x), v32f(y)));
+            return generic<T>(fcpu.vmin(v32f(x), v32f(y)));
         else if(typeof(T) == typeof(double))
-            return generic<T>(vcpu.vmin(v64f(x), v64f(y)));
+            return generic<T>(fcpu.vmin(v64f(x), v64f(y)));
         else
             throw no<T>();
     }
@@ -260,9 +285,9 @@ public readonly struct gfcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(float))
-            return generic<T>(vcpu.vmax(v32f(x), v32f(y)));
+            return generic<T>(fcpu.vmax(v32f(x), v32f(y)));
         else if(typeof(T) == typeof(double))
-            return generic<T>(vcpu.vmax(v64f(x), v64f(y)));
+            return generic<T>(fcpu.vmax(v64f(x), v64f(y)));
         else
             throw no<T>();
     }
@@ -272,9 +297,9 @@ public readonly struct gfcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(float))
-            return generic<T>(vcpu.vmax(v32f(x), v32f(y)));
+            return generic<T>(fcpu.vmax(v32f(x), v32f(y)));
         else if(typeof(T) == typeof(double))
-            return generic<T>(vcpu.vmax(v64f(x), v64f(y)));
+            return generic<T>(fcpu.vmax(v64f(x), v64f(y)));
         else
             throw no<T>();
     }

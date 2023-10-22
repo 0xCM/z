@@ -13,7 +13,7 @@ partial class vcpu
     /// <param name="spec">The shuffle spec</param>
     [MethodImpl(Inline), Op]
     public static Vector128<int> vshuffle(Vector128<int> src, [Imm] byte spec)
-        => Shuffle(src, (byte)spec);
+        => Shuffle(src, spec);
 
     /// <summary>
     /// __m128i _mm_shuffle_epi32 (__m128i a, int immediate) PSHUFD xmm, xmm/m128, imm8
@@ -85,7 +85,35 @@ partial class vcpu
     public static Vector512<uint> vshuffle(Vector512<uint> src, [Imm] _MM_PERM_ENUM spec)
         => Shuffle(src, (byte)spec);
 
+    /// <summary>
+    /// __m512i _mm512_shuffle_epi32 (__m512i a, const int imm8)
+    ///   VPSHUFD zmm1 {k1}{z}, zmm2/m512/m32bcst, imm8
+    /// </summary>
     [MethodImpl(Inline), Op]
-    public static Vector512<uint> vshuffle4x128(Vector512<uint> a, Vector512<uint> b, [Imm] byte spec)
+    public static Vector512<int> vshuffle(Vector512<int> src, [Imm] _MM_PERM_ENUM spec)
+        => Shuffle(src, (byte)spec);
+
+    /// <summary>
+    /// __m512i _mm512_shuffle_i32x4(__m512i a, __m512i b, const int imm8)
+    /// Shuffle 128-bits (composed of 4 32-bit integers) selected by "imm8" from "a" and "b", and store the results in "dst".
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <param name="spec"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<uint> vshuffle32x4(Vector512<uint> a, Vector512<uint> b, [Imm] byte spec)
         => Shuffle4x128(a, b, spec);
+
+    /// <summary>
+    /// __m512i _mm512_shuffle_i64x2(__m512i a, __m512i b, const int imm8)
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <param name="spec"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<ulong> vshuffle64x2(Vector512<ulong> a, Vector512<ulong> b, [Imm] byte spec)
+        => Shuffle4x128(a, b, spec);
+
 }

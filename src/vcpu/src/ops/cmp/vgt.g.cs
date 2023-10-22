@@ -19,11 +19,6 @@ namespace Z0
             where T : unmanaged
                 => vgt_u(x,y);
 
-        // [MethodImpl(Inline), Gt, Closures(Integers)]
-        // public static Vector512<T> vgt<T>(in Vector512<T> x, in Vector512<T> y)
-        //     where T : unmanaged
-        //         => Vector512.Create(vgt(x.Lo, y.Lo), vgt(x.Hi, y.Hi));
-
         [MethodImpl(Inline)]
         static Vector128<T> vgt_u<T>(Vector128<T> x, Vector128<T> y)
             where T : unmanaged

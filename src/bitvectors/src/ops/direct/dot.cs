@@ -13,7 +13,7 @@ namespace Z0
         /// <param name="y">The right bitvector</param>
         [MethodImpl(Inline), Dot]
         public static bit dot(BitVector4 x, BitVector4 y)
-            => parity(and(x, y));
+            => bits.parity(and(x, y));
 
         /// <summary>
         /// Computes the scalar product between two bitvectors
@@ -22,7 +22,7 @@ namespace Z0
         /// <param name="y">The right bitvector</param>
         [MethodImpl(Inline), Dot]
         public static bit dot(BitVector8 x, BitVector8 y)
-            => parity(and(x, y));
+            => bits.parity(and(x, y));
 
         /// <summary>
         /// Computes the scalar product between two bitvectors
@@ -31,7 +31,7 @@ namespace Z0
         /// <param name="y">The right bitvector</param>
         [MethodImpl(Inline), Dot]
         public static bit dot(BitVector16 x, BitVector16 y)
-            => parity(and(x, y));
+            => bits.parity(and(x, y));
 
         /// <summary>
         /// Computes the scalar product between two bitvectors
@@ -40,7 +40,7 @@ namespace Z0
         /// <param name="y">The right bitvector</param>
         [MethodImpl(Inline), Dot]
         public static bit dot(BitVector32 x, BitVector32 y)
-            => parity(and(x, y));
+            => bits.parity(and(x, y));
 
         /// <summary>
         /// Computes the scalar product between two bitvectors
@@ -49,6 +49,6 @@ namespace Z0
         /// <param name="y">The right bitvector</param>
         [MethodImpl(Inline), Dot]
         public static bit dot(BitVector64 x, BitVector64 y)
-            => parity(and(x, y));
+            => bits.parity(and(x, y));
     }
 }

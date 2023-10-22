@@ -759,19 +759,19 @@ public partial class NativeSigs
 
     [MethodImpl(Inline), Op]
     public static NativeType signed(NativeSize size)
-        => new NativeType(scalar(size, NativeClass.I));
+        => new (scalar(size, NativeClass.I));
 
     [MethodImpl(Inline), Op]
     public static NativeType fractional(NativeSize size)
-        => new NativeType(scalar(size, NativeClass.F));
+        => new (scalar(size, NativeClass.F));
 
     [MethodImpl(Inline), Op]
     public static NativeType character(NativeSize size)
-        => new NativeType(scalar(size, NativeClass.C));
+        => new (scalar(size, NativeClass.C));
 
     [MethodImpl(Inline), Op]
     public static NativeType bit()
-        => new NativeType(scalar(W.W8, NativeClass.B));
+        => new (scalar(W.W8, NativeClass.B));
 
     [MethodImpl(Inline), Op]
     public static NativeType u8()

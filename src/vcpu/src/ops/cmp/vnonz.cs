@@ -79,24 +79,6 @@ partial class vcpu
         => !TestZ(src, src);
 
     /// <summary>
-    /// Returns true if the source vector is nonzero, false otherwise
-    /// int _mm_testz_ps (__m128 a, __m128 b) VTESTPS xmm, xmm/m128
-    /// </summary>
-    /// <param name="src">The vector to test</param>
-    [MethodImpl(Inline), Nonz]
-    public static bool vnonz(Vector128<float> src)
-        => !TestZ(src, src);
-
-    /// <summary>
-    /// Returns true if the source vector is nonzero, false otherwise
-    /// int _mm_testz_pd (__m128d a, __m128d b) VTESTPD xmm, xmm/m128
-    /// </summary>
-    /// <param name="src">The vector to test</param>
-    [MethodImpl(Inline), Nonz]
-    public static bool vnonz(Vector128<double> src)
-        => !TestZ(src, src);
-
-    /// <summary>
     /// int _mm256_testz_si256 (__m256i a, __m256i b) VPTEST ymm, ymm/m256
     /// Returns true if the source vector is nonzero, false otherwise
     /// </summary>
@@ -121,7 +103,7 @@ partial class vcpu
     /// <param name="src">The vector to test</param>
     [MethodImpl(Inline), Nonz]
     public static bool vnonz(Vector256<short> src)
-        => ! TestZ(src,src);
+        => !TestZ(src,src);
 
     /// <summary>
     /// int _mm256_testz_si256 (__m256i a, __m256i b) VPTEST ymm, ymm/m256
@@ -130,7 +112,7 @@ partial class vcpu
     /// <param name="src">The vector to test</param>
     [MethodImpl(Inline), Nonz]
     public static bool vnonz(Vector256<ushort> src)
-        => ! TestZ(src,src);
+        => !TestZ(src,src);
 
     /// <summary>
     /// Returns true if the source vector is nonzero, false otherwise
@@ -138,7 +120,7 @@ partial class vcpu
     /// <param name="src">The vector to test</param>
     [MethodImpl(Inline), Nonz]
     public static bool vnonz(Vector256<int> src)
-        => ! TestZ(src,src);
+        => !TestZ(src,src);
 
     /// <summary>
     /// int _mm256_testz_si256 (__m256i a, __m256i b) VPTEST ymm, ymm/m256
@@ -165,23 +147,5 @@ partial class vcpu
     /// <param name="src">The vector to test</param>
     [MethodImpl(Inline), Nonz]
     public static bool vnonz(Vector256<ulong> src)
-        => !TestZ(src,src);
-
-    /// <summary>
-    /// int _mm256_testz_ps (__m256 a, __m256 b) VTESTPS ymm, ymm/m256
-    /// Returns true if the source vector is nonzero, false otherwise
-    /// </summary>
-    /// <param name="src">The vector to test</param>
-    [MethodImpl(Inline), Nonz]
-    public static bool vnonz(Vector256<float> src)
-        => !TestZ(src,src);
-
-    /// <summary>
-    /// int _mm256_testz_pd (__m256d a, __m256d b) VTESTPD ymm, ymm/m256
-    /// Returns true if the source vector is nonzero, false otherwise
-    /// </summary>
-    /// <param name="src">The vector to test</param>
-    [MethodImpl(Inline), Nonz]
-    public static bool vnonz(Vector256<double> src)
         => !TestZ(src,src);
 }

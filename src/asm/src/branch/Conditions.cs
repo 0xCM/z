@@ -8,6 +8,8 @@ using static sys;
 using static ConditionTokens;
 using static ConditionTokens.ConditionFacets;
 
+using K = JccKind;
+
 [ApiComplete]
 public sealed class Conditions
 {
@@ -236,7 +238,6 @@ public sealed class Conditions
         Symbols.descriptions(jcc32b, _AltJcc32Info.Edit);
         Symbols.kinds(jcc32b, _AltJcc32Codes.Edit);
     }
-
 
     [MethodImpl(Inline)]
     public ReadOnlySpan<Condition> ConditionCodes(N0 n)

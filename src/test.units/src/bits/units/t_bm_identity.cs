@@ -68,7 +68,7 @@ namespace Z0
             var m = BitMatrix32.Identity;
             for(byte i=0; i < m.Order; i++)
                 Claim.eq(m[i,i], bit.On);
-            Claim.require(BitMatrix.diagonal(m).TestC());
+            Claim.require(bits.testc(BitMatrix.diagonal(m)));
         }
 
         public void bm_identity_64x64_check()

@@ -24,17 +24,14 @@ namespace Z0
         public static Vector128<ushort> vswap(Vector128<ushort> src, uint i, uint j)
         {
             var perm = vgcpu.vinc<byte>(w128);
-
             var i0 = bit.parity((uint)i, bit.Off);
             var i1 = bit.parity((uint)i, bit.On);
             var j0 = bit.parity((uint)j, bit.Off);
             var j1 = bit.parity((uint)j, bit.On);
-
             perm = vset(i0, j0, perm);
             perm = vset(i1, j1, perm);
             perm = vset(j0, i0, perm);
             perm = vset(j1, i1, perm);
-
             return v16u(vshuffle(v8u(src),perm));
         }
 

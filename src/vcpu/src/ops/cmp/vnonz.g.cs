@@ -97,9 +97,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                return vcpu.vnonz(v32f(src));
+                return fcpu.vnonz(v32f(src));
             else if(typeof(T) == typeof(double))
-                return vcpu.vnonz(v64f(src));
+                return fcpu.vnonz(v64f(src));
             else
                 throw no<T>();
         }
@@ -137,9 +137,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                return vcpu.vnonz(v32f(src));
+                return fcpu.vnonz(v32f(src));
             else if(typeof(T) == typeof(double))
-                return vcpu.vnonz(v64f(src));
+                return fcpu.vnonz(v64f(src));
             else
                 throw no<T>();
         }

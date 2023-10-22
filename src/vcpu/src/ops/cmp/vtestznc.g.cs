@@ -55,9 +55,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                return vcpu.vtestznc(v32f(src), v32f(mask));
+                return fcpu.vtestznc(v32f(src), v32f(mask));
             else if(typeof(T) == typeof(double))
-                return vcpu.vtestznc(v64f(src), v64f(mask));
+                return fcpu.vtestznc(v64f(src), v64f(mask));
             else
                 throw no<T>();
         }
@@ -99,9 +99,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                return vcpu.vtestznc(v32f(src), v32f(mask));
+                return fcpu.vtestznc(v32f(src), v32f(mask));
             else if(typeof(T) == typeof(double))
-                return vcpu.vtestznc(v64f(src), v64f(mask));
+                return fcpu.vtestznc(v64f(src), v64f(mask));
             else
                 throw no<T>();
         }

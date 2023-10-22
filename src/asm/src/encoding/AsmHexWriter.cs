@@ -90,11 +90,19 @@ public class AsmHexWriter
         return ref Target;
     }
 
-    [MethodImpl(Inline), Op]
-    public static void encode(Hex8 a0, Imm8 a1, AsmHexWriter dst)
-        => dst.Write(a0,a1);
-
-    [MethodImpl(Inline), Op]
-    public static void encode(RexPrefix a0, Hex8 a1, Imm64 a2, AsmHexWriter dst)
-        => dst.Write(a0,a1,a2);
+    [MethodImpl(Inline)]
+    public ref readonly AsmHexCode Write<A,B,C,D,E>(in A a, in B b, in C c, in D d, in E e)
+        where A : unmanaged
+        where B : unmanaged
+        where C : unmanaged
+        where D : unmanaged
+        where E : unmanaged
+    {
+        Write(a);
+        Write(b);
+        Write(c);
+        Write(d);
+        Write(e);
+        return ref Target;
+    }    
 }

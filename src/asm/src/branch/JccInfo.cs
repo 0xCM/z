@@ -5,11 +5,10 @@
 namespace Z0.Asm;
 
 using static ConditionTokens;
+
 [StructLayout(LayoutKind.Sequential, Pack=1)]
 public readonly record struct JccInfo
 {
-    public readonly JccKind Kind;
-
     public readonly asci8 Name;
 
     public readonly NativeSize Size;
@@ -21,7 +20,6 @@ public readonly record struct JccInfo
     {
         Code = (byte)code;
         Name = name;
-        Kind = JccKind.Jcc8;
         Size = NativeSizeCode.W8;
     }
 
@@ -30,7 +28,6 @@ public readonly record struct JccInfo
     {
         Code = (byte)code;
         Name = name;
-        Kind = JccKind.Jcc8Alt;
         Size = NativeSizeCode.W8;
     }
 
@@ -39,7 +36,6 @@ public readonly record struct JccInfo
     {
         Code = (byte)code;
         Name = name;
-        Kind = JccKind.Jcc32;
         Size = NativeSizeCode.W32;
     }
 
@@ -48,7 +44,6 @@ public readonly record struct JccInfo
     {
         Code = (byte)code;
         Name = name;
-        Kind = JccKind.Jcc32Alt;
         Size = NativeSizeCode.W32;
     }
 }

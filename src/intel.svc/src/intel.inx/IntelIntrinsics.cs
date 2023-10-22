@@ -49,7 +49,7 @@ public class IntelIntrinsics : WfSvc<IntelIntrinsics>
         var xml = LoadSourceDoc();
         var parsed = ParseSouceDoc(xml);
         EmitAlgorithms(parsed);
-        var records = EmitRecords(parsed);
+        EmitRecords(parsed);
         EmitTypeDecls();
         EmitScripts();
         EmitMethodDecls(parsed);
@@ -132,16 +132,16 @@ public class IntelIntrinsics : WfSvc<IntelIntrinsics>
         Channel.EmittedFile(flow, count);
     }
 
-    public ReadOnlySeq<IntelIntrinsicRecord> EmitRecords(ReadOnlySeq<IntrinsicDef> src)
+    public static ReadOnlySeq<IntelIntrinsicRecord> records(ReadOnlySeq<IntrinsicDef> src)
     {
         var dst = alloc<IntelIntrinsicRecord>(src.Count);
         for(var i=0; i<src.Length; i++)
-            record(src[i], Channel, out seek(dst,i));            
-        dst.Sort();
-        dst.Resequence();
-        Channel.TableEmit(dst, Targets.Table<IntelIntrinsicRecord>());            
-        return dst;
+            record(src[i], out seek(dst,i));            
+        return dst.Sort().Resequence();
     }
+
+    public void EmitRecords(ReadOnlySeq<IntrinsicDef> src)
+        => Channel.TableEmit(records(src), Targets.Table<IntelIntrinsicRecord>());
 
     const int MaxDefCount = Pow2.T13;
     
@@ -317,7 +317,7 @@ public class IntelIntrinsics : WfSvc<IntelIntrinsics>
         dst.AppendLineFormat("# Description: {0}", src.description);
     }
 
-    static void record(in IntrinsicDef src, IWfChannel channel, out IntelIntrinsicRecord dst)
+    static void record(in IntrinsicDef src, out IntelIntrinsicRecord dst)
     {
         dst = IntelIntrinsicRecord.Empty;
         try
@@ -338,10 +338,9 @@ public class IntelIntrinsics : WfSvc<IntelIntrinsics>
             }
         }
         catch (Exception e)
-        {
-            
-            channel.Error(e);
-            channel.Row(src.ToString());
+        {            
+            term.error(e);
+            term.error(src.ToString());
         }
     }
 

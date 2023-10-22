@@ -4,6 +4,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static XedModels;
+
 partial class IntrinsicsDoc
 {
     public readonly struct Instruction
@@ -23,6 +25,9 @@ partial class IntrinsicsDoc
             this.xed  = xed;
         }
 
+        public InstRef ToInstRef()
+            => new(name, xed, form);
+            
         public bool IsEmpty
         {
             [MethodImpl(Inline)]

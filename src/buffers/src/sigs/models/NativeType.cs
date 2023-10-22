@@ -6,7 +6,7 @@ namespace Z0;
 
 using static NativeSigs;
 
-public readonly struct NativeType : INativeType<NativeType>, IEquatable<NativeType>
+public readonly record struct NativeType : INativeType<NativeType>, IEquatable<NativeType>
 {
     [MethodImpl(Inline)]
     public static NativeType define(Scalar src)
@@ -74,15 +74,17 @@ public readonly struct NativeType : INativeType<NativeType>, IEquatable<NativeTy
     public bool Equals(NativeType src)
         => Data == src.Data;
 
+    public Hash32 Hash
+    {
+        get => Data;
+    }
+    
     [MethodImpl(Inline)]
     public override int GetHashCode()
-        => Data;
-
-    public override bool Equals(object src)
-        => src is NativeType t && Equals(t);
+        => Hash;
 
     public string Format()
-        => NativeSigs.format(this);
+        => format(this);
 
     public override string ToString()
         => Format();
@@ -98,14 +100,6 @@ public readonly struct NativeType : INativeType<NativeType>, IEquatable<NativeTy
     [MethodImpl(Inline)]
     public static implicit operator NativeType(NativeSegKind src)
         => new (src);
-
-    [MethodImpl(Inline)]
-    public static bool operator ==(NativeType a, NativeType b)
-        => a.Equals(b);
-
-    [MethodImpl(Inline)]
-    public static bool operator !=(NativeType a, NativeType b)
-        => !a.Equals(b);
 
     public static NativeType Void
     {

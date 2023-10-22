@@ -13,7 +13,7 @@ namespace Z0
             var w = w128;
             var lut = VLut.init(gcpu.vinc<byte>(w));
             var found = gcpu.vinc<byte>(w, 64);
-            VClaim.veq(found, VLut.select(lut,found));
+            VClaim.veq(found, lut.Select(found));
         }
 
         public void lut32_rep_check()
@@ -21,7 +21,7 @@ namespace Z0
             var w = w256;
             var lut = VLut.init(gcpu.vinc<byte>(w));
             var found = gcpu.vinc<byte>(w, 64);
-            VClaim.veq(found, VLut.select(lut,found));
+            VClaim.veq(found, lut.Select(found));
         }
     }
 }

@@ -154,11 +154,11 @@ public partial class NativeTypes
         => typed(name, @base, size);
 
     [MethodImpl(Inline), Op]
-    public static NumericType numeric(Label name, DataSize size)
+    public static NumericType numeric(string name, DataSize size)
         => new (name, size);
 
     [MethodImpl(Inline), Op]
-    public static NumericType numeric(Label name, byte width)
+    public static NumericType numeric(string name, byte width)
         => new (name, width);
 
     public static TypeKey NextKey(DataTypeKind kind)

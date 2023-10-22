@@ -25,22 +25,6 @@ partial class vcpu
         => (ushort)MoveMask(src);
 
     /// <summary>
-    /// int _mm_movemask_ps (__m128 a) MOVMSKPS reg, xmm
-    /// Constructs an integer from the most significant bit of each source vector component
-    /// </summary>
-    [MethodImpl(Inline), Op]
-    public static int vmovemask(Vector128<float> src)
-        => MoveMask(src);
-
-    /// <summary>
-    /// int _mm_movemask_pd (__m128d a) MOVMSKPD reg, xmm
-    /// Constructs an integer from the most significant bit of each source vector component
-    /// </summary>
-    [MethodImpl(Inline), Op]
-    public static int vmovemask(Vector128<double> src)
-        => MoveMask(src);
-
-    /// <summary>
     /// int _mm256_movemask_epi8 (__m256i a) VPMOVMSKB reg, ymm
     /// Constructs an integer from the most significant bit of each 8-bit source vector segment
     /// </summary>

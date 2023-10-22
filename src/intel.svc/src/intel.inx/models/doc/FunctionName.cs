@@ -43,62 +43,6 @@ partial class IntrinsicsDoc
                 ;
         }
 
-        public bool IsStore
-        {
-            get => Components.Contains("store")
-                || Components.Contains("storeu")
-                || Components.Contains("storeu2")
-                ;
-        }
-
-        public bool IsLoad
-        {
-            get => Components.Contains("load")
-            || Components.Contains("loadu")
-            || Components.Contains("load1")
-            || Components.Contains("loadh")
-            || Components.Contains("loadl")
-            || Components.Contains("loadr")
-            || Components.Contains("storeu2")
-            ;
-        }
-
-        public bool IsShift
-        {
-            get => Components.Contains("sll")
-                || Components.Contains("slli")
-                || Components.Contains("sllv")
-                || Components.Contains("sra")
-                || Components.Contains("srlv")
-                || Components.Contains("srai")
-                || Components.Contains("srav")
-                ;
-        }
-        public bool IsShuffle
-        {
-            get => Components.Contains("shuffle")
-                || Components.Contains("shufflehi")
-                || Components.Contains("shufflelo")
-            ;
-        }
-
-        public bool IsBlend
-        {
-            get => Components.Contains("blend") || Components.Contains("blendv");
-        }
-
-        public bool IsBroadcast
-        {
-            get => Components.Contains("broadcast") 
-                || Components.Contains("broadcastb")
-                || Components.Contains("broadcastw")
-                || Components.Contains("broadcastd")
-                || Components.Contains("broadcastq")
-                || Components.Contains("broadcastss")
-                || Components.Contains("broadcastsd")
-                ;
-        }
-
         public bool IsCompare
         {
             get => Components.Contains("cmp") 
@@ -113,6 +57,181 @@ partial class IntrinsicsDoc
                 || Components.Contains("cmple")
                 || Components.Contains("cmpnle")
                 ;
+        }
+
+        public bool IsAdd
+        {
+            get => Components.Contains("add")
+                || Components.Contains("adds")
+                || Components.Contains("hadd")
+                || Components.Contains("paddb")
+            ;
+        }
+
+        public bool IsSub
+        {
+            get => Components.Contains("sub")
+                || Components.Contains("subs")
+                || Components.Contains("hsub")
+                ;
+        }
+
+        public bool IsMul
+        {
+            get => Components.Contains("mul") || Components.Contains("mulx");
+        }
+
+        public bool IsDiv
+        {
+            get=> Components.Contains("div");
+        }
+
+        public bool IsAnd
+        {
+            get => Components.Contains("and")
+                || Components.Contains("kand")
+            ;
+        }
+
+        public bool IsAndNot
+        {
+            get => Components.Contains("andnot");
+        }
+
+        public bool IsNot
+        {
+            get => Components.Contains("knot");
+        }
+
+        public bool IsOr
+        {
+            get => Components.Contains("or")
+                || Components.Contains("kor")            
+            ;
+        }
+
+        public bool IsXor
+        {
+            get => Components.Contains("xor")
+                || Components.Contains("kxor")            
+            ;
+        }
+
+        public bool IsXnor
+        {
+            get => Components.Contains("kxnor");
+        }
+
+        public bool IsShift
+        {
+            get => Components.Contains("sll")
+                || Components.Contains("slli")
+                || Components.Contains("sllv")
+                || Components.Contains("sra")
+                || Components.Contains("srlv")
+                || Components.Contains("srai")
+                || Components.Contains("srav")
+                || Components.Contains("kshiftli")
+                || Components.Contains("kshiftri")
+                ;
+        }
+
+        public bool IsTest
+        {
+            get => Components.Contains("test")
+                || Components.Contains("testn")
+                || Components.Contains("testc")
+                || Components.Contains("testz")
+                || Components.Contains("testznc")
+                || Components.Contains("ktest")
+                || Components.Contains("ktestc")
+                || Components.Contains("ktestz")
+                || Components.Contains("kortest")
+                || Components.Contains("kortestc")
+                || Components.Contains("kortestz")
+            ;
+        }
+
+        public bool IsSet
+        {
+            get => Components.Contains("set") 
+                || Components.Contains("setr")
+                || Components.Contains("set1")
+                || Components.Contains("set4")
+                || Components.Contains("setr4")
+                || Components.Contains("setzero")
+                ;
+        }
+
+        public bool IsMask
+        {
+            get => Components.Contains("mask")
+                || Components.Contains("maskz");
+        }
+
+        public bool IsAbs
+        {
+            get => Components.Contains("abs");
+        }
+
+        public bool IsMax
+        {
+            get => Components.Contains("max");
+        }
+
+        public bool IsMin
+        {
+            get => Components.Contains("min");
+        }
+
+        public bool IsNonTemporal
+        {
+            get => Components.Contains("stream");
+        }
+
+        public bool IsLoad
+        {
+            get => Components.Contains("load")
+                || Components.Contains("loadu")
+                || Components.Contains("load1")
+                || Components.Contains("loadh")
+                || Components.Contains("loadl")
+                || Components.Contains("loadr")
+            ;
+        }
+
+        public bool IsStore
+        {
+            get => Components.Contains("store")
+                || Components.Contains("storeu")
+                || Components.Contains("storel")
+                || Components.Contains("storeu2")
+                || Components.Contains("directstoreu")
+                || Components.Contains("movdir64b")
+                ;
+        }
+
+        public bool IsPack
+        {
+            get => Components.Contains("vpackssdw")
+                || Components.Contains("packssdw")
+                || Components.Contains("packs")
+                || Components.Contains("packus")
+            ;
+        }
+
+        public bool IsShuffle
+        {
+            get => Components.Contains("shuffle")
+                || Components.Contains("shufflehi")
+                || Components.Contains("shufflelo")
+            ;
+        }
+
+        public bool IsBlend
+        {
+            get => Components.Contains("blend")
+                || Components.Contains("blendv");
         }
 
         public bool IsScatter
@@ -135,76 +254,26 @@ partial class IntrinsicsDoc
                 ;                
         }
 
-        public bool IsDiv
+        public bool IsMove
         {
-            get=> Components.Contains("div");
-        }
-
-        public bool IsSub
-        {
-            get => Components.Contains("sub")
-                || Components.Contains("subs")
-                || Components.Contains("hsub")
+            get => Components.Contains("mov")
+                || Components.Contains("movedup")
+                || Components.Contains("movemask")
+                || Components.Contains("movepi64")
+                || Components.Contains("movelh")
                 ;
         }
 
-        public bool IsMul
+        public bool IsBroadcast
         {
-            get=> Components.Contains("mul");
-        }
-
-        public bool IsAdd
-        {
-            get => Components.Contains("add")
-                || Components.Contains("adds")
-                || Components.Contains("hadd")
-            ;
-        }
-
-        public bool IsTest
-        {
-            get => Components.Contains("test")
-                || Components.Contains("testn")
-                || Components.Contains("testc")
-                || Components.Contains("testz")
-                || Components.Contains("testznc")
-            ;
-        }
-
-        public bool IsSet
-        {
-            get => Components.Contains("set") 
-                || Components.Contains("setr")
-                || Components.Contains("set1")
-                || Components.Contains("set4")
-                || Components.Contains("setr4")
-                || Components.Contains("setzero")
+            get => Components.Contains("broadcast") 
+                || Components.Contains("broadcastb")
+                || Components.Contains("broadcastw")
+                || Components.Contains("broadcastd")
+                || Components.Contains("broadcastq")
+                || Components.Contains("broadcastss")
+                || Components.Contains("broadcastsd")
                 ;
-        }
-
-        public bool IsXor
-        {
-            get => Components.Contains("xor");
-        }
-
-        public bool IsOr
-        {
-            get => Components.Contains("or");
-        }
-
-        public bool IsAbs
-        {
-            get => Components.Contains("abs");
-        }
-
-        public bool IsMax
-        {
-            get => Components.Contains("max");
-        }
-
-        public bool IsMin
-        {
-            get => Components.Contains("min");
         }
 
         public Hash32 Hash

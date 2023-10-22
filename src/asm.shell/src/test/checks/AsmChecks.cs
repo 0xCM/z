@@ -399,13 +399,6 @@ class AsmChecks : WfAppCmd<AsmChecks>
         return result;
     }
 
-    [CmdOp("asm/check/luts")]
-    void RunAsmChecks()
-    {
-        vlut(w128);
-        vlut(w256);
-    }
-
     [CmdOp("gen/hex-kind")]
     void GenHex8()
     {
@@ -426,28 +419,6 @@ class AsmChecks : WfAppCmd<AsmChecks>
         Channel.Write(dst.Emit());
     }
 
-
-    void vlut(W128 w)
-    {
-        // lut := <0,1,2,...,15> ; defines 16 indicies in a table with up to 255 entries
-        var lut = VLut.init(gcpu.vinc<byte>(w));
-        // items := <64,65,...,79>
-        var items = gcpu.vinc<byte>(w, 64);
-        var selected = VLut.select(lut,items);
-        var expect = items;
-        VClaim.veq(expect, selected);
-    }
-
-    void vlut(W256 w)
-    {
-        // lut := <0,1,2,...,31>  ; defines 32 indicies in a table with up to 255 entries
-        var lut = VLut.init(gcpu.vinc<byte>(w));
-        // items := <64,65,...,95>
-        var items = vgcpu.vinc<byte>(w, 64);
-        var selected = VLut.select(lut,items);
-        var expect = items;
-        VClaim.veq(expect, selected);
-    }
 
     [CmdOp("asm/check/hexlines")]
     void CheckHexLines()

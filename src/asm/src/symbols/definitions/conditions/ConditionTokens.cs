@@ -26,7 +26,6 @@ public enum ConditionKind : byte
     Jcc32Alt,
 }
 
-
 [LiteralProvider(GroupName)]
 public partial class ConditionTokens
 {

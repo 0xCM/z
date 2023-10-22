@@ -168,45 +168,5 @@ namespace Z0
         [MethodImpl(Inline), TestZ]
         public static bit vtestz(Vector256<ulong> src, Vector256<ulong> mask)
             => TestZ(src, mask);
-
-        /// <summary>
-        /// int _mm256_testz_ps (__m256 a, __m256 b) VTESTPS ymm, ymm/m256
-        /// Determines whether all mask-specified source bits are off
-        /// </summary>
-        /// <param name="src">The bit source</param>
-        /// <param name="mask">The mask</param>
-        [MethodImpl(Inline), TestZ]
-        public static bit vtestz(Vector256<float> src, Vector256<float> mask)
-            => TestZ(src,mask);
-
-        /// <summary>
-        /// int _mm256_testz_pd (__m256d a, __m256d b) VTESTPD ymm, ymm/m256
-        /// Determines whether all mask-specified source bits are off
-        /// </summary>
-        /// <param name="src">The bit source</param>
-        /// <param name="mask">The mask</param>
-        [MethodImpl(Inline), TestZ]
-        public static bit vtestz(Vector256<double> src, Vector256<double> mask)
-            => TestZ(src,mask);
-
-        /// <summary>
-        /// int _mm_testz_ps (__m128 a, __m128 b) VTESTPS xmm, xmm/m128
-        /// Determines whether all mask-specified source bits are off
-        /// </summary>
-        /// <param name="src">The bit source</param>
-        /// <param name="mask">The mask</param>
-        [MethodImpl(Inline), TestZ]
-        public static bit vtestz(Vector128<float> src, Vector128<float> mask)
-            => TestZ(src,mask);
-
-        /// <summary>
-        /// int _mm_testz_pd (__m128d a, __m128d b) VTESTPD xmm, xmm/m128
-        /// Determines whether all mask-specified source bits are off
-        /// </summary>
-        /// <param name="src">The bit source</param>
-        /// <param name="mask">The mask</param>
-        [MethodImpl(Inline), TestZ]
-        public static bit vtestz(Vector128<double> src, Vector128<double> mask)
-            => TestZ(src,mask);
     }
 }

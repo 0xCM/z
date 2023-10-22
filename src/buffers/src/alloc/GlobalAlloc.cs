@@ -17,11 +17,11 @@ public sealed class GlobalAlloc : Alloc
     public static LocatedSymbol symbol(MemoryAddress location, ReadOnlySpan<char> name)
         => Alloc.Symbols().Symbol(location,name);
 
-    public static NativeSigRef sig(NativeSig sig)
-        => Alloc.Sig(sig);
+    // public static NativeSigRef sig(NativeSig sig)
+    //     => Alloc.Sig(sig);
 
-    public static NativeSigRef sig(ReadOnlySpan<char> scope, ReadOnlySpan<char> name, NativeType ret, params Operand[] ops)
-        => Alloc.Sig(scope,name,ret,ops);
+    // public static NativeSigRef sig(ReadOnlySpan<char> scope, ReadOnlySpan<char> name, NativeType ret, params Operand[] ops)
+    //     => Alloc.Sig(scope,name,ret,ops);
 
     public static MemorySegment memory(ByteSize size)
         => Alloc.Memory().Memory(size);

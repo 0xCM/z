@@ -5,10 +5,10 @@
 namespace Z0.Lang.Intel
 {
     using static sys;
-    using static Lang.Intel.TypeNames;
+    using static IntrinsicTypes;
     using static NativeSigs;
     
-    using Names = Lang.Intel.TypeNames;
+    using Names = IntrinsicTypes;
 
     public readonly struct Types
     {

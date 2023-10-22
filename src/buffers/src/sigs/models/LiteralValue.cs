@@ -5,7 +5,7 @@
 namespace Z0;
 
 [StructLayout(StructLayout,Pack=1)]
-public readonly struct LiteralValue
+public readonly record struct LiteralValue
 {
     public readonly LiteralType Type;
 

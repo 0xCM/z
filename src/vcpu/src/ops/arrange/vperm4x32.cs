@@ -42,5 +42,5 @@ partial class vcpu
     /// <param name="spec">The shuffle spec</param>
     [MethodImpl(Inline), Op]
     public static Vector256<uint> vperm4x32(Vector256<uint> src, [Imm] Perm4L spec)
-            => Shuffle(src, (byte)spec);
+        => Shuffle(src, (byte)spec);
 }

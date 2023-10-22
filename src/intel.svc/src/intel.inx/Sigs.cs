@@ -13,16 +13,16 @@ namespace Z0.Lang.Intel.intrinsics
     _mm_add_epi8   | __m128i _mm_add_epi8(__m128i a, __m128i b)   | PADDB xmm, xmm | PADDB_XMMdq_XMMdq
     */
 
-    using static TypeNames;
+    using static IntrinsicTypes;
 
     [ApiHost]
-    public class Sigs
+    public class IntrinsicSigs
     {
-        const string Scope = "inx";
+        const string Scope = "Algs";
 
         NativeTypeMap TypeMap;
 
-        public Sigs()
+        public IntrinsicSigs()
         {
             TypeMap = Types.map();
         }

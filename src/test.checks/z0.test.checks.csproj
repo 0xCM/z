@@ -5,6 +5,7 @@
     <ProjectReference Include="$(Polyrand)" />
     <ProjectReference Include="$(ApiMd)" />
     <ProjectReference Include="$(ApiCode)" />
+    <ProjectReference Include="$(VCpu)" />
     <ProjectReference Include="$(Machines)" />
     <ProjectReference Include="$(Workflow)" />
   </ItemGroup>

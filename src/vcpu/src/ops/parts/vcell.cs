@@ -27,6 +27,12 @@ namespace Z0
                 => src.GetElement(index);
 
         [MethodImpl(Inline)]
+        public static T vcell<T>(Vector512<T> src, byte index)
+            where T : unmanaged
+                => src.GetElement(index);
+
+
+        [MethodImpl(Inline)]
         public static T vcell<T>(Vector256<T> src, N0 index)
             where T : unmanaged
                 => src.GetElement(index);
