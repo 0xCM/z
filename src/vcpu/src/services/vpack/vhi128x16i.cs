@@ -29,6 +29,6 @@ partial struct vpack
     /// <param name="src">The source</param>
     /// <param name="dst">The target</param>
     [MethodImpl(Inline), Op]
-    public static Vector128<ushort> vhi128x16u(Vector128<byte> src, out Vector128<ushort> dst)
-        => dst = v16u(ConvertToVector128Int16(vshi(src)));
+    public static Vector128<ushort> vhi128x16u(Vector128<byte> src)
+        => v16u(ConvertToVector128Int16(vshi(src)));
 }

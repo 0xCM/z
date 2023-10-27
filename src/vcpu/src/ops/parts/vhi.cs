@@ -79,22 +79,6 @@ partial class vcpu
         => ExtractVector128(src, 1);
 
     /// <summary>
-    /// __m128 _mm256_extractf128_ps (__m256 a, const int imm8) VEXTRACTF128 xmm/m128, ymm, imm8
-    /// </summary>
-    /// <param name="src"></param>
-    [MethodImpl(Inline), Op]
-    public static Vector128<float> vhi(Vector256<float> src)
-        => ExtractVector128(src, 1);
-
-    /// <summary>
-    /// __m128d _mm256_extractf128_pd (__m256d a, const int imm8) VEXTRACTF128 xmm/m128, ymm, imm8
-    /// </summary>
-    /// <param name="src"></param>
-    [MethodImpl(Inline), Op]
-    public static Vector128<double> vhi(Vector256<double> src)
-        => ExtractVector128(src, 1);
-
-    /// <summary>
     /// Extracts the upper 128-bit lane from the source vector to scalar targets
     /// </summary>
     /// <param name="src">The source vector</param>

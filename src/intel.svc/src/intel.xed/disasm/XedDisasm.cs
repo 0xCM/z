@@ -49,9 +49,9 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         return src;
     }
 
-    public void EmitDetails(XedDisasmContext context, XedDisasmDoc src)
+    public void EmitDetails(XedDisasmContext context, XedDisasmDoc src, FilePath? dst = null)
     {
-        var path = context.DisasmDetailPath(src.SourcePath);
+        var path = dst ?? context.DisasmDetailPath(src.SourcePath);
         var emitting = Channel.EmittingFile(path);
         var te = text.emitter();
         iter(src.DetailBlocks, detail => context.Blocks.Add(detail));
@@ -73,14 +73,14 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         return docs;
     }
 
-    void EmitSummaries(XedDisasmContext context, XedDisasmDoc doc)
-        => Channel.TableEmit(doc.Summary.Rows, context.DisasmSummaryPath(doc.SourcePath));
+    void EmitSummaries(XedDisasmContext context, XedDisasmDoc doc, FilePath? dst = null)
+        => Channel.TableEmit(doc.Summary.Rows, dst ?? context.DisasmSummaryPath(doc.SourcePath));
 
     const string OperandFormat = "{0} | {1,-20} | {2}";
 
-    public void EmitOps(XedDisasmContext context, XedDisasmDoc src)
+    public void EmitOps(XedDisasmContext context, XedDisasmDoc src, FilePath? dst = null)
     {
-        var path = context.DisasmOpsPath(src.Detail.DataFile.Source);
+        var path = dst ?? context.DisasmOpsPath(src.Detail.DataFile.Source);
         var doc = src.Detail;
         var emitting = Channel.EmittingFile(path);
         using var emitter = path.AsciEmitter();
@@ -185,14 +185,14 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         return dst.Emit();        
     }
 
-    public void EmitChecks(XedDisasmContext context, XedDisasmDoc src)
+    public void EmitChecks(XedDisasmContext context, XedDisasmDoc src, FilePath? dst = null)
     {
         const string LabeledValue = "{0,-24} | {1}";
         var doc = src.Detail;
         ref readonly var file = ref doc.DataFile;
         var buffer = text.buffer();
         var count = doc.Count;
-        var outpath = context.DisasmChecksPath(file.Source);
+        var outpath = dst ?? context.DisasmChecksPath(file.Source);
         using var writer = outpath.AsciWriter();
         var emitting = Channel.EmittingFile(outpath);
         writer.AppendLineFormat(RenderCol2, "DataSource", doc.Source.ToUri().Format());
