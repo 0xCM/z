@@ -31,7 +31,7 @@ public readonly struct asci32 : IAsciSeq<A,N>, IUnmanaged<A>
     [MethodImpl(Inline)]
     public asci32(Vector128<byte> src)
     {
-        Storage = vcpu.vinsert(src, default, LaneIndex.L0);
+        Storage = vcpu.vinsert(src, default(Vector256<byte>), LaneIndex.L0);
     }
 
     [MethodImpl(Inline)]

@@ -20,7 +20,6 @@ namespace Z0
             where T : unmanaged
                 => init(vgcpu.vbroadcast(w,src));
 
-
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static BitVector256<T> init<T>(W256 w, T src)
             where T : unmanaged

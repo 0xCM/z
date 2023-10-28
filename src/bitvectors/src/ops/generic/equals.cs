@@ -2,18 +2,17 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    partial class BitVectors
-    {
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static bit equals<T>(in BitVector128<T> x, in BitVector128<T> y)
-            where T : unmanaged
-                => vgcpu.vsame(x.State, y.State);
+namespace Z0;
 
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static bit equals<T>(in BitVector256<T> x, in BitVector256<T> y)
-            where T : unmanaged
-                => vgcpu.vsame(x.State, y.State);
-    }
+partial class BitVectors
+{
+    [MethodImpl(Inline), Op, Closures(Closure)]
+    public static bit equals<T>(BitVector128<T> x, BitVector128<T> y)
+        where T : unmanaged
+            => vgcpu.vsame(x.State, y.State);
+
+    [MethodImpl(Inline), Op, Closures(Closure)]
+    public static bit equals<T>(BitVector256<T> x, BitVector256<T> y)
+        where T : unmanaged
+            => vgcpu.vsame(x.State, y.State);
 }

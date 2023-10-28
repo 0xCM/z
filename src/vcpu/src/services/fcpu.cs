@@ -2171,7 +2171,47 @@ public unsafe class fcpu
     [MethodImpl(Inline), Op]
     public static Vector256<double> vlane(Vector128<double> src, Vector256<double> dst, N1 index)
         => InsertVector128(dst, src, 1);
-        
+
+    /// <summary>
+    /// _m128 _mm256_extractf128_ps (__m256 a, const int imm8)VEXTRACTF128 xmm/m128, ymm, imm8
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vlo(Vector256<float> src)
+        => ExtractVector128(src, 0);
+
+    /// <summary>
+    /// __m128d _mm256_extractf128_pd (__m256d a, const int imm8)VEXTRACTF128 xmm/m128, ymm, imm8
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vlo(Vector256<double> src)
+        => ExtractVector128(src, 0);
+
+    /// <summary>
+    /// _mm256_insertf128_ps: Overwrites a 128-bit lane in the target with the content of the source vector
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="dst">The target vector</param>
+    /// <param name="index">Identifies the lane the target to overwrite, either 0 or 1 respectively
+    /// identifing low or hi</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vinsert(Vector128<float> src, Vector256<float> dst, [Imm] LaneIndex index)
+        => InsertVector128(dst, src, (byte)index);
+
+    /// <summary>
+    /// _mm256_insertf128_pd: Overwrites a 128-bit lane in the target with the content of the source vector
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="dst">The target vector</param>
+    /// <param name="index">Identifies the lane in the target to overwrite, either 0 or 1 respectively
+    /// identifing low or hi</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vinsert(Vector128<double> src, Vector256<double> dst, [Imm] LaneIndex index)
+        => InsertVector128(dst, src, (byte)index);
+
+
+
     static Vector256<int> MRev256f32
     {
         [MethodImpl(Inline), Op]

@@ -207,12 +207,84 @@ partial class vcpu
     public static unsafe void vstore(Vector256<double> src, ref double dst)
         => Store(refptr(ref dst),src);
 
+    /// <summary>
+    /// void _mm512_storeu_epi8 (__m512i * mem_addr, __m512i a)
+    /// VMOVDQU8 m512 {k1}{z}, zmm1
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="dst"></param>
     [MethodImpl(Inline), Store]
     public static unsafe void vstore(Vector512<byte> src, ref byte dst)
         => Store(refptr(ref dst),src);
 
+    /// <summary>
+    /// void _mm512_storeu_epi8 (__m512i * mem_addr, __m512i a)
+    /// VMOVDQU8 m512 {k1}{z}, zmm1
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="dst"></param>
     [MethodImpl(Inline), Store]
     public static unsafe void vstore(Vector512<sbyte> src, ref sbyte dst)
+        => Store(refptr(ref dst),src);
+
+    /// <summary>
+    /// void _mm512_storeu_epi16 (__m512i * mem_addr, __m512i a)
+    /// VMOVDQU16 m512 {k1}{z}, zmm1
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="dst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<short> src, ref short dst)
+        => Store(refptr(ref dst),src);
+
+    /// <summary>
+    /// void _mm512_storeu_epi16 (__m512i * mem_addr, __m512i a)
+    /// VMOVDQU16 m512 {k1}{z}, zmm1
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="dst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<ushort> src, ref ushort dst)
+        => Store(refptr(ref dst),src);
+
+    /// <summary>
+    /// void _mm512_storeu_epi32 (__m512i * mem_addr, __m512i a)
+    /// VMOVDQU32 m512 {k1}{z}, zmm1
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="dst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<uint> src, ref uint dst)
+        => Store(refptr(ref dst),src);
+
+    /// <summary>
+    /// void _mm512_storeu_epi32 (__m512i * mem_addr, __m512i a)
+    /// VMOVDQU32 m512 {k1}{z}, zmm1
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="dst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<int> src, ref int dst)
+        => Store(refptr(ref dst),src);
+
+    /// <summary>
+    /// void _mm512_storeu_epi64 (__m512i * mem_addr, __m512i a)
+    /// VMOVDQU64 m512 {k1}{z}, zmm1
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="dst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<long> src, ref long dst)
+        => Store(refptr(ref dst),src);
+
+    /// <summary>
+    /// void _mm512_storeu_epi64 (__m512i * mem_addr, __m512i a)
+    /// VMOVDQU64 m512 {k1}{z}, zmm1
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="dst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<ulong> src, ref ulong dst)
         => Store(refptr(ref dst),src);
 
     /// <summary>

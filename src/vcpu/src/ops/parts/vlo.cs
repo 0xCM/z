@@ -98,6 +98,87 @@ partial class vcpu
         => ExtractVector128(src, 0);
 
     /// <summary>
+    /// __m256i _mm512_extracti256_si512 (__m512i a, const int imm8)
+    /// VEXTRACTI64x4 ymm1/m256 {k1}{z}, zmm2, imm8
+    /// </summary>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector256<byte> vlo(Vector512<byte> src)
+        => ExtractVector256(src, 0);
+
+    /// <summary>
+    /// __m256i _mm512_extracti256_si512 (__m512i a, const int imm8)
+    /// VEXTRACTI64x4 ymm1/m256 {k1}{z}, zmm2, imm8
+    /// </summary>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector256<sbyte> vlo(Vector512<sbyte> src)
+        => ExtractVector256(src, 0);
+
+    /// <summary>
+    /// __m256i _mm512_extracti256_si512 (__m512i a, const int imm8)
+    /// VEXTRACTI64x4 ymm1/m256 {k1}{z}, zmm2, imm8
+    /// </summary>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector256<short> vlo(Vector512<short> src)
+        => ExtractVector256(src, 0);
+
+    /// <summary>
+    /// __m256i _mm512_extracti256_si512 (__m512i a, const int imm8)
+    /// VEXTRACTI64x4 ymm1/m256 {k1}{z}, zmm2, imm8
+    /// </summary>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector256<ushort> vlo(Vector512<ushort> src)
+        => ExtractVector256(src, 0);
+
+    /// <summary>
+    /// __m256i _mm512_extracti32x8_epi32 (__m512i a, const int imm8)
+    /// VEXTRACTI32x8 ymm1/m256 {k1}{z}, zmm2, imm8
+    /// </summary>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector256<int> vlo(Vector512<int> src)
+        => ExtractVector256(src, 0);
+
+    /// <summary>
+    /// __m256i _mm512_extracti32x8_epi32 (__m512i a, const int imm8)
+    /// VEXTRACTI32x8 ymm1/m256 {k1}{z}, zmm2, imm8
+    /// </summary>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector256<uint> vlo(Vector512<uint> src)
+        => ExtractVector256(src, 0);
+
+    /// <summary>
+    /// __m256i _mm512_extracti64x4_epi64 (__m512i a, const int imm8)
+    /// VEXTRACTI64x4 ymm1/m256 {k1}{z}, zmm2, imm8
+    /// </summary>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector256<long> vlo(Vector512<long> src)
+        => ExtractVector256(src, 0);
+
+    /// <summary>
+    /// __m256i _mm512_extracti64x4_epi64 (__m512i a, const int imm8)
+    /// VEXTRACTI64x4 ymm1/m256 {k1}{z}, zmm2, imm8
+    /// </summary>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector256<ulong> vlo(Vector512<ulong> src)
+        => ExtractVector256(src, 0);
+
+
+    /// <summary>
     /// Extracts the lower 128-bit lane from the source vector to scalar targets
     /// </summary>
     /// <param name="src">The source vector</param>

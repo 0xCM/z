@@ -321,4 +321,100 @@ partial class vcpu
     [MethodImpl(Inline), Op]
     public static Vector256<ulong> vblendv(Vector256<ulong> x, Vector256<ulong> y, Vector256<byte> spec)
         => BlendVariable(x, y, v64u(spec));
+
+    /// <summary>
+    /// __m512i _mm512_blendv_epu8 (__m512i a, __m512i b, __m512i mask)
+    /// VPBLENDMB zmm1 {k1}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="spec"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<byte> vblendv(Vector512<byte> x, Vector512<byte> y, Vector512<byte> spec)
+        => BlendVariable(x, y, spec);
+
+    /// <summary>
+    /// __m512i _mm512_blendv_epi8 (__m512i a, __m512i b, __m512i mask)
+    /// VPBLENDMB zmm1 {k1}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="spec"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<sbyte> vblendv(Vector512<sbyte> x, Vector512<sbyte> y, Vector512<sbyte> spec)
+        => BlendVariable(x, y, spec);
+
+    /// <summary>
+    /// __m512i _mm512_blendv_epi16 (__m512i a, __m512i b, __m512i mask)
+    /// VPBLENDMW zmm1 {k1}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="spec"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<short> vblendv(Vector512<short> x, Vector512<short> y, Vector512<short> spec)
+        => BlendVariable(x, y, spec);
+
+    /// <summary>
+    /// __m512i _mm512_blendv_epu16 (__m512i a, __m512i b, __m512i mask)
+    /// VPBLENDMW zmm1 {k1}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="spec"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<ushort> vblendv(Vector512<ushort> x, Vector512<ushort> y, Vector512<ushort> spec)
+        => BlendVariable(x, y, spec);
+
+    /// <summary>
+    /// __m512i _mm512_blendv_epu32 (__m512i a, __m512i b, __m512i mask)
+    /// VPBLENDMD zmm1 {k1}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="spec"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<uint> vblendv(Vector512<uint> x, Vector512<uint> y, Vector512<uint> spec)
+        => BlendVariable(x, y, spec);
+
+    /// <summary>
+    /// __m512i _mm512_blendv_epi32 (__m512i a, __m512i b, __m512i mask)
+    /// VPBLENDMD zmm1 {k1}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="spec"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<int> vblendv(Vector512<int> x, Vector512<int> y, Vector512<int> spec)
+        => BlendVariable(x, y, spec);
+
+    /// <summary>
+    /// __m512i _mm512_blendv_epu64 (__m512i a, __m512i b, __m512i mask)
+    /// VPBLENDMQ zmm1 {k1}, zmm2, zmm3/m512/m64bcst
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="spec"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<long> vblendv(Vector512<long> x, Vector512<long> y, Vector512<long> spec)
+        => BlendVariable(x, y, spec);
+
+    /// <summary>
+    /// __m512i _mm512_blendv_epu64 (__m512i a, __m512i b, __m512i mask)
+    /// VPBLENDMQ zmm1 {k1}, zmm2, zmm3/m512/m64bcst
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="spec"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<ulong> vblendv(Vector512<ulong> x, Vector512<ulong> y, Vector512<ulong> spec)
+        => BlendVariable(x, y, spec);
 }

@@ -52,7 +52,7 @@ partial class vcpu
     /// <param name="even"></param>
     /// <param name="src"></param>
     [MethodImpl(Inline), Op]
-    public static Vector256<float> vdup32(N0 even, Vector256<float> src)
+    static Vector256<float> vdup32(N0 even, Vector256<float> src)
         => DuplicateEvenIndexed(src);
 
     /// <summary>
@@ -61,7 +61,7 @@ partial class vcpu
     /// <param name="odd"></param>
     /// <param name="src"></param>
     [MethodImpl(Inline), Op]
-    public static Vector256<float> vdup32(N1 odd, Vector256<float> src)
+    static Vector256<float> vdup32(N1 odd, Vector256<float> src)
         => DuplicateOddIndexed(src);
 
     /// <summary>
@@ -70,10 +70,10 @@ partial class vcpu
     /// <param name="even"></param>
     /// <param name="src"></param>
     [MethodImpl(Inline), Op]
-    public static Vector256<double> vdup64(N0 even, Vector256<double> src)
+    static Vector256<double> vdup64(N0 even, Vector256<double> src)
         => DuplicateEvenIndexed(src);
 
     [MethodImpl(Inline), Op]
-    public static Vector256<double> vdup64(N1 odd, Vector256<double> src)
+    static Vector256<double> vdup64(N1 odd, Vector256<double> src)
         => DuplicateEvenIndexed(ShiftRightLogical(src.AsUInt64(),64).AsDouble());
 }

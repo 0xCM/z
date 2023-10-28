@@ -65,7 +65,7 @@ namespace Z0
         /// <param name="src">The source vector</param>
         /// <param name="dst">The target block</param>
         /// <typeparam name="T">The vector cell type</typeparam>
-        [MethodImpl(Inline), Op, Closures(Closure)]
+        [MethodImpl(Inline), Op, Closures(Integers)]
         public static void vstore<T>(Vector128<T> src, Span<T> dst)
             where T : unmanaged
                 => vstore(src, ref first(dst));
@@ -81,16 +81,10 @@ namespace Z0
             where T : unmanaged
                 => vstore(src, ref first(dst));
 
-        // /// <summary>
-        // /// Stores vector content to the front of a span
-        // /// </summary>
-        // /// <param name="src">The source vector</param>
-        // /// <param name="dst">The target block</param>
-        // /// <typeparam name="T">The vector cell type</typeparam>
-        // [MethodImpl(Inline), Op, Closures(Closure)]
-        // public static void vstore<T>(Vector512<T> src, Span<T> dst)
-        //     where T : unmanaged
-        //         => vstore(src, ref first(dst));
+        [MethodImpl(Inline), Op, Closures(Integers)]
+        public static void vstore<T>(Vector512<T> src, Span<T> dst)
+            where T : unmanaged
+                => vstore_u(src,dst);
 
         /// <summary>
         /// Stores vector content to a span
@@ -115,18 +109,6 @@ namespace Z0
         public static void vstore<T>(Vector256<T> src, Span<T> dst, int offset)
             where T : unmanaged
                 => vstore(src, ref first(dst), offset);
-
-        // /// <summary>
-        // /// Stores vector content to a span
-        // /// </summary>
-        // /// <param name="src">The source vector</param>
-        // /// <param name="dst">The target block</param>
-        // /// <param name="offset">The target offset at which storage should begin</param>
-        // /// <typeparam name="T">The vector cell type</typeparam>
-        // [MethodImpl(Inline), Op, Closures(Closure)]
-        // public static void vstore<T>(Vector512<T> src, Span<T> dst, int offset)
-        //     where T : unmanaged
-        //         => vstore(src, ref first(dst), offset);
 
         [MethodImpl(Inline), Op, Closures(AllNumeric)]
         public static void vstore<T>(Vector128<T> src, ref T dst)
@@ -315,5 +297,38 @@ namespace Z0
             else
                 throw no<T>();
         }
+
+        static void vstore_u<T>(Vector512<T> src, Span<T> dst)
+            where T : unmanaged
+        {
+            if(typeof(T) == typeof(byte))
+                vcpu.vstore(v8u(src), ref u8(first(dst)));
+            else if(typeof(T) == typeof(ushort))
+                vcpu.vstore(v16u(src), ref u16(first(dst)));
+            else if(typeof(T) == typeof(uint))
+                vcpu.vstore(v32u(src),  ref u32(first(dst)));
+            else if(typeof(T) == typeof(ulong))
+                vcpu.vstore(v64u(src),  ref u64(first(dst)));
+            else
+                 vstore_i(src, dst);
+            
+        }
+
+        static void vstore_i<T>(Vector512<T> src, Span<T> dst)
+            where T : unmanaged
+        {
+            if(typeof(T) == typeof(byte))
+                vcpu.vstore(v8i(src), ref i8(first(dst)));
+            else if(typeof(T) == typeof(ushort))
+                vcpu.vstore(v16i(src), ref i16(first(dst)));
+            else if(typeof(T) == typeof(uint))
+                vcpu.vstore(v32i(src),  ref i32(first(dst)));
+            else if(typeof(T) == typeof(ulong))
+                vcpu.vstore(v64i(src),  ref i64(first(dst)));
+            else
+                throw no<T>();            
+        }
+
+
     }
 }

@@ -248,6 +248,85 @@ partial class vcpu
     /// <param name="x">The left operand</param>
     /// <param name="y">The right operand</param>
     [MethodImpl(Inline), Xor]
+    public static Vector512<byte> vxor(Vector512<byte> x, Vector512<byte> y)
+        => Xor(x, y);
+
+    /// <summary>
+    /// Computes the bitwise XOR between operands
+    /// __m512i _mm512_xor_si512 (__m512i a, __m512i b)
+    /// VPXORD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Xor]
     public static Vector512<sbyte> vxor(Vector512<sbyte> x, Vector512<sbyte> y)
         => Xor(x, y);
+
+    /// <summary>
+    /// Computes the bitwise XOR between operands
+    /// __m512i _mm512_xor_si512 (__m512i a, __m512i b)
+    /// VPXORD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Xor]
+    public static Vector512<short> vxor(Vector512<short> x, Vector512<short> y)
+        => Xor(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_xor_si512 (__m512i a, __m512i b)
+    /// VPXORD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// Computes the bitwise XOR between operands
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Xor]
+    public static Vector512<ushort> vxor(Vector512<ushort> x, Vector512<ushort> y)
+        => Xor(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_xor_epi32 (__m512i a, __m512i b)
+    /// VPXORD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// Computes the bitwise XOR between operands
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Xor]
+    public static Vector512<int> vxor(Vector512<int> x, Vector512<int> y)
+        => Xor(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_xor_epi32 (__m512i a, __m512i b)
+    /// VPXORD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// Computes the bitwise XOR between operands
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Xor]
+    public static Vector512<uint> vxor(Vector512<uint> x, Vector512<uint> y)
+        => Xor(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_xor_epi64 (__m512i a, __m512i b)
+    /// VPXORQ zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
+    /// Computes the bitwise XOR between operands
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Xor]
+    public static Vector512<long> vxor(Vector512<long> x, Vector512<long> y)
+        => Xor(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_xor_epi64 (__m512i a, __m512i b)
+    /// VPXORQ zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
+    /// Computes the bitwise XOR between operands
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Xor]
+    public static Vector512<ulong> vxor(Vector512<ulong> x, Vector512<ulong> y)
+        => Xor(x, y);
+
+
 }

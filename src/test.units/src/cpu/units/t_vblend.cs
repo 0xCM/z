@@ -26,9 +26,9 @@ public class t_vblend : t_inx<t_vblend>
     public void vblend_256x8u_outline()
     {
         var w = n256;
-        var a = gcpu.vinc(w, z8);
-        var b = gcpu.vdec(w, Max8u);
-        var spec = v8u(cpu.vbroadcast(w, (ushort)((ushort)Pow2.T07 << 8)));
+        var a = gcpu.vinc(w, z16);
+        var b = gcpu.vdec(w, Max16u);
+        var spec = cpu.vbroadcast(w, (ushort)((ushort)Pow2.T07 << 8));
         var c = gcpu.vblend(a,b,spec);
     }
 
@@ -36,7 +36,7 @@ public class t_vblend : t_inx<t_vblend>
     {
         var w = n128;
         var alt = (uint)M.Msb16x8x1 << 16;
-        cpu.vcover(v16u(cpu.vbroadcast(w,alt)), out Vector128<byte> spec);
+        vcover(cpu.vbroadcast(w,alt), out Vector128<ushort> spec);
         var a = gcpu.vinc(w,z16);
         var b = gcpu.vdec(w,Max16u);
         var c = gcpu.vblend(a,b,spec);
@@ -47,7 +47,7 @@ public class t_vblend : t_inx<t_vblend>
         var w = n256;
         var altOdd = (uint)M.Msb16x8x1 << 16;
         var altEven = (uint)M.Msb16x8x1;
-        cpu.vcover(v16u(gcpu.vbroadcast<uint>(w, altOdd)), out Vector256<byte> spec);
+        vcover(gcpu.vbroadcast(w, altOdd), out Vector256<ushort> spec);
         var a = gcpu.vinc(w,z16);
         var b = gcpu.vdec(w,Max16u);
         var c = gcpu.vblend(a,b,spec);
@@ -96,8 +96,8 @@ public class t_vblend : t_inx<t_vblend>
 
         Claim.veq(x, cpu.vblend(x,y, Blend8x16.LLLLLLLL));
         Claim.veq(y, cpu.vblend(x,y, Blend8x16.RRRRRRRR));
-        Claim.veq(cpu.vparts(n, 0,2,4,6,9,B,D,F), cpu.vblend(x,y, Blend8x16.LLLLRRRR));
-        Claim.veq(cpu.vparts(n, 1,3,5,7,8,A,C,E), cpu.vblend(x,y, Blend8x16.RRRRLLLL));
+        Claim.veq(vparts(n, 0,2,4,6,9,B,D,F), cpu.vblend(x,y, Blend8x16.LLLLRRRR));
+        Claim.veq(vparts(n, 1,3,5,7,8,A,C,E), cpu.vblend(x,y, Blend8x16.RRRRLLLL));
 
     }
 
@@ -120,10 +120,10 @@ public class t_vblend : t_inx<t_vblend>
         var w = w64;
         var left =  cpu.vparts(0,1);
         var right = cpu.vparts(4,5);
-        Claim.veq(cpu.vparts(0, 5), cpu.vblend2x64(left, right, Blend2x64.LR));
-        Claim.veq(cpu.vparts(4, 1), cpu.vblend2x64(left, right, Blend2x64.RL));
-        Claim.veq(cpu.vparts(0, 1), cpu.vblend2x64(left, right, Blend2x64.LL));
-        Claim.veq(cpu.vparts(4, 5), cpu.vblend2x64(left, right, Blend2x64.RR));
+        Claim.veq(vparts(0, 5), vblend2x64(left, right, Blend2x64.LR));
+        Claim.veq(vparts(4, 1), vblend2x64(left, right, Blend2x64.RL));
+        Claim.veq(vparts(0, 1), vblend2x64(left, right, Blend2x64.LL));
+        Claim.veq(vparts(4, 5), vblend2x64(left, right, Blend2x64.RR));
     }
 
     public void vblend_4x32_basecases()

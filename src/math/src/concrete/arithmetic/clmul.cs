@@ -4,8 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using Pclmulqdq = System.Runtime.Intrinsics.X86.Pclmulqdq;
 
-partial class vcpu 
+partial class math
 {
     /// <summary>
     /// Computes the caryless 16-bit product of two 8-bit operands
@@ -35,7 +36,6 @@ partial class vcpu
         => clmul((ulong)a, (ulong)b).Left;
 
     /// <summary>
-    /// __m128i _mm_clmulepi64_si128 (__m128i a, __m128i b, const int imm8) PCLMULQDQ xmm, xmm/m128, imm8
     /// Computes the caryless 128-bit product of two 64-bit operands
     /// </summary>
     /// <param name="a">The left operand</param>
@@ -43,15 +43,11 @@ partial class vcpu
     [MethodImpl(Inline), ClMul]
     public static ConstPair<ulong> clmul(ulong a, ulong b)
     {
-        var m0 = vscalar(w128, a);
-        var m1 = vscalar(w128, b);
-        var result = CarrylessMultiply(m0,m1,0x00);
-        return (vcell(result,0), vcell(result,1));
+        var m0 = Vector128.CreateScalarUnsafe(a);
+        var m1 = Vector128.CreateScalarUnsafe(b);
+        var result = Pclmulqdq.CarrylessMultiply(m0,m1,0x00);
+        return (result.GetElement(0), result.GetElement(1));
     }
-
-    [MethodImpl(Inline), ClMul]
-    public static Vector128<ulong> clmul2(ulong a, ulong b)
-        => vclmul(vparts(w128, a, b));
 
     /// <summary>
     /// Computes the carryless product of the operands reduced by a specified polynomial
@@ -110,35 +106,9 @@ partial class vcpu
     [MethodImpl(Inline), ClMul]
     public static ulong clmul64(ulong x, ulong y)
     {
-        var u = vscalar(w128, x);
-        var v = vscalar(w128, y);
-        var z = CarrylessMultiply(u, v, 0);
-        return vcell(z,0);
+        var u = Vector128.CreateScalarUnsafe(x);
+        var v = Vector128.CreateScalarUnsafe(y);
+        var z = Pclmulqdq.CarrylessMultiply(u, v, 0);
+        return z.GetElement(0);
     }
-}
-
-/// <summary>
-/// Defines a mask that specifies the left/right vector components from which a carry-less product will be formed
-/// </summary>
-public enum ClMulKind : byte
-{
-    /// <summary>
-    /// For a product P = XY, multiply the lo(X) and lo(Y)
-    /// </summary>
-    Lo = 0x00,
-
-    /// <summary>
-    /// For a product P = XY, multiply the lo(X) and hi(Y)
-    /// </summary>
-    LoHi = 0x01,
-
-    /// <summary>
-    /// For a product P = XY, multiply the hi(X) and lo(Y)
-    /// </summary>
-    HiLo = 0x10,
-
-    /// <summary>
-    /// For a product P = XY, multiply the hi(X) and hi(Y)
-    /// </summary>
-    Hi = 0x11,
 }
