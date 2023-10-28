@@ -22,7 +22,7 @@ namespace Z0
         {
             var perm = Permute.identity(n);
             var lengths = gcalc.stream(m,n);
-            core.iter(lengths, i => {
+            sys.iter(lengths, i => {
                 var p = Permute.identity(i);
                 var cycle = p.Cycle(default(T));
                 Claim.eq(cycle.Length, 1);

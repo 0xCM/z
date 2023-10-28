@@ -178,6 +178,13 @@ partial class vcpu
     public static Vector512<sbyte> vand(Vector512<sbyte> x, Vector512<sbyte> y)
         => And(x, y);
 
+    /// <summary>
+    /// __m512i _mm512_and_si512 (__m512i a, __m512i b)
+    /// VPANDD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), And]
     public static Vector512<ushort> vand(Vector512<ushort> x, Vector512<ushort> y)
         => And(x, y);
@@ -186,6 +193,13 @@ partial class vcpu
     public static Vector512<int> vand(Vector512<int> x, Vector512<int> y)
         => And(x, y);
 
+    /// <summary>
+    /// __m512i _mm512_and_epi32 (__m512i a, __m512i b)
+    /// VPANDD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), And]
     public static Vector512<uint> vand(Vector512<uint> x, Vector512<uint> y)
         => And(x, y);

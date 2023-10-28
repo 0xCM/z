@@ -16,7 +16,7 @@ partial struct vpack
     /// <param name="src">The input component source</param>
     /// <param name="n">The source component count</param>
     /// <param name="w">The target component width</param>
-    [MethodImpl(Inline), Op(inflate)]
+    [MethodImpl(Inline), Op]
     public static unsafe Vector256<ushort> vinflate16x8u(in byte src)
         => ConvertToVector256Int16(gptr(src)).AsUInt16();
 }

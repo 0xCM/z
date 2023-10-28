@@ -50,18 +50,6 @@ namespace Z0
             else if(typeof(T) == typeof(long))
                 return generic<T>(vcpu.vconcat(v64i(lo), v64i(hi)));
             else
-                return vconcat_f(lo,hi);
-        }
-
-        [MethodImpl(Inline)]
-        static Vector256<T> vconcat_f<T>(Vector128<T> lo, Vector128<T> hi)
-            where T : unmanaged
-        {
-            if(typeof(T) == typeof(float))
-                return generic<T>(vcpu.vconcat(v32f(lo), v32f(hi)));
-            else if(typeof(T) == typeof(double))
-                return generic<T>(vcpu.vconcat(v64f(lo), v64f(hi)));
-            else
                 throw no<T>();
         }
     }

@@ -11,7 +11,7 @@ partial struct vpack
     /// </summary>
     /// <param name="src">The source vector</param>
     /// <param name="dst">The target vector</param>
-    [MethodImpl(Inline), Op(inflate)]
+    [MethodImpl(Inline), Op]
     public static Vector128<int> vinflate4x8i(Vector128<sbyte> src)
         => ConvertToVector128Int32(src);
 }

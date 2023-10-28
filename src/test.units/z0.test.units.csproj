@@ -5,7 +5,6 @@
     <ProjectReference Include="$(Circuits)" />
     <ProjectReference Include="$(Polyrand)" />
     <ProjectReference Include="$(Wf)" />
-    <ProjectReference Include="$(ZLib)" />
     <ProjectReference Include="$(Native)" />
   </ItemGroup>
   

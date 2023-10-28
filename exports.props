@@ -41,7 +41,6 @@
 
    <Import Project="$(MsBuildThisFileDirectory)src/intel.svc/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/lib/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/linq/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/math/exports.props"/>

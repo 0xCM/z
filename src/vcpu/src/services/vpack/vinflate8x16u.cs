@@ -17,7 +17,7 @@ partial struct vpack
     /// <param name="src">The blocked memory source</param>
     /// <param name="lo">The lower target</param>
     /// <param name="hi">The upper target</param>
-    [MethodImpl(Inline), Op(inflate)]
+    [MethodImpl(Inline), Op]
     public static unsafe void vinflate8x16u(in ushort src, out Vector256<ulong> lo, out Vector256<ulong> hi)
     {
         lo = v64u(ConvertToVector256Int64(gptr(src)));
@@ -30,7 +30,7 @@ partial struct vpack
     /// </summary>
     /// <param name="src">The source vector</param>
     /// <param name="dst">The target vector</param>
-    [MethodImpl(Inline), Op(inflate)]
+    [MethodImpl(Inline), Op]
     public static Vector256<int> vinflate8x16u(Vector128<ushort> src, out Vector256<int> dst)
         => dst = ConvertToVector256Int32(src);
 
@@ -42,7 +42,7 @@ partial struct vpack
     /// <param name="src">The input component source</param>
     /// <param name="n">The source component count</param>
     /// <param name="w">The target component width</param>
-    [MethodImpl(Inline), Op(inflate)]
+    [MethodImpl(Inline), Op]
     public static unsafe Vector256<uint> vinflate8x16u(in ushort src, out Vector256<uint> dst)
         => dst = v32u(ConvertToVector256Int32(gptr(src)));
 
@@ -54,7 +54,7 @@ partial struct vpack
     /// <param name="dst">The target vector</param>
     /// <param name="w">The target vector width</param>
     /// <param name="t">A target component type representative</param>
-    [MethodImpl(Inline), Op(inflate)]
+    [MethodImpl(Inline), Op]
     public static Vector256<uint> vinflate8x16u(Vector128<ushort> src, out Vector256<uint> dst)
         => dst = v32u(ConvertToVector256Int32(src));
 }

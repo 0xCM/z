@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <ZLib>$(MsBuildThisFileDirectory)z0.lib.csproj</ZLib>
-  </PropertyGroup>
-</Project>

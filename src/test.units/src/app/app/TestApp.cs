@@ -25,5 +25,23 @@ namespace Z0
 
         ConcurrentQueue<BenchmarkRecord> BenchmarkQueue {get;}
             = new ConcurrentQueue<BenchmarkRecord>();
+
+        static TestApp()
+        {
+            App = new();
+            UnitHosts = (from t in App.TargetComponent.Types().Realize<IUnitTest>()
+                where t.IsConcrete() && t.Untagged<IgnoreAttribute>()
+                orderby t.Name
+                select t).Array();
+            UnitIndex = UnitHosts.Map(x => (x.Name,x)).ToDictionary();
+            App.InjectShell(ApiServer.runtime());
+            App.SetMode(InDiagnosticMode);
+        }
+
+        static readonly A App;
+
+        static readonly Type[] UnitHosts;
+
+        static readonly Dictionary<string,Type> UnitIndex;
     }
 }

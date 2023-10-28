@@ -97,7 +97,7 @@ namespace Z0
         /// <typeparam name="T">The output value type</typeparam>
         [MethodImpl(Inline), Keyword, Closures(AllNumeric)]
         public static ref T @as<T>(in ushort src)
-            => ref As<ushort,T>(ref AsRef(src));
+            => ref As<ushort,T>(ref AsRef(in src));
 
         /// <summary>
         /// Presents a <see cref='int'/> as a <typeparamref name='T'/> cell
@@ -106,7 +106,7 @@ namespace Z0
         /// <typeparam name="T">The output value type</typeparam>
         [MethodImpl(Inline), Keyword, Closures(AllNumeric)]
         public static ref T @as<T>(in int src)
-            => ref As<int,T>(ref AsRef(src));
+            => ref As<int,T>(ref AsRef(in src));
 
         /// <summary>
         /// Presents a <see cref='uint'/> as a <typeparamref name='T'/> cell
@@ -133,7 +133,7 @@ namespace Z0
         /// <typeparam name="T">The output value type</typeparam>
         [MethodImpl(Inline), Keyword, Closures(AllNumeric)]
         public static ref T @as<T>(in ulong src)
-            => ref As<ulong,T>(ref AsRef(src));
+            => ref As<ulong,T>(ref AsRef(in src));
 
         /// <summary>
         /// Presents a <see cref='float'/> as a <typeparamref name='T'/> cell
@@ -142,7 +142,7 @@ namespace Z0
         /// <typeparam name="T">The output value type</typeparam>
         [MethodImpl(Inline), Keyword, Closures(AllNumeric)]
         public static ref T @as<T>(in float src)
-            => ref As<float,T>(ref AsRef(src));
+            => ref As<float,T>(ref AsRef(in src));
 
         /// <summary>
         /// Presents a <see cref='double'/> as a <typeparamref name='T'/> cell
@@ -151,7 +151,7 @@ namespace Z0
         /// <typeparam name="T">The output value type</typeparam>
         [MethodImpl(Inline), Keyword, Closures(AllNumeric)]
         public static ref T @as<T>(in double src)
-            => ref As<double,T>(ref AsRef(src));
+            => ref As<double,T>(ref AsRef(in src));
 
         /// <summary>
         /// Presents a <see cref='decimal'/> as a <typeparamref name='T'/> cell

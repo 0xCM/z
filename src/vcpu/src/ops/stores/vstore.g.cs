@@ -148,14 +148,6 @@ namespace Z0
             where T : unmanaged
                 => vstore(src, ref Cells.to<T>(dst));
 
-        // [MethodImpl(Inline), Op, Closures(AllNumeric)]
-        // public static void vstore<T>(Vector512<T> src, ref T dst, int offset = 0)
-        //     where T : unmanaged
-        // {
-        //     vstore(src.Lo, ref dst, offset);
-        //     vstore(src.Hi, ref dst, offset + vcount<T>(w256));
-        // }
-
         [MethodImpl(Inline)]
         static unsafe void vstore_u<T>(Vector128<T> src, ref T dst)
             where T : unmanaged

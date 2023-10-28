@@ -197,5 +197,4 @@ partial class vcpu
     [MethodImpl(Inline), Not]
     public static Vector512<ulong> vnot(Vector512<ulong> a)
         => Xor(a, CompareEqual(a, a));
-
 }

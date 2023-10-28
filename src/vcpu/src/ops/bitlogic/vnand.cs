@@ -149,4 +149,77 @@ partial class vcpu
     [MethodImpl(Inline), Nand]
     public static Vector256<ulong> vnand(Vector256<ulong> x, Vector256<ulong> y)
         => vnot(And(x, y));
+
+    /// <summary>
+    /// Computes ~(x & y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Nand]
+    public static Vector512<byte> vnand(Vector512<byte> x, Vector512<byte> y)
+        => vnot(And(x, y));
+
+    /// <summary>
+    /// Computes ~(x & y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Nand]
+    public static Vector512<short> vnand(Vector512<short> x, Vector512<short> y)
+        => vnot(And(x, y));
+
+    /// <summary>
+    /// Computes ~(x & y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Nand]
+    public static Vector512<sbyte> vnand(Vector512<sbyte> x, Vector512<sbyte> y)
+        => vnot(And(x, y));
+
+    /// <summary>
+    /// Computes ~(x & y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Nand]
+    public static Vector512<ushort> vnand(Vector512<ushort> x, Vector512<ushort> y)
+        => vnot(And(x, y));
+
+    /// <summary>
+    /// Computes ~(x & y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Nand]
+    public static Vector512<int> vnand(Vector512<int> x, Vector512<int> y)
+        => vnot(And(x, y));
+
+    /// <summary>
+    /// Computes ~(x & y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Nand]
+    public static Vector512<uint> vnand(Vector512<uint> x, Vector512<uint> y)
+        => vnot(And(x, y));
+
+    /// <summary>
+    /// Computes ~(x & y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Nand]
+    public static Vector512<long> vnand(Vector512<long> x, Vector512<long> y)
+        => vnot(And(x, y));
+
+    /// <summary>
+    /// Computes ~(x & y) for vectors x and y
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Nand]
+    public static Vector512<ulong> vnand(Vector512<ulong> x, Vector512<ulong> y)
+        => vnot(And(x, y));
+
 }

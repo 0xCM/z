@@ -164,5 +164,75 @@ partial class vcpu
     public static Vector256<ulong> vcnonimpl(Vector256<ulong> x, Vector256<ulong> y)
         => AndNot(y, x);
 
-}
+    /// <summary>
+    /// Computes the converse nonimplication z := x & (~y) for operands x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), CNonImpl]
+    public static Vector512<sbyte> vcnonimpl(Vector512<sbyte> x, Vector512<sbyte> y)
+        => AndNot(y, x);
 
+    /// <summary>
+    /// Computes the converse nonimplication z := x & (~y) for operands x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), CNonImpl]
+    public static Vector512<byte> vcnonimpl(Vector512<byte> x, Vector512<byte> y)
+        => AndNot(y, x);
+
+    /// <summary>
+    /// Computes the converse nonimplication z := x & (~y) for operands x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), CNonImpl]
+    public static Vector512<short> vcnonimpl(Vector512<short> x, Vector512<short> y)
+        => AndNot(y, x);
+
+    /// <summary>
+    /// Computes the converse nonimplication z := x & (~y) for operands x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), CNonImpl]
+    public static Vector512<ushort> vcnonimpl(Vector512<ushort> x, Vector512<ushort> y)
+        => AndNot(y, x);
+
+    /// <summary>
+    /// Computes the converse nonimplication z := x & (~y) for operands x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), CNonImpl]
+    public static Vector512<int> vcnonimpl(Vector512<int> x, Vector512<int> y)
+        => AndNot(y, x);
+
+    /// <summary>
+    /// Computes the converse nonimplication z := x & (~y) for operands x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), CNonImpl]
+    public static Vector512<uint> vcnonimpl(Vector512<uint> x, Vector512<uint> y)
+        => AndNot(y, x);
+
+    /// <summary>
+    /// Computes the converse nonimplication z := x & (~y) for operands x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), CNonImpl]
+    public static Vector512<long> vcnonimpl(Vector512<long> x, Vector512<long> y)
+        => AndNot(y, x);
+
+    /// <summary>
+    /// Computes the converse nonimplication z := x & (~y) for operands x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), CNonImpl]
+    public static Vector512<ulong> vcnonimpl(Vector512<ulong> x, Vector512<ulong> y)
+        => AndNot(y, x);
+}

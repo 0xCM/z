@@ -218,7 +218,7 @@ namespace Z0.Logix
 
         public void check_ternary_ops()
         {
-            core.iter(VLogixOps.TernaryBitLogicKinds, check_ternary_ops);
+            sys.iter(VLogixOps.TernaryBitLogicKinds, check_ternary_ops);
             //core.iter(NumericLogixHost.TernaryLogicKinds, check_ternary_ops);
         }
 

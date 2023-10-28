@@ -1929,6 +1929,249 @@ public unsafe class fcpu
     public static Vector128<double> vhi(Vector256<double> src)
         => ExtractVector128(src, 1);
 
+    /// Creates a 256-bit vector by concatenating two 128-bit source vectors
+    /// </summary>
+    /// <param name="lo">The lower 128-bits of the target vector</param>
+    /// <param name="hi">The upper 128-bits of the target vector</param>
+    [MethodImpl(Inline), Concat]
+    public static Vector256<float> vconcat(Vector128<float> lo, Vector128<float> hi)
+        => Avx2.InsertVector128(Avx2.InsertVector128(default, lo, 0), hi, 1);
+
+    /// <summary>
+    /// Creates a 256-bit vector by concatenating two 128-bit source vectors
+    /// </summary>
+    /// <param name="lo">The lower 128-bits of the target vector</param>
+    /// <param name="hi">The upper 128-bits of the target vector</param>
+    [MethodImpl(Inline), Concat]
+    public static Vector256<double> vconcat(Vector128<double> lo, Vector128<double> hi)
+        => Avx2.InsertVector128(Avx2.InsertVector128(default, lo, 0), hi, 1);
+
+    /// <summary>
+    /// __m128 _mm_blendv_ps (__m128 a, __m128 b, __m128 mask) BLENDVPS xmm, xmm/m128,xmm0
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The blend specification</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vblendv(Vector128<float> x, Vector128<float> y, Vector128<float> spec)
+        => BlendVariable(x,y,spec);
+
+    /// <summary>
+    /// _m128d _mm_blendv_pd (__m128d a, __m128d b, __m128d mask) BLENDVPD xmm, xmm/m128, xmm0
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The blend specification</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vblendv(Vector128<double> x, Vector128<double> y, Vector128<double> spec)
+        => BlendVariable(x,y,spec);
+
+    /// <summary>
+    /// __m128 _mm_blendv_ps (__m128 a, __m128 b, __m128 mask) BLENDVPS xmm, xmm/m128,xmm0
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The blend specification</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vblend4x32(Vector128<float> x, Vector128<float> y, Vector128<float> spec)
+        =>  BlendVariable(x, y, spec);
+
+    /// <summary>
+    /// __m128d _mm_blendv_pd (__m128d a, __m128d b, __m128d mask) BLENDVPD xmm, xmm/m128,xmm0
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The blend specification</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vblend2x64(Vector128<double> x, Vector128<double> y, Vector128<double> spec)
+        =>  BlendVariable(x, y, spec);
+
+    /// <summary>
+    /// __m256 _mm256_blendv_ps (__m256 a, __m256 b, __m256 mask) VBLENDVPS ymm, ymm, ymm/m256, ymm
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The blend specification</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vblend8x32(Vector256<float> x, Vector256<float> y, Vector256<float> spec)
+        => BlendVariable(x, y, spec);
+
+    /// <summary>
+    /// __m256 _mm256_blendv_ps (__m256 a, __m256 b, __m256 mask) VBLENDVPS ymm, ymm, ymm/m256, ymm
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The blend specification</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vblend4x64(Vector256<double> x, Vector256<double> y, Vector256<double> spec)
+        => BlendVariable(x, y, spec);
+
+
+    /// <summary>
+    /// __m256 _mm256_blendv_ps (__m256 a, __m256 b, __m256 mask) VBLENDVPS ymm, ymm, ymm/m256, ymm
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The blend specification</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vblendv(Vector256<float> x, Vector256<float> y, Vector256<float> spec)
+        => BlendVariable(x,y,spec);
+
+    /// <summary>
+    /// __m256d _mm256_blendv_pd (__m256d a, __m256d b, __m256d mask) VBLENDVPD ymm, ymm,ymm/m256, ymm
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The blend specification</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vblendv(Vector256<double> x, Vector256<double> y, Vector256<double> spec)
+        => BlendVariable(x,y,spec);
+
+    /// <summary>
+    /// __m128d _mm_blend_pd (__m128d a, __m128d b, const int imm8) BLENDPD xmm, xmm/m128, imm8
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The blend specification</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vblend2x64(Vector128<double> x, Vector128<double> y, [Imm] Blend2x64 spec)
+        => Blend(x, y, (byte)spec);
+
+    /// <summary>
+    /// __m128 _mm_blend_ps (__m128 a, __m128 b, const int imm8) BLENDPS xmm, xmm/m128, imm8
+    /// Produces a new vector by assembling components from two source vectors as dermined by a mask
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The blend specification</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vblend(Vector128<float> x, Vector128<float> y, [Imm] byte spec)
+        => Blend(x, y, spec);
+
+    /// <summary>
+    /// __m128d _mm_blend_pd (__m128d a, __m128d b, const int imm8) BLENDPD xmm, xmm/m128, imm8
+    /// Produces a new vector by assembling components from two source vectors as dermined by a mask
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The blend specification</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vblend(Vector128<double> x, Vector128<double> y, [Imm] byte spec)
+        => Blend(x, y, spec);
+
+    /// <summary>
+    /// __m256 _mm256_blend_ps (__m256 a, __m256 b, const int imm8) VBLENDPS ymm, ymm, ymm/m256, imm8
+    /// Produces a new vector by assembling components from two source vectors as dermined by a mask
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The blend specification</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vblend(Vector256<float> x, Vector256<float> y, [Imm] byte spec)
+        => Blend(x, y, spec);
+
+    /// <summary>
+    /// __m256d _mm256_blend_pd (__m256d a, __m256d b, const int imm8) VBLENDPD ymm, ymm, ymm/m256, imm8
+    /// Produces a new vector by assembling components from two source vectors as dermined by a mask
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The blend specification</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vblend(Vector256<double> x, Vector256<double> y, [Imm] byte spec)
+        => Blend(x, y, spec);
+
+    /// <summary>
+    /// __m256d _mm256_blend_pd (__m256d a, __m256d b, const int imm8) VBLENDPD ymm, ymm, ymm/m256, imm8
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The blend specification</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vblend4x64(Vector256<double> x, Vector256<double> y, [Imm] Blend4x64 spec)
+        => Blend(x, y, (byte)spec);
+
+    /// <summary>
+    /// __m128d _mm_loaddup_pd (double const* mem_addr) MOVDDUP xmm, m64
+    /// </summary>
+    /// <param name="w">The width selector</param>
+    /// <param name="src">The data source</param>
+    [MethodImpl(Inline), Op]
+    public static unsafe Vector128<double> vdup64(in double src)
+        => LoadAndDuplicateToVector128(gptr(src));
+
+    /// <summary>
+    /// __m256 _mm256_moveldup_ps (__m256 a) VMOVSLDUP ymm, ymm/m256
+    /// </summary>
+    /// <param name="even"></param>
+    /// <param name="src"></param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vdup32(N0 even, Vector256<float> src)
+        => DuplicateEvenIndexed(src);
+
+    /// <summary>
+    /// __m256 _mm256_movehdup_ps (__m256 a) VMOVSHDUP ymm, ymm/m256
+    /// </summary>
+    /// <param name="odd"></param>
+    /// <param name="src"></param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vdup32(N1 odd, Vector256<float> src)
+        => DuplicateOddIndexed(src);
+
+    /// <summary>
+    /// __m256d _mm256_movedup_pd (__m256d a) VMOVDDUP ymm, ymm/m256
+    /// </summary>
+    /// <param name="even"></param>
+    /// <param name="src"></param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vdup64(N0 even, Vector256<double> src)
+        => DuplicateEvenIndexed(src);
+
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vdup64(N1 odd, Vector256<double> src)
+        => DuplicateEvenIndexed(ShiftRightLogical(src.AsUInt64(),64).AsDouble());
+
+    /// <summary>
+    /// _mm256_insertf128_ps: Overwrites a 128-bit lane in the target with the content of the source vector
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="dst">The target vector</param>
+    /// <param name="index">Identifies the lane the target to overwrite, either 0 or 1 respectively
+    /// identifying low or hi</param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<float> vlane(Vector128<float> src, Vector256<float> dst, [Imm] byte index)
+        => InsertVector128(dst, src, index);
+
+    /// <summary>
+    /// _mm256_insertf128_pd: Overwrites a 128-bit lane in the target with the content of the source vector
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="dst">The target vector</param>
+    /// <param name="index">Identifies the lane in the target to overwrite, either 0 or 1 respectively identifying low or hi </param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vlane(Vector128<double> src, Vector256<double> dst, [Imm] byte index)
+        => InsertVector128(dst, src, index);
+
+    /// <summary>
+    /// _mm256_insertf128_pd: Overwrites a 128-bit lane in the target with the content of the source vector
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="dst">The target vector</param>
+    /// <param name="index">Identifies the lane in the target to overwrite, either 0 or 1 respectively identifying low or hi </param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vlane(Vector128<double> src, Vector256<double> dst, N0 index)
+        => InsertVector128(dst, src, 0);
+
+    /// <summary>
+    /// _mm256_insertf128_pd: Overwrites a 128-bit lane in the target with the content of the source vector
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="dst">The target vector</param>
+    /// <param name="index">Identifies the lane in the target to overwrite, either 0 or 1 respectively identifying low or hi </param>
+    [MethodImpl(Inline), Op]
+    public static Vector256<double> vlane(Vector128<double> src, Vector256<double> dst, N1 index)
+        => InsertVector128(dst, src, 1);
+        
     static Vector256<int> MRev256f32
     {
         [MethodImpl(Inline), Op]

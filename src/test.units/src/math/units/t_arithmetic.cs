@@ -123,7 +123,7 @@ namespace Z0
         {
             var count = Random.Next(21u, 256u);
             Span<T> data = new T[count];
-            ref var src = ref core.first(data);
+            ref var src = ref sys.first(data);
             Partitions.increments(first, count, ref src);
 
             for(var i=0; i < count; i++)

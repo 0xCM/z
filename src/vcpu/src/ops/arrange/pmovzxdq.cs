@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static System.Runtime.Intrinsics.X86.Sse41;
-
 partial class vcpu
 {
     /// <summary>

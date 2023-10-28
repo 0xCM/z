@@ -14,6 +14,18 @@ using static vcpu;
 public readonly struct gfcpu
 {
     [MethodImpl(Inline)]
+    public static Vector256<T> vconcat<T>(Vector128<T> lo, Vector128<T> hi)
+        where T : unmanaged
+    {
+        if(typeof(T) == typeof(float))
+            return generic<T>(fcpu.vconcat(v32f(lo), v32f(hi)));
+        else if(typeof(T) == typeof(double))
+            return generic<T>(fcpu.vconcat(v64f(lo), v64f(hi)));
+        else
+            throw no<T>();
+    }
+
+    [MethodImpl(Inline)]
     public static Vector128<T> veq<T>(Vector128<T> x, Vector128<T> y)
         where T : unmanaged
     {

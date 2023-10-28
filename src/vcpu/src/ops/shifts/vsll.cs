@@ -174,6 +174,72 @@ partial class vcpu
         => ShiftLeftLogical(src, (byte)count);
 
     /// <summary>
+    ///  __m512i _mm512_slli_epi16 (__m512i a, int imm8)
+    /// VPSLLW zmm1 {k1}{z}, zmm2, imm8
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Sll]
+    public static Vector512<ushort> vsll(Vector512<ushort> src, [Imm] byte count)
+        => ShiftLeftLogical(src, count);
+
+    /// <summary>
+    ///  __m512i _mm512_slli_epi16 (__m512i a, int imm8)
+    /// VPSLLW zmm1 {k1}{z}, zmm2, imm8
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Sll]
+    public static Vector512<short> vsll(Vector512<short> src, [Imm] byte count)
+        => ShiftLeftLogical(src, count);
+
+    /// <summary>
+    /// __m512i _mm512_sll_epi32 (__m512i a, __m128i count)
+    /// VPSLLD zmm1 {k1}{z}, zmm2, xmm3/m128
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Sll]
+    public static Vector512<uint> vsll(Vector512<uint> src, [Imm] byte count)
+        => ShiftLeftLogical(src, count);
+
+    /// <summary>
+    /// __m512i _mm512_sll_epi32 (__m512i a, __m128i count)
+    /// VPSLLD zmm1 {k1}{z}, zmm2, xmm3/m128
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Sll]
+    public static Vector512<int> vsll(Vector512<int> src, [Imm] byte count)
+        => ShiftLeftLogical(src, count);
+
+    /// <summary>
+    /// __m512i _mm512_slli_epi64 (__m512i a, int imm8)
+    /// VPSLLQ zmm1 {k1}{z}, zmm2, imm8
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Sll]
+    public static Vector512<long> vsll(Vector512<long> src, [Imm] byte count)
+        => ShiftLeftLogical(src, count);
+
+    /// <summary>
+    /// __m512i _mm512_slli_epi64 (__m512i a, int imm8)
+    /// VPSLLQ zmm1 {k1}{z}, zmm2, imm8
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Sll]
+    public static Vector512<ulong> vsll(Vector512<ulong> src, [Imm] byte count)
+        => ShiftLeftLogical(src, count);
+
+    /// <summary>
     /// Shifts each source vector component leftwards by an amount specified in the first component of the offset vector
     /// </summary>
     /// <param name="src">The source vector</param>
@@ -345,6 +411,7 @@ partial class vcpu
     [MethodImpl(Inline), Sll]
     public static Vector256<ulong> vsll(Vector256<ulong> src, Vector128<ulong> count)
         => ShiftLeftLogical(src, count);
+
 
     [MethodImpl(Inline), Op]
     static byte msb8f(byte density)

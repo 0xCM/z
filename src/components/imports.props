@@ -68,6 +68,5 @@
     <ProjectReference Include="$(Validity)" />
     <ProjectReference Include="$(Wf)" />
 
-    <ProjectReference Include="$(ZLib)" />
   </ItemGroup>
 </Project>

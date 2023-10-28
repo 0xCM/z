@@ -31,7 +31,7 @@ partial struct vpack
     /// <param name="src">The input component source</param>
     /// <param name="n">The source component count</param>
     /// <param name="w">The target component width</param>
-    [MethodImpl(Inline), Op(inflate)]
+    [MethodImpl(Inline), Op]
     public static unsafe Vector128<long> vinflate2x64i(in short src)
         => ConvertToVector128Int64(gptr(src));
 
@@ -43,7 +43,7 @@ partial struct vpack
     /// <param name="n">The source component count</param>
     /// <param name="w">The target component width</param>
     /// <param name="i">Signals a sign extension</param>
-    [MethodImpl(Inline), Op(inflate)]
+    [MethodImpl(Inline), Op]
     public static unsafe Vector128<long> vinflate2x64i(in ushort src)
         => ConvertToVector128Int64(gptr(src));
 
@@ -55,7 +55,7 @@ partial struct vpack
     /// <param name="src">The input component source</param>
     /// <param name="n">The source component count</param>
     /// <param name="w">The target component width</param>
-    [MethodImpl(Inline), Op(inflate)]
+    [MethodImpl(Inline), Op]
     public static unsafe Vector128<long> vinflate2x64i(in int src)
         => vunpack2x64(src);        
 
@@ -79,7 +79,7 @@ partial struct vpack
     /// <param name="src">The input component source</param>
     /// <param name="n">The source component count</param>
     /// <param name="w">The target component width</param>
-    [MethodImpl(Inline), Op(inflate)]
+    [MethodImpl(Inline), Op]
     public static unsafe Vector128<ulong> vinflate2x64u(in ushort src)
         => v64u(ConvertToVector128Int64(gptr(src)));        
 }

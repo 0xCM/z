@@ -207,6 +207,14 @@ partial class vcpu
     public static unsafe void vstore(Vector256<double> src, ref double dst)
         => Store(refptr(ref dst),src);
 
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<byte> src, ref byte dst)
+        => Store(refptr(ref dst),src);
+
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<sbyte> src, ref sbyte dst)
+        => Store(refptr(ref dst),src);
+
     /// <summary>
     /// void _mm_storeu_si128 (__m128i* mem_addr, __m128i a) MOVDQU m128, xmm
     /// Stores vector content to a specified reference, offset by a specified amount
@@ -411,9 +419,6 @@ partial class vcpu
     public static unsafe void vstore(Vector256<double> src, ref double dst, int offset)
         => Store(refptr(ref dst, offset), src);
 
-    [MethodImpl(Inline), Store]
-    public static unsafe void vstore(Vector512<byte> src, ref byte dst)
-        => Store(refptr(ref dst), src);
 
     [MethodImpl(Inline), Store]
     public static unsafe void vstore(Vector128<byte> src, Span<byte> dst)

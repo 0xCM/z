@@ -17,7 +17,7 @@ partial struct vpack
     /// <param name="src">The blocked memory source</param>
     /// <param name="lo">The lower target</param>
     /// <param name="hi">The upper target</param>
-    [MethodImpl(Inline), Op(inflate)]
+    [MethodImpl(Inline), Op]
     public static unsafe void vinflate8x32u(in uint src, out Vector256<ulong> lo, out Vector256<ulong> hi)
     {
         lo = v64u(ConvertToVector256Int64(gptr(src)));

@@ -81,9 +81,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                return generic<T>(vcpu.vblendv(v32f(x), v32f(y), v32f(spec)));
+                return generic<T>(fcpu.vblendv(v32f(x), v32f(y), v32f(spec)));
             else if(typeof(T) == typeof(double))
-                return generic<T>(vcpu.vblendv(v64f(x), v64f(y), v64f(spec)));
+                return generic<T>(fcpu.vblendv(v64f(x), v64f(y), v64f(spec)));
             else
                 throw no<T>();
         }
@@ -109,9 +109,9 @@ namespace Z0
             where T : unmanaged
         {
              if(typeof(T) == typeof(float))
-                return generic<T>(vcpu.vblendv(v32f(x), v32f(y), v32f(spec)));
+                return generic<T>(fcpu.vblendv(v32f(x), v32f(y), v32f(spec)));
             else if(typeof(T) == typeof(double))
-                return generic<T>(vcpu.vblendv(v64f(x), v64f(y), v64f(spec)));
+                return generic<T>(fcpu.vblendv(v64f(x), v64f(y), v64f(spec)));
             else
                 throw no<T>();
         }

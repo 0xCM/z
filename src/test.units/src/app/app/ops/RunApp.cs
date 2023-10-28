@@ -4,24 +4,23 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
+    using System.Linq;
     using static sys;
 
     partial class TestApp<A>
     {
         protected virtual Assembly TargetComponent {get;} = typeof(A).Assembly;
 
-        void RunUnits(ReadOnlySeq<string> src, bool pll)
-            => iter(src.IsEmpty ? FindHosts() : FindHosts(src), h => RunUnit(h), pll);
+        public static IEnumerable<string> UnitNames => UnitIndex.Keys;
 
-        Type[] FindHosts()
-            =>  (from t in TargetComponent.Types().Realize<IUnitTest>()
-                where t.IsConcrete() && t.Untagged<IgnoreAttribute>()
-                orderby t.Name
-                select t).Array();
+        static Type UnitHost(string name)
+            => UnitIndex[name];
+
+        void RunUnits(ReadOnlySeq<string> src, bool pll)
+            => iter(src.IsEmpty ? UnitHosts : FindHosts(src), h => RunUnit(h), pll);
 
         Type[] FindHosts(ReadOnlySeq<string> names)
-            =>
-             (from t in TargetComponent.Types().Realize<IUnitTest>()
+            => (from t in TargetComponent.Types().Realize<IUnitTest>()
                 where t.IsConcrete() && t.Untagged<IgnoreAttribute>() && names.Contains(t.Name)
                 orderby t.Name
                 select t).Array();
@@ -41,15 +40,6 @@ namespace Z0
             {
                 term.error(e);
             }
-        }
-
-        public static void Run(Index<PartId> parts, params string[] units)
-        {
-            var app = new A();
-            var shell = ApiServer.runtime();
-            app.InjectShell(shell);
-            app.SetMode(InDiagnosticMode);
-            app.RunUnits(units);
         }
     }
 }

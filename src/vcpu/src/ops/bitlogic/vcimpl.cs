@@ -149,4 +149,76 @@ partial class vcpu
     [MethodImpl(Inline), CImpl]
     public static Vector256<ulong> vcimpl(Vector256<ulong> x, Vector256<ulong> y)
         => Or(vnot(x),y);
+
+    /// <summary>
+    /// Computes the converse implication, ~x | y for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), CImpl]
+    public static Vector512<sbyte> vcimpl(Vector512<sbyte> x, Vector512<sbyte> y)
+        => Or(vnot(x),y);
+
+    /// <summary>
+    /// Computes the converse implication, ~x | y for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), CImpl]
+    public static Vector512<byte> vcimpl(Vector512<byte> x, Vector512<byte> y)
+        => Or(vnot(x),y);
+
+    /// <summary>
+    /// Computes the converse implication, ~x | y for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), CImpl]
+    public static Vector512<short> vcimpl(Vector512<short> x, Vector512<short> y)
+        => Or(vnot(x),y);
+
+    /// <summary>
+    /// Computes the converse implication, ~x | y for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), CImpl]
+    public static Vector512<ushort> vcimpl(Vector512<ushort> x, Vector512<ushort> y)
+        => Or(vnot(x),y);
+
+    /// <summary>
+    /// Computes the converse implication, ~x | y for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), CImpl]
+    public static Vector512<int> vcimpl(Vector512<int> x, Vector512<int> y)
+        => Or(vnot(x),y);
+
+    /// <summary>
+    /// Computes the converse implication, ~x | y for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), CImpl]
+    public static Vector512<uint> vcimpl(Vector512<uint> x, Vector512<uint> y)
+        => Or(vnot(x),y);
+
+    /// <summary>
+    /// Computes the converse implication, ~x | y for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), CImpl]
+    public static Vector512<long> vcimpl(Vector512<long> x, Vector512<long> y)
+        => Or(vnot(x),y);
+
+    /// <summary>
+    /// Computes the converse implication, ~x | y for vectors x and y
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), CImpl]
+    public static Vector512<ulong> vcimpl(Vector512<ulong> x, Vector512<ulong> y)
+        => Or(vnot(x),y);        
 }

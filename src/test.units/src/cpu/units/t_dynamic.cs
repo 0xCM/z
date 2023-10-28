@@ -6,23 +6,9 @@ namespace Z0
 {
     public class t_dynamic : t_inx<t_dynamic>
     {
-        public void check_blocks()
-        {
-            // var methods = typeof(Blocked).DeclaredMethods().Tagged<OpAttribute>().WithName("add");
-            // foreach(var method in methods)
-            // {
-            //     foreach(var t in method.ParameterTypes())
-            //     {
-            //         Claim.yea(t.IsSpanBlock(), $"The parameter {t.Name} from the method {method.Name} is not of blocked type");
-            //         var width = ApiIdentity.width(t);
-            //         Claim.yea(width == TypeWidth.W128 || width == TypeWidth.W256, $"{width}");
-            //     }
-            // }
-        }
-
         public void vbsll_imm_handle()
         {   const byte imm8 = 9;
-            var name = nameof(gcpu.vbsll);
+            var name = "vbsll";
             var src = typeof(gcpu).DeclaredMethods().WithName(name).OfKind(VK.v128).Single();
             var op = Dynop.EmbedVUnaryOpImm(VK.vk128<uint>(), ApiIdentity.identify(src), src, imm8);
             var handle = CilDynamic.handle(op.Target);
