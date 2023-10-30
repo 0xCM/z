@@ -90,6 +90,10 @@ public readonly struct RegOp : IRegOp
         =>  Format();
 
     [MethodImpl(Inline)]
+    public static implicit operator RegKind(RegOp src)
+        => src.RegKind;
+
+    [MethodImpl(Inline)]
     public static implicit operator RegOp(RegKind kind)
         => asm.reg(kind);
 

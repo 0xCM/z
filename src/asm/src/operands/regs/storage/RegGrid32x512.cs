@@ -20,11 +20,9 @@ namespace Z0
         public RegGrid32x512()
         {
             Storage = new();
-            var regs = AsmRegSets.create();
-            XmmNames = regs.XmmRegNames();
-            YmmNames = regs.YmmRegNames();
-            ZmmNames = regs.ZmmRegNames();
-
+            XmmNames = AsmRegSets.XmmRegNames();
+            YmmNames = AsmRegSets.YmmRegNames();
+            ZmmNames = AsmRegSets.ZmmRegNames();
         }
 
         [MethodImpl(Inline)]

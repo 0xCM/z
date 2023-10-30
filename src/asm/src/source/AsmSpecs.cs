@@ -6,8 +6,6 @@ namespace Z0.Asm;
 
 using Asm.Operands;
 
-using static sys;
-
 [ApiHost]
 public class AsmSpecs
 {
@@ -17,5 +15,4 @@ public class AsmSpecs
     [MethodImpl(Inline), Op]
     public static AsmInstruction and(r32 a, Imm32 b)
         => asm.inst("and", a, b);
-
 }

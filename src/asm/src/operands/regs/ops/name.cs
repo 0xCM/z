@@ -19,8 +19,6 @@ partial struct AsmRegs
         {
             case RegClassCode.GP:
                 return Gp.RegName(i, size);
-            case RegClassCode.GP8HI:
-                return Gp8Hi.RegName(i);
             case RegClassCode.XMM:
                 return Xmm.RegName(i);
             case RegClassCode.YMM:

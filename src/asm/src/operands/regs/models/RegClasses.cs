@@ -62,10 +62,13 @@ public readonly struct RegClasses
     
     public readonly struct GpClass : IRegClass<GpClass>
     {
+        const byte RegLength = 4;
+
+        const byte RowLength = 4*RegLength;
+
         [MethodImpl(Inline), Op]
         public AsmRegName RegName(byte index, NativeSizeCode size)
         {
-            const byte RegLength = 4;
             const string R0 =  "rax eax ax  al  ";
             const string R1 =  "rcx ecx cx  cl  ";
             const string R2 =  "rdx edx dx  dl  ";
@@ -82,7 +85,8 @@ public readonly struct RegClasses
             const string R13 = "r13 r13dr13wr13b";
             const string R14 = "r14 r14dr14wr14b";
             const string R15 = "r15 r15dr15wr15b";
-            const string Data = R0 + R1 + R2 + R3 + R4 + R5 + R6 + R7 + R8 + R9 + R10 + R11 + R12 + R13 + R14 + R15;
+            const string R16 = "ah  ch  dh  bh  ";
+            const string Data = R0 + R1 + R2 + R3 + R4 + R5 + R6 + R7 + R8 + R9 + R10 + R11 + R12 + R13 + R14 + R15 + R16;
             var data = 0ul;
             var i0 = offset(index, size);
             return new asci8(slice(text.chars(Data), i0, RegLength));
@@ -91,19 +95,40 @@ public readonly struct RegClasses
         [MethodImpl(Inline), Op]
         static ushort offset(byte index, NativeSizeCode size)
         {
-            const byte RegLength = 4;
-            const byte RowLength = 4*RegLength;
-            var row = (uint)((uint)index*RowLength);
-            var col = z32;
-            if(size == NativeSizeCode.W64)
-                col = 0;
-            else if(size == NativeSizeCode.W32)
-                col = 4;
-            else if(size == NativeSizeCode.W16)
-                col = 8;
-            else
-                col = 12;
-
+            var row = 0u;
+            var col = 0u;
+            switch(index)
+            {
+                case 16:
+                    col = 0;
+                    row = 15;
+                break;                
+                case 17:
+                    col = 1;
+                    row = 15;
+                break;                
+                case 18:
+                    col = 2;
+                    row = 15;
+                break;                
+                case 19:
+                    col = 3;
+                    row = 15;
+                break;
+                default:
+                {
+                    row = (uint)index*RowLength;
+                    if(size == NativeSizeCode.W64)
+                        col = 0;
+                    else if(size == NativeSizeCode.W32)
+                        col = 4;
+                    else if(size == NativeSizeCode.W16)
+                        col = 8;
+                    else
+                        col = 12;
+                }
+                break;
+            }
             return (ushort)(row + col);
         }
 

@@ -15,7 +15,7 @@ public readonly struct RegFacets
     /// <summary>
     /// The number of register classes
     /// </summary>
-    public const byte ClassCount = 18;
+    public const byte ClassCount = 17;
 
     /// <summary>
     /// The number of register withs
@@ -115,7 +115,7 @@ public readonly struct RegFacets
     /// <summary>
     /// The number of available Gp8 registers
     /// </summary>
-    public const byte Gp8RegCount = Gp8LoRegCount + Gp8HiRegCount;
+    public const byte Gp8RegCount = 20;
 
     /// <summary>
     /// The number of available Gp16 registers

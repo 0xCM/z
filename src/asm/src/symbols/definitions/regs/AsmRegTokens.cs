@@ -42,8 +42,8 @@ public class AsmRegTokens
     /// <remarks>
     /// al, cl, dl, bl, spl, bpl, sil, dil, r8b, r9b, r10b, r11b, r12b, r13b, r14b, r15b
     /// </remarks/>
-    [SymSource(GroupName), TokenKind(K.Gp8Lo)]
-    public enum Gp8LoReg : byte
+    [SymSource(GroupName), TokenKind(K.Gp8)]
+    public enum Gp8Reg : byte
     {
         [Symbol("al")]
         al = r0,
@@ -92,28 +92,18 @@ public class AsmRegTokens
 
         [Symbol("r15b")]
         r15b = r15,
-    }
 
-    /// <summary>
-    /// Specifies the GP 8-bit hi regsisters
-    /// </summary>
-    /// <remarks>
-    /// ah, ch, dh, bh
-    /// </remarks/>
-    [SymSource(GroupName), TokenKind(K.Gp8Hi)]
-    public enum Gp8HiReg : byte
-    {
         [Symbol("ah")]
-        ah = r4,
+        ah = r16,
 
         [Symbol("ch")]
-        ch = r5,
+        ch = r17,
 
         [Symbol("dh")]
-        dh = r6,
+        dh = r18,
 
         [Symbol("bh")]
-        bh = r7,
+        bh = r19,
     }
 
     /// <summary>

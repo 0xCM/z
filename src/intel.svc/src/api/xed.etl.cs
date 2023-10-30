@@ -5,15 +5,13 @@
 namespace Z0;
 
 using Asm;
-using System.Linq;
 
 using static sys;
-using static XedModels;
-using static XedRules;
-using static XedZ;
 
 partial class XedCmd
 {
+
+
     XedImport XedImport => Wf.XedImport();
 
     [CmdOp("xed/check/bits")]

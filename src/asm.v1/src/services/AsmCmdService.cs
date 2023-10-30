@@ -10,8 +10,6 @@ namespace Z0.Asm
     {
         AsmCallPipe AsmCalls => Wf.AsmCallPipe();
 
-        AsmRegSets RegSets => Service(AsmRegSets.create);
-
         AsmApiTables AsmTables => Service(Wf.AsmTables);
 
         ApiPacks ApiPacks => Channel.Channeled<ApiPacks>();
@@ -137,7 +135,7 @@ namespace Z0.Asm
 
             // a in RCX, b in RDX, c in R8, d in R9
             var counter = 0u;
-            var r0 = RegSets.MaskRegs();
+            var r0 = AsmRegSets.MaskRegs();
             var r1 = r0.Replicate();
             var r2 = r0.Replicate();
             for(var i=0u; i<r0.Count; i++)
@@ -176,8 +174,8 @@ namespace Z0.Asm
             var syntax = "mc";
             var w0 = NativeSizeCode.W16;
             var w1 = NativeSizeCode.W16;
-            var r0 = RegSets.GpRegs(w0);
-            var r1 = RegSets.GpRegs(w1);
+            var r0 = AsmRegSets.GpRegs(w0);
+            var r1 = AsmRegSets.GpRegs(w1);
             var dst = AppDb.Dev("llvm.models/mc.models").Path(asmid,FileKind.Asm);
             var indent = 0u;
             var buffer = text.buffer();

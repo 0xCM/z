@@ -18,19 +18,11 @@ public enum Gp8Kind : ushort
 {
     AL = r0 | (GP << ClassField) | (W8 << WidthField),
 
-    AH = r4 | (GP8HI << ClassField) | (W8 << WidthField),
-
     CL = r1 | (GP << ClassField) | (W8 << WidthField),
-
-    CH = r5 | (GP8HI << ClassField) | (W8 << WidthField),
 
     DL = r2 | (GP << ClassField) | (W8 << WidthField),
 
-    DH = r6 | (GP8HI << ClassField) | (W8 << WidthField),
-
     BL = r3 | (GP << ClassField) | (W8 << WidthField),
-
-    BH = r7 | (GP8HI << ClassField) | (W8 << WidthField),
 
     SPL = r4 | (GP << ClassField) | (W8 << WidthField),
 
@@ -55,4 +47,12 @@ public enum Gp8Kind : ushort
     R14B = r14 | (GP << ClassField) | (W8 << WidthField),
 
     R15B = r15 | (GP << ClassField) | (W8 << WidthField),
+
+    AH = r16 | (GP << ClassField) | (W8 << WidthField),
+
+    CH = r17 | (GP << ClassField) | (W8 << WidthField),
+    
+    DH = r18 | (GP << ClassField) | (W8 << WidthField),
+
+    BH = r19 | (GP << ClassField) | (W8 << WidthField),
 }

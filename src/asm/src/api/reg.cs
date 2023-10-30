@@ -7,9 +7,9 @@ namespace Z0.Asm;
 partial struct asm
 {
     [MethodImpl(Inline), Op]
-    public static RegOp reg(NativeSizeCode width, RegClassCode @class, RegIndex r)
-        => AsmRegs.reg(width, @class,r);
-
+    public static RegOp reg(NativeSize size, RegClassCode @class, RegIndex r)
+        => AsmRegs.reg(size, @class, r);
+    
     [MethodImpl(Inline), Op]
     public static RegOp reg(RegKind kind)
         => AsmRegs.reg(kind);

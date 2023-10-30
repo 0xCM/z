@@ -82,7 +82,7 @@ partial class XedModels
 
         [MethodImpl(Inline)]
         public static explicit operator Register(ushort src)
-            => new Register((XedRegId)src);
+            => new ((XedRegId)src);
 
         public static Register Empty => default;
     }

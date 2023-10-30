@@ -13,8 +13,8 @@ using static AsmOpCodeTokens;
 public sealed class RexBGenerator : AppService<RexBGenerator>
 {
     // RexBBits:[Index[00000] | Token[000]]
-    public static RexB rexb(RexBToken token, RegIndexCode r, bit gpHi)
-        => new (token, r, gpHi);
+    public static RexB rexb(RexBToken token, RegIndexCode r)
+        => new (token, r);
 
     [MethodImpl(Inline)]
     static RexBToken rb()
@@ -40,23 +40,23 @@ public sealed class RexBGenerator : AppService<RexBGenerator>
     public Index<RexB> Generate()
     {
         var regs = AsmRegSets.create();
-        var dst = alloc<RexB>(16*4 + 4);
+        var dst = alloc<RexB>(16*3 + 20 + 4);
         var j=0u;
-        Gen(regs.Gp8LoRegs(), rb(), 0, ref j, dst);
-        Gen(regs.Gp8HiRegs(), rb(), 1, ref j, dst);
-        Gen(regs.Gp16Regs(), rw(), 0, ref j, dst);
-        Gen(regs.Gp32Regs(), rd(), 0, ref j, dst);
-        Gen(regs.Gp64Regs(), ro(), 0, ref j, dst);
+        Gen(AsmRegSets.Gp8Regs(), rb(), ref j, dst);
+        Gen(AsmRegSets.Gp16Regs(), rw(), ref j, dst);
+        Gen(AsmRegSets.Gp32Regs(), rd(), ref j, dst);
+        Gen(AsmRegSets.Gp64Regs(), ro(), ref j, dst);
         return dst;
     }
 
-    void Gen(RegOpSeq src, RexBToken token, bit hi, ref uint j, Span<RexB> dst)
+    void Gen(RegOpSeq src, RexBToken token, ref uint j, Span<RexB> dst)
     {
         var count = src.Count;
         for(byte i=0; i<count; i++)
         {
             ref readonly var reg = ref src[i];
-            seek(dst,j++) = rexb(token, (RegIndexCode)reg.IndexCode, hi);
+            var code = reg.IndexCode == 0 ? 0 : (byte)reg.IndexCode % 16;
+            seek(dst,j++) = rexb(token, (RegIndexCode)code);
         }
     }
 }

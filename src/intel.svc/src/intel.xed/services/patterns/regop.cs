@@ -10,9 +10,9 @@ using Asm;
 partial class XedPatterns
 {
     public static RegOp regop(XedRegId src)
-        => XedRegMap.Service.Map(src);
+        => XedRegMap.convert(src);
 
     public static XedRegId regid(RegKind src)
-        => XedRegMap.Service.Map(src);
+        => XedRegMap.convert(src);
 }
 

@@ -12,11 +12,8 @@ public enum AsmRegTokenKind
     [Symbol("gp")]
     Gp,
 
-    [Symbol("gp8lo")]
-    Gp8Lo,
-
-    [Symbol("gp8hi")]
-    Gp8Hi,
+    [Symbol("gp8")]
+    Gp8,
 
     [Symbol("gp16")]
     Gp16,

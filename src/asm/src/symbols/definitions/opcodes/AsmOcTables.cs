@@ -5,6 +5,7 @@
 namespace Z0.Asm;
 
 using Tk = AsmOcTableKind;
+
 public class AsmOcTables
 {
     public const string GroupName = "opcodes.tables";

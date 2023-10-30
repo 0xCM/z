@@ -24,7 +24,6 @@ public class AsmRegSets
 
     }
 
-
     Span<char> Buffer()
         => _Buffer.Clear();
 
@@ -36,7 +35,7 @@ public class AsmRegSets
         return (uint)count;
     }
 
-    public RegNameSet RegNames(RegClassCode @class, NativeSize? size = null)
+    public static RegNameSet RegNames(RegClassCode @class, NativeSize? size = null)
     {
         var names = Asm.RegNameSet.Empty;
         switch(@class)
@@ -60,6 +59,7 @@ public class AsmRegSets
                 names = MaskRegNames();
             break;
             case BND:
+                names = BndRegNames();
             break;
             case MMX:
                 names = MmxRegNames();
@@ -68,15 +68,17 @@ public class AsmRegSets
                 names = SegRegNames();
             break;
             case CR:
+                names = CrRegNames();
             break;
             case DB:
+                names = DbRegNames();
             break;
 
         }
         return names;
     }
 
-    public RegOpSeq Regs(RegClassCode @class, NativeSize? size = null)
+    public static RegOpSeq Regs(RegClassCode @class, NativeSize? size = null)
     {
         var regs = RegOpSeq.Empty;
         switch(@class)
@@ -86,9 +88,6 @@ public class AsmRegSets
                     regs = GpRegs();
                 else
                     regs = GpRegs(size.Value);
-            break;
-            case RegClassCode.GP8HI:
-                regs = Gp8HiRegs();
             break;
             case RegClassCode.XMM:
                 regs = XmmRegs();
@@ -121,9 +120,9 @@ public class AsmRegSets
         return regs;
     }
 
-    public RegOpSeq GpRegs()
+    public static RegOpSeq GpRegs()
     {
-        return Data(nameof(GpRegs), Load);
+        return data(nameof(GpRegs), Load);
 
         RegOpSeq Load()
         {
@@ -135,62 +134,32 @@ public class AsmRegSets
         }
     }
 
-    public RegOpSeq XmmRegs()
-        => Data(nameof(XmmRegs), () => RegSeq(XmmRegSize, XMM, XmmRegCount));
+    public static RegOpSeq XmmRegs()
+        => data(nameof(XmmRegs), () => RegSeq(XmmRegSize, XMM, XmmRegCount));
 
-    public RegOpSeq YmmRegs()
-        => Data(nameof(XmmRegs), () => RegSeq(YmmRegSize, YMM, YmmRegCount));
+    public static RegOpSeq YmmRegs()
+        => data(nameof(XmmRegs), () => RegSeq(YmmRegSize, YMM, YmmRegCount));
 
-    public RegOpSeq ZmmRegs()
-        => Data(nameof(ZmmRegs), () => RegSeq(ZmmRegSize, ZMM, ZmmRegCount));
+    public static RegOpSeq ZmmRegs()
+        => data(nameof(ZmmRegs), () => RegSeq(ZmmRegSize, ZMM, ZmmRegCount));
 
-    public RegOpSeq Gp8HiRegs()
+    public static RegOpSeq Gp8Regs()
     {
-        return Data(nameof(Gp8HiRegs), Load);
-
-        RegOpSeq Load()
-        {
-            var count = Gp8HiRegCount;
-            var buffer = alloc<RegOp>(count);
-            for(byte i=0,j=4; i<count; i++,j++)
-                seek(buffer,i) = reg(Gp8RegSize, GP8HI, (RegIndexCode)j);
-            return buffer;
-        }
-    }
-
-    public RegOpSeq Gp8LoRegs()
-    {
-        return Data(nameof(Gp8LoRegs), Load);
-
-        RegOpSeq Load()
-        {
-            var count = Gp8LoRegCount;
-            var buffer = alloc<RegOp>(count);
-            for(var i=0; i<count; i++)
-                seek(buffer,i) = reg(Gp8RegSize, GP, (RegIndexCode)i);
-            return buffer;
-        }
-    }
-
-    public RegOpSeq Gp8Regs()
-    {
-        return Data(nameof(Gp8Regs), Load);
+        return data(nameof(Gp8Regs), Load);
 
         RegOpSeq Load()
         {
             var count = Gp8RegCount;
             var buffer = alloc<RegOp>(count);
-            for(var i=0; i<16; i++)
+            for(var i=0; i<count; i++)
                 seek(buffer,i) = reg(Gp8RegSize, GpRegClass, (RegIndexCode)i);
-            for(byte i=16,j=4; i<20; i++,j++)
-                seek(buffer,i) = reg(Gp8RegSize, GP8HI, (RegIndexCode)j);
             return buffer;
         }
     }
 
-    public RegOpSeq Gp16Regs()
+    public static RegOpSeq Gp16Regs()
     {
-        return Data(nameof(Gp16Regs), Load);
+        return data(nameof(Gp16Regs), Load);
 
         RegOpSeq Load()
         {
@@ -202,9 +171,9 @@ public class AsmRegSets
         }
     }
 
-    public RegOpSeq Gp32Regs()
+    public static RegOpSeq Gp32Regs()
     {
-        return Data(nameof(Gp32Regs), Load);
+        return data(nameof(Gp32Regs), Load);
 
         RegOpSeq Load()
         {
@@ -216,9 +185,9 @@ public class AsmRegSets
         }
     }
 
-    public RegOpSeq Gp64Regs()
+    public static RegOpSeq Gp64Regs()
     {
-        return Data(nameof(Gp64Regs), Load);
+        return data(nameof(Gp64Regs), Load);
 
         RegOpSeq Load()
         {
@@ -230,7 +199,7 @@ public class AsmRegSets
         }
     }
 
-    public RegOpSeq GpRegs(NativeSizeCode width)
+    public static RegOpSeq GpRegs(NativeSizeCode width)
     {
         var dst = RegOpSeq.Empty;
         switch(width)
@@ -251,7 +220,7 @@ public class AsmRegSets
         return dst;
     }
 
-    public RegNameSet GpRegNames(NativeSizeCode width)
+    public static RegNameSet GpRegNames(NativeSizeCode width)
     {
         var dst = Asm.RegNameSet.Empty;
         switch(width)
@@ -272,9 +241,9 @@ public class AsmRegSets
         return dst;
     }
 
-    public RegOpSeq MaskRegs()
+    public static RegOpSeq MaskRegs()
     {
-        return Data(nameof(MaskRegs), Load);
+        return data(nameof(MaskRegs), Load);
 
         RegOpSeq Load()
         {
@@ -286,9 +255,9 @@ public class AsmRegSets
         }
     }
 
-    public RegOpSeq CrRegs()
+    public static RegOpSeq CrRegs()
     {
-        return Data(nameof(CrRegs), Load);
+        return data(nameof(CrRegs), Load);
 
         RegOpSeq Load()
         {
@@ -300,9 +269,9 @@ public class AsmRegSets
         }
     }
 
-    public RegOpSeq DbRegs()
+    public static RegOpSeq DbRegs()
     {
-        return Data(nameof(DbRegs), Load);
+        return data(nameof(DbRegs), Load);
 
         RegOpSeq Load()
         {
@@ -314,9 +283,9 @@ public class AsmRegSets
         }
     }
 
-    public RegOpSeq MmxRegs()
+    public static RegOpSeq MmxRegs()
     {
-        return Data(nameof(MmxRegs), Load);
+        return data(nameof(MmxRegs), Load);
 
         RegOpSeq Load()
         {
@@ -328,9 +297,9 @@ public class AsmRegSets
         }
     }
 
-    public RegOpSeq TmmRegs()
+    public static RegOpSeq TmmRegs()
     {
-        return Data(nameof(TmmRegs), Load);
+        return data(nameof(TmmRegs), Load);
 
         RegOpSeq Load()
         {
@@ -342,9 +311,9 @@ public class AsmRegSets
         }
     }
 
-    public RegOpSeq BndRegs()
+    public static RegOpSeq BndRegs()
     {
-        return Data(nameof(BndRegs), Load);
+        return data(nameof(BndRegs), Load);
 
         RegOpSeq Load()
         {
@@ -356,9 +325,9 @@ public class AsmRegSets
         }
     }
 
-    public RegOpSeq SegRegs()
+    public static RegOpSeq SegRegs()
     {
-        return Data(nameof(SegRegs), Load);
+        return data(nameof(SegRegs), Load);
         RegOpSeq Load()
         {
             const byte Count = SegRegCount;
@@ -369,9 +338,9 @@ public class AsmRegSets
         }
     }
 
-    public RegOpSeq FpuRegs()
+    public static RegOpSeq FpuRegs()
     {
-        return Data(nameof(FpuRegs), Load);
+        return data(nameof(FpuRegs), Load);
         RegOpSeq Load()
         {
             const byte Count = FpuRegCount;
@@ -382,52 +351,52 @@ public class AsmRegSets
         }
     }
 
-    public RegNameSet GpRegNames()
-        => Data(nameof(GpRegNames), () => Names(GpRegClass, GpRegs()));
+    public static RegNameSet GpRegNames()
+        => data(nameof(GpRegNames), () => Names(GpRegClass, GpRegs()));
 
-    public RegNameSet Gp8RegNames()
-        => Data(nameof(Gp8RegNames), () => Names("Gp8", Gp8Regs()));
+    public static RegNameSet Gp8RegNames()
+        => data(nameof(Gp8RegNames), () => Names("Gp8", Gp8Regs()));
 
-    public RegNameSet Gp16RegNames()
-        => Data(nameof(Gp16RegNames), () => Names("Gp16", Gp16Regs()));
+    public static RegNameSet Gp16RegNames()
+        => data(nameof(Gp16RegNames), () => Names("Gp16", Gp16Regs()));
 
-    public RegNameSet Gp32RegNames()
-        => Data(nameof(Gp32RegNames), () => Names("Gp32", Gp32Regs()));
+    public static RegNameSet Gp32RegNames()
+        => data(nameof(Gp32RegNames), () => Names("Gp32", Gp32Regs()));
 
-    public RegNameSet Gp64RegNames()
-        => Data(nameof(Gp64RegNames), () => Names("Gp64",Gp64Regs()));
+    public static RegNameSet Gp64RegNames()
+        => data(nameof(Gp64RegNames), () => Names("Gp64",Gp64Regs()));
 
-    public RegNameSet XmmRegNames()
-        => Data(nameof(XmmRegNames), () => Names(XmmRegClass, XmmRegs()));
+    public static RegNameSet XmmRegNames()
+        => data(nameof(XmmRegNames), () => Names(XmmRegClass, XmmRegs()));
 
-    public RegNameSet YmmRegNames()
-        => Data(nameof(YmmRegNames), () => Names(YmmRegClass, YmmRegs()));
+    public static RegNameSet YmmRegNames()
+        => data(nameof(YmmRegNames), () => Names(YmmRegClass, YmmRegs()));
 
-    public RegNameSet ZmmRegNames()
-        => Data(nameof(ZmmRegNames), () => Names(ZmmRegClass, ZmmRegs()));
+    public static RegNameSet ZmmRegNames()
+        => data(nameof(ZmmRegNames), () => Names(ZmmRegClass, ZmmRegs()));
 
-    public RegNameSet MaskRegNames()
-        => Data(nameof(MaskRegNames), () => Names(MaskRegClass, MaskRegs()));
+    public static RegNameSet MaskRegNames()
+        => data(nameof(MaskRegNames), () => Names(MaskRegClass, MaskRegs()));
 
-    public RegNameSet MmxRegNames()
-        => Data(nameof(MmxRegNames), () => Names(MmxRegClass, MmxRegs()));
+    public static RegNameSet MmxRegNames()
+        => data(nameof(MmxRegNames), () => Names(MmxRegClass, MmxRegs()));
 
-    public RegNameSet SegRegNames()
-        => Data(nameof(SegRegNames), () => Names(SegRegClass, SegRegs()));
+    public static RegNameSet SegRegNames()
+        => data(nameof(SegRegNames), () => Names(SegRegClass, SegRegs()));
 
-    public RegNameSet BndRegNames()
-        => Data(nameof(BndRegNames), () => Names(BndRegClass, BndRegs()));
+    public static RegNameSet BndRegNames()
+        => data(nameof(BndRegNames), () => Names(BndRegClass, BndRegs()));
 
-    public RegNameSet CrRegNames()
-        => Data(nameof(CrRegNames), () => Names(CrRegClass, CrRegs()));
+    public static RegNameSet CrRegNames()
+        => data(nameof(CrRegNames), () => Names(CrRegClass, CrRegs()));
 
-    public RegNameSet DbRegNames()
-        => Data(nameof(DbRegNames), () => Names(DbRegClass, DbRegs()));
+    public static RegNameSet DbRegNames()
+        => data(nameof(DbRegNames), () => Names(DbRegClass, DbRegs()));
 
-    public RegNameSet FpuRegNames()
-        => Data(nameof(FpuRegNames), () => Names(FpuRegClass,FpuRegs()));
+    public static RegNameSet FpuRegNames()
+        => data(nameof(FpuRegNames), () => Names(FpuRegClass,FpuRegs()));
 
-    RegOpSeq RegSeq(NativeSizeCode size, RegClassCode @class, byte count)
+    static RegOpSeq RegSeq(NativeSizeCode size, RegClassCode @class, byte count)
     {
         var dst = alloc<RegOp>(count);
         for(var i=0; i<count; i++)
@@ -435,8 +404,7 @@ public class AsmRegSets
         return dst;
     }
 
-
-    RegNameSet Names(RegClassCode @class, RegOpSeq src)
+    static RegNameSet Names(RegClassCode @class, RegOpSeq src)
     {
         var count = src.Count;
         var buffer = alloc<AsmRegName>(count);
@@ -445,7 +413,7 @@ public class AsmRegSets
         return (format(@class), buffer);
     }
 
-    RegNameSet Names(string name, RegOpSeq src)
+    static RegNameSet Names(string name, RegOpSeq src)
     {
         var count = src.Count;
         var buffer = alloc<AsmRegName>(count);
@@ -456,16 +424,12 @@ public class AsmRegSets
 
     readonly Index<char> _Buffer = alloc<char>(256);
 
-    ConcurrentDictionary<string,object> _Data {get;}
+    static ConcurrentDictionary<string,object> _Data {get;}
         = new();
 
     [MethodImpl(Inline)]
-    protected D Data<D>(string key, Func<D> factory)
+    protected static D data<D>(string key, Func<D> factory)
         => (D)_Data.GetOrAdd(key, k => factory());
-
-    [MethodImpl(Inline)]
-    protected void ClearCache()
-        => _Data.Clear();
 
     static AsmRegSets Instance = new();
 

@@ -171,10 +171,6 @@ public class AsmBytes
     public static Sib sib(uint3 @base, uint3 index, uint2 scale)
         => new (join((scale, 0), (index, 2), (@base, 6)));
 
-    // RexBBits:[Index[00000] | Token[000]]
-    public static RexB rexb(RexBToken token, RegIndexCode r, bit gpHi)
-        => new (token, r, gpHi);
-
     public static string bitstring(Sib src)
         => string.Format("{0} {1} {2}", BitRender.format2(src.Scale), BitRender.format3(src.Index), BitRender.format3(src.Base));
 

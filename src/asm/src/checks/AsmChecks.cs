@@ -7,9 +7,6 @@ namespace Z0;
 using Asm;
 
 using static sys;
-using static Asm.AsmPrefixTokens;
-using static Asm.AsmRegTokens;
-using static XedRules;
 using static NativeSigs;
 
 using gp32 = Asm.AsmRegTokens.Gp32Reg;
@@ -25,7 +22,6 @@ class AsmChecks : WfAppCmd<AsmChecks>
         public const string CheckVex = "asm/check/vex";
     }
 
-    AsmRegSets Regs => Service(AsmRegSets.create);
 
     ReadOnlySpan<byte> Input => new byte[]{0x44, 0x01, 0x58,0x04};
 
@@ -210,32 +206,6 @@ class AsmChecks : WfAppCmd<AsmChecks>
         Channel.Write(impl.Format());
     }
 
-    [CmdOp("check/expr/scopes")]
-    Outcome TestScopes(CmdArgs args)
-    {
-        var result = Outcome.Success;
-
-        ExprScope a = "a";
-
-        Require.invariant(a.IsRoot);
-
-        ExprScope b = "b";
-        Require.invariant(b.IsRoot);
-
-        var c = a + b;
-        Require.equal(c, "a.b");
-
-        var d = ExprScope.root("d");
-        var e = c + d;
-        Require.equal(e, "a.b.d");
-
-        var fg = ExprScope.root("f") + ExprScope.root("g");
-        var h = e + fg;
-        Require.equal(h, "a.b.d.f.g");
-
-        return result;
-    }
-
     [CmdOp("check/lookups")]
     Outcome TestKeys(CmdArgs args)
     {
@@ -356,49 +326,6 @@ class AsmChecks : WfAppCmd<AsmChecks>
         Channel.Write(block.Format());
     }
 
-    [CmdOp("asm/regs/query")]
-    Outcome RegQuery(CmdArgs args)
-    {
-        var selected = list<RegNameSet>();
-        var result = Outcome.Success;
-        if(args.Count != 0)
-        {
-            for(var i=0; i<args.Count; i++)
-            {
-                var pred = args[i].Value;
-                result = DataParser.eparse(pred, out RegClassCode @class);
-                if(result.Fail)
-                    return result;
-
-                var names = Regs.RegNames(@class);
-                if(names.IsNonEmpty)
-                    selected.Add(names);
-            }
-        }
-        else
-        {
-            selected.Add(Regs.Gp8RegNames());
-            selected.Add(Regs.Gp16RegNames());
-            selected.Add(Regs.Gp32RegNames());
-            selected.Add(Regs.Gp64RegNames());
-            selected.Add(Regs.XmmRegNames());
-            selected.Add(Regs.YmmRegNames());
-            selected.Add(Regs.ZmmRegNames());
-            selected.Add(Regs.MaskRegNames());
-            selected.Add(Regs.MmxRegNames());
-            selected.Add(Regs.SegRegNames());
-            selected.Add(Regs.CrRegNames());
-            selected.Add(Regs.DbRegNames());
-            selected.Add(Regs.FpuRegNames());
-        }
-
-        var buffer = text.buffer();
-        iter(selected, reg => buffer.AppendLine(string.Format("{0}:[{1}]", reg.Name, reg.Format())));
-        Channel.Write(buffer.Emit());
-
-        return result;
-    }
-
     [CmdOp("gen/hex-kind")]
     void GenHex8()
     {
@@ -468,22 +395,6 @@ c5 f8 99 c8";
         Channel.Write(sig.Format(SigFormatStyle.C));
 
         return true;
-    }
-
-    [CmdOp("asm/check/jcc")]
-    Outcome CheckJcc()
-    {
-        var @case = AsmCaseAssets.create().Branches();
-        Utf8.decode(@case.ResBytes, out var doc);
-
-        using var buffers = Alloc.create();
-        var parser = DecodedAsmParser.create(buffers.Composite());
-        var result = parser.ParseBlocks(doc);
-        var blocks = parser.Parsed();
-        iter(blocks, block => {
-            iter(block.Code, code => Channel.Row(code.Decoded));
-        });
-        return result;
     }
 
     [CmdOp("asm/check/cases")]
@@ -602,8 +513,6 @@ c5 f8 99 c8";
         CheckJmp32(n2);
     }
 
-
-
     [CmdOp("asm/check/specs")]
     void CheckAsmSpecs()
     {
@@ -617,7 +526,6 @@ c5 f8 99 c8";
         var result = SdmOpCodes.parse(Oc0, out opcode);
         Channel.Write($"{Oc0} -> {opcode}");
     }
-
 
     void CheckJmp32(N0 n)
     {
@@ -768,6 +676,12 @@ c5 f8 99 c8";
             ref readonly var r = ref results[i];
             Channel.Write(r.Format());
         }
+    }
+
+    [CmdOp("asm/check/exec")]
+    void CheckCodeExec()
+    {
+        AsmCheckExec.run(Emitter);        
     }
 
 
@@ -921,26 +835,6 @@ c5 f8 99 c8";
         Require.equal(actual,expect);
     }
 
-    [CmdOp(CheckNames.CheckDirectives)]
-    void CheckDirectives(CmdArgs args)
-    {
-        var actual = AsmDirectives.section(CoffSectionKind.ReadOnlyData, CoffSectionFlags.d | CoffSectionFlags.r, CoffComDatKind.Discard, "block, vpmuldq_1, sdm/opcode, vpmuldq");
-        var expect = ".section .rdata, \"dr\", discard, \"block, vpmuldq_1, sdm/opcode, vpmuldq\"";
-        if(actual.Format() != expect)
-            Channel.Row($"{text.squote(actual)} != {text.squote(expect)}", FlairKind.Error);
-        else
-            Channel.Row($"{text.squote(actual)} == {text.squote(expect)}", FlairKind.Data);
-
-        //Require.equal(a.Format(),x);
-        
-    }
-
-
-    [CmdOp("asm/check/exec")]
-    void CheckCodeExec()
-    {
-        AsmCheckExec.run(Emitter);        
-    }
 
     [CmdOp("asm/check/regs")]
     void CheckRegstore()
@@ -979,14 +873,9 @@ c5 f8 99 c8";
         CheckDigitParsers();
     }
 
-
     void CheckDigitParsers()
     {
         var input = "01001101";
-        // var count = Digital.parse(input, out GBlock64<BinaryDigit> dst);
-        // var digits = dst.Segment(0,count);
-        // var parsed = Digital.format(digits);
-        //Write(Demand.eq(input,parsed));
         CheckDigitParser(base2);
         CheckDigitParser(base10);
         CheckDigitParser(base16);
@@ -1021,26 +910,4 @@ c5 f8 99 c8";
         var parsed = slice(buffer.Data,0,count);
         Channel.Write(text.format(Demand.eq(input,parsed)));
     }        
-
-    [CmdOp("asm/gen/regnames")]
-    Outcome EmitRegNames(CmdArgs args)
-    {
-        var dst = text.emitter();
-        var input = AsmRegData.gp();
-        var count = input.Length;
-        var buffer = text.buffer();
-        for(var i=0; i<count; i++)
-        {
-            if(i != 0 && i%4 == 0)
-                buffer.AppendLine();
-            buffer.AppendFormat("{0,-6}", skip(input,i));
-        }
-
-        var data = recover<byte>(span(buffer.Emit()));
-        var spec = ByteSpans.specify("GpRegNames", data.ToArray());
-        var format = SpanResFormatter.format(spec);
-        Channel.FileEmit(format, count, AppDb.CgStage().Path("regnames", FileKind.Cs));
-
-        return true;
-    }
 }

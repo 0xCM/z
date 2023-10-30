@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-class AsmChecker : IAsmChecker
+class AsmChecker
 {
-    public static IAsmChecker create(IWfRuntime wf, Type host, IApiCmdRunner runner)
-        => new AsmChecker(wf,host,runner);
+    public static AsmChecker create(IWfRuntime wf, Type host, IApiCmdRunner runner)
+        => new (wf,host,runner);
 
     readonly IApiCmdRunner Runner;
 

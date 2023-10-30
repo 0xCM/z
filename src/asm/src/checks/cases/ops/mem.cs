@@ -5,7 +5,7 @@
 namespace Z0.Asm;
 
 using static sys;
-using static Asm.AsmRegOps;
+using static RegKind;
 
 partial class AsmCases
 {
@@ -36,13 +36,13 @@ partial class AsmCases
         var cases = MemOps(7);
         var i=0u;
 
-        cases[i++] = MemOp(asm.mem8(rax), "byte ptr [rax]");
-        cases[i++] = MemOp(asm.mem16(rax), "word ptr [rax]");
-        cases[i++] = MemOp(asm.mem32(rdx), "dword ptr [rdx]");
-        cases[i++] = MemOp(asm.mem8(r8,rcx), "byte ptr [r8 + rcx]");
-        cases[i++] = MemOp(asm.mem16(r8, 2, rcx), "word ptr [r8 + 2*rcx]");
-        cases[i++] = MemOp(asm.mem16(r8, 2, rcx, asm.disp8(0x20)),"word ptr [r8 + 2*rcx + 0x20]");
-        cases[i++] = MemOp(asm.mem16(r8, 2, rcx, asm.disp8(-0x20)),"word ptr [r8 + 2*rcx - 0x20]");
+        cases[i++] = MemOp(asm.mem8(RAX), "byte ptr [rax]");
+        cases[i++] = MemOp(asm.mem16(RAX), "word ptr [rax]");
+        cases[i++] = MemOp(asm.mem32(RDX), "dword ptr [rdx]");
+        cases[i++] = MemOp(asm.mem8(R8Q, RCX), "byte ptr [r8 + rcx]");
+        cases[i++] = MemOp(asm.mem16(R8Q, 2, RCX), "word ptr [r8 + 2*rcx]");
+        cases[i++] = MemOp(asm.mem16(R8Q, 2, RCX, asm.disp8(0x20)),"word ptr [r8 + 2*rcx + 0x20]");
+        cases[i++] = MemOp(asm.mem16(R8Q, 2, RCX, asm.disp8(-0x20)),"word ptr [r8 + 2*rcx - 0x20]");
         return cases;
     }
 

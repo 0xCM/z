@@ -14,9 +14,9 @@ public readonly record struct RexB
     readonly byte Value;
 
     [MethodImpl(Inline)]
-    public RexB(RexBToken token, RegIndexCode r, bit gpHi)
+    public RexB(RexBToken token, RegIndexCode r)
     {
-        Value = math.or((byte)token, math.sll((byte)r,2), math.sll((byte)gpHi, 7));
+        Value = math.or((byte)token, math.sll((byte)r,2));
     }
 
     public BpExpr BitPattern => $"{(RexBToken)(Value & 0b111)}";
@@ -25,12 +25,6 @@ public readonly record struct RexB
     {
         [MethodImpl(Inline)]
         get => math.le((byte)Token, (byte)RexBToken.ro);
-    }
-
-    public bit Hi
-    {
-        [MethodImpl(Inline)]
-        get => bit.test(Value,7);
     }
 
     public RexBToken Token

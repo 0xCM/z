@@ -11,6 +11,6 @@ partial struct asm
         => AsmRegs.reg(kind);
 
     [MethodImpl(Inline), Op]
-    public static AsmOperand op(RegOp target, RegIndex mask, RegMaskKind kind)
-        => regmask(target,mask,kind);
+    public static AsmOperand op(RegOp target, RegIndex index, RegMaskKind kind)
+        => mask(target, index, kind);
 }

@@ -31,10 +31,8 @@ public sealed class XedRegMap
     {
         var xsyms = Symbols.index<XedRegId>().View;
         var rlu = dict<XedRegId,RegOp>();
-
         var rsyms = Symbols.index<RegKind>();
         var xlu = dict<RegKind,XedRegId>();
-
         var rkinds = rsyms.View.Map(x => (x.Expr.Format(), x.Kind)).ToDictionary();
         foreach(var xedreg in xsyms)
         {
@@ -68,54 +66,60 @@ public sealed class XedRegMap
         return dst;
     }
 
-    readonly ConstLookup<XedRegId,RegOp> RLU;
+    readonly ConstLookup<XedRegId,RegOp> XedToCanonicalLookup;
 
-    readonly ConstLookup<RegKind,XedRegId> XLU;
+    readonly ConstLookup<RegKind,XedRegId> CanonicalToXedLookup;
 
-    readonly Index<RegMapEntry> RLUData;
+    readonly ReadOnlySeq<RegMapEntry> XedToCanonicalEntries;
 
-    readonly Index<RegMapEntry> XLUData;
+    readonly ReadOnlySeq<RegMapEntry> CanonicalToXedEntries;
 
     XedRegMap(ConstLookup<XedRegId,RegOp> rlu, ConstLookup<RegKind,XedRegId> xlu)
     {
-        RLU = rlu;
-        XLU = xlu;
-        RLUData = sys.map(rlu.Entries, x => entry(x.Key, x.Value));
-        XLUData = sys.map(xlu.Entries, x => entry(x.Value, x.Key));
+        XedToCanonicalLookup = rlu;
+        CanonicalToXedLookup = xlu;
+        XedToCanonicalEntries = sys.map(rlu.Entries, x => entry(x.Key, x.Value));
+        CanonicalToXedEntries = sys.map(xlu.Entries, x => entry(x.Value, x.Key));
     }
 
-    public RegOp Map(XedRegId src)
+    RegOp Map(XedRegId src)
     {
-        if(RLU.Find(src, out var reg))
+        if(XedToCanonicalLookup.Find(src, out var reg))
             return reg;
         else
             return RegOp.Empty;
     }
 
-    public XedRegId Map(RegKind src)
+    XedRegId Map(RegKind src)
     {
-        if(XLU.Find(src, out var reg))
+        if(CanonicalToXedLookup.Find(src, out var reg))
             return reg;
         else
             return XedRegId.INVALID;
     }
 
-    public bool Map(XedRegId src, out RegOp dst)
-        => RLU.Find(src, out dst);
+    public static RegOp convert(XedRegId src)
+        => Instance.Map(src);
 
-    public bool Map(RegKind src, out XedRegId dst)
-        => XLU.Find(src, out dst);
+    public static XedRegId convert(RegOp src)
+        => Instance.Map(src);
 
-    public ReadOnlySpan<RegMapEntry> REntries
+    public static bool convert(XedRegId src, out RegOp dst)
+        => Instance.XedToCanonicalLookup.Find(src,out dst);
+
+    public static bool convert(RegKind src, out XedRegId dst)
+        => Instance.CanonicalToXedLookup.Find(src, out dst);
+
+    public static ReadOnlySpan<RegMapEntry> REntries
     {
         [MethodImpl(Inline)]
-        get => RLUData;
+        get => Instance.XedToCanonicalEntries;
     }
 
-    public ReadOnlySpan<RegMapEntry> XEntries
+    public static ReadOnlySpan<RegMapEntry> XEntries
     {
         [MethodImpl(Inline)]
-        get => XLUData;
+        get => Instance.CanonicalToXedEntries;
     }
 
     static readonly XedRegMap Instance = create();

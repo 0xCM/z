@@ -68,26 +68,14 @@ public enum RegKind : ushort
     [Symbol("al")]
     AL = G8.AL,
 
-    [Symbol("ah")]
-    AH = G8.AH,
-
     [Symbol("cl")]
     CL = G8.CL,
-
-    [Symbol("ch")]
-    CH = G8.CH,
 
     [Symbol("dl")]
     DL = G8.DL,
 
-    [Symbol("dh")]
-    DH = G8.DH,
-
     [Symbol("bl")]
     BL = G8.BL,
-
-    [Symbol("bh")]
-    BH = G8.BH,
 
     [Symbol("spl")]
     SPL = G8.SPL,
@@ -124,6 +112,18 @@ public enum RegKind : ushort
 
     [Symbol("r15b")]
     R15B = G8.R15B,
+
+    [Symbol("ah")]
+    AH = G8.AH,
+
+    [Symbol("ch")]
+    CH = G8.CH,
+
+    [Symbol("dh")]
+    DH = G8.DH,
+
+    [Symbol("bh")]
+    BH = G8.BH,
 
     // ~ 16-bit general-purpose registers
     // ~ ------------------------------------------------------------------

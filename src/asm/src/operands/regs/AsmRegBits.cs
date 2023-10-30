@@ -61,7 +61,6 @@ public class AsmRegBits
     public static NativeSizeCode width(RegOp src)
         => width(src.RegKind);
 
-
     [SymSource("asm.regs.bits")]
     public enum RegFieldIndex : byte
     {

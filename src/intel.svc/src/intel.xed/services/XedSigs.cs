@@ -26,14 +26,6 @@ public class XedSigs
         return dst;
     }
 
-    public static Pairings<InstPattern,InstSig> sigs(Index<InstPattern> src)
-    {
-        var dst = alloc<Paired<InstPattern,InstSig>>(src.Count);
-        for(var i=0; i<src.Count; i++)
-            seek(dst,i) = (src[i],sig(src[i]));
-        return dst;
-    }
-
     public static string format(in InstSig src)
     {
         var dst = text.buffer();

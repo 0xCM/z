@@ -1,12 +1,13 @@
 <Project>
   <PropertyGroup>
     <ZSysVer>0.0.189</ZSysVer>
-    <ZVer>0.0.651</ZVer>
-    <ZFxVer>0.0.1041</ZFxVer>
+    <ZVer>0.0.656</ZVer>
+    <ZFxVer>0.0.1045</ZFxVer>
+
+    <ClrRuntimeVersion>8.0.0-dev</ClrRuntimeVersion>
 
     <AsmResolverVersion>5.4.0</AsmResolverVersion>
     <ClangSharpVersion>16.0.1-rc1</ClangSharpVersion>
-    <ClrRuntimeVersion>8.0.0-dev</ClrRuntimeVersion>
     <CodeAnalysisVersion>4.8.0</CodeAnalysisVersion>
     <DebugXVersion>20230430.1.0</DebugXVersion>
     <EtwVesion>1.11.109</EtwVesion>

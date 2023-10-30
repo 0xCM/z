@@ -415,7 +415,7 @@ public class XedWidths
 
     [Op]
     public static ushort width(XedRegId src)
-        => (ushort)XedRegMap.Service.Map(src).Size.Width;
+        => (ushort)XedRegMap.convert(src).Size.Width;
 
     [Op]
     public static ushort width(AsmVL src)

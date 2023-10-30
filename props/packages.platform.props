@@ -5,7 +5,6 @@
   <Import Project="packages.debugging.props"/>
   <Import Project="packages.diagnostics.props"/>
   <Import Project="packages.etw.props"/>  
-  <Import Project="packages.ilc.props"/>  
   <Import Project="packages.interop.props"/>
   <Import Project="packages.messaging.props"/>  
   <Import Project="packages.metadata.props" />
