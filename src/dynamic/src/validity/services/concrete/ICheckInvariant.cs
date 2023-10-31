@@ -12,19 +12,19 @@ namespace Z0
 
     public interface ICheckInvariant : IClaimValidator
     {
-        bool require(bool invariant, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+        bool require(bool invariant, [Caller] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => api.require(invariant, caller, file, line);
 
-        void require<T>(T msg, bool invariant, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+        void require<T>(T msg, bool invariant, [Caller] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => api.require(invariant, msg?.ToString() ?? string.Empty, caller, file, line);
 
-        void no<T>(bool src, T msg = default, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+        void no<T>(bool src, T msg = default, [Caller] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => api.not(src, msg?.ToString() ?? string.Empty, caller, file, line);
 
-        void yea(bool src, string msg = null, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+        void yea(bool src, string msg = null, [Caller] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => api.require(src, msg, caller, file, line);
 
-        void nea(bool src, string msg = null, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+        void nea(bool src, string msg = null, [Caller] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => api.not(src, msg, caller, file, line);
     }
 }

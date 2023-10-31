@@ -449,6 +449,6 @@ namespace Z0
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged
-                => BitGrid.parse(bs,w,m,n,t);
+                => BitGrid.parse(bs, w, m, n, t);
     }
 }

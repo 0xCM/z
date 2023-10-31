@@ -167,9 +167,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                vcpu.vstore(v32f(src), ref float32(ref dst));
+                fcpu.vstore(v32f(src), ref float32(ref dst));
             else if(typeof(T) == typeof(double))
-                vcpu.vstore(v64f(src), ref float64(ref dst));
+                fcpu.vstore(v64f(src), ref float64(ref dst));
             else
                 throw no<T>();
         }
@@ -211,9 +211,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                vcpu.vstore(v32f(src), ref float32(ref dst));
+                fcpu.vstore(v32f(src), ref float32(ref dst));
             else if(typeof(T) == typeof(double))
-                vcpu.vstore(v64f(src), ref sys.float64(ref dst));
+                fcpu.vstore(v64f(src), ref sys.float64(ref dst));
             else
                 throw no<T>();
         }
@@ -251,9 +251,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                vcpu.vstore(v32f(src), ref float32(ref dst), offset);
+                fcpu.vstore(v32f(src), ref float32(ref dst), offset);
             else if(typeof(T) == typeof(double))
-                vcpu.vstore(v64f(src), ref sys.float64(ref dst), offset);
+                fcpu.vstore(v64f(src), ref sys.float64(ref dst), offset);
             else
                 throw no<T>();
         }
@@ -291,9 +291,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                vcpu.vstore(v32f(src), ref float32(ref dst), offset);
+                fcpu.vstore(v32f(src), ref float32(ref dst), offset);
             else if(typeof(T) == typeof(double))
-                vcpu.vstore(v64f(src), ref sys.float64(ref dst), offset);
+                fcpu.vstore(v64f(src), ref sys.float64(ref dst), offset);
             else
                 throw no<T>();
         }
@@ -328,7 +328,5 @@ namespace Z0
             else
                 throw no<T>();            
         }
-
-
     }
 }

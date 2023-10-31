@@ -672,13 +672,13 @@ public partial class XedParsers
         return result;
     }
 
-    public static bool parse(string src, out Register dst)
+    public static bool parse(string src, out RegExpr dst)
     {
         var result = parse(src, out XedRegId reg);
         if(result)
             dst = reg;
         else
-            dst = Register.Empty;
+            dst = RegExpr.Empty;
         return result;
     }
 

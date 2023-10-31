@@ -110,7 +110,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static unsafe void copy(in asci64 src, Span<byte> dst)
-            => vcpu.vstore(src.Storage, dst);
+            => vcpu.vstore(src.Storage.ToVector<byte>(), dst);
 
         /// <summary>
         /// Presents the leading source cell as a byte reference

@@ -8,12 +8,6 @@ namespace Z0;
 using static sys;
 using static XedModels;
 
-partial class XedFieldWriter
-{
-
-}
-
-
 partial class XedFields
 {
     [Op]

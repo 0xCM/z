@@ -9,10 +9,6 @@ using Asm;
 
 using static sys;
 
-partial class XedFieldWriter
-{
-}
-
 partial class XedFields
 {
     [MethodImpl(Inline), Op]

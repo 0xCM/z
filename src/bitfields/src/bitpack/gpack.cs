@@ -345,7 +345,6 @@ public class gpack
     public static void unpack1x32x8(uint src, Span<byte> dst)
         => unpack1x8x32(src, ref first64u(dst));
 
-
     [MethodImpl(Inline), Unpack, Closures(Closure)]
     public static Span<Bit32> unpack32<T>(ReadOnlySpan<T> src, Span<Bit32> dst)
         where T : unmanaged

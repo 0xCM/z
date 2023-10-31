@@ -8,10 +8,10 @@ namespace Z0
     {
         [MethodImpl(Inline), Op]
         public static GridRegion region(CellIndex upper, CellIndex lower)
-            => new GridRegion(upper, lower);
+            => new (upper, lower);
 
         [MethodImpl(Inline), Op]
         public static GridRegion region(uint upper, uint left, uint lower, uint right)
-            => new GridRegion(point(upper,left), point(lower,right));
+            => new (point(upper,left), point(lower,right));
     }
 }

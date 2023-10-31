@@ -32,7 +32,7 @@ partial class XedRules
             => new ((ushort)value, kind, FieldDataKind.Word);
 
         [MethodImpl(Inline)]
-        public static Field init(FieldKind kind, Register value)
+        public static Field init(FieldKind kind, RegExpr value)
             => new ((ushort)value, kind, FieldDataKind.Reg);
 
         [MethodImpl(Inline)]
@@ -71,8 +71,8 @@ partial class XedRules
             => Data;
 
         [MethodImpl(Inline)]
-        Register Reg()
-            => (Register)Data;
+        RegExpr Reg()
+            => (RegExpr)Data;
 
         [MethodImpl(Inline)]
         ChipCode Chip()
@@ -137,7 +137,7 @@ partial class XedRules
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator Register(Field src)
+        public static implicit operator RegExpr(Field src)
             => src.Reg();
 
         [MethodImpl(Inline)]
@@ -193,7 +193,7 @@ partial class XedRules
             => src.Word();
 
         [MethodImpl(Inline)]
-        public static implicit operator Field((FieldKind kind, Register data) src)
+        public static implicit operator Field((FieldKind kind, RegExpr data) src)
             => init(src.kind, src.data);
 
         [MethodImpl(Inline)]

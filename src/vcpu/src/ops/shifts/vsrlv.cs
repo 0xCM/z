@@ -53,7 +53,7 @@ partial class vcpu
     /// <param name="counts">The offset vector</param>
     [MethodImpl(Inline), Srlv]
     public static Vector128<sbyte> vsrlv(Vector128<sbyte> src, Vector128<sbyte> counts)
-        => vpack.vpack128x8i(vsrlv(vpack.vinflate256x16i(src),vpack.vinflate256x16i(counts)));
+        => vpack.vpack128x8i(vsrlv(vpack.vpmovsxbw(w256, src), vpack.vpmovsxbw(w256, counts)));
 
     /// <summary>
     /// Computes z[i] := x[i] >> s[i] for i = 0..15
@@ -63,8 +63,8 @@ partial class vcpu
     [MethodImpl(Inline), Srlv]
     public static Vector128<byte> vsrlv(Vector128<byte> src, Vector128<byte> counts)
     {
-        var x = vpack.vinflate256x16u(src);
-        var y = vpack.vinflate256x16u(counts);
+        var x = vpack.vpmovzxbw(w256, src);
+        var y = vpack.vpmovzxbw(w256, counts);
         return vpack.vpack128x8u(vsrlv(x,y));
     }
 
@@ -89,8 +89,8 @@ partial class vcpu
     [MethodImpl(Inline), Srlv]
     public static Vector128<ushort> vsrlv(Vector128<ushort> src, Vector128<ushort> counts)
     {
-        var x = vpack.vinflate256x32u(src);
-        var y = vpack.vinflate256x32u(counts);
+        var x = vpack.vpmovzxwd(w256, src);
+        var y = vpack.vpmovzxwd(w256, counts);
         return vpack.vpack128x16u(ShiftRightLogicalVariable(x,y));
     }
 
@@ -178,8 +178,8 @@ partial class vcpu
     [MethodImpl(Inline), Srlv]
     public static Vector256<short> vsrlv(Vector256<short> src, Vector256<short> counts)
     {
-        var x = vpack.vinflate512x32i(src);
-        var s = vpack.vinflate512x32i(counts);
+        var x = vpack.vpmovsxwd(w512, src);
+        var s = vpack.vpmovsxwd(w512, counts);
         var x0 = vgcpu.vlo(x);
         var x1 = vgcpu.vhi(x);
         var s0 = vgcpu.vlo(s);
@@ -195,8 +195,8 @@ partial class vcpu
     [MethodImpl(Inline), Srlv]
     public static Vector256<ushort> vsrlv(Vector256<ushort> src, Vector256<ushort> counts)
     {
-        var x = vpack.vinflate512x32u(src);
-        var s = vpack.vinflate512x32u(counts);
+        var x = vpack.vpmovzxwd(w512, src);
+        var s = vpack.vpmovzxwd(w512, counts);
         var x0 = vgcpu.vlo(x);
         var x1 = vgcpu.vhi(x);
         var s0 = vgcpu.vlo(s);

@@ -54,7 +54,6 @@ partial class XedRules
             return dst.Emit();
         }
 
-
         public override string ToString()
             => Format();
 

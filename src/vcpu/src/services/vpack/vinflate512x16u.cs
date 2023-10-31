@@ -12,8 +12,8 @@ partial struct vpack
     [MethodImpl(Inline), Op]
     public static Vector512<ushort> vinflate512x16u(in byte src)
     {
-        var lo = vinflate256x16u(vload(w128, src));
-        var hi = vinflate256x16u(vload(w128, add(src, 16)));
+        var lo = vpmovzxbw(w256, vload(w128, src));
+        var hi = vpmovzxbw(w256, vload(w128, add(src, 16)));
         return vgcpu.vconcat(lo,hi);
     }
 

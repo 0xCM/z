@@ -28,6 +28,8 @@ partial struct BitPatterns
             return NativeSizeCode.W64;
         else if(width <= 128)
             return NativeSizeCode.W128;
+        else if(width <= 256)
+            return NativeSizeCode.W256;
         else
             Throw.message("Width unsupported");
 

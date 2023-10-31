@@ -5,6 +5,7 @@
 namespace Z0;
 
 using static sys;
+using static vcpu;
 
 [ApiHost, Free]
 public unsafe class fcpu
@@ -2210,6 +2211,158 @@ public unsafe class fcpu
     public static Vector256<double> vinsert(Vector128<double> src, Vector256<double> dst, [Imm] LaneIndex index)
         => InsertVector128(dst, src, (byte)index);
 
+    /// <summary>
+    /// Creates a scalar vector from the upper 64 bits of the source vector
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<float> vhi(Vector128<float> src)
+        => v32f(vscalar(v64i(src).GetElement(1)));
+
+    /// <summary>
+    /// Creates a scalar vector from the upper 64 bits of the source vector
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<double> vhi(Vector128<double> src)
+        => vscalar(src.GetElement(1));
+
+    /// <summary>
+    /// __int64 _mm_cvtss_si64 (__m128 a) CVTSS2SI r64, xmm/m32
+    /// src[0..31] -> r64
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="wDst">The target width</param>
+    [MethodImpl(Inline), Op]
+    public static long vlo64i(Vector128<float> src)
+        => ConvertToInt64(src);
+
+    /// <summary>
+    ///  __int64 _mm_cvtsd_si64 (__m128d a) CVTSD2SI r64, xmm/m64
+    /// src[0..63] -> r64
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="wDst">The target width</param>
+    [MethodImpl(Inline), Op]
+    public static long vlo64i(Vector128<double> src)
+        => ConvertToInt64(src);
+
+    /// <summary>
+    /// __m128 _mm_broadcast_ss (float const * mem_addr) VBROADCASTSS xmm, m32
+    /// </summary>
+    /// <param name="w">The target vector width</param>
+    /// <param name="src">The value to broadcast</param>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector128<float> vbroadcast(W128 w, float src)
+        => BroadcastScalarToVector128(gptr(src));
+
+    /// <summary>
+    /// Broadcasts a 64-bit floating point value to the upper and lower cells of a 128-bit floating-point vector
+    /// </summary>
+    /// <param name="w">The target vector width</param>
+    /// <param name="src">The value to broadcast</param>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector128<double> vbroadcast(W128 w, double src)
+        => Vector128.Create(src);
+
+    /// <summary>
+    /// __m256 _mm256_broadcast_ss (float const * mem_addr) VBROADCASTSS ymm, m32
+    /// </summary>
+    /// <param name="w">The target vector width</param>
+    /// <param name="src">The value to broadcast</param>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector256<float> vbroadcast(W256 w, float src)
+        => BroadcastScalarToVector256(gptr(src));
+
+    /// <summary>
+    /// __m256d _mm256_broadcast_sd (double const * mem_addr) VBROADCASTSD ymm, m64
+    /// </summary>
+    /// <param name="w">The target vector width</param>
+    /// <param name="src">The value to broadcast</param>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector256<double> vbroadcast(W256 w, double src)
+        => BroadcastScalarToVector256(gptr(src));
+
+    /// <summary>
+    /// void _mm256_storeu_ps (float * mem_addr, __m256 a) MOVUPS m256, ymm
+    /// Stores vector content to a specified reference, offset by a specified amount
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="dst">The target memory</param>
+    ///<intrinsic>void _mm256_storeu_ps (float * mem_addr, __m256 a) MOVUPS m256, ymm</intrinsic>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector256<float> src, ref float dst, int offset)
+        => Store(refptr(ref dst, offset), src);
+
+    /// <summary>
+    /// void _mm256_storeu_pd (double * mem_addr, __m256d a) MOVUPD m256, ymm
+    /// Stores vector content to a specified reference, offset by a specified amount
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="dst">The target memory</param>
+    ///<intrinsic>void _mm256_storeu_pd (double * mem_addr, __m256d a) MOVUPD m256, ymm</intrinsic>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector256<double> src, ref double dst, int offset)
+        => Store(refptr(ref dst, offset), src);
+
+    /// <summary>
+    /// Stores vector content to a specified reference
+    /// void _mm_storeu_pd (double* mem_addr, __m128d a) MOVUPD m128, xmm
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="dst">The target memory</param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector128<float> src, ref float dst)
+        => Store(refptr(ref dst), src);
+
+    /// <summary>
+    /// Stores vector content to a specified reference
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="dst">The target memory</param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector128<double> src, ref double dst)
+        => Store(refptr(ref dst), src);
+
+    /// <summary>
+    ///  void _mm_storeu_ps (float* mem_addr, __m128 a) MOVUPS m128, xmm
+    /// Stores vector content to a specified reference, offset by a specified amount
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="dst">The target memory</param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector128<float> src, ref float dst, int offset)
+        => Store(refptr(ref dst, offset), src);
+
+    /// <summary>
+    /// void _mm_storeu_pd (double* mem_addr, __m128d a) MOVUPD m128, xmm
+    /// Stores vector content to a specified reference, offset by a specified amount
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="dst">The target memory</param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector128<double> src, ref double dst, int offset)
+        => Store(refptr(ref dst, offset), src);
+
+    /// <summary>
+    /// Stores vector content to a specified reference
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="dst">The target memory</param>
+    ///<intrinsic>void _mm256_storeu_ps (float * mem_addr, __m256 a) MOVUPS m256, ymm</intrinsic>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector256<float> src, ref float dst)
+        => Store(refptr(ref dst),src);
+
+    /// <summary>
+    /// Stores vector content to a specified reference
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="dst">The target memory</param>
+    ///<intrinsic>void _mm256_storeu_pd (double * mem_addr, __m256d a) MOVUPD m256, ymm</intrinsic>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector256<double> src, ref double dst)
+        => Store(refptr(ref dst),src);
 
 
     static Vector256<int> MRev256f32

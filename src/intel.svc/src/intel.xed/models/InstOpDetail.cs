@@ -82,7 +82,7 @@ partial class XedModels
         public BitSegType SegInfo;
 
         [Render(8)]
-        public Register RegLit;
+        public RegExpr RegLit;
 
         [Render(16)]
         public OpModifier Modifier;

@@ -6,11 +6,12 @@
 namespace Z0;
 
 using static XedRules;
+using static XedModels;
 
-partial class XedModels
+partial class XedTables
 {
     [StructLayout(LayoutKind.Sequential,Pack=1), Record(TableName)]
-    public record struct InstOpRow
+    public record struct InstOperand
     {
         public const string TableName = "xed.inst.ops";
 
@@ -72,7 +73,7 @@ partial class XedModels
         public BitSegType SegInfo;
 
         [Render(8)]
-        public EmptyZero<Register> RegLit;
+        public EmptyZero<RegExpr> RegLit;
 
         [Render(12)]
         public OpModifier Modifier;
@@ -86,6 +87,6 @@ partial class XedModels
         [Render(1)]
         public asci64 SourceExpr;
 
-        public static InstOpRow Empty => default;
+        public static InstOperand Empty => default;
     }
 }

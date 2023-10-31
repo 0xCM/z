@@ -6,6 +6,7 @@ namespace Z0;
 
 using static LimitValues;
 using static vcpu;
+using static sys;
 
 public class t_vpack : t_inx<t_vpack>
 {
@@ -30,6 +31,22 @@ public class t_vpack : t_inx<t_vpack>
         case2();
     }
 
+    public void vpack_vpmovzxbd()
+    {
+        Span<uint> actual = stackalloc uint[16];
+        Span<byte> expect = stackalloc byte[16];
+        for(var i=0; i<RepCount; i++)
+        {
+            var a = Random.CpuVector<byte>(w128);
+            var b = vpack.vpmovzxbd(w512,a);
+            vstore(a,expect);
+            vstore(b,actual);
+            for(var j=z8; j<16; j++)
+            {
+                Claim.eq(skip(expect,j), skip(actual,j));
+            }
+        }
+    }
     public void vpack_128x16x2_128x8()
     {
         var w = w128;
@@ -92,14 +109,4 @@ public class t_vpack : t_inx<t_vpack>
         var expect = vsub(vtmax, gcpu.vinc(w, z16));
         Claim.veq(expect,v);
     }
-
-    // public void vpack_2x128x64u_128x32u()
-    // {
-    //     var w = w128;
-    //     var x0 = cpu.vparts(w, 25, 50);
-    //     var x1 = cpu.vparts(w, 75, 10);
-    //     var dst = vpack.vpack128x32u(x0, x1);
-    //     var expect = cpu.vparts(w, 25, 50, 75, 10);
-    //     Claim.veq(expect,dst);
-    // }
 }

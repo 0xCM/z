@@ -32,7 +32,7 @@ partial class XedModels
 
         public ushort ElementWidth;
 
-        public Register RegLit;
+        public RegExpr RegLit;
 
         public OpModifier Modifier;
 

@@ -39,7 +39,7 @@ partial class XedModels
 
         public Nonterminal Rule;
 
-        public Register Reg;
+        public RegExpr Reg;
 
         public const string RenderPattern = "{0} | {1,-6} | {2,-4} | {3,-4} | {4,-4} | {5,-16} | {6}";
 

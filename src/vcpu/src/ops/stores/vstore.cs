@@ -90,25 +90,6 @@ partial class vcpu
 
     /// <summary>
     /// Stores vector content to a specified reference
-    /// void _mm_storeu_pd (double* mem_addr, __m128d a) MOVUPD m128, xmm
-    /// </summary>
-    /// <param name="src">The source vector</param>
-    /// <param name="dst">The target memory</param>
-    [MethodImpl(Inline), Store]
-    public static unsafe void vstore(Vector128<float> src, ref float dst)
-        => Store(refptr(ref dst), src);
-
-    /// <summary>
-    /// Stores vector content to a specified reference
-    /// </summary>
-    /// <param name="src">The source vector</param>
-    /// <param name="dst">The target memory</param>
-    [MethodImpl(Inline), Store]
-    public static unsafe void vstore(Vector128<double> src, ref double dst)
-        => Store(refptr(ref dst), src);
-
-    /// <summary>
-    /// Stores vector content to a specified reference
     /// void _mm256_storeu_si256 (__m256i * mem_addr, __m256i a) MOVDQU m256, ymm
     /// </summary>
     /// <param name="src">The source vector</param>
@@ -185,26 +166,6 @@ partial class vcpu
     ///<intrinsic>void _mm256_storeu_si256 (__m256i * mem_addr, __m256i a) MOVDQU m256, ymm</intrinsic>
     [MethodImpl(Inline), Store]
     public static unsafe void vstore(Vector256<ulong> src, ref ulong dst)
-        => Store(refptr(ref dst),src);
-
-    /// <summary>
-    /// Stores vector content to a specified reference
-    /// </summary>
-    /// <param name="src">The source vector</param>
-    /// <param name="dst">The target memory</param>
-    ///<intrinsic>void _mm256_storeu_ps (float * mem_addr, __m256 a) MOVUPS m256, ymm</intrinsic>
-    [MethodImpl(Inline), Store]
-    public static unsafe void vstore(Vector256<float> src, ref float dst)
-        => Store(refptr(ref dst),src);
-
-    /// <summary>
-    /// Stores vector content to a specified reference
-    /// </summary>
-    /// <param name="src">The source vector</param>
-    /// <param name="dst">The target memory</param>
-    ///<intrinsic>void _mm256_storeu_pd (double * mem_addr, __m256d a) MOVUPD m256, ymm</intrinsic>
-    [MethodImpl(Inline), Store]
-    public static unsafe void vstore(Vector256<double> src, ref double dst)
         => Store(refptr(ref dst),src);
 
     /// <summary>
@@ -370,26 +331,6 @@ partial class vcpu
         => Store(refptr(ref dst, offset), src);
 
     /// <summary>
-    ///  void _mm_storeu_ps (float* mem_addr, __m128 a) MOVUPS m128, xmm
-    /// Stores vector content to a specified reference, offset by a specified amount
-    /// </summary>
-    /// <param name="src">The source vector</param>
-    /// <param name="dst">The target memory</param>
-    [MethodImpl(Inline), Store]
-    public static unsafe void vstore(Vector128<float> src, ref float dst, int offset)
-        => Store(refptr(ref dst, offset), src);
-
-    /// <summary>
-    /// void _mm_storeu_pd (double* mem_addr, __m128d a) MOVUPD m128, xmm
-    /// Stores vector content to a specified reference, offset by a specified amount
-    /// </summary>
-    /// <param name="src">The source vector</param>
-    /// <param name="dst">The target memory</param>
-    [MethodImpl(Inline), Store]
-    public static unsafe void vstore(Vector128<double> src, ref double dst, int offset)
-        => Store(refptr(ref dst, offset), src);
-
-    /// <summary>
     /// void _mm256_storeu_si256 (__m256i * mem_addr, __m256i a) MOVDQU m256, ymm
     /// Stores vector content to a specified reference, offset by a specified amount
     /// </summary>
@@ -469,29 +410,6 @@ partial class vcpu
     public static unsafe void vstore(Vector256<ulong> src, ref ulong dst, int offset)
         => Store(refptr(ref dst, offset), src);
 
-    /// <summary>
-    /// void _mm256_storeu_ps (float * mem_addr, __m256 a) MOVUPS m256, ymm
-    /// Stores vector content to a specified reference, offset by a specified amount
-    /// </summary>
-    /// <param name="src">The source vector</param>
-    /// <param name="dst">The target memory</param>
-    ///<intrinsic>void _mm256_storeu_ps (float * mem_addr, __m256 a) MOVUPS m256, ymm</intrinsic>
-    [MethodImpl(Inline), Store]
-    public static unsafe void vstore(Vector256<float> src, ref float dst, int offset)
-        => Store(refptr(ref dst, offset), src);
-
-    /// <summary>
-    /// void _mm256_storeu_pd (double * mem_addr, __m256d a) MOVUPD m256, ymm
-    /// Stores vector content to a specified reference, offset by a specified amount
-    /// </summary>
-    /// <param name="src">The source vector</param>
-    /// <param name="dst">The target memory</param>
-    ///<intrinsic>void _mm256_storeu_pd (double * mem_addr, __m256d a) MOVUPD m256, ymm</intrinsic>
-    [MethodImpl(Inline), Store]
-    public static unsafe void vstore(Vector256<double> src, ref double dst, int offset)
-        => Store(refptr(ref dst, offset), src);
-
-
     [MethodImpl(Inline), Store]
     public static unsafe void vstore(Vector128<byte> src, Span<byte> dst)
         => vstore(src, ref first(dst));
@@ -503,6 +421,34 @@ partial class vcpu
     [MethodImpl(Inline), Store]
     public static unsafe void vstore(Vector512<byte> src, Span<byte> dst)
         => vstore(src, ref first(dst));
+
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<sbyte> src, Span<byte> dst)
+        => vstore(src, ref first(recover<sbyte>(dst)));
+
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<short> src, Span<byte> dst)
+        => vstore(src, ref first(recover<short>(dst)));
+
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<ushort> src, Span<byte> dst)
+        => vstore(src, ref first(recover<ushort>(dst)));
+
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<uint> src, Span<byte> dst)
+        => vstore(src, ref first(recover<uint>(dst)));
+
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<uint> src, Span<uint> dst)
+        => vstore(src, ref first(dst));
+
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<long> src, Span<byte> dst)
+        => vstore(src, ref first(recover<long>(dst)));
+
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<ulong> src, Span<byte> dst)
+        => vstore(src, ref first(recover<ulong>(dst)));
 
     [MethodImpl(Inline), Store]
     public static unsafe void vstore(Vector128<byte> src, uint offset, Span<byte> dst)

@@ -4,12 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static vcpu;
-
-partial class vgcpu
+partial struct grids
 {
     [MethodImpl(Inline), Op, Closures(Closure)]
-    public static ulong vhi64<T>(Vector128<T> src)
+    public static GridSegment<T> segment<T>(GridDim dim, uint segwidth)
         where T : unmanaged
-            => vcpu.vcell(v64u(src),1);
+            => new (dim, segwidth);
 }

@@ -16,4 +16,7 @@ public enum AsmVL : byte
 
     [Symbol("512", "Specifies a vector length of 512")]
     VL512 = 2,
+
+    [Symbol("LLIG", "Indicates that the EVEX.W bit ignored")]
+    LLIG = 3,
 }

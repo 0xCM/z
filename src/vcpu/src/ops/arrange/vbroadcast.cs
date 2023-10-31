@@ -125,24 +125,6 @@ partial class vcpu
         => BroadcastScalarToVector128(&src);
 
     /// <summary>
-    /// __m128 _mm_broadcast_ss (float const * mem_addr) VBROADCASTSS xmm, m32
-    /// </summary>
-    /// <param name="w">The target vector width</param>
-    /// <param name="src">The value to broadcast</param>
-    [MethodImpl(Inline), Broadcast]
-    public static unsafe Vector128<float> vbroadcast(W128 w, float src)
-        => BroadcastScalarToVector128(gptr(src));
-
-    /// <summary>
-    /// Broadcasts a 64-bit floating point value to the upper and lower cells of a 128-bit floating-point vector
-    /// </summary>
-    /// <param name="w">The target vector width</param>
-    /// <param name="src">The value to broadcast</param>
-    [MethodImpl(Inline), Broadcast]
-    public static unsafe Vector128<double> vbroadcast(W128 w, double src)
-        => Vector128.Create(src);
-
-    /// <summary>
     /// __m256i _mm256_broadcastb_epi8 (__m128i a) VPBROADCASTB ymm, m8
     /// Creates a target vector where each component is initialized with the same value
     /// </summary>
@@ -221,24 +203,6 @@ partial class vcpu
     [MethodImpl(Inline), Broadcast]
     public static unsafe Vector256<ulong> vbroadcast(W256 w, ulong src)
         => BroadcastScalarToVector256(&src);
-
-    /// <summary>
-    /// __m256 _mm256_broadcast_ss (float const * mem_addr) VBROADCASTSS ymm, m32
-    /// </summary>
-    /// <param name="w">The target vector width</param>
-    /// <param name="src">The value to broadcast</param>
-    [MethodImpl(Inline), Broadcast]
-    public static unsafe Vector256<float> vbroadcast(W256 w, float src)
-        => BroadcastScalarToVector256(gptr(src));
-
-    /// <summary>
-    /// __m256d _mm256_broadcast_sd (double const * mem_addr) VBROADCASTSD ymm, m64
-    /// </summary>
-    /// <param name="w">The target vector width</param>
-    /// <param name="src">The value to broadcast</param>
-    [MethodImpl(Inline), Broadcast]
-    public static unsafe Vector256<double> vbroadcast(W256 w, double src)
-        => BroadcastScalarToVector256(gptr(src));
 
     /// <summary>
     /// Creates a 256-bit vector where the lower 128-bit lane is filled with replicas of the lo value

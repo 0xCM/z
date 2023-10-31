@@ -20,7 +20,7 @@ public struct XedFieldPack
 
     public ushort Word;
 
-    public Register Reg;
+    public RegExpr Reg;
 
     public ChipCode Chip;
 

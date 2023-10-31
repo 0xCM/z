@@ -20,7 +20,7 @@ using B = ReadOnlySpan<bit>;
 using U2 = ReadOnlySpan<uint2>;
 using U3 = ReadOnlySpan<num3>;
 
-public class XedTables : AppService<XedTables>
+public partial class XedTables : AppService<XedTables>
 {
     public enum DatasetName
     {
@@ -76,16 +76,11 @@ public class XedTables : AppService<XedTables>
 
         OpClasses,
 
-        OpSpecs,
+        Broadcasts,
     }
 
-    public static ReadOnlySeq<AsmBroadcast> broadcasts(ReadOnlySpan<BroadcastKind> src)
-    {
-        var dst = alloc<AsmBroadcast>(src.Length);
-        for(var j=0; j<src.Length; j++)
-            seek(dst,j) = asm.broadcast(skip(src,j));
-        return dst;
-    }    
+    public static ReadOnlySeq<AsmBroadcast> Broadcasts()
+        => data(DatasetName.Broadcasts,() => broadcasts(Symbols.kinds<BroadcastKind>()));
 
     public static Pairings<InstPattern,InstSig> InstructionSigs(ReadOnlySeq<InstPattern> src)
         => data(DatasetName.InstSigs,() => sigs(src));
@@ -95,9 +90,6 @@ public class XedTables : AppService<XedTables>
         
     public static ReadOnlySeq<InstOpClass> OperandClasses(ReadOnlySeq<InstOpDetail> src)
         => data(DatasetName.OpClasses, () => classes(src));
-
-    public static ReadOnlySeq<InstOpSpec> OperandSpecs(ReadOnlySeq<InstOpDetail> src)
-        => data(DatasetName.OpSpecs, () => specs(src));
 
     public static ChipMap ChipMap()
         => data(DatasetName.ChipMap,XedChips.Map);
@@ -126,7 +118,6 @@ public class XedTables : AppService<XedTables>
         data(DatasetName.Instructions,() => instructions);
         return instructions;
     }
-
     
     public static InstBlockPatterns BlockPatterns()
         => BlockPatterns(BlockLines());
@@ -134,9 +125,15 @@ public class XedTables : AppService<XedTables>
     public static InstBlockPatterns BlockPatterns(ParallelQuery<InstBlockLineSpec> lines)
         => data(DatasetName.InstBlocks,() => XedZ.patterns(lines));
 
-    public static ReadOnlySeq<InstOpRow> OpRows(ReadOnlySeq<InstOpDetail> src)
+    public static ReadOnlySeq<InstOperand> Operands(ReadOnlySeq<InstOpDetail> src)
         => data(DatasetName.OpRows, () => CalcOpRows(src));
-        
+    
+    public static ReadOnlySeq<InstOperand> Operands()
+        => data(DatasetName.OpRows, () => CalcOpRows(OpDetails(InstPatterns(EncInstDefs()))));
+
+    public static ChipInstructions ChipInstructions()
+        => data(DatasetName.ChipInstructions, () => XedChips.ChipInstructions(FormImports(), ChipMap()));
+
     public static ChipInstructions ChipInstructions(ReadOnlySeq<FormImport> forms, ChipMap map)
         => data(DatasetName.ChipInstructions,() => XedChips.ChipInstructions(forms, map));
 
@@ -499,12 +496,6 @@ public class XedTables : AppService<XedTables>
         get => Bytes.sequential<bit>(0, 1);
     }
 
-    public static ref readonly ReadOnlySeq<AsmBroadcast> Broadcasts
-    {
-        [MethodImpl(Inline), Op]
-        get => ref _BroadcastDefs;
-    }
-
     static InstRuleDef instruction(XedInstForm form, IEnumerable<BlockField> fields)
     {
         var mode = MachineMode.Default;
@@ -596,10 +587,10 @@ public class XedTables : AppService<XedTables>
         return dst.Sort();
     }
 
-    static ReadOnlySeq<InstOpRow> CalcOpRows(ReadOnlySeq<InstOpDetail> src)
+    static ReadOnlySeq<InstOperand> CalcOpRows(ReadOnlySeq<InstOpDetail> src)
     {
         var count = src.Count;
-        var rows = alloc<InstOpRow>(count);
+        var rows = alloc<InstOperand>(count);
         for(var i=0; i<count; i++)
         {
             ref readonly var detail = ref src[i];
@@ -878,31 +869,6 @@ public class XedTables : AppService<XedTables>
         return dst;
     }
 
-    static ReadOnlySeq<InstOpSpec> specs(ReadOnlySeq<InstOpDetail> src)
-    {
-        var dst = alloc<InstOpSpec>(src.Count);
-        for(var i=0; i<src.Count; i++)
-            seek(dst,i) = spec(src[i]);
-        return dst;
-    }
-
-    static InstOpSpec spec(in InstOpDetail src)
-    {
-        var dst = InstOpSpec.Empty;
-        dst.Form = src.InstForm;
-        dst.Index = src.Index;
-        dst.Name = src.Name;
-        dst.ElementType = src.ElementType;
-        dst.Width = new OpWidth(src.WidthCode, src.BitWidth);
-        dst.BitWidth = src.BitWidth;
-        dst.RegLit = src.RegLit;
-        dst.Rule = src.Rule;
-        dst.GprWidth = src.GrpWidth;
-        var wi = XedWidths.describe(src.WidthCode);
-        if(wi.SegType.CellCount > 1)
-            dst.Seg = new InstOpSpec.Segmentation(wi.SegType.DataWidth, wi.SegType.CellWidth, src.ElementType.Indicator, wi.SegType.CellCount);
-        return dst;
-    }
 
     static ReadOnlySeq<RuleGrid> grids(CellTables src)
     {
@@ -969,13 +935,19 @@ public class XedTables : AppService<XedTables>
         return query;
     }
 
+    static ReadOnlySeq<AsmBroadcast> broadcasts(ReadOnlySpan<BroadcastKind> src)
+    {
+        var dst = alloc<AsmBroadcast>(src.Length);
+        for(var j=0; j<src.Length; j++)
+            seek(dst,j) = asm.broadcast(skip(src,j));
+        return dst;
+    }    
+
     static readonly ReadOnlySeq<OpName> _OpNames = Symbols.index<OpNameKind>().Kinds.Map(x => new OpName(x));
 
     static readonly ReadOnlySeq<XedRegId> _Regs = Symbols.index<XedRegId>().Kinds.ToArray();
 
     static ReadOnlySpan<byte> _DISP_WIDTH => new byte[]{(byte)DispWidth.None, (byte)DispWidth.DW8, (byte)DispWidth.DW16, (byte)DispWidth.DW32, (byte)DispWidth.DW64};
-
-    static readonly ReadOnlySeq<AsmBroadcast> _BroadcastDefs = XedTables.broadcasts(Symbols.kinds<BroadcastKind>());
 
     static XedWidths _Widths = XedWidths.FromSource(XedPaths.WidthSource());
 

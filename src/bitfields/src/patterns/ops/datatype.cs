@@ -21,6 +21,8 @@ partial struct BitPatterns
             dst = typeof(ulong);
         else if(w <= 128)
             dst = typeof(BitVector128<ulong>);
+        else if(w <= 256)
+            dst = typeof(BitVector256<ulong>);
         else
             Throw.message("Width unsupported");
         return dst;

@@ -7,13 +7,14 @@ namespace Z0;
 using System.Runtime.Intrinsics.X86;
 
 using static vcpu;
+using static vpack;
 using static sys;
 using static bits;
 using static BitMaskLiterals;
 using static BitMasks;
 
 [ApiHost,Free]
-public partial class BitPack
+public class BitPack
 {
     const NumericKind Closure = UnsignedInts;
 
@@ -40,8 +41,8 @@ public partial class BitPack
     {
         var mask = BitMasks.lsb<ulong>(n8, n1);
         ref var lead = ref first(dst);
-        seek64(lead, 0) = bits.scatter((ulong)(byte)src, mask);
-        seek64(lead, 1) = bits.scatter((ulong)((byte)(src >> 8)), mask);
+        seek64(lead, 0) = scatter((ulong)(byte)src, mask);
+        seek64(lead, 1) = scatter((ulong)((byte)(src >> 8)), mask);
     }
 
     public static byte scalar(string src, out byte dst)
@@ -308,8 +309,8 @@ public partial class BitPack
     {
         var storage = ByteBlock64.Empty;
         var dst = recover<ushort>(storage.Bytes);
-        vstore(vpack.vinflatelo256x16u(src), ref seek(dst,0));
-        vstore(vpack.vinflatehi256x16u(src), ref seek(dst,16));
+        vstore(vinflatelo256x16u(src), ref seek(dst,0));
+        vstore(vinflatehi256x16u(src), ref seek(dst,16));
         return storage;
     }
 
@@ -344,10 +345,10 @@ public partial class BitPack
     public static ref byte unpack1x32x8(uint src, ref byte dst)
     {
         var m = lsb<ulong>(n8,n1);
-        seek64(dst, 0) = bits.scatter((ulong)(byte)src, m);
-        seek64(dst, 1) = bits.scatter((ulong)((byte)(src >> 8)), m);
-        seek64(dst, 2) = bits.scatter((ulong)((byte)(src >> 16)), m);
-        seek64(dst, 3) = bits.scatter((ulong)((byte)(src >> 24)), m);
+        seek64(dst, 0) = scatter((ulong)(byte)src, m);
+        seek64(dst, 1) = scatter((ulong)((byte)(src >> 8)), m);
+        seek64(dst, 2) = scatter((ulong)((byte)(src >> 16)), m);
+        seek64(dst, 3) = scatter((ulong)((byte)(src >> 24)), m);
         return ref dst;
     }
 
@@ -362,7 +363,7 @@ public partial class BitPack
         var buffer = z64;
         ref var tmp = ref uint8(ref buffer);
         unpack1x8(src, ref tmp);
-        vpack.vinflate8x256x32u(tmp).StoreTo(ref dst);
+        vinflate8x256x32u(tmp).StoreTo(ref dst);
     }
 
     [MethodImpl(Inline), Op]
@@ -375,10 +376,10 @@ public partial class BitPack
         ref var target = ref ByteBlocks.first<uint>(ref block);
 
         unpack1x32x8(src, ref tmp);
-        vpack.vinflate8x256x32u(tmp, 0, ref target);
-        vpack.vinflate8x256x32u(tmp, 1, ref target);
-        vpack.vinflate8x256x32u(tmp, 2, ref target);
-        vpack.vinflate8x256x32u(tmp, 3, ref target);
+        vinflate8x256x32u(tmp, 0, ref target);
+        vinflate8x256x32u(tmp, 1, ref target);
+        vinflate8x256x32u(tmp, 2, ref target);
+        vinflate8x256x32u(tmp, 3, ref target);
         return block;
     }        
 
@@ -439,8 +440,8 @@ public partial class BitPack
     [MethodImpl(Inline), Op]
     public static ref byte unpack3x10(uint src, ref byte dst)
     {
-        seek64(dst, 0) = bits.scatter(src, Lsb64x8x3);
-        seek16(dst, 4) = (ushort)bits.scatter(src >> 24, Lsb64x8x3);
+        seek64(dst, 0) = scatter(src, Lsb64x8x3);
+        seek16(dst, 4) = (ushort)scatter(src >> 24, Lsb64x8x3);
         return ref dst;
     }    
 

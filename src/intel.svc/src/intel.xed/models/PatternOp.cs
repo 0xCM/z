@@ -67,7 +67,7 @@ partial class XedModels
             => XedPatterns.nonterm(this, out dst);
 
         [MethodImpl(Inline)]
-        public bool RegLiteral(out Register dst)
+        public bool RegLiteral(out RegExpr dst)
             => XedPatterns.reglit(this, out dst);
 
         [MethodImpl(Inline)]

@@ -177,7 +177,6 @@ partial class vcpu
     public static Vector256<ulong> vlo(Vector512<ulong> src)
         => ExtractVector256(src, 0);
 
-
     /// <summary>
     /// Extracts the lower 128-bit lane from the source vector to scalar targets
     /// </summary>
@@ -186,19 +185,6 @@ partial class vcpu
     /// <param name="x1">Receiver for the hi part of the exracted lane</param>
     [MethodImpl(Inline), Op]
     public static void vlo(Vector256<ulong> src, out ulong x0, out ulong x1)
-    {
-        x0 = src.GetElement(0);
-        x1 = src.GetElement(1);
-    }
-
-    /// <summary>
-    /// Extracts the lower 128-bit lane from the source vector to scalar targets
-    /// </summary>
-    /// <param name="src">The source vector</param>
-    /// <param name="x0">Receiver for the lo part of the exracted lane</param>
-    /// <param name="x1">Receiver for the hi part of the exracted lane</param>
-    [MethodImpl(Inline), Op]
-    public static void vlo(Vector256<byte> src, out ulong x0, out ulong x1)
     {
         x0 = src.GetElement(0);
         x1 = src.GetElement(1);

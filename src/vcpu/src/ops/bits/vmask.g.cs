@@ -26,7 +26,7 @@ partial class vgcpu
     [MethodImpl(Inline), Op, Closures(Closure)]
     public static Vector256<T> vmask256<T>(uint src, byte index)
         where T : unmanaged
-            => generic<T>(v8u(vpack.vinflate256x8u(src,index)));
+            => generic<T>(v8u(vpack.vunpack1x32(src,index)));
 
     /// <summary>
     /// int _mm_movemask_epi8 (__m128i a) PMOVMSKB reg, xmm

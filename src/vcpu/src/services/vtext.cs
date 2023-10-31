@@ -15,20 +15,6 @@ namespace Z0
     {
         const NumericKind Closure = UInt64k;
 
-        // public static unsafe void decode(MemoryAddress src, uint size, out CharBlock32 dst)
-        // {
-        //     var input = sys.cover(src.Pointer<byte>(), size);
-        //     dst = CharBlock32.Null;
-        //     var buffer = recover<ushort>(dst.Data);
-        //     if(size == 32)
-        //         vgcpu.vstore(vtext.decode(vcpu.vload(w256, input)), buffer);
-        //     else
-        //     {
-        //         for(var i=0; i<size; i++)
-        //             seek(buffer,i) = skip(input,i);
-        //     }
-        // }            
-
         [MethodImpl(Inline), Op]
         public static void decode(N48 n, ReadOnlySpan<byte> src, Span<char> dst)
         {
@@ -44,7 +30,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static void decode(N16 n, ReadOnlySpan<byte> src, Span<char> dst)
-            => vstore(vinflate256x16u(vcpu.vload(w128,src)), ref @as<ushort>(sys.first(dst)));
+            => vstore(vpack.vpmovzxbw(w256, vcpu.vload(w128,src)), ref @as<ushort>(sys.first(dst)));
 
         [MethodImpl(Inline), Op]
         public static void decode(N32 n, ReadOnlySpan<byte> src, Span<char> dst)
@@ -55,19 +41,17 @@ namespace Z0
             vstore(vinflatehi256x16u(v), ref seek(target,16));
         }
 
-
         [MethodImpl(Inline), Op]
         public static Vector128<ushort> decode(ulong src)
-            => vlo(vpack.vinflate256x16u(v8u(vscalar(src))));
+            => vlo(vpack.vpmovzxbw(w256, v8u(vscalar(src))));
 
         [MethodImpl(Inline), Op]
         public static Vector256<ushort> decode(Vector128<byte> src)
-            => vpack.vinflate256x16u(src);
+            => vpack.vpmovzxbw(w256, src);
 
         [MethodImpl(Inline), Op]
         public static Vector512<ushort> decode(Vector256<byte> src)
             => vparts(w512, vpack.vinflatelo256x16u(src), vpack.vinflatehi256x16u(src));
-
 
         /// <summary>
         /// Populates the 16 components of an 128x8u vector with a specified character code
@@ -206,20 +190,10 @@ namespace Z0
             vcpu.vstore(vpack128x8u(vload(w256, c3)), ref b3);
         }
 
-        // [MethodImpl(Inline), Op]
-        // public static void unpack(N32 n, ReadOnlySpan<byte> src, Span<char> dst)
-        // {
-        //     var packed = vload(w256, src);
-        //     var unpacked = new Vector512<ushort>(vinflatelo256x16u(packed), vinflatehi256x16u(packed));
-        //     var source = v8u(unpacked);
-        //     var target = bytes(dst);
-        //     vcpu.vstore(source, target);
-        // }
-
         [MethodImpl(Inline), Op]
         public static void bits(Vector128<byte> src, Span<char> dst)
         {
-            var a = vinflate256x8u(vcell(src,1), 0);
+            var a = vunpack1x32(vcell(src,1), 0);
             var lo = vlo256x16u(a);
             ref var target = ref u16(first(dst));
             vcpu.vstore(lo, ref seek(target,0));

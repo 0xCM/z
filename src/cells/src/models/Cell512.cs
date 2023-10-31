@@ -24,6 +24,12 @@ namespace Z0
 
         Cell256 X1;
 
+        public ReadOnlySpan<byte> Bytes
+        {
+            [MethodImpl(Inline), UnscopedRef]
+            get => bytes(this);
+        }
+
         public readonly CellKind Kind
             => CellKind.Cell512;
 

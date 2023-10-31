@@ -9,21 +9,21 @@ using static XedRules;
 
 partial class XedModels
 {
-    public readonly struct Register
+    public readonly struct RegExpr
     {        
         readonly XedRegId RegId;
 
         readonly RuleName Rule;
 
         [MethodImpl(Inline)]
-        public Register(XedRegId src)
+        public RegExpr(XedRegId src)
         {
             RegId = src;
             Rule = 0;
         }
 
         [MethodImpl(Inline)]
-        public Register(RuleName src)
+        public RegExpr(RuleName src)
         {
             RegId = 0;
             Rule = src;
@@ -47,6 +47,12 @@ partial class XedModels
             get => RegId != 0 || Rule != 0;
         }
 
+        public XedRegId AsRegister()
+            => RegId;
+
+        public RuleName AsRule()
+            => Rule;
+
         public string Format()
         {
             var dst = EmptyString;
@@ -61,29 +67,29 @@ partial class XedModels
             => Format();
 
         [MethodImpl(Inline)]
-        public static implicit operator Register(XedRegId src)
+        public static implicit operator RegExpr(XedRegId src)
             => new (src);
 
         [MethodImpl(Inline)]
-        public static implicit operator Register(RuleName src)            
+        public static implicit operator RegExpr(RuleName src)            
             => new (src);
 
         [MethodImpl(Inline)]
-        public static implicit operator Register(Nonterminal src)            
+        public static implicit operator RegExpr(Nonterminal src)            
             => new (src);
 
         [MethodImpl(Inline)]
-        public static implicit operator XedRegId(Register src)
+        public static implicit operator XedRegId(RegExpr src)
             => src.RegId;
 
         [MethodImpl(Inline)]
-        public static explicit operator ushort(Register src)
+        public static explicit operator ushort(RegExpr src)
             => (ushort)src.RegId;
 
         [MethodImpl(Inline)]
-        public static explicit operator Register(ushort src)
+        public static explicit operator RegExpr(ushort src)
             => new ((XedRegId)src);
 
-        public static Register Empty => default;
+        public static RegExpr Empty => default;
     }
 }

@@ -283,13 +283,13 @@ public partial class XedPatterns : AppService<XedPatterns>
     }
 
     [MethodImpl(Inline)]
-    public static bool reglit(in PatternOp src, out Register dst)
+    public static bool reglit(in PatternOp src, out RegExpr dst)
     {
         var result = first(src.Attribs, OpAttribKind.RegLiteral, out var attrib);
         if(result)
             dst = attrib.ToRegLiteral();
         else
-            dst = Register.Empty;
+            dst = RegExpr.Empty;
         return result;
     }
 

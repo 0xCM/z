@@ -32,6 +32,6 @@ partial class XedModels
             Props = props;
         }
 
-        public static Instruction Empty => new Instruction(InstructionId.Empty, asci64.Null, XedInstClass.Empty, XedInstForm.Empty, InstFieldValues.Empty);
+        public static Instruction Empty => new (InstructionId.Empty, asci64.Null, XedInstClass.Empty, XedInstForm.Empty, InstFieldValues.Empty);
     }
 }

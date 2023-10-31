@@ -133,7 +133,7 @@ public class t_vconvert : t_inx<t_vconvert>
         for(var sample = 0; sample < RepCount; sample++)
         {
             var sv = Random.CpuVector(sw, st);
-            var tv = vpack.vinflate256x16u(sv);
+            var tv = vpack.vpmovzxbw(w256, sv);
 
             sv.StoreTo(sb);
             tv.StoreTo(tb);
@@ -165,7 +165,7 @@ public class t_vconvert : t_inx<t_vconvert>
         for(var sample = 0; sample < RepCount; sample++)
         {
             var sv = Random.CpuVector(sw,st);
-            var tv = vpack.vinflate256x16u(sv);
+            var tv = vpack.vpmovzxbw(w256, sv);
             var tvLo = cpu.vlo(tv);
             var tvHi = cpu.vhi(tv);
 

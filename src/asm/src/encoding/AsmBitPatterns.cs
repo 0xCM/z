@@ -71,15 +71,20 @@ public readonly struct AsmBitPatterns
 
     const string VL = "VL";
 
-    public static readonly BpInfo Sib = describe<P>(nameof(Asm.Sib), ss, iii, bbb);
+    public static readonly BpInfo Sib = describe<P>(nameof(Asm.Sib),
+        ss, iii, bbb);
 
-    //public static readonly BpInfo ModRm = describe<P>(nameof(Asm.ModRm), mm, rrr, nnn);
+    public static readonly BpInfo ModRm = describe<P>(nameof(Asm.ModRm),
+        mm, rrr, nnn);
 
-    public static readonly BpInfo Rex = describe<P>(nameof(Rex), WRXB, W, R, X, B);
+    public static readonly BpInfo Rex = describe<P>(nameof(Rex),
+        WRXB, W, R, X, B);
 
-    public static readonly BpInfo VexC4 = describe<P>(nameof(Asm.VexC4), cccccccc, R, X, B, mmmmm, W, vvvv, L, pp);
+    public static readonly BpInfo VexC4 = describe<P>(nameof(Asm.VexC4),
+        cccccccc, R, X, B, mmmmm, W, vvvv, L, pp);
 
-    public static readonly BpInfo VexC5 = describe<P>(nameof(Asm.VexC5), cccccccc, R, vvvv, L, pp);
+    public static readonly BpInfo VexC5 = describe<P>(nameof(Asm.VexC5),
+        cccccccc, R, vvvv, L, pp);
 
     public static readonly BpInfo Evex = describe<P>(nameof(Evex),
         mmm, d0, q, RXB,

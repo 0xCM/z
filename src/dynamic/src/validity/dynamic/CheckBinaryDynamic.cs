@@ -106,11 +106,11 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         internal static TestBinaryDynamic create(ICheckBinaryCellOp matcher)
-            => new TestBinaryDynamic(matcher);
+            => new (matcher);
 
         [MethodImpl(Inline), Op]
         internal static TestBinaryDynamic create(IWfRuntime runtime)
-            => new TestBinaryDynamic(runtime);
+            => new (runtime);
 
         internal TestBinaryDynamic(IWfRuntime runtime)
         {

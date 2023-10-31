@@ -9,7 +9,8 @@ using static vcpu;
 partial struct vpack
 {
     /// <summary>
-    ///  __m128i _mm_packs_epi16 (__m128i a, __m128i b) PACKSSWB xmm, xmm/m128
+    ///  __m128i _mm_packs_epi16 (__m128i a, __m128i b)
+    ///  PACKSSWB xmm, xmm/m128
     /// Converts packed signed 16-bit integers from the source operands to packed 8-bit integers using signed saturation
     /// </summary>
     /// <param name="x">The left vector</param>
@@ -17,15 +18,6 @@ partial struct vpack
     [MethodImpl(Inline), Op]
     public static Vector128<sbyte> vpackss(Vector128<short> x, Vector128<short> y)
         => PackSignedSaturate(x,y);
-
-    /// <summary>
-    ///  __m128i _mm_packs_epi16 (__m128i a, __m128i b) PACKSSWB xmm, xmm/m128
-    /// </summary>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
-    [MethodImpl(Inline), Op]
-    public static Vector128<sbyte> vpackss(Vector128<ushort> x, Vector128<ushort> y)
-        => PackSignedSaturate(v16i(x),v16i(y));
 
     /// <summary>
     /// __m128i _mm_packs_epi32 (__m128i a, __m128i b) PACKSSDW xmm, xmm/m128
@@ -37,15 +29,6 @@ partial struct vpack
         => PackSignedSaturate(x,y);
 
     /// <summary>
-    /// __m128i _mm_packs_epi32 (__m128i a, __m128i b) PACKSSDW xmm, xmm/m128
-    /// </summary>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
-    [MethodImpl(Inline), Op]
-    public static Vector128<short> vpackss(Vector128<uint> x, Vector128<uint> y)
-        => PackSignedSaturate(v32i(x), v32i(y));
-
-    /// <summary>
     /// __m256i _mm256_packs_epi16 (__m256i a, __m256i b) VPACKSSWB ymm, ymm, ymm/m256
     /// </summary>
     /// <param name="x">The left vector</param>
@@ -55,16 +38,8 @@ partial struct vpack
         => PackSignedSaturate(x,y);
 
     /// <summary>
-    /// __m256i _mm256_packs_epi16 (__m256i a, __m256i b) VPACKSSWB ymm, ymm, ymm/m256
-    /// </summary>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
-    [MethodImpl(Inline), Op]
-    public static Vector256<sbyte> vpackss(Vector256<ushort> x, Vector256<ushort> y)
-        => PackSignedSaturate(v16i(x),v16i(y));
-
-    /// <summary>
-    /// __m256i _mm256_packs_epi32 (__m256i a, __m256i b) VPACKSSDW ymm, ymm, ymm/m256
+    /// __m256i _mm256_packs_epi32 (__m256i a, __m256i b)
+    ///     VPACKSSDW ymm, ymm, ymm/m256
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -73,11 +48,24 @@ partial struct vpack
         => PackSignedSaturate(x,y);
 
     /// <summary>
-    /// __m256i _mm256_packs_epi32 (__m256i a, __m256i b) VPACKSSDW ymm, ymm, ymm/m256
+    /// __m512i _mm512_packs_epi16 (__m512i a, __m512i b)
+    /// VPACKSSWB zmm1 {k1}{z}, zmm2, zmm3/m512
     /// </summary>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Op]
-    public static Vector256<short> vpackss(Vector256<uint> x, Vector256<uint> y)
-        => PackSignedSaturate(v32i(x), v32i(y));
+    public static Vector512<sbyte> vpackss(Vector512<short> x, Vector512<short> y)
+        => PackSignedSaturate(x,y);
+
+    /// <summary>
+    /// __m512i _mm512_packs_epi32 (__m512i a, __m512i b)
+    /// VPACKSSDW zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<short> vpackss(Vector512<int> x, Vector512<int> y)
+        => PackSignedSaturate(x,y);
 }

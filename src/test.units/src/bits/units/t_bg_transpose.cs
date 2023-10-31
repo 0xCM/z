@@ -22,37 +22,5 @@ namespace Z0
             var g2 = bsT.ToBitString();
             Claim.eq(g1,g2);
         }
-
-        // public void nbg_transpose_16x4()
-        // {
-        //     var w = n64;
-        //     var m = n16;
-        //     var n = n4;
-        //     var t = z64;
-
-        //     for(var i=0; i<RepCount;i++)
-        //     {
-        //         var g = Random.BitGrid(m,n,t);
-        //         var tr1 = BitGrid.transpose(g);
-        //         var tr2 = BitGrid.transpose2(g);
-        //         var tr3 = g.ToBitString().Transpose(m,n).ToBitGrid(w,n,m,t);
-
-        //         if(tr1 != tr3)
-        //         {
-        //             Notify(tr1.Format());
-        //             Notify("!=");
-        //             Notify(tr3.Format());
-        //             Claim.fail();
-        //         }
-
-        //         if(tr1 != tr2)
-        //         {
-        //             Notify(tr1.Format());
-        //             Notify("!=");
-        //             Notify(tr2.Format());
-        //             Claim.fail();
-        //         }
-        //     }
-        // }
     }
 }

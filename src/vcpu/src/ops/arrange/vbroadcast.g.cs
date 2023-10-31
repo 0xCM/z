@@ -73,18 +73,6 @@ namespace Z0
             else if(typeof(T) == typeof(long))
                 return generic<T>(vcpu.vbroadcast(w, int64(src)));
             else
-                return vbroadcast_f(w,src);
-        }
-
-        [MethodImpl(Inline)]
-        static Vector128<T> vbroadcast_f<T>(W128 w, T src)
-            where T : unmanaged
-        {
-            if(typeof(T) == typeof(float))
-                return generic<T>(vcpu.vbroadcast(w, float32(src)));
-            else if(typeof(T) == typeof(double))
-                return generic<T>(vcpu.vbroadcast(w, float64(src)));
-            else
                 throw no<T>();
         }
 
@@ -117,19 +105,8 @@ namespace Z0
             else if(typeof(T) == typeof(long))
                 return generic<T>(vcpu.vbroadcast(w, int64(src)));
             else
-                return vbroadcast_f(w,src);
+                 throw no<T>();
        }
 
-        [MethodImpl(Inline)]
-        static Vector256<T> vbroadcast_f<T>(W256 w, T src)
-            where T : unmanaged
-        {
-            if(typeof(T) == typeof(float))
-                return generic<T>(vcpu.vbroadcast(w, float32(src)));
-            else if(typeof(T) == typeof(double))
-                return generic<T>(vcpu.vbroadcast(w, float64(src)));
-            else
-                throw no<T>();
-        }
     }
 }

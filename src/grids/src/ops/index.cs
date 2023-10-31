@@ -26,6 +26,6 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static GridIndex index(ushort CellIndex, ushort RowCellCount, byte BitOffset, uint BitIndex, int RowIndex, int ColIndex)
-            => new GridIndex(CellIndex, RowCellCount, BitOffset, BitIndex, RowIndex, ColIndex);        
+            => new (CellIndex, RowCellCount, BitOffset, BitIndex, RowIndex, ColIndex);        
     }
 }

@@ -32,7 +32,7 @@ partial class XedRules
         public BitSegType SegType;
 
         [Render(16)]
-        public Register Register;
+        public RegExpr Register;
 
         [Render(1)]
         public string SourceExpr;

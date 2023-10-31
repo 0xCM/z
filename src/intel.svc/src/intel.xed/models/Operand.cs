@@ -31,12 +31,12 @@ partial class XedModels
         }
 
         [MethodImpl(Inline)]
-        public Operand(OpNameKind name, Register value)
+        public Operand(OpNameKind name, RegExpr value)
         {
             var data = ByteBlock16.Empty;
             data[0] = (byte)name;
             data[1] = (byte)OpDataKind.Reg;
-            @as<Register>(data[2]) = value;
+            @as<RegExpr>(data[2]) = value;
             _Data = data;
         }
 
@@ -72,10 +72,10 @@ partial class XedModels
             get => @as<MemoryScale>(_Data[2]);
         }
 
-        Register Reg
+        RegExpr Reg
         {
             [MethodImpl(Inline)]
-            get => @as<Register>(_Data[2]);
+            get => @as<RegExpr>(_Data[2]);
         }
 
         Imm Imm
@@ -127,7 +127,7 @@ partial class XedModels
             => src.Scale;
 
         [MethodImpl(Inline)]
-        public static explicit operator Register(Operand src)
+        public static explicit operator RegExpr(Operand src)
             => src.Reg;
 
         public static Operand Empty => new Operand(OpNameKind.None, ScaleFactor.None);

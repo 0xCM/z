@@ -14,6 +14,30 @@ using static vcpu;
 public readonly struct gfcpu
 {
     [MethodImpl(Inline)]
+    public static Vector256<T> vbroadcast<T>(W256 w, T src)
+        where T : unmanaged
+    {
+        if(typeof(T) == typeof(float))
+            return generic<T>(fcpu.vbroadcast(w, float32(src)));
+        else if(typeof(T) == typeof(double))
+            return generic<T>(fcpu.vbroadcast(w, float64(src)));
+        else
+            throw no<T>();
+    }
+
+    [MethodImpl(Inline)]
+    public static Vector128<T> vbroadcast<T>(W128 w, T src)
+        where T : unmanaged
+    {
+        if(typeof(T) == typeof(float))
+            return generic<T>(fcpu.vbroadcast(w, float32(src)));
+        else if(typeof(T) == typeof(double))
+            return generic<T>(fcpu.vbroadcast(w, float64(src)));
+        else
+            throw no<T>();
+    }
+
+    [MethodImpl(Inline)]
     public static Vector256<T> vinsert<T>(Vector128<T> src, Vector256<T> dst, LaneIndex lane)
         where T : unmanaged
     {
@@ -372,9 +396,9 @@ public readonly struct gfcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(float))
-            return generic<T>(vcpu.vbroadcast(w256,-0.0f));
+            return generic<T>(fcpu.vbroadcast(w256,-0.0f));
         else if(typeof(T) == typeof(double))
-            return generic<T>(vcpu.vbroadcast(w256,-0.0));
+            return generic<T>(fcpu.vbroadcast(w256,-0.0));
         else
             throw no<T>();
     }

@@ -9,6 +9,10 @@ using static CheckLengths;
 using static CheckInvariant;
 using static ClaimValidator;
 
+using Caller = System.Runtime.CompilerServices.CallerMemberNameAttribute;
+using File = System.Runtime.CompilerServices.CallerFilePathAttribute;
+using Line = System.Runtime.CompilerServices.CallerLineNumberAttribute;
+
 public readonly struct CheckPrimalSeq : ICheckPrimalSeq
 {
     /// <summary>
@@ -73,7 +77,7 @@ public readonly struct CheckPrimalSeq : ICheckPrimalSeq
     /// <param name="caller">The caller member name</param>
     /// <param name="file">The source file of the calling function</param>
     /// <param name="line">The source file line number where invocation ocurred</param>
-    public static void eq(ReadOnlySpan<bool> a, ReadOnlySpan<bool> b, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+    public static void eq(ReadOnlySpan<bool> a, ReadOnlySpan<bool> b, [Caller] string caller = null, [File] string file = null, [CallerLine] int? line = null)
     {
         var count = length(a,b);
         for(var i = 0; i<count; i++)
@@ -90,7 +94,7 @@ public readonly struct CheckPrimalSeq : ICheckPrimalSeq
     /// <param name="file">The file in which the invoking function is defined </param>
     /// <param name="line">The file line number of invocation</param>
     /// <typeparam name="T">The element type</typeparam>
-    public static void eq(ReadOnlySpan<char> a, ReadOnlySpan<char> b, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+    public static void eq(ReadOnlySpan<char> a, ReadOnlySpan<char> b, [Caller] string caller = null, [File] string file = null, [CallerLine] int? line = null)
         => require(TestEq(a,b), string.Format("Equality fail, {0} != {1}", a.ToString(), b.ToString()), caller, file, line);
 
     /// <summary>
@@ -102,7 +106,7 @@ public readonly struct CheckPrimalSeq : ICheckPrimalSeq
     /// <param name="file">The file in which the invoking function is defined </param>
     /// <param name="line">The file line number of invocation</param>
     /// <typeparam name="T">The element type</typeparam>
-    public static void eq(ReadOnlySpan<byte> a, ReadOnlySpan<byte> b, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+    public static void eq(ReadOnlySpan<byte> a, ReadOnlySpan<byte> b, [Caller] string caller = null, [File] string file = null, [CallerLine] int? line = null)
         => require(TestEq(a, b), "a != b", caller, file, line);
 
     /// <summary>
@@ -114,7 +118,7 @@ public readonly struct CheckPrimalSeq : ICheckPrimalSeq
     /// <param name="file">The file in which the invoking function is defined </param>
     /// <param name="line">The file line number of invocation</param>
     /// <typeparam name="T">The element type</typeparam>
-    public static void eq(ReadOnlySpan<sbyte> a, ReadOnlySpan<sbyte> b, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+    public static void eq(ReadOnlySpan<sbyte> a, ReadOnlySpan<sbyte> b, [Caller] string caller = null, [File] string file = null, [CallerLine] int? line = null)
         => require(TestEq(a, b), "a != b", caller, file, line);
 
     /// <summary>
@@ -126,7 +130,7 @@ public readonly struct CheckPrimalSeq : ICheckPrimalSeq
     /// <param name="file">The file in which the invoking function is defined </param>
     /// <param name="line">The file line number of invocation</param>
     /// <typeparam name="T">The element type</typeparam>
-    public static void eq(ReadOnlySpan<int> a, ReadOnlySpan<int> b, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+    public static void eq(ReadOnlySpan<int> a, ReadOnlySpan<int> b, [Caller] string caller = null, [File] string file = null, [CallerLine] int? line = null)
         => require(TestEq(a, b), "a != b", caller, file, line);
 
     /// <summary>
@@ -138,7 +142,7 @@ public readonly struct CheckPrimalSeq : ICheckPrimalSeq
     /// <param name="file">The file in which the invoking function is defined </param>
     /// <param name="line">The file line number of invocation</param>
     /// <typeparam name="T">The element type</typeparam>
-    public static void eq(ReadOnlySpan<uint> a, ReadOnlySpan<uint> b, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+    public static void eq(ReadOnlySpan<uint> a, ReadOnlySpan<uint> b, [Caller] string caller = null, [File] string file = null, [CallerLine] int? line = null)
         => require(TestEq(a, b), "a != b", caller, file, line);
 
     /// <summary>
@@ -150,6 +154,6 @@ public readonly struct CheckPrimalSeq : ICheckPrimalSeq
     /// <param name="file">The file in which the invoking function is defined </param>
     /// <param name="line">The file line number of invocation</param>
     /// <typeparam name="T">The element type</typeparam>
-    public static void eq(ReadOnlySpan<ulong> a, ReadOnlySpan<ulong> b, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+    public static void eq(ReadOnlySpan<ulong> a, ReadOnlySpan<ulong> b, [Caller] string caller = null, [File] string file = null, [CallerLine] int? line = null)
         => require(TestEq(a, b), "a != b", caller, file, line);
 }

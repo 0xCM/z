@@ -185,7 +185,7 @@ public class XedFieldRender
                 case K.REG8:
                 case K.REG9:
                 case K.OUTREG:
-                    r.Functions[kind] = x => format((Register)x);
+                    r.Functions[kind] = x => format((RegExpr)x);
                 break;
                 default:
                     r.Functions[kind] = x => x.ToString();

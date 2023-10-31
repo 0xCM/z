@@ -558,7 +558,7 @@ public class XedRender
     {
         if(src == 0)
             return EmptyString;
-        var bcasts = XedTables.Broadcasts;
+        var bcasts = XedTables.Broadcasts();
         var index = (byte)src;
         if(index < bcasts.Length)
             return bcasts[index].Symbol.Format();

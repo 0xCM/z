@@ -56,11 +56,11 @@ partial struct vpack
     /// <param name="y">The right vector</param>
     /// <remarks>See https://stackoverflow.com/questions/12118910/converting-float-vector-to-16-bit-int-without-saturating</remarks>
     [MethodImpl(Inline), Op]
-    public static Vector128<byte> vpackus(Vector128<ushort> x, Vector128<ushort> y)
+    public static Vector128<byte> vpackus(Vector128<ushort> a, Vector128<ushort> b)        //=> PackUnsignedSaturate(v16i(a),v16i(b));
     {
         var mask = vbroadcast(n128, (ushort)(byte.MaxValue));
-        var v1 = v16i(vand(x,mask));
-        var v2 = v16i(vand(y,mask));
+        var v1 = v16i(vand(a,mask));
+        var v2 = v16i(vand(b,mask));
         return PackUnsignedSaturate(v1,v2);
     }
 
@@ -72,11 +72,12 @@ partial struct vpack
     /// <param name="y">The right vector</param>
     /// <remarks>See https://stackoverflow.com/questions/12118910/converting-float-vector-to-16-bit-int-without-saturating</remarks>
     [MethodImpl(Inline), Op]
-    public static Vector128<ushort> vpackus(Vector128<uint> x, Vector128<uint> y)
+    public static Vector128<ushort> vpackus(Vector128<uint> a, Vector128<uint> b)
+        //=> PackUnsignedSaturate(v32i(a),v32i(b));
     {
         var mask = vcpu.vbroadcast(n128, (uint)(ushort.MaxValue));
-        var z0 = v32i(vand(x,mask));
-        var z1 = v32i(vand(y,mask));
+        var z0 = v32i(vand(a,mask));
+        var z1 = v32i(vand(b,mask));
         return PackUnsignedSaturate(z0, z1);
     }
 
@@ -87,11 +88,12 @@ partial struct vpack
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
     [MethodImpl(Inline), Op]
-    public static Vector256<byte> vpackus(Vector256<ushort> x, Vector256<ushort> y)
+    public static Vector256<byte> vpackus(Vector256<ushort> a, Vector256<ushort> b)
+        //=> PackUnsignedSaturate(v16i(a),v16i(b));
     {
         var mask = vcpu.vbroadcast(n256, (ushort)(byte.MaxValue));
-        var v1 = v16i(vand(x,mask));
-        var v2 = v16i(vand(y,mask));
+        var v1 = v16i(vand(a,mask));
+        var v2 = v16i(vand(b,mask));
         return PackUnsignedSaturate(v1,v2);
     }
 
@@ -103,11 +105,17 @@ partial struct vpack
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
     [MethodImpl(Inline), Op]
-    public static Vector256<ushort> vpackus(Vector256<uint> x, Vector256<uint> y)
+    public static Vector256<ushort> vpackus(Vector256<uint> a, Vector256<uint> b)
+        //=> PackUnsignedSaturate(v32i(a),v32i(b));
+
     {
         var mask = vgcpu.vbroadcast<uint>(n256, (uint)(ushort.MaxValue));
-        var z0 = v32i(vand(x,mask));
-        var z1 = v32i(vand(y,mask));
+        var z0 = v32i(vand(a,mask));
+        var z1 = v32i(vand(b,mask));
         return PackUnsignedSaturate(z0, z1);
     }
+
+    [MethodImpl(Inline), Op]
+    public static Vector512<ushort> vpackus(Vector512<uint> a, Vector512<uint> b)
+        => PackUnsignedSaturate(v32i(a),v32i(b));
 }

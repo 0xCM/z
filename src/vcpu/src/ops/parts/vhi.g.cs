@@ -61,5 +61,4 @@ partial class vgcpu
         else 
             throw no<T>();
     }
-
 }

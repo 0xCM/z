@@ -53,6 +53,27 @@ public class BpInfo
     }
 
     /// <summary>
+    /// The number of bitfield segments
+    /// </summary>
+    public uint SegCount
+    {
+        [MethodImpl(Inline)]
+        get => Segs.Count;
+    }
+
+    public ref readonly BfSegModel this[uint i]
+    {
+        [MethodImpl(Inline)]
+        get => ref Segs[i];
+    }
+
+    public ref readonly BfSegModel this[int i]
+    {
+        [MethodImpl(Inline)]
+        get => ref Segs[i];
+    }
+
+    /// <summary>
     /// The pattern source
     /// </summary>
     public ref readonly BfOrigin Origin

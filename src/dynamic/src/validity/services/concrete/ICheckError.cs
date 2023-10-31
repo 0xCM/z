@@ -15,7 +15,7 @@ namespace Z0
         void Print(IAppMsg message)
             => Terminal.Get().WriteMessage(message);
 
-        IAppMsg Describe(Exception e, string title, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+        IAppMsg Describe(Exception e, string title, [Caller] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
         {
             var msg = new StringBuilder();
             msg.AppendLine($"{title}: Failure ocuurred at {caller} {file} {line}");
@@ -23,7 +23,7 @@ namespace Z0
             return AppMsg.define($"{msg.ToString()}", LogLevel.Error);
         }
 
-        void Print(Exception e, string title, [CallerName] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
+        void Print(Exception e, string title, [Caller] string caller = null, [CallerFile] string file = null, [CallerLine] int? line = null)
             => Print(Describe(e, title, caller,file,line));
     }
 }

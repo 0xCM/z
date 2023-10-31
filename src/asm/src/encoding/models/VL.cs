@@ -12,6 +12,8 @@ public readonly record struct VL : IComparable<VL>
 
     public static VL VL512 => new(2);
 
+    public static VL LLIG => new(3);
+
     public static VL None => new(byte.MaxValue);
 
     readonly byte _Value;
@@ -31,7 +33,7 @@ public readonly record struct VL : IComparable<VL>
     public uint Width
     {
         [MethodImpl(Inline)]
-        get => _Value == byte.MaxValue ? 0 :  (uint)Pow2.log(_Value) << 7;
+        get => (_Value == byte.MaxValue  || _Value == 2) ? 0 :  (uint)Pow2.log(_Value) << 7;
     }
 
     public readonly AsmVL Value

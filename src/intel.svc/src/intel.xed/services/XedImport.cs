@@ -11,6 +11,8 @@ using static sys;
 using static XedModels;
 using static XedRules;
 
+using T = XedTables;
+
 public partial class XedImport : WfSvc<XedImport>
 {     
     public void Run()
@@ -19,61 +21,60 @@ public partial class XedImport : WfSvc<XedImport>
         var ruleT = XedRuleTables.Empty;
         var instdefs = ReadOnlySeq<InstDef>.Empty;
         exec(true, 
-            () => Emit(XedTables.Instructions()),
-            () => ruleT = XedTables.RuleTables(),
-            () => Emit(XedTables.RuleSeqImports()),
-            () => Emit(XedTables.SeqReflected()),
-            () => Emit(XedTables.MacroMatches()),
-            () => instdefs = XedTables.EncInstDefs(),
-            () => Emit(XedTables.MacroDefs()),
-            () => Emit(XedTables.FieldImports()),
+            () => Emit(T.Instructions()),
+            () => ruleT = T.RuleTables(),
+            () => Emit(T.RuleSeqImports()),
+            () => Emit(T.SeqReflected()),
+            () => Emit(T.MacroMatches()),
+            () => instdefs = T.EncInstDefs(),
+            () => Emit(T.MacroDefs()),
+            () => Emit(T.FieldImports()),
             () => Channel.TableEmit(XedRegMap.REntries, XedPaths.ImportTable<RegMapEntry>("rmap")),
             () => Channel.TableEmit(XedRegMap.XEntries, XedPaths.ImportTable<RegMapEntry>("xmap")),
             () => EmitChipCodes(Symbols.symkinds<ChipCode>()),
-            () => Emit(XedTables.broadcasts(Symbols.kinds<BroadcastKind>())),
+            () => Emit(T.Broadcasts()),
             () => Emit(CalcCpuIdDataset(XedPaths.CpuidSource())),
             () => {
-                var chips = XedTables.ChipMap();
+                var chips = T.ChipMap();
                 Emit(chips);
-                var forms = XedTables.FormImports();
+                var forms = T.FormImports();
                 EmitFormImports(forms);
-                Emit(XedTables.ChipInstructions(forms, chips));
+                Emit(T.ChipInstructions(forms, chips));
             },
             () => {
-                Emit(XedTables.Widths.Details);
-                Emit(XedTables.Widths.Pointers.Where(x => x.Kind != 0).Map(x => x.ToRecord()));
+                Emit(T.Widths.Details);
+                Emit(T.Widths.Pointers.Where(x => x.Kind != 0).Map(x => x.ToRecord()));
             }
         );
 
-        var patterns = XedTables.InstPatterns(instdefs);
+        var patterns = T.InstPatterns(instdefs);
         var cells = XedRuleCells.Empty;
         exec(true,
             () => EmitPages(ruleT),
             () => EmitPatternDocs(patterns),            
-            () => Emit(XedTables.TableDefRows(ruleT)),
-            () => cells = XedTables.RuleCells(ruleT),
+            () => Emit(T.TableDefRows(ruleT)),
+            () => cells = T.RuleCells(ruleT),
             () => Emit(XedPatterns.layouts(patterns)),
             () => Emit(InstPattern.records(patterns.Storage)),
             () => Emit(XedPatterns.fieldrows(patterns.Storage)),
             () => {                
                 EmitFlagEffects(patterns);
-                Emit(XedTables.InstructionSigs(patterns));
+                Emit(T.InstructionSigs(patterns));
                 EmitInstAttribs(patterns);
-                Emit(XedTables.OpCodes(patterns));
+                Emit(T.OpCodes(patterns));
             }
         );
     
-        var cellT = XedTables.CellTables(cells);
-        var opdetail = XedTables.OpDetails(patterns);
+        var cellT = T.CellTables(cells);
+        var opdetail = T.OpDetails(patterns);
         exec(true, 
             () => EmitRuleDocs(cellT),
-            () => Emit(XedTables.FieldDeps(cellT)),
+            () => Emit(T.FieldDeps(cellT)),
             () => Emit(CellTables.records(cellT)),
             () => EmitRuleMetrics(cellT),
-            () => Emit(XedTables.Stats(cellT)),
-            () => Emit(XedTables.OperandSpecs(opdetail)),
-            () => Emit(XedTables.OpRows(opdetail)),
-            () => Emit(XedTables.OperandClasses(opdetail))
+            () => Emit(T.Stats(cellT)),
+            () => Emit(T.Operands(opdetail)),
+            () => Emit(T.OperandClasses(opdetail))
         );
     }
 
@@ -240,17 +241,14 @@ public partial class XedImport : WfSvc<XedImport>
     void Emit(ReadOnlySeq<XedInstOpCode> src)
         => Channel.TableEmit(src, XedPaths.ImportTable<XedInstOpCode>());
 
-    void Emit(ReadOnlySpan<InstOpRow> src)
-        => Channel.TableEmit(src, XedPaths.ImportTable<InstOpRow>());
+    void Emit(ReadOnlySpan<T.InstOperand> src)
+        => Channel.TableEmit(src, XedPaths.ImportTable<T.InstOperand>());
 
     void Emit(ReadOnlySpan<InstOpClass> src)
         => Channel.TableEmit(src, XedPaths.ImportTable<InstOpClass>());
 
     void Emit(ReadOnlySpan<RuleCellRecord> src)
         => Channel.TableEmit(src, XedPaths.ImportTable<RuleCellRecord>());
-
-    void Emit(ReadOnlySeq<InstOpSpec> src)
-        => Channel.TableEmit(src, XedPaths.ImportTable<InstOpSpec>());
 
     void Emit(InstBlockPatterns src)
         => Channel.TableEmit(src.View,XedPaths.ImportTable<InstBlockPattern>());

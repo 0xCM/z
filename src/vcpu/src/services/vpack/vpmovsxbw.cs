@@ -4,13 +4,16 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static vcpu;
+
 partial struct vpack
 {
     /// <summary>
-    /// Distributes each bit of the source to to a specified bit of each byte in a 256-bit target vector
+    /// __m256i _mm256_cvtepi8_epi16 (__m128i a)
+    /// VPMOVSXBW ymm, xmm/m128
     /// </summary>
-    /// <param name="src">The source bits</param>
-    [MethodImpl(Inline), Op]
-    public static Vector256<byte> vinflate256x8u(uint src, byte index)
-        => vunpack1x32(src,index);
+    /// <param name="src"></param>
+    /// <returns></returns>
+    public static Vector256<short> vpmovsxbw(W256 w, Vector128<sbyte> src)
+        => ConvertToVector256Int16(src);
 }
