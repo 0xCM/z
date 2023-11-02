@@ -4,22 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using F = AsmPrefixTokens.VsibField;
-
-public enum VsibKind : byte
-{
-    [Symbol("")]
-    None,
-
-    [Symbol("xmm")]
-    Xmm,
-
-    [Symbol("ymm")]
-    Ymm,
-
-    [Symbol("zmm")]
-    Zmm    
-}
+using F = VsibField;
 
 /// <summary>
 /// Represents a VSIB address

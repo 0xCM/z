@@ -7,6 +7,7 @@ namespace Z0.Asm;
 using static sys;
 using static Asm.RegFacets;
 
+using Operands;
 using C = RegClassCode;
 using W = NativeSizeCode;
 using I = RegIndexCode;
@@ -30,62 +31,42 @@ partial struct AsmRegs
         => new (first(span16u(src.Data)));
 
     [MethodImpl(Inline), Op]
-    public static RegOp gp8(I r)
-        => reg(W.W8, C.GP, r);
+    public static r8 gp8(I r)
+        => r;
 
     [MethodImpl(Inline), Op]
-    public static RegOp gp16(I r)
-        => reg(W.W16, C.GP, r);
+    public static r16 gp16(I r)
+        => r;
 
     [MethodImpl(Inline), Op]
-    public static RegOp gp32(I r)
-        => reg(W.W32, C.GP, r);
+    public static r32 gp32(I r)
+        => r;
 
     [MethodImpl(Inline), Op]
-    public static RegOp gp64(I r)
-        => reg(W.W64, C.GP, r);
+    public static r64 gp64(I r)
+        => r;
 
     [MethodImpl(Inline), Op]
-    public static RegOp mask(I r)
-        => reg(W.W64, C.MASK, r);
+    public static rK mask(I r)
+        => r;
 
     [MethodImpl(Inline), Op]
-    public static RegOp v128(I r)
-        => reg(W.W128, C.XMM, r);
+    public static rKz zmask(I r)
+        => r;
 
     [MethodImpl(Inline), Op]
-    public static RegOp v256(I r)
-        => reg(W.W128, C.YMM, r);
+    public static xmm xmm(I r)
+        => r;
 
     [MethodImpl(Inline), Op]
-    public static RegOp v512(I r)
-        => reg(W.W128, C.ZMM, r);
+    public static ymm ymm(I r)
+        => r;
 
     [MethodImpl(Inline), Op]
-    public static RegOp rK(I r)
-        => reg(W.W64, C.MASK, r);
+    public static zmm zmm(I r)
+        => r;
 
     [MethodImpl(Inline), Op]
-    public static RegOp rK8(I r)
-        => reg(W.W8, C.MASK, r);
-
-    [MethodImpl(Inline), Op]
-    public static RegOp rK16(I r)
-        => reg(W.W16, C.MASK, r);
-
-    [MethodImpl(Inline), Op]
-    public static RegOp rK32(I r)
-        => reg(W.W32, C.MASK, r);
-
-    [MethodImpl(Inline), Op]
-    public static RegOp rK64(I r)
-        => reg(W.W64, C.MASK, r);
-
-    [MethodImpl(Inline), Op]
-    public static RegOp sptr(I r)
-        => reg(W.W16, C.SPTR, r);
-
-    [MethodImpl(Inline), Op]
-    public static RegOp seg(I r)
-        => reg(W.W16, C.SEG, r);
+    public static rSeg seg(I r)
+        => r;
 }

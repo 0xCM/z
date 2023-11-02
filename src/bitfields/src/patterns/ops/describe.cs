@@ -11,12 +11,12 @@ partial struct BitPatterns
 
     public static BpInfo describe<O>(string name, params string[] segs)
     {
-        var pattern = new BpExpr(text.join(Chars.Space,segs));
+        var pattern = new BpExpr(text.join(Chars.Space,segs.Reverse()));
         return describe(name, pattern, PolyBits.origin<O>());
     }
 
-    public static BpInfo describe<O>(string name, BpExpr pattern)
-        => describe(name, pattern, PolyBits.origin<O>());
+    public static BpInfo describe(string name, params string[] segs)
+        => describe(name, new BpExpr(text.join(Chars.Space,segs.Reverse())), BfOrigin.Empty);
 
     public static BpInfo describe(string name, BpExpr pattern, BfOrigin src)
             => new BpInfo(

@@ -190,6 +190,12 @@ public readonly struct num3 : INumber<T>
         get => nhash(Value);
     }
 
+    public bit this[byte index]
+    {
+        [MethodImpl(Inline)]
+        get => test(this,index);
+    }
+
     [MethodImpl(Inline)]
     public string Format()
         => Value.ToString();

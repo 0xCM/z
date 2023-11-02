@@ -19,4 +19,6 @@ public enum AsmVL : byte
 
     [Symbol("LLIG", "Indicates that the EVEX.W bit ignored")]
     LLIG = 3,
+
+    Invalid = 0xFF,
 }

@@ -21,19 +21,19 @@ public readonly record struct RexField : IComparable<RexField>
         {
             case 'W':
             case 'w':
-                result = 4;
+                result = 3;
             break;
             case 'R':
             case 'r':
-                result = 3;
+                result = 2;
             break;
             case 'X':
             case 'x':
-                result = 2;
+                result = 1;
             break;
             case 'B':
             case 'b':
-                result = 1;
+                result = 0;
             break;
         }
         return result;

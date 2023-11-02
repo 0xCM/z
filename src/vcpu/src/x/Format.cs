@@ -30,7 +30,7 @@ namespace Z0
         public static string FormatHex<T>(this Vector512<T> src, char sep = Chars.Comma, bool specifier = false)
              where T : unmanaged
         {
-            Span<byte> buffer = stackalloc byte[32];
+            Span<byte> buffer = stackalloc byte[64];
             var dst = sys.recover<T>(buffer);
             vgcpu.vstore(src, dst);
             return HexFormatter.format(dst.ReadOnly(), sep, specifier);

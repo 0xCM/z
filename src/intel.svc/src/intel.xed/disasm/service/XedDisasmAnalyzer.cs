@@ -34,7 +34,6 @@ public sealed class XedDisasmAnalyzer : XedDisasmTarget<XedDisasmAnalyzer>
     {
         Output.AppendLine(RP.PageBreak100);
         Output.AppendLineFormat(PaddedSlots, "Seq", seq);
-        Output.AppendLineFormat(PaddedSlots, nameof(src.Id), src.Id);
         Output.AppendLineFormat(PaddedSlots, nameof(src.Asm), src.Asm);
     }
 

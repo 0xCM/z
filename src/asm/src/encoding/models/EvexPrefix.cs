@@ -11,15 +11,6 @@ public readonly record struct EvexPrefix : IBitPattern<EvexPrefix>
 {
     const string Pattern = "01100010" + "z VL b f aaa" +  "W vvvv 1 pp" + "RXB q 0 mmm";
 
-    [MethodImpl(Inline)]
-    public static bit test(ReadOnlySpan<byte> src)
-    {
-        if(src.Length < 4)
-            return false;
-        else
-            return first(src) == 0x62;
-    }
-
     readonly uint Data;
 
     [MethodImpl(Inline)]
@@ -38,12 +29,6 @@ public readonly record struct EvexPrefix : IBitPattern<EvexPrefix>
     {
         [UnscopedRef, MethodImpl(Inline)]
         get => ref skip(Bytes,i);
-    }
-
-    Hex8 x62
-    {
-        [UnscopedRef]
-        get => (byte)Data;
     }
 
     public Span<Hex8> Bytes
@@ -89,8 +74,8 @@ public readonly record struct EvexPrefix : IBitPattern<EvexPrefix>
     /// <summary>
     /// EVEX.pp: Compressed legacy prefix; Identical to VEX.pp
     /// </summary>
-    public readonly num2 pp => p1.pp;
-
+    public readonly VexPP pp => (VexPP)(byte)p1.pp;
+        
     /// <summary>
     /// EVEX.vvvv: VVVV register specifier; Same as VEX.vvvv. This field is encoded in bit inverted format.
     /// </summary>
@@ -119,12 +104,12 @@ public readonly record struct EvexPrefix : IBitPattern<EvexPrefix>
     /// <summary>
     /// EVEX.L'L Vector length/RC
     /// </summary>
-    public readonly num2 VL => p2.VL;
+    public readonly VL VL => (AsmVL)(byte)p2.VL;
 
     /// <summary>
     /// EVEX.z Zeroing/Merging
     /// </summary>
-    public readonly bit z  => p2.z;   
+    public readonly bit z => p2.z;   
 
     [StructLayout(LayoutKind.Sequential,Size=1)]
     readonly record struct P0
@@ -162,7 +147,6 @@ public readonly record struct EvexPrefix : IBitPattern<EvexPrefix>
         public bit one => bits.test(this,3);
 
         public num2 pp => new(bits.extract(this, 0,1));
-
 
         public string Format()
             => u8(this).FormatHex();

@@ -15,15 +15,15 @@ public partial class XedDisasm : WfSvc<XedDisasm>
 {
     static long DisasmTokens;    
 
-    static readonly BpDef<ModRm> ModRmPattern = BitPatterns.def<ModRm>();
+    static readonly BpDef ModRmPattern = AsmBitPatterns.ModRm.Def;
 
-    static readonly BpDef<VexC4> VexC4Pattern = BitPatterns.def<VexC4>();
+    static readonly BpDef VexC4Pattern = AsmBitPatterns.VexC4.Def;
 
-    static readonly BpDef<VexC5> VexC5Pattern = BitPatterns.def<VexC5>();
+    static readonly BpDef VexC5Pattern = AsmBitPatterns.VexC5.Def;
 
-    static readonly BpDef<RexPrefix> RexPattern = BitPatterns.def<RexPrefix>();
+    static readonly BpDef RexPattern = AsmBitPatterns.Rex.Def;
 
-    static readonly BpDef<EvexPrefix> EvexPattern = BitPatterns.def<EvexPrefix>();
+    static readonly BpDef EvexPattern = Evex.Pattern.Def;
 
     public static ParallelQuery<FilePath> sources(IDbArchive src)
         => src.Files(FileKind.XedRawDisasm).AsParallel();        
@@ -69,7 +69,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         var context = new XedDisasmContext(root);
         var docs = Import(context);
         piter(docs, doc => {});
-        Consolidate(context, docs);
+        Consolidate(context);
         return docs;
     }
 
@@ -146,13 +146,15 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         return buffer;
     }
 
-    void Consolidate(XedDisasmContext context, ParallelQuery<XedDisasmDoc> src)
+    public static ParallelQuery<Instruction> consolidate(XedDisasmContext context)
+        => (from b in context.Blocks select b.Instruction).AsParallel().OrderBy(x => x.Form).ThenBy(x => x.Asm);
+
+    void Consolidate(XedDisasmContext context)
     {
         var dst = context.ProjectRoot.Scoped("build");
-        var summaries = from block in context.Blocks select block.SummaryRow;
         exec(PllExec,
             () => EmitConsolidated(resequence(context.Blocks.ToArray()), dst),
-            () => EmitConsolidated(resequence(summaries.ToArray()), dst));
+            () => EmitConsolidated(resequence((from block in context.Blocks select block.SummaryRow).ToArray()), dst));
     }
 
     void EmitConsolidated(ReadOnlySeq<XedDisasmDetailBlock> src, IDbArchive dst)
@@ -220,7 +222,6 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             writer.WriteLine(RP.PageBreak80);
 
             writer.AppendLineFormat(LabeledValue, nameof(detail.InstructionId), detail.InstructionId);
-            //writer.AppendLineFormat(LabeledValue, "Fields", format(slice(fields,0, fieldcount)));
             writer.AppendLineFormat(LabeledValue, nameof(detail.Instruction), detail.Instruction);            
             writer.AppendLineFormat(LabeledValue, nameof(detail.Form), detail.Form);
             writer.AppendLineFormat(LabeledValue, nameof(detail.IP), detail.IP);
@@ -283,7 +284,6 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             if(state.HAS_MODRM)
             {
                 var modrm = Require.equal(XedFields.modrm(state), detail.ModRm);
-
                 writer.AppendLineFormat(LabeledValue, "ModRm", modrm.Format());
                 writer.AppendLineFormat(LabeledValue, EmptyString, ModRmPattern.Symbolic());
                 writer.AppendLineFormat(LabeledValue, EmptyString, ModRmPattern.BitString(modrm));
@@ -373,7 +373,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
                 if(vc == XedVexClass.VV1)
                 {
                     var vex5 = Numbers.pack((num3)(byte)state.VEXDEST210, state.VEXDEST4, state.VEXDEST3);
-                    IBitPattern vp = detail.VexPrefix.VexKind == AsmPrefixTokens.VexPrefixKind.xC4 ? VexC4Pattern : VexC5Pattern;
+                    IBitPattern vp = detail.VexPrefix.VexKind == VexPrefixKind.xC4 ? VexC4Pattern : VexC5Pattern;
                     writer.AppendLineFormat(LabeledValue, nameof(detail.VexPrefix.VexKind), detail.VexPrefix.VexKind);
                     writer.AppendLineFormat(LabeledValue, nameof(detail.VexPrefix), vp.Symbolic());
                     writer.AppendLineFormat(LabeledValue, EmptyString, vp.BitString(detail.VexPrefix));
@@ -388,7 +388,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
                     }
                     else
                     {
-                        var evex = @as<EvexPrefix>(prefix);
+                         var evex = @as<EvexPrefix>(prefix);
                          writer.AppendLineFormat(LabeledValue, "Evex",  evex.Format());
                          writer.AppendLineFormat(LabeledValue, EmptyString, EvexPattern.Symbolic());
                          writer.AppendLineFormat(LabeledValue, EmptyString, EvexPattern.BitString(evex));

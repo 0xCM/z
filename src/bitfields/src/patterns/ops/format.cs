@@ -7,7 +7,7 @@ namespace Z0;
 partial struct BitPatterns
 {
     public static string format(in BpDef src)
-        => string.Format("{0}[{1}]", src.Name, src.Pattern);
+        => string.Format("{0}[{1}]", src.Name, src.Expr);
 
     public static string format<P>(in BpDef<P> src)
         where P : unmanaged, IBitPattern<P>

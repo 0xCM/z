@@ -87,8 +87,8 @@ namespace Z0
                 }
                 case 3:
                 {
-                    uint3 value = Value;
-                    dst = string.Format("0b{0}",value);
+                    num3 value = Value;
+                    dst = string.Format("0b{0}",value.Bitstring());
                     break;
                 }
                 case 4:
@@ -125,40 +125,24 @@ namespace Z0
             => src.Value;
 
         [MethodImpl(Inline)]
-        public static implicit operator LiteralBits(uint5 src)
-            => new LiteralBits(5,src);
-
-        [MethodImpl(Inline)]
-        public static implicit operator LiteralBits(uint4 src)
-            => new LiteralBits(4,src);
-
-        [MethodImpl(Inline)]
-        public static implicit operator LiteralBits(uint3 src)
-            => new LiteralBits(3,src);
-
-        [MethodImpl(Inline)]
-        public static implicit operator LiteralBits(uint2 src)
-            => new LiteralBits(2,src);
-
-        [MethodImpl(Inline)]
-        public static implicit operator LiteralBits(uint1 src)
-            => new LiteralBits(1,src);
+        public static implicit operator LiteralBits(num3 src)
+            => new (3,src);
 
         [MethodImpl(Inline)]
         public static implicit operator LiteralBits(bit src)
-            => new LiteralBits(1,src);
+            => new (1,src);
 
         [MethodImpl(Inline)]
         public static implicit operator LiteralBits(num5 src)
-            => new LiteralBits(5,src);
+            => new (5,src);
+
+        [MethodImpl(Inline)]
+        public static implicit operator LiteralBits(uint5 src)
+            => new (5,src);
 
         [MethodImpl(Inline)]
         public static implicit operator LiteralBits(num4 src)
-            => new LiteralBits(4,src);
-
-        [MethodImpl(Inline)]
-        public static implicit operator LiteralBits(num3 src)
-            => new LiteralBits(3,src);
+            => new (4,src);
 
         [MethodImpl(Inline)]
         public static implicit operator LiteralBits(num2 src)

@@ -123,32 +123,8 @@ namespace Z0
                 => new BitNumber<N,T>(src);
 
         [MethodImpl(Inline)]
-        public static uint3 define(N3 n, byte src)
-            => src;
-
-        [MethodImpl(Inline)]
-        public static uint4 define(N4 n, byte src)
-            => src;
-
-        [MethodImpl(Inline)]
-        public static uint5 define(N5 n, byte src)
-            => src;
-
-        [MethodImpl(Inline)]
-        public static uint6 define(N6 n, byte src)
-            => src;
-
-        [MethodImpl(Inline)]
-        public static uint7 define(N7 n, byte src)
-            => src;
-
-        [MethodImpl(Inline)]
-        public static uint8b define(N8 n, byte src)
-            => src;
-
-        [MethodImpl(Inline)]
         public static BitNumber define(byte n, ulong src)
-            => new BitNumber(n,src);
+            => new (n,src);
 
         const byte WidthOffset = 56;
 
@@ -180,12 +156,6 @@ namespace Z0
         public BitNumber(uint2 data)
         {
             Data = (ulong)data | ((ulong)2 << WidthOffset);
-        }
-
-        [MethodImpl(Inline)]
-        public BitNumber(uint3 data)
-        {
-            Data = (ulong)data | ((ulong)3 << WidthOffset);
         }
 
         [MethodImpl(Inline)]
@@ -229,55 +199,6 @@ namespace Z0
             [MethodImpl(Inline)]
             get => (byte)(Data >> WidthOffset);
         }
-
-        bit Val1
-        {
-            [MethodImpl(Inline)]
-            get => (byte)Data;
-        }
-
-        uint2 Val2
-        {
-            [MethodImpl(Inline)]
-            get => (byte)Data;
-        }
-
-        uint3 Val3
-        {
-            [MethodImpl(Inline)]
-            get => (byte)Data;
-        }
-
-        uint4 Val4
-        {
-            [MethodImpl(Inline)]
-            get => (byte)Data;
-        }
-
-        uint5 Val5
-        {
-            [MethodImpl(Inline)]
-            get => (byte)Data;
-        }
-
-        uint6 Val6
-        {
-            [MethodImpl(Inline)]
-            get => (byte)Data;
-        }
-
-        uint7 Val7
-        {
-            [MethodImpl(Inline)]
-            get => (byte)Data;
-        }
-
-        uint8b Val8
-        {
-            [MethodImpl(Inline)]
-            get => (byte)Data;
-        }
-
         public bool IsZero
         {
             [MethodImpl(Inline)]
@@ -320,10 +241,6 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator BitNumber(uint2 src)
-            => new BitNumber(src);
-
-        [MethodImpl(Inline)]
-        public static implicit operator BitNumber(uint3 src)
             => new BitNumber(src);
 
         [MethodImpl(Inline)]

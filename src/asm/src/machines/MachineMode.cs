@@ -134,12 +134,12 @@ public readonly struct MachineMode : IComparable<MachineMode>, IEquatable<Machin
         => new ((MachineModeClass)src);
 
     [MethodImpl(Inline)]
-    public static explicit operator MachineMode(uint3 src)
+    public static explicit operator MachineMode(num3 src)
         => new ((MachineModeClass)(byte)src);
 
     [MethodImpl(Inline)]
-    public static explicit operator uint3(MachineMode src)
-        => (uint3)(byte)src.Class;
+    public static explicit operator num3(MachineMode src)
+        => (num3)(byte)src.Class;
 
     [MethodImpl(Inline)]
     public static bool operator==(MachineMode a, MachineMode b)

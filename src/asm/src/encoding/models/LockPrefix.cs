@@ -4,7 +4,17 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using static AsmPrefixTokens;
+
+/// <summary>
+/// Defines the lock prefix code
+/// </summary>
+public enum LockPrefixCode : byte
+{
+    None = 0,
+
+    [Symbol("F0", "Lock Prefix")]
+    LOCK = 0xF0,
+}
 
 public readonly record struct LockPrefix : IAsmPrefix<LockPrefixCode>, IAsmByte<LockPrefix>
 {

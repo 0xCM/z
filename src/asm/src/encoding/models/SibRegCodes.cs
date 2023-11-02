@@ -16,7 +16,7 @@ public record struct SibRegCodes
     public asci8 Index;
 
     [Render(5)]
-    public uint2 Scale;
+    public num2 Scale;
 
     [Render(3)]
     public Hex8 Hex;

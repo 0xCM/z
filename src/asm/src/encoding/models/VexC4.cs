@@ -4,14 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using static AsmPrefixTokens;
 using static sys;
 
-[BitPattern(Pattern), ApiComplete]
+using api = Vex;
+
+[ApiComplete]
 public record struct VexC4 : IBitPattern<VexC4>
-{
-    const string Pattern = "11000100 R X B mmmmm W vvvv L pp";
-    
+{    
     // ~ RXB
     const byte RXB_Mask = 0b1110_0000;
 
@@ -79,7 +78,7 @@ public record struct VexC4 : IBitPattern<VexC4>
     }
 
     [MethodImpl(Inline)]
-    public static VexC4 init(VexRXB rxb, VexM mmmmm = default, bit w = default, byte vvvv = default, VexLengthCode l = default, VexOpCodeExtension pp = default)
+    public static VexC4 init(VexRXB rxb, VexM mmmmm = default, bit w = default, byte vvvv = default, VL l = default, VexPP pp = default)
     {
         var dst = new VexC4();
         dst.B0 = (byte)VexPrefixKind.xC4;
@@ -146,19 +145,19 @@ public record struct VexC4 : IBitPattern<VexC4>
         set => B2 = math.or(bits.scatter((byte)value, VVVV_Mask), math.and(B2, math.not(VVVV_Mask)));
     }
 
-    public VexLengthCode L
+    public VL L
     {
         [MethodImpl(Inline)]
-        get => (VexLengthCode)bits.extract(B2, L_Min, L_Max);
+        get => (AsmVL)bits.extract(B2, L_Min, L_Max);
 
         [MethodImpl(Inline)]
-        set => B2 = math.or(bits.scatter((byte)value, L_Mask), math.and(B2, math.not(L_Mask)));
+        set => B2 = math.or(bits.scatter((byte)value.Value, L_Mask), math.and(B2, math.not(L_Mask)));
     }
 
-    public VexOpCodeExtension PP
+    public VexPP PP
     {
         [MethodImpl(Inline)]
-        get => (VexOpCodeExtension)bits.extract(B2, PP_Min, PP_Max);
+        get => (VexPP)bits.extract(B2, PP_Min, PP_Max);
 
         [MethodImpl(Inline)]
         set => B2 =  math.or(bits.scatter((byte)value, PP_Mask), math.and(B2, math.not(PP_Mask)));
@@ -181,7 +180,7 @@ public record struct VexC4 : IBitPattern<VexC4>
     public byte Size
     {
         [MethodImpl(Inline)]
-        get => VexPrefix.size(Kind);
+        get => api.size(Kind);
     }
 
     public string Bitstring()
@@ -204,7 +203,7 @@ public record struct VexC4 : IBitPattern<VexC4>
         BitRender.render4(VVVV, ref i, dst);
         seek(dst,i++) = Chars.Space;
 
-        BitRender.render1((byte)L, ref i, dst);
+        BitRender.render1((byte)L.Value, ref i, dst);
         seek(dst,i++) = Chars.Space;
 
         BitRender.render2((byte)PP, ref i, dst);

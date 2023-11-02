@@ -9,7 +9,7 @@ using static RuntimeModeKind;
 using static OpszKind;
 using static AsmOpCodes;
 
-using SZ = AsmPrefixTokens.SizeOverrideCode;
+using SZ = SizeOverrideCode;
 
 [ApiHost]
 public readonly struct AsmPrefixTests
@@ -82,7 +82,7 @@ public readonly struct AsmPrefixTests
     /// <param name="src">The byte to test</param>
     [MethodImpl(Inline), Op]
     public static bit opsz(byte src)
-        => (SZ)src == SZ.OPSZ;
+        => (SZ)src == SZ.OSZ;
 
     /// <summary>
     /// Tests whether a specified byte represents the address size override prefix selecting an instruction's non-default address size
@@ -90,7 +90,7 @@ public readonly struct AsmPrefixTests
     /// <param name="src">The byte to test</param>
     [MethodImpl(Inline), Op]
     public static bit adsz(byte src)
-        => (SZ)src == SZ.ADSZ;
+        => (SZ)src == SZ.ASZ;
 
     /// <summary>
     /// Determines whether a 66h prefix is required to indicate an operand-size override

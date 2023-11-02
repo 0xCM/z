@@ -20,7 +20,7 @@ public readonly partial struct BitPatterns
         dst.WriteLine(RP.PageBreak120);
         dst.AppendLineFormat(RenderPattern,  nameof(BpInfo.Origin), src.Origin);
         dst.AppendLineFormat(RenderPattern,  nameof(BpInfo.Name), src.Name);
-        dst.AppendLineFormat(RenderPattern,  nameof(BpInfo.Pattern), src.Pattern);
+        dst.AppendLineFormat(RenderPattern,  nameof(BpInfo.Expr), src.Expr);
         dst.AppendLineFormat(RenderPattern,  nameof(BpInfo.DataWidth), src.DataWidth);
         dst.AppendLineFormat(RenderPattern,  nameof(BpInfo.PackedSize), src.PackedSize);
         dst.AppendLineFormat(RenderPattern,  nameof(BpInfo.DataType), src.DataType.DisplayName());
@@ -51,7 +51,6 @@ public readonly partial struct BitPatterns
         where F : unmanaged, Enum
         where T : unmanaged
             => gpack.extract(dataset.Offset(field), dataset.Width(field), src);
-
 
     [MethodImpl(Inline), Op]
     public static BfOrigin<P> origin<P>()

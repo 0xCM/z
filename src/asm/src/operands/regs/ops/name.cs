@@ -26,7 +26,9 @@ partial struct AsmRegs
             case RegClassCode.ZMM:
                 return Zmm.RegName(i);
             case RegClassCode.MASK:
-                return KReg.RegName(i);
+                return Mask.RegName(i);
+            case RegClassCode.ZMASK:
+                return ZMask.RegName(i);
             case RegClassCode.MMX:
                 return Mmx.RegName(i);
             case RegClassCode.DB:

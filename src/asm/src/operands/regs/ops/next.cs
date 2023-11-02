@@ -24,6 +24,15 @@ partial struct AsmRegs
             return r0;
     }
 
+    [MethodImpl(Inline), Op]
+    public static rKz next(rKz src)
+    {
+        if(math.lt((byte)src.IndexCode, (byte)r7))
+            return emath.inc(src.IndexCode);
+        else
+            return r0;
+    }
+
     /// <summary>
     /// Advances to the next <see cref='T.r16'/> register, modulo 16
     /// </summary>

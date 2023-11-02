@@ -19,12 +19,12 @@ namespace Z0
 
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<uint2> bits(N2 n)
-            => recover<byte,uint2>(W2);
+        public static ReadOnlySpan<num2> bits(N2 n)
+            => recover<byte,num2>(W2);
 
         [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<uint3> bits(N3 n)
-            => recover<byte,uint3>(W3);
+        public static ReadOnlySpan<num3> bits(N3 n)
+            => recover<byte,num3>(W3);
 
         [MethodImpl(Inline), Op]
         public static ReadOnlySpan<uint4> bits(N4 n)

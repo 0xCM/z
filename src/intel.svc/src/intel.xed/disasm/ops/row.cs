@@ -152,20 +152,20 @@ partial class XedDisasm
 
         if(state.VEXVALID == (byte)XedVexClass.VV1)
         {
-            var vexcode = VexPrefix.code(prefix);
-            var vexsize = VexPrefix.size(vexcode.Value);
+            var vexcode = Vex.code(prefix);
+            var vexsize = Vex.size(vexcode.Value);
             var vexbytes = slice(prefix, vexcode.Offset, vexsize);
             var vexdest = (num5)(state.VEXDEST210 | (byte)state.VEXDEST3 << 3 | (byte)state.VEXDEST4 << 4);
             Require.equal(vexbytes.Length, vexsize);
 
-            if(vexcode.Value == AsmPrefixTokens.VexPrefixKind.xC4)
-                dst.VexPrefix = VexPrefix.define(AsmPrefixTokens.VexPrefixKind.xC4,skip(vexbytes, 1), skip(vexbytes,2));
-            else if(vexcode.Value == AsmPrefixTokens.VexPrefixKind.xC5)
-                dst.VexPrefix = VexPrefix.define(AsmPrefixTokens.VexPrefixKind.xC5,skip(vexbytes, 1));
+            if(vexcode.Value == VexPrefixKind.xC4)
+                dst.VexPrefix = Vex.define(VexPrefixKind.xC4,skip(vexbytes, 1), skip(vexbytes,2));
+            else if(vexcode.Value == VexPrefixKind.xC5)
+                dst.VexPrefix = Vex.define(VexPrefixKind.xC5,skip(vexbytes, 1));
 
         }
         else if(state.VEXVALID == (byte)XedVexClass.EVV)
-            dst.EvexPrefix = AsmPrefix.evex(slice(prefix,legacyskip));
+            dst.EvexPrefix = Evex.prefix(slice(prefix,legacyskip));
 
         if(state.IMM0)
             dst.Imm = asm.imm(code, state.POS_IMM, state.IMM0SIGNED, Sizes.native(state.IMM_WIDTH));

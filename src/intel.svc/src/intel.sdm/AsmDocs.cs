@@ -13,7 +13,5 @@ public readonly struct AsmDocs
     public AsmDocs()
     {
         _Root = AppSettings.Default.DevRoot().Scoped("asm/docs");        
-    }
-
-    
+    }   
 }

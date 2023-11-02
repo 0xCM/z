@@ -162,9 +162,6 @@ public class XedRender
     public static string format(uint2 src)
         => "0b" + src.Format();
 
-    public static string format(uint3 src)
-        => "0b" +  src.Format();
-
     public static string format(num2 src)
         => "0b" +  src.Bitstring();
 

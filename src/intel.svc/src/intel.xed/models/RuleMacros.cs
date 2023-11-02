@@ -5,11 +5,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using Asm;
 using static XedModels;
 using static MachineModes;
 using static MachineModes.MachineModeClass;
-using static Asm.AsmPrefixTokens;
-using static Asm.AsmPrefixTokens.VectorWidthCode;
 using static XedModels.EASZ;
 using static XedModels.EOSZ;
 using static XedModels.SMODE;
@@ -357,15 +356,15 @@ partial class XedRules
 
         [MethodImpl(Inline), Op]
         static MacroSpec VL128()
-            => assign(M.VL128, K.VL, V128);
+            => assign(M.VL128, K.VL, AsmVL.VL128);
 
         [MethodImpl(Inline), Op]
         static MacroSpec VL256()
-            => assign(M.VL256, K.VL, V256);
+            => assign(M.VL256, K.VL, AsmVL.VL256);
 
         [MethodImpl(Inline), Op]
         static MacroSpec VL512()
-            => assign(M.VL512, K.VL, V512);
+            => assign(M.VL512, K.VL, AsmVL.VL512);
 
         [MethodImpl(Inline), Op]
         static MacroSpec VV0()
@@ -417,7 +416,7 @@ partial class XedRules
 
         [MethodImpl(Inline), Op]
         static MacroSpec VLBAD()
-            => assign(M.VLBAD, K.VL, VectorWidthCode.INVALID);
+            => assign(M.VLBAD, K.VL, AsmVL.Invalid);
 
         [MethodImpl(Inline), Op]
         static MacroSpec VMAP0()

@@ -12,13 +12,13 @@ public readonly struct RegClasses
 {
     public static GpClass Gp => default;
 
-    public static GP8HiClass Gp8Hi => default;
-
     public static SegClass Seg => default;
 
     public static FlagClass Flag => default;
 
-    public static MaskClass KReg => default;
+    public static MaskClass Mask => default;
+
+    public static ZMaskClass ZMask => default;
 
     public static CrClass Cr => default;
 
@@ -43,22 +43,6 @@ public readonly struct RegClasses
     public static StClass St => default;
 
     public static MmxClass Mmx => default;
-
-    public readonly struct GP8HiClass : IRegClass<GP8HiClass>
-    {
-        public CC Kind => CC.GP8HI;
-
-        public asci8 Name => nameof(CC.GP8HI);
-
-        [MethodImpl(Inline), Op]
-        public AsmRegName RegName(byte index)
-        {
-            const byte RegLength = 2;
-            const string Data = "ahchdhbh";
-            var i0 = ((byte)index - 4)*RegLength;
-            return new asci8(slice(text.chars(Data), i0, RegLength));
-        }
-    }
     
     public readonly struct GpClass : IRegClass<GpClass>
     {
@@ -293,7 +277,6 @@ public readonly struct RegClasses
 
     public readonly struct YmmClass : IRegClass<YmmClass>
     {
-
         [MethodImpl(Inline), Op]
         public AsmRegName RegName(byte index)
         {
@@ -332,7 +315,6 @@ public readonly struct RegClasses
 
     public readonly struct MaskClass : IRegClass<MaskClass>
     {
-
         public CC Kind => CC.MASK;
 
         public asci8 Name => nameof(CC.MASK);
@@ -347,6 +329,25 @@ public readonly struct RegClasses
         }
 
         public static implicit operator CC(MaskClass src)
+            => src.Kind;
+    }
+
+    public readonly struct ZMaskClass : IRegClass<ZMaskClass>
+    {
+        public CC Kind => CC.ZMASK;
+
+        public asci8 Name => nameof(CC.ZMASK);
+
+        [MethodImpl(Inline), Op]
+        public AsmRegName RegName(byte index)
+        {
+            const byte RegLength = 5;
+            const string Data = "k0{z}k1{z}k2{z}k3{z}k4{z}k5{z}k6{z}k7{z}";
+            var i0 = (ushort)((uint)index*RegLength);
+            return new asci8(slice(text.chars(Data), i0, RegLength));
+        }
+
+        public static implicit operator CC(ZMaskClass src)
             => src.Kind;
     }
 

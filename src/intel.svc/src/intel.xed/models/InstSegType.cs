@@ -95,7 +95,7 @@ partial class XedRules
                         dst = XedRender.format((uint2)Literal);
                     break;
                     case 3:
-                        dst = XedRender.format((uint3)Literal);
+                        dst = XedRender.format((num3)Literal);
                     break;
                     case 4:
                         dst = XedRender.format((uint4)Literal);

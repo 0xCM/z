@@ -20,16 +20,13 @@ public enum RegClassCode : byte
     GP = 0,
 
     /// <summary>
-    /// Classifies a hi byte register
-    /// </summary>
-    [Symbol("gp8hi", "A hi gp8 register")]
-    GP8HI,
-
-    /// <summary>
     /// Classifies a 64-bit mask register
     /// </summary>
     [Symbol("mask", "A 64-bit avx512 mask register")]
     MASK,
+
+    [Symbol("mask", "A zero-masked 64-bit avx512 mask register")]
+    ZMASK,
 
     /// <summary>
     /// Classifies an xmm vector register of width <see cref='W128'/>

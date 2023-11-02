@@ -27,13 +27,13 @@ public readonly record struct BpDef : IBitPattern
     /// The pattern content
     /// </summary>
     [Render(1)]
-    public readonly BpExpr Pattern;
+    public readonly BpExpr Expr;
 
     [MethodImpl(Inline)]
     public BpDef(string name, BpExpr pattern, BfOrigin origin)
     {
         Name = name;
-        Pattern = pattern;
+        Expr = pattern;
         Origin = origin;
     }
 
@@ -42,53 +42,53 @@ public readonly record struct BpDef : IBitPattern
     /// </summary>
     [MethodImpl(Inline)]
     public uint BitWidth()
-        => api.bitwidth(Pattern);
+        => api.bitwidth(Expr);
 
     /// <summary>
     /// The total pattern size
     /// </summary>
     [MethodImpl(Inline)]
     public DataSize Size()
-        => api.size(Pattern);
+        => api.size(Expr);
 
     /// <summary>
     /// The minimum amount of storage required to store the represented data
     /// </summary>
     [MethodImpl(Inline)]
     public NativeSize PackedSize()
-        => api.packedsize(Pattern);
+        => api.packedsize(Expr);
 
     /// <summary>
     /// The segments in the field
     /// </summary>
     [MethodImpl(Inline)]
     public Seq<BfSegModel> Segments()
-        => api.segs(Pattern);
+        => api.segs(Expr);
 
     [MethodImpl(Inline)]
     public Seq<byte> SegWidths()
-        => api.segwidths(Pattern);
+        => api.segwidths(Expr);
 
     [MethodImpl(Inline)]
     public ReadOnlySeq<string> Symbols()
-        => api.symbols(Pattern);
+        => api.symbols(Expr);
 
     [MethodImpl(Inline)]
     public BpInfo Description()
-        => api.describe(Name, Pattern, Origin);
+        => api.describe(Name, Expr, Origin);
 
     [MethodImpl(Inline)]
     public BfModel Model()
-        => api.model(Name, Pattern, Origin);
+        => api.model(Name, Expr, Origin);
 
     [MethodImpl(Inline)]
     public string BitString(ulong value)
-        => api.bitstring(Pattern, value);
+        => api.bitstring(Expr, value);
 
     [MethodImpl(Inline)]
     public string BitString<T>(T value)
         where T : unmanaged
-        => api.bitstring(Pattern, value);
+        => api.bitstring(Expr, value);
 
     public void Symbolic(ITextEmitter dst)
         => api.symbolic(this,dst);
@@ -106,7 +106,7 @@ public readonly record struct BpDef : IBitPattern
         => Name;
 
     BpExpr IBitPattern.Pattern
-        => Pattern;
+        => Expr;
 
     BfOrigin IBitPattern.Origin
         => Origin;

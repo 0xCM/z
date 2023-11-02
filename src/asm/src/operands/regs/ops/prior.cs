@@ -48,6 +48,24 @@ partial struct AsmRegs
     }
 
     [MethodImpl(Inline), Op]
+    public static rK prior(rK src)
+    {
+        if(math.gt((byte)src.IndexCode, (byte)r0))
+            return dec(src.IndexCode);
+        else
+            return r31;
+    }
+
+    [MethodImpl(Inline), Op]
+    public static rKz prior(rKz src)
+    {
+        if(math.gt((byte)src.IndexCode, (byte)r0))
+            return dec(src.IndexCode);
+        else
+            return r7;
+    }
+
+    [MethodImpl(Inline), Op]
     public static xmm prior(xmm src)
     {
         if(math.gt((byte)src.IndexCode, (byte)r0))
@@ -74,14 +92,6 @@ partial struct AsmRegs
             return r31;
     }
 
-    [MethodImpl(Inline), Op]
-    public static rK prior(rK src)
-    {
-        if(math.gt((byte)src.IndexCode, (byte)r0))
-            return dec(src.IndexCode);
-        else
-            return r31;
-    }
 
     [MethodImpl(Inline), Op]
     public static rCr prior(rCr src)

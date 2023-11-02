@@ -67,10 +67,6 @@ public readonly struct BpCalcs<P>
     public ReadOnlySeq<string> Symbols()
         => Untyped.Symbols();
 
-    [MethodImpl(Inline)]
-    public BpInfo Description()
-        => api.describe<P>(Def.Name, Def.Pattern);
-
     /// <summary>
     /// A semantic identifier
     /// </summary>

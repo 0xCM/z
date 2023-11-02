@@ -38,7 +38,6 @@ namespace Z0
             var i=0u;
             Write($"1: {bits.View(w1, i)}");
             Write($"2: {bits.View(w2, i)}");
-            Write($"3: {bits.View(w3, i)}");
             Write($"4: {bits.View(w4, i)}");
             Write($"5: {bits.View(w5, i)}");
             Write($"6: {bits.View(w6, i)}");
@@ -48,7 +47,6 @@ namespace Z0
             i++;
             Write($"1: {bits.View(w1, i)}");
             Write($"2: {bits.View(w2, i)}");
-            Write($"3: {bits.View(w3, i)}");
             Write($"4: {bits.View(w4, i)}");
             Write($"5: {bits.View(w5, i)}");
             Write($"6: {bits.View(w6, i)}");

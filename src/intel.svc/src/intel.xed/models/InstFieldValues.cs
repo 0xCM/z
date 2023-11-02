@@ -4,7 +4,6 @@
 // License: https://github.com/intelxed/xed/blob/main/LICENSE
 //-----------------------------------------------------------------------------
 namespace Z0;
-using System.Linq;
 
 using static sys;
 using static XedModels;
@@ -38,9 +37,7 @@ partial class XedRules
             var dst = text.emitter();
             dst.Append(Chars.LBrace);
             for(var i=0; i<keys.Length; i++)
-            {
                 dst.Append($"{keys[i]}:{this[keys[i]]}");
-            }
             dst.Append(Chars.RBrace);
             return dst.Emit();
         }

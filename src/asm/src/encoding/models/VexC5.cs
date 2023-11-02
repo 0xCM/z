@@ -4,14 +4,14 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using static AsmPrefixTokens;
+//using static AsmPrefixTokens;
 using static sys;
 
-[BitPattern(Pattern), ApiComplete]
+using api = Vex;
+
+[ApiComplete]
 public record struct VexC5 : IBitPattern<VexC5>
 {
-    const string Pattern = "11000101 R vvvv L pp";
-
     // ~ R
 
     const byte R_Mask = 0b1000_0000;
@@ -53,7 +53,7 @@ public record struct VexC5 : IBitPattern<VexC5>
     }
 
     [MethodImpl(Inline)]
-    public static VexC5 init(bit r = default, byte vvvv = default, VexLengthCode l = default, VexOpCodeExtension pp = default)
+    public static VexC5 init(bit r = default, byte vvvv = default, VL l = default, VexPP pp = default)
     {
         var dst = new VexC5();
         dst.B0 = (byte)VexPrefixKind.xC5;
@@ -99,24 +99,23 @@ public record struct VexC5 : IBitPattern<VexC5>
         set => B1 = math.or(bits.scatter(value, VVVV_Mask), math.and(B1, math.not(VVVV_Mask)));
     }
 
-    public VexLengthCode L
+    public VL L
     {
         [MethodImpl(Inline)]
-        get => (VexLengthCode)bits.extract(B1, L_Min, L_Max);
+        get => (AsmVL)bits.extract(B1, L_Min, L_Max);
 
         [MethodImpl(Inline)]
-        set => B1 = math.or(bits.scatter((byte)value, L_Mask), math.and(B1, math.not(L_Mask)));
+        set => B1 = math.or(bits.scatter((byte)value.Value, L_Mask), math.and(B1, math.not(L_Mask)));
     }
 
-    public VexOpCodeExtension PP
+    public VexPP PP
     {
         [MethodImpl(Inline)]
-        get => (VexOpCodeExtension)bits.extract(B1, PP_Min, PP_Max);
+        get => (VexPP)bits.extract(B1, PP_Min, PP_Max);
 
         [MethodImpl(Inline)]
         set => B1 =  math.or(bits.scatter((byte)value, PP_Mask), math.and(B1, math.not(PP_Mask)));
     }
-
 
     public VexPrefixKind Kind
     {
@@ -127,7 +126,7 @@ public record struct VexC5 : IBitPattern<VexC5>
     public byte Size
     {
         [MethodImpl(Inline)]
-        get => VexPrefix.size(Kind);
+        get => api.size(Kind);
     }
 
     public RegIndex Reg
@@ -150,7 +149,7 @@ public record struct VexC5 : IBitPattern<VexC5>
         BitRender.render4(VVVV, ref i, dst);
         seek(dst,i++) = Chars.Space;
 
-        BitRender.render1((byte)L, ref i, dst);
+        BitRender.render1((byte)L.Value, ref i, dst);
         seek(dst,i++) = Chars.Space;
 
         BitRender.render2((byte)PP, ref i, dst);

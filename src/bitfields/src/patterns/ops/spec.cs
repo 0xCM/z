@@ -20,7 +20,7 @@ partial struct BitPatterns
     {
         var dst = BpSpec.Empty;
         dst.Origin = src.Origin.Format();
-        dst.Content = src.Pattern;
+        dst.Content = src.Expr;
         dst.DataType = src.DataType.DisplayName();
         dst.Descriptor = src.Descriptor;
         dst.MinSize = src.PackedSize;

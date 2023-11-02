@@ -4,11 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using static AsmPrefixTokens;
-using static AsmPrefixTokens.SizeOverrideCode;
-
 public readonly record struct SizeOverride
 {
+    public static SizeOverride ASZ => new(SizeOverrideCode.OSZ);
+
+    public static SizeOverride OSZ => new(SizeOverrideCode.ASZ);
+
     public readonly SizeOverrideCode Code;
 
     [MethodImpl(Inline)]
@@ -22,8 +23,8 @@ public readonly record struct SizeOverride
 
     public string Format()
         => Code switch  {
-            OPSZ => "0x66",
-            ADSZ => "0x67",
+            SizeOverrideCode.OSZ => "0x66",
+            SizeOverrideCode.ASZ => "0x67",
             _ => EmptyString,
         };
 

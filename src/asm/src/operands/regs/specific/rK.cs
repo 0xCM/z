@@ -70,11 +70,11 @@ public readonly struct rK : IRegOp64<rK>
 
     [MethodImpl(Inline)]
     public static implicit operator G(uint4 src)
-        => new G((I)(byte)src);
+        => new ((I)(byte)src);
 
     [MethodImpl(Inline)]
     public static implicit operator G(I src)
-        => new G(src);
+        => new (src);
 
     [MethodImpl(Inline)]
     public static implicit operator I(G src)
@@ -86,11 +86,11 @@ public readonly struct rK : IRegOp64<rK>
 
     [MethodImpl(Inline)]
     public static implicit operator G(Sym<K> src)
-        => new G((I)src.Kind);
+        => new ((I)src.Kind);
 
     [MethodImpl(Inline)]
     public static implicit operator G(RegKind src)
-        => new G(index(src));
+        => new (index(src));
 
     [MethodImpl(Inline)]
     public static G operator ++(G src)

@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using System.Numerics;
 using static System.Runtime.Intrinsics.X86.Bmi1;
 using static System.Runtime.Intrinsics.X86.Bmi1.X64;
 

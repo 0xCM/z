@@ -15,9 +15,6 @@ namespace Z0
         public static bool parse(string src, out uint2 dst)
             => Z0.uint2.parse(src, out dst);
 
-        public static bool parse(string src, out uint3 dst)
-            => Z0.uint3.parse(src, out dst);
-
         public static bool parse(string src, out uint4 dst)
             => Z0.uint4.parse(src, out dst);
 

@@ -21,12 +21,11 @@ partial struct BitPatterns
     {
         var segs = src.Segments();
         var count = (int)segs.Count;
-        for(var i=count-1; i>=0; i--)
+        for(var i=0; i<count; i++)
         {
-            if(i!=count-1)
+            if(i!=0)
                 dst.Append(Chars.Space);            
-            ref readonly var seg = ref segs[i];
-            dst.Append(seg.SegName);            
+            dst.Append(segs[i].SegName);            
         }
     }
 }

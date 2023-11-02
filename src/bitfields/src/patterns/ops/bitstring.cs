@@ -14,12 +14,13 @@ partial struct BitPatterns
         var count = (int)segments.Count;
         Span<char> buffer = stackalloc char[src.PatternLength];
         var j=0u;
-        for(var i=count-1; i>=0; i--)
+        for(var i=0; i<count; i++)
         {
             ref readonly var seg = ref segments[i];
             var bits = math.srl(seg.Mask.Apply(value), (byte)seg.MinPos);
+            if(i != 0)
+                seek(buffer, j++) = Chars.Space;
             BitRender.render((ushort)bits, ref j, seg.Width, buffer);
-            seek(buffer, j++) = Chars.Space;
         }
         return new string(buffer);
     }

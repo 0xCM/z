@@ -8,8 +8,6 @@ using static sys;
 
 using F = RexFields;
 
-using static AsmPrefixTokens;
-
 /// <summary>
 /// REX = [0100 | W:4 | R:3 | X:2 | B:1]
 /// </summary>
@@ -104,10 +102,6 @@ public record struct RexPrefix : IAsmPrefix<RexPrefix>, IAsmByte<RexPrefix>, IBi
     [MethodImpl(Inline)]
     public static implicit operator Hex8(RexPrefix src)
         => src.Data;
-
-    [MethodImpl(Inline)]
-    public static implicit operator RexPrefix(RexPrefixCode src)
-        => new ((byte)src);
 
     [MethodImpl(Inline)]
     public static implicit operator byte(RexPrefix src)

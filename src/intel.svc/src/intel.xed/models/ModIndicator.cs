@@ -7,11 +7,8 @@ namespace Z0;
 
 partial class XedModels
 {
-    [DataWidth(Width, 8)]
-    public readonly struct ModIndicator : IComparable<ModIndicator>, IEquatable<ModIndicator>
+    public readonly record struct ModIndicator : IComparable<ModIndicator>, IEquatable<ModIndicator>
     {
-        public const byte Width = num3.Width;
-
         public readonly ModKind Kind;
 
         [MethodImpl(Inline)]
@@ -50,6 +47,15 @@ partial class XedModels
         public override string ToString()
             => Format();
 
+        public Hash32 Hash
+        {
+            [MethodImpl(Inline)]
+            get => (byte)Kind;
+        }
+
+        public override int GetHashCode()
+            => Hash;
+
         [MethodImpl(Inline)]
         public int CompareTo(ModIndicator src)
             => ((byte)Kind).CompareTo((byte)src.Kind);
@@ -63,12 +69,12 @@ partial class XedModels
             => new (src);
 
         [MethodImpl(Inline)]
-        public static explicit operator ModIndicator(uint3 src)
+        public static explicit operator ModIndicator(num3 src)
             => new ((ModKind)(byte)src);
 
         [MethodImpl(Inline)]
-        public static explicit operator uint3(ModIndicator src)
-            => (uint3)(byte)src.Kind;
+        public static explicit operator num3(ModIndicator src)
+            => (num3)(byte)src.Kind;
 
         [MethodImpl(Inline)]
         public static explicit operator uint(ModIndicator src)

@@ -47,13 +47,6 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public uint3 View(W3 w, ByteSize offset)
-        {
-            math.divmod(offset, CellWidth, out var d, out var r);
-            return d < Size ? (uint3)bits.extract(skip(Data,d), (byte)r, 3) : uint3.Zero;
-        }
-
-        [MethodImpl(Inline)]
         public uint4 View(W4 w, ByteSize offset)
         {
             math.divmod(offset, CellWidth, out var d, out var r);

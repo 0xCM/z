@@ -37,7 +37,7 @@ public class BpCalcs
     public ref readonly BpExpr Pattern
     {
         [MethodImpl(Inline)]
-        get => ref Def.Pattern;
+        get => ref Def.Expr;
     }
 
     /// <summary>
@@ -97,10 +97,10 @@ public class BpCalcs
 
     [MethodImpl(Inline)]
     public string BitString(ulong value)
-        => api.bitstring(Def.Pattern, value);
+        => api.bitstring(Def.Expr, value);
 
     [MethodImpl(Inline)]
     public string BitString<T>(T value)
         where T : unmanaged
-        => api.bitstring(Def.Pattern, value);
+        => api.bitstring(Def.Expr, value);
 }

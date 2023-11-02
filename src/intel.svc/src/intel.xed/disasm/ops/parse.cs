@@ -10,11 +10,12 @@ using static XedModels;
 
 partial class XedDisasm
 {
-    public static void instruction(InstructionId id, string expr, InstFieldValues props, out Instruction dst)
-        => dst = new Instruction(id, expr, props.InstClass, props.InstForm, props);
-
     public static void parse(in XedDisasmLines src, out Instruction dst)
-        => instruction(src.Row.InstructionId, src.Block.Props.Content, fields(src.Block), out dst);
+    {                
+        var asm = src.Row.Asm.Format();
+        var props = fields(src.Block);
+        dst = new(asm,props.InstClass, props.InstForm, src.Row.IP, src.Row.Encoded, props);
+    }
 
     public static uint parse(in XedDisasmBlock src, out InstFieldValues dst)
     {

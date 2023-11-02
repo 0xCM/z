@@ -5,7 +5,6 @@
 namespace Z0.Asm;
 
 using static sys;
-using static AsmOpCodeTokens;
 
 using Asm;
 
@@ -17,7 +16,6 @@ public class AsmBytes
     public static string format<T>(T src)
         where T : unmanaged, IAsmByte
             => src.Value().FormatHex(zpad:true, specifier:true, uppercase:true);
-
 
     [MethodImpl(Inline), Op]
     public static ByteSize size(ReadOnlySpan<HexDataRow> src)
@@ -168,7 +166,7 @@ public class AsmBytes
         => modrm(mod, (byte)reg, (byte)rm);
 
     [MethodImpl(Inline), Op]
-    public static Sib sib(uint3 @base, uint3 index, uint2 scale)
+    public static Sib sib(num3 @base, num3 index, num2 scale)
         => new (join((scale, 0), (index, 2), (@base, 6)));
 
     public static string bitstring(Sib src)
@@ -220,7 +218,7 @@ public class AsmBytes
                     var b0 = skip(f0, i);
                     var b1 = skip(f1, j);
                     var b2 = skip(f2, k);
-                    sib(new Sib(BitNumbers.join(b0,b1,b2)), ref m, dst);
+                    sib(new Sib(Numbers.pack(b0,b1,b2)), ref m, dst);
                     text.crlf(ref m, dst);
                 }
             }
@@ -296,7 +294,7 @@ public class AsmBytes
                     row.Base = AsmRegs.name(size, @class, (RegIndexCode)(byte)@base);
                     row.Index  = AsmRegs.name(size, @class, (RegIndexCode)(byte)index);
                     row.Scale = scale;
-                    var sib = new Sib(BitNumbers.join(@base, index, scale));
+                    var sib = new Sib(Numbers.pack(@base, index, scale));
                     row.Bits = bitstring(sib);
                     row.Hex= (byte)counter;
                 }

@@ -249,7 +249,7 @@ public readonly partial struct XedCellRender
             break;
             case C.B3:
             {
-                uint3 x = first(data);
+                num3 x = first(data);
                 dst = XedRender.format(x);
             }
             break;

@@ -15,7 +15,10 @@ namespace Z0
         public static void Main(params string[] args)
         {
             using var app = ApiServer.shell<App>(args);
-            app.Run();            
+            if(args.Length == 0)
+                app.Run();
+            else
+                app.Runner.RunCommand(ApiServer.command(args));
         } 
     }
 

@@ -4,6 +4,7 @@
     <ProjectReference Include="$(TestUnits)" />
     <ProjectReference Include="$(TestChecks)" />
     <ProjectReference Include="$(Bits)" />
+    <ProjectReference Include="../intel.svc/z0.intel.svc.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>

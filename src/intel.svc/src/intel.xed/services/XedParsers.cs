@@ -309,17 +309,6 @@ public partial class XedParsers
         }
     }
 
-    public static bool parse(string src, out uint3 dst)
-    {
-        if(IsBinaryLiteral(src))
-            return BitNumbers.parse(src, out dst);
-        else
-        {
-            dst = default;
-            return false;
-        }
-    }
-
     public static bool parse(string src, out uint4 dst)
     {
         if(IsBinaryLiteral(src))
@@ -363,7 +352,7 @@ public partial class XedParsers
                 n = (byte)len;
             break;
             case 3:
-                number = (uint3)(byte)value;
+                number = (num3)(byte)value;
                 n = (byte)len;
             break;
             case 4:

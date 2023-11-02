@@ -847,7 +847,7 @@ c5 f8 99 c8";
         for(byte i=0; i<7; i++)
         {
             regs[i] = i;
-            seek(names,i) = RegClasses.KReg.RegName(i);
+            seek(names,i) = RegClasses.Mask.RegName(i);
             grid[i] = asm.regval(skip(names,i), regs[i]);
         }
 

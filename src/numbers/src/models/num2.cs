@@ -182,6 +182,12 @@ public readonly struct num2 : INumber<T>
         get => Value == MaxValue;
     }
 
+    public bit this[byte index]
+    {
+        [MethodImpl(Inline)]
+        get => test(this,index);
+    }
+
     byte INumber.PackedWidth
         => Width;
 

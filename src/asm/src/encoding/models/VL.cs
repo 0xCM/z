@@ -8,7 +8,7 @@ public readonly record struct VL : IComparable<VL>
 {
     public static VL VL128 => new(z8);
 
-    public static VL V256 => new(1);
+    public static VL VL256 => new(1);
 
     public static VL VL512 => new(2);
 
@@ -80,5 +80,4 @@ public readonly record struct VL : IComparable<VL>
     [MethodImpl(Inline)]
     public static bool operator >= (VL a, VL b)
         => a.Value >= b.Value;
-
 }

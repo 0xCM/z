@@ -85,10 +85,10 @@ public class BpInfo
     /// <summary>
     /// The pattern specification
     /// </summary>
-    public ref readonly BpExpr Pattern
+    public ref readonly BpExpr Expr
     {
         [MethodImpl(Inline)]
-        get => ref Def.Pattern;
+        get => ref Def.Expr;
     }
 
     /// <summary>
