@@ -27,7 +27,7 @@ public class XedRender
 
     static EnumRender<VisibilityKind> VisKind = new();
 
-    static EnumRender<XedVexClass> VexClasses = new();
+    static EnumRender<VexValid> VexClasses = new();
 
     static EnumRender<XedVexKind> VexKinds = new();
 
@@ -240,7 +240,7 @@ public class XedRender
     public static string format(SMODE src, DataFormatCode fc = DataFormatCode.Expr)
         => fc == DataFormatCode.BitWidth ? nsize((byte)src + 1) : EnumRender.format(SModes,src,fc);
 
-    public static string format(XedVexClass src, DataFormatCode fc = DataFormatCode.Expr)
+    public static string format(VexValid src, DataFormatCode fc = DataFormatCode.Expr)
         => EnumRender.format(VexClasses, src, fc);
 
     public static string format(HintKind src, DataFormatCode fc = DataFormatCode.Expr)
@@ -555,7 +555,7 @@ public class XedRender
     {
         if(src == 0)
             return EmptyString;
-        var bcasts = XedTables.Broadcasts();
+        var bcasts = XedTables.Broadcasts;
         var index = (byte)src;
         if(index < bcasts.Length)
             return bcasts[index].Symbol.Format();

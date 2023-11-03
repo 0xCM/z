@@ -207,8 +207,8 @@ partial class XedRules
             => Format();
 
         [MethodImpl(Inline)]
-        public XedVexClass ToVexClass()
-            => (XedVexClass)Data;
+        public VexValid ToVexClass()
+            => (VexValid)Data;
 
         [MethodImpl(Inline)]
         public AsmVL ToVL()
@@ -315,7 +315,7 @@ partial class XedRules
             => src.ToEOSZ();
 
         [MethodImpl(Inline)]
-        public static implicit operator XedVexClass(FieldValue src)
+        public static implicit operator VexValid(FieldValue src)
             => src.ToVexClass();
 
         [MethodImpl(Inline)]

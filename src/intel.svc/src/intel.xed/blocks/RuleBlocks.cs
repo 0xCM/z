@@ -7,7 +7,7 @@ namespace Z0;
 using static XedModels;
 using static sys;
 
-partial class XedZ
+partial class XedInstBlocks
 {
     public class RuleBlocks
     {

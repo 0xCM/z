@@ -8,7 +8,7 @@ using Asm;
 
 using static XedModels;
 
-partial class XedZ
+partial class XedInstBlocks
 {
     public readonly record struct BlockField
     {

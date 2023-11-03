@@ -10,11 +10,11 @@ using System.Linq;
 using static sys;
 using static XedModels;
 using static MachineModes;
-using static XedZ.BlockFieldName;
+using static XedInstBlocks.BlockFieldName;
 
-using N=XedZ.BlockFieldName;
+using N=XedInstBlocks.BlockFieldName;
 
-public partial class XedZ
+public partial class XedInstBlocks
 {
     static readonly EnumParser<BlockFieldName> FieldNameParser = new();
 
@@ -212,14 +212,14 @@ public partial class XedZ
             case amd_3dnow_opcode:
             {
                 if(XedParsers.parse(src, out Hex8 value))
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
-            case attributes:
+            case N.attributes:
             {
                 if(parse(src, out InstAttribs value))
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
@@ -230,7 +230,7 @@ public partial class XedZ
             case avx512_vsib:
             {
                 if(parse(src, out VsibKind value))
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
@@ -240,7 +240,7 @@ public partial class XedZ
             case category:
             {
                 if(XedParsers.parse(src, out CategoryKind value))
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
@@ -251,7 +251,7 @@ public partial class XedZ
             case easz:
             {
                 if(parse(src, out EASZ value))
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
@@ -269,7 +269,7 @@ public partial class XedZ
             case eosz:
             {
                 if(parse(src, out EOSZ value))
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
@@ -279,7 +279,7 @@ public partial class XedZ
                 if(src != "['none']")
                 {
                     if(parse(src, out OperandClasses value))
-                        dst = new(field,value);
+                        dst = new(field, value);
                 }
             }
             break;
@@ -287,7 +287,7 @@ public partial class XedZ
             case extension:
             {
                 if(XedParsers.parse(src, out InstExtension value))   
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
@@ -304,7 +304,7 @@ public partial class XedZ
             case sibmem:
             {
                 if(parse(src, out bool value))
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
@@ -314,14 +314,14 @@ public partial class XedZ
             case iclass:
             {
                 if(XedParsers.parse(src, out XedInstClass value))
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
             case iform:
             {
                 if(XedParsers.parse(src, out XedInstForm value))
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
@@ -331,7 +331,7 @@ public partial class XedZ
             case isa_set:
             {
                 if(XedParsers.parse(src, out InstIsaKind value))   
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
@@ -354,7 +354,7 @@ public partial class XedZ
             case mode_restriction:
             {
                 if(parse(src, out MachineMode value))
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
@@ -362,7 +362,7 @@ public partial class XedZ
             case ntname:
             {
                 if(XedParsers.parse(src, out RuleName value))
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
@@ -370,55 +370,55 @@ public partial class XedZ
             {
                 var input = text.split(src, Chars.Space);
                 var count = input.Length;
-                PatternOps value =  sys.alloc<PatternOp>(count);
-                for(var i=z8; i<count; i++)
+                    PatternOps value = sys.alloc<PatternOp>(count);
+                for(var i= z8; i< count; i++)
                 {
-                    XedPatterns.parse(skip(input,i), ref value[i]);
+                        XedPatterns.parse(skip(input, i), ref value[i]);
                     value[i].Index = i;
                 }
-                dst = new(field,value);
+                dst = new(field, value);
             }
             break;
 
             case N.pattern:
             {
                 if(parse(src, out InstCells value))
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
             case reg_required:
             {
                 if(src != "unspecified" && byte.TryParse(src, out byte value))
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
             case rexw_prefix:
             {
                 if(src != "unspecified" && DataParser.parse(src, out bit value).Ok)
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
             case rm_required:
             {
                 if(src != "unspecified" && byte.TryParse(src, out var value))
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
             case space:
             {
                 if(parse(src, out AsmOpCodeClass value))                        
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
             case vl:
             {
                 if(parse(src, out VL value))
-                    dst = new(field,value);
+                    dst = new(field, value);
             }
             break;
 
@@ -429,7 +429,7 @@ public partial class XedZ
             {
                 if(XedParsers.parse(src, out WidthCode value))
                 {
-                    dst = new(field,value);
+                    dst = new(field, value);
                 }
             }
             break;

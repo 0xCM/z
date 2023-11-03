@@ -12,7 +12,7 @@ using static XedModels;
 using static XedRules;
 using static sys;
 using static MachineModes;
-using static XedZ;
+using static XedInstBlocks;
 
 using M = XedModels;
 using R = XedRules;
@@ -79,15 +79,57 @@ public partial class XedTables : AppService<XedTables>
         Broadcasts,
     }
 
-    public static ReadOnlySeq<AsmBroadcast> Broadcasts()
-        => data(DatasetName.Broadcasts,() => broadcasts(Symbols.kinds<BroadcastKind>()));
+    public static InstBlockPatterns BlockPatterns()
+        => BlockPatterns(BlockLines());
+
+    public static InstBlockPatterns BlockPatterns(ParallelQuery<InstBlockLineSpec> lines)
+        => data(DatasetName.InstBlocks,() => XedInstBlocks.patterns(lines));
+
+    public static ReadOnlySeq<InstDef> EncInstDefs()
+        => data(DatasetName.EncInstDefs, () => XedInstDefParser.parse(XedPaths.EncInstDef()));
+
+    public static ReadOnlySeq<InstDef> DecInstDefs()
+        => data(DatasetName.DecInstDefs, () => XedInstDefParser.parse(XedPaths.DecInstDef()));
+
+    public static ReadOnlySeq<InstPattern> EncInstPatterns()
+        => EncInstPatterns(EncInstDefs());
+
+    public static ReadOnlySeq<InstPattern> EncInstPatterns(ReadOnlySeq<InstDef> defs)
+        => data(DatasetName.InstPatterns,() =>  CalcInstPatterns(defs));
+
+    public static ReadOnlySeq<XedInstOpCode> OpCodes()
+        => OpCodes(EncInstPatterns());
+        
+    public static ReadOnlySeq<XedInstOpCode> OpCodes(ReadOnlySeq<InstPattern> src)
+        => data(DatasetName.OpCodes, () => CalcOpCodes(src));
+
+    public static Pairings<InstPattern,InstSig> InstructionSigs()
+        => InstructionSigs(EncInstPatterns());
 
     public static Pairings<InstPattern,InstSig> InstructionSigs(ReadOnlySeq<InstPattern> src)
         => data(DatasetName.InstSigs,() => sigs(src));
 
-    public static ReadOnlySeq<XedTableStats> Stats(CellTables src)
+    public static ReadOnlySeq<InstOpDetail> OpDetails()
+        => OpDetails(EncInstPatterns());
+
+    public static ReadOnlySeq<InstOpDetail> OpDetails(ReadOnlySeq<InstPattern> src)
+        => data(DatasetName.OpDetails,() => XedPatterns.opdetails(src));
+
+    public static CellTables CellTables()
+        => CellTables(RuleCells());
+
+    public static CellTables CellTables(XedRuleCells src)
+        => data(DatasetName.CellTables, () => new CellTables(src));
+
+    public static ReadOnlySeq<XedTableStats> TableStats()
+        => TableStats(CellTables());
+
+    public static ReadOnlySeq<XedTableStats> TableStats(CellTables src)
         => data(DatasetName.TableStats,() => stats(src));
-        
+
+    public static ReadOnlySeq<InstOpClass> OperandClasses()
+        => OperandClasses(OpDetails());
+
     public static ReadOnlySeq<InstOpClass> OperandClasses(ReadOnlySeq<InstOpDetail> src)
         => data(DatasetName.OpClasses, () => classes(src));
 
@@ -107,7 +149,7 @@ public partial class XedTables : AppService<XedTables>
         => data(DatasetName.MacroMatches,CalcMacroMatches);
 
     public static ParallelQuery<InstBlockLineSpec> BlockLines()
-        => data(DatasetName.InstBlockLines, () => XedZ.lines()).AsParallel();
+        => data(DatasetName.InstBlockLines, () => XedInstBlocks.lines()).AsParallel();
 
     public static ReadOnlySeq<RuleGrid> Grids(CellTables src)
         => data(DatasetName.RuleGrids,() => grids(src));
@@ -118,36 +160,36 @@ public partial class XedTables : AppService<XedTables>
         data(DatasetName.Instructions,() => instructions);
         return instructions;
     }
-    
-    public static InstBlockPatterns BlockPatterns()
-        => BlockPatterns(BlockLines());
 
-    public static InstBlockPatterns BlockPatterns(ParallelQuery<InstBlockLineSpec> lines)
-        => data(DatasetName.InstBlocks,() => XedZ.patterns(lines));
+    public static ReadOnlySeq<InstOperand> Operands()
+        => Operands(OpDetails(EncInstPatterns(EncInstDefs())));
 
     public static ReadOnlySeq<InstOperand> Operands(ReadOnlySeq<InstOpDetail> src)
         => data(DatasetName.OpRows, () => CalcOpRows(src));
     
-    public static ReadOnlySeq<InstOperand> Operands()
-        => data(DatasetName.OpRows, () => CalcOpRows(OpDetails(InstPatterns(EncInstDefs()))));
-
     public static ChipInstructions ChipInstructions()
-        => data(DatasetName.ChipInstructions, () => XedChips.ChipInstructions(FormImports(), ChipMap()));
+        => ChipInstructions(FormImports(), ChipMap());
 
     public static ChipInstructions ChipInstructions(ReadOnlySeq<FormImport> forms, ChipMap map)
         => data(DatasetName.ChipInstructions,() => XedChips.ChipInstructions(forms, map));
 
-    public static ReadOnlySeq<TableDefRow> TableDefRows(XedRuleTables src)
+    public static ReadOnlySeq<RuleTableRow> RuleTableRows()
+        => RuleTableRows(RuleTables());
+
+    public static ReadOnlySeq<RuleTableRow> RuleTableRows(XedRuleTables src)
         => data(DatasetName.TableDefRows,() => CalcDefRows(src));
 
-    public static ReadOnlySeq<InstOpDetail> OpDetails(ReadOnlySeq<InstPattern> src)
-        => data(DatasetName.OpDetails,() => XedPatterns.opdetails(src));
+    public static ReadOnlySeq<FieldUsage> FieldDeps()
+        => FieldDeps(CellTables());
 
     public static ReadOnlySeq<FieldUsage> FieldDeps(CellTables src)
         => data(DatasetName.FieldDeps,() => CalcFieldDeps(src));
-        
-    public static CellTables CellTables(XedRuleCells src)
-        => data(DatasetName.CellTables, () => new CellTables(src));
+
+    public static XedRuleCells RuleCells()
+        => RuleCells(RuleTables());
+
+    public static XedRuleCells RuleCells(XedRuleTables tables)
+        => data(DatasetName.RuleCells, () => XedCells.cells(tables));
 
     public static ReadOnlySeq<RuleSeq> RuleSeqImports()
         => data(DatasetName.RuleSeqImports, XedCellParser.ruleseq);
@@ -158,25 +200,12 @@ public partial class XedTables : AppService<XedTables>
     public static ReadOnlySeq<SeqDef> SeqReflected()
         => data(DatasetName.SeqReflected,XedRuleSeq.defs);
 
-    public static ReadOnlySeq<InstDef> EncInstDefs()
-        => data(DatasetName.EncInstDefs, () => XedInstDefParser.parse(XedPaths.EncInstDef()));
-
-    public static ReadOnlySeq<InstDef> DecInstDefs()
-        => data(DatasetName.DecInstDefs, () => XedInstDefParser.parse(XedPaths.DecInstDef()));
-
-    public static XedRuleCells RuleCells(XedRuleTables tables)
-        => data(DatasetName.RuleCells, () => XedCells.cells(tables));
-
-    public static Index<InstPattern> InstPatterns(ReadOnlySeq<InstDef> defs)
-        => data(DatasetName.InstPatterns,() =>  CalcInstPatterns(defs));
-
-    public static ReadOnlySeq<XedInstOpCode> OpCodes(ReadOnlySeq<InstPattern> src)
-        => data(DatasetName.OpCodes, () => CalcOpCodes(src));
-
-
     public static ReadOnlySpan<OpName> OpNames => _OpNames.View;
 
     public static ref readonly XedWidths Widths => ref _Widths;
+
+    public static ReadOnlySeq<AsmBroadcast> Broadcasts
+        => data(DatasetName.Broadcasts,() => broadcasts(Symbols.kinds<BroadcastKind>()));
 
     public static B DF32
     {
@@ -334,10 +363,10 @@ public partial class XedTables : AppService<XedTables>
         get => Bytes.sequential<LLRC>(0, (byte)M.LLRC.LLRC3);
     }
 
-    public static ReadOnlySpan<XedVexClass> VEXVALID
+    public static ReadOnlySpan<VexValid> VEXVALID
     {
         [MethodImpl(Inline)]
-        get => Bytes.sequential<XedVexClass>(0, (byte)XedVexClass.XOPV);
+        get => Bytes.sequential<VexValid>(0, (byte)VexValid.XOPV);
     }
 
     public static ReadOnlySpan<XedVexKind> VEX_PREFIX
@@ -566,7 +595,7 @@ public partial class XedTables : AppService<XedTables>
         return rule;
     }
 
-    static Index<InstPattern> CalcInstPatterns(ReadOnlySeq<InstDef> defs)
+    static ReadOnlySeq<InstPattern> CalcInstPatterns(ReadOnlySeq<InstDef> defs)
     {
         var count = 0u;
         iter(defs, def => count += def.PatternSpecs.Count);
@@ -714,9 +743,9 @@ public partial class XedTables : AppService<XedTables>
     static ReadOnlySeq<MacroMatch> CalcMacroMatches()
         => mapi(RuleMacros.matches().Values.ToArray().Sort(), (i,m) => m.WithSeq((uint)i));
 
-    static ReadOnlySeq<TableDefRow> CalcDefRows(XedRuleTables src)
+    static ReadOnlySeq<RuleTableRow> CalcDefRows(XedRuleTables src)
     {        
-        var buffer = list<TableDefRow>();
+        var buffer = list<RuleTableRow>();
         ref readonly var specs = ref src.Specs();
         var k=0u;
         for(var i=0u; i<specs.TableCount; i++)
@@ -725,7 +754,7 @@ public partial class XedTables : AppService<XedTables>
             for(var j=0u; j<spec.RowCount; j++, k++)
             {
                 ref readonly var row = ref spec[j];
-                var dst = TableDefRow.Empty;
+                var dst = RuleTableRow.Empty;
                 dst.Seq = k;
                 dst.TableId = spec.TableId;
                 dst.Index = j;

@@ -63,7 +63,7 @@ public partial class XedParsers
 
     static readonly EnumParser<RuleMacroKind> MacroKinds = new();
 
-    static readonly EnumParser<XedVexClass> VexClasses = new();
+    static readonly EnumParser<VexValid> VexClasses = new();
 
     static readonly EnumParser<XedVexKind> VexKinds = new();
 
@@ -463,7 +463,7 @@ public partial class XedParsers
     public static bool parse(string src, out CategoryKind dst)
         => CategoryKinds.Parse(src, out dst);
 
-    public static bool parse(string src, out XedVexClass dst)
+    public static bool parse(string src, out VexValid dst)
         => VexClasses.Parse(src, out dst);
 
     public static bool parse(string src, out InstCategory dst)

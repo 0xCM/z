@@ -48,7 +48,7 @@ public interface IBitPattern
         => api.symbols(Pattern);
 
     BpInfo Description()
-        => api.describe(Name, Pattern, Origin);
+        => api.describe(Name, Pattern);
 
     string Descriptor()
         => api.descriptor(Pattern);

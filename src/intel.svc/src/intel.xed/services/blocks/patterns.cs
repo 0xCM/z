@@ -8,7 +8,7 @@ using System.Linq;
 
 using static XedModels;
 
-partial class XedZ
+partial class XedInstBlocks
 {        
     public static InstBlockPatterns patterns(ParallelQuery<InstBlockLineSpec> lines)
         => new(from line in lines select pattern(line));

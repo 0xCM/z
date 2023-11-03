@@ -368,19 +368,19 @@ partial class XedRules
 
         [MethodImpl(Inline), Op]
         static MacroSpec VV0()
-            => assign(M.VV0, K.VEXVALID, XedVexClass.None);
+            => assign(M.VV0, K.VEXVALID, VexValid.None);
 
         [MethodImpl(Inline), Op]
         static MacroSpec VV1()
-            => assign(M.VV1, K.VEXVALID, XedVexClass.VV1);
+            => assign(M.VV1, K.VEXVALID, VexValid.VV1);
 
         [MethodImpl(Inline), Op]
         static MacroSpec EVV()
-            => assign(M.EVV, K.VEXVALID, XedVexClass.EVV);
+            => assign(M.EVV, K.VEXVALID, VexValid.EVV);
 
         [MethodImpl(Inline), Op]
         static MacroSpec XOPV()
-            => assign(M.XOPV, K.VEXVALID, XedVexClass.XOPV);
+            => assign(M.XOPV, K.VEXVALID, VexValid.XOPV);
 
         [MethodImpl(Inline), Op]
         static MacroSpec VNP()

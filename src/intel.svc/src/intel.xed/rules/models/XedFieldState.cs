@@ -331,7 +331,7 @@ public record struct XedFieldState
     [RuleField(K.ESRC, 4, typeof(ESRC))]
     public byte ESRC;
 
-    [RuleField(K.VEXVALID, 3, typeof(XedVexClass), "Specifies one of {VV0,VV1,EVV,XOPV,KVV}, if applicable")]
+    [RuleField(K.VEXVALID, 3, typeof(VexValid), "Specifies one of {VV0,VV1,EVV,XOPV,KVV}, if applicable")]
     public byte VEXVALID;
 
     [RuleField(K.VEX_PREFIX, 2, typeof(XedVexKind), "Specifies one of {VNP,V66,VF2,VF3}, if applicable")]

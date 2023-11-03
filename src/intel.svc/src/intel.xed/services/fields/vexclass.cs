@@ -6,15 +6,11 @@
 namespace Z0;
 
 using static sys;
-
-partial class XedFieldWriter
-{
-
-}
+using static XedModels;
 
 partial class XedFields
 {
     [MethodImpl(Inline), Op]
-    public static ref readonly XedVexClass vexclass(in XedFieldState src)
-        => ref @as<XedVexClass>(src.VEXVALID);
+    public static ref readonly VexValid vexvalid(in XedFieldState src)
+        => ref @as<VexValid>(src.VEXVALID);
 }

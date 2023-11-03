@@ -203,7 +203,7 @@ public readonly partial struct XedCellRender
             break;
             case K.VEXVALID:
             {
-                var x = @as<XedVexClass>(data);
+                var x = @as<VexValid>(data);
                 dst = XedRender.format(x, code);
             }
             break;
@@ -470,7 +470,7 @@ public readonly partial struct XedCellRender
             break;
             case C.VexClass:
             {
-                var x = @as<XedVexClass>(data);
+                var x = @as<VexValid>(data);
                 dst = XedRender.format(x);
             }
             break;

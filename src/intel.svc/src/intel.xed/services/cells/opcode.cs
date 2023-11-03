@@ -13,7 +13,7 @@ partial class XedCells
     [MethodImpl(Inline), Op]
     public static AsmOpCode opcode(in InstCells src)
     {
-        var vc = XedVexClass.None;
+        var vc = VexValid.None;
         var number = z8;
         var ocv = ocvalue(src);
         var ock = AsmOpCodeKind.None;
@@ -21,20 +21,20 @@ partial class XedCells
         {
             ref readonly var part = ref src[i];
             if(part.IsExpr && part.Field == FieldKind.VEXVALID)
-                vc = (XedVexClass)part.ToCellExpr().Value;
+                vc = (VexValid)part.ToCellExpr().Value;
             if(part.IsExpr && part.Field == FieldKind.MAP)
                 number = part.ToCellExpr().Value.ToByte();
         }
 
         switch(vc)
         {
-            case XedVexClass.VV1:
+            case VexValid.VV1:
                 ock = AsmOpCodes.kind(AsmOpCodes.index((VexMapKind)number));
             break;
-            case XedVexClass.XOPV:
+            case VexValid.XOPV:
                 ock = AsmOpCodes.kind(AsmOpCodes.index((XopMapKind)number));
             break;
-            case XedVexClass.EVV:
+            case VexValid.EVV:
                 ock = AsmOpCodes.kind(AsmOpCodes.index((EvexMapKind)number));
             break;
             default:

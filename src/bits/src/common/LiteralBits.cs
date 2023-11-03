@@ -146,11 +146,11 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator LiteralBits(num2 src)
-            => new LiteralBits(2,src);
+            => new (2,src);
 
         [MethodImpl(Inline)]
         public static implicit operator LiteralBits(num1 src)
-            => new LiteralBits(1,src);
+            => new (1,src.Value);
 
         public static LiteralBits Empty => default;
     }

@@ -88,7 +88,7 @@ public readonly record struct BpDef<P> : IBitPattern<P>
 
     [MethodImpl(Inline)]
     public BpInfo Description()
-        => api.describe(Name, Pattern, Origin);
+        => api.describe(Name, Pattern);
 
     [MethodImpl(Inline)]
     public BfModel Model()

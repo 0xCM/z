@@ -138,7 +138,7 @@ public readonly struct num1 : INumber<T>
 
     [MethodImpl(Inline), Op]
     public static T mul(T a, T b)
-        => reduce(math.mul(a.Value, b.Value));
+        => reduce((num1)math.mul(a.Value, b.Value));
 
     [MethodImpl(Inline), Op]
     public static T div(T a, T b)
@@ -150,7 +150,7 @@ public readonly struct num1 : INumber<T>
 
     [MethodImpl(Inline)]
     public static string bitstring(T src)
-        => src == 0 ? "0" : "1";
+        => src.Value == 0 ? "0" : "1";
 
     [Parser]
     public static bool parse(ReadOnlySpan<char> src, out T dst)
@@ -211,11 +211,11 @@ public readonly struct num1 : INumber<T>
         => src is T t && Equals(t);
 
     [MethodImpl(Inline)]
-    public static implicit operator T(D src)
+    public static explicit operator T(D src)
         => new T(src);
 
     [MethodImpl(Inline)]
-    public static implicit operator D(T src)
+    public static explicit operator D(T src)
         => src.Value;
 
     [MethodImpl(Inline)]
@@ -223,15 +223,15 @@ public readonly struct num1 : INumber<T>
         => (sbyte)src.Value;
 
     [MethodImpl(Inline)]
-    public static implicit operator ushort(T src)
+    public static explicit operator ushort(T src)
         => src.Value;
 
     [MethodImpl(Inline)]
-    public static implicit operator uint(T src)
+    public static explicit operator uint(T src)
         => src.Value;
 
     [MethodImpl(Inline)]
-    public static implicit operator ulong(T src)
+    public static explicit operator ulong(T src)
         => src.Value;
 
     [MethodImpl(Inline)]

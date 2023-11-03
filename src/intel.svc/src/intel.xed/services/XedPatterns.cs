@@ -26,11 +26,11 @@ public partial class XedPatterns : AppService<XedPatterns>
         }
     }
 
-    public static AsmOpCodeClass occlass(XedVexClass src)
+    public static AsmOpCodeClass occlass(VexValid src)
         => src switch {
-            XedVexClass.VV1 =>AsmOpCodeClass.Vex,
-            XedVexClass.EVV => AsmOpCodeClass.Evex,
-            XedVexClass.XOPV => AsmOpCodeClass.Xop,
+            VexValid.VV1 =>AsmOpCodeClass.Vex,
+            VexValid.EVV => AsmOpCodeClass.Evex,
+            VexValid.XOPV => AsmOpCodeClass.Xop,
             _ => AsmOpCodeClass.Legacy
         };
 

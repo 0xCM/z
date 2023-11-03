@@ -86,7 +86,7 @@ public class BpCalcs
 
     [MethodImpl(Inline)]
     public BpInfo Description()
-        => api.describe(Name, Pattern, Origin);
+        => api.describe(Name, Pattern);
 
     /// <summary>
     /// A semantic identifier

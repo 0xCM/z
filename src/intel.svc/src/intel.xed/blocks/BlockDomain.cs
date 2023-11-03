@@ -5,10 +5,10 @@
 namespace Z0;
 
 using static XedModels;
-using static XedZ.BlockFieldName;
+using static XedInstBlocks.BlockFieldName;
 
 using static sys;
-public partial class XedZ
+public partial class XedInstBlocks
 {
     public sealed class BlockDomain : Dictionary<BlockFieldName,HashSet<RuleAttribute>>
     {
@@ -28,7 +28,7 @@ public partial class XedZ
 
                 switch(name)
                 {
-                    case attributes:
+                    case BlockFieldName.attributes:
                     {
                         foreach(var value in InstAttribs.Array().Sort())
                             if(value.IsNonEmpty)

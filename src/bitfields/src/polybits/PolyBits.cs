@@ -34,14 +34,14 @@ public partial class PolyBits : AppService<PolyBits>
         return src;
     }
 
-    public void EmitPatterns(Type src, IDbArchive dst)
-    {
-        var attrib = src.Tag<LiteralProviderAttribute>();
-        var name = attrib ? text.ifempty(attrib.Value.Group, src.Name) : src.Name;
-        var patterns = BitPatterns.reflected(src);
-        EmitDescriptions(name, patterns, dst);
-        EmitRecords(name, patterns, dst);
-    }
+    // public void EmitPatterns(Type src, IDbArchive dst)
+    // {
+    //     var attrib = src.Tag<LiteralProviderAttribute>();
+    //     var name = attrib ? text.ifempty(attrib.Value.Group, src.Name) : src.Name;
+    //     var patterns = BitPatterns.reflected(src);
+    //     EmitDescriptions(name, patterns, dst);
+    //     EmitRecords(name, patterns, dst);
+    // }
 
     public void EmitDescriptions(string name, ReadOnlySpan<BpInfo> src, IDbArchive dst)
     {
@@ -51,16 +51,16 @@ public partial class PolyBits : AppService<PolyBits>
         Channel.FileEmit(emitter.Emit(), 12, dst.Path(name, FileKind.Txt));
     }
 
-    public void EmitRecords(string name, ReadOnlySpan<BpInfo> src, IDbArchive dst)
-    {
-        var count = src.Length;
-        var specs = alloc<BpSpec>(count);
-        var segs = BitPatterns.segs(src);
-        for(var i=0; i<src.Length; i++)
-            seek(specs,i) = skip(src,i).Spec;
-        Channel.TableEmit(segs, dst.PrefixedTable<BpSeg>(name));
-        Channel.TableEmit(specs, dst.PrefixedTable<BpSpec>(name));
-    }
+    // public void EmitRecords(string name, ReadOnlySpan<BpInfo> src, IDbArchive dst)
+    // {
+    //     var count = src.Length;
+    //     var specs = alloc<BpSpec>(count);
+    //     var segs = BitPatterns.segs(src);
+    //     for(var i=0; i<src.Length; i++)
+    //         seek(specs,i) = skip(src,i).Spec;
+    //     Channel.TableEmit(segs, dst.PrefixedTable<BpSeg>(name));
+    //     Channel.TableEmit(specs, dst.PrefixedTable<BpSpec>(name));
+    // }
 
     public static Index<CharBlock8> BitBlocks(W8 w, byte start = 0, byte end = byte.MaxValue)
     {

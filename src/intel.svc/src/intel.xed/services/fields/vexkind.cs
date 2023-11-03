@@ -7,11 +7,6 @@ namespace Z0;
 
 using static sys;
 
-partial class XedFieldWriter
-{
-
-}
-
 partial class XedFields
 {
     [MethodImpl(Inline), Op]

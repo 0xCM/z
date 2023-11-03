@@ -6,7 +6,7 @@ namespace Z0;
 
 using static sys;
 
-partial class XedZ
+partial class XedInstBlocks
 {
     public readonly record struct Attribute
     {

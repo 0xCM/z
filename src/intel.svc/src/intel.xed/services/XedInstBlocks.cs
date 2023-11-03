@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-public partial class XedZ
+public partial class XedInstBlocks
 {
 
 }

@@ -9,17 +9,12 @@ using static sys;
 partial struct BitPatterns
 {
     [MethodImpl(Inline), Op]
-    public static BpDef def(string name, in BpExpr pattern, BfOrigin origin)
-        => new (name, pattern, origin);
+    public static BpDef def(string name, in BpExpr pattern)
+        => new (name, pattern, BfOrigin.Empty);
 
-    [MethodImpl(Inline), Op]
-    public static BpDef<P> def<P>(string name, in BpExpr pattern)
+    public static BpDef def<P>()
         where P : unmanaged, IBitPattern<P>
-            => new (name, pattern, origin<P>());
-
-    public static BpDef<P> def<P>()
-        where P : unmanaged, IBitPattern<P>
-            => def<P>(typeof(P).Name, typeof(P).GetCustomAttribute<BitPatternAttribute>().Symbols ?? EmptyString);
+            => def(typeof(P).Name, typeof(P).GetCustomAttribute<BitPatternAttribute>().Symbols ?? EmptyString);
 
     public static Index<BpDef> defs(ReadOnlySpan<BpInfo> src)
     {

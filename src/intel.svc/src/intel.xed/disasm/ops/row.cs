@@ -150,7 +150,7 @@ partial class XedDisasm
             }
         }
 
-        if(state.VEXVALID == (byte)XedVexClass.VV1)
+        if(state.VEXVALID == (byte)VexValid.VV1)
         {
             var vexcode = Vex.code(prefix);
             var vexsize = Vex.size(vexcode.Value);
@@ -164,7 +164,7 @@ partial class XedDisasm
                 dst.VexPrefix = Vex.define(VexPrefixKind.xC5,skip(vexbytes, 1));
 
         }
-        else if(state.VEXVALID == (byte)XedVexClass.EVV)
+        else if(state.VEXVALID == (byte)VexValid.EVV)
             dst.EvexPrefix = Evex.prefix(slice(prefix,legacyskip));
 
         if(state.IMM0)

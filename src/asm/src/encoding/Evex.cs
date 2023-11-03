@@ -30,23 +30,9 @@ public class Evex
             return @as<EvexPrefix>(src);
     }
 
-    const string ss = "ss";
-
-    const string iii = "iii";
-
-    const string bbb = "bbb";
-
-    const string mm = "mm";
-
-    const string rrr = "rrr";
-
-    const string nnn = "nnn";
-
     const string vvvv = "vvvv";
 
     const string mmm = "mmm";
-
-    const string WRXB = "WRXB";
 
     const string W = "W";
 
@@ -56,13 +42,7 @@ public class Evex
 
     const string B = "B";
 
-    const string L = "L";
-
     const string RXB = $"{R}{X}{B}";
-
-    const string cccccccc = "cccccccc";
-
-    const string mmmmm = "mmmmm";
 
     const string pp = "pp";
 

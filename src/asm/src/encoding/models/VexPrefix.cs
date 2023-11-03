@@ -30,21 +30,7 @@ using api = Vex;
 [ApiHost]
 public record struct VexPrefix
 {
-    [MethodImpl(Inline), Op]
-    public static byte size(K src)
-        => src switch{
-            K.xC4 => 3,
-            K.xC5 => 2,
-            _ => 0
-        };
-
     internal uint _Data;
-
-    [MethodImpl(Inline)]
-    internal VexPrefix(K k)
-    {
-        _Data = (byte)k;
-    }
 
     [MethodImpl(Inline)]
     internal VexPrefix(K k, byte b1)

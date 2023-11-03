@@ -10,15 +10,15 @@ using static XedModels;
 using static XedRules;
 using static sys;
 
-using N = XedZ.BlockFieldName;
+using N = XedInstBlocks.BlockFieldName;
 
-partial class XedZ
+partial class XedInstBlocks
 {            
     public static InstBlockPattern pattern(in InstBlockLineSpec spec)
     {
         var pattern = new InstBlockPattern();
         var fields = list<BlockField>();
-        foreach(var field in XedZ.fields(spec))
+        foreach(var field in XedInstBlocks.fields(spec))
         {                
             fields.Add(field);
             switch(field.Name)
@@ -68,7 +68,6 @@ partial class XedZ
                         if(target.Register.IsEmpty && op.Nonterminal(out var nt))
                             target.Register = nt;
                     }
-                    //pattern.Operands = (PatternOps)field;
                 }
                 break;
                 case N.pattern:

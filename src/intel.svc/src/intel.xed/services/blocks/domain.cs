@@ -9,9 +9,9 @@ using System.Linq;
 using static XedModels;
 using static sys;
 
-using N = XedZ.BlockFieldName;
+using N = XedInstBlocks.BlockFieldName;
 
-partial class XedZ
+partial class XedInstBlocks
 {        
     public static BlockDomain domain(RuleBlocks src)
     {
@@ -21,7 +21,7 @@ partial class XedZ
         iter(imports, import => {                        
             var block = src.FormBlocks[import.Form];
             Require.notnull(block);
-            if(parse(block, out List<RuleAttribute> rules))
+            if(attributes(block, out List<RuleAttribute> rules))
             {
                 foreach(var rule in rules)
                 {

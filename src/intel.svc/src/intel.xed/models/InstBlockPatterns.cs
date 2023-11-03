@@ -6,8 +6,6 @@ namespace Z0;
 
 using System.Linq;
 
-using static XedZ;
-
 partial class XedModels
 {
     public sealed class InstBlockPatterns

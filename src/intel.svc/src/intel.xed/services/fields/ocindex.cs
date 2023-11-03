@@ -6,6 +6,7 @@
 namespace Z0;
 
 using static AsmOpCodes;
+using static XedModels;
 using static sys;
 
 partial class XedFields
@@ -15,16 +16,16 @@ partial class XedFields
     {
         var dst = AsmOpCodeIndex.Amd3dNow;
         ref readonly var map = ref state.MAP;
-        ref readonly var vc = ref vexclass(state);
+        ref readonly var vc = ref vexvalid(state);
         switch(vc)
         {
-            case XedVexClass.VV1:
+            case VexValid.VV1:
                 dst = index((VexMapKind)map);
                 break;
-            case XedVexClass.EVV:
+            case VexValid.EVV:
                 dst = index((EvexMapKind)map);
                 break;
-            case XedVexClass.XOPV:
+            case VexValid.XOPV:
                 dst = index((XopMapKind)map);
                 break;
             default:

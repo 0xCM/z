@@ -6,7 +6,7 @@ namespace Z0;
 
 using static XedModels;
 
-partial class XedZ
+partial class XedInstBlocks
 {
     [StructLayout(StructLayout,Pack=1), Record(TableId)]
     public struct InstBlockImport : ISequential<InstBlockImport>, IComparable<InstBlockImport>

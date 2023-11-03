@@ -6,7 +6,7 @@ namespace Z0;
 
 using static XedModels;
 
-partial class XedZ
+partial class XedInstBlocks
 {
     [StructLayout(LayoutKind.Sequential,Pack=1), Record(TableId)]
     public struct InstBlockLineSpec

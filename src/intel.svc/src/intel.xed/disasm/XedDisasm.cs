@@ -190,25 +190,23 @@ public partial class XedDisasm : WfSvc<XedDisasm>
     public void EmitChecks(XedDisasmContext context, XedDisasmDoc src, FilePath? dst = null)
     {
         const string LabeledValue = "{0,-24} | {1}";
-        var doc = src.Detail;
-        ref readonly var file = ref doc.DataFile;
+        var detail = src.Detail;
         var buffer = text.buffer();
-        var count = doc.Count;
-        var outpath = dst ?? context.DisasmChecksPath(file.Source);
+        var count = detail.Count;
+        var outpath = dst ?? context.DisasmChecksPath(detail.DataFile.Source);
         using var writer = outpath.AsciWriter();
         var emitting = Channel.EmittingFile(outpath);
-        writer.AppendLineFormat(RenderCol2, "DataSource", doc.Source.ToUri().Format());
+        writer.AppendLineFormat(RenderCol2, "DataSource", detail.Source.ToUri().Format());
         var counter = 0;
         var fields = span<FieldValue>(148);
         for(var j=0; j<count; j++)
         {
             var state = XedFieldState.Empty;
-            //state.VL = byte.MaxValue;
             buffer.Clear();
             fields.Clear();
 
-            ref readonly var detail = ref doc[j].DetailRow;
-            ref readonly var block = ref doc[j].SummaryLines;
+            ref readonly var row = ref detail[j].DetailRow;
+            ref readonly var block = ref detail[j].SummaryLines;
             ref readonly var summary = ref block.Row;
             ref readonly var lines = ref block.Block;
             ref readonly var asmhex = ref summary.Encoded;
@@ -221,15 +219,31 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             
             writer.WriteLine(RP.PageBreak80);
 
-            writer.AppendLineFormat(LabeledValue, nameof(detail.InstructionId), detail.InstructionId);
-            writer.AppendLineFormat(LabeledValue, nameof(detail.Instruction), detail.Instruction);            
-            writer.AppendLineFormat(LabeledValue, nameof(detail.Form), detail.Form);
-            writer.AppendLineFormat(LabeledValue, nameof(detail.IP), detail.IP);
-            writer.AppendLineFormat(LabeledValue, nameof(detail.Asm), detail.Asm);
-            foreach(var pattern in context.InstPatterns.Match(detail.Form, context.Mode))
+            writer.AppendLineFormat(LabeledValue, nameof(row.Instruction), row.Instruction);            
+            writer.AppendLineFormat(LabeledValue, nameof(row.Form), row.Form);
+            writer.AppendLineFormat(LabeledValue, nameof(row.IP), row.IP);
+            writer.AppendLineFormat(LabeledValue, nameof(row.Asm), row.Asm);
+
+            var pattern = context.InstPatterns.Match(row.Form, context.Mode).FirstOrDefault();
+            if(pattern != null)
             {
                 writer.AppendLineFormat(LabeledValue, "Pattern", pattern.Body.Format());
+                var ops = pattern.Operands;
+                for(var i=0; i<ops.Count; i++)
+                {
+                    ref readonly var op = ref ops[i];
+                    var opspec = $"{i} {op.Name.Format()}:{op.Kind}";
+                    if(op.Register.IsNonEmpty)
+                        opspec += $":{op.Register.Format()}";
+                    if(op.Width.Bits != 0)
+                        opspec += $":w{op.Width.Bits}";
+                    else if(op.Width.Code != 0)
+                        opspec += $":{op.Width.Code}";                    
+                    writer.AppendLineFormat(LabeledValue, EmptyString, opspec);
+                }
             }
+            else
+                writer.AppendLineFormat(LabeledValue, $"Pattern", "<error>");
 
             if(state.OSZ)
             {
@@ -266,24 +280,24 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             writer.AppendLineFormat(LabeledValue, nameof(state.MODE), AsmRender.format(XedFields.mode(state)));
             writer.AppendLineFormat(LabeledValue, "OpCode", AsmOpCodes.opcode(context.Mode, XedFields.ocindex(state), XedFields.opcode(state)));
 
-            var offsets = detail.Offsets;
+            var offsets = row.Offsets;
             var encoding  = XedFields.encoding(state, asmhex);
-            if(detail.PrefixSize != 0)
-                writer.AppendLineFormat(LabeledValue, nameof(detail.PrefixSize), detail.PrefixSize);
-            writer.AppendLineFormat(LabeledValue, nameof(detail.Offsets), offsets);
-            writer.AppendLineFormat(LabeledValue, nameof(detail.Encoded), detail.Encoded);
-            writer.AppendLineFormat(LabeledValue, EmptyString, detail.Encoded.BitString);
+            if(row.PrefixSize != 0)
+                writer.AppendLineFormat(LabeledValue, nameof(row.PrefixSize), row.PrefixSize);
+            writer.AppendLineFormat(LabeledValue, nameof(row.Offsets), offsets);
+            writer.AppendLineFormat(LabeledValue, nameof(row.Encoded), row.Encoded);
+            writer.AppendLineFormat(LabeledValue, EmptyString, row.Encoded.BitString);
 
-            var prefix = slice(detail.PrefixBytes.Bytes, 0, detail.PrefixSize);
-            if(detail.PrefixSize != 0)
-                writer.AppendLineFormat(LabeledValue, nameof(detail.PrefixBytes), prefix.FormatHex());
+            var prefix = slice(row.PrefixBytes.Bytes, 0, row.PrefixSize);
+            if(row.PrefixSize != 0)
+                writer.AppendLineFormat(LabeledValue, nameof(row.PrefixBytes), prefix.FormatHex());
 
             if(state.SRM != 0)
                 writer.AppendLineFormat(LabeledValue, nameof(state.SRM), string.Format("{0} [{1}]", state.SRM.Hex(), state.SRM.Bitstring()));
 
             if(state.HAS_MODRM)
             {
-                var modrm = Require.equal(XedFields.modrm(state), detail.ModRm);
+                var modrm = Require.equal(XedFields.modrm(state), row.ModRm);
                 writer.AppendLineFormat(LabeledValue, "ModRm", modrm.Format());
                 writer.AppendLineFormat(LabeledValue, EmptyString, ModRmPattern.Symbolic());
                 writer.AppendLineFormat(LabeledValue, EmptyString, ModRmPattern.BitString(modrm));
@@ -367,20 +381,20 @@ public partial class XedDisasm : WfSvc<XedDisasm>
                 }
             }
 
-            var vc = XedFields.vexclass(state);
+            var vc = XedFields.vexvalid(state);
             if(vc != 0)
             {
-                if(vc == XedVexClass.VV1)
+                if(vc == VexValid.VV1)
                 {
                     var vex5 = Numbers.pack((num3)(byte)state.VEXDEST210, state.VEXDEST4, state.VEXDEST3);
-                    IBitPattern vp = detail.VexPrefix.VexKind == VexPrefixKind.xC4 ? VexC4Pattern : VexC5Pattern;
-                    writer.AppendLineFormat(LabeledValue, nameof(detail.VexPrefix.VexKind), detail.VexPrefix.VexKind);
-                    writer.AppendLineFormat(LabeledValue, nameof(detail.VexPrefix), vp.Symbolic());
-                    writer.AppendLineFormat(LabeledValue, EmptyString, vp.BitString(detail.VexPrefix));
+                    IBitPattern vp = row.VexPrefix.VexKind == VexPrefixKind.xC4 ? VexC4Pattern : VexC5Pattern;
+                    writer.AppendLineFormat(LabeledValue, nameof(row.VexPrefix.VexKind), row.VexPrefix.VexKind);
+                    writer.AppendLineFormat(LabeledValue, nameof(row.VexPrefix), vp.Symbolic());
+                    writer.AppendLineFormat(LabeledValue, EmptyString, vp.BitString(row.VexPrefix));
                     writer.AppendLineFormat(LabeledValue, "VEXDEST", string.Format("{0} {1}", vex5.Hex(), vex5.Bitstring()));
 
                 }
-                else if(vc == XedVexClass.EVV)
+                else if(vc == VexValid.EVV)
                 {
                     if(prefix.Length < 4)
                     {
@@ -412,7 +426,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             if(state.OUTREG != 0)
                 writer.AppendLineFormat(LabeledValue, nameof(state.OUTREG), XedPatterns.regop(state.OUTREG));
 
-            operands(detail, buffer);
+            operands(row, buffer);
             writer.WriteLine(buffer.Emit());
         }
 

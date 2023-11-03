@@ -6,7 +6,7 @@ namespace Z0;
 
 using static sys;
 
-public partial class XedZ
+public partial class XedInstBlocks
 {
     public class RuleAttribute : IEquatable<RuleAttribute>, IComparable<RuleAttribute>
     {

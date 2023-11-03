@@ -163,7 +163,7 @@ public class XedFieldRender
                     r.Functions[kind] = x => format((bit)x);
                 break;
                 case K.VEXVALID:
-                    r.Functions[kind] = x => format((XedVexClass)x);
+                    r.Functions[kind] = x => format((VexValid)x);
                 break;
                 case K.VEX_PREFIX:
                     r.Functions[kind] = x => format((XedVexKind)x);

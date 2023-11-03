@@ -10,7 +10,7 @@ using System.Linq;
 using static sys;
 using static XedModels;
 using static XedRules;
-using static XedZ;
+using static XedInstBlocks;
 
 partial class XedCmd
 {

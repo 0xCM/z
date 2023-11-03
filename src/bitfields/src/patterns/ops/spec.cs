@@ -7,13 +7,8 @@ namespace Z0;
 partial struct BitPatterns
 {
     [MethodImpl(Inline), Op]
-    public static BpSpec spec(string name, BpExpr pattern, BfOrigin origin)
-        => spec(describe(name, pattern, origin));
-
-    [MethodImpl(Inline), Op]
-    public static BpSpec spec<P>(string name, BpExpr pattern, P src)
-        where P : unmanaged, IBitPattern<P>
-            => spec(describe(name, pattern, src));
+    public static BpSpec spec(string name, BpExpr pattern)
+        => spec(describe(name, pattern));
 
     [MethodImpl(Inline), Op]
     public static BpSpec spec(in BpInfo src)

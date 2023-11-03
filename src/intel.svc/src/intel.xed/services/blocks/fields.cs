@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-partial class XedZ
+partial class XedInstBlocks
 {        
     public static IEnumerable<BlockField> fields(InstBlockLineSpec src)
     {

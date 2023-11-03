@@ -9,9 +9,9 @@ using System.Linq;
 using static XedModels;
 using static sys;
 
-using N = XedZ.BlockFieldName;
+using N = XedInstBlocks.BlockFieldName;
 
-partial class XedZ
+partial class XedInstBlocks
 {        
     public static IEnumerable<InstBlockLineSpec> lines()
         => lines(XedPaths.RuleBlockSource());
@@ -24,6 +24,24 @@ partial class XedZ
         return _dst;     
     }
 
+    static bool split(string src, out string name, out string value)
+    {
+        var result = false;
+        var i = text.index(src,Chars.Colon);
+        if(i > 0)
+        {
+            name = text.trim(text.left(src,i));
+            value = text.trim(text.right(src,i));
+            result = true;
+        }
+        else
+        {
+            name = EmptyString;
+            value = EmptyString;
+        }
+        return result;
+    }
+    
     static void lines(ReadOnlySpan<string> src, List<InstBlockLineSpec> dst)
     {
         const string FirstItemMarker = "amd_3dnow_opcode:";

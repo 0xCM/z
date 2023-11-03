@@ -10,7 +10,7 @@ using static XedModels;
 partial class XedRules
 {
     [StructLayout(LayoutKind.Sequential,Pack=1), Record(TableName)]
-    public struct TableDefRow
+    public struct RuleTableRow
     {
         public const string TableName = "xed.rules.tables";
 
@@ -35,6 +35,6 @@ partial class XedRules
         [Render(1)]
         public TextBlock Statement;
 
-        public static TableDefRow Empty => default;
+        public static RuleTableRow Empty => default;
     }
 }

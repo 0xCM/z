@@ -5,18 +5,20 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-[SymSource(AsmOpCodes.group), DataWidth(3)]
-public enum XedVexClass : byte
+partial class XedModels
 {
-    [Symbol("legacy", "VEXVALID=0")]
-    None = 0,
+    public enum VexValid : byte
+    {
+        [Symbol("legacy", "VEXVALID=0")]
+        None = 0,
 
-    [Symbol("vex", "VEXVALID=1")]
-    VV1 = 1,
+        [Symbol("vex", "VEXVALID=1")]
+        VV1 = 1,
 
-    [Symbol("evex", "VEXVALID=2")]
-    EVV = 2,
+        [Symbol("evex", "VEXVALID=2")]
+        EVV = 2,
 
-    [Symbol("xop", "VEXVALID=3")]
-    XOPV = 3,
-}    
+        [Symbol("xop", "VEXVALID=3")]
+        XOPV = 3,
+    }    
+}
