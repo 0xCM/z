@@ -106,26 +106,26 @@ public class XedInstBlocks
                 case N.mode_restriction:
                     mode = (MachineMode)field;
                 break;
-                case N.pattern:
-                {
-                    var cells = (InstCells)field;
-                    var segs = list<CellValue>();
-                    var segexpr = EmptyString;
-                    for(var i=0; i<cells.Count; i++)
-                    {
-                        ref readonly var cell = ref cells[i];
-                        switch(cell.CellKind)
-                        {
-                            case RuleCellKind.BitLit:
-                            case RuleCellKind.HexLit:
-                            case RuleCellKind.InstSeg:
-                                segs.Add(cell);
-                            break;
-                        }
-                    }
-                    rule.Cells = segs.Array();
-                }
-                break;
+                // case N.pattern:
+                // {
+                //     var cells = (InstCells)field;
+                //     var segs = list<CellValue>();
+                //     var segexpr = EmptyString;
+                //     for(var i=0; i<cells.Count; i++)
+                //     {
+                //         ref readonly var cell = ref cells[i];
+                //         switch(cell.CellKind)
+                //         {
+                //             case RuleCellKind.BitLit:
+                //             case RuleCellKind.HexLit:
+                //             case RuleCellKind.InstSeg:
+                //                 segs.Add(cell);
+                //             break;
+                //         }
+                //     }
+                //     rule.Cells = segs.Array();
+                // }
+                // break;
                 case N.operands:
                 {
                     var ops = (PatternOps)field;
@@ -189,6 +189,9 @@ public class XedInstBlocks
                 break;
                 case N.map:
                     ocmap = (byte)field;
+                break;
+                case N.rexw_prefix:
+                    pattern.RexW = (bit)field;
                 break;
                 case N.opcode:
                 case N.amd_3dnow_opcode:
@@ -286,21 +289,6 @@ public class XedInstBlocks
         return dst.IsNonEmpty;
     }        
 
-    static bool parse(string src, out BlockAttribute dst)
-    {
-        var i = text.index(src,Chars.Colon);
-        if(i > 0)
-        {
-            var name = text.trim(text.left(src,i));
-            var value = text.trim(text.right(src,i));
-            parse(name, out N field);
-            dst = new(field, value);
-        }
-        else
-            dst = BlockAttribute.Empty;
-        return dst.IsNonEmpty;
-    }        
-    
     public static bool parse(string src, out InstAttribKind dst)
         => AttribKindParser.Parse(src, out dst);
 
@@ -418,9 +406,6 @@ public class XedInstBlocks
         };
         return dst.Class <= MachineModeClass.Mode32x64;
     }
-
-    static bool parse(ReadOnlySpan<char> src, out InstCells dst)
-        => XedCells.parse(src, out dst);
 
     static bool parse(string src, out InstAttribs dst)
     {
@@ -740,8 +725,10 @@ public class XedInstBlocks
 
             case N.pattern:
             {
-                if(parse(src, out InstCells value))
+                if(XedCells.parse(src, out InstCells value))
+                {                    
                     dst = new(field, value);
+                }
             }
             break;
 

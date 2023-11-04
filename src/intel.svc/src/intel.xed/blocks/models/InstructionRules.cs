@@ -15,7 +15,6 @@ partial class XedRules
     {     
         readonly InstBlockPatterns _PatternLookup;
 
-
         readonly ReadOnlySeq<InstBlock> _Defs;
         
         public readonly uint Count;

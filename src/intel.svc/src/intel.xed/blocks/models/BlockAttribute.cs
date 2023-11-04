@@ -22,8 +22,10 @@ partial class XedModels
 
         public bool IsNonEmpty
         {
+            [MethodImpl(Inline)]
             get => Field != 0 || nonempty(Value);
         }
+
         public static BlockAttribute Empty => new(default,EmptyString);
     }
 }

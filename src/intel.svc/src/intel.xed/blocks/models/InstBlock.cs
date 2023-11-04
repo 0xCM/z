@@ -18,30 +18,26 @@ partial class XedRules
         
         public ReadOnlySeq<InstBlockField> Fields;
         
-        public ReadOnlySeq<CellValue> Cells;
-
         public InstBlockOperands Operands;
 
         readonly InstBlockField EmptyField = InstBlockField.Empty;
 
         public InstBlock()
         {
-            Cells = sys.empty<CellValue>();
             Fields = sys.empty<InstBlockField>();
             Form = default;
             Operands = InstBlockOperands.Empty;
         }
 
-
         public string Format()
         {
             var dst = text.emitter();
             dst.Append($"{Form,-54} | ");
-            for(var i=0; i<Cells.Count; i++)
+            for(var i=0; i<Pattern.Body.Data.Count; i++)
             {
                 if(i!=0)
                     dst.Append(Chars.Space);            
-                dst.Append(Cells[i]);
+                dst.Append(Pattern.Body.Data[i]);
             }
 
             return dst.Emit();
@@ -66,11 +62,7 @@ partial class XedRules
         {
             var result = Form.CompareTo(src.Form);
             if(result == 0)
-            {
-                result = Operands.Length.CompareTo(src.Operands.Length);
-                if(result == 0)
-                    result = Cells.Length.CompareTo(src.Cells.Length);
-            }
+                result = FormIndex.CompareTo(src.FormIndex);
             return result;
         }
     }

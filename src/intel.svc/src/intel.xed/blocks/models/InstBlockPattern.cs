@@ -28,6 +28,9 @@ partial class XedModels
         [Render(8)]
         public bit Lock;
 
+        [Render(8)]
+        public bit? RexW;
+
         [Render(16)]
         public AsmOpCode OpCode;
 

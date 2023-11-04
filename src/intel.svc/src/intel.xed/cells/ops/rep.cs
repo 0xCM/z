@@ -5,27 +5,24 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static XedRules;
 using static XedModels;
+using static XedRules;
 
-partial class XedPatterns
+partial class XedCells
 {
-    [Op]
-    public static bool mode(in InstCells src, out MachineMode dst)
+    [MethodImpl(Inline), Op]
+    public static RepIndicator @rep(in InstCells src)
     {
-        dst = MachineMode.Default;
-        var found = false;
+        var dst = RepIndicator.Empty;
         for(var i=0; i<src.Count; i++)
         {
-            ref readonly var cell = ref src[i];
-            if(cell.Field == FieldKind.MODE)
+            ref readonly var field = ref src[i];
+            if(field.Field == FieldKind.REP)
             {
-                dst = cell.AsMode();
-                found = true;
+                dst = (RepPrefix)field.ToCellExpr().Value;
                 break;
             }
         }
-
-        return found;
-    }
+        return dst;
+    }    
 }

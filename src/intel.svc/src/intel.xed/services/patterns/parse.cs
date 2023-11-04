@@ -49,7 +49,6 @@ partial class XedPatterns
         return XedParsers.parse(left, out name);
     }
 
-
     static PatternOps parse(uint pattern, string ops)
     {
         var buffer = list<PatternOp>();

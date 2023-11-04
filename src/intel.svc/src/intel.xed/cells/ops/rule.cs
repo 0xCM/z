@@ -7,24 +7,25 @@ namespace Z0;
 
 using static XedModels;
 using static XedRules;
-using static sys;
 
 partial class XedCells
 {
-    [MethodImpl(Inline), Op]
-    public static RepIndicator @rep(in InstCells src)
+    public static Nonterminal rule(in InstCells src, RuleName name)
     {
-        var dst = RepIndicator.Empty;
+        var dst = Nonterminal.Empty;
         for(var i=0; i<src.Count; i++)
         {
-            ref readonly var field = ref src[i];
-            if(field.Field == FieldKind.REP)
+            ref readonly var cell = ref src[i];
+            if(cell.IsNonterm)
             {
-                dst = (RepPrefix)field.ToCellExpr().Value;
-                break;
-            }
+                var nt = cell.AsNonterm();
+                if(nt.Name == name)
+                {
+                    dst = nt;
+                    break;
+                }
+            }            
         }
         return dst;
-    }    
+    }
 }
-
