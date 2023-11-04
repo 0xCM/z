@@ -11,7 +11,7 @@ partial class XedRules
     public readonly struct Fields
     {
         public static Fields allocate()
-            => new Fields(sys.alloc<Field>(Fields.MaxCount));
+            => new (sys.alloc<Field>(Fields.MaxCount));
 
         [MethodImpl(Inline), Op]
         public static Field field<T>(FieldKind kind, T value)
@@ -90,6 +90,6 @@ partial class XedRules
             get => ref Data[(byte)kind];
         }
 
-        public static Fields Empty => new Fields(sys.empty<Field>());
+        public static Fields Empty => new (sys.empty<Field>());
     }
 }

@@ -62,7 +62,7 @@ partial class XedCells
     {
         Require.nonempty(data);
         Require.invariant(data.Length < 48);
-        var kind = XedFieldParser.kind(data);
+        var kind = XedFields.kind(data);
         var field = kind != 0 ? FieldDefs.field(kind) : FieldDef.Empty;
         ruleop(data, out RuleOperator op);
         dst = new (kind, celltype(field.Field, data), op, field.DataType, field.Size);

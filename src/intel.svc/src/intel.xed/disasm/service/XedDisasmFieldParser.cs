@@ -59,7 +59,7 @@ class XedDisasmFieldParser
     }
 
     static bool update(string src, FieldKind kind, ref XedDisasmState dstate)
-        => XedFieldParser.parse(src, kind, ref dstate.RuleState).IsNonEmpty;
+        => XedFields.parse(src, kind, ref dstate.RuleState).IsNonEmpty;
 
 
     static Outcome parse(string src, out asci32 dst)

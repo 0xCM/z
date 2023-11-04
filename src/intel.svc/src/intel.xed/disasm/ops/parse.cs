@@ -45,7 +45,7 @@ partial class XedDisasm
         }
 
         XedDisasmParse.parse(src, out var _class, out var _form);
-        dst = InstFieldValues.define(_class, _form, facets);
+        dst = XedFields.values(_class, _form, facets);
 
         return k;
     }

@@ -6,11 +6,20 @@
 namespace Z0;
 
 using static XedRules;
-
+using static sys;
 using K = XedRules.FieldKind;
 
 partial class XedFields
 {
+    public static void extract(in XedFieldState state, ReadOnlySpan<FieldKind> fields)
+    {
+        for(var i=0; i<fields.Length; i++)
+        {
+            ref readonly var kind = ref skip(fields,i);
+            var cell = extract(state, skip(fields,i));
+        }
+    }
+
     [Op]
     public static FieldValue extract(in XedFieldState src, FieldKind kind)
     {

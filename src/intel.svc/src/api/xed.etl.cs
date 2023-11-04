@@ -5,12 +5,38 @@
 namespace Z0;
 
 using Asm;
-
+using static XedModels;
+using static XedRules;
 using static sys;
 
 partial class XedCmd
 {
 
+    [CmdOp("xed/check/fields")]
+    void CheckXedFields()
+    {
+        var instructions = XedTables.Instructions();
+        var fields = Fields.allocate();
+        Span<FieldKind> members = stackalloc FieldKind[128];
+
+        foreach(var def in instructions.Defs)
+        {
+            fields.Clear();
+            members.Clear();
+
+            var cells = def.Pattern.Body;
+            var set = XedFields.pack(cells, fields);
+            var count = set.Members(members);
+            for(var i=0; i<count; i++)
+            {
+                ref readonly var kind = ref members[i];
+                var value = fields[kind];
+                Channel.Row($"{kind}:{value}");                
+            }
+
+
+        }
+    }
 
     XedImport XedImport => Wf.XedImport();
 

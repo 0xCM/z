@@ -275,6 +275,10 @@ partial class XedRules
             => @as<byte>(Data.First);
 
         [MethodImpl(Inline)]
+        public bit AsBit()
+            => @as<bit>(Data.First);
+
+        [MethodImpl(Inline)]
         public ushort AsWord()
             => @as<ushort>(Data.First);
 

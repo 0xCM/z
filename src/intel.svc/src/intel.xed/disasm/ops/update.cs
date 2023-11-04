@@ -13,13 +13,13 @@ partial class XedDisasm
     public static void update(in XedDisasmBlock src, ref XedFieldState dst)
     {
         var vals = values(src);
-        XedFieldParser.update(vals, ref dst);    
+        XedFields.update(vals, ref dst);    
     }
 
     public static uint update(in XedDisasmBlock src, Span<FieldValue> buffer, ref XedFieldState dst)
     {
         var count = values(src, buffer);
-        XedFieldParser.update(slice(buffer,0, count), ref dst);
+        XedFields.update(slice(buffer,0, count), ref dst);
         return count;
     }
 
@@ -29,7 +29,6 @@ partial class XedDisasm
         var state = XedFieldState.Empty;
         var names = props.Keys.Array();
         var count = (uint)min(names.Length, dst.Length);
-        //var dst = alloc<FieldValue>(count - 2);
         var k=0u;
         for(var i=0; i<count; i++)
         {
@@ -38,7 +37,7 @@ partial class XedDisasm
                 continue;
 
             if(XedParsers.parse(name, out FieldKind kind))
-                seek(dst,k++) = XedFieldParser.parse(props[name], kind, ref state);
+                seek(dst,k++) = XedFields.parse(props[name], kind, ref state);
             else
                 Errors.Throw(AppMsg.ParseFailure.Format(nameof(FieldKind), name));
         }
@@ -60,7 +59,7 @@ partial class XedDisasm
                 continue;
 
             if(XedParsers.parse(name, out FieldKind kind))
-                seek(dst,k++) = XedFieldParser.parse(props[name], kind, ref state);
+                seek(dst,k++) = XedFields.parse(props[name], kind, ref state);
             else
                 Errors.Throw(AppMsg.ParseFailure.Format(nameof(FieldKind), name));
         }

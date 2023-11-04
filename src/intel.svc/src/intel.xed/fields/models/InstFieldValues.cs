@@ -12,14 +12,6 @@ partial class XedRules
 {
     public class InstFieldValues : Dictionary<string,string>
     {
-        public static InstFieldValues define(XedInstClass @class, XedInstForm form, Index<Facet<string>> src)
-        {
-            var dst = dict<string,string>();
-            for(var i=0; i<src.Count; i++)
-                dst.Add(src[i].Key, src[i].Value);
-            return new InstFieldValues(@class, form, dst);
-        }
-
         public readonly XedInstClass InstClass;
 
         public readonly XedInstForm InstForm;
@@ -46,7 +38,7 @@ partial class XedRules
             => Format();
             
         public Index<FieldValue> ParseFields(out XedFieldState state)
-            => XedFieldParser.parse(this, out state);
+            => XedFields.parse(this, out state);
 
         public static InstFieldValues Empty
             => new (XedInstClass.Empty, XedInstForm.Empty, dict<string,string>());
