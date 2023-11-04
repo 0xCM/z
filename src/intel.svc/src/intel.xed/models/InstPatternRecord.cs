@@ -35,9 +35,6 @@ partial class XedModels
         [Render(8)]
         public EmptyZero<bit> Scalable;
 
-        [Render(52)]
-        public XedInstForm InstForm;
-
         [Render(1)]
         public InstCells Body;
 
@@ -46,7 +43,7 @@ partial class XedModels
 
         [MethodImpl(Inline)]
         public PatternSort Sort()
-            => new PatternSort(this);
+            => new PatternSort(this,true);
 
         public static InstPatternRecord Empty => default;
 

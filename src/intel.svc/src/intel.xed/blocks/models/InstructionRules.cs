@@ -15,35 +15,30 @@ partial class XedRules
     {     
         readonly InstBlockPatterns _PatternLookup;
 
-        readonly ReadOnlySeq<InstBlockPattern> _Patterns;
 
-        readonly ReadOnlySeq<InstBlockOperand> _Ops;
-
-        readonly ReadOnlySeq<InstRuleDef> _Defs;
+        readonly ReadOnlySeq<InstBlock> _Defs;
         
         public readonly uint Count;
 
-        internal InstructionRules(ReadOnlySeq<InstRuleDef> defs,  ReadOnlySeq<InstBlockPattern> patterns, InstBlockPatterns lu, ReadOnlySeq<InstBlockOperand> operands)
+        internal InstructionRules(ReadOnlySeq<InstBlock> defs, InstBlockPatterns lu)
         {
             _PatternLookup = lu;
-            _Ops = operands;            
             _Defs = defs;
-            _Patterns = patterns;
-            Count = Require.equal(defs.Count, patterns.Count);
+            Count = defs.Count;
         }        
 
-        public ref readonly InstRuleDef this[uint i]
+        public ref readonly InstBlock this[uint i]
         {
             [MethodImpl(Inline)]
             get => ref _Defs[i];
         }
 
-        public IEnumerable<InstRuleDef> Defs => _Defs;            
+        public IEnumerable<InstBlock> Defs => _Defs;            
 
         public ref readonly InstBlockPatterns Patterns => ref _PatternLookup;
 
-        public ref readonly ReadOnlySeq<InstBlockOperand> Operands => ref _Ops;
+        public IEnumerable<InstBlockOperand> Operands => XedInstBlocks.operands(_Defs);
 
-        public static InstructionRules Empty => new (sys.empty<InstRuleDef>(), sys.empty<InstBlockPattern>(), InstBlockPatterns.Empty, sys.empty<InstBlockOperand>());
+        public static InstructionRules Empty => new (sys.empty<InstBlock>(), InstBlockPatterns.Empty);
     }
 }

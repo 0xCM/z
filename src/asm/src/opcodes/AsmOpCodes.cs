@@ -28,6 +28,63 @@ public partial class AsmOpCodes
     public static AsmOpCode opcode(MachineMode mode, AsmOpCodeIndex index, uint value)
         => new(mode,kind(index), value);
 
+    public static byte number(AsmOpCodeKind kind)
+    {
+        var dst = z8;
+        switch(kind)
+        {
+            case Base00:
+                dst = 0;
+            break;
+            case Base0F:
+                dst = 1;
+            break;
+            case Base0F38:
+                dst = 2;
+            break;
+            case Base0F3A:
+                dst = 3;
+            break;
+            case Amd3DNow:
+                dst = 4;
+            break;
+            case Xop8:
+                dst = 8;
+            break;
+            case Xop9:
+                dst = 9;
+            break;
+            case XopA:
+                dst = 10;
+            break;
+            case Vex0F:
+                dst = 1;
+            break;
+            case Vex0F38:
+                dst = 2;
+            break;
+            case Vex0F3A:
+                dst = 3;
+            break;
+            case Evex0F:
+                dst = 1;
+            break;
+            case Evex0F38:
+                dst = 2;
+            break;
+            case Evex0F3A:
+                dst = 3;
+            break;
+            case Evex5:
+                dst = 5;
+            break;
+            case Evex6:
+                dst = 6;
+            break;
+        }
+
+        return dst;
+    }
     public static K kind(AsmOpCodeClass @class, byte number)
     {
         var kind = K.None;
@@ -411,118 +468,27 @@ public partial class AsmOpCodes
     public static AsmOpCodeMap map(K src)
         => new (src, @class(src), index(src), symbol(src), selector(src));
 
-    // [MethodImpl(Inline), Op]
-    // public static AsmOpCodeMap map(I src)
-    //     => map(kind(src));
-
-    // public static IEnumerable<AsmOpCodeMap> maps(AsmOpCodeClass @class)
-    // {
-    //     switch(@class)
-    //     {
-    //         case AsmOpCodeClass.Legacy:
-    //         {
-    //             yield return map(I.LegacyMap0);
-    //             yield return map(I.LegacyMap1);
-    //             yield return map(I.LegacyMap2);
-    //             yield return map(I.LegacyMap3);
-    //             yield return map(I.Amd3dNow);
-    //         }
-    //         break;
-    //         case AsmOpCodeClass.Xop:
-    //         {
-    //             yield return map(I.Xop8);
-    //             yield return map(I.Xop9);
-    //             yield return map(I.XopA);
-    //         }
-    //         break;
-    //         case AsmOpCodeClass.Vex:
-    //         {
-    //             yield return map(I.Vex0F);
-    //             yield return map(I.Vex0F38);
-    //             yield return map(I.Vex0F3A);            
-    //         }
-    //         break;
-    //         case AsmOpCodeClass.Evex:
-    //         {
-    //             yield return map(I.Evex0F);
-    //             yield return map(I.Evex0F38);
-    //             yield return map(I.Evex0F3A);
-    //             yield return map(I.Evex5);
-    //             yield return map(I.Evex6);
-    //         }
-    //         break;
-    //     }
-    // }
-
-    // public static IEnumerable<AsmOpCodeMap> maps()
-    // {
-    //     foreach(var map in maps(AsmOpCodeClass.Legacy))
-    //         yield return map;
-    //     foreach(var map in maps(AsmOpCodeClass.Xop))
-    //         yield return map;
-    //     foreach(var map in maps(AsmOpCodeClass.Vex))
-    //         yield return map;
-    //     foreach(var map in maps(AsmOpCodeClass.Evex))
-    //         yield return map;
-    // }    
-
-    // public static N? number(I src)
-    // {
-    //     var dst = default(N?);
-    //     switch(src)
-    //     {
-    //         case I.LegacyMap0:
-    //             dst = (N)BaseMap0;
-    //         break;
-    //         case I.LegacyMap1:
-    //             dst = (N)BaseMap1;
-    //         break;
-    //         case I.LegacyMap2:
-    //             dst = (N)BaseMap2;
-    //         break;
-    //         case I.LegacyMap3:
-    //             dst = (N)BaseMap3;
-    //         break;
-    //         case I.Amd3dNow:
-    //             dst = (N)src;
-    //         break;
-
-    //         case I.Vex0F:
-    //             dst = (N)VEX_MAP_0F;
-    //         break;
-    //         case I.Vex0F38:
-    //             dst = (N)VEX_MAP_0F38;
-    //         break;
-    //         case I.Vex0F3A:
-    //             dst = (N)VEX_MAP_0F3A;
-    //         break;
-    //         case I.Evex0F:
-    //             dst = (N)EVEX_MAP_0F;
-    //         break;
-    //         case I.Evex0F38:
-    //             dst = (N)EVEX_MAP_0F38;
-    //         break;
-    //         case I.Evex0F3A:
-    //             dst = (N)EVEX_MAP_0F3A;
-    //         break;
-    //         case I.Xop8:
-    //             dst = (N)XopMapKind.Xop8;
-    //         break;
-    //         case I.Xop9:
-    //             dst = (N)XopMapKind.Xop9;
-    //         break;
-    //         case I.XopA:
-    //             dst = (N)XopMapKind.XopA;
-    //         break;
-    //     }
-    //     return dst;
-    // }
-
     static string hex(byte src)
         => "0x" + src.ToString("X2");
 
     public static string format(AsmOpCode src)
     {
+        var space = EmptyString;
+        switch(src.Map.Class)
+        {
+            case AsmOpCodeClass.Legacy:
+                space = Literals.@base;
+            break;
+            case AsmOpCodeClass.Xop:
+                space = Literals.xop;
+            break;
+            case AsmOpCodeClass.Vex:
+                space = Literals.vex;
+            break;
+            case AsmOpCodeClass.Evex:
+                space = Literals.evex;
+            break;
+        }
         var a = src.Map.Value;
         var value = src.Value.Bytes;
         var size = src.Value.TrimmedSize;
@@ -536,18 +502,18 @@ public partial class AsmOpCodes
             case 1:
             {
                 ref readonly var b0 = ref value[0];
-                dst = $"{symbol}[{a}]:{hex(b0)}";
+                dst = $"{space}[{src.MapNumber}]:{hex(b0)}";
             }
             break;
             case 2:
             {
                 ref readonly var b0 = ref value[1];
                 ref readonly var b1 = ref value[0];
-                dst = $"{symbol}[{a}]:{hex(b1)} {hex(b0)}";
+                dst = $"{space}[{src.MapNumber}]:{hex(b1)} {hex(b0)}";
                 if(lo !=0 && hi == 0)
                 {
                     if(lo == b1)
-                        dst = $"{symbol}[{a}]:{hex(b0)}";
+                        dst = $"{space}[{src.MapNumber}]:{hex(b0)}";
                 }
             }
             break;
@@ -556,16 +522,16 @@ public partial class AsmOpCodes
                 ref readonly var b0 = ref value[2];
                 ref readonly var b1 = ref value[1];
                 ref readonly var b2 = ref value[0];
-                dst = $"{symbol}[{a}]:{hex(b2)} {hex(b1)} {hex(b0)}";
+                dst = $"{space}[{src.MapNumber}]:{hex(b2)} {hex(b1)} {hex(b0)}";
                 if(lo !=0 && hi != 0)
                 {
                     if(hi == b2 && lo == b1)
-                        dst = $"{symbol}[{a}]:{hex(b0)}";
+                        dst = $"{space}[{src.MapNumber}]:{hex(b0)}";
                 }
                 else if(lo != 0)
                 {
                     if(lo == b2)
-                        dst = $"{symbol}[{a}]:{hex(b1)} {hex(b0)}";
+                        dst = $"{space}[{src.MapNumber}]:{hex(b1)} {hex(b0)}";
                 }
             }
             break;
@@ -678,5 +644,14 @@ public partial class AsmOpCodes
         public const string Amd3dClassName = "3D";
 
         public const string XopClassName = "XOP";
+
+        public const string evex = nameof(evex);
+
+        public const string vex = nameof(vex);
+
+        public const string @base = "base";
+
+        public const string xop = nameof(xop);
+
     }
 }

@@ -16,10 +16,11 @@ partial class XedRuleSeq
         REX_PREFIX_ENC_EMIT() | VEXED_REX_EMIT()
         INSTRUCTIONS_EMIT()
     */
-    public static SeqDef ISA_EMIT() => emit(nameof(ISA_EMIT), new []{
-        PREFIX_ENC_EMIT,
-        REX_PREFIX_ENC_EMIT,
-        VEXED_REX_EMIT,
-        INSTRUCTIONS_EMIT
-    });
+
+    // public static SeqDef ISA_EMIT() => emit(nameof(ISA_EMIT), new []{
+    //     PREFIX_ENC_EMIT,
+    //     REX_PREFIX_ENC_EMIT,
+    //     VEXED_REX_EMIT,
+    //     INSTRUCTIONS_EMIT
+    // });
 }

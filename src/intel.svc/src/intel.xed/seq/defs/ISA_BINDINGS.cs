@@ -21,11 +21,12 @@ partial class XedRuleSeq
         PREFIX_ENC_BIND()       | PREFIX_ENC
         REX_PREFIX_ENC_BIND()   | REX_PREFIX_ENC
     */
+
     public static SeqDef ISA_BINDINGS() => bind(nameof(ISA_BINDINGS), new RuleName[]{
             FIXUP_EOSZ_ENC_BIND,
             FIXUP_EASZ_ENC_BIND,
-            ASZ_NONTERM_BIND,
-            INSTRUCTIONS_BIND,
+            //ASZ_NONTERM_ENC,
+            //INSTRUCTIONS_BIND,
             OSZ_NONTERM_ENC_BIND,
             PREFIX_ENC_BIND,
             REX_PREFIX_ENC_BIND,

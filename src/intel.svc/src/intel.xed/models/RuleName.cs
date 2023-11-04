@@ -51,6 +51,8 @@ partial class XedModels
 
         ASZ_NONTERM,
 
+        ASZ_NONTERM_ENC,
+
         AVX_INSTRUCTIONS,
 
         AVX_SPLITTER,

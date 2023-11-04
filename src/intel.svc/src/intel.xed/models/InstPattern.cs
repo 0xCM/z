@@ -32,7 +32,6 @@ partial class XedModels
             dst.Scalable = src.Scalable;
             Require.invariant(src.InstClass.Kind != 0);
             dst.InstClass = Xed.classifier(src.InstClass);
-            dst.InstForm = src.InstForm;
             dst.Body = body;
             return dst;
         }

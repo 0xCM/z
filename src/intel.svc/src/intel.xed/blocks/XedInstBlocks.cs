@@ -71,29 +71,29 @@ public class XedInstBlocks
             Require.invariant(lookup.TryAdd(key,pattern));
             seek(patterns,i) = pattern;
         }
-        return new InstructionRules(defs, patterns, new(patterns, lookup), operands(defs));
+        
+        return new InstructionRules(defs, new(patterns, lookup));
     }
 
-    static ReadOnlySeq<InstBlockOperand> operands(ReadOnlySeq<InstRuleDef> src)
+    internal static IEnumerable<InstBlockOperand> operands(ReadOnlySeq<InstBlock> src)
     {
         var operands = list<InstBlockOperand>();
-        foreach(var pattern in src)
+        foreach(var pattern in src.Storage)
         {   
             var count = pattern.Operands.Count;
             for(var i=0; i<count; i++)
-                operands.Add(pattern.Operands[i]);
-        }
-        return operands.Array();
+                yield return pattern.Operands[i];
+        }        
     }
 
-    static ParallelQuery<InstRuleDef> defs(ParallelQuery<InstBlockLineSpec> lines)
+    static ParallelQuery<InstBlock> defs(ParallelQuery<InstBlockLineSpec> lines)
         => from line in lines select instruction(line, fields(line).Array());    
 
-    static InstRuleDef instruction(InstBlockLineSpec line, ReadOnlySeq<InstBlockField> fields)
+    static InstBlock instruction(InstBlockLineSpec line, ReadOnlySeq<InstBlockField> fields)
     {
         var mode = MachineMode.Default;
         var form = line.Form;
-        var rule = new InstRuleDef{
+        var rule = new InstBlock{
             Form = form,
             Pattern = pattern(line),
             Fields = fields
@@ -167,6 +167,9 @@ public class XedInstBlocks
         var pattern = new InstBlockPattern();
         pattern.Seq = spec.Seq;
         var fields = list<InstBlockField>();
+        var ocvalue = Hex8.Zero;
+        var occlass = AsmOpCodeClass.Legacy;
+        var ocmap = z8;
         foreach(var field in XedInstBlocks.fields(spec))
         {                
             fields.Add(field);
@@ -181,9 +184,15 @@ public class XedInstBlocks
                 case N.mode_restriction:
                     pattern.Mode = (MachineMode)field;
                 break;
+                case N.space:
+                    occlass = (AsmOpCodeClass)field;
+                break;
+                case N.map:
+                    ocmap = (byte)field;
+                break;
                 case N.opcode:
                 case N.amd_3dnow_opcode:
-                    pattern.OpCode = (Hex8)field;
+                    ocvalue = (Hex8)field;
                 break;
                 case N.attributes:
                     pattern.InstAttribs = (InstAttribs)field;
@@ -259,6 +268,8 @@ public class XedInstBlocks
                 break;
             }
         }
+
+        pattern.OpCode = new(pattern.Mode, AsmOpCodes.kind(occlass,ocmap), ocvalue);
         return pattern;
     }
 

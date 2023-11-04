@@ -15,10 +15,11 @@ partial class XedRuleSeq
     ISA()::
     PREFIXES() OSZ_NONTERM() ASZ_NONTERM() EVEX_SPLITTER() |
     */
-    public static SeqDef ISA() => def(nameof(ISA), RuleTableKind.DEC,
-        PREFIXES,
-        OSZ_NONTERM,
-        ASZ_NONTERM,
-        EVEX_SPLITTER
-        );
+    
+    // public static SeqDef ISA() => def(nameof(ISA), RuleTableKind.DEC,
+    //     PREFIXES,
+    //     OSZ_NONTERM,
+    //     ASZ_NONTERM,
+    //     EVEX_SPLITTER
+    //     );
 }

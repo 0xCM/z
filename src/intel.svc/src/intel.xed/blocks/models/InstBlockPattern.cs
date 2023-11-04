@@ -9,7 +9,7 @@ using static XedRules;
 partial class XedModels
 {
     [Record(TableName)]
-    public record InstBlockPattern : IComparable<InstBlockPattern>
+    public record InstBlockPattern : IComparable<InstBlockPattern>, ISequential<InstBlockPattern>
     {
         const string TableName = "xed.instblock.patterns";
 
@@ -28,8 +28,8 @@ partial class XedModels
         [Render(8)]
         public bit Lock;
 
-        [Render(8)]
-        public Hex8 OpCode;
+        [Render(16)]
+        public AsmOpCode OpCode;
 
         [Render(58)]
         public XedInstForm Form;
@@ -45,5 +45,11 @@ partial class XedModels
 
         public int CompareTo(InstBlockPattern src)
             => XedInstBlocks.cmp(this, src);
+
+        uint ISequential.Seq
+        {
+            get => Seq;
+            set => Seq = value;
+        }
     }
 }

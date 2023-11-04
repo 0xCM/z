@@ -14,8 +14,8 @@ partial class XedRuleSeq
         ISA_BINDINGS
         ISA_EMIT
     */
-    public static SeqControl ISA_ENCODE() => control(nameof(ISA_ENCODE), new SeqDef[]{
-        ISA_BINDINGS(),
-        ISA_EMIT(),
-        });
+    // public static SeqControl ISA_ENCODE() => control(nameof(ISA_ENCODE), new SeqDef[]{
+    //     ISA_BINDINGS(),
+    //     ISA_EMIT(),
+    //     });
 }

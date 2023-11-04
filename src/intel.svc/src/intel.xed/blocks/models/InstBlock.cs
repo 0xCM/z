@@ -8,7 +8,7 @@ using static XedModels;
 
 partial class XedRules
 {
-    public record InstRuleDef : IComparable<InstRuleDef>
+    public record InstBlock : IComparable<InstBlock>
     {
         public XedInstForm Form;
 
@@ -24,7 +24,7 @@ partial class XedRules
 
         readonly InstBlockField EmptyField = InstBlockField.Empty;
 
-        public InstRuleDef()
+        public InstBlock()
         {
             Cells = sys.empty<CellValue>();
             Fields = sys.empty<InstBlockField>();
@@ -62,7 +62,7 @@ partial class XedRules
         public override string ToString()
             => Format();
         
-        public int CompareTo(InstRuleDef src)
+        public int CompareTo(InstBlock src)
         {
             var result = Form.CompareTo(src.Form);
             if(result == 0)

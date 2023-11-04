@@ -17,7 +17,7 @@ public readonly struct AsmOpCode : IEquatable<AsmOpCode>, IComparable<AsmOpCode>
 
     public readonly OpCodeValue Value;
 
-    readonly byte Pad;
+    public readonly byte MapNumber;
 
     [MethodImpl(Inline)]
     public AsmOpCode(MachineMode mode, AsmOpCodeKind kind, OpCodeValue value)
@@ -25,7 +25,7 @@ public readonly struct AsmOpCode : IEquatable<AsmOpCode>, IComparable<AsmOpCode>
         Mode = mode;
         Kind = kind;
         Value = value;
-        Pad = 0;
+        MapNumber = AsmOpCodes.number(kind);
     }
 
     public AsmOpCodeClass Class

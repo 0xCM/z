@@ -86,7 +86,7 @@ public partial class XedImport : WfSvc<XedImport>
 
     public void Emit(InstructionRules src)
     {
-        Emit(src.Operands);
+        Emit(src.Operands.Array());
         Emit(src.Patterns);
     }
 
@@ -232,7 +232,7 @@ public partial class XedImport : WfSvc<XedImport>
         => Channel.TableEmit(src, XedPaths.ImportTable<RuleCellRecord>());
 
     void Emit(InstBlockPatterns src)
-        => Channel.TableEmit(src.View,XedPaths.ImportTable<InstBlockPattern>());
+        => Channel.TableEmit(src.View, XedPaths.ImportTable<InstBlockPattern>());
 
     void Emit(InstLayouts src)
         => Channel.TableEmit(src.Records.View, XedPaths.ImportTable<InstLayoutRecord>(), TextEncodingKind.Asci);
@@ -285,8 +285,6 @@ public partial class XedImport : WfSvc<XedImport>
 
     void EmitPatternDocs(ReadOnlySeq<InstPattern> src)
     {
-        // EmitDetails(src);
-        // EmitDocs(src);
         var instdoc = new XedInstDoc(src.Map(x => new InstDocPart(x)));
         Channel.FileEmit(instdoc.Format(), instdoc.Parts.Count, XedPaths.DocTarget("instructions", FileKind.Md), TextEncodingKind.Asci);
         var emitter = text.emitter();

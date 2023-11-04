@@ -150,7 +150,10 @@ partial class AsmOpCodes
 
         [MethodImpl(Inline)]
         public int CompareTo(OpCodeValue src)
-            => ((uint)Data).CompareTo((uint)src.Data);
+        {
+            return ((uint)Data).CompareTo((uint)src.Data);
+
+        }
 
         public override int GetHashCode()
             => Hash;
@@ -173,11 +176,15 @@ partial class AsmOpCodes
 
         [MethodImpl(Inline)]
         public static implicit operator OpCodeValue(ReadOnlySpan<byte> src)
-            => new OpCodeValue(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator OpCodeValue(ByteBlock4 src)
             => new (src);
+
+        [MethodImpl(Inline)]
+        public static implicit operator OpCodeValue(Hex8 src)
+            => new(src);
 
         public static OpCodeValue Empty => default;
     }
