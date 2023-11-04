@@ -10,6 +10,7 @@ using System.Linq;
 using static sys;
 using static XedModels;
 using static XedRules;
+using static Markdown;
 
 using T = XedTables;
 
@@ -20,8 +21,12 @@ public partial class XedImport : WfSvc<XedImport>
         XedPaths.Imports().Delete();
         var ruleT = XedRuleTables.Empty;
         var instdefs = ReadOnlySeq<InstDef>.Empty;
+        var instrules = InstructionRules.Empty;
         exec(true, 
-            () => Emit(T.Instructions()),
+            () => {
+                instrules = T.Instructions();
+                Emit(instrules);
+            },
             () => ruleT = T.RuleTables(),
             () => Emit(T.RuleSeqImports()),
             () => Emit(T.SeqReflected()),
@@ -51,6 +56,7 @@ public partial class XedImport : WfSvc<XedImport>
         var cells = XedRuleCells.Empty;
         exec(true,
             () => EmitPages(ruleT),
+            () => EmitBlockDocs(instrules),
             () => EmitPatternDocs(patterns),            
             () => Emit(T.RuleTableRows(ruleT)),
             () => cells = T.RuleCells(ruleT),
@@ -156,31 +162,6 @@ public partial class XedImport : WfSvc<XedImport>
         Channel.FileEmit(dst.Emit(), XedPaths.Imports().Path("xed.rules.fields.deps", FileKind.Csv));
     }
 
-    static void EmitPage(in TableCriteria src)
-    {
-        var formatter = CsvTables.formatter<RuleTableRow>();
-        using var emitter = XedPaths.RuleTable(src.Rule).AsciEmitter();
-        emitter.AppendLine(formatter.FormatHeader());
-        var k=0u;
-        for(var j=0u; j<src.RowCount; j++, k++)
-        {
-            ref readonly var spec = ref src[j];
-            var specFormat = spec.Format();
-            var row = RuleTableRow.Empty;
-            row.Seq = k;
-            row.TableId = src.TableId;
-            row.Index = j;
-            row.Rule = src.Rule;
-            row.Kind = src.TableKind;
-            row.Name = src.TableName;
-            row.Statement = specFormat;
-            emitter.AppendLine(formatter.Format(row));
-        }
-        emitter.AppendLine();
-        emitter.AppendLine();
-        src.RenderLines(emitter);
-    }
-
     void Emit(ChipMap map)
     {
         const string RowFormat = "{0,-12} | {1,-24} | {2}";
@@ -256,9 +237,6 @@ public partial class XedImport : WfSvc<XedImport>
     void Emit(InstLayouts src)
         => Channel.TableEmit(src.Records.View, XedPaths.ImportTable<InstLayoutRecord>(), TextEncodingKind.Asci);
 
-    void EmitPages(XedRuleTables src)
-        => iter(src.Criteria(), table => EmitPage(table), PllExec);
-    
     void Emit(ReadOnlySeq<AsmBroadcast> src)
         => Channel.TableEmit(src, XedPaths.ImportTable<AsmBroadcast>());
 
@@ -307,8 +285,91 @@ public partial class XedImport : WfSvc<XedImport>
 
     void EmitPatternDocs(ReadOnlySeq<InstPattern> src)
     {
-        EmitDetails(src);
-        EmitSummary(src);
+        // EmitDetails(src);
+        // EmitDocs(src);
+        var instdoc = new XedInstDoc(src.Map(x => new InstDocPart(x)));
+        Channel.FileEmit(instdoc.Format(), instdoc.Parts.Count, XedPaths.DocTarget("instructions", FileKind.Md), TextEncodingKind.Asci);
+        var emitter = text.emitter();
+        var formatter = XedInstPages.create();
+        for(var j=0; j<src.Count; j++)
+            emitter.Append(formatter.Format(src[j]));
+        Channel.FileEmit(emitter.Emit(), XedPaths.DocTarget("instructions.detail", FileKind.Txt));
+    }
+
+    void EmitPages(XedRuleTables src)
+        => iter(src.Criteria(), table => EmitPage(table), PllExec);
+    
+    static void EmitPage(in TableCriteria src)
+    {
+        var formatter = CsvTables.formatter<RuleTableRow>();
+        using var emitter = XedPaths.RuleTable(src.Rule).AsciEmitter();
+        emitter.AppendLine(formatter.FormatHeader());
+        var k=0u;
+        for(var j=0u; j<src.RowCount; j++, k++)
+        {
+            ref readonly var spec = ref src[j];
+            var specFormat = spec.Format();
+            var row = RuleTableRow.Empty;
+            row.Seq = k;
+            row.TableId = src.TableId;
+            row.Index = j;
+            row.Rule = src.Rule;
+            row.Kind = src.TableKind;
+            row.Name = src.TableName;
+            row.Statement = specFormat;
+            emitter.AppendLine(formatter.Format(row));
+        }
+        emitter.AppendLine();
+        emitter.AppendLine();
+        src.RenderLines(emitter);
+    }
+
+    void EmitBlockDocs(InstructionRules src)
+    {        
+        const string LabelFormat = "{0,-22} {1}";
+        var dst = text.emitter();
+        dst.AppendLine(Markdown.header(1,"Instruction Blocks"));
+        dst.AppendLine();
+        foreach(var def in src.Defs)
+        {
+            var pattern = def.Pattern;            
+            dst.AppendLine(Markdown.header(2,pattern.Form.Format()));
+            dst.AppendLineFormat(LabelFormat, nameof(pattern.Instruction), pattern.Instruction);
+            dst.AppendLineFormat(LabelFormat, nameof(pattern.OpCode), pattern.OpCode);
+            dst.AppendLineFormat(LabelFormat, nameof(pattern.Mode), pattern.Mode);
+            dst.AppendLineFormat(LabelFormat, nameof(pattern.Lock), pattern.Lock);
+            dst.AppendLineFormat(LabelFormat, "Attributes", string.Join(" | ", pattern.InstAttribs));            
+            dst.AppendLineFormat(LabelFormat, "Rule", pattern.Body);
+            var encoding = def.Field(BlockFieldName.space);
+            if(encoding.IsNonEmpty)
+                dst.AppendLineFormat(LabelFormat, "Encoding", encoding.Unwrap());
+            var hasmodrm = def.Field(BlockFieldName.has_modrm);
+            if(hasmodrm.IsNonEmpty)
+                dst.AppendLineFormat(LabelFormat, "ModRm", hasmodrm.Unwrap());
+            if(pattern.Operands.IsNonEmpty)
+            {
+                dst.AppendLine();
+                dst.AppendLine(Markdown.header(3, nameof(pattern.Operands)));
+                dst.AppendLine();
+
+                for(var i=0; i<pattern.Operands.Count; i++)
+                {
+                    ref readonly var op = ref pattern.Operands[i];
+                    dst.Append(string.Format("{0,-2} {1} {2}", op.Index, op.Name, op.Kind));
+                    if(op.SegType.IsNonEmpty)
+                        dst.Append($" {op.SegType}");
+                    else if(op.Width.IsNonEmpty)
+                        dst.Append($" {op.Width}");        
+                    if(op.Register.IsNonEmpty)
+                        dst.Append($" {op.Register}");
+                    
+                    dst.Append(Chars.NL);
+                }
+            }
+            dst.AppendLine();
+        }
+
+        Channel.FileEmit(dst.Emit(),XedPaths.DocTarget("instblocks", FileKind.Md));
     }
 
     void EmitRuleDocs(CellTables src)
@@ -431,21 +492,25 @@ public partial class XedImport : WfSvc<XedImport>
         Channel.EmittedFile(emitting,counter);
     }
 
-    void EmitSummary(ReadOnlySeq<InstPattern> src)
-    {
-        var dst = XedPaths.DocTarget("instructions", FileKind.Md);
-        var inst = new XedInstDoc(src.Map(x => new InstDocPart(x)));
-        Channel.FileEmit(inst.Format(), inst.Parts.Count, dst, TextEncodingKind.Asci);
-    }
+    // void EmitDocs(ReadOnlySeq<InstPattern> src)
+    // {
+    //     var instdoc = new XedInstDoc(src.Map(x => new InstDocPart(x)));
+    //     Channel.FileEmit(instdoc.Format(), instdoc.Parts.Count, XedPaths.DocTarget("instructions", FileKind.Md), TextEncodingKind.Asci);
+    //     var emitter = text.emitter();
+    //     var formatter = XedInstPages.create();
+    //     for(var j=0; j<src.Count; j++)
+    //         emitter.Append(formatter.Format(src[j]));
+    //     Channel.FileEmit(emitter.Emit(), XedPaths.DocTarget("instructions.detail", FileKind.Txt));
+    // }
 
-    void EmitDetails(ReadOnlySeq<InstPattern> src)
-    {
-        var dst = XedPaths.DocTarget("instructions.detail", FileKind.Txt);
-        var formatter = XedInstPages.create();
-        var emitting = Channel.EmittingFile(dst);
-        using var writer = dst.AsciWriter();
-        for(var j=0; j<src.Count; j++)
-            writer.Write(formatter.Format(src[j]));
-        Channel.EmittedFile(emitting, src.Count);
-    }
+    // void EmitDetails(ReadOnlySeq<InstPattern> src)
+    // {
+    //     var dst = XedPaths.DocTarget("instructions.detail", FileKind.Txt);
+    //     var formatter = XedInstPages.create();
+    //     var emitting = Channel.EmittingFile(dst);
+    //     using var writer = dst.AsciWriter();
+    //     for(var j=0; j<src.Count; j++)
+    //         writer.Write(formatter.Format(src[j]));
+    //     Channel.EmittedFile(emitting, src.Count);
+    // }
 }

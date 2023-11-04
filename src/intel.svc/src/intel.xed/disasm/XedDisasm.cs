@@ -386,6 +386,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             {
                 if(vc == VexValid.VV1)
                 {
+
                     var vex5 = Numbers.pack((num3)(byte)state.VEXDEST210, state.VEXDEST4, state.VEXDEST3);
                     IBitPattern vp = row.VexPrefix.VexKind == VexPrefixKind.xC4 ? VexC4Pattern : VexC5Pattern;
                     writer.AppendLineFormat(LabeledValue, nameof(row.VexPrefix.VexKind), row.VexPrefix.VexKind);

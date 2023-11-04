@@ -5,9 +5,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using System.Linq;
+
 partial class XedModels
 {
-    public readonly struct InstAttribs
+    public readonly struct InstAttribs : IEnumerable<InstAttrib>
     {
         [MethodImpl(Inline)]
         public Bitset128<InstAttrib> Bitset()
@@ -68,6 +70,12 @@ partial class XedModels
 
         public override string ToString()
             => Format();
+
+        public IEnumerator<InstAttrib> GetEnumerator()
+            => (((IEnumerable<InstAttrib>)Data).Where(x => x.IsNonEmpty)).GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator()
+            => GetEnumerator();
 
         [MethodImpl(Inline)]
         public static implicit operator InstAttribs(InstAttrib[] src)

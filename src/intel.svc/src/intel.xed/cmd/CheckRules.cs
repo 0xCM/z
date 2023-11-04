@@ -26,40 +26,6 @@ partial class XedChecks
         Channel.Write(dst.Emit());
     }
 
-    SectionHeader header(RuleCaller target)
-    {
-        var rule = target.ToRule();
-        return new(3,rule.Format());
-    }
-
-    void Emit(Index<NontermCall> calls)
-    {
-        var dst = text.buffer();
-        var source = RuleCaller.Empty;
-        for(var i=0; i<calls.Count; i++)
-        {
-            ref readonly var call = ref calls[i];
-            if(source.IsEmpty)
-            {
-                source = call.Source;
-                dst.AppendLine(header(source));
-                dst.AppendLine();
-            }
-
-            if(source != call.Source)
-            {
-                dst.AppendLine();
-                source = call.Source;
-                dst.AppendLine(header(source));
-                dst.AppendLine();
-            }
-
-            dst.AppendLine(XedPaths.MarkdownLink(call.Target));
-        }
-
-        Channel.FileEmit(dst.Emit(), calls.Count, XedPaths.DbTarget("rules.tables.deps", FileKind.Md));
-    }
-
     void CheckRuleNames()
     {
         const uint RuleCount = RuleNames.MaxCount;

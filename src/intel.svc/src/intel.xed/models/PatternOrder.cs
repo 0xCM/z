@@ -7,7 +7,7 @@ namespace Z0;
 
 partial class XedModels
 {
-    public readonly struct PatternOrder : IComparer<XedInstOpCode>, IComparer<InstOpDetail>, IComparer<InstGroupSeq>
+    public readonly struct PatternOrder : IComparer<XedInstOpCode>, IComparer<InstOpDetail>
     {
         public readonly bit OpCodeFirst;
 
@@ -31,20 +31,20 @@ partial class XedModels
             return result;
         }
 
-        public int Compare(InstGroupSeq x, InstGroupSeq y)
-        {
-            var a = new PatternSort(x, OpCodeFirst);
-            var b = new PatternSort(y, OpCodeFirst);
-            var result = a.CompareTo(b);
-            if(result == 0)
-            {
-                result = x.PatternId.CompareTo(y.PatternId);
-                if(result == 0)
-                    result = x.Index.CompareTo(y.Index);
-            }
+        // public int Compare(InstGroupSeq x, InstGroupSeq y)
+        // {
+        //     var a = new PatternSort(x, OpCodeFirst);
+        //     var b = new PatternSort(y, OpCodeFirst);
+        //     var result = a.CompareTo(b);
+        //     if(result == 0)
+        //     {
+        //         result = x.PatternId.CompareTo(y.PatternId);
+        //         if(result == 0)
+        //             result = x.Index.CompareTo(y.Index);
+        //     }
 
-            return result;
-        }
+        //     return result;
+        // }
 
         public int Compare(XedInstOpCode x, XedInstOpCode y)
             => new PatternSort(x, OpCodeFirst).CompareTo(new PatternSort(y, OpCodeFirst));

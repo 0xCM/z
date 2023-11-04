@@ -112,7 +112,7 @@ partial class XedRules
         }
 
         public string Format()
-            => XedCellRender.Tables.format(this);
+            => CellTables.format(this);
 
         public override string ToString()
             => Format();

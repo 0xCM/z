@@ -200,6 +200,18 @@ public readonly struct num32 : INumber<T>
         get => Value == MaxValue;
     }
 
+    public bit this[byte index]
+    {
+        [MethodImpl(Inline)]
+        get => test(this,index);
+    }
+
+    public T this[byte i0, byte i1]
+    {
+        [MethodImpl(Inline)]
+        get => bits.extract(Value,i0, i1);
+    }
+
     [MethodImpl(Inline)]
     public S Force<S>()
         where S : unmanaged

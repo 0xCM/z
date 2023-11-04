@@ -20,8 +20,7 @@ public class XedRuleDocRender
 
     public XedRuleDocRender(CellTables src)
     {
-        Data = src;
-        
+        Data = src;        
     }
 
     void Render(RuleIdentity sig, Index<RuleCell> src, ITextEmitter dst)

@@ -203,6 +203,12 @@ public readonly struct num5 : INumber<T>
         get => test(this,index);
     }
 
+    public T this[byte i0, byte i1]
+    {
+        [MethodImpl(Inline)]
+        get => bits.extract(Value,i0, i1);
+    }
+
     [MethodImpl(Inline)]
     public string Format()
         => Value.ToString();

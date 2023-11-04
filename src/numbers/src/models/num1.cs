@@ -212,7 +212,7 @@ public readonly struct num1 : INumber<T>
 
     [MethodImpl(Inline)]
     public static explicit operator T(D src)
-        => new T(src);
+        => new (src);
 
     [MethodImpl(Inline)]
     public static explicit operator D(T src)
@@ -236,15 +236,15 @@ public readonly struct num1 : INumber<T>
 
     [MethodImpl(Inline)]
     public static explicit operator T(ushort src)
-        => number((byte)src);
+        => new ((byte)src);
 
     [MethodImpl(Inline)]
     public static explicit operator T(uint src)
-        => number((byte)src);
+        => new ((byte)src);
 
     [MethodImpl(Inline)]
     public static explicit operator T(ulong src)
-        => number((byte)src);
+        => new ((byte)src);
 
     [MethodImpl(Inline)]
     public static implicit operator bit(T src)
@@ -252,7 +252,7 @@ public readonly struct num1 : INumber<T>
 
     [MethodImpl(Inline)]
     public static implicit operator T(bit src)
-        => src;
+        => new((byte)src);
 
     [MethodImpl(Inline)]
     public static T operator + (T x, T y)

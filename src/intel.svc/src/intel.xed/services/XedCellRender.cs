@@ -18,9 +18,6 @@ using CK = XedRules.RuleCellKind;
 
 public readonly partial struct XedCellRender
 {
-    public static Functions RenderFunctions
-        => Functions.Service;
-
     public static void render(RowExpr src, ITextEmitter dst)
     {
         var count = src.Cells.Count;

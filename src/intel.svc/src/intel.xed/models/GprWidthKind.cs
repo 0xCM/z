@@ -48,5 +48,4 @@ partial class XedModels
         OrDX,
         OrSP,
     }
-
 }

@@ -36,7 +36,5 @@ partial class XedCells
             }
         }
         return dst;
-    }    
-
-    
+    }        
 }

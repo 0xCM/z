@@ -5,6 +5,7 @@
 namespace Z0;
 
 using static math;
+using static sys;
 
 partial class Numbers
 {
@@ -21,6 +22,6 @@ partial class Numbers
         => (num5)((uint)a | sll((uint)b, num3.Width));
 
     [MethodImpl(Inline), Op]
-    public static num5 pack(num3 a, num1 b, num1 c)
-        => (num5)((uint)a | sll((uint)b, num3.Width) | sll((uint)c, num3.Width + 1));    
+    public static num5 pack(num3 a, bit b, bit c)
+        => (num5)(u32(a) | sll(u32(b), num3.Width) | sll(u32(c), num3.Width + num1.Width));    
 }

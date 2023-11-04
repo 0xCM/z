@@ -23,7 +23,7 @@ public class XedDisasmContext
         ProjectRoot = root;
         Mode = MachineMode.Default;
         Blocks = new();
-        InstPatterns = XedTables.BlockPatterns();
+        InstPatterns = XedTables.Instructions().Patterns;
         DisasmTargets = root.Scoped("xed");
     }
 

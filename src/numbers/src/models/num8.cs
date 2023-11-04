@@ -219,6 +219,18 @@ public readonly struct num8 : INumber<T>
         get => Value == D.MinValue;
     }
 
+    public bit this[byte index]
+    {
+        [MethodImpl(Inline)]
+        get => test(this,index);
+    }
+
+    public T this[byte i0, byte i1]
+    {
+        [MethodImpl(Inline)]
+        get => bits.extract(Value,i0, i1);
+    }
+
     [MethodImpl(Inline)]
     public string Format()
         => Value.ToString();
@@ -244,7 +256,7 @@ public readonly struct num8 : INumber<T>
 
     [MethodImpl(Inline)]
     public static implicit operator T(D src)
-        => new T(src);
+        => new (src);
 
     [MethodImpl(Inline)]
     public static implicit operator D(T src)

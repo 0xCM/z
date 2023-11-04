@@ -28,7 +28,6 @@ partial class XedRules
             Block = block;
         }
 
-
         public ref LayoutCell this[int i]
         {
             [MethodImpl(Inline), UnscopedRef]

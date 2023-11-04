@@ -38,6 +38,9 @@ partial class XedModels
             get => ((uint)Code << 16) | (uint)Bits;
         }
 
+        public override int GetHashCode()
+            => Hash;
+            
         public string Format()
         {
             var dst = EmptyString;
@@ -51,8 +54,6 @@ partial class XedModels
                 dst += $"{Bits}";
             }
             return dst;
-            //Bits == 0 ? EnumRender.format(Code) : $"{EnumRender.format(Code)}:{Bits}";
-
         }
 
         public override string ToString()

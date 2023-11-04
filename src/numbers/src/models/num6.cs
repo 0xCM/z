@@ -29,7 +29,6 @@ public readonly struct num6 : INumber<T>
         return result;
     }
 
-
     public readonly D Value;
 
     [MethodImpl(Inline)]
@@ -208,6 +207,12 @@ public readonly struct num6 : INumber<T>
     {
         [MethodImpl(Inline)]
         get => test(this,index);
+    }
+
+    public T this[byte i0, byte i1]
+    {
+        [MethodImpl(Inline)]
+        get => bits.extract(Value,i0, i1);
     }
 
     [MethodImpl(Inline)]

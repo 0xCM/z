@@ -21,13 +21,6 @@ public class XedInstPages
     public string Format(InstPattern pattern)
         => page(pattern);
 
-    public Index<InstIsaFormat> GroupFormats(Index<InstPattern> src)
-    {
-        var buffer = sys.bag<InstIsaFormat>();
-        iter(src.GroupBy(x => x.Isa.Kind), g => buffer.Add(format(g.Key, g.Array())), AppData.get().PllExec());
-        return buffer.Array().Sort();
-    }
-
     const string InstSep = RP.PageBreak160 + RP.PageBreak20;
 
     public static string page(InstPattern pattern)
@@ -65,14 +58,14 @@ public class XedInstPages
         return emitter.Emit();
     }
 
-    static InstIsaFormat format(InstIsa isa, Index<InstPattern> src)
-    {
-        var counter=0u;
-        var dst = text.emitter();
-        for(var i=0; i<src.Count; i++)
-            dst.Append(page(src[i]));
-        return new (isa, src, dst.Emit(), counter);
-    }
+    // static InstIsaFormat format(InstIsa isa, Index<InstPattern> src)
+    // {
+    //     var counter=0u;
+    //     var dst = text.emitter();
+    //     for(var i=0; i<src.Count; i++)
+    //         dst.Append(page(src[i]));
+    //     return new (isa, src, dst.Emit(), counter);
+    // }
 
     static string header(InstPattern src)
         => string.Format("{0,-18}{1,-18}{2}", src.InstClass, src.Isa, src.InstForm);

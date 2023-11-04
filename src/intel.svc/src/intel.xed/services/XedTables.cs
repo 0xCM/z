@@ -8,11 +8,11 @@ namespace Z0;
 using System.Linq;
 using Asm;
 
+using static sys;
+
 using static XedModels;
 using static XedRules;
-using static sys;
 using static MachineModes;
-using static XedInstBlocks;
 
 using M = XedModels;
 using R = XedRules;
@@ -37,10 +37,6 @@ public partial class XedTables : AppService<XedTables>
         RuleCells,
 
         OpCodes,
-
-        InstBlocks,
-
-        InstBlockLines,
 
         MacroMatches,
 
@@ -78,12 +74,6 @@ public partial class XedTables : AppService<XedTables>
 
         Broadcasts,
     }
-
-    public static InstBlockPatterns BlockPatterns()
-        => BlockPatterns(BlockLines());
-
-    public static InstBlockPatterns BlockPatterns(ParallelQuery<InstBlockLineSpec> lines)
-        => data(DatasetName.InstBlocks,() => XedInstBlocks.patterns(lines));
 
     public static ReadOnlySeq<InstDef> EncInstDefs()
         => data(DatasetName.EncInstDefs, () => XedInstDefParser.parse(XedPaths.EncInstDef()));
@@ -148,18 +138,11 @@ public partial class XedTables : AppService<XedTables>
     public static ReadOnlySeq<MacroMatch> MacroMatches()
         => data(DatasetName.MacroMatches,CalcMacroMatches);
 
-    public static ParallelQuery<InstBlockLineSpec> BlockLines()
-        => data(DatasetName.InstBlockLines, () => XedInstBlocks.lines()).AsParallel();
-
     public static ReadOnlySeq<RuleGrid> Grids(CellTables src)
         => data(DatasetName.RuleGrids,() => grids(src));
     
     public static InstructionRules Instructions()
-    {
-        var instructions = XedTables.instructions();
-        data(DatasetName.Instructions,() => instructions);
-        return instructions;
-    }
+        => data(DatasetName.Instructions, () => XedInstBlocks.instructions());
 
     public static ReadOnlySeq<InstOperand> Operands()
         => Operands(OpDetails(EncInstPatterns(EncInstDefs())));
@@ -525,75 +508,6 @@ public partial class XedTables : AppService<XedTables>
         get => Bytes.sequential<bit>(0, 1);
     }
 
-    static InstRuleDef instruction(XedInstForm form, IEnumerable<BlockField> fields)
-    {
-        var mode = MachineMode.Default;
-        var rule = new InstRuleDef{
-            Form = form
-        };
-
-        foreach(var field in fields)
-        {
-            switch(field.Name)                
-            {
-                case BlockFieldName.mode_restriction:
-                    mode = (MachineMode)field;
-                break;
-                case BlockFieldName.pattern:
-                {
-                    var cells = (InstCells)field;
-                    var segs = list<CellValue>();
-                    var segexpr = EmptyString;
-                    for(var i=0; i<cells.Count; i++)
-                    {
-                        ref readonly var cell = ref cells[i];
-                        switch(cell.CellKind)
-                        {
-                            case RuleCellKind.BitLit:
-                            case RuleCellKind.HexLit:
-                            case RuleCellKind.InstSeg:
-                                segs.Add(cell);
-                            break;
-                        }
-                    }
-                    rule.Cells = segs.Array();
-                }
-                break;
-                case BlockFieldName.operands:
-                {
-                    var ops = (PatternOps)field;
-                    rule.Operands = new(sys.alloc<InstBlockOperand>(ops.Count));
-                    for(var i=z8; i<ops.Count;i++)
-                    {
-                        ref var target = ref rule.Operands[i];
-                        ref readonly var op = ref ops[i];
-                        target.Index = i;
-                        target.Form = form;
-                        target.Name = op.Name;
-                        target.Kind = op.Kind;
-                        target.SourceExpr = op.SourceExpr;
-                        op.WidthCode(out var wc);
-                        op.RegLiteral(out target.Register);
-                        if(wc != 0)
-                        {
-                            target.Width = new(wc, XedWidths.bitwidth(mode,wc));
-                            var wi = XedWidths.describe(target.Width);
-                            if(wi.ElementCount > 1 && wi.ElementWidth != 0)
-                                target.SegType = wi.SegType;
-                        }
-
-                        if(target.Register.IsNonEmpty && !target.Register.IsNonterminal && target.Width.Bits == 0)
-                            target.Width = new(target.Width.Code, XedWidths.width(target.Register));
-
-                        if(target.Register.IsEmpty && op.Nonterminal(out var nt))
-                            target.Register = nt;
-                    }
-                }
-                break;
-            }                             
-        }
-        return rule;
-    }
 
     static ReadOnlySeq<InstPattern> CalcInstPatterns(ReadOnlySeq<InstDef> defs)
     {
@@ -898,7 +812,6 @@ public partial class XedTables : AppService<XedTables>
         return dst;
     }
 
-
     static ReadOnlySeq<RuleGrid> grids(CellTables src)
     {
         var kGrid = src.TableCount;
@@ -930,39 +843,6 @@ public partial class XedTables : AppService<XedTables>
         }
         return grids;
     }    
-
-    static InstructionRules instructions()
-    {
-        var lines = BlockLines();
-        var blockpatterns = InstBlockPatterns.Empty;
-        var instruledefs = ReadOnlySeq<InstRuleDef>.Empty;
-        exec(true, 
-            () => blockpatterns = BlockPatterns(lines),
-            () => instruledefs = instructions(lines).Array().Sort()
-            );
-
-        return new InstructionRules(blockpatterns, instruledefs, operands(instruledefs));
-    }
-
-    static ReadOnlySeq<InstBlockOperand> operands(ReadOnlySeq<InstRuleDef> src)
-    {
-        var operands = list<InstBlockOperand>();
-        foreach(var pattern in src)
-        {   
-            var count = pattern.Operands.Count;
-            for(var i=0; i<count; i++)
-                operands.Add(pattern.Operands[i]);
-        }
-        return operands.Array();
-    }
-
-    static ParallelQuery<InstRuleDef> instructions(ParallelQuery<InstBlockLineSpec> lines)
-    {
-        var query = from line in lines
-                    let f = fields(line)
-                    select instruction(line.Form,f);    
-        return query;
-    }
 
     static ReadOnlySeq<AsmBroadcast> broadcasts(ReadOnlySpan<BroadcastKind> src)
     {
