@@ -57,375 +57,375 @@ public class XedMachine
         Rules[0x0411] = ArSI_DEC;
         Rules[0x0412] = ArSP_DEC;
         Rules[0x0413] = ASZ_NONTERM_DEC;
-        Rules[0x0416] = AVX_SPLITTER_DEC;
-        Rules[0x0217] = AVX512_EVEX_BYTE3_ENC_ENC;
-        Rules[0x0419] = AVX512_ROUND_DEC;
-        Rules[0x0219] = AVX512_ROUND_ENC;
-        Rules[0x041a] = BND_B_DEC;
-        Rules[0x041b] = BND_B_CHECK_DEC;
-        Rules[0x021b] = BND_B_CHECK_ENC;
-        Rules[0x041c] = BND_R_DEC;
-        Rules[0x041d] = BND_R_CHECK_DEC;
-        Rules[0x021d] = BND_R_CHECK_ENC;
-        Rules[0x041e] = BRANCH_HINT_DEC;
-        Rules[0x021e] = BRANCH_HINT_ENC;
-        Rules[0x041f] = BRDISP32_DEC;
-        Rules[0x0420] = BRDISP8_DEC;
-        Rules[0x0421] = BRDISPz_DEC;
-        Rules[0x0422] = CET_NO_TRACK_DEC;
-        Rules[0x0222] = CET_NO_TRACK_ENC;
-        Rules[0x0423] = CR_B_DEC;
-        Rules[0x0424] = CR_R_DEC;
-        Rules[0x0425] = CR_WIDTH_DEC;
-        Rules[0x0225] = CR_WIDTH_ENC;
-        Rules[0x0426] = DF64_DEC;
-        Rules[0x0226] = DF64_ENC;
-        Rules[0x0227] = DISP_NT_ENC;
-        Rules[0x022a] = DISP_WIDTH_0_ENC;
-        Rules[0x022b] = DISP_WIDTH_0_8_16_ENC;
-        Rules[0x022c] = DISP_WIDTH_0_8_32_ENC;
-        Rules[0x022d] = DISP_WIDTH_16_ENC;
-        Rules[0x022e] = DISP_WIDTH_32_ENC;
-        Rules[0x022f] = DISP_WIDTH_8_ENC;
-        Rules[0x0230] = DISP_WIDTH_8_32_ENC;
-        Rules[0x0431] = DR_R_DEC;
-        Rules[0x0232] = ERROR_ENC;
-        Rules[0x0433] = ESIZE_1_BITS_DEC;
-        Rules[0x0233] = ESIZE_1_BITS_ENC;
-        Rules[0x0434] = ESIZE_128_BITS_DEC;
-        Rules[0x0234] = ESIZE_128_BITS_ENC;
-        Rules[0x0435] = ESIZE_16_BITS_DEC;
-        Rules[0x0235] = ESIZE_16_BITS_ENC;
-        Rules[0x0436] = ESIZE_2_BITS_DEC;
-        Rules[0x0236] = ESIZE_2_BITS_ENC;
-        Rules[0x0437] = ESIZE_32_BITS_DEC;
-        Rules[0x0237] = ESIZE_32_BITS_ENC;
-        Rules[0x0438] = ESIZE_4_BITS_DEC;
-        Rules[0x0238] = ESIZE_4_BITS_ENC;
-        Rules[0x0439] = ESIZE_64_BITS_DEC;
-        Rules[0x0239] = ESIZE_64_BITS_ENC;
-        Rules[0x043a] = ESIZE_8_BITS_DEC;
-        Rules[0x023a] = ESIZE_8_BITS_ENC;
-        Rules[0x023b] = EVEX_62_REXR_ENC_ENC;
-        Rules[0x0246] = EVEX_LL_ENC_ENC;
-        Rules[0x0248] = EVEX_U_ENC_ENC;
-        Rules[0x0249] = EVEX_PP_ENC_ENC;
-        Rules[0x024a] = EVEX_MAP_ENC_ENC;
-        Rules[0x024b] = EVEX_REXB_ENC_ENC;
-        Rules[0x024c] = EVEX_REXRR_ENC_ENC;
-        Rules[0x024d] = EVEX_REXW_VVVV_ENC_ENC;
-        Rules[0x024e] = EVEX_REXX_ENC_ENC;
-        Rules[0x0450] = EVEX_SPLITTER_DEC;
-        Rules[0x0454] = FINAL_DSEG_DEC;
-        Rules[0x0455] = FINAL_DSEG_MODE64_DEC;
-        Rules[0x0456] = FINAL_DSEG_NOT64_DEC;
-        Rules[0x0457] = FINAL_DSEG1_DEC;
-        Rules[0x0458] = FINAL_DSEG1_MODE64_DEC;
-        Rules[0x0459] = FINAL_DSEG1_NOT64_DEC;
-        Rules[0x045a] = FINAL_ESEG_DEC;
-        Rules[0x045b] = FINAL_ESEG1_DEC;
-        Rules[0x045c] = FINAL_SSEG_DEC;
-        Rules[0x045d] = FINAL_SSEG_MODE64_DEC;
-        Rules[0x045e] = FINAL_SSEG_NOT64_DEC;
-        Rules[0x045f] = FINAL_SSEG0_DEC;
-        Rules[0x0460] = FINAL_SSEG1_DEC;
-        Rules[0x0461] = FIX_ROUND_LEN128_DEC;
-        Rules[0x0261] = FIX_ROUND_LEN128_ENC;
-        Rules[0x0462] = FIX_ROUND_LEN512_DEC;
-        Rules[0x0262] = FIX_ROUND_LEN512_ENC;
-        Rules[0x0263] = FIXUP_EASZ_ENC_ENC;
-        Rules[0x0264] = FIXUP_EOSZ_ENC_ENC;
-        Rules[0x0265] = FIXUP_SMODE_ENC_ENC;
-        Rules[0x0466] = FORCE64_DEC;
-        Rules[0x0266] = FORCE64_ENC;
-        Rules[0x0467] = GPR16_B_DEC;
-        Rules[0x0468] = GPR16_R_DEC;
-        Rules[0x0469] = GPR16_SB_DEC;
-        Rules[0x026a] = GPR16e_ENC;
-        Rules[0x046b] = GPR32_B_DEC;
-        Rules[0x046c] = GPR32_R_DEC;
-        Rules[0x046d] = GPR32_SB_DEC;
-        Rules[0x046e] = GPR32_X_DEC;
-        Rules[0x026f] = GPR32e_ENC;
-        Rules[0x0270] = GPR32e_m32_ENC;
-        Rules[0x0271] = GPR32e_m64_ENC;
-        Rules[0x0472] = GPR64_B_DEC;
-        Rules[0x0473] = GPR64_R_DEC;
-        Rules[0x0474] = GPR64_SB_DEC;
-        Rules[0x0475] = GPR64_X_DEC;
-        Rules[0x0276] = GPR64e_ENC;
-        Rules[0x0477] = GPR8_B_DEC;
-        Rules[0x0277] = GPR8_B_ENC;
-        Rules[0x0478] = GPR8_R_DEC;
-        Rules[0x0278] = GPR8_R_ENC;
-        Rules[0x0479] = GPR8_SB_DEC;
-        Rules[0x0279] = GPR8_SB_ENC;
-        Rules[0x047a] = GPRv_B_DEC;
-        Rules[0x047b] = GPRv_R_DEC;
-        Rules[0x047c] = GPRv_SB_DEC;
-        Rules[0x047d] = GPRy_B_DEC;
-        Rules[0x047e] = GPRy_R_DEC;
-        Rules[0x047f] = GPRz_B_DEC;
-        Rules[0x0480] = GPRz_R_DEC;
-        Rules[0x0481] = IGNORE66_DEC;
-        Rules[0x0281] = IGNORE66_ENC;
-        Rules[0x0482] = IMMUNE_REXW_DEC;
-        Rules[0x0282] = IMMUNE_REXW_ENC;
-        Rules[0x0483] = IMMUNE66_DEC;
-        Rules[0x0283] = IMMUNE66_ENC;
-        Rules[0x0484] = IMMUNE66_LOOP64_DEC;
-        Rules[0x0284] = IMMUNE66_LOOP64_ENC;
-        Rules[0x048c] = MASK_B_DEC;
-        Rules[0x048d] = MASK_N_DEC;
-        Rules[0x048e] = MASK_N32_DEC;
-        Rules[0x048f] = MASK_N64_DEC;
-        Rules[0x0490] = MASK_R_DEC;
-        Rules[0x0491] = MASK1_DEC;
-        Rules[0x0492] = MASKNOT0_DEC;
-        Rules[0x0493] = MEMDISP_DEC;
-        Rules[0x0494] = MEMDISP16_DEC;
-        Rules[0x0495] = MEMDISP32_DEC;
-        Rules[0x0496] = MEMDISP8_DEC;
-        Rules[0x0497] = MEMDISPv_DEC;
-        Rules[0x0498] = MMX_B_DEC;
-        Rules[0x0499] = MMX_R_DEC;
-        Rules[0x049a] = MODRM_DEC;
-        Rules[0x029b] = MODRM_MOD_EA16_DISP0_ENC;
-        Rules[0x029c] = MODRM_MOD_EA16_DISP16_ENC;
-        Rules[0x029d] = MODRM_MOD_EA16_DISP8_ENC;
-        Rules[0x029e] = MODRM_MOD_EA32_DISP0_ENC;
-        Rules[0x029f] = MODRM_MOD_EA32_DISP32_ENC;
-        Rules[0x02a0] = MODRM_MOD_EA32_DISP8_ENC;
-        Rules[0x02a1] = MODRM_MOD_EA64_DISP0_ENC;
-        Rules[0x02a2] = MODRM_MOD_EA64_DISP32_ENC;
-        Rules[0x02a3] = MODRM_MOD_EA64_DISP8_ENC;
-        Rules[0x02a4] = MODRM_MOD_ENCODE_ENC;
-        Rules[0x02a5] = MODRM_RM_ENCODE_ENC;
-        Rules[0x02a6] = MODRM_RM_ENCODE_EA16_SIB0_ENC;
-        Rules[0x02a7] = MODRM_RM_ENCODE_EA32_SIB0_ENC;
-        Rules[0x02a8] = MODRM_RM_ENCODE_EA64_SIB0_ENC;
-        Rules[0x02a9] = MODRM_RM_ENCODE_EANOT16_SIB1_ENC;
-        Rules[0x04aa] = MODRM16_DEC;
-        Rules[0x04ab] = MODRM32_DEC;
-        Rules[0x04ac] = MODRM64alt32_DEC;
-        Rules[0x02ad] = UISA_ENC_INDEX_XMM_ENC;
-        Rules[0x04ae] = NELEM_EIGHTHMEM_DEC;
-        Rules[0x02ae] = NELEM_EIGHTHMEM_ENC;
-        Rules[0x04af] = NELEM_FULL_DEC;
-        Rules[0x02af] = NELEM_FULL_ENC;
-        Rules[0x04b0] = NELEM_FULLMEM_DEC;
-        Rules[0x02b0] = NELEM_FULLMEM_ENC;
-        Rules[0x04b1] = NELEM_GPR_READER_DEC;
-        Rules[0x02b1] = NELEM_GPR_READER_ENC;
-        Rules[0x04b2] = NELEM_GPR_READER_BYTE_DEC;
-        Rules[0x02b2] = NELEM_GPR_READER_BYTE_ENC;
-        Rules[0x04b3] = NELEM_GPR_READER_SUBDWORD_DEC;
-        Rules[0x02b3] = NELEM_GPR_READER_SUBDWORD_ENC;
-        Rules[0x04b4] = NELEM_GPR_READER_WORD_DEC;
-        Rules[0x02b4] = NELEM_GPR_READER_WORD_ENC;
-        Rules[0x04b5] = NELEM_GPR_WRITER_LDOP_DEC;
-        Rules[0x02b5] = NELEM_GPR_WRITER_LDOP_ENC;
-        Rules[0x04b6] = NELEM_GPR_WRITER_LDOP_D_DEC;
-        Rules[0x02b6] = NELEM_GPR_WRITER_LDOP_D_ENC;
-        Rules[0x04b7] = NELEM_GPR_WRITER_LDOP_Q_DEC;
-        Rules[0x02b7] = NELEM_GPR_WRITER_LDOP_Q_ENC;
-        Rules[0x04b8] = NELEM_GPR_WRITER_STORE_DEC;
-        Rules[0x02b8] = NELEM_GPR_WRITER_STORE_ENC;
-        Rules[0x04b9] = NELEM_GPR_WRITER_STORE_BYTE_DEC;
-        Rules[0x02b9] = NELEM_GPR_WRITER_STORE_BYTE_ENC;
-        Rules[0x04ba] = NELEM_GPR_WRITER_STORE_SUBDWORD_DEC;
-        Rules[0x02ba] = NELEM_GPR_WRITER_STORE_SUBDWORD_ENC;
-        Rules[0x04bb] = NELEM_GPR_WRITER_STORE_WORD_DEC;
-        Rules[0x02bb] = NELEM_GPR_WRITER_STORE_WORD_ENC;
-        Rules[0x04bc] = NELEM_GSCAT_DEC;
-        Rules[0x02bc] = NELEM_GSCAT_ENC;
-        Rules[0x04bd] = NELEM_HALF_DEC;
-        Rules[0x02bd] = NELEM_HALF_ENC;
-        Rules[0x04be] = NELEM_HALFMEM_DEC;
-        Rules[0x02be] = NELEM_HALFMEM_ENC;
-        Rules[0x04bf] = NELEM_MEM128_DEC;
-        Rules[0x02bf] = NELEM_MEM128_ENC;
-        Rules[0x04c0] = NELEM_MOVDDUP_DEC;
-        Rules[0x02c0] = NELEM_MOVDDUP_ENC;
-        Rules[0x04c1] = NELEM_QUARTERMEM_DEC;
-        Rules[0x02c1] = NELEM_QUARTERMEM_ENC;
-        Rules[0x04c2] = NELEM_SCALAR_DEC;
-        Rules[0x02c2] = NELEM_SCALAR_ENC;
-        Rules[0x04c3] = NELEM_TUPLE1_DEC;
-        Rules[0x02c3] = NELEM_TUPLE1_ENC;
-        Rules[0x04c4] = NELEM_TUPLE1_4X_DEC;
-        Rules[0x02c4] = NELEM_TUPLE1_4X_ENC;
-        Rules[0x04c5] = NELEM_TUPLE1_BYTE_DEC;
-        Rules[0x02c5] = NELEM_TUPLE1_BYTE_ENC;
-        Rules[0x04c6] = NELEM_TUPLE1_SUBDWORD_DEC;
-        Rules[0x02c6] = NELEM_TUPLE1_SUBDWORD_ENC;
-        Rules[0x04c7] = NELEM_TUPLE1_WORD_DEC;
-        Rules[0x02c7] = NELEM_TUPLE1_WORD_ENC;
-        Rules[0x04c8] = NELEM_TUPLE2_DEC;
-        Rules[0x02c8] = NELEM_TUPLE2_ENC;
-        Rules[0x04c9] = NELEM_TUPLE4_DEC;
-        Rules[0x02c9] = NELEM_TUPLE4_ENC;
-        Rules[0x04ca] = NELEM_TUPLE8_DEC;
-        Rules[0x02ca] = NELEM_TUPLE8_ENC;
-        Rules[0x04cc] = OeAX_DEC;
-        Rules[0x04cd] = ONE_DEC;
-        Rules[0x04ce] = OrAX_DEC;
-        Rules[0x04cf] = OrBP_DEC;
-        Rules[0x04d0] = OrBX_DEC;
-        Rules[0x04d1] = OrCX_DEC;
-        Rules[0x04d2] = OrDX_DEC;
-        Rules[0x04d3] = OrSP_DEC;
-        Rules[0x04d4] = OSZ_NONTERM_DEC;
-        Rules[0x02d5] = OSZ_NONTERM_ENC_ENC;
-        Rules[0x04d6] = OVERRIDE_SEG0_DEC;
-        Rules[0x02d6] = OVERRIDE_SEG0_ENC;
-        Rules[0x04d7] = OVERRIDE_SEG1_DEC;
-        Rules[0x02d7] = OVERRIDE_SEG1_ENC;
-        Rules[0x02d8] = PREFIX_ENC_ENC;
-        Rules[0x04da] = PREFIXES_DEC;
-        Rules[0x04db] = REFINING66_DEC;
-        Rules[0x02db] = REFINING66_ENC;
-        Rules[0x04dc] = REMOVE_SEGMENT_DEC;
-        Rules[0x02dc] = REMOVE_SEGMENT_ENC;
-        Rules[0x02dd] = REMOVE_SEGMENT_AGEN1_ENC;
-        Rules[0x02de] = REX_PREFIX_ENC_ENC;
-        Rules[0x04df] = rFLAGS_DEC;
-        Rules[0x04e0] = rIP_DEC;
-        Rules[0x04e1] = rIPa_DEC;
-        Rules[0x04e2] = SAE_DEC;
-        Rules[0x02e2] = SAE_ENC;
-        Rules[0x04e3] = SE_IMM8_DEC;
-        Rules[0x02e3] = SE_IMM8_ENC;
-        Rules[0x04e4] = SEG_DEC;
-        Rules[0x04e5] = SEG_MOV_DEC;
-        Rules[0x02e6] = SEGe_ENC;
-        Rules[0x02e7] = SEGMENT_DEFAULT_ENCODE_ENC;
-        Rules[0x02e8] = SEGMENT_ENCODE_ENC;
-        Rules[0x04e9] = SIB_DEC;
-        Rules[0x04ea] = SIB_BASE0_DEC;
-        Rules[0x02eb] = SIB_NT_ENC;
-        Rules[0x02ed] = SIB_REQUIRED_ENCODE_ENC;
-        Rules[0x02ee] = SIBBASE_ENCODE_ENC;
-        Rules[0x02ef] = SIBBASE_ENCODE_SIB1_ENC;
-        Rules[0x02f0] = SIBINDEX_ENCODE_ENC;
-        Rules[0x02f1] = SIBINDEX_ENCODE_SIB1_ENC;
-        Rules[0x02f2] = SIBSCALE_ENCODE_ENC;
-        Rules[0x04f3] = SIMM8_DEC;
-        Rules[0x04f4] = SIMMz_DEC;
-        Rules[0x04f5] = SrBP_DEC;
-        Rules[0x04f7] = SrSP_DEC;
-        Rules[0x04f9] = TMM_B_DEC;
-        Rules[0x04fa] = TMM_N_DEC;
-        Rules[0x04fb] = TMM_R_DEC;
-        Rules[0x04fc] = UIMM16_DEC;
-        Rules[0x04fd] = UIMM32_DEC;
-        Rules[0x04fe] = UIMM8_DEC;
-        Rules[0x04ff] = UIMM8_1_DEC;
-        Rules[0x0500] = UIMMv_DEC;
-        Rules[0x0301] = UISA_ENC_INDEX_YMM_ENC;
-        Rules[0x0302] = UISA_ENC_INDEX_ZMM_ENC;
-        Rules[0x0503] = UISA_VMODRM_XMM_DEC;
-        Rules[0x0504] = UISA_VMODRM_YMM_DEC;
-        Rules[0x0505] = UISA_VMODRM_ZMM_DEC;
-        Rules[0x0506] = UISA_VSIB_BASE_DEC;
-        Rules[0x0507] = UISA_VSIB_INDEX_XMM_DEC;
-        Rules[0x0508] = UISA_VSIB_INDEX_YMM_DEC;
-        Rules[0x0509] = UISA_VSIB_INDEX_ZMM_DEC;
-        Rules[0x050a] = UISA_VSIB_XMM_DEC;
-        Rules[0x050b] = UISA_VSIB_YMM_DEC;
-        Rules[0x050c] = UISA_VSIB_ZMM_DEC;
-        Rules[0x030d] = VEX_ESCVL_ENC_ENC;
-        Rules[0x030e] = VEX_MAP_ENC_ENC;
-        Rules[0x030f] = VEX_REG_ENC_ENC;
-        Rules[0x0310] = VEX_REXR_ENC_ENC;
-        Rules[0x0311] = VEX_REXXB_ENC_ENC;
-        Rules[0x0312] = VEX_TYPE_ENC_ENC;
-        Rules[0x0313] = VEXED_REX_ENC;
-        Rules[0x051c] = VGPR32_B_DEC;
-        Rules[0x051d] = VGPR32_B_32_DEC;
-        Rules[0x051e] = VGPR32_B_64_DEC;
-        Rules[0x051f] = VGPR32_N_DEC;
-        Rules[0x0520] = VGPR32_N_32_DEC;
-        Rules[0x0521] = VGPR32_N_64_DEC;
-        Rules[0x0522] = VGPR32_R_DEC;
-        Rules[0x0523] = VGPR32_R_32_DEC;
-        Rules[0x0524] = VGPR32_R_64_DEC;
-        Rules[0x0525] = VGPR64_B_DEC;
-        Rules[0x0526] = VGPR64_N_DEC;
-        Rules[0x0527] = VGPR64_R_DEC;
-        Rules[0x0528] = VGPRy_B_DEC;
-        Rules[0x0529] = VGPRy_N_DEC;
-        Rules[0x052a] = VGPRy_R_DEC;
-        Rules[0x032b] = VMODRM_MOD_ENCODE_ENC;
-        Rules[0x052c] = VMODRM_XMM_DEC;
-        Rules[0x052d] = VMODRM_YMM_DEC;
-        Rules[0x052e] = VSIB_BASE_DEC;
-        Rules[0x032f] = VSIB_ENC_ENC;
-        Rules[0x0330] = VSIB_ENC_BASE_ENC;
-        Rules[0x0331] = VSIB_ENC_INDEX_XMM_ENC;
-        Rules[0x0332] = VSIB_ENC_INDEX_YMM_ENC;
-        Rules[0x0333] = VSIB_ENC_SCALE_ENC;
-        Rules[0x0534] = VSIB_INDEX_XMM_DEC;
-        Rules[0x0535] = VSIB_INDEX_YMM_DEC;
-        Rules[0x0536] = VSIB_XMM_DEC;
-        Rules[0x0537] = VSIB_YMM_DEC;
-        Rules[0x0538] = X87_DEC;
-        Rules[0x0539] = XMM_B_DEC;
-        Rules[0x053a] = XMM_B_32_DEC;
-        Rules[0x053b] = XMM_B_64_DEC;
-        Rules[0x053c] = XMM_B3_DEC;
-        Rules[0x053d] = XMM_B3_32_DEC;
-        Rules[0x053e] = XMM_B3_64_DEC;
-        Rules[0x053f] = XMM_N_DEC;
-        Rules[0x0540] = XMM_N_32_DEC;
-        Rules[0x0541] = XMM_N_64_DEC;
-        Rules[0x0542] = XMM_N3_DEC;
-        Rules[0x0543] = XMM_N3_32_DEC;
-        Rules[0x0544] = XMM_N3_64_DEC;
-        Rules[0x0545] = XMM_R_DEC;
-        Rules[0x0546] = XMM_R_32_DEC;
-        Rules[0x0547] = XMM_R_64_DEC;
-        Rules[0x0548] = XMM_R3_DEC;
-        Rules[0x0549] = XMM_R3_32_DEC;
-        Rules[0x054a] = XMM_R3_64_DEC;
-        Rules[0x054b] = XMM_SE_DEC;
-        Rules[0x054c] = XMM_SE32_DEC;
-        Rules[0x054d] = XMM_SE64_DEC;
-        Rules[0x0350] = XOP_MAP_ENC_ENC;
-        Rules[0x0351] = XOP_REXXB_ENC_ENC;
-        Rules[0x0352] = XOP_TYPE_ENC_ENC;
-        Rules[0x0553] = YMM_B_DEC;
-        Rules[0x0554] = YMM_B_32_DEC;
-        Rules[0x0555] = YMM_B_64_DEC;
-        Rules[0x0556] = YMM_B3_DEC;
-        Rules[0x0557] = YMM_B3_32_DEC;
-        Rules[0x0558] = YMM_B3_64_DEC;
-        Rules[0x0559] = YMM_N_DEC;
-        Rules[0x055a] = YMM_N_32_DEC;
-        Rules[0x055b] = YMM_N_64_DEC;
-        Rules[0x055c] = YMM_N3_DEC;
-        Rules[0x055d] = YMM_N3_32_DEC;
-        Rules[0x055e] = YMM_N3_64_DEC;
-        Rules[0x055f] = YMM_R_DEC;
-        Rules[0x0560] = YMM_R_32_DEC;
-        Rules[0x0561] = YMM_R_64_DEC;
-        Rules[0x0562] = YMM_R3_DEC;
-        Rules[0x0563] = YMM_R3_32_DEC;
-        Rules[0x0564] = YMM_R3_64_DEC;
-        Rules[0x0565] = YMM_SE_DEC;
-        Rules[0x0566] = YMM_SE32_DEC;
-        Rules[0x0567] = YMM_SE64_DEC;
-        Rules[0x0568] = ZMM_B3_DEC;
-        Rules[0x0569] = ZMM_B3_32_DEC;
-        Rules[0x056a] = ZMM_B3_64_DEC;
-        Rules[0x056b] = ZMM_N3_DEC;
-        Rules[0x056c] = ZMM_N3_32_DEC;
-        Rules[0x056d] = ZMM_N3_64_DEC;
-        Rules[0x056e] = ZMM_R3_DEC;
-        Rules[0x056f] = ZMM_R3_32_DEC;
-        Rules[0x0570] = ZMM_R3_64_DEC;
-        Rules[0x0571] = XSAVE_DEC;
-        Rules[0x0371] = XSAVE_ENC;
+        Rules[0x0415] = AVX_SPLITTER_DEC;
+        Rules[0x0216] = AVX512_EVEX_BYTE3_ENC_ENC;
+        Rules[0x0417] = AVX512_ROUND_DEC;
+        Rules[0x0217] = AVX512_ROUND_ENC;
+        Rules[0x0418] = BND_B_DEC;
+        Rules[0x0419] = BND_B_CHECK_DEC;
+        Rules[0x0219] = BND_B_CHECK_ENC;
+        Rules[0x041a] = BND_R_DEC;
+        Rules[0x041b] = BND_R_CHECK_DEC;
+        Rules[0x021b] = BND_R_CHECK_ENC;
+        Rules[0x041c] = BRANCH_HINT_DEC;
+        Rules[0x021c] = BRANCH_HINT_ENC;
+        Rules[0x041d] = BRDISP32_DEC;
+        Rules[0x041e] = BRDISP8_DEC;
+        Rules[0x041f] = BRDISPz_DEC;
+        Rules[0x0420] = CET_NO_TRACK_DEC;
+        Rules[0x0220] = CET_NO_TRACK_ENC;
+        Rules[0x0421] = CR_B_DEC;
+        Rules[0x0422] = CR_R_DEC;
+        Rules[0x0423] = CR_WIDTH_DEC;
+        Rules[0x0223] = CR_WIDTH_ENC;
+        Rules[0x0424] = DF64_DEC;
+        Rules[0x0224] = DF64_ENC;
+        Rules[0x0225] = DISP_NT_ENC;
+        Rules[0x0226] = DISP_WIDTH_0_ENC;
+        Rules[0x0227] = DISP_WIDTH_0_8_16_ENC;
+        Rules[0x0228] = DISP_WIDTH_0_8_32_ENC;
+        Rules[0x0229] = DISP_WIDTH_16_ENC;
+        Rules[0x022a] = DISP_WIDTH_32_ENC;
+        Rules[0x022b] = DISP_WIDTH_8_ENC;
+        Rules[0x022c] = DISP_WIDTH_8_32_ENC;
+        Rules[0x042d] = DR_R_DEC;
+        Rules[0x022e] = ERROR_ENC;
+        Rules[0x042f] = ESIZE_1_BITS_DEC;
+        Rules[0x022f] = ESIZE_1_BITS_ENC;
+        Rules[0x0430] = ESIZE_128_BITS_DEC;
+        Rules[0x0230] = ESIZE_128_BITS_ENC;
+        Rules[0x0431] = ESIZE_16_BITS_DEC;
+        Rules[0x0231] = ESIZE_16_BITS_ENC;
+        Rules[0x0432] = ESIZE_2_BITS_DEC;
+        Rules[0x0232] = ESIZE_2_BITS_ENC;
+        Rules[0x0433] = ESIZE_32_BITS_DEC;
+        Rules[0x0233] = ESIZE_32_BITS_ENC;
+        Rules[0x0434] = ESIZE_4_BITS_DEC;
+        Rules[0x0234] = ESIZE_4_BITS_ENC;
+        Rules[0x0435] = ESIZE_64_BITS_DEC;
+        Rules[0x0235] = ESIZE_64_BITS_ENC;
+        Rules[0x0436] = ESIZE_8_BITS_DEC;
+        Rules[0x0236] = ESIZE_8_BITS_ENC;
+        Rules[0x0237] = EVEX_62_REXR_ENC_ENC;
+        Rules[0x023a] = EVEX_LL_ENC_ENC;
+        Rules[0x023b] = EVEX_U_ENC_ENC;
+        Rules[0x023c] = EVEX_PP_ENC_ENC;
+        Rules[0x023d] = EVEX_MAP_ENC_ENC;
+        Rules[0x023e] = EVEX_REXB_ENC_ENC;
+        Rules[0x023f] = EVEX_REXRR_ENC_ENC;
+        Rules[0x0240] = EVEX_REXW_VVVV_ENC_ENC;
+        Rules[0x0241] = EVEX_REXX_ENC_ENC;
+        Rules[0x0442] = EVEX_SPLITTER_DEC;
+        Rules[0x0444] = FINAL_DSEG_DEC;
+        Rules[0x0445] = FINAL_DSEG_MODE64_DEC;
+        Rules[0x0446] = FINAL_DSEG_NOT64_DEC;
+        Rules[0x0447] = FINAL_DSEG1_DEC;
+        Rules[0x0448] = FINAL_DSEG1_MODE64_DEC;
+        Rules[0x0449] = FINAL_DSEG1_NOT64_DEC;
+        Rules[0x044a] = FINAL_ESEG_DEC;
+        Rules[0x044b] = FINAL_ESEG1_DEC;
+        Rules[0x044c] = FINAL_SSEG_DEC;
+        Rules[0x044d] = FINAL_SSEG_MODE64_DEC;
+        Rules[0x044e] = FINAL_SSEG_NOT64_DEC;
+        Rules[0x044f] = FINAL_SSEG0_DEC;
+        Rules[0x0450] = FINAL_SSEG1_DEC;
+        Rules[0x0451] = FIX_ROUND_LEN128_DEC;
+        Rules[0x0251] = FIX_ROUND_LEN128_ENC;
+        Rules[0x0452] = FIX_ROUND_LEN512_DEC;
+        Rules[0x0252] = FIX_ROUND_LEN512_ENC;
+        Rules[0x0253] = FIXUP_EASZ_ENC_ENC;
+        Rules[0x0254] = FIXUP_EOSZ_ENC_ENC;
+        Rules[0x0255] = FIXUP_SMODE_ENC_ENC;
+        Rules[0x0456] = FORCE64_DEC;
+        Rules[0x0256] = FORCE64_ENC;
+        Rules[0x0457] = GPR16_B_DEC;
+        Rules[0x0458] = GPR16_R_DEC;
+        Rules[0x0459] = GPR16_SB_DEC;
+        Rules[0x025a] = GPR16e_ENC;
+        Rules[0x045b] = GPR32_B_DEC;
+        Rules[0x045c] = GPR32_R_DEC;
+        Rules[0x045d] = GPR32_SB_DEC;
+        Rules[0x045e] = GPR32_X_DEC;
+        Rules[0x025f] = GPR32e_ENC;
+        Rules[0x0260] = GPR32e_m32_ENC;
+        Rules[0x0261] = GPR32e_m64_ENC;
+        Rules[0x0462] = GPR64_B_DEC;
+        Rules[0x0463] = GPR64_R_DEC;
+        Rules[0x0464] = GPR64_SB_DEC;
+        Rules[0x0465] = GPR64_X_DEC;
+        Rules[0x0266] = GPR64e_ENC;
+        Rules[0x0467] = GPR8_B_DEC;
+        Rules[0x0267] = GPR8_B_ENC;
+        Rules[0x0468] = GPR8_R_DEC;
+        Rules[0x0268] = GPR8_R_ENC;
+        Rules[0x0469] = GPR8_SB_DEC;
+        Rules[0x0269] = GPR8_SB_ENC;
+        Rules[0x046a] = GPRv_B_DEC;
+        Rules[0x046b] = GPRv_R_DEC;
+        Rules[0x046c] = GPRv_SB_DEC;
+        Rules[0x046d] = GPRy_B_DEC;
+        Rules[0x046e] = GPRy_R_DEC;
+        Rules[0x046f] = GPRz_B_DEC;
+        Rules[0x0470] = GPRz_R_DEC;
+        Rules[0x0471] = IGNORE66_DEC;
+        Rules[0x0271] = IGNORE66_ENC;
+        Rules[0x0472] = IMMUNE_REXW_DEC;
+        Rules[0x0272] = IMMUNE_REXW_ENC;
+        Rules[0x0473] = IMMUNE66_DEC;
+        Rules[0x0273] = IMMUNE66_ENC;
+        Rules[0x0474] = IMMUNE66_LOOP64_DEC;
+        Rules[0x0274] = IMMUNE66_LOOP64_ENC;
+        Rules[0x0477] = MASK_B_DEC;
+        Rules[0x0478] = MASK_N_DEC;
+        Rules[0x0479] = MASK_N32_DEC;
+        Rules[0x047a] = MASK_N64_DEC;
+        Rules[0x047b] = MASK_R_DEC;
+        Rules[0x047c] = MASK1_DEC;
+        Rules[0x047d] = MASKNOT0_DEC;
+        Rules[0x047e] = MEMDISP_DEC;
+        Rules[0x047f] = MEMDISP16_DEC;
+        Rules[0x0480] = MEMDISP32_DEC;
+        Rules[0x0481] = MEMDISP8_DEC;
+        Rules[0x0482] = MEMDISPv_DEC;
+        Rules[0x0483] = MMX_B_DEC;
+        Rules[0x0484] = MMX_R_DEC;
+        Rules[0x0485] = MODRM_DEC;
+        Rules[0x0286] = MODRM_MOD_EA16_DISP0_ENC;
+        Rules[0x0287] = MODRM_MOD_EA16_DISP16_ENC;
+        Rules[0x0288] = MODRM_MOD_EA16_DISP8_ENC;
+        Rules[0x0289] = MODRM_MOD_EA32_DISP0_ENC;
+        Rules[0x028a] = MODRM_MOD_EA32_DISP32_ENC;
+        Rules[0x028b] = MODRM_MOD_EA32_DISP8_ENC;
+        Rules[0x028c] = MODRM_MOD_EA64_DISP0_ENC;
+        Rules[0x028d] = MODRM_MOD_EA64_DISP32_ENC;
+        Rules[0x028e] = MODRM_MOD_EA64_DISP8_ENC;
+        Rules[0x028f] = MODRM_MOD_ENCODE_ENC;
+        Rules[0x0290] = MODRM_RM_ENCODE_ENC;
+        Rules[0x0291] = MODRM_RM_ENCODE_EA16_SIB0_ENC;
+        Rules[0x0292] = MODRM_RM_ENCODE_EA32_SIB0_ENC;
+        Rules[0x0293] = MODRM_RM_ENCODE_EA64_SIB0_ENC;
+        Rules[0x0294] = MODRM_RM_ENCODE_EANOT16_SIB1_ENC;
+        Rules[0x0495] = MODRM16_DEC;
+        Rules[0x0496] = MODRM32_DEC;
+        Rules[0x0497] = MODRM64alt32_DEC;
+        Rules[0x0298] = UISA_ENC_INDEX_XMM_ENC;
+        Rules[0x0499] = NELEM_EIGHTHMEM_DEC;
+        Rules[0x0299] = NELEM_EIGHTHMEM_ENC;
+        Rules[0x049a] = NELEM_FULL_DEC;
+        Rules[0x029a] = NELEM_FULL_ENC;
+        Rules[0x049b] = NELEM_FULLMEM_DEC;
+        Rules[0x029b] = NELEM_FULLMEM_ENC;
+        Rules[0x049c] = NELEM_GPR_READER_DEC;
+        Rules[0x029c] = NELEM_GPR_READER_ENC;
+        Rules[0x049d] = NELEM_GPR_READER_BYTE_DEC;
+        Rules[0x029d] = NELEM_GPR_READER_BYTE_ENC;
+        Rules[0x049e] = NELEM_GPR_READER_SUBDWORD_DEC;
+        Rules[0x029e] = NELEM_GPR_READER_SUBDWORD_ENC;
+        Rules[0x049f] = NELEM_GPR_READER_WORD_DEC;
+        Rules[0x029f] = NELEM_GPR_READER_WORD_ENC;
+        Rules[0x04a0] = NELEM_GPR_WRITER_LDOP_DEC;
+        Rules[0x02a0] = NELEM_GPR_WRITER_LDOP_ENC;
+        Rules[0x04a1] = NELEM_GPR_WRITER_LDOP_D_DEC;
+        Rules[0x02a1] = NELEM_GPR_WRITER_LDOP_D_ENC;
+        Rules[0x04a2] = NELEM_GPR_WRITER_LDOP_Q_DEC;
+        Rules[0x02a2] = NELEM_GPR_WRITER_LDOP_Q_ENC;
+        Rules[0x04a3] = NELEM_GPR_WRITER_STORE_DEC;
+        Rules[0x02a3] = NELEM_GPR_WRITER_STORE_ENC;
+        Rules[0x04a4] = NELEM_GPR_WRITER_STORE_BYTE_DEC;
+        Rules[0x02a4] = NELEM_GPR_WRITER_STORE_BYTE_ENC;
+        Rules[0x04a5] = NELEM_GPR_WRITER_STORE_SUBDWORD_DEC;
+        Rules[0x02a5] = NELEM_GPR_WRITER_STORE_SUBDWORD_ENC;
+        Rules[0x04a6] = NELEM_GPR_WRITER_STORE_WORD_DEC;
+        Rules[0x02a6] = NELEM_GPR_WRITER_STORE_WORD_ENC;
+        Rules[0x04a7] = NELEM_GSCAT_DEC;
+        Rules[0x02a7] = NELEM_GSCAT_ENC;
+        Rules[0x04a8] = NELEM_HALF_DEC;
+        Rules[0x02a8] = NELEM_HALF_ENC;
+        Rules[0x04a9] = NELEM_HALFMEM_DEC;
+        Rules[0x02a9] = NELEM_HALFMEM_ENC;
+        Rules[0x04aa] = NELEM_MEM128_DEC;
+        Rules[0x02aa] = NELEM_MEM128_ENC;
+        Rules[0x04ab] = NELEM_MOVDDUP_DEC;
+        Rules[0x02ab] = NELEM_MOVDDUP_ENC;
+        Rules[0x04ac] = NELEM_QUARTERMEM_DEC;
+        Rules[0x02ac] = NELEM_QUARTERMEM_ENC;
+        Rules[0x04ad] = NELEM_SCALAR_DEC;
+        Rules[0x02ad] = NELEM_SCALAR_ENC;
+        Rules[0x04ae] = NELEM_TUPLE1_DEC;
+        Rules[0x02ae] = NELEM_TUPLE1_ENC;
+        Rules[0x04af] = NELEM_TUPLE1_4X_DEC;
+        Rules[0x02af] = NELEM_TUPLE1_4X_ENC;
+        Rules[0x04b0] = NELEM_TUPLE1_BYTE_DEC;
+        Rules[0x02b0] = NELEM_TUPLE1_BYTE_ENC;
+        Rules[0x04b1] = NELEM_TUPLE1_SUBDWORD_DEC;
+        Rules[0x02b1] = NELEM_TUPLE1_SUBDWORD_ENC;
+        Rules[0x04b2] = NELEM_TUPLE1_WORD_DEC;
+        Rules[0x02b2] = NELEM_TUPLE1_WORD_ENC;
+        Rules[0x04b3] = NELEM_TUPLE2_DEC;
+        Rules[0x02b3] = NELEM_TUPLE2_ENC;
+        Rules[0x04b4] = NELEM_TUPLE4_DEC;
+        Rules[0x02b4] = NELEM_TUPLE4_ENC;
+        Rules[0x04b5] = NELEM_TUPLE8_DEC;
+        Rules[0x02b5] = NELEM_TUPLE8_ENC;
+        Rules[0x04b7] = OeAX_DEC;
+        Rules[0x04b8] = ONE_DEC;
+        Rules[0x04b9] = OrAX_DEC;
+        Rules[0x04ba] = OrBP_DEC;
+        Rules[0x04bb] = OrBX_DEC;
+        Rules[0x04bc] = OrCX_DEC;
+        Rules[0x04bd] = OrDX_DEC;
+        Rules[0x04be] = OrSP_DEC;
+        Rules[0x04bf] = OSZ_NONTERM_DEC;
+        Rules[0x02c0] = OSZ_NONTERM_ENC_ENC;
+        Rules[0x04c1] = OVERRIDE_SEG0_DEC;
+        Rules[0x02c1] = OVERRIDE_SEG0_ENC;
+        Rules[0x04c2] = OVERRIDE_SEG1_DEC;
+        Rules[0x02c2] = OVERRIDE_SEG1_ENC;
+        Rules[0x02c3] = PREFIX_ENC_ENC;
+        Rules[0x04c4] = PREFIXES_DEC;
+        Rules[0x04c5] = REFINING66_DEC;
+        Rules[0x02c5] = REFINING66_ENC;
+        Rules[0x04c6] = REMOVE_SEGMENT_DEC;
+        Rules[0x02c6] = REMOVE_SEGMENT_ENC;
+        Rules[0x02c7] = REMOVE_SEGMENT_AGEN1_ENC;
+        Rules[0x02c8] = REX_PREFIX_ENC_ENC;
+        Rules[0x04c9] = rFLAGS_DEC;
+        Rules[0x04ca] = rIP_DEC;
+        Rules[0x04cb] = rIPa_DEC;
+        Rules[0x04cc] = SAE_DEC;
+        Rules[0x02cc] = SAE_ENC;
+        Rules[0x04cd] = SE_IMM8_DEC;
+        Rules[0x02cd] = SE_IMM8_ENC;
+        Rules[0x04ce] = SEG_DEC;
+        Rules[0x04cf] = SEG_MOV_DEC;
+        Rules[0x02d0] = SEGe_ENC;
+        Rules[0x02d1] = SEGMENT_DEFAULT_ENCODE_ENC;
+        Rules[0x02d2] = SEGMENT_ENCODE_ENC;
+        Rules[0x04d3] = SIB_DEC;
+        Rules[0x04d4] = SIB_BASE0_DEC;
+        Rules[0x02d5] = SIB_NT_ENC;
+        Rules[0x02d6] = SIB_REQUIRED_ENCODE_ENC;
+        Rules[0x02d7] = SIBBASE_ENCODE_ENC;
+        Rules[0x02d8] = SIBBASE_ENCODE_SIB1_ENC;
+        Rules[0x02d9] = SIBINDEX_ENCODE_ENC;
+        Rules[0x02da] = SIBINDEX_ENCODE_SIB1_ENC;
+        Rules[0x02db] = SIBSCALE_ENCODE_ENC;
+        Rules[0x04dc] = SIMM8_DEC;
+        Rules[0x04dd] = SIMMz_DEC;
+        Rules[0x04de] = SrBP_DEC;
+        Rules[0x04e0] = SrSP_DEC;
+        Rules[0x04e2] = TMM_B_DEC;
+        Rules[0x04e3] = TMM_N_DEC;
+        Rules[0x04e4] = TMM_R_DEC;
+        Rules[0x04e5] = UIMM16_DEC;
+        Rules[0x04e6] = UIMM32_DEC;
+        Rules[0x04e7] = UIMM8_DEC;
+        Rules[0x04e8] = UIMM8_1_DEC;
+        Rules[0x04e9] = UIMMv_DEC;
+        Rules[0x02ea] = UISA_ENC_INDEX_YMM_ENC;
+        Rules[0x02eb] = UISA_ENC_INDEX_ZMM_ENC;
+        Rules[0x04ec] = UISA_VMODRM_XMM_DEC;
+        Rules[0x04ed] = UISA_VMODRM_YMM_DEC;
+        Rules[0x04ee] = UISA_VMODRM_ZMM_DEC;
+        Rules[0x04ef] = UISA_VSIB_BASE_DEC;
+        Rules[0x04f0] = UISA_VSIB_INDEX_XMM_DEC;
+        Rules[0x04f1] = UISA_VSIB_INDEX_YMM_DEC;
+        Rules[0x04f2] = UISA_VSIB_INDEX_ZMM_DEC;
+        Rules[0x04f3] = UISA_VSIB_XMM_DEC;
+        Rules[0x04f4] = UISA_VSIB_YMM_DEC;
+        Rules[0x04f5] = UISA_VSIB_ZMM_DEC;
+        Rules[0x02f6] = VEX_ESCVL_ENC_ENC;
+        Rules[0x02f7] = VEX_MAP_ENC_ENC;
+        Rules[0x02f8] = VEX_REG_ENC_ENC;
+        Rules[0x02f9] = VEX_REXR_ENC_ENC;
+        Rules[0x02fa] = VEX_REXXB_ENC_ENC;
+        Rules[0x02fb] = VEX_TYPE_ENC_ENC;
+        Rules[0x02fc] = VEXED_REX_ENC;
+        Rules[0x04fd] = VGPR32_B_DEC;
+        Rules[0x04fe] = VGPR32_B_32_DEC;
+        Rules[0x04ff] = VGPR32_B_64_DEC;
+        Rules[0x0500] = VGPR32_N_DEC;
+        Rules[0x0501] = VGPR32_N_32_DEC;
+        Rules[0x0502] = VGPR32_N_64_DEC;
+        Rules[0x0503] = VGPR32_R_DEC;
+        Rules[0x0504] = VGPR32_R_32_DEC;
+        Rules[0x0505] = VGPR32_R_64_DEC;
+        Rules[0x0506] = VGPR64_B_DEC;
+        Rules[0x0507] = VGPR64_N_DEC;
+        Rules[0x0508] = VGPR64_R_DEC;
+        Rules[0x0509] = VGPRy_B_DEC;
+        Rules[0x050a] = VGPRy_N_DEC;
+        Rules[0x050b] = VGPRy_R_DEC;
+        Rules[0x030c] = VMODRM_MOD_ENCODE_ENC;
+        Rules[0x050d] = VMODRM_XMM_DEC;
+        Rules[0x050e] = VMODRM_YMM_DEC;
+        Rules[0x050f] = VSIB_BASE_DEC;
+        Rules[0x0310] = VSIB_ENC_ENC;
+        Rules[0x0311] = VSIB_ENC_BASE_ENC;
+        Rules[0x0312] = VSIB_ENC_INDEX_XMM_ENC;
+        Rules[0x0313] = VSIB_ENC_INDEX_YMM_ENC;
+        Rules[0x0314] = VSIB_ENC_SCALE_ENC;
+        Rules[0x0515] = VSIB_INDEX_XMM_DEC;
+        Rules[0x0516] = VSIB_INDEX_YMM_DEC;
+        Rules[0x0517] = VSIB_XMM_DEC;
+        Rules[0x0518] = VSIB_YMM_DEC;
+        Rules[0x0519] = X87_DEC;
+        Rules[0x051a] = XMM_B_DEC;
+        Rules[0x051b] = XMM_B_32_DEC;
+        Rules[0x051c] = XMM_B_64_DEC;
+        Rules[0x051d] = XMM_B3_DEC;
+        Rules[0x051e] = XMM_B3_32_DEC;
+        Rules[0x051f] = XMM_B3_64_DEC;
+        Rules[0x0520] = XMM_N_DEC;
+        Rules[0x0521] = XMM_N_32_DEC;
+        Rules[0x0522] = XMM_N_64_DEC;
+        Rules[0x0523] = XMM_N3_DEC;
+        Rules[0x0524] = XMM_N3_32_DEC;
+        Rules[0x0525] = XMM_N3_64_DEC;
+        Rules[0x0526] = XMM_R_DEC;
+        Rules[0x0527] = XMM_R_32_DEC;
+        Rules[0x0528] = XMM_R_64_DEC;
+        Rules[0x0529] = XMM_R3_DEC;
+        Rules[0x052a] = XMM_R3_32_DEC;
+        Rules[0x052b] = XMM_R3_64_DEC;
+        Rules[0x052c] = XMM_SE_DEC;
+        Rules[0x052d] = XMM_SE32_DEC;
+        Rules[0x052e] = XMM_SE64_DEC;
+        Rules[0x0331] = XOP_MAP_ENC_ENC;
+        Rules[0x0332] = XOP_REXXB_ENC_ENC;
+        Rules[0x0333] = XOP_TYPE_ENC_ENC;
+        Rules[0x0534] = YMM_B_DEC;
+        Rules[0x0535] = YMM_B_32_DEC;
+        Rules[0x0536] = YMM_B_64_DEC;
+        Rules[0x0537] = YMM_B3_DEC;
+        Rules[0x0538] = YMM_B3_32_DEC;
+        Rules[0x0539] = YMM_B3_64_DEC;
+        Rules[0x053a] = YMM_N_DEC;
+        Rules[0x053b] = YMM_N_32_DEC;
+        Rules[0x053c] = YMM_N_64_DEC;
+        Rules[0x053d] = YMM_N3_DEC;
+        Rules[0x053e] = YMM_N3_32_DEC;
+        Rules[0x053f] = YMM_N3_64_DEC;
+        Rules[0x0540] = YMM_R_DEC;
+        Rules[0x0541] = YMM_R_32_DEC;
+        Rules[0x0542] = YMM_R_64_DEC;
+        Rules[0x0543] = YMM_R3_DEC;
+        Rules[0x0544] = YMM_R3_32_DEC;
+        Rules[0x0545] = YMM_R3_64_DEC;
+        Rules[0x0546] = YMM_SE_DEC;
+        Rules[0x0547] = YMM_SE32_DEC;
+        Rules[0x0548] = YMM_SE64_DEC;
+        Rules[0x0549] = ZMM_B3_DEC;
+        Rules[0x054a] = ZMM_B3_32_DEC;
+        Rules[0x054b] = ZMM_B3_64_DEC;
+        Rules[0x054c] = ZMM_N3_DEC;
+        Rules[0x054d] = ZMM_N3_32_DEC;
+        Rules[0x054e] = ZMM_N3_64_DEC;
+        Rules[0x054f] = ZMM_R3_DEC;
+        Rules[0x0550] = ZMM_R3_32_DEC;
+        Rules[0x0551] = ZMM_R3_64_DEC;
+        Rules[0x0552] = XSAVE_DEC;
+        Rules[0x0352] = XSAVE_ENC;
 
     }
     public void A_GPR_B_DEC()
@@ -3410,70 +3410,70 @@ public class XedMachine
 
     public void SIB_DEC()
     {
-        // REXX=0 SIBSCALE[0b00] SIBINDEX[0b0000] SIBBASE[bbb] SIB_BASE0() => INDEX=ArAX() SCALE=1
-        // REXX=1 SIBSCALE[0b00] SIBINDEX[0b0000] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar8() SCALE=1
-        // REXX=0 SIBSCALE[0b00] SIBINDEX[0b0001] SIBBASE[bbb] SIB_BASE0() => INDEX=ArCX() SCALE=1
-        // REXX=1 SIBSCALE[0b00] SIBINDEX[0b0001] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar9() SCALE=1
-        // REXX=0 SIBSCALE[0b00] SIBINDEX[0b0010] SIBBASE[bbb] SIB_BASE0() => INDEX=ArDX() SCALE=1
-        // REXX=1 SIBSCALE[0b00] SIBINDEX[0b0010] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar10() SCALE=1
-        // REXX=0 SIBSCALE[0b00] SIBINDEX[0b0011] SIBBASE[bbb] SIB_BASE0() => INDEX=ArBX() SCALE=1
-        // REXX=1 SIBSCALE[0b00] SIBINDEX[0b0011] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar11() SCALE=1
-        // REXX=0 SIBSCALE[0b00] SIBINDEX[0b0100] SIBBASE[bbb] SIB_BASE0() => INDEX=INVALID SCALE=1 ENCODER_PREFERRED=1
-        // REXX=1 SIBSCALE[0b00] SIBINDEX[0b0100] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar12() SCALE=1
-        // REXX=0 SIBSCALE[0b00] SIBINDEX[0b0101] SIBBASE[bbb] SIB_BASE0() => INDEX=ArBP() SCALE=1
-        // REXX=1 SIBSCALE[0b00] SIBINDEX[0b0101] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar13() SCALE=1
-        // REXX=0 SIBSCALE[0b00] SIBINDEX[0b0110] SIBBASE[bbb] SIB_BASE0() => INDEX=ArSI() SCALE=1
-        // REXX=1 SIBSCALE[0b00] SIBINDEX[0b0110] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar14() SCALE=1
-        // REXX=0 SIBSCALE[0b00] SIBINDEX[0b0111] SIBBASE[bbb] SIB_BASE0() => INDEX=ArDI() SCALE=1
-        // REXX=1 SIBSCALE[0b00] SIBINDEX[0b0111] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar15() SCALE=1
-        // REXX=0 SIBSCALE[0b01] SIBINDEX[0b0000] SIBBASE[bbb] SIB_BASE0() => INDEX=ArAX() SCALE=2
-        // REXX=1 SIBSCALE[0b01] SIBINDEX[0b0000] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar8() SCALE=2
-        // REXX=0 SIBSCALE[0b01] SIBINDEX[0b0001] SIBBASE[bbb] SIB_BASE0() => INDEX=ArCX() SCALE=2
-        // REXX=1 SIBSCALE[0b01] SIBINDEX[0b0001] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar9() SCALE=2
-        // REXX=0 SIBSCALE[0b01] SIBINDEX[0b0010] SIBBASE[bbb] SIB_BASE0() => INDEX=ArDX() SCALE=2
-        // REXX=1 SIBSCALE[0b01] SIBINDEX[0b0010] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar10() SCALE=2
-        // REXX=0 SIBSCALE[0b01] SIBINDEX[0b0011] SIBBASE[bbb] SIB_BASE0() => INDEX=ArBX() SCALE=2
-        // REXX=1 SIBSCALE[0b01] SIBINDEX[0b0011] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar11() SCALE=2
-        // REXX=0 SIBSCALE[0b01] SIBINDEX[0b0100] SIBBASE[bbb] SIB_BASE0() => INDEX=INVALID SCALE=1
-        // REXX=1 SIBSCALE[0b01] SIBINDEX[0b0100] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar12() SCALE=2
-        // REXX=0 SIBSCALE[0b01] SIBINDEX[0b0101] SIBBASE[bbb] SIB_BASE0() => INDEX=ArBP() SCALE=2
-        // REXX=1 SIBSCALE[0b01] SIBINDEX[0b0101] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar13() SCALE=2
-        // REXX=0 SIBSCALE[0b01] SIBINDEX[0b0110] SIBBASE[bbb] SIB_BASE0() => INDEX=ArSI() SCALE=2
-        // REXX=1 SIBSCALE[0b01] SIBINDEX[0b0110] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar14() SCALE=2
-        // REXX=0 SIBSCALE[0b01] SIBINDEX[0b0111] SIBBASE[bbb] SIB_BASE0() => INDEX=ArDI() SCALE=2
-        // REXX=1 SIBSCALE[0b01] SIBINDEX[0b0111] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar15() SCALE=2
-        // REXX=0 SIBSCALE[0b10] SIBINDEX[0b0000] SIBBASE[bbb] SIB_BASE0() => INDEX=ArAX() SCALE=4
-        // REXX=1 SIBSCALE[0b10] SIBINDEX[0b0000] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar8() SCALE=4
-        // REXX=0 SIBSCALE[0b10] SIBINDEX[0b0001] SIBBASE[bbb] SIB_BASE0() => INDEX=ArCX() SCALE=4
-        // REXX=1 SIBSCALE[0b10] SIBINDEX[0b0001] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar9() SCALE=4
-        // REXX=0 SIBSCALE[0b10] SIBINDEX[0b0010] SIBBASE[bbb] SIB_BASE0() => INDEX=ArDX() SCALE=4
-        // REXX=1 SIBSCALE[0b10] SIBINDEX[0b0010] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar10() SCALE=4
-        // REXX=0 SIBSCALE[0b10] SIBINDEX[0b0011] SIBBASE[bbb] SIB_BASE0() => INDEX=ArBX() SCALE=4
-        // REXX=1 SIBSCALE[0b10] SIBINDEX[0b0011] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar11() SCALE=4
-        // REXX=0 SIBSCALE[0b10] SIBINDEX[0b0100] SIBBASE[bbb] SIB_BASE0() => INDEX=INVALID SCALE=1
-        // REXX=1 SIBSCALE[0b10] SIBINDEX[0b0100] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar12() SCALE=4
-        // REXX=0 SIBSCALE[0b10] SIBINDEX[0b0101] SIBBASE[bbb] SIB_BASE0() => INDEX=ArBP() SCALE=4
-        // REXX=1 SIBSCALE[0b10] SIBINDEX[0b0101] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar13() SCALE=4
-        // REXX=0 SIBSCALE[0b10] SIBINDEX[0b0110] SIBBASE[bbb] SIB_BASE0() => INDEX=ArSI() SCALE=4
-        // REXX=1 SIBSCALE[0b10] SIBINDEX[0b0110] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar14() SCALE=4
-        // REXX=0 SIBSCALE[0b10] SIBINDEX[0b0111] SIBBASE[bbb] SIB_BASE0() => INDEX=ArDI() SCALE=4
-        // REXX=1 SIBSCALE[0b10] SIBINDEX[0b0111] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar15() SCALE=4
-        // REXX=0 SIBSCALE[0b11] SIBINDEX[0b0000] SIBBASE[bbb] SIB_BASE0() => INDEX=ArAX() SCALE=8
-        // REXX=1 SIBSCALE[0b11] SIBINDEX[0b0000] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar8() SCALE=8
-        // REXX=0 SIBSCALE[0b11] SIBINDEX[0b0001] SIBBASE[bbb] SIB_BASE0() => INDEX=ArCX() SCALE=8
-        // REXX=1 SIBSCALE[0b11] SIBINDEX[0b0001] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar9() SCALE=8
-        // REXX=0 SIBSCALE[0b11] SIBINDEX[0b0010] SIBBASE[bbb] SIB_BASE0() => INDEX=ArDX() SCALE=8
-        // REXX=1 SIBSCALE[0b11] SIBINDEX[0b0010] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar10() SCALE=8
-        // REXX=0 SIBSCALE[0b11] SIBINDEX[0b0011] SIBBASE[bbb] SIB_BASE0() => INDEX=ArBX() SCALE=8
-        // REXX=1 SIBSCALE[0b11] SIBINDEX[0b0011] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar11() SCALE=8
-        // REXX=0 SIBSCALE[0b11] SIBINDEX[0b0100] SIBBASE[bbb] SIB_BASE0() => INDEX=INVALID SCALE=1
-        // REXX=1 SIBSCALE[0b11] SIBINDEX[0b0100] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar12() SCALE=8
-        // REXX=0 SIBSCALE[0b11] SIBINDEX[0b0101] SIBBASE[bbb] SIB_BASE0() => INDEX=ArBP() SCALE=8
-        // REXX=1 SIBSCALE[0b11] SIBINDEX[0b0101] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar13() SCALE=8
-        // REXX=0 SIBSCALE[0b11] SIBINDEX[0b0110] SIBBASE[bbb] SIB_BASE0() => INDEX=ArSI() SCALE=8
-        // REXX=1 SIBSCALE[0b11] SIBINDEX[0b0110] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar14() SCALE=8
-        // REXX=0 SIBSCALE[0b11] SIBINDEX[0b0111] SIBBASE[bbb] SIB_BASE0() => INDEX=ArDI() SCALE=8
-        // REXX=1 SIBSCALE[0b11] SIBINDEX[0b0111] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar15() SCALE=8
+        // REXX=0 SIBSCALE[0b00] SIBINDEX[0b000] SIBBASE[bbb] SIB_BASE0() => INDEX=ArAX() SCALE=1
+        // REXX=1 SIBSCALE[0b00] SIBINDEX[0b000] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar8() SCALE=1
+        // REXX=0 SIBSCALE[0b00] SIBINDEX[0b001] SIBBASE[bbb] SIB_BASE0() => INDEX=ArCX() SCALE=1
+        // REXX=1 SIBSCALE[0b00] SIBINDEX[0b001] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar9() SCALE=1
+        // REXX=0 SIBSCALE[0b00] SIBINDEX[0b010] SIBBASE[bbb] SIB_BASE0() => INDEX=ArDX() SCALE=1
+        // REXX=1 SIBSCALE[0b00] SIBINDEX[0b010] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar10() SCALE=1
+        // REXX=0 SIBSCALE[0b00] SIBINDEX[0b011] SIBBASE[bbb] SIB_BASE0() => INDEX=ArBX() SCALE=1
+        // REXX=1 SIBSCALE[0b00] SIBINDEX[0b011] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar11() SCALE=1
+        // REXX=0 SIBSCALE[0b00] SIBINDEX[0b100] SIBBASE[bbb] SIB_BASE0() => INDEX=INVALID SCALE=1 ENCODER_PREFERRED=1
+        // REXX=1 SIBSCALE[0b00] SIBINDEX[0b100] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar12() SCALE=1
+        // REXX=0 SIBSCALE[0b00] SIBINDEX[0b101] SIBBASE[bbb] SIB_BASE0() => INDEX=ArBP() SCALE=1
+        // REXX=1 SIBSCALE[0b00] SIBINDEX[0b101] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar13() SCALE=1
+        // REXX=0 SIBSCALE[0b00] SIBINDEX[0b110] SIBBASE[bbb] SIB_BASE0() => INDEX=ArSI() SCALE=1
+        // REXX=1 SIBSCALE[0b00] SIBINDEX[0b110] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar14() SCALE=1
+        // REXX=0 SIBSCALE[0b00] SIBINDEX[0b111] SIBBASE[bbb] SIB_BASE0() => INDEX=ArDI() SCALE=1
+        // REXX=1 SIBSCALE[0b00] SIBINDEX[0b111] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar15() SCALE=1
+        // REXX=0 SIBSCALE[0b01] SIBINDEX[0b000] SIBBASE[bbb] SIB_BASE0() => INDEX=ArAX() SCALE=2
+        // REXX=1 SIBSCALE[0b01] SIBINDEX[0b000] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar8() SCALE=2
+        // REXX=0 SIBSCALE[0b01] SIBINDEX[0b001] SIBBASE[bbb] SIB_BASE0() => INDEX=ArCX() SCALE=2
+        // REXX=1 SIBSCALE[0b01] SIBINDEX[0b001] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar9() SCALE=2
+        // REXX=0 SIBSCALE[0b01] SIBINDEX[0b010] SIBBASE[bbb] SIB_BASE0() => INDEX=ArDX() SCALE=2
+        // REXX=1 SIBSCALE[0b01] SIBINDEX[0b010] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar10() SCALE=2
+        // REXX=0 SIBSCALE[0b01] SIBINDEX[0b011] SIBBASE[bbb] SIB_BASE0() => INDEX=ArBX() SCALE=2
+        // REXX=1 SIBSCALE[0b01] SIBINDEX[0b011] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar11() SCALE=2
+        // REXX=0 SIBSCALE[0b01] SIBINDEX[0b100] SIBBASE[bbb] SIB_BASE0() => INDEX=INVALID SCALE=1
+        // REXX=1 SIBSCALE[0b01] SIBINDEX[0b100] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar12() SCALE=2
+        // REXX=0 SIBSCALE[0b01] SIBINDEX[0b101] SIBBASE[bbb] SIB_BASE0() => INDEX=ArBP() SCALE=2
+        // REXX=1 SIBSCALE[0b01] SIBINDEX[0b101] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar13() SCALE=2
+        // REXX=0 SIBSCALE[0b01] SIBINDEX[0b110] SIBBASE[bbb] SIB_BASE0() => INDEX=ArSI() SCALE=2
+        // REXX=1 SIBSCALE[0b01] SIBINDEX[0b110] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar14() SCALE=2
+        // REXX=0 SIBSCALE[0b01] SIBINDEX[0b111] SIBBASE[bbb] SIB_BASE0() => INDEX=ArDI() SCALE=2
+        // REXX=1 SIBSCALE[0b01] SIBINDEX[0b111] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar15() SCALE=2
+        // REXX=0 SIBSCALE[0b10] SIBINDEX[0b000] SIBBASE[bbb] SIB_BASE0() => INDEX=ArAX() SCALE=4
+        // REXX=1 SIBSCALE[0b10] SIBINDEX[0b000] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar8() SCALE=4
+        // REXX=0 SIBSCALE[0b10] SIBINDEX[0b001] SIBBASE[bbb] SIB_BASE0() => INDEX=ArCX() SCALE=4
+        // REXX=1 SIBSCALE[0b10] SIBINDEX[0b001] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar9() SCALE=4
+        // REXX=0 SIBSCALE[0b10] SIBINDEX[0b010] SIBBASE[bbb] SIB_BASE0() => INDEX=ArDX() SCALE=4
+        // REXX=1 SIBSCALE[0b10] SIBINDEX[0b010] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar10() SCALE=4
+        // REXX=0 SIBSCALE[0b10] SIBINDEX[0b011] SIBBASE[bbb] SIB_BASE0() => INDEX=ArBX() SCALE=4
+        // REXX=1 SIBSCALE[0b10] SIBINDEX[0b011] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar11() SCALE=4
+        // REXX=0 SIBSCALE[0b10] SIBINDEX[0b100] SIBBASE[bbb] SIB_BASE0() => INDEX=INVALID SCALE=1
+        // REXX=1 SIBSCALE[0b10] SIBINDEX[0b100] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar12() SCALE=4
+        // REXX=0 SIBSCALE[0b10] SIBINDEX[0b101] SIBBASE[bbb] SIB_BASE0() => INDEX=ArBP() SCALE=4
+        // REXX=1 SIBSCALE[0b10] SIBINDEX[0b101] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar13() SCALE=4
+        // REXX=0 SIBSCALE[0b10] SIBINDEX[0b110] SIBBASE[bbb] SIB_BASE0() => INDEX=ArSI() SCALE=4
+        // REXX=1 SIBSCALE[0b10] SIBINDEX[0b110] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar14() SCALE=4
+        // REXX=0 SIBSCALE[0b10] SIBINDEX[0b111] SIBBASE[bbb] SIB_BASE0() => INDEX=ArDI() SCALE=4
+        // REXX=1 SIBSCALE[0b10] SIBINDEX[0b111] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar15() SCALE=4
+        // REXX=0 SIBSCALE[0b11] SIBINDEX[0b000] SIBBASE[bbb] SIB_BASE0() => INDEX=ArAX() SCALE=8
+        // REXX=1 SIBSCALE[0b11] SIBINDEX[0b000] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar8() SCALE=8
+        // REXX=0 SIBSCALE[0b11] SIBINDEX[0b001] SIBBASE[bbb] SIB_BASE0() => INDEX=ArCX() SCALE=8
+        // REXX=1 SIBSCALE[0b11] SIBINDEX[0b001] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar9() SCALE=8
+        // REXX=0 SIBSCALE[0b11] SIBINDEX[0b010] SIBBASE[bbb] SIB_BASE0() => INDEX=ArDX() SCALE=8
+        // REXX=1 SIBSCALE[0b11] SIBINDEX[0b010] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar10() SCALE=8
+        // REXX=0 SIBSCALE[0b11] SIBINDEX[0b011] SIBBASE[bbb] SIB_BASE0() => INDEX=ArBX() SCALE=8
+        // REXX=1 SIBSCALE[0b11] SIBINDEX[0b011] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar11() SCALE=8
+        // REXX=0 SIBSCALE[0b11] SIBINDEX[0b100] SIBBASE[bbb] SIB_BASE0() => INDEX=INVALID SCALE=1
+        // REXX=1 SIBSCALE[0b11] SIBINDEX[0b100] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar12() SCALE=8
+        // REXX=0 SIBSCALE[0b11] SIBINDEX[0b101] SIBBASE[bbb] SIB_BASE0() => INDEX=ArBP() SCALE=8
+        // REXX=1 SIBSCALE[0b11] SIBINDEX[0b101] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar13() SCALE=8
+        // REXX=0 SIBSCALE[0b11] SIBINDEX[0b110] SIBBASE[bbb] SIB_BASE0() => INDEX=ArSI() SCALE=8
+        // REXX=1 SIBSCALE[0b11] SIBINDEX[0b110] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar14() SCALE=8
+        // REXX=0 SIBSCALE[0b11] SIBINDEX[0b111] SIBBASE[bbb] SIB_BASE0() => INDEX=ArDI() SCALE=8
+        // REXX=1 SIBSCALE[0b11] SIBINDEX[0b111] SIBBASE[bbb] SIB_BASE0() => INDEX=Ar15() SCALE=8
         Context.RuleActivated((RuleTableKind.DEC,RuleName.SIB));
     }
 
@@ -5413,5 +5413,169 @@ public class XedMachine
         // else => null
         Context.RuleActivated((RuleTableKind.ENC,RuleName.XSAVE));
     }
+
+    public void EVEX_ENC_BIND()
+    {
+        EVEX_62_REXR_ENC_ENC();
+        EVEX_REXX_ENC_ENC();
+        EVEX_REXB_ENC_ENC();
+        EVEX_REXRR_ENC_ENC();
+        EVEX_MAP_ENC_ENC();
+        EVEX_REXW_VVVV_ENC_ENC();
+        EVEX_U_ENC_ENC();
+        EVEX_PP_ENC_ENC();
+        EVEX_LL_ENC_ENC();
+        AVX512_EVEX_BYTE3_ENC_ENC();
+    }
+
+    public void EVEX_ENC_EMIT()
+    {
+        EVEX_62_REXR_ENC_ENC();
+        EVEX_REXX_ENC_ENC();
+        EVEX_REXB_ENC_ENC();
+        EVEX_REXRR_ENC_ENC();
+        EVEX_MAP_ENC_ENC();
+        EVEX_REXW_VVVV_ENC_ENC();
+        EVEX_U_ENC_ENC();
+        EVEX_PP_ENC_ENC();
+        EVEX_LL_ENC_ENC();
+        AVX512_EVEX_BYTE3_ENC_ENC();
+    }
+
+
+    public void MODRM_BIND()
+    {
+        SIB_REQUIRED_ENCODE_ENC();
+        SIBSCALE_ENCODE_ENC();
+        SIBINDEX_ENCODE_ENC();
+        SIBBASE_ENCODE_ENC();
+        MODRM_RM_ENCODE_ENC();
+        MODRM_MOD_ENCODE_ENC();
+        SEGMENT_DEFAULT_ENCODE_ENC();
+        SEGMENT_ENCODE_ENC();
+        SIB_NT_ENC();
+        DISP_NT_ENC();
+    }
+
+    public void MODRM_EMIT()
+    {
+        SIB_NT_ENC();
+        DISP_NT_ENC();
+    }
+
+    public void NEWVEX3_ENC_EMIT()
+    {
+        VEX_TYPE_ENC_ENC();
+        VEX_REXR_ENC_ENC();
+        VEX_REXXB_ENC_ENC();
+        VEX_MAP_ENC_ENC();
+        VEX_REG_ENC_ENC();
+        VEX_ESCVL_ENC_ENC();
+    }
+
+    public void NEWVEX_ENC_BIND()
+    {
+        VEX_TYPE_ENC_ENC();
+        VEX_REXR_ENC_ENC();
+        VEX_REXXB_ENC_ENC();
+        VEX_MAP_ENC_ENC();
+        VEX_REG_ENC_ENC();
+        VEX_ESCVL_ENC_ENC();
+    }
+
+    public void NEWVEX_ENC_EMIT()
+    {
+        VEX_TYPE_ENC_ENC();
+        VEX_REXR_ENC_ENC();
+        VEX_REXXB_ENC_ENC();
+        VEX_MAP_ENC_ENC();
+        VEX_REG_ENC_ENC();
+        VEX_ESCVL_ENC_ENC();
+    }
+
+    public void UISA_VMODRM_XMM_BIND()
+    {
+        VMODRM_MOD_ENCODE_ENC();
+        VSIB_ENC_BASE_ENC();
+        UISA_ENC_INDEX_XMM_ENC();
+        VSIB_ENC_SCALE_ENC();
+        VSIB_ENC_ENC();
+        SEGMENT_DEFAULT_ENCODE_ENC();
+        SEGMENT_ENCODE_ENC();
+        DISP_NT_ENC();
+    }
+
+    public void UISA_VMODRM_XMM_EMIT()
+    {
+        VSIB_ENC_ENC();
+        DISP_NT_ENC();
+    }
+
+    public void UISA_VMODRM_YMM_BIND()
+    {
+        VMODRM_MOD_ENCODE_ENC();
+        VSIB_ENC_BASE_ENC();
+        UISA_ENC_INDEX_YMM_ENC();
+        VSIB_ENC_SCALE_ENC();
+        VSIB_ENC_ENC();
+        SEGMENT_DEFAULT_ENCODE_ENC();
+        SEGMENT_ENCODE_ENC();
+        DISP_NT_ENC();
+    }
+
+    public void UISA_VMODRM_ZMM_BIND()
+    {
+        VMODRM_MOD_ENCODE_ENC();
+        VSIB_ENC_BASE_ENC();
+        UISA_ENC_INDEX_ZMM_ENC();
+        VSIB_ENC_SCALE_ENC();
+        VSIB_ENC_ENC();
+        SEGMENT_DEFAULT_ENCODE_ENC();
+        SEGMENT_ENCODE_ENC();
+        DISP_NT_ENC();
+    }
+
+    public void UISA_VMODRM_ZMM_EMIT()
+    {
+        VSIB_ENC_ENC();
+        DISP_NT_ENC();
+    }
+
+    public void VMODRM_XMM_BIND()
+    {
+        VMODRM_MOD_ENCODE_ENC();
+        VSIB_ENC_BASE_ENC();
+        VSIB_ENC_INDEX_XMM_ENC();
+        VSIB_ENC_SCALE_ENC();
+        VSIB_ENC_ENC();
+        SEGMENT_DEFAULT_ENCODE_ENC();
+        SEGMENT_ENCODE_ENC();
+        DISP_NT_ENC();
+    }
+
+    public void VMODRM_XMM_EMIT()
+    {
+        VSIB_ENC_ENC();
+        DISP_NT_ENC();
+    }
+
+    public void VMODRM_YMM_BIND()
+    {
+        VMODRM_MOD_ENCODE_ENC();
+        VSIB_ENC_BASE_ENC();
+        VSIB_ENC_INDEX_YMM_ENC();
+        VSIB_ENC_SCALE_ENC();
+        VSIB_ENC_ENC();
+        SEGMENT_DEFAULT_ENCODE_ENC();
+        SEGMENT_ENCODE_ENC();
+        DISP_NT_ENC();
+    }
+
+    public void VMODRM_YMM_EMIT()
+    {
+        VSIB_ENC_ENC();
+        DISP_NT_ENC();
+    }
+
 
 }

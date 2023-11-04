@@ -13,11 +13,11 @@ partial class XedRuleSeq
 {
     /*
     SEQUENCE MODRM_EMIT
-        SIB_NT_EMIT()
-        DISP_NT_EMIT()
+        SIB_NT_EMIT
+        DISP_NT_EMIT
     */
     public static SeqDef MODRM_EMIT() => emit(nameof(MODRM_EMIT), new RuleName[]{
-        SIB_NT,
-        DISP_NT,
+        SIB_NT_EMIT,
+        DISP_NT_EMIT,
     });
 }

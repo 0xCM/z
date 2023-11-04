@@ -12,6 +12,8 @@ partial class XedRules
     {
         public XedInstForm Form;
 
+        public byte FormIndex;
+        
         public InstBlockPattern Pattern;
         
         public ReadOnlySeq<InstBlockField> Fields;

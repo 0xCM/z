@@ -13,16 +13,16 @@ partial class XedRules
     {
         public readonly asci32 SeqName;
 
-        public readonly SeqEffect Effect;
+        public readonly RuleStep Effect;
 
-        public readonly ReadOnlySeq<RuleIdentity> Steps;
+        public readonly ReadOnlySeq<RuleIdentity> Rules;
 
         [MethodImpl(Inline)]
-        public SeqDef(asci32 name, SeqEffect effect, RuleName[] rules, RuleTableKind kind )
+        public SeqDef(asci32 name, RuleStep effect, RuleName[] rules, RuleTableKind kind )
         {
             SeqName = name;
             Effect = effect;
-            Steps = rules.Map(r => new RuleIdentity(kind,r));
+            Rules = rules.Map(r => new RuleIdentity(kind,r));
         }
 
         _FileUri Uri(RuleIdentity src)
@@ -32,11 +32,8 @@ partial class XedRules
         {
             var dst = text.buffer();
             dst.AppendLineFormat("{0}(){{", SeqName);
-            for(var i=0; i<Steps.Count; i++)
-                dst.IndentLineFormat(4, "{0,-42} {1}",
-                    Effect == 0 ? Steps[i].TableName : string.Format("{0}_{1}", Steps[i].TableName, Effect),
-                    Uri(Steps[i])
-                    );
+            for(var i=0; i<Rules.Count; i++)
+                dst.IndentLineFormat(4, "{0,-42} {1}", Rules[i].Unkinded, Uri(Rules[i]));
             dst.AppendLine("}");
             return dst.Emit();
         }

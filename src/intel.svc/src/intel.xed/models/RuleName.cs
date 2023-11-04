@@ -5,6 +5,8 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static XedRules;
+
 partial class XedModels
 {
     public enum RuleName : ushort
@@ -49,15 +51,11 @@ partial class XedModels
 
         ASZ_NONTERM,
 
-        ASZ_NONTERM_BIND,
-
         AVX_INSTRUCTIONS,
 
         AVX_SPLITTER,
 
         AVX512_EVEX_BYTE3_ENC,
-
-        AVX512_EVEX_BYTE3_ENC_BIND,
 
         AVX512_ROUND,
 
@@ -88,10 +86,6 @@ partial class XedModels
         DF64,
 
         DISP_NT,
-
-        DISP_NT_EMIT,
-
-        UISA_ENC_INDEX_YMM_BIND,
 
         DISP_WIDTH_0,
 
@@ -129,29 +123,11 @@ partial class XedModels
 
         EVEX_62_REXR_ENC,
 
-        EVEX_REXX_ENC_EMIT,
-        
-        EVEX_REXB_ENC_EMIT,
-        
-        EVEX_REXRR_ENC_EMIT,
-        
-        EVEX_MAP_ENC_EMIT,
-        
-        EVEX_REXW_VVVV_ENC_EMIT,
-        
-        EVEX_UPP_ENC_EMIT,
-        
-        EVEX_LL_ENC_EMIT,
-        
-        AVX512_EVEX_BYTE3_ENC_EMIT,
-
         EVEX_ENC,
 
         EVEX_INSTRUCTIONS,
 
         EVEX_LL_ENC,
-
-        EVEX_LL_ENC_BIND,
 
         EVEX_U_ENC,
 
@@ -167,15 +143,9 @@ partial class XedModels
 
         EVEX_REXX_ENC,
 
-        EVEX_REXX_ENC_BIND,
-
         EVEX_SPLITTER,
 
         EVEX_UPP_ENC,
-
-        EVEX_UPP_ENC_BIND,
-
-        EVEX_62_REXR_ENC_BIND,
 
         FINAL_DSEG,
 
@@ -276,16 +246,6 @@ partial class XedModels
         IMMUNE66_LOOP64,
 
         INSTRUCTIONS,
-
-        INSTRUCTIONS_BIND,
-
-        INSTRUCTIONS_EMIT,
-
-        OSZ_NONTERM_ENC_BIND,
-
-        PREFIX_ENC_BIND,
-
-        VEXED_REX_BIND,
 
         ISA,
 
@@ -443,8 +403,6 @@ partial class XedModels
 
         PREFIX_ENC,
 
-        PREFIX_ENC_EMIT,
-
         PREFIXES,
 
         REFINING66,
@@ -480,8 +438,6 @@ partial class XedModels
         SIB_BASE0,
 
         SIB_NT,
-
-        SIB_NT_EMIT,
 
         SIB_REQUIRED_ENCODE,
 
@@ -576,22 +532,6 @@ partial class XedModels
         VEX_TYPE_ENC,
 
         VEXED_REX,
-
-        VEXED_REX_EMIT,
-
-        VEX_TYPE_ENC_EMIT,
-        
-        VEX_REXR_ENC_EMIT,
-        
-        VEX_REXXB_ENC_EMIT,
-        
-        VEX_MAP_ENC_EMIT,
-        
-        VEX_REG_ENC_EMIT,
-        
-        VEX_ESCVL_ENC_EMIT,
-
-        VSIB_ENC_EMIT,
 
         VGPR32_B,
 
@@ -956,5 +896,141 @@ partial class XedModels
         XSAVE,
 
         NELEM_QUARTER,
+
+        SIB_REQUIRED_ENCODE_BIND = SIB_REQUIRED_ENCODE | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        SIBSCALE_ENCODE_BIND = SIBSCALE_ENCODE | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        SIBINDEX_ENCODE_BIND = SIBINDEX_ENCODE | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        SIBBASE_ENCODE_BIND = SIBBASE_ENCODE | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        MODRM_RM_ENCODE_BIND = MODRM_RM_ENCODE | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        MODRM_MOD_ENCODE_BIND = MODRM_MOD_ENCODE | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        SEGMENT_DEFAULT_ENCODE_BIND = SEGMENT_DEFAULT_ENCODE | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        SEGMENT_ENCODE_BIND = SEGMENT_ENCODE | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        SIB_NT_BIND = SIB_NT | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        DISP_NT_BIND = DISP_NT | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        VSIB_ENC_INDEX_XMM_BIND = VSIB_ENC_INDEX_XMM | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        UISA_ENC_INDEX_ZMM_BIND = UISA_ENC_INDEX_ZMM | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        VMODRM_MOD_ENCODE_BIND = VMODRM_MOD_ENCODE | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        VSIB_ENC_BASE_BIND = VSIB_ENC_BASE | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        UISA_ENC_INDEX_XMM_BIND = UISA_ENC_INDEX_XMM | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        VSIB_ENC_SCALE_BIND = VSIB_ENC_SCALE | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        VSIB_ENC_BIND = VSIB_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        VSIB_ENC_INDEX_YMM_BIND = VSIB_ENC_INDEX_YMM | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        VEX_TYPE_ENC_BIND = VEX_TYPE_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        VEX_REXR_ENC_BIND = VEX_REXR_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        VEX_REXXB_ENC_BIND = VEX_REXXB_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        VEX_MAP_ENC_BIND = VEX_MAP_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        VEX_REG_ENC_BIND = VEX_REG_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        VEX_ESCVL_ENC_BIND = VEX_ESCVL_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        ASZ_NONTERM_BIND = ASZ_NONTERM | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        FIXUP_EOSZ_ENC_BIND = FIXUP_EOSZ_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+        
+        FIXUP_EASZ_ENC_BIND = FIXUP_EASZ_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        REX_PREFIX_ENC_BIND = REX_PREFIX_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+        
+        AVX512_EVEX_BYTE3_ENC_BIND = AVX512_EVEX_BYTE3_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        UISA_ENC_INDEX_YMM_BIND = UISA_ENC_INDEX_YMM | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        EVEX_REXRR_ENC_BIND = EVEX_REXRR_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        EVEX_MAP_ENC_BIND = EVEX_MAP_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        EVEX_REXW_VVVV_ENC_BIND = EVEX_REXW_VVVV_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        EVEX_U_ENC_BIND = EVEX_U_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        EVEX_PP_ENC_BIND = EVEX_PP_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        EVEX_LL_ENC_BIND = EVEX_LL_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        EVEX_REXX_ENC_BIND = EVEX_REXX_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        EVEX_UPP_ENC_BIND = EVEX_UPP_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        EVEX_REXB_ENC_BIND = EVEX_REXB_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        EVEX_62_REXR_ENC_BIND = EVEX_62_REXR_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        INSTRUCTIONS_BIND = INSTRUCTIONS | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        OSZ_NONTERM_ENC_BIND = OSZ_NONTERM_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        PREFIX_ENC_BIND = PREFIX_ENC | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        VEXED_REX_BIND = VEXED_REX | (RuleStep.BIND << RuleIdentity.StepOffset),
+
+        DISP_NT_EMIT = DISP_NT | (RuleStep.EMIT << RuleIdentity.StepOffset),
+
+        EVEX_REXX_ENC_EMIT = EVEX_REXX_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+        
+        EVEX_62_REXR_ENC_EMIT = EVEX_62_REXR_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+
+        EVEX_REXB_ENC_EMIT = EVEX_REXB_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+        
+        EVEX_REXRR_ENC_EMIT = EVEX_REXRR_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+        
+        EVEX_MAP_ENC_EMIT = EVEX_MAP_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+        
+        EVEX_REXW_VVVV_ENC_EMIT = EVEX_REXW_VVVV_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+        
+        EVEX_UPP_ENC_EMIT = EVEX_UPP_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+        
+        EVEX_LL_ENC_EMIT = EVEX_LL_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+        
+        AVX512_EVEX_BYTE3_ENC_EMIT = AVX512_EVEX_BYTE3_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+
+        INSTRUCTIONS_EMIT = INSTRUCTIONS | (RuleStep.EMIT << RuleIdentity.StepOffset),
+
+        PREFIX_ENC_EMIT = PREFIX_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+
+        REX_PREFIX_ENC_EMIT = REX_PREFIX_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+
+        SIB_NT_EMIT = SIB_NT | (RuleStep.EMIT << RuleIdentity.StepOffset),
+
+        VEXED_REX_EMIT = VEXED_REX | (RuleStep.EMIT << RuleIdentity.StepOffset),
+
+        VEX_TYPE_ENC_EMIT = VEX_TYPE_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+        
+        VEX_REXR_ENC_EMIT = VEX_REXR_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+        
+        VEX_REXXB_ENC_EMIT = VEX_REXXB_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+        
+        VEX_MAP_ENC_EMIT = VEX_MAP_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+        
+        VEX_REG_ENC_EMIT = VEX_REG_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+        
+        VEX_ESCVL_ENC_EMIT = VEX_ESCVL_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+
+        VSIB_ENC_EMIT = VSIB_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+
+        EVEX_U_ENC_EMIT = EVEX_U_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
+         
+        EVEX_PP_ENC_EMIT = EVEX_PP_ENC | (RuleStep.EMIT << RuleIdentity.StepOffset),
     }
 }

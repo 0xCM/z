@@ -43,8 +43,7 @@ partial class XedCells
         dst = new(alloc<CellValue>(count));
         for(var i=0; i<count; i++)
         {
-            ref readonly var part = ref skip(parts,i);
-            result = parse(part, out dst[i]);
+            result = parse(skip(parts,i), out dst[i]);
             if(result.Fail)
                 Errors.Throw(result.Message);
         }

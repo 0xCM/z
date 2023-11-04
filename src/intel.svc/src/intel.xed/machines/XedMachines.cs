@@ -142,15 +142,54 @@ public partial class XedMachines
 
         for(var i=0; i<decls.Count; i++)
         {
-            ref readonly var decl = ref decls[i];
-            render(ref indent, decl.Table, dst);
+            render(ref indent, decls[i].Table, dst);
             dst.AppendLine();
         }
-        indent -=4;
 
+        for(var i=0; i<context.RuleSeq.Count; i++)
+        {
+            render(ref indent, context.RuleSeq[i], dst);
+            dst.AppendLine();
+        }
+        
+        for(var i=0; i<context.RuleControls.Count; i++)
+        {
+            render(ref indent, context.RuleControls[i], dst);
+            dst.AppendLine();
+        }
+
+        indent -=4;
         dst.IndentLine(indent, Chars.RBrace);
     }
 
+    static void render(ref uint indent, in SeqControl src, ITextEmitter dst)
+    {
+        dst.IndentLineFormat(indent, "public void {0}()",  src.SeqName);
+        dst.IndentLine(indent, Chars.LBrace);
+        indent += 4;
+        for(var i=0; i<src.Defs.Count; i++)
+        {
+            ref readonly var def = ref src.Defs[i];
+            dst.IndentLine(indent,$"{def.SeqName}_{def.Effect}();");
+        }
+        indent -= 4;
+        dst.IndentLine(indent, Chars.RBrace);
+    }
+
+    static void render(ref uint indent, in SeqDef src, ITextEmitter dst)
+    {
+        dst.IndentLineFormat(indent, "public void {0}()",  src.SeqName);
+        dst.IndentLine(indent, Chars.LBrace);
+        indent += 4;
+        for(var i=0; i<src.Rules.Count; i++)
+        {
+            ref readonly var step = ref src.Rules[i];
+            dst.IndentLine(indent,$"{step.TableName}_ENC();");
+        }
+        indent -= 4;
+        dst.IndentLine(indent, Chars.RBrace);
+
+    }
     static string ActionName(in CellTable src)
         => string.Format("{0}_{1}", src.Name, src.Kind);
 

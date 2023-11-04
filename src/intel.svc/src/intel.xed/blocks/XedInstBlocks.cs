@@ -66,6 +66,7 @@ public class XedInstBlocks
             }
             pattern.Seq = i;
             pattern.Index = j++;
+            def.FormIndex = pattern.Index;
             var key = XedInstBlocks.key(pattern);
             Require.invariant(lookup.TryAdd(key,pattern));
             seek(patterns,i) = pattern;

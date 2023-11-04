@@ -5,9 +5,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-partial class XedRules
+partial class XedModels
 {
-    public enum SeqEffect : byte
+    public enum RuleStep : byte
     {
         None,
 

@@ -30,11 +30,17 @@ partial class XedMachines
             MachineMode = mode;
             Instructions = XedTables.Instructions();
             RuleDecls = RuleTables.View.Map(x => new RuleDecl(x));         
+            RuleSeq = XedRuleSeq.defs();
+            RuleControls = XedRuleSeq.controls();
         }
         
         readonly Action<RuleIdentity> ActivationHandler;
 
         public readonly InstructionRules Instructions;
+
+        public readonly ReadOnlySeq<SeqDef> RuleSeq;
+
+        public readonly ReadOnlySeq<SeqControl> RuleControls;
 
         public readonly CellTables RuleTables;
 

@@ -14,15 +14,15 @@ public unsafe partial class XedRuleSeq
 {
     [MethodImpl(Inline), Op]
     public static SeqDef bind(asci32 name, RuleName[] rules)
-        => new (name, SeqEffect.BIND, rules, RuleTableKind.ENC);
+        => new (name, RuleStep.BIND, rules, RuleTableKind.ENC);
 
     [MethodImpl(Inline), Op]
     public static SeqDef emit(asci32 name, RuleName[] rules)
-        => new (name, SeqEffect.EMIT, rules, RuleTableKind.ENC);
+        => new (name, RuleStep.EMIT, rules, RuleTableKind.ENC);
 
     [MethodImpl(Inline), Op]
     public static SeqDef def(asci32 name, RuleTableKind kind, params RuleName[] rules)
-        => new (name, SeqEffect.None, rules, kind);
+        => new (name, RuleStep.None, rules, kind);
 
     [MethodImpl(Inline), Op]
     public static SeqControl control(asci32 name, params SeqDef[] src)

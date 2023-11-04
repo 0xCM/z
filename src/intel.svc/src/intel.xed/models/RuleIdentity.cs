@@ -9,16 +9,17 @@ using static XedModels;
 
 partial class XedRules
 {
-    [DataWidth(PackedWidth)]
     public readonly record struct RuleIdentity : IComparable<RuleIdentity>
     {
-        public const byte PackedWidth = num2.Width + num9.Width;
+        const ushort KindMask = 0b1100_0000_0000_0000;
 
-        const ushort KindMask = 0xF000;
+        const ushort NameMask = 0b0000_1111_1111_1111;
 
-        const ushort NameMask = 0x0FFF;
+        const ushort StepMask = 0b0011_0000_0000_0000;
 
-        const ushort KindOffset = 12;
+        internal const ushort StepOffset = 12;
+
+        const ushort KindOffset = 14;
 
         readonly ushort Data;
 
@@ -40,6 +41,18 @@ partial class XedRules
             get => Data;
         }
 
+        public RuleStep Step
+        {
+            [MethodImpl(Inline)]
+            get => (RuleStep)((Data & StepMask) >> StepOffset);
+        }
+
+        public RuleName Unkinded
+        {
+            [MethodImpl(Inline)]
+            get => (RuleName)(Data & ~KindMask);
+        }        
+
         public RuleName TableName
         {
             [MethodImpl(Inline)]
@@ -51,7 +64,7 @@ partial class XedRules
             [MethodImpl(Inline)]
             get => (RuleTableKind)((Data & KindMask) >> KindOffset);
         }
-
+        
         public bool IsEncTable
         {
             [MethodImpl(Inline)]
