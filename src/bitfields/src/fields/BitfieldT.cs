@@ -10,18 +10,18 @@ using api = Bitfields;
 public struct Bitfield<T>
     where T : unmanaged
 {
-    readonly BfModel Model;
+    readonly BfDef Model;
 
     public T State;
 
     [MethodImpl(Inline)]
-    public Bitfield(BfModel model, T state)
+    public Bitfield(BfDef model, T state)
     {
         State = state;
         Model = model;
     }
 
-    public ReadOnlySpan<BfSegModel> SegSpecs
+    public ReadOnlySpan<BfSegDef> SegSpecs
     {
         [MethodImpl(Inline)]
         get => Model.Segments;
@@ -29,7 +29,7 @@ public struct Bitfield<T>
 
     [MethodImpl(Inline)]
     public T Extract(byte field)
-        => api.seg(this, field);
+        => api.extract(this, field);
 
     [MethodImpl(Inline)]
     public Bitfield<T> Store(byte field, T src)

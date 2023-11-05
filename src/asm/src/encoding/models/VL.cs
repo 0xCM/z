@@ -4,8 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
+[DataWidth(TypeWidth)]
 public readonly record struct VL : IComparable<VL>
 {
+    public const byte TypeWidth = num3.Width;
+
     public static VL VL128 => new(z8);
 
     public static VL VL256 => new(1);

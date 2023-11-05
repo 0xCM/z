@@ -61,7 +61,6 @@ partial class XedRules
         bit Bit()
             => (bit)Data;
 
-
         [MethodImpl(Inline)]
         byte Byte()
             => (byte)Data;
@@ -178,6 +177,10 @@ partial class XedRules
 
         [MethodImpl(Inline)]
         public static implicit operator uint2(Field src)
+            => src.Byte();
+
+        [MethodImpl(Inline)]
+        public static implicit operator num2(Field src)
             => src.Byte();
 
         [MethodImpl(Inline)]

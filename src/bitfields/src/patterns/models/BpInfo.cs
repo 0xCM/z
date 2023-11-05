@@ -29,7 +29,7 @@ public class BpInfo
     /// <summary>
     /// The segments in the field
     /// </summary>
-    public readonly ReadOnlySeq<BfSegModel> Segs;
+    public readonly ReadOnlySeq<BfSegDef> Segs;
 
     /// <summary>
     /// A semantic identifier
@@ -41,7 +41,7 @@ public class BpInfo
     /// </summary>
     public readonly BpSpec Spec;
 
-    internal BpInfo(in BpDef def, uint width, Type datatype, NativeSize minsize, ReadOnlySeq<BfSegModel> segs, string descriptor)
+    internal BpInfo(in BpDef def, uint width, Type datatype, NativeSize minsize, ReadOnlySeq<BfSegDef> segs, string descriptor)
     {
         Def = def;
         DataWidth = width;
@@ -61,25 +61,16 @@ public class BpInfo
         get => Segs.Count;
     }
 
-    public ref readonly BfSegModel this[uint i]
+    public ref readonly BfSegDef this[uint i]
     {
         [MethodImpl(Inline)]
         get => ref Segs[i];
     }
 
-    public ref readonly BfSegModel this[int i]
+    public ref readonly BfSegDef this[int i]
     {
         [MethodImpl(Inline)]
         get => ref Segs[i];
-    }
-
-    /// <summary>
-    /// The pattern source
-    /// </summary>
-    public ref readonly BfOrigin Origin
-    {
-        [MethodImpl(Inline)]
-        get => ref Def.Origin;
     }
 
     /// <summary>

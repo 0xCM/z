@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static System.Runtime.Intrinsics.X86.Avx;
-using static System.Runtime.Intrinsics.X86.Sse2;
-using static System.Runtime.Intrinsics.X86.Sse41;
 using static vcpu;
 
 partial struct vpack

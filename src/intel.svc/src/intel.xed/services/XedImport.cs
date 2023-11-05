@@ -29,6 +29,7 @@ public partial class XedImport : WfSvc<XedImport>
             },
             () => ruleT = T.RuleTables(),
             () => Emit(T.RuleSeqImports()),
+            () => Emit(T.FieldsReflected()),
             () => Emit(T.SeqReflected()),
             () => Emit(T.MacroMatches()),
             () => instdefs = T.EncInstDefs(),
@@ -213,6 +214,9 @@ public partial class XedImport : WfSvc<XedImport>
         Channel.FileEmit(dst.Emit(), src.TableCount, XedPaths.Imports().Path("xed.rules.metrics", FileKind.Txt));
     }
 
+    void Emit(ReadOnlySeq<FieldDef> src)
+        => Channel.TableEmit(src, XedPaths.ImportTable<FieldDef>());
+        
     void Emit(ReadOnlySeq<XedTableStats> stats)
         => Channel.TableEmit(stats, XedPaths.ImportTable<XedTableStats>(), TextEncodingKind.Asci);
 

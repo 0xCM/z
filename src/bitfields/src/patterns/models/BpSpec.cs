@@ -10,12 +10,6 @@ public record struct BpSpec
     public const string TableId = "specs";
 
     /// <summary>
-    /// The name of the pattern source
-    /// </summary>
-    [Render(16)]
-    public string Origin;
-
-    /// <summary>
     /// The pattern name
     /// </summary>
     [Render(16)]

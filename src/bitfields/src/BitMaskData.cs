@@ -166,15 +166,15 @@ public readonly struct BitMaskData
 
     [MethodImpl(Inline)]
     public static implicit operator BitMaskData(ushort src)
-        => new BitMaskData(src);
+        => new (src);
 
     [MethodImpl(Inline)]
     public static implicit operator BitMaskData(uint src)
-        => new BitMaskData(src);
+        => new (src);
 
     [MethodImpl(Inline)]
     public static implicit operator BitMaskData(ulong src)
-        => new BitMaskData(src);
+        => new (src);
 
     public static BitMaskData Empty => default;
 }

@@ -9,7 +9,7 @@ partial class ApiOps
     [CmdOp("bitmasks/check")]
     void CheckBitmasks()
     {
-        var src = BitMask.masks(typeof(BitMaskLiterals));
+        var src = Bitfields.masks(typeof(BitMaskLiterals));
         var formatter = CsvTables.formatter<BitMaskLiterals>();
         for(var i=0; i<src.Count; i++)
         {

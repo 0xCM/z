@@ -14,7 +14,6 @@ partial struct BitPatterns
     public static BpSpec spec(in BpInfo src)
     {
         var dst = BpSpec.Empty;
-        dst.Origin = src.Origin.Format();
         dst.Content = src.Expr;
         dst.DataType = src.DataType.DisplayName();
         dst.Descriptor = src.Descriptor;

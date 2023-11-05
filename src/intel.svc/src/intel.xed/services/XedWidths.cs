@@ -272,7 +272,7 @@ public class XedWidths
                 break;
             }
 
-            dst.SegType = BitSegType.define(nclass(dst.Code), dst.Width64, dst.ElementWidth);
+            dst.SegType = Bitfields.segtype(nclass(dst.Code), dst.Width64, dst.ElementWidth);
             buffer.TryAdd(dst.Code, dst);
         }
 

@@ -52,11 +52,11 @@ public readonly struct BpCalcs<P>
     /// The segments in the field
     /// </summary>
     [MethodImpl(Inline)]
-    public Seq<BfSegModel> Segments()
+    public Seq<BfSegDef> Segments()
         => Untyped.Segments();
 
     [MethodImpl(Inline)]
-    public BfModel Model()
+    public BfDef Model()
         => Untyped.Model();
 
     [MethodImpl(Inline)]
@@ -89,5 +89,5 @@ public readonly struct BpCalcs<P>
 
     [MethodImpl(Inline)]
     public static implicit operator BpCalcs<P>(P src)
-        => new (new BpDef<P>(src.Name, src.Pattern, src.Origin));
+        => new (new BpDef<P>(src.Name, src.Pattern));
 }

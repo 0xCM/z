@@ -27,6 +27,4 @@ partial struct vpack
         var v = vconcat(v0,v1);
         return v8u(v);
     }
-
-
 }

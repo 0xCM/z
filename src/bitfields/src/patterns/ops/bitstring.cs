@@ -10,7 +10,7 @@ partial struct BitPatterns
 {
     public static string bitstring(BpExpr src, ulong value)
     {
-        var segments = segs(src);
+        var segments = segdefs(src);
         var count = (int)segments.Count;
         Span<char> buffer = stackalloc char[src.PatternLength];
         var j=0u;

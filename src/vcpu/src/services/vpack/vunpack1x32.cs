@@ -18,7 +18,7 @@ partial struct vpack
     {
         var a = vbroadcast(w256, src);
         var b = vbroadcast(w256, Msb32x8x7);
-        return v8u(vcpu.vand(a,b));
+        return v8u(vand(a,b));
     }
 
     /// <summary>

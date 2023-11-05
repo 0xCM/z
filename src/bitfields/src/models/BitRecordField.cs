@@ -15,7 +15,7 @@ public readonly struct BitRecordField
     /// <summary>
     /// The symbolic field representation
     /// </summary>
-    public readonly asci16 Symbols;
+    public readonly asci16 Expr;
 
     /// <summary>
     /// The 0-based, record-relative field position/index
@@ -30,16 +30,22 @@ public readonly struct BitRecordField
     /// <summary>
     /// The number of semantic bits required by the field
     /// </summary>
-    public readonly byte ContentWidth;
+    public readonly byte PackedWidth;
 
     [MethodImpl(Inline)]
-    public BitRecordField(asci16 name, asci16 symbols, byte index, uint offset, byte width)
+    public BitRecordField(asci16 name, asci16 expr, byte index, uint offset, byte width)
     {
         Name = name;
-        Symbols = symbols;
+        Expr = expr;
         FieldIndex = index;
         FieldOffset = offset;
-        ContentWidth = width;
+        PackedWidth = width;
+    }
+
+    public BfInterval Interval
+    {
+        [MethodImpl(Inline)]
+        get => new(FieldOffset,PackedWidth);
     }
 
     /// <summary>
@@ -48,6 +54,6 @@ public readonly struct BitRecordField
     public uint LastBit
     {
         [MethodImpl(Inline)]
-        get => FieldOffset + ContentWidth;
+        get => FieldOffset + PackedWidth;
     }
 }

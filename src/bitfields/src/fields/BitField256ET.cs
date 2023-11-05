@@ -24,7 +24,7 @@ namespace Z0
         public T this[E index]
         {
             [MethodImpl(Inline)]
-            get => api.seg(this, index);
+            get => api.extract(this, index);
             [MethodImpl(Inline)]
             set => api.store(value, index, ref this);
         }
@@ -39,7 +39,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public T Extract(E index)
-            => api.seg(this, index);
+            => api.extract(this, index);
 
         [MethodImpl(Inline)]
         public void Store(T src, E index)

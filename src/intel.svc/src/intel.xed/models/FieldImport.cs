@@ -12,7 +12,7 @@ partial class XedModels
     [Record(TableId), StructLayout(LayoutKind.Sequential, Pack=1)]
     public struct FieldImport : IComparable<FieldImport>
     {
-        const string TableId = "xed.fields";
+        const string TableId = "xed.fields.imports";
 
         [Render(32)]
         public asci32 Name;

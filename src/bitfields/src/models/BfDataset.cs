@@ -78,10 +78,10 @@ public class BfDataset : IBfDataset
         FieldCount = widths.Count;
         _Indices = indices;
         _Widths = widths;
-        _Offsets = api.offsets(widths);
-        _Intervals = PolyBits.intervals(_Offsets, widths);
+        _Offsets = Bitfields.offsets(widths);
+        _Intervals = Bitfields.intervals(_Offsets, widths);
         Size = new (_Intervals.Width, size.Width);
-        _Masks = api.masks(this);
+        _Masks = Bitfields.masks(this);
         BitstringPattern = pattern(widths, Chars.Space);
     }
 

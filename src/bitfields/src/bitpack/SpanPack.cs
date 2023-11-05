@@ -94,7 +94,6 @@ public class SpanPack
     public static void unpack16x1(ushort src, Span<bit> dst)
         => unpack16x1(src, recover<bit,byte>(dst));
 
-
     /// <summary>
     /// Partitions a the source into 2 segments, each of effective width of 4
     /// </summary>
@@ -515,7 +514,6 @@ public class SpanPack
     public static uint unpack1x8x16(ushort src, Span<byte> dst)
         => BitPack.unpack1x8x16(src, ref first64u(dst));
 
-
     /// <summary>
     /// Distributes 64 packed source bit to the least significant bit of 64 corresponding target bytes
     /// </summary>
@@ -523,7 +521,7 @@ public class SpanPack
     /// <param name="dst">The bit target</param>
     [MethodImpl(Inline), Unpack]
     public static void unpack1x64x8(ulong src, Span<byte> dst)
-        =>BitPack.unpack1x64(src, ref first64u(dst));
+        => BitPack.unpack1x64(src, ref first64u(dst));
 
     /// <summary>
     /// Distributes 64 packed source bits to 64 corresponding target bits

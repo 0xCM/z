@@ -76,6 +76,12 @@ partial class XedRules
             get => ref Indexed[i];
         }
 
+        public ReadOnlySpan<FieldDef> View
+        {
+            [MethodImpl(Inline)]
+            get => Indexed.View;
+        }        
+
         [MethodImpl(Inline)]
         public static implicit operator Index<FieldDef> (FieldDefs src)
             => src.Indexed.Storage;

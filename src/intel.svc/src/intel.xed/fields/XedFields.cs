@@ -50,7 +50,7 @@ public partial class XedFields
     public static ref readonly RoundingKind rounding(in XedFieldState src)
         => ref @as<RoundingKind>(src.ROUNDC);
 
-   [MethodImpl(Inline), Op]
+    [MethodImpl(Inline), Op]
     public static ref readonly AsmVL vl(in XedFieldState src)
         => ref @as<AsmVL>(src.VL);
 

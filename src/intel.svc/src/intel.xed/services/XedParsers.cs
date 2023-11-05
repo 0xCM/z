@@ -112,6 +112,9 @@ public partial class XedParsers
     public static bool parse(string src, out AsmVL dst)
         => AsmVLParser.Parse(src, out dst);
 
+    public static bool parse(string src, out num2 dst)
+        => num2.parse(src, out dst);
+
     public static bool parse(string src, out num3 dst)
         => num3.parse(src, out dst);
 

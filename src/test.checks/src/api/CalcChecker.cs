@@ -44,7 +44,7 @@ partial class ApiOps : Checker<ApiOps>
     void EmitBitMasks()
     {
         var dst = AppDb.AppData(ApiAtomic.logs).Path("bitmasks", FileKind.Csv);
-        var src = BitMask.masks(typeof(BitMaskLiterals));
+        var src = Bitfields.masks(typeof(BitMaskLiterals));
         var formatter = CsvTables.formatter<BitMaskInfo>();
         for(var i=0; i<src.Count; i++)
         {

@@ -18,10 +18,6 @@ public interface IBitPattern
     /// </summary>
     BpExpr Pattern {get;}
 
-    /// <summary>
-    /// The name of the pattern source
-    /// </summary>
-    BfOrigin Origin {get;}
 
     DataSize Size
         => api.size(Pattern);
@@ -29,11 +25,11 @@ public interface IBitPattern
     NativeSize PackedSize()
         => api.packedsize(Pattern);
 
-    Seq<BfSegModel> Segments()
-        => api.segs(Pattern);
+    Seq<BfSegDef> Segments()
+        => api.segdefs(Pattern);
 
-    BfModel Model()
-        => api.model(Name, Pattern, Origin);
+    BfDef Model()
+        => api.bitfield(Name, Pattern);
 
     Seq<byte> SegWidths()
         => api.segwidths(Pattern);
@@ -70,9 +66,4 @@ public interface IBitPattern<P> : IBitPattern
     string IBitPattern.Name
         => typeof(P).Name;
 
-    new BfOrigin<P> Origin
-        => default(P);
-
-    BfOrigin IBitPattern.Origin
-        => Origin;
 }

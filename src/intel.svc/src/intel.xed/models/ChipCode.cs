@@ -8,7 +8,7 @@ namespace Z0;
 partial class XedModels
 {
     // D:\env\sdks\intel\xed\kit\include\xed\xed-chip-enum.h
-    [SymSource(xed), DataWidth(8)]
+    [SymSource(xed), DataWidth(7)]
     public enum ChipCode : byte
     {
         INVALID,

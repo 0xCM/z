@@ -11,30 +11,30 @@ namespace Z0
         where T : unmanaged
         where K : unmanaged
     {
-        readonly BfModel<K> Model;
+        readonly BfDef<K> Model;
 
         public T State;
 
         [MethodImpl(Inline)]
-        public Bitfield(BfModel<K> model, T state)
+        public Bitfield(BfDef<K> model, T state)
         {
             State = state;
             Model = model;
         }
 
-        public ReadOnlySpan<BfSegModel<K>> SegSpecs
+        public ReadOnlySpan<BfSegDef<K>> SegSpecs
         {
             [MethodImpl(Inline)]
             get => Model.Segments;
         }
 
         [MethodImpl(Inline)]
-        public ref readonly BfSegModel<K> SegSpec(byte field)
+        public ref readonly BfSegDef<K> SegSpec(byte field)
             => ref Model[field];
 
         [MethodImpl(Inline)]
         public T Extract(byte field)
-            => api.seg(this, field);
+            => api.extract(this, field);
 
         [MethodImpl(Inline)]
         public Bitfield<T,K> Store(byte field, T src)

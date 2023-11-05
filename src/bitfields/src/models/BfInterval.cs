@@ -31,7 +31,7 @@ public readonly record struct BfInterval : IComparable<BfInterval>
     public BfSegExpr Expr
     {
         [MethodImpl(Inline)]
-        get => api.expr(this);
+        get => Bitfields.expr(this);
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ public readonly record struct BfInterval : IComparable<BfInterval>
     public readonly byte MaxPos
     {
         [MethodImpl(Inline)]
-        get => (byte)api.endpos(Offset,Width);
+        get => (byte)Bitfields.endpos(Offset,Width);
     }
 
     public Hash32 Hash

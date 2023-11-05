@@ -7,7 +7,7 @@ namespace Z0;
 
 partial class XedModels
 {
-    [SymSource(xed)]
+    [SymSource(xed), DataWidth(num3.Width)]
     public enum EOSZ : byte
     {
         [Symbol("8", "EOSZ=0")]

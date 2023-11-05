@@ -23,15 +23,6 @@ public class BpCalcs
     }
 
     /// <summary>
-    /// The pattern source
-    /// </summary>
-    public ref readonly BfOrigin Origin
-    {
-        [MethodImpl(Inline)]
-        get => ref Def.Origin;
-    }
-
-    /// <summary>
     /// The pattern specification
     /// </summary>
     public ref readonly BpExpr Pattern
@@ -69,12 +60,12 @@ public class BpCalcs
     /// The segments in the field
     /// </summary>
     [MethodImpl(Inline)]
-    public Seq<BfSegModel> Segments()
-        => api.segs(Pattern);
+    public Seq<BfSegDef> Segments()
+        => api.segdefs(Pattern);
 
     [MethodImpl(Inline)]
-    public BfModel Model()
-        => api.model(Name, Pattern, Origin);
+    public BfDef Model()
+        => api.bitfield(Name, Pattern);
 
     [MethodImpl(Inline)]
     public Seq<byte> SegWidths()

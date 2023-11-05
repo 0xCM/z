@@ -9,10 +9,6 @@ public readonly record struct BitSegType
     readonly uint Data;
 
     [MethodImpl(Inline)]
-    public static BitSegType define(NativeClass @class, ushort total, ushort cell)
-        => new (@class, total, cell == 0 ? (ushort)1 : cell);
-
-    [MethodImpl(Inline)]
     internal BitSegType(NativeClass @class, ushort total, ushort cell)
     {
         var count = ((uint)total)/((uint)cell);

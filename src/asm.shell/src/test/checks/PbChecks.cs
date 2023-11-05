@@ -21,7 +21,7 @@ public class PbChecks : Checker<PbChecks>
     }
 
     static BfDataset<FieldName,Field32> dataset(N1 n)
-        => PolyBits.dataset<FieldName,FieldWidth,Field32>("field32", NativeSizeCode.W32);
+        => Bitfields.dataset<FieldName,FieldWidth,Field32>("field32", NativeSizeCode.W32);
 
     public static Index<Field32> pack(BfDataset<FieldName,Field32> spec, ReadOnlySpan<Field32Source> src, bool pll = true)
     {
@@ -76,15 +76,15 @@ public class PbChecks : Checker<PbChecks>
 
     void Check(N0 n)
     {
-        Render(PolyBits.dataset<Fields3>($"Bf{n}", NativeSizeCode.W32, Widths0));
+        Render(Bitfields.dataset<Fields3>($"Bf{n}", NativeSizeCode.W32, Widths0));
     }
 
     void Check(N1 n)
     {
         var bf = dataset(n);
-        var formatter = CsvTables.formatter<BfSegModel>();
-        var segs = PolyBits.segs(bf);
-        Channel.TableEmit(segs, AppDb.DbTargets("pb").PrefixedTable<BfSegModel>($"{bf.Name}"));
+        var formatter = CsvTables.formatter<BfSegDef>();
+        var segs = Bitfields.segdefs(bf);
+        Channel.TableEmit(segs, AppDb.DbTargets("pb").PrefixedTable<BfSegDef>($"{bf.Name}"));
         var intervals = bf.Intervals;
         Write(formatter.FormatHeader());
         iter(segs, seg => Write(formatter.Format(seg)));

@@ -12,16 +12,12 @@ public readonly partial struct BitRecords
     const NumericKind Closure = UnsignedInts;
 
     [MethodImpl(Inline), Op]
-    public static BitRecordField field(asci16 name, asci16 symbols, byte index, uint offset, byte width)
-        => new (name, symbols, index, offset, width);
+    public static BitRecordField field(asci16 name, asci16 expr, byte index, uint offset, byte width)
+        => new (name, expr, index, offset, width);
 
     [MethodImpl(Inline), Op]
-    public static BitRecordSchema schema(asci16 name, BitRecordField[] fields)
-        => new (asci16.Null, name, fields);
-
-    [MethodImpl(Inline), Op]
-    public static BitRecordSchema schema(asci16 scope, asci16 name, BitRecordField[] fields)
-        => new (scope, name, fields);
+    public static BitRecordDef record(asci16 name, BitRecordField[] fields)
+        => new (name, fields);
 
     [MethodImpl(Inline), Op]
     public static uint serialize(in BitRecordField src, Span<byte> dst)

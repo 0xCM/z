@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static sys;
-
 partial struct BitPatterns
 {
     public static string symbolic<P>(P src)

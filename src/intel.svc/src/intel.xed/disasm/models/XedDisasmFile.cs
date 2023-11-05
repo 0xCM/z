@@ -39,7 +39,7 @@ public readonly record struct XedDisasmFile : IComparable<XedDisasmFile>
         get => ref Blocks[i];
     }
 
-    public StateIndex ParseStates()
+    public FieldStateIndex ParseStates()
         => states(this);
 
     public int CompareTo(XedDisasmFile src)

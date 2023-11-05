@@ -7,7 +7,7 @@ namespace Z0;
 
 partial class XedModels
 {
-    [SymSource(xed)]
+    [SymSource(xed), DataWidth(7)]
     public enum DispWidth : byte
     {
         [Symbol("0")]

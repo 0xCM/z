@@ -55,6 +55,8 @@ public partial class XedTables : AppService<XedTables>
         ChipInstructions,
 
         FieldImports,
+
+        FieldsReflected,
         
         FieldDeps,
 
@@ -75,6 +77,9 @@ public partial class XedTables : AppService<XedTables>
         Broadcasts,
     }
 
+    public static ReadOnlySeq<FieldDef> FieldsReflected()
+        => data(DatasetName.FieldsReflected, () => FieldDefs.Instance.Indexed.Storage.ToSeq());
+        
     public static ReadOnlySeq<InstDef> EncInstDefs()
         => data(DatasetName.EncInstDefs, () => XedInstDefParser.parse(XedPaths.EncInstDef()));
 
@@ -507,7 +512,6 @@ public partial class XedTables : AppService<XedTables>
         [MethodImpl(Inline)]
         get => Bytes.sequential<bit>(0, 1);
     }
-
 
     static ReadOnlySeq<InstPattern> CalcInstPatterns(ReadOnlySeq<InstDef> defs)
     {

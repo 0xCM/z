@@ -54,18 +54,18 @@ public readonly struct BfIntervals
     }
 
     public string Format()
-        => PolyBits.format(View);
+        => Bitfields.format(View);
 
     public override string ToString()
         => Format();
 
     [MethodImpl(Inline)]
     public static implicit operator BfIntervals(BfInterval[] src)
-        => new BfIntervals(src);
+        => new (src);
 
     [MethodImpl(Inline)]
     public static implicit operator BfIntervals(Index<BfInterval> src)
-        => new BfIntervals(src.Storage);
+        => new (src.Storage);
 
     [MethodImpl(Inline)]
     public static implicit operator BfInterval[](BfIntervals src)

@@ -13,12 +13,6 @@ public readonly record struct BpDef<P> : IBitPattern<P>
     const string TableId = "bits.patterns.defs";
 
     /// <summary>
-    /// The name of the pattern source
-    /// </summary>
-    [Render(32)]
-    public readonly BfOrigin<P> Origin;
-
-    /// <summary>
     /// The pattern name
     /// </summary>
     [Render(32)]
@@ -31,17 +25,16 @@ public readonly record struct BpDef<P> : IBitPattern<P>
     public readonly BpExpr Pattern;
 
     [MethodImpl(Inline)]
-    public BpDef(string name, in BpExpr pattern, BfOrigin<P> origin)
+    public BpDef(string name, in BpExpr pattern)
     {
         Name = name;
         Pattern = pattern;
-        Origin = origin;
     }
 
     public BpDef Untyped
     {
         [MethodImpl(Inline)]
-        get => new (Name, Pattern, Origin);
+        get => new (Name, Pattern);
     }
 
     BpCalcs<P> Calcs
@@ -75,8 +68,8 @@ public readonly record struct BpDef<P> : IBitPattern<P>
     /// The segments in the field
     /// </summary>
     [MethodImpl(Inline)]
-    public Seq<BfSegModel> Segments()
-        => api.segs(Pattern);
+    public Seq<BfSegDef> Segments()
+        => api.segdefs(Pattern);
 
     [MethodImpl(Inline)]
     public Seq<byte> SegWidths()
@@ -91,8 +84,8 @@ public readonly record struct BpDef<P> : IBitPattern<P>
         => api.describe(Name, Pattern);
 
     [MethodImpl(Inline)]
-    public BfModel Model()
-        => api.model(Name, Pattern, Origin);
+    public BfDef Model()
+        => api.bitfield(Name, Pattern);
 
     [MethodImpl(Inline)]
     public string BitString(ulong value)
@@ -120,9 +113,6 @@ public readonly record struct BpDef<P> : IBitPattern<P>
 
     BpExpr IBitPattern.Pattern
         => Pattern;
-
-    BfOrigin IBitPattern.Origin
-        => Origin;
 
     [MethodImpl(Inline)]
     public static implicit operator BpDef(BpDef<P> src)

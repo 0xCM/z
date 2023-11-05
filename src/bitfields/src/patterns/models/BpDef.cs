@@ -12,12 +12,6 @@ public readonly record struct BpDef : IBitPattern
     const string TableId = "bits.patterns.defs";
 
     /// <summary>
-    /// The name of the pattern source
-    /// </summary>
-    [Render(32)]
-    public readonly BfOrigin Origin;
-
-    /// <summary>
     /// The pattern name
     /// </summary>
     [Render(32)]
@@ -30,11 +24,10 @@ public readonly record struct BpDef : IBitPattern
     public readonly BpExpr Expr;
 
     [MethodImpl(Inline)]
-    public BpDef(string name, BpExpr pattern, BfOrigin origin)
+    public BpDef(string name, BpExpr pattern)
     {
         Name = name;
         Expr = pattern;
-        Origin = origin;
     }
 
     /// <summary>
@@ -62,8 +55,8 @@ public readonly record struct BpDef : IBitPattern
     /// The segments in the field
     /// </summary>
     [MethodImpl(Inline)]
-    public Seq<BfSegModel> Segments()
-        => api.segs(Expr);
+    public Seq<BfSegDef> Segments()
+        => api.segdefs(Expr);
 
     [MethodImpl(Inline)]
     public Seq<byte> SegWidths()
@@ -78,8 +71,8 @@ public readonly record struct BpDef : IBitPattern
         => api.describe(Name, Expr);
 
     [MethodImpl(Inline)]
-    public BfModel Model()
-        => api.model(Name, Expr, Origin);
+    public BfDef Model()
+        => api.bitfield(Name, Expr);
 
     [MethodImpl(Inline)]
     public string BitString(ulong value)
@@ -107,7 +100,4 @@ public readonly record struct BpDef : IBitPattern
 
     BpExpr IBitPattern.Pattern
         => Expr;
-
-    BfOrigin IBitPattern.Origin
-        => Origin;
 }

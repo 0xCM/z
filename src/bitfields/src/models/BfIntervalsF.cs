@@ -65,7 +65,7 @@ public readonly struct BfIntervals<F>
     }
 
     public string Format()
-        => PolyBits.format(View);
+        => Bitfields.format(View);
 
     public override string ToString()
         => Format();

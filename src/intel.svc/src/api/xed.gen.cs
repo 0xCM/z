@@ -23,4 +23,9 @@ partial class XedCmd
         Channel.FileEmit(dst.Emit(), FS.path("D:/env/dev/z0/src/intel.svc/src/intel.xed/gen/XedMachine.cs"));
     }
 
+    void GenFieldBits()
+    {
+        var fields = XedTables.FieldsReflected();
+
+    }
 }

@@ -7,18 +7,18 @@ namespace Z0;
 partial struct BitPatterns
 {
     public static string descriptor(BpExpr src)
-        => text.intersperse(segs(src).Select(x => x.Format()).Storage, Chars.Space);
+        => text.intersperse(segdefs(src).Select(x => x.Format()).Storage, Chars.Space);
 
     public static BpInfo describe(string name, params string[] segs)
         => describe(name, new BpExpr(text.join(Chars.Space,segs.Reverse())));
 
     public static BpInfo describe(string name, BpExpr pattern)
         => new BpInfo(
-            def(name, pattern),
+            BitPatterns.pattern(name, pattern),
             bitwidth(pattern),
             datatype(pattern),
             packedsize(pattern),
-            segs(pattern),
+            segdefs(pattern),
             descriptor(pattern)
         );
 }

@@ -8,7 +8,6 @@ using static vcpu;
 
 partial struct vpack
 {
-
     /// <summary>
     /// __m128i _mm_cvtepu8_epi16 (__m128i a)
     /// PMOVZXBW xmm, xmm/m64

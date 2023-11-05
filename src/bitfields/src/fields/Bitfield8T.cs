@@ -58,7 +58,7 @@ public struct Bitfield8<T>
 
     [MethodImpl(Inline)]
     public readonly T Extract(byte min, byte max)
-        => api.seg(this, min, max);
+        => api.extract(this, min, max);
 
     [MethodImpl(Inline)]
     public void Store(T src, byte min, byte max)

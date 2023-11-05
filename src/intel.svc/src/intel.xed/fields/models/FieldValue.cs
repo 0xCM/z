@@ -134,6 +134,22 @@ partial class XedRules
         }
 
         [MethodImpl(Inline)]
+        public FieldValue(FieldKind kind, EASZ data)
+        {
+            Field = kind;
+            Data = (ushort)data;
+            CellKind = 0;
+        }
+
+        [MethodImpl(Inline)]
+        public FieldValue(FieldKind kind, EOSZ data)
+        {
+            Field = kind;
+            Data = (ushort)data;
+            CellKind = 0;
+        }
+
+        [MethodImpl(Inline)]
         public FieldValue(FieldKind kind, ChipCode data)
         {
             Field = kind;

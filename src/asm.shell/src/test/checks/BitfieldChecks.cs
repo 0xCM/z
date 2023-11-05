@@ -53,7 +53,7 @@ public class BitfieldChecks : Checker<BitfieldChecks>
 
     public static ByteSpanSpec GenBits(W8 w, byte start = 0, byte end = byte.MaxValue)
     {
-        var blocks = PolyBits.BitBlocks(w,start, end);
+        var blocks = PolyBits.blocks(w,start, end);
         var count = blocks.Count;
         var buffer = alloc<ByteSpanSpec>(count);
         for(var i=0; i<count; i++)
@@ -83,15 +83,15 @@ public class BitfieldChecks : Checker<BitfieldChecks>
     public void Run(IEventTarget log)
     {
         var segs = array(
-            PolyBits.seg(BF_A.Seg0, 0, 1, Bitfields.mask(Bitfields.segwidth(0,1), 0)),
-            PolyBits.seg(BF_A.Seg1, 2, 2, Bitfields.mask(Bitfields.segwidth(2,2), 2)),
-            PolyBits.seg(BF_A.Seg2, 3, 5, Bitfields.mask(Bitfields.segwidth(3,5), 3)),
-            PolyBits.seg(BF_A.Seg3, 6, 8, Bitfields.mask(Bitfields.segwidth(6,8), 6))
+            Bitfields.segdef(BF_A.Seg0, 0, 1, Bitfields.mask(Bitfields.segwidth(0,1), 0)),
+            Bitfields.segdef(BF_A.Seg1, 2, 2, Bitfields.mask(Bitfields.segwidth(2,2), 2)),
+            Bitfields.segdef(BF_A.Seg2, 3, 5, Bitfields.mask(Bitfields.segwidth(3,5), 3)),
+            Bitfields.segdef(BF_A.Seg3, 6, 8, Bitfields.mask(Bitfields.segwidth(6,8), 6))
             );
 
         var emitter = text.emitter();
         var s0 = (byte)0b01_11_10_11;
-        var field = Bitfields.create(PolyBits.origin(typeof(BF_A)), "test",segs,s0);
+        var field = Bitfields.create("test",segs,s0);
         var specs = field.SegSpecs;
         var count = specs.Length;
         emitter.Append("[");

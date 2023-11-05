@@ -38,10 +38,10 @@ public class BfDataset<F> : IBfDataset<F>
         _Fields = fields;
         _Indices = indices;
         _Widths = widths;
-        _Offsets = api.offsets(widths);
-        _Int = api.intervals(this);
+        _Offsets = Bitfields.offsets(widths);
+        _Int = Bitfields.intervals(this);
         Size = new (_Int.Width, size.Width);
-        _Masks = api.masks(this);
+        _Masks = Bitfields.masks(this);
         BitstringPattern = BfDataset.pattern(widths, Chars.Space);
         _UTInt = _Int.Untype();
     }
@@ -120,5 +120,5 @@ public class BfDataset<F> : IBfDataset<F>
     public T Extract<S,T>(F field, S src)
         where T : unmanaged
         where S : unmanaged
-            => BitPatterns.extract<F,S,T>(this, field, src);
+            => Bitfields.extract<F,S,T>(this, field, src);
 }
