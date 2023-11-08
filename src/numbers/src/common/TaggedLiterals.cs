@@ -25,7 +25,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static LiteralInfo describe(string Name, object Data, string Text, TypeCode TypeCode, bool IsEnum, bool MultiLiteral)
-            => new LiteralInfo(Name,Data, Text, TypeCode, IsEnum, MultiLiteral);
+            => new (Name,Data, Text, TypeCode, IsEnum, MultiLiteral);
 
         /// <summary>
         /// Describes a literal field tagged with a <see cref='MultiLiteralAttribute'/> along with text that ought to be the render resule of the described literal

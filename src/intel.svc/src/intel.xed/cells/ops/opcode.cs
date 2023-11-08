@@ -21,9 +21,9 @@ partial class XedCells
         {
             ref readonly var part = ref src[i];
             if(part.IsExpr && part.Field == FieldKind.VEXVALID)
-                vc = (VexValid)part.ToCellExpr().Value;
+                vc = (VexValid)part.AsCellExpr().Value;
             if(part.IsExpr && part.Field == FieldKind.MAP)
-                number = part.ToCellExpr().Value.ToByte();
+                number = part.AsCellExpr().Value.ToByte();
         }
 
         switch(vc)

@@ -19,7 +19,7 @@ partial class XedCells
             ref readonly var field = ref src[i];
             if(field.Field == FieldKind.LOCK)
             {
-                result = field.ToCellExpr().Value;
+                result = field.AsCellExpr().Value;
                 break;
             }
         }

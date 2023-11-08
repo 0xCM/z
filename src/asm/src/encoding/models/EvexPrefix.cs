@@ -61,13 +61,12 @@ public readonly record struct EvexPrefix : IBitPattern<EvexPrefix>
     public readonly num3 mmm => p0.mmm;
 
     /// <summary>
-    /// Evex.R': High-16 register specifier modifier; This bit is stored in inverted format.
+    /// Evex.R': Combine with EVEX.R and ModR/M.reg; This bit is stored in inverted format
     /// </summary>
-    public readonly bit Rp=> p0.q;
+    public readonly bit Rp=> p0.Rp;
 
     /// <summary>
-    /// EVEX.RXB: Next-8 register specifier modifier; Combine with ModR/M.reg, ModR/M.rm (base, index/vidx).
-    /// This field is encoded in bit inverted format.
+    /// EVEX.RXB: Next-8 register specifier modifier; Combine with ModR/M.reg, ModR/M.rm (base, index/vidx). This field is encoded in bit inverted format.
     /// </summary>
     public readonly num3 RXB => p0.RXB;
 
@@ -94,12 +93,12 @@ public readonly record struct EvexPrefix : IBitPattern<EvexPrefix>
     /// <summary>
     /// EVEX.V': High-16 VVVV/VIDX register specifier; Combine with EVEX.vvvv or when VSIB present. This bit is stored in inverted format.
     /// </summary>
-    public readonly bit Vp  => p2.f;   
+    public readonly bit Vp  => p2.Vp;   
 
     /// <summary>
     /// EVEX.b: Broadcast/RC/SAE Context
     /// </summary>
-    public readonly num1 b  => p2.b;
+    public readonly bit b => p2.b;
 
     /// <summary>
     /// EVEX.L'L Vector length/RC
@@ -114,11 +113,9 @@ public readonly record struct EvexPrefix : IBitPattern<EvexPrefix>
     [StructLayout(LayoutKind.Sequential,Size=1)]
     readonly record struct P0
     {
-        public num3 RXB => ~ num3.number(bits.extract(this,5,7));
+        public num3 RXB => num3.number(bits.extract(this,5,7));
 
-        public bit q => ~bits.test(this,4);
-
-        public bit zero => bits.test(this,3);
+        public bit Rp => bits.test(this,4);
 
         public num3 mmm => num3.number(bits.extract(this, 0,2));
 
@@ -142,9 +139,7 @@ public readonly record struct EvexPrefix : IBitPattern<EvexPrefix>
     {
         public bit W => bits.test(this,7);
 
-        public num4 vvvv => ~num4.number(bits.extract(this,3,6));
-
-        public bit one => bits.test(this,3);
+        public num4 vvvv => num4.number(bits.extract(this,3,6));
 
         public num2 pp => new(bits.extract(this, 0,1));
 
@@ -172,7 +167,7 @@ public readonly record struct EvexPrefix : IBitPattern<EvexPrefix>
 
         public bit b => bits.test(this,4);
 
-        public bit f => ~bits.test(this,3);
+        public bit Vp => bits.test(this,3);
 
         public num3 aaa => bits.extract(this,0,2);
 

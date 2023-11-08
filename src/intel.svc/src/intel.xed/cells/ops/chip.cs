@@ -20,7 +20,7 @@ partial class XedCells
 
             if(f.IsExpr && f.Field == FieldKind.CHIP)
             {
-                dst = f.ToCellExpr().Value;
+                dst = f.AsCellExpr().Value;
                 break;
             }
         }

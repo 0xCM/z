@@ -39,7 +39,7 @@ partial class XedRules
         {
             var dst = RuleOperator.None;
             if(Value.IsExpr)
-                dst = Value.ToCellExpr().Operator;
+                dst = Value.AsCellExpr().Operator;
             else if (Value.IsOperator)
                 dst = Value.AsOperator();
             return dst;
@@ -78,25 +78,37 @@ partial class XedRules
         public bool IsOperator
         {
             [MethodImpl(Inline)]
-            get => Value.IsOperator;
+            get => CellType.IsOperator;
         }
 
         public bool IsNontermCall
         {
             [MethodImpl(Inline)]
-            get => Value.IsNontermCall;
+            get => CellType.IsNontermCall;
         }
 
         public bool IsNontermExpr
         {
             [MethodImpl(Inline)]
-            get => Value.IsNontermExpr;
+            get => CellType.IsNontermExpr;
+        }
+
+        public bit IsEqExpr
+        {
+            [MethodImpl(Inline)]
+            get => CellType.IsEqExpr;
+        }
+
+        public bit IsNeqExpr
+        {
+            [MethodImpl(Inline)]
+            get => CellType.IsNeqExpr;
         }
 
         public bool IsNonterm
         {
             [MethodImpl(Inline)]
-            get => Value.IsNonterm;
+            get => CellType.IsNonterm;
         }
 
         public byte CellIndex

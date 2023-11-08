@@ -31,6 +31,8 @@ public readonly struct AsmBitPatterns
 
     const string VexC5Indicator = "11000101";
 
+    const string EvexIndicator = "01100010";
+
     const string W = "W";
 
     const string R = "R";
@@ -45,8 +47,28 @@ public readonly struct AsmBitPatterns
 
     const string pp = "pp";
 
+    const string mmm = "mmm";
+
+    const string RXB = $"{R}{X}{B}";
+
+    const string aaa = "aaa";
+
+    const string d0 = "0";
+
+    const string d1 = "1";
+
+    const string z = "z";
+
+    const string b = "b";
+
+    const string Vp = "f";
+
+    const string VL = "VL";
+
+    const string Rp = "g";
+
     public static readonly BpInfo Sib = describe(nameof(Asm.Sib),
-        bbb, iii, ss);
+        ss, iii, bbb);
 
     public static readonly BpInfo ModRm = describe(nameof(Asm.ModRm),
        mm, rrr, nnn);
@@ -55,8 +77,21 @@ public readonly struct AsmBitPatterns
         RexIndicator, W, R, X, B);
 
     public static readonly BpInfo VexC4 = describe(nameof(Asm.VexC4),
-        VexC4Indicator, R, X, B, mmmmm, W, vvvv, L, pp);
+        pp, L, vvvv, W,
+        mmmmm, RXB, 
+        VexC4Indicator
+        );
 
     public static readonly BpInfo VexC5 = describe(nameof(Asm.VexC5),
-        VexC5Indicator, R, vvvv, L, pp);
+        pp, L, vvvv, R, 
+        VexC5Indicator
+        );
+
+    public static readonly BpInfo Evex = describe(nameof(Evex),
+        z, VL, b, Vp, aaa,
+        W, vvvv, d1, pp,
+        RXB, Rp, d0, mmm, 
+        EvexIndicator
+        );
+
 }

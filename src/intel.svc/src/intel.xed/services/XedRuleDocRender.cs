@@ -25,9 +25,7 @@ public class XedRuleDocRender
 
     void Render(RuleIdentity sig, Index<RuleCell> src, ITextEmitter dst)
     {
-        dst.AppendLine(TableHeader(sig));
-        dst.AppendLine();
-        dst.AppendLineFormat("{0}(){{", sig.TableName);
+        dst.AppendLineFormat("{0}_{1}(){{", sig.TableName, sig.TableKind);
         var row = z16;
         var count = src.Count;
         for(var i=0; i<count; i++)

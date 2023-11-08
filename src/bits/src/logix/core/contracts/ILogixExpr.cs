@@ -8,7 +8,7 @@ namespace Z0
     /// Characterizes an parametric expression
     /// </summary>
     /// <typeparam name="T">The type over which the expression is defined</typeparam>
-    public interface ILogixExpr<T> : IExprDeprecated
+    public interface ILogixExpr<T> : IExpr
     {
 
     }

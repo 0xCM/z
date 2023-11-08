@@ -19,7 +19,7 @@ partial class XedCells
             ref readonly var field = ref src[i];
             if(field.Field == FieldKind.REP)
             {
-                dst = (RepPrefix)field.ToCellExpr().Value;
+                dst = (RepPrefix)field.AsCellExpr().Value;
                 break;
             }
         }

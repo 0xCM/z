@@ -19,8 +19,6 @@ partial class XedRules
 
         public readonly Seq<RuleCell> Cells;
 
-        public readonly RowExpr Expression;
-
         [MethodImpl(Inline)]
         public CellRow(RuleIdentity sig, ushort table, ushort row, RuleCell[] src)
         {
@@ -29,7 +27,6 @@ partial class XedRules
             TableSig = sig;
             Cells = Require.notnull(src);
             CellCount = (uint)src.Length;
-            Expression = Xed.expr(src);
         }
 
         byte AntecedantCount

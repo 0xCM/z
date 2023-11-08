@@ -204,10 +204,6 @@ public partial class Xed : WfSvc<Xed>
     public static CellExpr expr(OperatorKind op, FieldValue value)
         => new (op,value);
 
-    [MethodImpl(Inline), Op]
-    public static RowExpr expr(Index<RuleCell> src)
-        => new (src);
-
     public static XedKit kit()
         => new (AppSettings.Sdks().Scoped("intel/xed"));
 }

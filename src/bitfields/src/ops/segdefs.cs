@@ -21,7 +21,7 @@ partial struct Bitfields
             ref readonly var offset = ref src.Offset(field);
             ref readonly var mask = ref src.Mask(field);
             ref readonly var interval = ref src.Interval(field);
-            seek(dst,i) = Bitfields.segdef(field, offset, offset + width -1, mask);
+            seek(dst,i) = segdef(field, (byte)offset, (byte)(offset + width -1), mask);
         }
         return dst;
     }    

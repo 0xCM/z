@@ -55,16 +55,16 @@ partial struct AsmRegs
         => r;
 
     [MethodImpl(Inline), Op]
-    public static xmm xmm(I r)
-        => r;
+    public static xmm xmm(RegIndex r)
+        => r.Code;
 
     [MethodImpl(Inline), Op]
-    public static ymm ymm(I r)
-        => r;
+    public static ymm ymm(RegIndex r)
+        => r.Code;
 
     [MethodImpl(Inline), Op]
-    public static zmm zmm(I r)
-        => r;
+    public static zmm zmm(RegIndex r)
+        => r.Code;
 
     [MethodImpl(Inline), Op]
     public static rSeg seg(I r)

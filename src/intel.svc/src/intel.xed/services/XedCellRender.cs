@@ -18,6 +18,19 @@ using CK = XedRules.RuleCellKind;
 
 public readonly partial struct XedCellRender
 {
+    public static void render(ReadOnlySeq<RuleCell> src, ITextEmitter dst)
+    {
+        var count = src.Count;
+        for(var i=0; i<count; i++)
+        {
+            ref readonly var cell = ref src[i];
+            if(i != 0)
+                dst.Append(Chars.Space);
+            if(i == count - 1 && cell.IsOperator)
+                break;
+            dst.Append(XedRender.format(cell.Value));
+        }
+    }
     public static void render(RowExpr src, ITextEmitter dst)
     {
         var count = src.Cells.Count;

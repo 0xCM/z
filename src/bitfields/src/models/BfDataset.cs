@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using api = PolyBits;
-
 public class BfDataset : IBfDataset
 {
     /// <summary>

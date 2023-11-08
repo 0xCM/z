@@ -15,31 +15,17 @@ partial struct BitPatterns
         var dst = alloc<BfSegDef>(count);
         var offset = z8;
         var size = packedsize(src);
-        if(size.Width <= 8)
+        for(var i=count-1; i>=0; i--)
         {
-            for(var i=count-1; i>=0; i--)
-            {
-                ref readonly var name = ref names[i];
-                var width = (byte)name.Length;
-                var min = offset;
-                var max = (byte)(width + offset - 1);
-                seek(dst,i) = Bitfields.segdef(name, min, max, Bitfields.mask(size, min, max));
-                offset += width;
-            }
-        }
-        else
-        {
-            for(var i=0; i<count; i++)
-            {
-                ref readonly var name = ref names[i];
-                var width = (byte)name.Length;
-                var min = offset;
-                var max = (byte)(width + offset - 1);
-                seek(dst,i) = Bitfields.segdef(name, min, max, Bitfields.mask(size, min, max));
-                offset += width;
-            }
+            ref readonly var name = ref names[i];
+            var width = (byte)name.Length;
+            var min = offset;
+            var max = (byte)(width + offset - 1);
+            seek(dst,i) = Bitfields.segdef(name, size, min, max);
+            offset += width;
         }
 
         return dst;
     }
+
 }

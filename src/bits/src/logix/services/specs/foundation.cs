@@ -134,7 +134,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static BinaryLogicOpExpr<T> binary<T>(BinaryBitLogicKind kind, ILogicExpr<T> a, ILogicExpr<T> b)
             where T : unmanaged
-                => new BinaryLogicOpExpr<T>(kind,a,b);
+                => new (kind,a,b);
 
         /// <summary>
         /// Defines a binary logic operator over bit literal operands
@@ -144,7 +144,7 @@ namespace Z0
         /// <param name="b">The second operand</param>
         [MethodImpl(Inline), Op]
         public static BinaryLogicOpExpr binary(BinaryBitLogicKind kind, bit a, bit b)
-            => new BinaryLogicOpExpr(kind,literal(a),literal(b));
+            => new (kind,literal(a),literal(b));
 
         /// <summary>
         /// Defines a binary logic operator over typed literal operands
@@ -155,7 +155,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         static BinaryLogicOpExpr<T> binary<T>(BinaryBitLogicKind kind, bit a, bit b)
             where T : unmanaged
-                => new BinaryLogicOpExpr<T>(kind,literal<T>(a),literal<T>(b));
+                => new (kind,literal<T>(a),literal<T>(b));
 
         /// <summary>
         /// Defines a ternary logic operator over expression operands
@@ -166,7 +166,7 @@ namespace Z0
         /// <param name="c">The third operand</param>
         [MethodImpl(Inline), Op]
         public static TernaryLogicOpExpr ternary(TernaryBitLogicKind kind, ILogicExpr a, ILogicExpr b, ILogicExpr c)
-            => new TernaryLogicOpExpr(kind,a,b,c);
+            => new (kind,a,b,c);
 
         /// <summary>
         /// Defines a ternary logic operator over expression operands
@@ -178,7 +178,7 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static TernaryLogicOpExpr<T> ternary<T>(TernaryBitLogicKind kind, ILogicExpr<T> a, ILogicExpr<T> b, ILogicExpr<T> c)
             where T : unmanaged
-                => new TernaryLogicOpExpr<T>(kind,a,b,c);
+                => new (kind,a,b,c);
 
         /// <summary>
         /// Defines a ternary logic operator over bit literal operands
@@ -189,7 +189,7 @@ namespace Z0
         /// <param name="c">The third operand</param>
         [MethodImpl(Inline), Op]
         public static TernaryLogicOpExpr ternary(TernaryBitLogicKind kind, bit a, bit b, bit c)
-            => new TernaryLogicOpExpr(kind,literal(a),literal(b),literal(c));
+            => new (kind,literal(a),literal(b),literal(c));
 
         /// <summary>
         /// Defines a ternary logic operator over typed literal operands
@@ -201,6 +201,6 @@ namespace Z0
         [MethodImpl(Inline), Op, Closures(Closure)]
         static TernaryLogicOpExpr<T> ternary<T>(TernaryBitLogicKind kind, bit a, bit b, bit c)
             where T : unmanaged
-                => new TernaryLogicOpExpr<T>(kind,literal<T>(a),literal<T>(b),literal<T>(c));
+                => new (kind,literal<T>(a),literal<T>(b),literal<T>(c));
     }
 }

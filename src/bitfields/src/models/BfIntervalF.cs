@@ -18,7 +18,7 @@ public readonly record struct BfInterval<F> : IComparable<BfInterval>
     /// The index of the first bit in the segment
     /// </summary>
     [Render(8)]
-    public readonly uint Offset;
+    public readonly uint MinPos;
 
     /// <summary>
     /// The segment width
@@ -30,7 +30,7 @@ public readonly record struct BfInterval<F> : IComparable<BfInterval>
     public BfInterval(F field, uint offset, byte width)
     {
         Field = field;
-        Offset = offset;
+        MinPos = offset;
         Width = width;
     }
 
@@ -46,16 +46,16 @@ public readonly record struct BfInterval<F> : IComparable<BfInterval>
     public readonly byte MaxPos
     {
         [MethodImpl(Inline)]
-        get => (byte)Bitfields.endpos(Offset,Width);
+        get => (byte)Bitfields.endpos(MinPos,Width);
     }
 
     [MethodImpl(Inline)]
     public BfInterval Untype()
-        => new BfInterval(Offset,Width);
+        => new (MinPos,Width);
 
     [MethodImpl(Inline)]
     public int CompareTo(BfInterval src)
-        => Offset.CompareTo(src.Offset);
+        => MinPos.CompareTo(src.MinPos);
 
     public string Format()
         => Expr.Format();

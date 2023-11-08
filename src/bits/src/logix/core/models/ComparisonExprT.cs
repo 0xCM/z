@@ -41,6 +41,18 @@ namespace Z0
             _Vars = vars;
         }
 
+        public bool IsEmpty
+        {
+            [MethodImpl(Inline)]
+            get => ComparisonKind == 0;
+        }
+
+        public bool IsNonEmpty
+        {
+            [MethodImpl(Inline)]
+            get => ComparisonKind != 0;
+        }
+
         public uint VarCount
         {
             [MethodImpl(Inline)]

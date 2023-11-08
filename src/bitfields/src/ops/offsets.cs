@@ -5,9 +5,6 @@
 namespace Z0;
 
 using static sys;
-using static LimitValues;
-using static TaggedLiterals;
-using static bits;
 
 partial struct Bitfields
 {

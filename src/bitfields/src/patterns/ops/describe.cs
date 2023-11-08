@@ -10,7 +10,7 @@ partial struct BitPatterns
         => text.intersperse(segdefs(src).Select(x => x.Format()).Storage, Chars.Space);
 
     public static BpInfo describe(string name, params string[] segs)
-        => describe(name, new BpExpr(text.join(Chars.Space,segs.Reverse())));
+        => describe(name, new BpExpr(text.join(Chars.Space,segs)));
 
     public static BpInfo describe(string name, BpExpr pattern)
         => new BpInfo(

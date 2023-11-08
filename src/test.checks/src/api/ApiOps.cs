@@ -9,6 +9,7 @@ using static sys;
 using System.Reflection;
 using Masks = BitMaskLiterals;
 
+
 partial class ApiOps : Checker<ApiOps>
 {
     public void Run(string[] args)
@@ -53,6 +54,37 @@ partial class ApiOps : Checker<ApiOps>
             Channel.Write(mask.Text);
         }
         Channel.TableEmit(src,dst,TextEncodingKind.Unicode);
+    }
+
+    public Hex8? FindSelect()
+    {   
+        var control = default(Hex8?);
+        var x = Random.CpuVector<byte>(w128);
+        var y = Random.CpuVector<byte>(w128);
+        var z = Random.CpuVector<byte>(w128);
+        for(var i=0; i<256; i++)
+        {
+            var a = vcpu.vternlog(x,y,z,(byte)i);
+            var b = vcpu.vselect(x,y,z);
+            if(vcpu.vsame(a,b))
+            {
+                control = (Hex8)i;
+            }
+        }
+
+        return control;
+    }
+
+    [CmdOp("vcpu/check/vternlog")]
+    void CheckTernlog()
+    {
+        var control = FindSelect();
+        if(control != null)
+        {
+            Channel.Row($"Select:{control}");            
+        }
+        else
+            Channel.Error($"Select not found");
     }
 
     [CmdOp("grids/check")]

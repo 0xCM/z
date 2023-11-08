@@ -83,10 +83,10 @@ public class BitfieldChecks : Checker<BitfieldChecks>
     public void Run(IEventTarget log)
     {
         var segs = array(
-            Bitfields.segdef(BF_A.Seg0, 0, 1, Bitfields.mask(Bitfields.segwidth(0,1), 0)),
-            Bitfields.segdef(BF_A.Seg1, 2, 2, Bitfields.mask(Bitfields.segwidth(2,2), 2)),
-            Bitfields.segdef(BF_A.Seg2, 3, 5, Bitfields.mask(Bitfields.segwidth(3,5), 3)),
-            Bitfields.segdef(BF_A.Seg3, 6, 8, Bitfields.mask(Bitfields.segwidth(6,8), 6))
+            Bitfields.segdef(BF_A.Seg0, NativeSize.W8, 0, 1),
+            Bitfields.segdef(BF_A.Seg1, NativeSize.W8, 2, 2),
+            Bitfields.segdef(BF_A.Seg2, NativeSize.W8, 3, 5),
+            Bitfields.segdef(BF_A.Seg3, NativeSize.W8, 6, 8)
             );
 
         var emitter = text.emitter();

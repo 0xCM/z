@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0
 {
-
     public sealed class VariableExpr<T> : ILogixVarExpr<T>
         where T : unmanaged
     {

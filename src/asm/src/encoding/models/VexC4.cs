@@ -18,16 +18,12 @@ public record struct VexC4 : IBitPattern<VexC4>
 
     const byte RXB_Max = 7;
 
-    const byte RXB_Width = RXB_Max - RXB_Min + 1;
-
     // ~ M
     const byte MMMMM_Mask = 0b0001_1111;
 
     const byte MMMMM_Min = 0;
 
     const byte MMMMM_Max = 4;
-
-    const byte MMMMM_Width = MMMMM_Max - MMMMM_Min + 1;
 
     // ~ W
 
@@ -37,7 +33,6 @@ public record struct VexC4 : IBitPattern<VexC4>
 
     const byte W_Max = 7;
 
-    const byte W_Width = W_Max - W_Min + 1;
 
     // ~ VVVV
 
@@ -47,8 +42,6 @@ public record struct VexC4 : IBitPattern<VexC4>
 
     const byte VVVV_Max = 6;
 
-    const byte VVVV_Width = VVVV_Max - VVVV_Min + 1;
-
     // ~ L
 
     const byte L_Mask = 0b0000_0100;
@@ -57,8 +50,6 @@ public record struct VexC4 : IBitPattern<VexC4>
 
     const byte L_Max = 2;
 
-    const byte L_Width = L_Max - L_Min + 1;
-
     // ~ PP
 
     const byte PP_Mask = 0b0000_0011;
@@ -66,8 +57,6 @@ public record struct VexC4 : IBitPattern<VexC4>
     const byte PP_Min = 0;
 
     const byte PP_Max = 1;
-
-    const byte PP_Width = PP_Max - PP_Min + 1;
 
     [MethodImpl(Inline)]
     public static VexC4 init()
@@ -163,8 +152,6 @@ public record struct VexC4 : IBitPattern<VexC4>
         set => B2 =  math.or(bits.scatter((byte)value, PP_Mask), math.and(B2, math.not(PP_Mask)));
     }
 
-    const string SemanticFormat = "{0}\n{1}\n{2}";
-
     public VexPrefixKind Kind
     {
         [MethodImpl(Inline)]
@@ -211,9 +198,6 @@ public record struct VexC4 : IBitPattern<VexC4>
         var content = slice(dst,0,i);
         return new string(content);
     }
-
-    public string FormatSemantic()
-        => string.Format(SemanticFormat, Format(), AsmBitPatterns.VexC4, Bitstring());
 
     public string Format()
     {

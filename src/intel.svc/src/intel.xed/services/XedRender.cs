@@ -691,7 +691,7 @@ public class XedRender
     static string expr(in CellValue src)
     {
         Require.invariant(src.IsExpr);
-        return format(src.ToCellExpr());
+        return format(src.AsCellExpr());
     }
 
     public static string format(in CellValue src)

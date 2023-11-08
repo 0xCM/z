@@ -190,6 +190,7 @@ public partial class XedMachines
         dst.IndentLine(indent, Chars.RBrace);
 
     }
+
     static string ActionName(in CellTable src)
         => string.Format("{0}_{1}", src.Name, src.Kind);
 
@@ -202,11 +203,10 @@ public partial class XedMachines
         for(var i=0; i<table.RowCount; i++)
         {
             ref readonly var row = ref table[i];
-
-            dst.Indent(indent,"// ");
             var antecedants = row.Antecedants();
             var consequents = row.Consequents();
 
+            dst.Indent(indent,"// ");
             for(var j=0; j<antecedants.Length; j++)
             {
                 if(j != 0)

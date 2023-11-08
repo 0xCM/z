@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using api = PolyBits;
-
 [StructLayout(LayoutKind.Sequential,Pack=1)]
 public readonly record struct BfInterval : IComparable<BfInterval>
 {
@@ -13,7 +11,7 @@ public readonly record struct BfInterval : IComparable<BfInterval>
     /// The index of the first bit in the segment
     /// </summary>
     [Render(8)]
-    public readonly uint Offset;
+    public readonly uint MinPos;
 
     /// <summary>
     /// The segment width
@@ -24,7 +22,7 @@ public readonly record struct BfInterval : IComparable<BfInterval>
     [MethodImpl(Inline)]
     public BfInterval(uint offset, byte width)
     {
-        Offset = offset;
+        MinPos = offset;
         Width = width;
     }
 
@@ -40,24 +38,24 @@ public readonly record struct BfInterval : IComparable<BfInterval>
     public readonly byte MaxPos
     {
         [MethodImpl(Inline)]
-        get => (byte)Bitfields.endpos(Offset,Width);
+        get => (byte)Bitfields.endpos(MinPos,Width);
     }
 
     public Hash32 Hash
     {
         [MethodImpl(Inline)]
-        get => (uint)Offset  | (uint)Width << 16;
+        get => (uint)MinPos  | (uint)Width << 16;
     }
 
     [MethodImpl(Inline)]
     public int CompareTo(BfInterval src)
-        => Offset.CompareTo(src.Offset);
+        => MinPos.CompareTo(src.MinPos);
 
     public override int GetHashCode()
         => Hash;
 
     public string Format()
-        => Expr.Format();
+        => BitPatterns.format(Expr);
 
     public override string ToString()
         => Format();

@@ -395,7 +395,7 @@ partial class vcpu
         => BlendVariable(x, y, spec);
 
     /// <summary>
-    /// __m512i _mm512_blendv_epu64 (__m512i a, __m512i b, __m512i mask)
+    /// __m512i _mm512_blendv_epi64 (__m512i a, __m512i b, __m512i mask)
     /// VPBLENDMQ zmm1 {k1}, zmm2, zmm3/m512/m64bcst
     /// </summary>
     /// <param name="x"></param>

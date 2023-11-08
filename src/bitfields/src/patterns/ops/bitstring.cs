@@ -8,19 +8,16 @@ using static sys;
 
 partial struct BitPatterns
 {
-    public static string bitstring(BpExpr src, ulong value)
+    public static string bitstring(BpExpr expr, ulong src)
     {
-        var segments = segdefs(src);
-        var count = (int)segments.Count;
-        Span<char> buffer = stackalloc char[src.PatternLength];
+        var segments = segdefs(expr);
+        Span<char> buffer = stackalloc char[expr.PatternLength];
         var j=0u;
-        for(var i=0; i<count; i++)
+        for(var i=0; i<segments.Count; i++)
         {
-            ref readonly var seg = ref segments[i];
-            var bits = math.srl(seg.Mask.Apply(value), (byte)seg.MinPos);
             if(i != 0)
-                seek(buffer, j++) = Chars.Space;
-            BitRender.render((ushort)bits, ref j, seg.Width, buffer);
+                seek(buffer, j++) = Chars.Space;            
+            segbits(segments[i], src, ref j, buffer);
         }
         return new string(buffer);
     }

@@ -20,7 +20,7 @@ partial class XedCells
             ref readonly var f = ref src[i];
             if(f.IsExpr && f.Field == FieldKind.MODE)
             {
-                result = f.ToCellExpr().Value;
+                result = f.AsCellExpr().Value;
                 break;
             }
         }

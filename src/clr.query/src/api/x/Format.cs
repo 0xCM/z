@@ -20,17 +20,6 @@ namespace Z0
         public static string Format(this ApiClassKind src)
             => src == 0 ? "unclassified" : src.ToString().ToLower();
 
-        public static TernaryBitLogicKind Next(this TernaryBitLogicKind src)
-            => src != TernaryBitLogicKind.XFF
-                ? (TernaryBitLogicKind)((uint)(src) + 1u)
-                : TernaryBitLogicKind.X00;
-
-        public static string Format(this TernaryBitLogicKind kind)
-            => kind.ToString();
-
-        public static string Format<T>(this TernaryBitLogicKind kind, T arg1, T arg2, T arg3)
-            => $"{kind.Format()}({arg1}, {arg2}, {arg3})";
-
 
        [Op]
        public static string Format(this ApiUriScheme src)

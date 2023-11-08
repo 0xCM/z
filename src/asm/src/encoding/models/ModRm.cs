@@ -4,14 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-
 /// <summary>
 /// ModRM[mod[7:6] | reg[5:3] | r/m[2:0]]
 /// </summary>
 [StructLayout(LayoutKind.Sequential,Size=1)]
 public record struct ModRm : IAsmByte<ModRm>, IBitPattern<ModRm>
 {
-    const string BitPattern = "mm rrr nnn";
 
     const uint mmMask=0b11000000;
     

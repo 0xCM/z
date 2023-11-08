@@ -88,7 +88,8 @@ partial class vcpu
         => UnpackHigh(vperm4x64(x, Perm4L.ACBD), vperm4x64(y, Perm4L.ACBD));
 
     /// <summary>
-    /// __m256i _mm256_unpackhi_epi8 (__m256i a, __m256i b) VPUNPCKHBW ymm, ymm, ymm/m256
+    /// __m256i _mm256_unpackhi_epi8 (__m256i a, __m256i b)
+    /// VPUNPCKHBW ymm, ymm, ymm/m256
     /// </summary>
     /// <param name="x">The left source vector</param>
     /// <param name="y">The right source vector</param>

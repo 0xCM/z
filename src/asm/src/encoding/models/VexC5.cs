@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-//using static AsmPrefixTokens;
 using static sys;
 
 using api = Vex;
@@ -156,9 +155,6 @@ public record struct VexC5 : IBitPattern<VexC5>
 
         return new string(slice(dst,0,i));
     }
-
-    public string FormatSemantic()
-        => string.Format("{0}\n{1}\n{2}", Format(), AsmBitPatterns.VexC5, Bitstring());
 
     public string Format()
     {

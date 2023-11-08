@@ -111,7 +111,7 @@ public class XedInstRender
                     case RuleCellKind.EqExpr:
                     case RuleCellKind.NeqExpr:
                     case RuleCellKind.NtExpr:
-                        seek(dst,k++) = string.Format(Pattern, j, fk, field.ToCellExpr());
+                        seek(dst,k++) = string.Format(Pattern, j, fk, field.AsCellExpr());
                     break;
                     case RuleCellKind.NtCall:
                     {

@@ -4,6 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using static sys;
+using static vcpu;
+
+
 partial class vcpu 
 {
     /// <summary>

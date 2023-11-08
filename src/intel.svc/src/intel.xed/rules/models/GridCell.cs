@@ -20,7 +20,7 @@ partial class XedRules
             }
             else if(src.IsCellExpr)
             {
-                var expr = src.Value.ToCellExpr();
+                var expr = src.Value.AsCellExpr();
                 if(expr.IsNonterm)
                     type = ColType.expr(field, expr.Operator, expr.Value.ToRuleName());
                 else

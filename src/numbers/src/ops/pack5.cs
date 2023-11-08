@@ -14,6 +14,10 @@ partial class Numbers
         => (num5)((uint)a | sll((uint)b, num1.Width));
 
     [MethodImpl(Inline), Op]
+    public static num5 pack(num4 a, bit b)
+        => (num5)((uint)a | sll((uint)b, num1.Width));
+
+    [MethodImpl(Inline), Op]
     public static num5 pack(num2 a, num3 b)
         => (num5)((uint)a | sll((uint)b, num2.Width));
 

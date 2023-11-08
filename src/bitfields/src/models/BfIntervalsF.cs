@@ -11,13 +11,13 @@ public readonly struct BfIntervals<F>
 {
     public readonly uint Width;
 
-    readonly Index<BfInterval<F>> Data;
+    readonly Seq<BfInterval<F>> Data;
 
     [MethodImpl(Inline)]
-    public BfIntervals(BfInterval<F>[] src)
+    public BfIntervals(Seq<BfInterval<F>> src)
     {
         Data = src;
-        Width = src.Select(x => x.Width).Sum();
+        Width = src.Map(x => x.Width).Sum();
     }
 
     public uint Count

@@ -13,7 +13,7 @@ partial class ApiOps
     {
         const uint Prefix = 0x62f27d48u;
 
-        var pattern = Evex.Pattern;
+        var pattern = AsmBitPatterns.Evex;
         var segs =  pattern.Segs;
         var dst = text.emitter();
         var count = segs.Count;

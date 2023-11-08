@@ -187,6 +187,18 @@ partial class XedRules
             get => CellType.IsExpr;
         }
 
+        public bit IsEqExpr
+        {
+            [MethodImpl(Inline)]
+            get => CellType.IsEqExpr;
+        }
+
+        public bit IsNeqExpr
+        {
+            [MethodImpl(Inline)]
+            get => CellType.IsNeqExpr;
+        }
+
         public bit IsOperator
         {
             [MethodImpl(Inline)]
@@ -287,7 +299,7 @@ partial class XedRules
             => @as<Nonterminal>(sys.bytes(Data));
 
         [MethodImpl(Inline)]
-        public CellExpr ToCellExpr()
+        public CellExpr AsCellExpr()
             => new ((OperatorKind)Data[OpIndex], new FieldValue(Field, @as<ulong>(Data.First), CellKind));
 
         [MethodImpl(Inline), UnscopedRef]

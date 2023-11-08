@@ -6,6 +6,26 @@ namespace Z0;
 
 using static CpuBytes;
 
+partial class vcpu
+{
+
+
+    [MethodImpl(Inline)]
+    static Vector256<byte> blendspec(W256 w, W8 n, bool odd)
+        => vcpu.vload<byte>(w,odd ? BlendSpec_Odd_256x8 : BlendSpec_Even_256x8);
+
+    [MethodImpl(Inline)]
+    static Vector256<byte> blendspec(W256 w, W16 n, bool odd)
+        => vcpu.vload<byte>(w,odd ? BlendSpec_Odd_256x16 : BlendSpec_Even_256x16);
+
+    [MethodImpl(Inline)]
+    static Vector256<byte> blendspec(W256 w, W32 n, bool odd)
+        => vcpu.vload<byte>(w,odd ? BlendSpec_Odd_256x32 : BlendSpec_Even_256x32);
+
+    [MethodImpl(Inline)]
+    static Vector256<byte> blendspec(N256 w, N64 n, bool odd)
+        => vcpu.vload<byte>(w, odd ? BlendSpec_Odd_256x64 : BlendSpec_Even_256x64);
+}
 partial struct cpu
 {
     /// <summary>
@@ -20,13 +40,13 @@ partial struct cpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(byte) || typeof(T) == typeof(sbyte))
-            return blend(w, w8, odd);
+            return blendspec(w, w8, odd);
         else if(typeof(T) == typeof(ushort) || typeof(T) == typeof(short))
-            return blend(w, w16, odd);
+            return blendspec(w, w16, odd);
         else if(typeof(T) == typeof(uint) ||typeof(T) == typeof(int))
-            return blend(w, w32, odd);
+            return blendspec(w, w32, odd);
         else if(typeof(T) == typeof(ulong) || typeof(T) == typeof(long))
-            return blend(w, w64, odd);
+            return blendspec(w, w64, odd);
         else
             throw no<T>();
     }
@@ -42,30 +62,30 @@ partial struct cpu
         where N : unmanaged, ITypeNat
     {
         if(typeof(N) == typeof(N8))
-            return blend(w, w8, odd);
+            return blendspec(w, w8, odd);
         else if(typeof(N) == typeof(N16))
-            return blend(w, w16, odd);
+            return blendspec(w, w16, odd);
         else if(typeof(N) == typeof(N32))
-            return blend(w, w32, odd);
+            return blendspec(w, w32, odd);
         else if(typeof(N) == typeof(N64))
-            return blend(w, w64, odd);
+            return blendspec(w, w64, odd);
         else
             throw no<N>();
     }
 
     [MethodImpl(Inline)]
-    static Vector256<byte> blend(W256 w, W8 n, bool odd)
+    static Vector256<byte> blendspec(W256 w, W8 n, bool odd)
         => vcpu.vload<byte>(w,odd ? BlendSpec_Odd_256x8 : BlendSpec_Even_256x8);
 
     [MethodImpl(Inline)]
-    static Vector256<byte> blend(W256 w, W16 n, bool odd)
+    static Vector256<byte> blendspec(W256 w, W16 n, bool odd)
         => vcpu.vload<byte>(w,odd ? BlendSpec_Odd_256x16 : BlendSpec_Even_256x16);
 
     [MethodImpl(Inline)]
-    static Vector256<byte> blend(W256 w, W32 n, bool odd)
+    static Vector256<byte> blendspec(W256 w, W32 n, bool odd)
         => vcpu.vload<byte>(w,odd ? BlendSpec_Odd_256x32 : BlendSpec_Even_256x32);
 
     [MethodImpl(Inline)]
-    static Vector256<byte> blend(N256 w, N64 n, bool odd)
+    static Vector256<byte> blendspec(N256 w, N64 n, bool odd)
         => vcpu.vload<byte>(w, odd ? BlendSpec_Odd_256x64 : BlendSpec_Even_256x64);
 }

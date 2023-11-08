@@ -78,8 +78,38 @@ partial class vcpu
     public static Vector256<ulong> vconcat(Vector128<ulong> lo, Vector128<ulong> hi)
         => Avx2.InsertVector128(Avx2.InsertVector128(default, lo, 0), hi, 1);
 
+
+    /// <summary>
+    /// Creates a 256-bit vector by concatenating two 128-bit source vectors
+    /// </summary>
+    /// <param name="lo">The lower 128-bits of the target vector</param>
+    /// <param name="hi">The upper 128-bits of the target vector</param>
+    [MethodImpl(Inline)]
+    public static Vector256<T> vconcat<T>(Vector128<T> lo, Vector128<T> hi)
+        where T : unmanaged
+            => Vector256.Create(lo,hi);    
+
+    /// <summary>
+    /// Creates a 512-bit vector by concatenating two 256-bit source vectors
+    /// </summary>
+    /// <param name="lo">The lower 128-bits of the target vector</param>
+    /// <param name="hi">The upper 128-bits of the target vector</param>
     [MethodImpl(Inline)]
     public static Vector512<T> vconcat<T>(Vector256<T> lo, Vector256<T> hi)
         where T : unmanaged
             => Vector512.Create(lo,hi);    
+
+    /// <summary>
+    /// Creates a 512-bit vector by concatenating four 128-bit source vectors
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <param name="c"></param>
+    /// <param name="d"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline)]
+    public static Vector512<T> vconcat<T>(Vector128<T> a, Vector128<T> b, Vector128<T> c, Vector128<T> d)
+        where T : unmanaged
+            => vconcat(Vector256.Create(a,b), Vector256.Create(c,d));
 }

@@ -70,6 +70,18 @@ partial class XedRules
             get => Kind == CK.BitLit || Kind == CK.HexLit || IsInt;
         }
 
+        public bit IsEqExpr
+        {
+            [MethodImpl(Inline)]
+            get => Kind == CK.EqExpr;
+        }
+
+        public bit IsNeqExpr
+        {
+            [MethodImpl(Inline)]
+            get => Kind == CK.NeqExpr;
+        }
+
         public bit IsExpr
         {
             [MethodImpl(Inline)]

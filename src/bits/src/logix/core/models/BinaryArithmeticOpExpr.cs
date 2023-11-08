@@ -2,56 +2,55 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+/// <summary>
+/// Defines a typed binary arithmetic operator expression
+/// </summary>
+public readonly struct BinaryArithmeticOpExpr<T> : IBinaryArithmeticOpExpr<T>
+    where T : unmanaged
 {
     /// <summary>
-    /// Defines a typed binary arithmetic operator expression
+    /// The operator kind
     /// </summary>
-    public readonly struct BinaryArithmeticOpExpr<T> : IBinaryArithmeticOpExpr<T>
-        where T : unmanaged
+    public ApiBinaryArithmeticClass ApiClass {get;}
+
+    /// <summary>
+    /// The left operand
+    /// </summary>
+    public ILogixExpr<T> Left {get;}
+
+    /// <summary>
+    /// The right operand
+    /// </summary>
+    public ILogixExpr<T> Right {get;}
+
+    [MethodImpl(Inline)]
+    public BinaryArithmeticOpExpr(ApiBinaryArithmeticClass op, ILogixExpr<T> lhs, ILogixExpr<T> rhs)
     {
-        /// <summary>
-        /// The operator kind
-        /// </summary>
-        public ApiBinaryArithmeticClass ApiClass {get;}
-
-        /// <summary>
-        /// The left operand
-        /// </summary>
-        public ILogixExpr<T> Left {get;}
-
-        /// <summary>
-        /// The right operand
-        /// </summary>
-        public ILogixExpr<T> Right {get;}
-
-        [MethodImpl(Inline)]
-        public BinaryArithmeticOpExpr(ApiBinaryArithmeticClass op, ILogixExpr<T> lhs, ILogixExpr<T> rhs)
-        {
-            ApiClass = op;
-            Left= lhs;
-            Right = rhs;
-        }
-
-        public bool IsEmpty
-        {
-            [MethodImpl(Inline)]
-            get => ApiClass == 0;
-        }
-
-        public bool IsNonEmpty
-        {
-            [MethodImpl(Inline)]
-            get => ApiClass != 0;
-        }
-
-        /// <summary>
-        /// Renders the expression in canonical form
-        /// </summary>
-        public string Format()
-            => ApiClass.Format(Left, Right);
-
-        public override string ToString()
-            => Format();
+        ApiClass = op;
+        Left= lhs;
+        Right = rhs;
     }
+
+    public bool IsEmpty
+    {
+        [MethodImpl(Inline)]
+        get => ApiClass == 0;
+    }
+
+    public bool IsNonEmpty
+    {
+        [MethodImpl(Inline)]
+        get => ApiClass != 0;
+    }
+
+    /// <summary>
+    /// Renders the expression in canonical form
+    /// </summary>
+    public string Format()
+        => ApiClass.Format(Left, Right);
+
+    public override string ToString()
+        => Format();
 }

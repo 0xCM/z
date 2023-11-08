@@ -47,7 +47,7 @@ partial class XedPatterns
             break;
             case RuleCellKind.NeqExpr:
             case RuleCellKind.EqExpr:
-                dst.FieldExpr = src.ToCellExpr();
+                dst.FieldExpr = src.AsCellExpr();
             break;
             case RuleCellKind.HexLit:
                 dst.HexLiteral = src.AsHexLit();

@@ -19,7 +19,7 @@ partial class XedCells
             ref readonly var f = ref src[i];
             if(f.IsExpr && f.Field == FieldKind.REXW)
             {
-                dst = BitIndicator.defined(f.ToCellExpr().Value);
+                dst = BitIndicator.defined(f.AsCellExpr().Value);
                 break;
             }
         }
@@ -35,7 +35,7 @@ partial class XedCells
             ref readonly var f = ref src[i];
             if(f.IsExpr && f.Field == FieldKind.REXR)
             {
-                dst = BitIndicator.defined(f.ToCellExpr().Value);
+                dst = BitIndicator.defined(f.AsCellExpr().Value);
                 break;
             }
         }
@@ -51,7 +51,7 @@ partial class XedCells
             ref readonly var f = ref src[i];
             if(f.IsExpr && f.Field == FieldKind.REXB)
             {
-                dst = BitIndicator.defined(f.ToCellExpr().Value);
+                dst = BitIndicator.defined(f.AsCellExpr().Value);
                 break;
             }
         }
@@ -67,7 +67,7 @@ partial class XedCells
             ref readonly var f = ref src[i];
             if(f.IsExpr && f.Field == FieldKind.REXX)
             {
-                dst = BitIndicator.defined(f.ToCellExpr().Value);
+                dst = BitIndicator.defined(f.AsCellExpr().Value);
                 break;
             }
         }

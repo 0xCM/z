@@ -30,7 +30,7 @@ public readonly record struct BfSegExpr
     public uint MinPos
     {
         [MethodImpl(Inline)]
-        get => SegBits.Offset;
+        get => SegBits.MinPos;
     }
 
     public uint MaxPos

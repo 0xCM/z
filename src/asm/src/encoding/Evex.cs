@@ -8,6 +8,22 @@ using static sys;
 
 public class Evex
 {
+    public static ReadOnlySeq<EvexField> FieldKinds => Kinds;
+
+    [MethodImpl(Inline)]
+    public ref readonly BfInterval<EvexField> field(EvexField index)
+        => ref Intervals[(byte)index];
+
+    readonly static ReadOnlySeq<EvexField> Kinds;
+
+    readonly static BfIntervals<EvexField> Intervals;
+
+    static Evex()
+    {
+        Intervals = Bitfields.intervals<EvexField>();
+        Kinds = Symbols.kinds<EvexField>().ToArray();
+    }
+
     [MethodImpl(Inline)]
     public static bit test(ReadOnlySpan<byte> src)
     {
@@ -22,6 +38,10 @@ public class Evex
         => new (Bytes.join(0x62, b1, b2, b3));
 
     [MethodImpl(Inline)]
+    public static EvexPrefix prefix(AsmHexCode src)
+        => @as<EvexPrefix>(src.Bytes);
+
+    [MethodImpl(Inline)]
     public static EvexPrefix prefix(ReadOnlySpan<byte> src)
     {
         if(src.Length < 4)
@@ -30,44 +50,4 @@ public class Evex
             return @as<EvexPrefix>(src);
     }
 
-    const string vvvv = "vvvv";
-
-    const string mmm = "mmm";
-
-    const string W = "W";
-
-    const string R = "R";
-
-    const string X = "X";
-
-    const string B = "B";
-
-    const string RXB = $"{R}{X}{B}";
-
-    const string pp = "pp";
-
-    const string aaa = "aaa";
-
-    const string q = "q";
-
-    const string d0 = "0";
-
-    const string d1 = "1";
-
-    const string z = "z";
-
-    const string b = "b";
-
-    const string f = "f";
-
-    const string VL = "VL";
-
-    const string EvexIndicator = "01100010";
-
-    public static readonly BpInfo Pattern = BitPatterns.describe(nameof(Evex),
-        EvexIndicator,
-        mmm, d0, q, RXB,
-        W, vvvv, d1, pp, 
-        z,  VL, b, f, aaa 
-        );
 }

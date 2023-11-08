@@ -8,6 +8,27 @@ using static sys;
 
 partial struct Bitfields
 {
+    public static BfIntervals<F> intervals<F>()
+        where F: unmanaged, Enum
+    {
+        var reflected = Symbols.fields<F>().ToSeq();
+        var kinds = Symbols.kinds<F>();
+        var intervals = alloc<BfInterval<F>>(reflected.Count).ToSeq();
+        var offset = 0u;
+        for(var i=0; i<reflected.Count; i++)
+        {
+            ref readonly var f = ref kinds[i];
+            ref readonly var r = ref reflected[i];
+            var attrib = r.GetCustomAttribute<BitfieldAttribute>()!;
+            var i0 = attrib.MinPos;
+            var i1 = attrib.MaxPos;
+            var width = i1 - i0 + 1;
+            intervals[i] = new(f,offset,(byte)width);
+            offset += width;            
+        }
+        return new(intervals);
+    }
+
     [MethodImpl(Inline)]
     public static BfInterval interval(uint offset, byte width)
         => new (offset,width);
