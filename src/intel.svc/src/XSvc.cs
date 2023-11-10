@@ -25,17 +25,10 @@ public static class XSvc
         public IntelSdm IntelSdm(IWfRuntime wf)
             => Service<IntelSdm>(wf);
 
-        public XedDisasm XedDisasm(IWfRuntime wf)
-            => Service<XedDisasm>(wf);
-
-        public XedDisasmAnalyzer DisasmAnalyzer(IWfRuntime wf)
-            => Service<XedDisasmAnalyzer>(wf);
 
         public IntelSdmPaths SdmPaths(IWfRuntime wf)
             => Service<IntelSdmPaths>(wf);
 
-        public XedImport XedImport(IWfRuntime wf)
-            => Service<XedImport>(wf);
     }
 
     static ServiceCache Services => ServiceCache.Instance;
@@ -49,20 +42,11 @@ public static class XSvc
     public static IntelSdm IntelSdm(this IWfRuntime wf)
         => Services.IntelSdm(wf);
 
-    public static XedDisasm XedDisasm(this IWfRuntime wf)
-        => Services.XedDisasm(wf);
-
-    public static XedDisasmAnalyzer DisasmAnalyser(this IWfRuntime wf)
-        => Services.DisasmAnalyzer(wf);
-
     public static IntelSdmPaths SdmPaths(this IWfRuntime wf)
         => Services.SdmPaths(wf);
 
     public static SdeCpuid CpuId(this IWfRuntime wf)
         => Services.CpuId(wf);
-
-    public static XedImport XedImport(this IWfRuntime wf)
-        => Services.XedImport(wf);
 
 }
 

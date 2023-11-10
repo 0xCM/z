@@ -12,7 +12,6 @@
     <ProjectReference Include="../native/z0.native.csproj" />
     <ProjectReference Include="../stitch/z0.stitch.csproj" />
     <ProjectReference Include="../markdown/z0.markdown.csproj" />
-    <ProjectReference Include="../intel.xed/z0.intel.xed.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
