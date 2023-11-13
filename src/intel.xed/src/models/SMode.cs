@@ -13,13 +13,13 @@ partial class XedModels
     [SymSource(xed), DataWidth(num2.Width)]
     public enum SMODE : sbyte
     {
-        [Symbol("smode16", "SMODE=0")]
+        [Symbol("16", "SMODE=0")]
         SMode16 = 0,
 
-        [Symbol("smode32","SMODE=1")]
+        [Symbol("32","SMODE=1")]
         SMode32= 1,
 
-        [Symbol("smode64","SMODE=2")]
+        [Symbol("64","SMODE=2")]
         SMode64 = 2
     }
 }

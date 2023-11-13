@@ -7,34 +7,10 @@ namespace Z0;
 
 using static sys;
 
-using CK = XedRules.RuleCellKind;
-
 partial class XedRules
 {
     public class FieldDefs
     {
-        [MethodImpl(Inline)]
-        public static ref readonly FieldDef field(FieldKind kind)
-            => ref Instance[kind];
-
-        public static DataSize size(FieldKind fk, CK ck)
-        {
-            var dst = field(fk).Size;
-            switch(ck)
-            {
-                case CK.Keyword:
-                    dst = RuleKeyword.DataSize;
-                break;
-                case CK.NtCall:
-                    dst = Nonterminal.DataSize;
-                break;
-                case CK.Operator:
-                    dst = RuleOperator.DataSize;
-                break;
-            }
-            return dst;
-        }
-
         static readonly FieldDefs _Instance = fields();
 
         public static ref readonly FieldDefs Instance => ref _Instance;

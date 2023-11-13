@@ -149,10 +149,10 @@ public partial class XedTables : AppService<XedTables>
     public static InstructionRules Instructions()
         => data(DatasetName.Instructions, () => XedInstBlocks.instructions());
 
-    public static ReadOnlySeq<InstOperand> Operands()
+    public static ReadOnlySeq<InstOpRecord> Operands()
         => Operands(OpDetails(EncInstPatterns(EncInstDefs())));
 
-    public static ReadOnlySeq<InstOperand> Operands(ReadOnlySeq<InstOpDetail> src)
+    public static ReadOnlySeq<InstOpRecord> Operands(ReadOnlySeq<InstOpDetail> src)
         => data(DatasetName.OpRows, () => CalcOpRows(src));
     
     public static ChipInstructions ChipInstructions()
@@ -369,18 +369,6 @@ public partial class XedTables : AppService<XedTables>
         get => Bytes.sequential<num2>(0, num2.MaxValue);
     }
 
-    public static ReadOnlySpan<num2> FIRST_F2F3
-    {
-        [MethodImpl(Inline)]
-        get => Bytes.sequential<num2>(0, num2.MaxValue);
-    }
-
-    public static ReadOnlySpan<num2> LAST_F2F3
-    {
-        [MethodImpl(Inline)]
-        get => Bytes.sequential<num2>(0, num2.MaxValue);
-    }
-
     public static ReadOnlySpan<RuleName> RuleNames
     {
         [MethodImpl(Inline), Op]
@@ -534,10 +522,10 @@ public partial class XedTables : AppService<XedTables>
         return dst.Sort();
     }
 
-    static ReadOnlySeq<InstOperand> CalcOpRows(ReadOnlySeq<InstOpDetail> src)
+    static ReadOnlySeq<InstOpRecord> CalcOpRows(ReadOnlySeq<InstOpDetail> src)
     {
         var count = src.Count;
-        var rows = alloc<InstOperand>(count);
+        var rows = alloc<InstOpRecord>(count);
         for(var i=0; i<count; i++)
         {
             ref readonly var detail = ref src[i];

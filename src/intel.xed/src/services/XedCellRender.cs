@@ -31,6 +31,7 @@ public readonly partial struct XedCellRender
             dst.Append(XedRender.format(cell.Value));
         }
     }
+
     public static void render(RowExpr src, ITextEmitter dst)
     {
         var count = src.Cells.Count;

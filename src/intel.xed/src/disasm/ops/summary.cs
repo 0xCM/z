@@ -39,8 +39,7 @@ partial class XedDisasm
             if(result.Fail)
                 break;
 
-            record.InstructionId = asm.instid(record.DocSeq, record.IP, sys.bytes(record.Encoded));
-            record.EncodingId = record.InstructionId.EncodingId;
+
             record.Asm = expr[i];
             record.Source = src;
             record.Source = record.Source.LineRef(line.LineNumber);

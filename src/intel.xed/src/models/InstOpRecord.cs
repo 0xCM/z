@@ -8,10 +8,10 @@ namespace Z0;
 using static XedRules;
 using static XedModels;
 
-partial class XedTables
+partial class XedModels
 {
     [StructLayout(LayoutKind.Sequential,Pack=1), Record(TableName)]
-    public record struct InstOperand
+    public record struct InstOpRecord
     {
         public const string TableName = "xed.inst.ops";
 
@@ -87,6 +87,6 @@ partial class XedTables
         [Render(1)]
         public asci64 SourceExpr;
 
-        public static InstOperand Empty => default;
+        public static InstOpRecord Empty => default;
     }
 }

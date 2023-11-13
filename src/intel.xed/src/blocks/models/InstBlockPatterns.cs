@@ -44,13 +44,28 @@ partial class XedModels
             get => ref Data[i];
         }
 
-        public IEnumerable<InstBlockPattern> Match(XedInstForm form, MachineMode mode, bool @lock = false)
+        public IEnumerable<InstBlockPattern> Match(XedInstForm form, bool @lock)
+        {
+            var i = z8;
+            while(Lookup.TryGetValue(new PatternKey(form, MachineMode.Mode32x64, @lock, i++), out var pattern))
+            {
+                yield return pattern;
+            }
+            while(Lookup.TryGetValue(new PatternKey(form, MachineMode.Mode64, @lock, i++), out var pattern))
+            {
+                yield return pattern;
+            }
+        }
+
+        public IEnumerable<InstBlockPattern> Match(XedInstForm form)
+            => Data.Where(x => x.Form == form);
+            
+        public IEnumerable<InstBlockPattern> Match(XedInstForm form, MachineMode mode, bool @lock)
         {
             var i = z8;
             while(Lookup.TryGetValue(new PatternKey(form, mode, @lock, i++), out var pattern))
             {
-                if(pattern.Mode != MachineMode.Not64)
-                    yield return pattern;
+                yield return pattern;
             }
         }
 

@@ -13,11 +13,13 @@ public class XedPaths
 {
     public static XedPaths Service => Instance;
 
+    static ref readonly AppSettings Settings => ref AppSettings.Default;
+
     public static IDbArchive XedKit()
-        => IntelPaths.service().XedKit();
+        => Settings.IntelKits().Scoped("xed");
 
     public static IDbArchive XedDb()
-        => IntelPaths.Service.XedDb();
+        => Settings.Setting(SettingNames.XedDb).DbArchive();
 
     public static IDbArchive XedBuild()
         => XedKit().Scoped("build");

@@ -45,8 +45,6 @@ partial class XedDisasm
         var dst = XedDisasmDetailRow.Empty;
         dst.Seq = summary.Seq;
         dst.DocSeq = summary.DocSeq;
-        dst.EncodingId = summary.EncodingId;
-        dst.InstructionId = asm.instid(summary.DocSeq, summary.IP, code.Bytes);
         dst.IP = summary.IP;
         dst.Encoded = summary.Encoded;
         dst.Asm = summary.Asm;

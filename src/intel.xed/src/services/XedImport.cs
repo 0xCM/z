@@ -10,7 +10,6 @@ using System.Linq;
 using static sys;
 using static XedModels;
 using static XedRules;
-using static Markdown;
 
 using T = XedTables;
 
@@ -226,8 +225,8 @@ public partial class XedImport : WfSvc<XedImport>
     void Emit(ReadOnlySeq<XedInstOpCode> src)
         => Channel.TableEmit(src, XedPaths.ImportTable<XedInstOpCode>());
 
-    void Emit(ReadOnlySpan<T.InstOperand> src)
-        => Channel.TableEmit(src, XedPaths.ImportTable<T.InstOperand>());
+    void Emit(ReadOnlySpan<InstOpRecord> src)
+        => Channel.TableEmit(src, XedPaths.ImportTable<InstOpRecord>());
 
     void Emit(ReadOnlySpan<InstOpClass> src)
         => Channel.TableEmit(src, XedPaths.ImportTable<InstOpClass>());

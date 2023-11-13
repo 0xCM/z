@@ -20,12 +20,6 @@ public record struct XedDisasmDetailRow : IComparable<XedDisasmDetailRow>
     [Render(AsmColWidths.DocSeq)]
     public uint DocSeq;
 
-    [Render(AsmColWidths.EncodingId)]
-    public EncodingId EncodingId;
-
-    [Render(AsmColWidths.InstructionId)]
-    public InstructionId InstructionId;
-
     [Render(AsmColWidths.IP)]
     public MemoryAddress IP;
 

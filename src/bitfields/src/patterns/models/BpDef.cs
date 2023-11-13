@@ -81,7 +81,7 @@ public readonly record struct BpDef : IBitPattern
     [MethodImpl(Inline)]
     public string BitString<T>(T value)
         where T : unmanaged
-        => api.bitstring(Expr, value);
+            => api.bitstring(Expr, value);
 
     public void Symbolic(ITextEmitter dst)
         => api.symbolic(this,dst);

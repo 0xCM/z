@@ -19,14 +19,14 @@ partial class XedFields
     {
         var count = fields.Length;
         for(var i=0; i<count; i++)
-            XedFields.update(src[skip(fields,i)], ref dst);
+            update(src[skip(fields,i)], ref dst);
         return ref dst;
     }
 
     public static ref XedFieldState update(ReadOnlySpan<FieldValue> src, ref XedFieldState dst)
     {
         for(var i=0; i<src.Length; i++)
-            XedFields.update(skip(src,i), ref dst);
+            update(skip(src,i), ref dst);
         return ref dst;
     }
 

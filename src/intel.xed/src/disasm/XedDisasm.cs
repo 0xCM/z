@@ -137,8 +137,6 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             var j = 0;
             result = DataParser.parse(skip(cells, j++), out dst.Seq);
             result = DataParser.parse(skip(cells, j++), out dst.DocSeq);
-            result = EncodingId.parse(skip(cells, j++), out dst.EncodingId);
-            result = InstructionId.parse(skip(cells, j++), out dst.InstructionId);
             result = DataParser.parse(skip(cells, j++), out dst.IP);
             result = AsmBytes.parse(skip(cells, j++), out dst.Encoded);
             result = DataParser.parse(skip(cells, j++), out dst.Size);
@@ -174,20 +172,6 @@ public partial class XedDisasm : WfSvc<XedDisasm>
         => Channel.TableEmit(src, dst.Table<XedDisasmRow>());
 
     public const string RenderCol2 = XedFieldRender.Columns;
-
-    static string format(ReadOnlySpan<FieldValue> src)
-    {
-        var dst = text.emitter();
-        dst.Append(Chars.LBrace);
-        for(var i=0; i<src.Length; i++)
-        {
-            if(i!=0)
-                dst.Append(", ");
-            dst.Append($"{src[i].Field}:{src[i].Format()}");
-        }
-        dst.Append(Chars.RBrace);
-        return dst.Emit();        
-    }
 
     public void EmitChecks(XedDisasmContext context, XedDisasmDoc src, FilePath? dst = null)
     {
@@ -226,7 +210,9 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             writer.AppendLineFormat(LabeledValue, nameof(row.IP), row.IP);
             writer.AppendLineFormat(LabeledValue, nameof(row.Asm), row.Asm);
 
-            var pattern = context.InstPatterns.Match(row.Form, context.Mode).FirstOrDefault();
+            var pattern = context.InstPatterns.Match(row.Form, state.LOCK).FirstOrDefault();
+            if(pattern == null)
+                pattern = context.InstPatterns.Match(row.Form).FirstOrDefault();
             if(pattern != null)
             {
                 writer.AppendLineFormat(LabeledValue, "Pattern", pattern.Body.Format());
@@ -259,6 +245,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             if(state.DF64)
                 writer.AppendLineFormat(LabeledValue, nameof(state.DF64), "64");
 
+
             if(state.DF32)
                 writer.AppendLineFormat(LabeledValue, nameof(state.DF32), "32");
 
@@ -280,6 +267,7 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             writer.AppendLineFormat(LabeledValue, nameof(state.EASZ), XedRender.format(XedFields.easz(state)));
             writer.AppendLineFormat(LabeledValue, nameof(state.EOSZ), XedRender.format(XedFields.eosz(state)));
             writer.AppendLineFormat(LabeledValue, nameof(state.MODE), AsmRender.format(XedFields.mode(state)));
+            writer.AppendLineFormat(LabeledValue, nameof(state.SMODE), XedRender.format(XedFields.smode(state)));
             writer.AppendLineFormat(LabeledValue, "OpCode", AsmOpCodes.opcode(context.Mode, XedFields.ocindex(state), XedFields.opcode(state)));
 
             var offsets = row.Offsets;

@@ -37,7 +37,7 @@ partial class XedCells
                     ref readonly var data = ref info.Data;
                     ref readonly var logic = ref info.Logic;
                     ref readonly var key = ref keys[k];
-                    var size = FieldDefs.size(key.Field, key.CellType);
+                    var size = XedFields.size(key.Field, key.CellType);
                     var result = false;
                     var cell = RuleCell.Empty;
 

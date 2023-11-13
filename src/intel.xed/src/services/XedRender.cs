@@ -136,10 +136,8 @@ public class XedRender
         return dst;
     }
 
-
-
     public static string format(Nonterminal src)
-        => src.IsEmpty ? EmptyString : string.Format("{0}()", XedRender.format(src.Name));
+        => src.IsEmpty ? EmptyString : XedRender.format(src.Name);
 
     public static string format(Hex4 src)
         => $"0x{src}";
@@ -375,7 +373,6 @@ public class XedRender
         const sbyte Pad = -XedFieldRender.ColWidth;
         var pattern = RP.slot(0,Pad) + " | " + RP.slot(1);
 
-        dst.AppendLineFormat(pattern, nameof(src.InstructionId), src.InstructionId);
         dst.AppendLineFormat(pattern, nameof(src.Asm), src.Asm);
         dst.AppendLineFormat(pattern, nameof(src.Instruction), src.Instruction);
         dst.AppendLineFormat(pattern, nameof(src.Form), src.Form);
@@ -600,7 +597,7 @@ public class XedRender
         var dst = EmptyString;
         if(src.IsEmpty)
             return EmptyString;
-        else if(src.IsNontermCall)
+        else if(src.IsNontermCall || src.IsNonterm)
             return format(src.ToNonterm());
         else if(src.CellKind == RuleCellKind.SegVar)
             return src.ToSegVar().Format();

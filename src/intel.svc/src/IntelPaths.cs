@@ -27,9 +27,6 @@ public readonly struct IntelPaths
 
     static ref readonly AppSettings Settings => ref AppSettings.Default;
                         
-    public IDbArchive XedDb()
-        => Settings.Setting(SettingNames.XedDb).DbArchive();
-
     public IDbArchive SdmDb()
         => Settings.Setting(SettingNames.SdmDb).DbArchive();
 
@@ -38,9 +35,6 @@ public readonly struct IntelPaths
 
     public IDbArchive InxDb()
         => Settings.Setting(SettingNames.InxDb).DbArchive();
-
-    public IDbArchive XedKit()
-        => Kit("xed");
 
     public IDbArchive PinKit()
         => Kit("pin");

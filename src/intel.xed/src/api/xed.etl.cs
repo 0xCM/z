@@ -5,8 +5,7 @@
 namespace Z0;
 
 using Asm;
-using System.Linq;
-using static XedModels;
+
 using static XedRules;
 using static sys;
 

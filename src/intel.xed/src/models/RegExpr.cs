@@ -13,17 +13,17 @@ partial class XedModels
     {        
         readonly XedRegId RegId;
 
-        readonly RuleName Rule;
+        readonly Nonterminal Rule;
 
         [MethodImpl(Inline)]
         public RegExpr(XedRegId src)
         {
             RegId = src;
-            Rule = 0;
+            Rule = Nonterminal.Empty;
         }
 
         [MethodImpl(Inline)]
-        public RegExpr(RuleName src)
+        public RegExpr(Nonterminal src)
         {
             RegId = 0;
             Rule = src;
@@ -32,25 +32,25 @@ partial class XedModels
         public bool IsNonterminal
         {
             [MethodImpl(Inline)]
-            get => Rule != 0;
+            get => Rule.IsNonEmpty;
         }
 
         public bool IsEmpty
         {
             [MethodImpl(Inline)]
-            get => RegId == 0 && Rule == 0;
+            get => RegId == 0 && Rule.IsEmpty;
         }
 
         public bool IsNonEmpty
         {
             [MethodImpl(Inline)]
-            get => RegId != 0 || Rule != 0;
+            get => RegId != 0 || Rule.IsNonEmpty;
         }
 
         public XedRegId AsRegister()
             => RegId;
 
-        public RuleName AsRule()
+        public Nonterminal AsRule()
             => Rule;
 
         public string Format()

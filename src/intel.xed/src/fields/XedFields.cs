@@ -8,12 +8,36 @@ namespace Z0;
 using Asm;
 
 using static XedModels;
+using static XedRules;
 using static sys;
 
 using M = XedModels;
+using CK = XedRules.RuleCellKind;
 
 public partial class XedFields
 {
+    [MethodImpl(Inline)]
+    public static ref readonly FieldDef def(FieldKind kind)
+        => ref FieldDefs.Instance[kind];
+
+    public static DataSize size(FieldKind fk, CK ck)
+    {
+        var dst = def(fk).Size;
+        switch(ck)
+        {
+            case CK.Keyword:
+                dst = RuleKeyword.DataSize;
+            break;
+            case CK.NtCall:
+                dst = Nonterminal.DataSize;
+            break;
+            case CK.Operator:
+                dst = RuleOperator.DataSize;
+            break;
+        }
+        return dst;
+    }
+
     [MethodImpl(Inline), Op]
     public static ref readonly XedInstClass iclass(in XedFieldState src)
         => ref @as<XedInstKind,XedInstClass>(src.ICLASS);
@@ -29,6 +53,10 @@ public partial class XedFields
     [MethodImpl(Inline), Op]
     public static ref readonly EASZ easz(in XedFieldState src)
         => ref @as<EASZ>(src.EASZ);
+
+    [MethodImpl(Inline), Op]
+    public static ref readonly SMODE smode(in XedFieldState src)
+        => ref @as<SMODE>(src.EASZ);
 
     [MethodImpl(Inline), Op]
     public static ref readonly EOSZ eosz(in XedFieldState src)

@@ -13,7 +13,7 @@ partial class XedFields
     {
         dst = Field.Empty;
         var kind = src.Field;
-        var size = FieldDefs.size(kind, src.CellKind);
+        var size = XedFields.size(kind, src.CellKind);
         if(size.PackedWidth == 1)
             dst = Field.init(kind, (bit)src.Data);
         else if(size.NativeWidth == 1)
