@@ -816,15 +816,6 @@ c5 f8 99 c8";
         return (same, string.Format("{0} {1} {2}", a, same ? "==" : "!=", b));
     }
 
-    [CmdOp("asm/check/flags")]
-    void CheckAsmFlags()
-    {
-        var result = Outcome.Success;
-        var flags = new StatusFlags();
-        flags.OF(true);
-        flags.SF(true);
-        Channel.Write(flags.Format());        
-    }
 
     [CmdOp("asm/check/shapes")]
     void CheckShapes()

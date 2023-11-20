@@ -3,7 +3,7 @@
     <LLVMInstallDir>D:\env\dev\llvm\vendor\kit</LLVMInstallDir>
     <ProjectProps>$(SlnRoot)\props</ProjectProps>
     <SlnBuild>$(SlnRoot)\build</SlnBuild>
-    <SlnLibs>$(SlnRoot)\lib</SlnLibs>
+    <SlnLibs>$(SlnRoot)\libs</SlnLibs>
     <SlnSrc>$(SlnRoot)\src</SlnSrc>
     <SlnBin>$(SlnBuild)\bin</SlnBin>
     <OutputPath>$(SlnBuild)\bin\$(MsBuildProjectName)\$(Configuration)</OutputPath>

@@ -52,6 +52,6 @@ partial struct Bitfields
         var segs = alloc<BfSegDef>(count);
         for(var i=0u; i<count; i++)
             seek(segs,i) = segdef(skip(src,i).Value.ToString(), (byte)i, (byte)i, i >= 64 ? one(64,63) : one((byte)i,(byte)i));
-        return define(name, segs);
+        return define(segs);
     }    
 }

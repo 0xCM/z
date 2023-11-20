@@ -54,7 +54,7 @@ readonly struct XedDisasmFlow : IXedDisasmFlow
         XedDisasm.parse(lines, out props);
         dst.Computed(seq, props);
 
-        var fields = Fields.allocate();
+        var fields = XedFields.allocate();
         XedFields.pack(props, fields, false);
         dst.Computed(seq, fields);
 

@@ -150,7 +150,7 @@ partial struct Bitfields
             => src.IsBitvector ? "bitvector" : "bitfield";
 
         static string decl(in BfDef src)
-            => string.Format("{0} : {1}<{2}> " , src.Name, typename(src), src.Size.Packed);
+            => string.Format("{0}<{1}> " , typename(src), src.Size.Packed);
 
         var dst = text.buffer();
         dst.AppendLine(decl(src) + Chars.LBrace);

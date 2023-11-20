@@ -14,51 +14,6 @@ using CK = XedRules.RuleCellKind;
 
 partial class XedFields
 {    
-    public static FieldSet pack(InstCells src, Fields dst)
-    {
-        var set = FieldSet.create();
-        for(var i=0; i<src.Count; i++)
-        {
-            ref readonly var cell = ref src[i];
-            var field = cell.Field;
-            switch(cell.CellKind)
-            {
-                case CK.BitVal:
-                    dst[field] = Field.init(field, cell.AsBit());
-                    set = set.Include(field);
-                break;
-                case CK.IntVal:
-                    dst[field] = Field.init(field, cell.AsWord());
-                    set = set.Include(field);
-                break;
-                case CK.HexVal:
-                    dst[field] = Field.init(field, cell.AsHex16());
-                    set = set.Include(field);
-                break;
-                case CK.BitLit:
-                    dst[field] = Field.init(field, cell.AsBitLit());
-                    set = set.Include(field);
-                break;
-                case CK.HexLit:
-                    dst[field] = Field.init(field, cell.AsHexLit());
-                    set = set.Include(field);
-                break;
-                // case CK.SegVar:
-                //     dst[field] = Field.init(field, cell.AsSegVar());
-                //     set = set.Include(field);
-                // break;
-                // case CK.FieldSeg:
-                //     dst[field] = Field.init(field, cell.AsSegVar());
-                //     set = set.Include(field);
-                // break;
-            }
-        }
-
-        return set;
-
-    }
-
-
     public static uint pack(InstFieldValues src, Fields dst, bool clear = true)
     {
         if(clear)

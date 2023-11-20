@@ -10,14 +10,6 @@ partial class XedRules
 {
     public readonly struct Fields
     {
-        public static Fields allocate()
-            => new (sys.alloc<Field>(Fields.MaxCount));
-
-        [MethodImpl(Inline), Op]
-        public static Field field<T>(FieldKind kind, T value)
-            where T : unmanaged
-                => Field.init(kind, bw16(value));
-
         readonly Index<Field> Data;
 
         readonly Index<FieldKind> Kinds;
@@ -79,8 +71,7 @@ partial class XedRules
         [MethodImpl(Inline)]
         public ref Field Update(in XedFieldPack src)
         {
-            ref var dst = ref this[(uint)src.Field];
-            dst = field(src.Field, src.Value());
+            this[(uint)src.Field] = XedFields.field(src.Field, src.Value());
             return ref this[src.Field];
         }
 

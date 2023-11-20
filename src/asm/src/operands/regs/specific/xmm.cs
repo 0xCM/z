@@ -15,6 +15,12 @@ using api = AsmRegs;
 
 public readonly struct xmm : IRegOp128<G>
 {
+    public static G Xmm0 => new(I.r0);
+
+    public static G Xmm1 => new(I.r1);
+
+    public static G Xmm2 => new(I.r2);
+
     public I IndexCode {get;}
 
     [MethodImpl(Inline)]

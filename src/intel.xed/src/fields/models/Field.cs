@@ -19,30 +19,6 @@ partial class XedRules
     [StructLayout(LayoutKind.Sequential,Pack=1)]
     public readonly struct Field
     {
-        [MethodImpl(Inline)]
-        public static Field init(FieldKind kind, bit value)
-            => new ((ushort)value, kind, FieldDataKind.Bit);
-
-        [MethodImpl(Inline)]
-        public static Field init(FieldKind kind, byte value)
-            => new ((ushort)value, kind, FieldDataKind.Byte);
-
-        [MethodImpl(Inline)]
-        public static Field init(FieldKind kind, ushort value)
-            => new ((ushort)value, kind, FieldDataKind.Word);
-
-        [MethodImpl(Inline)]
-        public static Field init(FieldKind kind, RegExpr value)
-            => new ((ushort)value, kind, FieldDataKind.Reg);
-
-        [MethodImpl(Inline)]
-        public static Field init(FieldKind kind, ChipCode value)
-            => new ((ushort)value, kind, FieldDataKind.Chip);
-
-        [MethodImpl(Inline)]
-        public static Field init(FieldKind kind, XedInstClass value)
-            => new ((ushort)value, kind, FieldDataKind.InstClass);
-
         readonly ushort Data;
 
         public readonly FieldKind Kind;
@@ -50,7 +26,7 @@ partial class XedRules
         readonly FieldDataKind Type;
 
         [MethodImpl(Inline)]
-        Field(ushort content, FieldKind kind, FieldDataKind type)
+        internal Field(ushort content, FieldKind kind, FieldDataKind type)
         {
             Data = content;
             Kind = kind;
@@ -197,27 +173,27 @@ partial class XedRules
 
         [MethodImpl(Inline)]
         public static implicit operator Field((FieldKind kind, RegExpr data) src)
-            => init(src.kind, src.data);
+            => XedFields.init(src.kind, src.data);
 
         [MethodImpl(Inline)]
         public static implicit operator Field((FieldKind kind, ChipCode data) src)
-            => init(src.kind, src.data);
+            => XedFields.init(src.kind, src.data);
 
         [MethodImpl(Inline)]
         public static implicit operator Field((FieldKind kind, XedInstClass data) src)
-            => init(src.kind, src.data);
+            => XedFields.init(src.kind, src.data);
 
         [MethodImpl(Inline)]
         public static implicit operator Field(Paired<FieldKind,bit> src)
-            => init(src.Left, src.Right);
+            => XedFields.init(src.Left, src.Right);
 
         [MethodImpl(Inline)]
         public static implicit operator Field(Paired<FieldKind,byte> src)
-            => init(src.Left, src.Right);
+            => XedFields.init(src.Left, src.Right);
 
         [MethodImpl(Inline)]
         public static implicit operator Field((FieldKind kind, ushort data) src)
-            => init(src.kind, src.data);
+            => XedFields.init(src.kind, src.data);
 
         public static Field Empty => default;
     }

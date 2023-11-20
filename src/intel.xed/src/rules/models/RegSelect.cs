@@ -73,9 +73,8 @@ partial class XedRules
                 for(var j=0u; j<ColCount && match; j++)
                 {
                     ref readonly var col = ref Cols[j];
-                    var cell = this[row,col];
                     var field = (num8)XedFields.extract(state,col).Data;
-                    match = field == cell;
+                    match = field == this[row,col];
                 }
                 if(match)
                     break;

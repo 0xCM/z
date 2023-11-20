@@ -1,8 +1,8 @@
 <Project>
   <PropertyGroup>
-    <ZSysVer>0.0.191</ZSysVer>
-    <ZVer>0.0.678</ZVer>
-    <ZFxVer>0.0.1046</ZFxVer>
+    <ZSysVer>0.0.193</ZSysVer>
+    <ZVer>0.0.687</ZVer>
+    <ZFxVer>0.0.1048</ZFxVer>
 
     <ClrRuntimeVersion>8.0.0-dev</ClrRuntimeVersion>
 

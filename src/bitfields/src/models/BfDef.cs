@@ -8,11 +8,6 @@ namespace Z0;
 public readonly record struct BfDef
 {
     /// <summary>
-    /// The model name
-    /// </summary>
-    public readonly string Name;
-
-    /// <summary>
     /// The number of defined segments
     /// </summary>
     public readonly uint SegCount;
@@ -25,10 +20,9 @@ public readonly record struct BfDef
     readonly Seq<BfSegDef> Data;
 
     [MethodImpl(Inline)]
-    public BfDef(string name, Seq<BfSegDef> segs, DataSize size)
+    public BfDef(Seq<BfSegDef> segs, DataSize size)
     {        
         Size = size;
-        Name = name;
         SegCount = segs.Count;
         Data = segs;
     }

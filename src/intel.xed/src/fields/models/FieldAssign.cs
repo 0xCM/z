@@ -8,7 +8,7 @@ namespace Z0;
 partial class XedRules
 {
     [StructLayout(LayoutKind.Sequential,Pack=1)]
-    readonly record struct FieldAssign
+    public readonly record struct FieldAssign
     {
         public readonly FieldKind Field;
 
@@ -45,7 +45,7 @@ partial class XedRules
 
         [MethodImpl(Inline)]
         public static implicit operator FieldAssign(FieldValue src)
-            => new FieldAssign(src);
+            => new (src);
 
         public static FieldAssign Empty => new FieldAssign(FieldValue.Empty);
     }

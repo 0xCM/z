@@ -23,7 +23,7 @@ public interface IBitPattern
         => api.size(Pattern);
 
     NativeSize PackedSize()
-        => api.packedsize(Pattern);
+        => api.nativesize(Pattern);
 
     Seq<BfSegDef> Segments()
         => api.segdefs(Pattern);
@@ -44,13 +44,7 @@ public interface IBitPattern
         => api.symbols(Pattern);
 
     BpInfo Description()
-        => api.describe(Name, Pattern);
-
-    string Descriptor()
-        => api.descriptor(Pattern);
-
-    string BitString(ulong value)
-        => api.bitstring(Pattern, value);
+        => api.describe(Pattern);
 
     string BitString<T>(T value)
         where T : unmanaged

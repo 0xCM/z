@@ -15,6 +15,12 @@ using api = AsmRegs;
 
 public readonly struct ymm : IRegOp256<ymm>
 {
+    public static G Ymm0 => new(I.r0);
+
+    public static G Ymm1 => new(I.r1);
+
+    public static G Ymm2 => new(I.r2);
+
     public I IndexCode {get;}
 
     [MethodImpl(Inline)]

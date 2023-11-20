@@ -47,7 +47,7 @@ public class BpCalcs
     /// </summary>
     [MethodImpl(Inline)]
     public NativeSize MinSize()
-        => api.packedsize(Pattern);
+        => api.nativesize(Pattern);
 
     /// <summary>
     /// A data type with size of <see cref='MinSize'/> or greater
@@ -65,7 +65,7 @@ public class BpCalcs
 
     [MethodImpl(Inline)]
     public BfDef Model()
-        => api.bitfield(Name, Pattern);
+        => api.bitfield(EmptyString, Pattern);
 
     [MethodImpl(Inline)]
     public Seq<byte> SegWidths()
@@ -77,7 +77,7 @@ public class BpCalcs
 
     [MethodImpl(Inline)]
     public BpInfo Description()
-        => api.describe(Name, Pattern);
+        => api.describe(Pattern);
 
     /// <summary>
     /// A semantic identifier
@@ -87,11 +87,7 @@ public class BpCalcs
         => api.descriptor(Pattern);
 
     [MethodImpl(Inline)]
-    public string BitString(ulong value)
-        => api.bitstring(Def.Expr, value);
-
-    [MethodImpl(Inline)]
     public string BitString<T>(T value)
         where T : unmanaged
-        => api.bitstring(Def.Expr, value);
+            => api.bitstring(Def.Expr, value);
 }

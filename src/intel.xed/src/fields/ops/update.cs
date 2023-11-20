@@ -536,7 +536,6 @@ partial class XedFields
 
     public static ref XedFieldState update(in FieldValue src, ref XedFieldState dst)
     {
-        var result = Outcome.Success;
         switch(src.Field)
         {
             case K.AMD3DNOW:

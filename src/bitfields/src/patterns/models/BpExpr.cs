@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
+using api = BitPatterns;
 public readonly record struct BpExpr : IComparable<BpExpr>
 {
     public readonly @string Data;
@@ -12,6 +13,22 @@ public readonly record struct BpExpr : IComparable<BpExpr>
     public BpExpr(string src)
     {
         Data = src;
+    }
+
+    public uint BitWidth
+    {
+        get => api.bitwidth(this);
+    }
+    public bool IsEmpty
+    {
+        [MethodImpl(Inline)]
+        get => Data.IsEmpty;
+    }
+
+    public bool IsNonEmpty
+    {
+        [MethodImpl(Inline)]
+        get => Data.IsNonEmpty;
     }
 
     public DataSize DataSize
@@ -46,4 +63,6 @@ public readonly record struct BpExpr : IComparable<BpExpr>
     [MethodImpl(Inline)]
     public static implicit operator BpExpr(string src)
         => new (src);
+
+    public static BpExpr Empty => new(EmptyString);
 }

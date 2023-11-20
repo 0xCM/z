@@ -6,8 +6,6 @@ namespace Z0.Asm;
 
 using static BitPatterns;
 
-using P = AsmBitPatterns;
-
 [LiteralProvider("asm.bits.patterns")]
 public readonly struct AsmBitPatterns
 {
@@ -77,21 +75,21 @@ public readonly struct AsmBitPatterns
         RexIndicator, W, R, X, B);
 
     public static readonly BpInfo VexC4 = describe(nameof(Asm.VexC4),
-        pp, L, vvvv, W,
-        mmmmm, RXB, 
-        VexC4Indicator
+        VexC4Indicator,
+        RXB, mmmmm, 
+        W, vvvv, L, pp         
         );
 
     public static readonly BpInfo VexC5 = describe(nameof(Asm.VexC5),
-        pp, L, vvvv, R, 
-        VexC5Indicator
+        VexC5Indicator,
+        R, vvvv, L, pp
         );
 
     public static readonly BpInfo Evex = describe(nameof(Evex),
-        z, VL, b, Vp, aaa,
-        W, vvvv, d1, pp,
+        EvexIndicator,
         RXB, Rp, d0, mmm, 
-        EvexIndicator
+        W, vvvv, d1, pp, 
+        z, VL, b, Vp, aaa 
         );
 
 }

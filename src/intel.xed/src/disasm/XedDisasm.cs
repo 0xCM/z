@@ -267,7 +267,6 @@ public partial class XedDisasm : WfSvc<XedDisasm>
             writer.AppendLineFormat(LabeledValue, nameof(state.EASZ), XedRender.format(XedFields.easz(state)));
             writer.AppendLineFormat(LabeledValue, nameof(state.EOSZ), XedRender.format(XedFields.eosz(state)));
             writer.AppendLineFormat(LabeledValue, nameof(state.MODE), AsmRender.format(XedFields.mode(state)));
-            writer.AppendLineFormat(LabeledValue, nameof(state.SMODE), XedRender.format(XedFields.smode(state)));
             writer.AppendLineFormat(LabeledValue, "OpCode", AsmOpCodes.opcode(context.Mode, XedFields.ocindex(state), XedFields.opcode(state)));
 
             var offsets = row.Offsets;

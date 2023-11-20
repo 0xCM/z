@@ -34,20 +34,24 @@ public class EvexCases
 
     static ReadOnlySpan<byte> VmovDqa64_3 => new byte[]{0x62,0x01,0xfd,0x48,0x6f,0xf5};
 
+    static ReadOnlySpan<byte> Vpcmpgtw_1 => new byte[]{0x62, 0xf1, 0x7d, 0x28, 0x65, 0x02};
     /*
 	vmovdqa64 zmm1, zmmword ptr [rdx] # encoding: [0x62,0xf1,0xfd,0x48,0x6f,0x0a]
 	vmovdqa64 zmm2, zmmword ptr [r8]  # encoding: [0x62,0xd1,0xfd,0x48,0x6f,0x10]
 	vmovdqa64 zmm3, zmmword ptr [r9]  # encoding: [0x62,0xd1,0xfd,0x48,0x6f,0x19]
 	vmovdqa64 zmm30, zmm29 # encoding: [0x62,0x01,0xfd,0x48,0x6f,0xf5]
     */
-    public static AsmEncodingCase vmovdqa64(uint index) =>
+    public static AsmEncodingCase @case(uint index) =>
         index switch {
             0 => new("vmovdqa64 zmm1, zmmword ptr [rdx]", VmovDqa64_0),
             1 => new("vmovdqa64 zmm2, zmmword ptr [r8]", VmovDqa64_1),
             2 => new("vmovdqa64 zmm3, zmmword ptr [r9]", VmovDqa64_2),
             3 => new("vmovdqa64 zmm30, zmm29", VmovDqa64_3),
+            4 => new("vpcmpgtw k0, ymm0, ymmword ptr [rdx]", Vpcmpgtw_1),
             _ => AsmEncodingCase.Empty
         };
+
+    public const uint Count = 5;
 }
 partial class XedCmd
 {
@@ -57,6 +61,18 @@ partial class XedCmd
         dst.AppendLine($"{@case.Code.FormatHex()}");
         dst.AppendLine($"{pattern.Expr}");
         dst.AppendLine(BitPatterns.bitstring(pattern.Expr, @as<uint>(@case.Code)));
+        var bitstring = @span(@case.Code.FormatBits());
+        var segs = pattern.Segs;
+        var offset = 0u;
+        for(var i=0; i<segs.Count; i++)
+        {
+            ref readonly var seg = ref segs[i];
+            var content = slice(bitstring, offset, seg.Width);
+            offset += seg.Width;
+            if(i!= 0)
+                dst.Append(Chars.Space);
+            dst.Append(content);
+        }
         dst.AppendLine();
     }
     [CmdOp("asm/check/evex")]
@@ -64,30 +80,14 @@ partial class XedCmd
     {
         var dst = text.emitter();
 
-        var @case = AsmEncodingCase.Empty;
         var pattern = AsmBitPatterns.Evex;
-        var i = 0u;
-        @case = EvexCases.vmovdqa64(i);
-        render(@case, pattern, dst);
-        i++;
-        @case = EvexCases.vmovdqa64(i);
-        render(@case, pattern, dst);
-        i++;
-        @case = EvexCases.vmovdqa64(i);
-        render(@case, pattern, dst);
-        i++;
-        @case = EvexCases.vmovdqa64(i);
-        render(@case, pattern, dst);
-        Channel.Row(dst.Emit());
+        for(var i=0u; i<EvexCases.Count; i++)
+        {
+            render(EvexCases.@case(i), pattern, dst);
+            dst.AppendLine();
 
-        // // vpsrlq	zmm30, qword ptr [rdx + 0x400]{1to8}, 0x7b
-        // var code = asm.asmhex(array<byte>(0x62,0xf1,0x8d,0x50,0x73,0x92,0x00,0x04,0x00,0x00,0x7b));
-        // // vmovdqa64	zmm3, zmmword ptr [r9]
-        // //code = asm.asmhex(array<byte>(0x62,0xd1,0xfd,0x48,0x6f,0x19));
-        // var prefix = Evex.prefix(code);
-        // var pattern = Evex.Pattern;
-        // Channel.Row($"{pattern.Expr}");
-        // Channel.Row(BitPatterns.bitstring(pattern.Expr, @as<uint>(recover<Hex8, byte>(prefix.Bytes))));
+        }
+        Channel.Row(dst.Emit());
 
     }
 
@@ -110,7 +110,7 @@ partial class XedCmd
         const string ReportFormat = "{0,-8} | {1,-64} | {2,-16} | {3,-16} | {4}";
         var headers = new string[]{"Seq", "Form", "Field", "Kind", "Value"};
         var instructions = XedTables.Instructions();
-        var fields = Fields.allocate();    
+        var fields = XedFields.allocate();    
         var report = text.emitter();
         report.AppendLineFormat(ReportFormat, headers);
         Span<FieldKind> members = stackalloc FieldKind[128];

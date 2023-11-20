@@ -4,6 +4,9 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
+/// <summary>
+/// RXB Rp 0 mmm W vvvv 1 pp z VL b Vp aaa 
+/// </summary>
 public enum EvexField : byte
 {
     /// <summary>

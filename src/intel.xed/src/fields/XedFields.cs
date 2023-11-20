@@ -17,8 +17,60 @@ using CK = XedRules.RuleCellKind;
 public partial class XedFields
 {
     [MethodImpl(Inline)]
+    public static FieldAssign assign<T>(FieldKind field, T value)
+        where T : unmanaged
+            => new (new FieldValue(field, bw64(value)));
+
+    [MethodImpl(Inline), Op]
+    public static Field field<T>(FieldKind kind, T value)
+        where T : unmanaged
+            => init(kind, bw16(value));
+
+    [MethodImpl(Inline)]
     public static ref readonly FieldDef def(FieldKind kind)
         => ref FieldDefs.Instance[kind];
+
+    [MethodImpl(Inline)]
+    public static Field init(FieldKind kind, bit value)
+        => new ((ushort)value, kind, FieldDataKind.Bit);
+
+    [MethodImpl(Inline)]
+    public static Field init(FieldKind kind, byte value)
+        => new ((ushort)value, kind, FieldDataKind.Byte);
+
+    [MethodImpl(Inline)]
+    public static Field init(FieldKind kind, ushort value)
+        => new ((ushort)value, kind, FieldDataKind.Word);
+
+    [MethodImpl(Inline)]
+    public static Field init(FieldKind kind, RegExpr value)
+        => new ((ushort)value, kind, FieldDataKind.Reg);
+
+    [MethodImpl(Inline)]
+    public static Field init(FieldKind kind, ChipCode value)
+        => new ((ushort)value, kind, FieldDataKind.Chip);
+
+    [MethodImpl(Inline)]
+    public static Field init(FieldKind kind, XedInstClass value)
+        => new ((ushort)value, kind, FieldDataKind.InstClass);
+
+    public static Fields allocate()
+        => new (sys.alloc<Field>(Fields.MaxCount));
+
+    public static void convert(in FieldValue src, out Field dst)
+    {
+        dst = Field.Empty;
+        var kind = src.Field;
+        var size = XedFields.size(kind, src.CellKind);
+        if(size.PackedWidth == 1)
+            dst = init(kind, (bit)src.Data);
+        else if(size.NativeWidth == 1)
+            dst = init(kind, (byte)src.Data);
+        else if(size.NativeWidth == 2)
+            dst = init(kind, (ushort)src.Data);
+        else
+            Errors.Throw($"Unsupported size {size}");
+    }
 
     public static DataSize size(FieldKind fk, CK ck)
     {

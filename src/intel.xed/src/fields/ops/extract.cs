@@ -11,17 +11,17 @@ using K = XedRules.FieldKind;
 
 partial class XedFields
 {
-    public static void extract(in XedFieldState state, ReadOnlySpan<FieldKind> fields, Span<FieldValue> dst)
-    {
-        for(var i=0; i<fields.Length; i++)
-        {
-            ref readonly var kind = ref skip(fields,i);
-            seek(dst,i) = extract(state, skip(fields,i));
-        }
-    }
+    // public static void extract(in XedFieldState state, ReadOnlySpan<FieldKind> fields, Span<FieldValue> dst)
+    // {
+    //     for(var i=0; i<fields.Length; i++)
+    //     {
+    //         ref readonly var kind = ref skip(fields,i);
+    //         seek(dst,i) = extract(state, skip(fields,i));
+    //     }
+    // }
 
     [Op]
-    public static FieldValue extract(in XedFieldState src, FieldKind kind)
+    public static FieldValue extract(in XedFieldState src, K kind)
     {
         var dst = FieldValue.Empty;
         switch(kind)

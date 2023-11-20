@@ -75,10 +75,6 @@ public readonly struct BpCalcs<P>
         => Untyped.Descriptor();
 
     [MethodImpl(Inline)]
-    public string BitString(ulong value)
-        => api.bitstring(Def.Pattern, value);
-
-    [MethodImpl(Inline)]
     public string BitString<T>(T value)
         where T : unmanaged
             => api.bitstring(Def.Pattern, value);

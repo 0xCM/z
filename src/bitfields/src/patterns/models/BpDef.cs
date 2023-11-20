@@ -49,7 +49,7 @@ public readonly record struct BpDef : IBitPattern
     /// </summary>
     [MethodImpl(Inline)]
     public NativeSize PackedSize()
-        => api.packedsize(Expr);
+        => api.nativesize(Expr);
 
     /// <summary>
     /// The segments in the field
@@ -68,15 +68,11 @@ public readonly record struct BpDef : IBitPattern
 
     [MethodImpl(Inline)]
     public BpInfo Description()
-        => api.describe(Name, Expr);
+        => api.describe(Expr);
 
     [MethodImpl(Inline)]
     public BfDef Model()
         => api.bitfield(Name, Expr);
-
-    [MethodImpl(Inline)]
-    public string BitString(ulong value)
-        => api.bitstring(Expr, value);
 
     [MethodImpl(Inline)]
     public string BitString<T>(T value)
