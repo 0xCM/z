@@ -41,7 +41,7 @@ public class t_vsrlv : t_inx<t_vsrlv>
 
         Pair<Vector128<T>> @case(uint i)
         {
-            var x = Random.CpuVector(w,t);
+            var x = Random.CpuVector<T>(w);
             var offsets = Random.CpuVector(w, domain);
             return (x,offsets);
         }
@@ -56,7 +56,7 @@ public class t_vsrlv : t_inx<t_vsrlv>
 
         Pair<Vector256<T>> @case(uint i)
         {
-            var x = Random.CpuVector(w,t);
+            var x = Random.CpuVector<T>(w);
             var offsets = Random.CpuVector(w, domain);
             return (x,offsets);
         }

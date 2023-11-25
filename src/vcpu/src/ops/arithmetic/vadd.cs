@@ -4,11 +4,11 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-
 partial class vcpu 
 {
     /// <summary>
-    /// __m128i _mm_add_epi8 (__m128i a, __m128i b) PADDB xmm, xmm/m128
+    /// __m128i _mm_add_epi8 (__m128i a, __m128i b)
+    /// PADDB xmm, xmm/m128
     /// </summary>
     /// <param name="x">The left operand</param>
     /// <param name="y">The right operand</param>
@@ -17,7 +17,8 @@ partial class vcpu
         => Add(x, y);
 
     /// <summary>
-    /// __m128i _mm_add_epi8 (__m128i a, __m128i b) PADDB xmm, xmm/m128
+    /// __m128i _mm_add_epi8 (__m128i a, __m128i b)
+    /// PADDB xmm, xmm/m128
     /// </summary>
     /// <param name="x">The left operand</param>
     /// <param name="y">The right operand</param>
@@ -26,7 +27,8 @@ partial class vcpu
         => Add(x, y);
 
     /// <summary>
-    /// __m128i _mm_add_epi16 (__m128i a, __m128i b) PADDW xmm, xmm/m128
+    /// __m128i _mm_add_epi16 (__m128i a, __m128i b)
+    /// PADDW xmm, xmm/m128
     /// </summary>
     /// <param name="x">The left operand</param>
     /// <param name="y">The right operand</param>
@@ -152,38 +154,82 @@ partial class vcpu
         => Add(x, y);
 
     /// <summary>
-    /// __m128 _mm_add_ps (__m128 a, __m128 b) ADDPS xmm, xmm/m128
+    /// __m512i _mm512_add_epi8 (__m512i a, __m512i b)
+    /// VPADDB zmm1 {k1}{z}, zmm2, zmm3/m512
     /// </summary>
     /// <param name="x">The left operand</param>
     /// <param name="y">The right operand</param>
     [MethodImpl(Inline), Add]
-    public static Vector128<float> vadd(Vector128<float> x, Vector128<float> y)
-        => Add(x, x);
-
-    /// <summary>
-    /// __m128d _mm_add_pd (__m128d a, __m128d b) ADDPD xmm, xmm/m128
-    /// </summary>
-    /// <param name="x">The left operand</param>
-    /// <param name="y">The right operand</param>
-    [MethodImpl(Inline), Add]
-    public static Vector128<double> vadd(Vector128<double> x, Vector128<double> y)
+    public static Vector512<byte> vadd(Vector512<byte> x, Vector512<byte> y)
         => Add(x, y);
 
     /// <summary>
-    /// __m256 _mm256_add_ps (__m256 a, __m256 b) VADDPS ymm, ymm, ymm/m256
+    /// __m512i _mm512_add_epi8 (__m512i a, __m512i b)
+    /// VPADDB zmm1 {k1}{z}, zmm2, zmm3/m512
     /// </summary>
     /// <param name="x">The left operand</param>
     /// <param name="y">The right operand</param>
     [MethodImpl(Inline), Add]
-    public static Vector256<float> vadd(Vector256<float> x, Vector256<float> y)
+    public static Vector512<sbyte> vadd(Vector512<sbyte> x, Vector512<sbyte> y)
         => Add(x, y);
 
     /// <summary>
-    /// __m256d _mm256_add_pd (__m256d a, __m256d b) VADDPD ymm, ymm, ymm/m256
+    /// __m512i _mm512_add_epi16 (__m512i a, __m512i b)
+    /// VPADDW zmm1 {k1}{z}, zmm2, zmm3/m512
     /// </summary>
     /// <param name="x">The left operand</param>
     /// <param name="y">The right operand</param>
     [MethodImpl(Inline), Add]
-    public static Vector256<double> vadd(Vector256<double> x, Vector256<double> y)
+    public static Vector512<short> vadd(Vector512<short> x, Vector512<short> y)
+        => Add(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_add_epi16 (__m512i a, __m512i b)
+    /// VPADDW zmm1 {k1}{z}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Add]
+    public static Vector512<ushort> vadd(Vector512<ushort> x, Vector512<ushort> y)
+        => Add(x, y);
+
+    /// <summary>
+    ///  __m512i _mm512_add_epi32 (__m512i a, __m512i b)
+    ///  VPADDD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Add]
+    public static Vector512<int> vadd(Vector512<int> x, Vector512<int> y)
+        => Add(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_add_epi32 (__m512i a, __m512i b)
+    /// VPADDD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Add]
+    public static Vector512<uint> vadd(Vector512<uint> x, Vector512<uint> y)
+        => Add(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_add_epi64 (__m512i a, __m512i b)
+    /// VPADDQ zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Add]
+    public static Vector512<long> vadd(Vector512<long> x, Vector512<long> y)
+        => Add(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_add_epi64 (__m512i a, __m512i b)
+    /// VPADDQ zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Add]
+    public static Vector512<ulong> vadd(Vector512<ulong> x, Vector512<ulong> y)
         => Add(x, y);
 }

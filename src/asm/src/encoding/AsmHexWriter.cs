@@ -7,7 +7,7 @@ namespace Z0.Asm;
 using static sys;
 
 [ApiComplete]
-public class AsmHexWriter
+public struct AsmHexWriter
 {
     [MethodImpl(Inline)]
     public static AsmHexWriter create()
@@ -37,35 +37,35 @@ public class AsmHexWriter
         return this;
     }
 
-    public ref readonly AsmHexCode Target
+    public AsmHexCode Target
     {
         [MethodImpl(Inline)]
-        get => ref Dst;
+        get => Dst;
     }
 
     [MethodImpl(Inline)]
-    public ref readonly AsmHexCode Write<T>(in T src)
+    public AsmHexCode Write<T>(in T src)
         where T : unmanaged
     {
         var size = (byte)size<T>();
         Dst.Size = (byte)(Dst.Size + size);
         cell<T>(Dst.Bytes, Offset) = src;
         Offset += size;
-        return ref Target;
+        return Target;
     }
-
+    
     [MethodImpl(Inline)]
-    public ref readonly AsmHexCode Write<A,B>(in A a, in B b)
+    public AsmHexCode Write<A,B>(in A a, in B b)
         where A : unmanaged
         where B : unmanaged
     {
         Write(a);
         Write(b);
-        return ref Target;
+        return Target;
     }
 
     [MethodImpl(Inline)]
-    public ref readonly AsmHexCode Write<A,B,C>(in A a, in B b, in C c)
+    public AsmHexCode Write<A,B,C>(in A a, in B b, in C c)
         where A : unmanaged
         where B : unmanaged
         where C : unmanaged
@@ -73,11 +73,11 @@ public class AsmHexWriter
         Write(a);
         Write(b);
         Write(c);
-        return ref Target;
+        return Target;
     }
 
     [MethodImpl(Inline)]
-    public ref readonly AsmHexCode Write<A,B,C,D>(in A a, in B b, in C c, in D d)
+    public AsmHexCode Write<A,B,C,D>(in A a, in B b, in C c, in D d)
         where A : unmanaged
         where B : unmanaged
         where C : unmanaged
@@ -87,11 +87,11 @@ public class AsmHexWriter
         Write(b);
         Write(c);
         Write(d);
-        return ref Target;
+        return Target;
     }
 
     [MethodImpl(Inline)]
-    public ref readonly AsmHexCode Write<A,B,C,D,E>(in A a, in B b, in C c, in D d, in E e)
+    public AsmHexCode Write<A,B,C,D,E>(in A a, in B b, in C c, in D d, in E e)
         where A : unmanaged
         where B : unmanaged
         where C : unmanaged
@@ -103,6 +103,6 @@ public class AsmHexWriter
         Write(c);
         Write(d);
         Write(e);
-        return ref Target;
+        return Target;
     }    
 }

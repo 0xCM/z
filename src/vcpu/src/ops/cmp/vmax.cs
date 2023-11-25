@@ -139,10 +139,9 @@ partial class vcpu
         => Max(x, y);
 
 
-
-
-
     /// <summary>
+    /// __m512i _mm512_max_epu8 (__m512i a, __m512i b)
+    /// VPMAXUB zmm1 {k1}{z}, zmm2, zmm3/m512
     /// </summary>
     /// <param name="x">The left operand</param>
     /// <param name="y">The right operand</param>
@@ -151,6 +150,8 @@ partial class vcpu
         => Max(x, y);
 
     /// <summary>
+    /// __m512i _mm512_max_epi8 (__m512i a, __m512i b)
+    /// VPMAXSB zmm1 {k1}{z}, zmm2, zmm3/m512
     /// </summary>
     /// <param name="x">The left operand</param>
     /// <param name="y">The right operand</param>
@@ -192,6 +193,8 @@ partial class vcpu
 
     /// <summary>
     /// Computes the maximum values of corresponding components
+    /// __m512i _mm512_max_epu64 (__m512i a, __m512i b)
+    /// VPMAXUQ zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
     /// </summary>
     /// <param name="x">The left operand</param>
     /// <param name="y">The right operand</param>
@@ -201,6 +204,8 @@ partial class vcpu
 
     /// <summary>
     /// Computes the maximum values of corresponding components
+    /// __m512i _mm512_max_epi64 (__m512i a, __m512i b)
+    /// VPMAXSQ zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
     /// </summary>
     /// <param name="x">The left operand</param>
     /// <param name="y">The right operand</param>

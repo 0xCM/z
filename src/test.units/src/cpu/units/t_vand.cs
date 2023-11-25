@@ -16,8 +16,8 @@ namespace Z0
 
             for(var i=0; i<RepCount; i++)
             {
-                var x = Random.CpuVector(n128,z32);
-                var y = Random.CpuVector(n128,z32);
+                var x = Random.CpuVector<uint>(n128);
+                var y = Random.CpuVector<uint>(n128);
                 Claim.require(vand(x,y));
             }
         }

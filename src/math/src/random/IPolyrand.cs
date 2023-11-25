@@ -28,5 +28,4 @@ public interface IPolyrand : IRng, IPolySource
 public interface IPolyrandProvider
 {
     IPolyrand Random {get;}
-
 }

@@ -200,7 +200,8 @@ namespace Z0
             var comment = skip(parts, 1);
             var bitstring = RP.Error;
             var formatted = FormatBytes(comment, out var count);
-            if(Hex.hexdata(formatted, out var parsed))
+            var parsed = sys.empty<byte>();
+            if(DataParser.parse(formatted, out parsed))
                 bitstring = asm.asmhex(parsed).BitString;
 
             if(count != 0)
@@ -238,7 +239,7 @@ namespace Z0
             for(var i=0; i<count; i++)
             {
                 ref readonly var c = ref skip(src,i);
-                if(Hex.scalar(c))
+                if(HexTest.scalar(c))
                 {
                     seek(chars,j++) = c;
                     if(++k == 2)
@@ -248,7 +249,7 @@ namespace Z0
                         m++;
                     }
                 }
-                else if(Hex.upper(c))
+                else if(HexTest.upper(c))
                 {
                     seek(chars, j++) = Char.ToLowerInvariant(c);
                     if(++k == 2)

@@ -14,7 +14,7 @@ using G = XorShift256;
 /// <remarks> Core algorithm taken from http://xoshiro.di.unimi.it/xoshiro256starstar.c</remarks>
 [ApiHost]
 [Rng(nameof(XorShift256))]
-public struct XorShift256 : IRandomSource<XorShift256,ulong>
+public struct XorShift256 : IRandomSource<G,ulong>
 {
     ulong S0;
 

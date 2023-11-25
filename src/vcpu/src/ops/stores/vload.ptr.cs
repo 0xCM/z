@@ -41,6 +41,11 @@ partial class vgcpu
         where T : unmanaged
             => vload(pSrc, out Vector512<T> _);
 
+    [MethodImpl(Inline), Op, Closures(Closure)]
+    public static unsafe Vector512<T> vload<T>(T* pSrc, out Vector512<T> dst)
+        where T : unmanaged
+            => dst = vcpu.vload<T>(w512, sys.cover((byte*)pSrc, 64));
+
     /// <summary>
     /// Loads a 128-bit vector from a pointer-identified memory location
     /// </summary>
@@ -89,16 +94,6 @@ partial class vgcpu
         else
             vloadu_f(pSrc, out dst);
 
-        return dst;
-    }
-
-    [MethodImpl(Inline), Op, Closures(Closure)]
-    public static unsafe Vector512<T> vload<T>(T* pSrc, out Vector512<T> dst)
-        where T : unmanaged
-    {
-        vload(pSrc, out Vector256<T> a);
-        vload((T*)Unsafe.Add<T>(pSrc, Vector256<T>.Count), out Vector256<T> b);
-        dst = Vector512.Create(a,b);
         return dst;
     }
 

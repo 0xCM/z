@@ -46,7 +46,7 @@ public readonly struct ExprScope : IEquatable<ExprScope>
         get => sys.hash(Text);
     }
 
-    public NameOld Name
+    public string Name
     {
         get
         {

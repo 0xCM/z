@@ -166,50 +166,81 @@ partial class vcpu
         => Subtract(x, y);
 
     /// <summary>
-    /// __m128d _mm_sub_ps (__m128d a, __m128d b) SUBPS xmm, xmm/m128
-    /// </summary>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    [MethodImpl(Inline), Op]
-    public static Vector128<float> vsub(Vector128<float> x, Vector128<float> y)
-        => Subtract(x,y);
-
-    /// <summary>
-    /// __m128d _mm_sub_pd (__m128d a, __m128d b) SUBPD xmm, xmm/m128
-    /// </summary>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    [MethodImpl(Inline), Op]
-    public static Vector128<double> vsub(Vector128<double> x, Vector128<double> y)
-        => Subtract(x,y);
-
-    /// <summary>
-    /// __m256 _mm256_sub_ps (__m256 a, __m256 b)
-    /// VSUBPS ymm, ymm, ymm/m256
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
-    [MethodImpl(Inline), Op]
-    public static Vector256<float> vsub(Vector256<float> x, Vector256<float> y)
+    [MethodImpl(Inline), Sub]
+    public static Vector512<byte> vsub(Vector512<byte> x, Vector512<byte> y)
         => Subtract(x, y);
 
     /// <summary>
-    /// __m256d _mm256_sub_pd (__m256d a, __m256d b)
-    /// VSUBPD ymm, ymm, ymm/m256
+    /// __m512i _mm512_sub_epi8 (__m512i a, __m512i b)
+    /// VPSUBB zmm1 {k1}{z}, zmm2, zmm3/m512
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
-    [MethodImpl(Inline), Op]
-    public static Vector256<double> vsub(Vector256<double> x, Vector256<double> y)
+    [MethodImpl(Inline), Sub]
+    public static Vector512<sbyte> vsub(Vector512<sbyte> x, Vector512<sbyte> y)
         => Subtract(x, y);
 
     /// <summary>
-    /// __m512d _mm512_sub_pd (__m512d a, __m512d b)
-    /// VSUBPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}
+    /// __m512i _mm512_sub_epi16 (__m512i a, __m512i b)
+    /// VPSUBW zmm1 {k1}{z}, zmm2, zmm3/m512
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
-    [MethodImpl(Inline), Op]
-    public static Vector512<double> vsub(Vector512<double> x, Vector512<double> y)
+    [MethodImpl(Inline), Sub]
+    public static Vector512<short> vsub(Vector512<short> x, Vector512<short> y)
         => Subtract(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_sub_epi16 (__m512i a, __m512i b)
+    /// VPSUBW zmm1 {k1}{z}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Sub]
+    public static Vector512<ushort> vsub(Vector512<ushort> x, Vector512<ushort> y)
+        => Subtract(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_sub_epi32 (__m512i a, __m512i b)
+    /// VPSUBD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Sub]
+    public static Vector512<int> vsub(Vector512<int> x, Vector512<int> y)
+        => Subtract(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_sub_epi32 (__m512i a, __m512i b)
+    /// VPSUBD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Sub]
+    public static Vector512<uint> vsub(Vector512<uint> x, Vector512<uint> y)
+        => Subtract(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_sub_epi64 (__m512i a, __m512i b)
+    /// VPSUBQ zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Sub]
+    public static Vector512<long> vsub(Vector512<long> x, Vector512<long> y)
+        => Subtract(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_sub_epi64 (__m512i a, __m512i b)
+    /// VPSUBQ zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    [MethodImpl(Inline), Sub]
+    public static Vector512<ulong> vsub(Vector512<ulong> x, Vector512<ulong> y)
+        => Subtract(x, y);
+
 }

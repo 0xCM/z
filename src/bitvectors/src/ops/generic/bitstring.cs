@@ -15,7 +15,7 @@ partial class BitVectors
     [MethodImpl(Inline)]
     public static BitString bitstring<T>(BitVector128<T> x)
         where T : unmanaged
-            => vbits.bitstring(x.State, x.Width);
+            => vgcpu.bitstring(x.State, x.Width);
 
     /// <summary>
     /// Converts the vector to a bitstring representation
@@ -26,7 +26,7 @@ partial class BitVectors
     [MethodImpl(Inline)]
     public static BitString bitstring<T>(BitVector256<T> x)
         where T : unmanaged
-            => vbits.bitstring(x.State, x.Width);
+            => vgcpu.bitstring(x.State, x.Width);
 
     [MethodImpl(Inline), Op]
     public static BitString bitstring<T>(BitVector<T> src)

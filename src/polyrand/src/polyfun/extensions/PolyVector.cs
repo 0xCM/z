@@ -163,7 +163,7 @@ public static class PolyVector
     /// <param name="random">The random source</param>
     /// <param name="domain">The domain of the random variable</param>
     /// <typeparam name="T">The vector component type</typeparam>
-    public static RowVector<T> Vector<T>(this IPolySource random, int len, Interval<T>? domain = null)
+    public static RowVector<T> RowVector<T>(this IPolySource random, int len, Interval<T>? domain = null)
         where T : unmanaged
     {
         var dst = Z0.RowVectors.alloc<T>(len);
@@ -182,7 +182,7 @@ public static class PolyVector
     /// <typeparam name="N">The length type</typeparam>
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
-    public static RowVector<N,T> Vector<N,T>(this IPolySource random, Interval<T> domain, N n = default)
+    public static RowVector<N,T> RowVector<N,T>(this IPolySource random, Interval<T> domain, N n = default)
         where T : unmanaged
         where N : unmanaged, ITypeNat
     {
@@ -198,7 +198,7 @@ public static class PolyVector
     /// <typeparam name="N">The length type</typeparam>
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
-    public static RowVector<N,T> Vector<N,T>(this IPolySource random, T min, T max,  N n = default)
+    public static RowVector<N,T> RowVector<N,T>(this IPolySource random, T min, T max,  N n = default)
         where T : unmanaged
         where N : unmanaged, ITypeNat
     {
@@ -214,7 +214,7 @@ public static class PolyVector
     /// <typeparam name="N">The length type</typeparam>
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
-    public static RowVector<N,T> Vector<N,T>(this IPolySource random, N n = default)
+    public static RowVector<N,T> RowVector<N,T>(this IPolySource random, N n = default)
         where T : unmanaged
         where N : unmanaged, ITypeNat
     {
@@ -233,11 +233,11 @@ public static class PolyVector
     /// <typeparam name="S">The sample domain type</typeparam>
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
-    public static RowVector<N,T> Vector<N,S,T>(this IPolySource random, Interval<S> domain, N n = default)
+    public static RowVector<N,T> RowVector<N,S,T>(this IPolySource random, Interval<S> domain, N n = default)
         where T : unmanaged
         where S : unmanaged
         where N : unmanaged, ITypeNat
-            => random.Vector<N,S>(domain).Convert<T>();
+            => random.RowVector<N,S>(domain).Convert<T>();
 
     /// <summary>
     /// Produces a natural vector over one domain and converts it to another
@@ -249,10 +249,10 @@ public static class PolyVector
     /// <typeparam name="S">The source domain type</typeparam>
     /// <typeparam name="T">The target domain type</typeparam>
     [MethodImpl(Inline)]
-    public static RowVector<T> Vector<S,T>(this IPolySource random, int len, Interval<S>? domain = null)
+    public static RowVector<T> RowVector<S,T>(this IPolySource random, int len, Interval<S>? domain = null)
         where S: unmanaged
         where T : unmanaged
-            => random.Vector<S>(len,domain).Convert<T>();
+            => random.RowVector<S>(len,domain).Convert<T>();
 
     /// <summary>
     /// Populates a vector of natural length with random values from the source
@@ -281,42 +281,6 @@ public static class PolyVector
         where T : unmanaged
         where N : unmanaged, ITypeNat
             => random.Fill<T>(Typed.nat32i<N>(), ref vector.Storage[0]);
-
-    /// <summary>
-    /// Effects a component-wise contraction on the source vector on a source vector of unsigned primal type,
-    /// dst[i] = src[i].Contract(max[i])
-    /// </summary>
-    /// <param name="src">The vector to contract</param>
-    /// <param name="max">The upper bound</param>
-    /// <typeparam name="N">The length type</typeparam>
-    /// <typeparam name="T">The unsigned primal type</typeparam>
-        public static Block256<N,T> Contract<N,T>(this Block256<N,T> src, Block256<N,T> max)
-        where N : unmanaged, ITypeNat
-        where T : unmanaged
-    {
-        var dst = NatSpans.alloc<N,T>();
-        for(var i=0; i<dst.Count; i++)
-            dst[i] = gcalc.squeeze(src[i],max[i]);
-        return dst;
-    }
-
-    /// <summary>
-    /// Effects a component-wise contraction on the source vector on a source vector of unsigned primal type,
-    /// dst[i] = src[i].Contract(max[i])
-    /// </summary>
-    /// <param name="src">The vector to contract</param>
-    /// <param name="max">The upper bound</param>
-    /// <typeparam name="N">The length type</typeparam>
-    /// <typeparam name="T">The unsigned primal type</typeparam>
-        public static RowVector256<T> Contract<T>(this RowVector256<T> src, RowVector256<T> max)
-        where T : unmanaged
-    {
-        var len = src.Length;
-        var dst = Z0.RowVectors.blockalloc<T>(len);
-        for(var i=0; i<dst.Length; i++)
-            dst[i] = gcalc.squeeze(src[i], max[i]);
-        return dst;
-    }
 
     /// <summary>
     /// Produces a 128-bit cpu vector over random T-cells
@@ -354,9 +318,9 @@ public static class PolyVector
     /// <param name="source">The data source</param>
     /// <param name="w">The width selector</param>
     /// <typeparam name="T">The vector component type</typeparam>
-    public static Vector128<T> CpuVector<T>(this ISource source, Vec128Kind<T> k, W128 w = default)
+    public static Vector128<T> CpuVector<T>(this ISource source, Vec128Kind<T> k)
         where T : unmanaged
-            => source.SpanBlocks<T>(w).LoadVector();
+            => source.SpanBlocks<T>(w128).LoadVector();
 
     /// <summary>
     /// Produces a random 256-bit cpu vector
@@ -364,9 +328,9 @@ public static class PolyVector
     /// <param name="src">The data source</param>
     /// <param name="w">The vector width selector</param>
     /// <typeparam name="T">The vector component type</typeparam>
-    public static Vector256<T> CpuVector<T>(this ISource src, Vec256Kind<T> k, W256 w = default)
+    public static Vector256<T> CpuVector<T>(this ISource src, Vec256Kind<T> k)
         where T : unmanaged
-            => src.SpanBlocks<T>(w).LoadVector();
+            => src.SpanBlocks<T>(w256).LoadVector();
 
     /// <summary>
     /// Produces a random 256-bit cpu vector
@@ -384,7 +348,7 @@ public static class PolyVector
     /// <param name="src">The data source</param>
     /// <param name="w">The width selector</param>
     /// <typeparam name="T">The vector component type</typeparam>
-    public static IEnumerable<Vector128<T>> CpuVectors<T>(this ISource src, N128 w)
+    public static IEnumerable<Vector128<T>> CpuVectors<T>(this ISource src, W128 w)
         where T : unmanaged
     {
         while(true)
@@ -397,7 +361,7 @@ public static class PolyVector
     /// <param name="src">The data source</param>
     /// <param name="w">The width selector</param>
     /// <typeparam name="T">The vector component type</typeparam>
-    public static IEnumerable<Vector256<T>> CpuVectors<T>(this ISource src, N256 w)
+    public static IEnumerable<Vector256<T>> CpuVectors<T>(this ISource src, W256 w)
         where T : unmanaged
     {
         while(true)
@@ -412,9 +376,33 @@ public static class PolyVector
     /// <param name="domain">An interval to which component values are constrained</param>
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
-    public static Vector128<T> CpuVector<T>(this IBoundSource src, N128 w, Interval<T> domain)
+    public static Vector128<T> CpuVector<T>(this IBoundSource src, W128 w, Interval<T> domain)
         where T : unmanaged
             => src.SpanBlocks<T>(w,domain,1).LoadVector();
+
+    /// <summary>
+    /// Produces a 256-bit cpu vector over random T-cells, each bound to a specified common domain
+    /// </summary>
+    /// <param name="src">The data source</param>
+    /// <param name="w">The vector width selector</param>
+    /// <param name="domain">An interval to which component values are constrained</param>
+    /// <typeparam name="T">The vector component type</typeparam>
+    [MethodImpl(Inline)]
+    public static Vector256<T> CpuVector<T>(this IBoundSource src, W256 w, Interval<T> domain)
+        where T : unmanaged
+            => src.SpanBlocks<T>(w, domain, 1).LoadVector();
+
+    /// <summary>
+    /// Produces a random 512-bit cpu vector
+    /// </summary>
+    /// <param name="src">The data source</param>
+    /// <param name="w">The vector width selector</param>
+    /// <param name="domain">An interval to which vector component values are constrained</param>
+    /// <typeparam name="T">The vector component type</typeparam>
+    [MethodImpl(Inline)]
+    public static Vector512<T> CpuVector<T>(this IBoundSource src, W512 w, Interval<T> domain)
+        where T : unmanaged
+            => src.CpuVector(w,domain,null);
 
     /// <summary>
     /// Produces a stream of 128-bit cpu vectors over random T-cells, each bound to a specified common domain
@@ -424,7 +412,7 @@ public static class PolyVector
     /// <param name="domain">An interval to which component values are constrained</param>
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
-    public static IEnumerable<Vector128<T>> CpuVectors<T>(this IBoundSource src, N128 w, Interval<T> domain)
+    public static IEnumerable<Vector128<T>> CpuVectors<T>(this IBoundSource src, W128 w, Interval<T> domain)
         where T : unmanaged
     {
         while(true)
@@ -440,21 +428,9 @@ public static class PolyVector
     /// <param name="filter">A domain refinement filter</param>
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
-    public static Vector128<T> CpuVector<T>(this IBoundSource src, N128 w, Interval<T> domain, Func<T,bool> filter)
+    public static Vector128<T> CpuVector<T>(this IBoundSource src, W128 w, Interval<T> domain, Func<T,bool> filter)
         where T : unmanaged
             => src.SpanBlocks<T>(w, domain, 1, filter).LoadVector();
-
-    /// <summary>
-    /// Produces a 256-bit cpu vector over random T-cells, each bound to a specified common domain
-    /// </summary>
-    /// <param name="src">The data source</param>
-    /// <param name="w">The vector width selector</param>
-    /// <param name="domain">An interval to which component values are constrained</param>
-    /// <typeparam name="T">The vector component type</typeparam>
-    [MethodImpl(Inline)]
-    public static Vector256<T> CpuVector<T>(this IBoundSource src, N256 w, Interval<T> domain)
-        where T : unmanaged
-            => src.SpanBlocks<T>(w, domain, 1).LoadVector();
 
     /// <summary>
     /// Produces a stream of 256-bit cpu vectors over random T-cells, each bound to a specified common domain
@@ -464,7 +440,7 @@ public static class PolyVector
     /// <param name="domain">An interval to which component values are constrained</param>
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
-    public static IEnumerable<Vector256<T>> CpuVectors<T>(this IBoundSource source, N256 w, Interval<T> domain)
+    public static IEnumerable<Vector256<T>> CpuVectors<T>(this IBoundSource source, W256 w, Interval<T> domain)
         where T : unmanaged
     {
         while(true)
@@ -480,7 +456,7 @@ public static class PolyVector
     /// <param name="filter">A domain refinement filter</param>
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
-    public static Vector256<T> CpuVector<T>(this IBoundSource src, N256 w, Interval<T> domain, Func<T,bool> filter)
+    public static Vector256<T> CpuVector<T>(this IBoundSource src, W256 w, Interval<T> domain, Func<T,bool> filter)
         where T : unmanaged
             => src.SpanBlocks<T>(w, domain, 1, filter).LoadVector();
 
@@ -493,54 +469,7 @@ public static class PolyVector
     /// <param name="filter">A domain refinement filter</param>
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
-    public static Vector512<T> CpuVector<T>(this IBoundSource src, N512 w, Interval<T> domain, Func<T,bool> filter)
+    public static Vector512<T> CpuVector<T>(this IBoundSource src, W512 w, Interval<T> domain, Func<T,bool> filter)
         where T : unmanaged
             => src.SpanBlocks(w, domain, 1, filter).LoadVector();
-
-    /// <summary>
-    /// Produces a random 512-bit cpu vector
-    /// </summary>
-    /// <param name="src">The data source</param>
-    /// <param name="w">The vector width selector</param>
-    /// <param name="domain">An interval to which vector component values are constrained</param>
-    /// <typeparam name="T">The vector component type</typeparam>
-    [MethodImpl(Inline)]
-    public static Vector512<T> CpuVector<T>(this IBoundSource src, N512 w, Interval<T> domain)
-        where T : unmanaged
-            => src.CpuVector(w,domain,null);
-
-    /// <summary>
-    /// Produces a random 128-bit cpu vector
-    /// </summary>
-    /// <param name="src">The data source</param>
-    /// <param name="w">The vector width selector value</param>
-    /// <param name="t">The component type representative</param>
-    /// <typeparam name="T">The vector component type</typeparam>
-    [MethodImpl(Inline)]
-    public static Vector128<T> CpuVector<T>(this ISource src, N128 w, T t)
-        where T : unmanaged
-            => src.SpanBlocks<T>(w,1).LoadVector();
-
-    /// <summary>
-    /// Produces a random 256-bit cpu vector
-    /// </summary>
-    /// <param name="src">The data source</param>
-    /// <param name="w">The vector width selector value</param>
-    /// <param name="t">The component type representative</param>
-    /// <typeparam name="T">The vector component type</typeparam>
-    [MethodImpl(Inline)]
-    public static Vector256<T> CpuVector<T>(this ISource src, N256 w, T t)
-        where T : unmanaged
-            => src.SpanBlocks<T>(w,1).LoadVector();
-
-    /// <summary>
-    /// Produces a random 256-bit cpu vector
-    /// </summary>
-    /// <param name="src">The data source</param>
-    /// <param name="w">The vector width selector value</param>
-    /// <param name="t">The component type representative</param>
-    /// <typeparam name="T">The vector component type</typeparam>
-    public static Vector512<T> CpuVector<T>(this ISource src, N512 w, T t)
-        where T : unmanaged
-            => src.SpanBlocks<T>(w,1).LoadVector();
 }

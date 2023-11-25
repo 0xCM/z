@@ -12,10 +12,16 @@ public record class Ancestry : Lineage<Ancestry,Label>
     }
 
     public Ancestry(Label name)
+        : base(name)
     {
     }
 
     public Ancestry()
     {
+    }
+
+    public override string ToString()
+    {
+        return Format();
     }
 }

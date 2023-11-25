@@ -39,7 +39,7 @@ public class BitCheckers
 
     static Union<T> union<T>(params T[] src)
         where T : IExpr
-            => new Union<T>(src);
+            => new (src);
 
     public Outcome Case1()
     {
@@ -86,28 +86,20 @@ public class BitCheckers
         {
             j=0;
             var count = BitRender.render32x4(Chars.Space, skip(dst,i), ref j, bitstring);
-            log.Deposit(Events.row(text.format(slice(bitstring,0,count))));
+            log.Deposit(Events.row(@string(slice(bitstring,0,count))));
         }
     }
 
     void CheckBitReplication(IEventTarget log)
     {
         const byte PW = 4;
-
         const byte P0 = 0b0111;
-
         const byte E0 = P0 | P0 << PW;
-
         const ushort P1 = 0b0111;
-
         const ushort E1 = (ushort)E0 | (ushort)E0 << PW*2;
-
         const uint P2 = 0b0111;
-
         const uint E2 = (uint)E1 | (uint)E1 << PW*4;
-
         const ulong P3 = 0b0111;
-
         const ulong E3 = (ulong)E2 | (ulong)E2 << PW*8;
 
         var A0 = gbits.replicate(P0, 0, 3, 8/PW);

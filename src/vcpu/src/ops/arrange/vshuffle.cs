@@ -82,7 +82,7 @@ partial class vcpu
     ///   VPSHUFD zmm1 {k1}{z}, zmm2/m512/m32bcst, imm8
     /// </summary>
     [MethodImpl(Inline), Op]
-    public static Vector512<uint> vshuffle(Vector512<uint> src, [Imm] _MM_PERM_ENUM spec)
+    public static Vector512<uint> vshuffle(Vector512<uint> src, [Imm] Perm4x4 spec)
         => Shuffle(src, (byte)spec);
 
     /// <summary>
@@ -90,7 +90,7 @@ partial class vcpu
     ///   VPSHUFD zmm1 {k1}{z}, zmm2/m512/m32bcst, imm8
     /// </summary>
     [MethodImpl(Inline), Op]
-    public static Vector512<int> vshuffle(Vector512<int> src, [Imm] _MM_PERM_ENUM spec)
+    public static Vector512<int> vshuffle(Vector512<int> src, [Imm] Perm4x4 spec)
         => Shuffle(src, (byte)spec);
 
     /// <summary>
@@ -115,5 +115,4 @@ partial class vcpu
     [MethodImpl(Inline), Op]
     public static Vector512<ulong> vshuffle64x2(Vector512<ulong> a, Vector512<ulong> b, [Imm] byte spec)
         => Shuffle4x128(a, b, spec);
-
 }

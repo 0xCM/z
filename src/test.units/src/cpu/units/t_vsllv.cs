@@ -45,7 +45,7 @@ namespace Z0
 
             Pair<Vector128<T>> @case(uint i)
             {
-                var x = Random.CpuVector(w,t);
+                var x = Random.CpuVector<T>(w);
                 var offsets = Random.CpuVector(w, domain);
                 return (x,offsets);
             }
@@ -60,7 +60,7 @@ namespace Z0
 
             Pair<Vector256<T>> @case(uint i)
             {
-                var x = Random.CpuVector(w,t);
+                var x = Random.CpuVector<T>(w);
                 var offsets = Random.CpuVector(w, domain);
                 return (x,offsets);
             }

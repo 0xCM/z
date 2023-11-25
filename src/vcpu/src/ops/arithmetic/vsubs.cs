@@ -52,7 +52,8 @@ partial class vcpu
         => SubtractSaturate(x, y);
 
     /// <summary>
-    ///  __m256i _mm256_subs_epi8 (__m256i a, __m256i b) VPSUBSB ymm, ymm, ymm/m256
+    ///  __m256i _mm256_subs_epi8 (__m256i a, __m256i b)
+    ///  VPSUBSB ymm, ymm, ymm/m256
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -61,7 +62,8 @@ partial class vcpu
         => SubtractSaturate(x, y);
 
     /// <summary>
-    /// __m256i _mm256_subs_epi16 (__m256i a, __m256i b) VPSUBSW ymm, ymm, ymm/m256
+    /// __m256i _mm256_subs_epi16 (__m256i a, __m256i b)
+    /// VPSUBSW ymm, ymm, ymm/m256
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -70,11 +72,57 @@ partial class vcpu
         => SubtractSaturate(x, y);
 
     /// <summary>
-    /// __m256i _mm256_subs_epu16 (__m256i a, __m256i b) VPSUBUSW ymm, ymm, ymm/m256
+    /// __m256i _mm256_subs_epu16 (__m256i a, __m256i b)
+    /// VPSUBUSW ymm, ymm, ymm/m256
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
     [MethodImpl(Inline), SubS]
     public static Vector256<ushort> vsubs(Vector256<ushort> x, Vector256<ushort> y)
         => SubtractSaturate(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_subs_epu8 (__m512i a, __m512i b)
+    /// VPSUBUSB zmm1 {k1}{z}, zmm2, zmm3/m128
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), SubS]
+    public static Vector512<byte> vsubs(Vector512<byte> x, Vector512<byte> y)
+        => SubtractSaturate(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_subs_epi8 (__m512i a, __m512i b)
+    /// VPSUBSB zmm1 {k1}{z}, zmm2, zmm3/m128
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), SubS]
+    public static Vector512<sbyte> vsubs(Vector512<sbyte> x, Vector512<sbyte> y)
+        => SubtractSaturate(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_subs_epu16 (__m512i a, __m512i b)
+    /// VPSUBUSW zmm1 {k1}{z}, zmm2, zmm3/m128
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), SubS]
+    public static Vector512<ushort> vsubs(Vector512<ushort> x, Vector512<ushort> y)
+        => SubtractSaturate(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_subs_epi16 (__m512i a, __m512i b)
+    /// VPSUBSW zmm1 {k1}{z}, zmm2, zmm3/m128
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), SubS]
+    public static Vector512<short> vsubs(Vector512<short> x, Vector512<short> y)
+        => SubtractSaturate(x, y);
+
 }

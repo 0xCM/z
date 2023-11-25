@@ -96,13 +96,25 @@ partial class vcpu
         => ShiftRightLogical(src, count);
 
     /// <summary>
-    /// 
+    /// __m512i _mm512_srli_epi16 (__m512i a, int imm8)
+    /// VPSRLW zmm1 {k1}{z}, zmm2, imm8
     /// </summary>
     /// <param name="src"></param>
     /// <param name="count"></param>
     /// <returns></returns>
     [MethodImpl(Inline), Srl]
     public static Vector512<ushort> vsrl(Vector512<ushort> src, [Imm] byte count)
+        => ShiftRightLogical(src, count);
+
+    /// <summary>
+    /// __m512i _mm512_srl_epi16 (__m512i a, __m128i count)
+    /// VPSRLW zmm1 {k1}{z}, zmm2, xmm3/m128
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Srl]
+    public static Vector512<ushort> vsrl(Vector512<ushort> src, Vector128<ushort> count)
         => ShiftRightLogical(src, count);
 
     /// <summary>
@@ -117,6 +129,17 @@ partial class vcpu
         => ShiftRightLogical(src, count);
 
     /// <summary>
+    /// __m512i _mm512_srl_epi16 (__m512i a, __m128i count)
+    /// VPSRLW zmm1 {k1}{z}, zmm2, xmm3/m128
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Srl]
+    public static Vector512<short> vsrl(Vector512<short> src, Vector128<short> count)
+        => ShiftRightLogical(src, count);
+
+    /// <summary>
     /// __m512i _mm512_srli_epi32 (__m512i a, int imm8)
     /// VPSRLD zmm1 {k1}{z}, zmm2, imm8
     /// </summary>
@@ -128,6 +151,17 @@ partial class vcpu
         => ShiftRightLogical(src, count);
 
     /// <summary>
+    /// __m512i _mm512_srl_epi32 (__m512i a, __m128i count)
+    /// VPSRLD zmm1 {k1}{z}, zmm2, xmm3/m128
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Srl]
+    public static Vector512<int> vsrl(Vector512<int> src, Vector128<int> count)
+        => ShiftRightLogical(src, count);
+
+    /// <summary>
     /// __m512i _mm512_srli_epi32 (__m512i a, int imm8)
     /// VPSRLD zmm1 {k1}{z}, zmm2, imm8
     /// </summary>
@@ -136,6 +170,17 @@ partial class vcpu
     /// <returns></returns>
     [MethodImpl(Inline), Srl]
     public static Vector512<uint> vsrl(Vector512<uint> src, [Imm] byte count)
+        => ShiftRightLogical(src, count);
+
+    /// <summary>
+    /// __m512i _mm512_srl_epi32 (__m512i a, __m128i count)
+    /// VPSRLD zmm1 {k1}{z}, zmm2, xmm3/m128
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Srl]
+    public static Vector512<uint> vsrl(Vector512<uint> src, Vector128<uint> count)
         => ShiftRightLogical(src, count);
 
     /// <summary>
@@ -158,6 +203,17 @@ partial class vcpu
     /// <returns></returns>
     [MethodImpl(Inline), Srl]
     public static Vector512<ulong> vsrl(Vector512<ulong> src, [Imm] byte count)
+        => ShiftRightLogical(src, count);
+
+    /// <summary>
+    /// __m512i _mm512_srl_epi64 (__m512i a, __m128i count)
+    /// VPSRLQ zmm1 {k1}{z}, zmm2, xmm3/m128
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Srl]
+    public static Vector512<ulong> vsrl(Vector512<ulong> src, Vector128<ulong> count)
         => ShiftRightLogical(src, count);
 
     /// <summary>

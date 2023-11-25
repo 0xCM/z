@@ -4,29 +4,23 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using static ConditionTokens;
-
 [StructLayout(LayoutKind.Sequential, Pack=1), DataTypeAttributeD("asm.conditions.jcc32")]
 public record struct Jcc32Conditions : IConditional
 {
-    public JccInfo<Jcc32Code> Primary;
+    public JccInfo<Jcc32Code> Definition;
 
-    public JccInfo<Jcc32AltCode> Alt;
-
-    public CharBlock64 PrimaryInfo;
-
-    public CharBlock64 AltInfo;
+    public CharBlock64 Description;
 
     public BitWidth RelWidth
     {
         [MethodImpl(Inline)]
-        get => Primary.Size.Width;
+        get => Definition.Size.Width;
     }
 
     public byte Encoding
     {
         [MethodImpl(Inline)]
-        get => Primary.Encoding;
+        get => Definition.Encoding;
     }
 
     public ReadOnlySpan<char> Bitstring
@@ -35,15 +29,9 @@ public record struct Jcc32Conditions : IConditional
         get => BitRender.render8x4(Encoding);
     }
 
-    public bit Identical
-    {
-        [MethodImpl(Inline)]
-        get => Alt.Name == Primary.Name;
-    }
-
-    public string Format(bit alt)
-        => Conditions.format(this,alt);
+    public string Format()
+        => Conditions.format(this);
 
     public override string ToString()
-        => Format(false);
+        => Format();
 }

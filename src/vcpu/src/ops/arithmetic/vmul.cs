@@ -72,62 +72,6 @@ partial class vcpu
         return (lo,hi);
     }
 
-    // /// <summary>
-    // /// Computes the full 16-bit product of corresponding left and right source components
-    // /// </summary>
-    // /// <param name="x">The left vector</param>
-    // /// <param name="y">The right vector</param>
-    // /// <param name="lo">Receiver for the product of the lower components</param>
-    // /// <param name="hi">Receiver for the product of the upper components</param>
-    // [MethodImpl(Inline), Mul]
-    // public static Vector256<short> vmul(Vector128<sbyte> x, Vector128<sbyte> y)
-    //     => vmullo(vpack.vinflate256x16i(x), vpack.vinflate256x16i(y));
-
-    // /// <summary>
-    // /// Computes the full 16-bit product of corresponding left and right source components
-    // /// </summary>
-    // /// <param name="x">The left vector</param>
-    // /// <param name="y">The right vector</param>
-    // /// <param name="lo">Receiver for the product of the lower components</param>
-    // /// <param name="hi">Receiver for the product of the upper components</param>
-    // [MethodImpl(Inline), Mul]
-    // public static Vector256<ushort> vmul(Vector128<byte> x, Vector128<byte> y)
-    // {
-    //     var z0 = vpack.vinflate256x16u(x);
-    //     var z1 = vpack.vinflate256x16u(y);
-    //     return vmullo(z0,z1);
-    // }
-
-    // /// <summary>
-    // /// Computes the full 32-bit product of corresponding left and right source components
-    // /// </summary>
-    // /// <param name="x">The left vector</param>
-    // /// <param name="y">The right vector</param>
-    // /// <param name="lo">Receiver for the product of the lower components</param>
-    // /// <param name="hi">Receiver for the product of the upper components</param>
-    // [MethodImpl(Inline), Mul]
-    // public static Vector256<int> vmul(Vector128<short> x, Vector128<short> y)
-    // {
-    //     var z0 = vpack.vinflate256x32i(x);
-    //     var z1 = vpack.vinflate256x32i(y);
-    //     return vmullo(z0,z1);
-    // }
-
-    // /// <summary>
-    // /// Computes the full 32-bit product of corresponding left and right source components
-    // /// </summary>
-    // /// <param name="x">The left vector</param>
-    // /// <param name="y">The right vector</param>
-    // /// <param name="lo">Receiver for the product of the lower components</param>
-    // /// <param name="hi">Receiver for the product of the upper components</param>
-    // [MethodImpl(Inline), Mul]
-    // public static Vector256<uint> vmul(Vector128<ushort> x, Vector128<ushort> y)
-    // {
-    //     var z0 = vpack.vinflate256x32u(x);
-    //     var z1 = vpack.vinflate256x32u(y);
-    //     return vmullo(z0,z1);
-    // }
-
     /// <summary>
     ///  __m128i _mm_mul_epi32 (__m128i a, __m128i b) PMULDQ xmm, xmm/m128
     /// </summary>

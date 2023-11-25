@@ -12,6 +12,43 @@ namespace Z0
     [ApiHost]
     public readonly partial struct SpanBlocks
     {
+
+        /// <summary>
+        /// Effects a component-wise contraction on the source vector on a source vector of unsigned primal type,
+        /// dst[i] = src[i].Contract(max[i])
+        /// </summary>
+        /// <param name="src">The vector to contract</param>
+        /// <param name="max">The upper bound</param>
+        /// <typeparam name="N">The length type</typeparam>
+        /// <typeparam name="T">The unsigned primal type</typeparam>
+        public static Block256<N,T> contract<N,T>(Block256<N,T> src, Block256<N,T> max)
+            where N : unmanaged, ITypeNat
+            where T : unmanaged
+        {
+            var dst = NatSpans.alloc<N,T>();
+            for(var i=0; i<dst.Count; i++)
+                dst[i] = gcalc.squeeze(src[i],max[i]);
+            return dst;
+        }
+
+        /// <summary>
+        /// Effects a component-wise contraction on the source vector on a source vector of unsigned primal type,
+        /// dst[i] = src[i].Contract(max[i])
+        /// </summary>
+        /// <param name="src">The vector to contract</param>
+        /// <param name="max">The upper bound</param>
+        /// <typeparam name="N">The length type</typeparam>
+        /// <typeparam name="T">The unsigned primal type</typeparam>
+        public static RowVector256<T> contract<T>(RowVector256<T> src, RowVector256<T> max)
+            where T : unmanaged
+        {
+            var len = src.Length;
+            var dst = Z0.RowVectors.blockalloc<T>(len);
+            for(var i=0; i<dst.Length; i++)
+                dst[i] = gcalc.squeeze(src[i], max[i]);
+            return dst;
+        }
+
         const NumericKind Closure = UnsignedInts;
 
         [MethodImpl(Inline), Op]

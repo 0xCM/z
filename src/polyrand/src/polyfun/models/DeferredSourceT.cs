@@ -7,6 +7,7 @@ namespace Z0;
 using System.Collections;
 using System.Linq;
 
+using static sys;
 /// <summary>
 /// Captures a random stream along with the generator classification
 /// </summary>
@@ -31,6 +32,13 @@ public readonly struct DeferredSource<T> : ISourceStream<T>
     [MethodImpl(Inline)]
     public T Next()
         => Src.First();
+
+    public ByteSize Fill(Span<T> dst)
+    {
+        for(var i=0; i<dst.Length; i++)
+            seek(dst,i) = Next();
+        return dst.Length*size<T>();
+    }
 
     IEnumerator IEnumerable.GetEnumerator()
         => Src.GetEnumerator();

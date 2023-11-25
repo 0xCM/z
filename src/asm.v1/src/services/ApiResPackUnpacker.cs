@@ -85,7 +85,7 @@ namespace Z0.Asm
             {
                 ref readonly var seg = ref skip(src,i);
                 buffer.Clear();
-                writer.WriteLine(BinaryRows.pack(seg, i, buffer));
+                writer.WriteLine(Hex.pack(seg, buffer));
             }
             Channel.EmittedFile(flow, count);
         }

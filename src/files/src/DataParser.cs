@@ -153,10 +153,31 @@ public readonly struct DataParser
         return true;
     }
 
+
+    /// <summary>
+    /// Parses a space-delimited sequence of hex text
+    /// </summary>
+    /// <param name="src">The space-delimited hex</param>
+    [Op]
+    public static Outcome parse(string src, out byte[] dst)
+    {
+        try
+        {
+            dst = src.Trim().Split(Chars.Space).Select(x => byte.Parse(x, NumberStyles.HexNumber));
+            return true;
+        }
+        catch(Exception e)
+        {
+            dst = sys.empty<byte>();
+            return (e,$"Input:{src}");
+        }
+    }
+
     [Parser]
     public static Outcome parse(string src, out BinaryCode dst)
     {
-        var result = Hex.hexdata(src, out var data);
+        var data = sys.empty<byte>();
+        var result = parse(src, out data);
         if(result)
         {
             dst = data;
@@ -170,4 +191,4 @@ public readonly struct DataParser
     }
 
     static MsgPattern<string> ParsingBytesFailed => "Parsing bytes from {0} failed";
-    }
+}

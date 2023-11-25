@@ -162,7 +162,7 @@ namespace Z0
                 return false;
 
             AddressParser.parse(skip(parts,0), out MemoryAddress location);
-            Hex.code(skip(parts,1), out BinaryCode cde);
+            //Hex.code(skip(parts,1), out BinaryCode cde);
 
             return true;
         }
@@ -379,96 +379,6 @@ namespace Z0
             return new MemoryBlocks(dst);
         }
 
-        // x7ffb651869e0[00012:00017]=<c5f8776690c5f857c0c5f91101488bc1c3>
-        public static Outcome<ByteSize> parse(ushort index, string src, out MemoryBlock dst)
-        {
-            var count = src.Length;
-            var line = index + 1;
-            var result = Outcome.Success;
-            dst = default;
-            if(count == 0)
-            {
-                dst = MemoryBlock.Empty;
-                return (false, "The input, it is empty");
-            }
-
-            if(first(src) != 'x')
-                return(false, $"Line {src} does not begin with the required character 'x'");
-
-            var i = src.IndexOf('h');
-            if(i == NotFound)
-                return(false, $"Line {src} does not contain address terminator 'h'");
-
-            result = AddressParser.parse(text.slice(src, 1, i-1), out MemoryAddress @base);
-            if(result.Fail)
-                return (false, $"{result.Message} | Could not parse address from '{src}'");
-
-            if(!Fenced.unfence(src, SegFence, out var seg))
-                return (false, $"Line {src} does not contain segment fence");
-
-            if(!Fenced.unfence(src, DataFence, out var data))
-                return (false, $"Line {src} does not contain data fence");
-
-            var segparts = text.split(seg, SegSep);
-            if(segparts.Length != 2)
-                return (false, $"Line {src} segement specifier does not have the required 2 components");
-
-            var segLeft = skip(segparts,0);
-            DataParser.parse(segLeft, out ushort segidx);
-            if(segidx != index)
-                return (false, $"Line {line} number does not correspond to the segement index {segidx}");
-
-            var segRight = skip(segparts,1);
-            result = DataParser.parse(segRight, out ByteSize segsize);
-            if(result.Fail)
-                return (false, $"{result.Message} | Could not parse segment size from {segRight}");
-
-            result = Hex.parse(data, out BinaryCode code);
-
-            if(result.Fail)
-                return (false, $"{result.Message} | Could not parse code from {data}");
-
-            if(code.IsEmpty)
-                return (false, $"Line {src} contains no data");
-
-            if(segsize != code.Length)
-                return (false, $"Expected {segsize} bytes but parsed {code.Length}");
-
-            dst = new MemoryBlock(@base, segsize, code);
-
-            return segsize;
-        }
-
-        public static MemoryBlocks memory(FilePath src)
-        {
-            var dst = MemoryBlocks.Empty;
-            var result = Outcome<MemoryBlocks>.Success;
-            var unpacked = Outcome<ByteSize>.Success;
-            var size  = ByteSize.Zero;
-            var buffer = list<MemoryBlock>();
-            var counter = z16;
-            using var reader = src.AsciReader();
-            var data = reader.ReadLine();
-            var block = MemoryBlock.Empty;
-            while(result.Ok && text.nonempty(data))
-            {
-                unpacked = parse(counter++, data, out block);
-                if(unpacked.Fail)
-                {
-                    result = (false, unpacked.Message);
-                    Errors.Throw(unpacked.Message);
-                }
-                else
-                {
-                    buffer.Add(block);
-                    size += unpacked.Data;
-                    data = reader.ReadLine();
-                }
-            }
-
-            dst = buffer.ToArray();
-            return dst;
-        }
 
         const char SegSep = Chars.Colon;
 

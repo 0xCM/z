@@ -58,8 +58,8 @@ public readonly struct CheckDynamicVectors
 
         for(var i=0; i<count; i++)
         {
-            var x = Source.CpuVector(w,t);
-            var y = Source.CpuVector(w,t);
+            var x = Source.CpuVector<T>(w);
+            var y = Source.CpuVector<T>(w);
             success &= vgcpu.vtestc(vgcpu.veq(f(x,y), g.Apply(x,y)));
         }
 
@@ -77,8 +77,8 @@ public readonly struct CheckDynamicVectors
 
         for(var i=0; i<count; i++)
         {
-            var x = Source.CpuVector(w,t);
-            var y = Source.CpuVector(w,t);
+            var x = Source.CpuVector<T>(w);
+            var y = Source.CpuVector<T>(w);
             success &= vgcpu.vtestc(vgcpu.veq(f(x,y), g.Apply(x,y)));
         }
 

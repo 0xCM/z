@@ -50,9 +50,9 @@ namespace Z0
             for(var sample=0; sample<RepCount; sample++)
             {
 
-                var x = Random.CpuVector(w,t);
-                var y = Random.CpuVector(w,t);
-                var mask = Random.CpuVector(w,t);
+                var x = Random.CpuVector<T>(w);
+                var y = Random.CpuVector<T>(w);
+                var mask = Random.CpuVector<T>(w);
                 var blended = gcpu.vblendbits(x,y,mask);
 
                 for(byte i = 0; i<count; i++)
@@ -84,9 +84,9 @@ namespace Z0
             var count = w/width<T>();
             for(var sample=0; sample<RepCount; sample++)
             {
-                var x = Random.CpuVector(w,t);
-                var y = Random.CpuVector(w,t);
-                var m = Random.CpuVector(w,t);
+                var x = Random.CpuVector<T>(w);
+                var y = Random.CpuVector<T>(w);
+                var m = Random.CpuVector<T>(w);
                 var r = gcpu.vblendbits(x,y,m);
 
                 for(byte i = 0; i<count; i++)

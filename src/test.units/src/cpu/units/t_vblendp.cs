@@ -116,7 +116,7 @@ namespace Z0
             gcpu.vlo(z).StoreTo(dst,0);
             gcpu.vhi(z).StoreTo(dst,1);
 
-            var perm = Permute.init(dst.Storage);
+            var perm = Permute.init(dst.Storage.ToArray());
             for(var i=0; i< perm.Length; i++)
             {
                 var identity = i == perm[i];
@@ -181,7 +181,7 @@ namespace Z0
             gcpu.vlo(blend).StoreTo(dst,0);
             gcpu.vhi(blend).StoreTo(dst,1);
 
-            var perm = Permute.init(dst.Storage);
+            var perm = Permute.init(dst.Storage.ToArray());
             var tc = 0;
             for(var i=0; i<perm.Length; i++)
             {

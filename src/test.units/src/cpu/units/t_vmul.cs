@@ -27,8 +27,8 @@ namespace Z0
 
             for(var rep=0; rep< RepCount; rep++)
             {
-                var x = Random.CpuVector(ws,s);
-                var y = Random.CpuVector(ws,s);
+                var x = Random.CpuVector<uint>(ws);
+                var y = Random.CpuVector<uint>(ws);
                 var x0 = zUInt128.mul(vcell(x,0), vcell(y,0));
                 var x1 = zUInt128.mul(vcell(x,1), vcell(y,1));
                 var x2 = zUInt128.mul(vcell(x,2), vcell(y,2));

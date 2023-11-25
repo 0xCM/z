@@ -12,6 +12,10 @@ partial class vcpu
         => vor(vand(x,y), vnonimpl(x,z));
 
     [MethodImpl(Inline), Select]
+    public static Vector128<sbyte> vselect(Vector128<sbyte> x, Vector128<sbyte> y, Vector128<sbyte> z)
+        => vor(vand(x,y), vnonimpl(x,z));
+
+    [MethodImpl(Inline), Select]
     public static Vector128<ushort> vselect(Vector128<ushort> x, Vector128<ushort> y, Vector128<ushort> z)
         => vor(vand(x,y), vnonimpl(x,z));
 
@@ -44,11 +48,27 @@ partial class vcpu
         => vor(vand(x,y), vnonimpl(x,z));
 
     [MethodImpl(Inline), Select]
+    public static Vector512<sbyte> vselect(Vector512<sbyte> x, Vector512<sbyte> y, Vector512<sbyte> z)
+        => vor(vand(x,y), vnonimpl(x,z));
+
+    [MethodImpl(Inline), Select]
     public static Vector512<ushort> vselect(Vector512<ushort> x, Vector512<ushort> y, Vector512<ushort> z)
         => vor(vand(x,y), vnonimpl(x,z));
 
     [MethodImpl(Inline), Select]
+    public static Vector512<short> vselect(Vector512<short> x, Vector512<short> y, Vector512<short> z)
+        => vor(vand(x,y), vnonimpl(x,z));
+
+    [MethodImpl(Inline), Select]
+    public static Vector512<int> vselect(Vector512<int> x, Vector512<int> y, Vector512<int> z)
+        => vor(vand(x,y), vnonimpl(x,z));
+
+    [MethodImpl(Inline), Select]
     public static Vector512<uint> vselect(Vector512<uint> x, Vector512<uint> y, Vector512<uint> z)
+        => vor(vand(x,y), vnonimpl(x,z));
+
+    [MethodImpl(Inline), Select]
+    public static Vector512<long> vselect(Vector512<long> x, Vector512<long> y, Vector512<long> z)
         => vor(vand(x,y), vnonimpl(x,z));
 
     [MethodImpl(Inline), Select]

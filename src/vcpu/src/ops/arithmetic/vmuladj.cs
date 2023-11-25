@@ -32,4 +32,26 @@ partial class vcpu
     [MethodImpl(Inline), Op]
     public static Vector256<int> vmuladj(Vector256<short> x, Vector256<short> y)
         => MultiplyAddAdjacent(x,y);
+
+    /// <summary>
+    /// __m512i _mm512_maddubs_epi16 (__m512i a, __m512i b)
+    /// VPMADDUBSW zmm1 {k1}{z}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<short> vmuladj(Vector512<byte> x, Vector512<sbyte> y)
+        => MultiplyAddAdjacent(x,y);
+
+    /// <summary>
+    /// __m512i _mm512_madd_epi16 (__m512i a, __m512i b)
+    /// VPMADDWD zmm1 {k1}{z}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<int> vmuladj(Vector512<short> x, Vector512<short> y)
+        => MultiplyAddAdjacent(x,y);
 }

@@ -2,20 +2,17 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm
+namespace Z0.Asm;
+
+using System;
+
+public interface IConditional
 {
-    using System;
+    string Format();
 
-    public interface IConditional
-    {
-        string Format(bit alt);
+    ReadOnlySpan<char> Bitstring {get;}
 
-        ReadOnlySpan<char> Bitstring {get;}
+    BitWidth RelWidth {get;}
 
-        BitWidth RelWidth {get;}
-
-        byte Encoding {get;}
-
-        bit Identical {get;}
-    }
+    byte Encoding {get;}
 }

@@ -15,5 +15,10 @@ namespace Z0
         public static Vector256<T> videntity<T>(Vector256<T> a)
             where T : unmanaged
                 => a;
+
+        [MethodImpl(Inline), IdentityFunction, Closures(Integers)]
+        public static Vector512<T> videntity<T>(Vector512<T> a)
+            where T : unmanaged
+                => a;
     }
 }

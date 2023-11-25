@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0.Asm;
 
-using static ConditionTokens;
-
 [StructLayout(LayoutKind.Sequential, Pack=1)]
 public readonly record struct JccInfo
 {
@@ -24,14 +22,6 @@ public readonly record struct JccInfo
     }
 
     [MethodImpl(Inline)]
-    public JccInfo(Jcc8AltCode code, asci8 name)
-    {
-        Code = (byte)code;
-        Name = name;
-        Size = NativeSizeCode.W8;
-    }
-
-    [MethodImpl(Inline)]
     public JccInfo(Jcc32Code code, asci8 name)
     {
         Code = (byte)code;
@@ -39,11 +29,4 @@ public readonly record struct JccInfo
         Size = NativeSizeCode.W32;
     }
 
-    [MethodImpl(Inline)]
-    public JccInfo(Jcc32AltCode code, asci8 name)
-    {
-        Code = (byte)code;
-        Name = name;
-        Size = NativeSizeCode.W32;
-    }
 }

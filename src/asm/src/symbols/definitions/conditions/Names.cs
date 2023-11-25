@@ -40,5 +40,29 @@ partial class ConditionTokens
         public const string jpo = nameof(jpo);
 
         public const string jl = nameof(jl);
-    }
+
+        public const string jae = nameof(jae);
+
+        public const string je = nameof(je);
+
+        public const string jne = nameof(jne);
+
+        public const string jbe = nameof(jbe);
+
+        public const string jnbe = nameof(jnbe);
+
+        public const string jp = nameof(jp);
+
+        public const string jnp = nameof(jnp);
+
+        public const string jnge = nameof(jnge);
+
+        public const string jge = nameof(jge);
+
+        public const string jle = nameof(jle);
+
+        public const string jg = nameof(jg);
+
+        public const string jnae = nameof(jnae);
+   }
 }

@@ -7,7 +7,8 @@ namespace Z0;
 partial class vcpu 
 {
     /// <summary>
-    ///  __m128i _mm_sad_epu8 (__m128i a, __m128i b) PSADBW xmm, xmm/m128
+    ///  __m128i _mm_sad_epu8 (__m128i a, __m128i b)
+    ///  PSADBW xmm, xmm/m128
     /// </summary>
     /// <param name="lhs"></param>
     /// <param name="rhs"></param>
@@ -16,7 +17,8 @@ partial class vcpu
         => SumAbsoluteDifferences(lhs,rhs);
 
     /// <summary>
-    /// __m256i _mm256_sad_epu8 (__m256i a, __m256i b) VPSADBW ymm, ymm, ymm/m256
+    /// __m256i _mm256_sad_epu8 (__m256i a, __m256i b)
+    /// VPSADBW ymm, ymm, ymm/m256
     /// Computes the absolute differences of packed unsigned 8-bit integers in a and b,
     /// then horizontally sums each consecutive 8 differences to produce four
     /// unsigned 16-bit integers, and pack these unsigned 16-bit integers in the low
@@ -27,4 +29,16 @@ partial class vcpu
     [MethodImpl(Inline), Sad]
     public static Vector256<ushort> vsad(Vector256<byte> lhs, Vector256<byte> rhs)
         => SumAbsoluteDifferences(lhs,rhs);
+
+    /// <summary>
+    /// __m512i _mm512_sad_epu8 (__m512i a, __m512i b)
+    /// VPSADBW zmm1 {k1}{z}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="lhs"></param>
+    /// <param name="rhs"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Sad]
+    public static Vector512<ushort> vsad(Vector512<byte> lhs, Vector512<byte> rhs)
+        => SumAbsoluteDifferences(lhs,rhs);
+
 }

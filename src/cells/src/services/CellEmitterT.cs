@@ -19,6 +19,14 @@ public struct CellEmitter<F> : IValueSource<F>
     public F Next()
         => select(w8);
 
+    public ByteSize Fill(Span<F> dst)
+    {
+        var size = 0u;
+        for(var i=0; i<dst.Length; i++, size+=8)
+            seek(dst,i) = Next();
+        return size;
+    }
+
     public bool Next(out F dst)
     {
         dst = Next();

@@ -133,4 +133,69 @@ partial class vcpu
     [MethodImpl(Inline), Negate]
     public static Vector256<ulong> vnegate(Vector256<ulong> src)
         => vsub(vnot(src), vones<ulong>(w256));
+
+
+    /// <summary>
+    /// Negates the source vector
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Negate]
+    public static Vector512<sbyte> vnegate(Vector512<sbyte> src)
+        => vsub(default, src);
+
+    /// <summary>
+    /// Negates the source vector (Two's complement)
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Negate]
+    public static Vector512<byte> vnegate(Vector512<byte> src)
+        => vsub(vnot(src), vones<byte>(w512));
+
+    /// <summary>
+    /// Negates the source vector
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Negate]
+    public static Vector512<short> vnegate(Vector512<short> src)
+        => vsub(default, src);
+
+    /// <summary>
+    /// Negates the source vector (Two's complement)
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Negate]
+    public static Vector512<ushort> vnegate(Vector512<ushort> src)
+        => vsub(vnot(src), vones<ushort>(w512));
+
+    /// <summary>
+    /// Negates the source vector
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Negate]
+    public static Vector512<int> vnegate(Vector512<int> src)
+        => vsub(default, src);
+
+    /// <summary>
+    /// Negates the source vector (Two's complement)
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Negate]
+    public static Vector512<uint> vnegate(Vector512<uint> src)
+        => vsub(vnot(src), vones<uint>(w512));
+
+    /// <summary>
+    /// Negates the source vector
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Negate]
+    public static Vector512<long> vnegate(Vector512<long> src)
+        => vsub(default, src);
+
+    /// <summary>
+    /// Negates the source vector (Two's complement)
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Negate]
+    public static Vector512<ulong> vnegate(Vector512<ulong> src)
+        => vsub(vnot(src), vones<ulong>(w512));
 }

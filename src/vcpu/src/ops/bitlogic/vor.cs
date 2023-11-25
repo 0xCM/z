@@ -208,6 +208,13 @@ partial class vcpu
     public static Vector512<sbyte> vor(Vector512<sbyte> x, Vector512<sbyte> y)
         => Or(x, y);
 
+    /// <summary>
+    /// __m512i _mm512_or_si512 (__m512i a, __m512i b)
+    /// VPORD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Or]
     public static Vector512<ushort> vor(Vector512<ushort> x, Vector512<ushort> y)
         => Or(x, y);
@@ -216,6 +223,13 @@ partial class vcpu
     public static Vector512<int> vor(Vector512<int> x, Vector512<int> y)
         => Or(x, y);
 
+    /// <summary>
+    /// __m512i _mm512_or_epi32 (__m512i a, __m512i b)
+    /// VPORD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Or]
     public static Vector512<uint> vor(Vector512<uint> x, Vector512<uint> y)
         => Or(x, y);

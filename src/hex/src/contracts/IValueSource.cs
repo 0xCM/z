@@ -4,13 +4,12 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-public interface IValueSource
-{
-    dynamic Next();
-}
-
 [Free]
 public interface IValueSource<T>
+
 {
     T Next();
+
+
+    ByteSize Fill(Span<T> dst);
 }

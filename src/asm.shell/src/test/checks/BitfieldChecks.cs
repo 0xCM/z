@@ -64,7 +64,6 @@ public class BitfieldChecks : Checker<BitfieldChecks>
         return merge;
     }
 
-
     enum BF_A : byte
     {
         [Symbol("seg0")]

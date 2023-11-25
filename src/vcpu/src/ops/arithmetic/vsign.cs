@@ -75,4 +75,5 @@ partial class vcpu
     [MethodImpl(Inline), Op]
     public static Vector256<int> vsign(Vector256<int> dst, Vector256<int> match)
         => Sign(dst, match);
+
 }

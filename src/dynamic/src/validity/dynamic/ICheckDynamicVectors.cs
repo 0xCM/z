@@ -39,8 +39,8 @@ public interface ICheckDynamicVectors : ICheckAction, ITestDynamic, IBufferedChe
             var t = default(T);
             for(var i=0; i<RepCount; i++)
             {
-                var x = Random.CpuVector(w,t);
-                var y = Random.CpuVector(w,t);
+                var x = Random.CpuVector<T>(w);
+                var y = Random.CpuVector<T>(w);
                 vgcpu.veq(f(x,y), g.Apply(x,y));
             }
         }
@@ -57,8 +57,8 @@ public interface ICheckDynamicVectors : ICheckAction, ITestDynamic, IBufferedChe
             var t = default(T);
             for(var i=0; i<RepCount; i++)
             {
-                var x = Random.CpuVector(w,t);
-                var y = Random.CpuVector(w,t);
+                var x = Random.CpuVector<T>(w);
+                var y = Random.CpuVector<T>(w);
                 eq(f(x,y), g.Apply(x,y));
             }
         }
@@ -76,8 +76,8 @@ public interface ICheckDynamicVectors : ICheckAction, ITestDynamic, IBufferedChe
         {
             for(var i=0; i<RepCount; i++)
             {
-                var x = Random.CpuVector(w,t);
-                var y = Random.CpuVector(w,t);
+                var x = Random.CpuVector<T>(w);
+                var y = Random.CpuVector<T>(w);
                 eq(f(x,y), g.Apply(x,y));
             }
         }
@@ -96,8 +96,8 @@ public interface ICheckDynamicVectors : ICheckAction, ITestDynamic, IBufferedChe
 
             for(var i=0; i<RepCount; i++)
             {
-                var x = Random.CpuVector(w,t);
-                var y = Random.CpuVector(w,t);
+                var x = Random.CpuVector<T>(w);
+                var y = Random.CpuVector<T>(w);
                 eq(f(x,y), g.Apply(x,y));
             }
         }

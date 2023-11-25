@@ -60,7 +60,7 @@ namespace Z0
 
             for(var i=0; i< RepCount; i++)
             {
-                var x = Random.CpuVector(w,t);
+                var x = Random.CpuVector<T>(w);
 
                 // Creates a mask corresponding to each off bit in the source vector
                 // thereby establishing the the context where testz will return true
@@ -77,7 +77,7 @@ namespace Z0
 
             for(var i=0; i< RepCount; i++)
             {
-                var x = Random.CpuVector(w,t);
+                var x = Random.CpuVector<T>(w);
 
                 // Creates a mask corresponding to each off bit in the source vector
                 // thereby establishing the the context where testz will return true

@@ -2365,6 +2365,42 @@ public unsafe class fcpu
         => Store(refptr(ref dst),src);
 
 
+    /// <summary>
+    /// __m128 _mm_add_ps (__m128 a, __m128 b) ADDPS xmm, xmm/m128
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Add]
+    public static Vector128<float> vadd(Vector128<float> x, Vector128<float> y)
+        => Add(x, x);
+
+    /// <summary>
+    /// __m128d _mm_add_pd (__m128d a, __m128d b) ADDPD xmm, xmm/m128
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Add]
+    public static Vector128<double> vadd(Vector128<double> x, Vector128<double> y)
+        => Add(x, y);
+
+    /// <summary>
+    /// __m256 _mm256_add_ps (__m256 a, __m256 b) VADDPS ymm, ymm, ymm/m256
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Add]
+    public static Vector256<float> vadd(Vector256<float> x, Vector256<float> y)
+        => Add(x, y);
+
+    /// <summary>
+    /// __m256d _mm256_add_pd (__m256d a, __m256d b) VADDPD ymm, ymm, ymm/m256
+    /// </summary>
+    /// <param name="x">The left operand</param>
+    /// <param name="y">The right operand</param>
+    [MethodImpl(Inline), Add]
+    public static Vector256<double> vadd(Vector256<double> x, Vector256<double> y)
+        => Add(x, y);
+
     static Vector256<int> MRev256f32
     {
         [MethodImpl(Inline), Op]

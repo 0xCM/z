@@ -85,24 +85,6 @@ partial class vcpu
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
-    [MethodImpl(Inline), Same]
-    public static bit vsame(Vector128<float> x, Vector128<float> y)
-        => vtestc(fcpu.veq(x,y));
-
-    /// <summary>
-    /// Returns 1 if the left vector is identical to the right vector and 0 otherwise
-    /// </summary>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
-    [MethodImpl(Inline), Same]
-    public static bit vsame(Vector128<double> x, Vector128<double> y)
-        => vtestc(fcpu.veq(x,y));
-
-    /// <summary>
-    /// Returns 1 if the left vector is identical to the right vector and 0 otherwise
-    /// </summary>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
     /// <typeparam name="T">The component type</typeparam>
     [MethodImpl(Inline), Same]
     public static bit vsame(Vector256<byte> x, Vector256<byte> y)
@@ -172,21 +154,4 @@ partial class vcpu
     public static bit vsame(Vector256<ulong> x, Vector256<ulong> y)
         => vtestc(veq(x,y));
 
-    /// <summary>
-    /// Returns 1 if the left vector is identical to the right vector and 0 otherwise
-    /// </summary>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
-    [MethodImpl(Inline), Same]
-    public static bit vsame(Vector256<float> x, Vector256<float> y)
-        => vtestc(fcpu.veq(x,y));
-
-    /// <summary>
-    /// Returns 1 if the left vector is identical to the right vector and 0 otherwise
-    /// </summary>
-    /// <param name="x">The left vector</param>
-    /// <param name="y">The right vector</param>
-    [MethodImpl(Inline), Same]
-    public static bit vsame(Vector256<double> x, Vector256<double> y)
-        => vtestc(fcpu.veq(x,y));
 }

@@ -29,6 +29,13 @@ public class Polyrand : IPolyrand
         Navigator = Option.some(points as IRandomNav);
     }
 
+    public ByteSize Fill<T>(Span<T> dst)
+    {
+        for(var i=0; i<dst.Length; i++)
+            seek(dst,i) = Next<T>();
+        return dst.Length*size<T>();
+    }
+
     [MethodImpl(Inline)]
     public T Next<T>()
     {
@@ -231,7 +238,7 @@ public class Polyrand : IPolyrand
 
     [MethodImpl(Inline)]
     sbyte IValueSource<sbyte>.Next()
-            => (sbyte) (Points.Next((ulong)sbyte.MaxValue*2) - (ulong)SByte.MaxValue);
+        => (sbyte) (Points.Next((ulong)sbyte.MaxValue*2) - (ulong)SByte.MaxValue);
 
     [MethodImpl(Inline)]
     sbyte IBoundSource<sbyte>.Next(sbyte max)
@@ -249,6 +256,9 @@ public class Polyrand : IPolyrand
             : math.add(min, (sbyte)Points.Next((ulong)math.negate(delta)));
     }
 
+    ByteSize IValueSource<sbyte>.Fill(Span<sbyte> dst)
+        => Fill(dst);
+
     [MethodImpl(Inline)]
     byte IBoundSource<byte>.Next(byte min, byte max)
         => (byte)Points.Next((ulong)min, (ulong)max);
@@ -260,6 +270,9 @@ public class Polyrand : IPolyrand
     [MethodImpl(Inline)]
     byte IValueSource<byte>.Next()
         => (byte)Points.Next((ulong)byte.MaxValue);
+
+    ByteSize IValueSource<byte>.Fill(Span<byte> dst)
+        => Fill(dst);
 
     [MethodImpl(Inline)]
     short IValueSource<short>.Next()
@@ -281,6 +294,9 @@ public class Polyrand : IPolyrand
             : math.add(min, (short)Points.Next((ulong)math.negate(delta)));
     }
 
+    ByteSize IValueSource<short>.Fill(Span<short> dst)
+        => Fill(dst);
+
     [MethodImpl(Inline)]
     short NextI16()
         => (short)Points.Next(((ulong)short.MaxValue*2) - (ulong)short.MaxValue);
@@ -296,6 +312,9 @@ public class Polyrand : IPolyrand
     [MethodImpl(Inline)]
     ushort IBoundSource<ushort>.Next(ushort min, ushort max)
         => (ushort)Points.Next((ulong)min, (ulong)max);
+
+    ByteSize IValueSource<ushort>.Fill(Span<ushort> dst)
+        => Fill(dst);
 
     [MethodImpl(Inline)]
     int IValueSource<int>.Next()
@@ -317,6 +336,10 @@ public class Polyrand : IPolyrand
             : min + (int)Points.Next((ulong)math.negate(delta));
     }
 
+    ByteSize IValueSource<int>.Fill(Span<int> dst)
+        => Fill(dst);
+
+
     [MethodImpl(Inline)]
     int NextI32()
         => (int) (Points.Next((ulong)int.MaxValue*2) - Int32.MaxValue);
@@ -332,6 +355,10 @@ public class Polyrand : IPolyrand
     [MethodImpl(Inline)]
     uint IBoundSource<uint>.Next(uint min, uint max)
         => (uint)Points.Next((ulong)min, (ulong)max);
+
+    ByteSize IValueSource<uint>.Fill(Span<uint> dst)
+        => Fill(dst);
+
 
     [MethodImpl(Inline)]
     uint NextU32(uint min, uint max)
@@ -371,6 +398,11 @@ public class Polyrand : IPolyrand
             : min + (long)Points.Next((ulong)math.negate(delta));
     }
 
+    ByteSize IValueSource<long>.Fill(Span<long> dst)
+        => Fill(dst);
+
+
+
     [MethodImpl(Inline)]
     ulong IValueSource<ulong>.Next()
         => Points.Next();
@@ -382,6 +414,9 @@ public class Polyrand : IPolyrand
     [MethodImpl(Inline)]
     ulong IBoundSource<ulong>.Next(ulong min, ulong max)
         => Points.Next(min, max);
+
+    ByteSize IValueSource<ulong>.Fill(Span<ulong> dst)
+        => Fill(dst);
 
     [MethodImpl(Inline)]
     float IValueSource<float>.Next()
@@ -401,6 +436,9 @@ public class Polyrand : IPolyrand
         return whole + NextF32();
     }
 
+    ByteSize IValueSource<float>.Fill(Span<float> dst)
+        => Fill(dst);
+
     [MethodImpl(Inline)]
     double IValueSource<double>.Next()
         => NextF64();
@@ -418,6 +456,9 @@ public class Polyrand : IPolyrand
         var whole = (double)Int64Source.Next((long)max);
         return whole + NextF64();
     }
+
+    ByteSize IValueSource<double>.Fill(Span<double> dst)
+        => Fill(dst);
 
     [MethodImpl(Inline)]
     float NextF32()

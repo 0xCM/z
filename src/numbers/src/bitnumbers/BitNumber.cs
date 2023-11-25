@@ -15,16 +15,16 @@ namespace Z0
             where N : unmanaged, ITypeNat
             where T : unmanaged
         {
-            var bn = BitNumber.generic(n,value);
+            var bn = generic(n,value);
             var width = Require.equal((byte)n.NatValue, bn.Width);
-            var bs = BitNumber.bitstring(n,value);
+            var bs = bitstring(n,value);
             var scalar = bn.Value;
             Require.invariant(gmath.eq(scalar,value));
             var f0 = Require.equal(bs.Format(), bn.Format());
-            BitNumber.parse(f0,n, out BitNumber<T> roundtrip);
+            parse(f0,n, out BitNumber<T> roundtrip);
             Require.equal(f0, roundtrip.Format());
             var storage = ByteBlock32.Empty;
-            var bits = BitNumber.parse(f0, n, ref storage);
+            var bits = parse(f0, n, ref storage);
             var f1 = bits.ToArray().Reverse().Select(x => x.Format()).Concat();
             Require.equal(f0,f1);
             log.AppendLine(string.Format("{0:D2} | {1:X4} | {2}", width, scalar, f0));
@@ -104,23 +104,23 @@ namespace Z0
         [MethodImpl(Inline)]
         public static BitNumber<T> generic<T>(byte n, T src)
             where T : unmanaged
-                => new BitNumber<T>(n, src);
+                => new (n, src);
 
         [MethodImpl(Inline)]
         public static BitNumber<T> generic<T>(int n, T src)
             where T : unmanaged
-                => new BitNumber<T>((byte)n, src);
+                => new ((byte)n, src);
 
         [MethodImpl(Inline)]
         public static BitNumber<T> generic<T>(uint n, T src)
             where T : unmanaged
-                => new BitNumber<T>((byte)n, src);
+                => new ((byte)n, src);
 
         [MethodImpl(Inline)]
         public static BitNumber<N,T> generic<N,T>(N n, T src)
             where T : unmanaged
             where N : unmanaged, ITypeNat
-                => new BitNumber<N,T>(src);
+                => new (src);
 
         [MethodImpl(Inline)]
         public static BitNumber define(byte n, ulong src)

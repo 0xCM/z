@@ -77,4 +77,49 @@ partial class vcpu
     [MethodImpl(Inline), MulLo]
     public static Vector256<uint> vmullo(Vector256<uint> x, Vector256<uint> y)
         => MultiplyLow(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_mullo_epi16 (__m512i a, __m512i b)
+    /// VPMULLW zmm1 {k1}{z}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), MulLo]
+    public static Vector512<ushort> vmullo(Vector512<ushort> x, Vector512<ushort> y)
+        => MultiplyLow(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_mullo_epi16 (__m512i a, __m512i b)
+    /// VPMULLW zmm1 {k1}{z}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), MulLo]
+    public static Vector512<short> vmullo(Vector512<short> x, Vector512<short> y)
+        => MultiplyLow(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_mullo_epi32 (__m512i a, __m512i b)
+    /// VPMULLD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), MulLo]
+    public static Vector512<int> vmullo(Vector512<int> x, Vector512<int> y)
+        => MultiplyLow(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_mullo_epi32 (__m512i a, __m512i b)
+    /// VPMULLD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), MulLo]
+    public static Vector512<uint> vmullo(Vector512<uint> x, Vector512<uint> y)
+        => MultiplyLow(x, y);
+
 }

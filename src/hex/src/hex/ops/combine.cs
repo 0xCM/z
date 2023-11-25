@@ -2,11 +2,11 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0.Asm;
+namespace Z0;
 
-partial struct asm
+partial struct Hex
 {
     [MethodImpl(Inline), Op]
-    public static InstructionId instid(uint docid, MemoryAddress ip, ReadOnlySpan<byte> encoding)
-        => new (docid, EncodingId.from(ip, encoding));
+    public static byte combine(HexDigitValue lo, HexDigitValue hi)
+        => (byte)((byte)hi << 4 | (byte)lo);
 }

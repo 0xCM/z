@@ -9,6 +9,237 @@ using static sys;
 partial class vcpu
 {
     /// <summary>
+    /// void _mm_storeu_si128 (__m128i* mem_addr, __m128i a)
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="pDst">The target memory</param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector128<sbyte> src, sbyte* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm_storeu_si128 (__m128i* mem_addr, __m128i a)
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="pDst">The target memory</param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector128<byte> src, byte* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm_storeu_si128 (__m128i* mem_addr, __m128i a)
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="pDst">The target memory</param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector128<short> src, short* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm_storeu_si128 (__m128i* mem_addr, __m128i a)
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="pDst">The target memory</param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector128<ushort> src, ushort* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm_storeu_si128 (__m128i* mem_addr, __m128i a)
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="pDst">The target memory</param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector128<int> src, int* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm_storeu_si128 (__m128i* mem_addr, __m128i a)
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="pDst">The target memory</param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector128<uint> src, uint* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm_storeu_si128 (__m128i* mem_addr, __m128i a)
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="pDst">The target memory</param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector128<long> src, long* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm_storeu_si128 (__m128i* mem_addr, __m128i a)
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="pDst">The target memory</param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector128<ulong> src, ulong* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm256_storeu_si256 (__m256i * mem_addr, __m256i a)
+    /// MOVDQU m256, ymm
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="pDst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector256<byte> src, byte* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm256_storeu_si256 (__m256i * mem_addr, __m256i a)
+    /// MOVDQU m256, ymm
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="pDst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector256<sbyte> src, sbyte* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm256_storeu_si256 (__m256i * mem_addr, __m256i a)
+    /// MOVDQU m256, ymm
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="pDst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector256<short> src, short* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm256_storeu_si256 (__m256i * mem_addr, __m256i a)
+    /// MOVDQU m256, ymm
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="pDst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector256<ushort> src, ushort* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm256_storeu_si256 (__m256i * mem_addr, __m256i a)
+    /// MOVDQU m256, ymm
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="pDst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector256<int> src, int* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm256_storeu_si256 (__m256i * mem_addr, __m256i a)
+    /// MOVDQU m256, ymm
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="pDst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector256<uint> src, uint* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm256_storeu_si256 (__m256i * mem_addr, __m256i a)
+    /// MOVDQU m256, ymm
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="pDst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector256<long> src, long* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm256_storeu_si256 (__m256i * mem_addr, __m256i a)
+    /// MOVDQU m256, ymm
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="pDst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector256<ulong> src, ulong* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm512_storeu_epi8 (__m512i * mem_addr, __m512i a)
+    /// VMOVDQU8 m512 {k1}{z}, zmm1
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="pDst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<byte> src, byte* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm512_storeu_epi8 (__m512i * mem_addr, __m512i a)
+    /// VMOVDQU8 m512 {k1}{z}, zmm1
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="pDst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<sbyte> src, sbyte* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm512_storeu_epi16 (__m512i * mem_addr, __m512i a)
+    /// VMOVDQU16 m512 {k1}{z}, zmm1
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="pDst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<short> src, short* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm512_storeu_epi16 (__m512i * mem_addr, __m512i a)
+    /// VMOVDQU16 m512 {k1}{z}, zmm1
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="pDst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<ushort> src, ushort* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm512_storeu_epi32 (__m512i * mem_addr, __m512i a)
+    /// VMOVDQU32 m512 {k1}{z}, zmm1
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="pDst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<int> src, int* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm512_storeu_epi32 (__m512i * mem_addr, __m512i a)
+    /// VMOVDQU32 m512 {k1}{z}, zmm1
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="pDst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<uint> src, uint* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm512_storeu_epi64 (__m512i * mem_addr, __m512i a)
+    /// VMOVDQU64 m512 {k1}{z}, zmm1
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="pDst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<long> src, long* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
+    /// void _mm512_storeu_epi64 (__m512i * mem_addr, __m512i a)
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="pDst"></param>
+    [MethodImpl(Inline), Store]
+    public static unsafe void vstore(Vector512<ulong> src, ulong* pDst)
+        => Store(pDst, src);
+
+    /// <summary>
     /// void _mm_storeu_si128 (__m128i* mem_addr, __m128i a) MOVDQU m128, xmm
     /// Stores vector content to a specified reference
     /// </summary>

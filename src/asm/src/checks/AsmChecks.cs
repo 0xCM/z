@@ -505,14 +505,6 @@ c5 f8 99 c8";
         Channel.Write(formatter.Format(BlockPartition.calc(9591191, 256, 128)));
     }
 
-    [CmdOp("asm/check/jmp")]
-    void CheckJumps()
-    {
-        CheckJmp32(n0);
-        CheckJmp32(n1);
-        CheckJmp32(n2);
-    }
-
     [CmdOp("asm/check/specs")]
     void CheckAsmSpecs()
     {
@@ -525,108 +517,6 @@ c5 f8 99 c8";
         var opcode = AsmOpCodeSpec.Empty;
         var result = SdmOpCodes.parse(Oc0, out opcode);
         Channel.Write($"{Oc0} -> {opcode}");
-    }
-
-    void CheckJmp32(N0 n)
-    {
-        var result = Outcome.Success;
-        var @base = (MemoryAddress)0x7ffd4512bf30;
-        var @return = @base + (MemoryAddress)0x10b7;
-        var sz = (byte)5;
-
-        // 005ah jmp near ptr 10b7h                            ; JMP rel32                        | E9 cd                            | 5   | e9 58 10 00 00
-        var label0 = 0x005au;
-        var ip0 = @base + label0;
-
-        var dx0 = AsmRel.disp32((ip0, sz), @return);
-
-        var code0 = JmpRel32.encode((ip0,sz), @return);
-        var code1 = asm.asmhex("e9 58 10 00 00");
-
-        if(!code0.Equals(code1))
-            Channel.Error(string.Format("{0} != {1}", code1, code0));
-
-        var label1 = 0x0065u;
-        var ip1 = @base + label1;
-        var dx1 = AsmRel.disp32((ip1,sz), @return);
-        var actual1 = JmpRel32.encode((ip1,sz), @return);
-        var expect1 = asm.asmhex("e9 4d 10 00 00");
-        if(!actual1.Equals(expect1))
-            Channel.Error(string.Format("{0} != {1}", expect1, actual1));
-
-        var label2 = 0x0070u;
-        var ip2 = @base + label2;
-        var dx2 = AsmRel.disp32((ip2,sz), @return);
-        var actual2 = JmpRel32.encode((ip2,sz), @return);
-        var expect2 = asm.asmhex("e9 42 10 00 00");
-        if(!actual2.Equals(expect2))
-            Channel.Error(string.Format("{0} != {1}", expect2, actual2));
-
-        var label3 = 0x007bu;
-        var ip3 = @base + label3;
-        var dx3 = AsmRel.disp32((ip3,sz), @return);
-        var actual3 = JmpRel32.encode((ip3,sz), @return);
-        var expect3 = asm.asmhex("e9 37 10 00 00");
-        if(!actual3.Equals(expect3))
-            Channel.Error(string.Format("{0} != {1}", expect3, actual3));
-    }
-
-    void CheckJmp32(N2 n)
-    {
-        const string Asm = "call 7fff92427890h";
-        const string Encoding = "e8 25 e4 b2 5f";
-        const byte InstSize = CallRel32.InstSize;
-        const ulong Base = 0x7fff328f9430ul;
-        const ushort Offset = 0x36;
-        const ulong Target = 0x7fff92427890ul;
-        const ulong Source = Base + Offset;
-
-        var rip = AsmRel.rip(Source,InstSize);
-
-        Hex.hexbytes(Encoding, out var enc1);
-        var dx = AsmRel.disp32(enc1);
-
-        var enc2 = CallRel32.encode(rip, Target);
-        if(enc1 != enc2)
-            Channel.Error(string.Format("Encoding mismatch '{0}' != '{1}'", enc1, enc2));
-
-        var box = new RipBox(Base, uint.MaxValue);
-        if(!box.IP(Source))
-            Channel.Error("Ip out of range");
-
-        box.Advance(InstSize, dx, out var target1);
-
-        if(target1 != Target)
-            Channel.Error("Computed target did not match expected target");
-
-        var target2 = AsmRel.target(rip, enc1);
-        if(target2 != Target)
-            Channel.Error("Computed target did not match expected target");
-    }
-
-    void CheckJmp32(N1 n)
-    {
-        var w = w8;
-        var result = Outcome.Success;
-        var cases = AsmCases.jmp32();
-        var count = cases.Count;
-        for(var i=0; i<count; i++)
-        {
-            ref readonly var expect = ref cases[i];
-            var disp = AsmRel.disp32(expect.Encoding.Bytes);
-            Require.equal(disp, expect.Disp);
-            var source = expect.Source;
-            AsmRip rip = (source, JmpRel32.InstSize);
-            MemoryAddress target = (MemoryAddress)((long)rip + (int)disp);
-            Require.equal(AsmRel.disp32(rip, target), disp);
-            Require.equal(AsmRel.target(rip, expect.Encoding.Bytes), target);
-            var encoding = JmpRel32.encode(rip, target);
-            Require.equal(encoding, expect.Encoding);
-            var relTarget = (int)disp + (int)JmpRel32.InstSize;
-            @string statement = string.Format("jmp near ptr {0:x}h", relTarget);
-            Require.equal(statement, expect.Statment);
-            Channel.Write(statement);
-        }
     }
 
     void CheckHex2()
@@ -664,6 +554,7 @@ c5 f8 99 c8";
     {
         CheckHex1();
         CheckHex2();
+        CheckAsmHexCode();
     }
 
     [CmdOp("asm/check/mem")]
@@ -742,10 +633,9 @@ c5 f8 99 c8";
         const long RIP = Source + InstSize;
         const uint Disp = 0x5FB2E425;
         const string RenderPattern = "{0,-12}: {1}";
-        Hex.hexbytes(Encoding, out var code);
-
+        var code = asm.asmhex(Encoding).Bytes;
         var disp1 = AsmRel.disp32(code);
-        var disp2 = asm.disp(code.View,1, NativeSizeCode.W32);
+        var disp2 = asm.disp(code,1, NativeSizeCode.W32);
         Require.equal(disp1,disp2);
         var target = (MemoryAddress)(RIP + disp1);
         if(target == Target && disp1 == Disp)
@@ -776,26 +666,25 @@ c5 f8 99 c8";
         CheckDisp32_2();
     }
 
-    [CmdOp("asm/check/hex")]
     void CheckAsmHexCode()
     {
         // 4080C416                add spl,22
         var buffer = span<char>(20);
         var input1 = "40 80 c4 16";
         var input2 = "4080C416";
+        var input4 = "[0xc4,0xe2,0x7d,0x1a,0x01]";
+        var expect4 = "c4 e2 7d 1a 01";
         Hex.parse64u(input2, out var input3);
 
         var code1 = asm.asmhex(input1);
         var code2 = asm.asmhex(input2);
         var code3 = asm.asmhex(input3);
+        var code4 = asm.asmhex(input4);
 
         var text1 = code1.Format();
         var text2 = code2.Format();
         var text3 = code3.Format();
-
-        // Write(code1.Format());
-        // Write(code2.Format());
-        // Write(code3.Format());
+        Require.equal(code4.Format(),expect4);
 
         var check1 = CheckEquality(text1,text2);
         if(check1.Fail)
@@ -816,7 +705,6 @@ c5 f8 99 c8";
         return (same, string.Format("{0} {1} {2}", a, same ? "==" : "!=", b));
     }
 
-
     [CmdOp("asm/check/shapes")]
     void CheckShapes()
     {
@@ -825,7 +713,6 @@ c5 f8 99 c8";
         var expect = shape(n4:1, n2:1);
         Require.equal(actual,expect);
     }
-
 
     [CmdOp("asm/check/regs")]
     void CheckRegstore()

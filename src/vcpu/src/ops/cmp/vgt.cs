@@ -206,14 +206,35 @@ partial class vcpu
     public static Vector512<sbyte> vgt(Vector512<sbyte> a, Vector512<sbyte> b)
         => CompareGreaterThan(a,b);
 
+    /// <summary>
+    /// __m512i _mm512_cmpgt_epu8 (__m512i a, __m512i b)
+    /// VPCMPUB k1 {k2}, zmm2, zmm3/m512, imm8(6)
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Gt]
     public static Vector512<byte> vgt(Vector512<byte> a, Vector512<byte> b)
         => CompareGreaterThan(a,b);
 
+    /// <summary>
+    /// __m512i _mm512_cmpgt_epi16 (__m512i a, __m512i b)
+    /// VPCMPGTW k1 {k2}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Gt]
     public static Vector512<short> vgt(Vector512<short> a, Vector512<short> b)
         => CompareGreaterThan(a,b);
 
+    /// <summary>
+    /// __m512i _mm512_cmpgt_epu16 (__m512i a, __m512i b)
+    /// VPCMPUW k1 {k2}, zmm2, zmm3/m512, imm8(6)
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Gt]
     public static Vector512<ushort> vgt(Vector512<ushort> a, Vector512<ushort> b)
         => CompareGreaterThan(a,b);
@@ -222,14 +243,34 @@ partial class vcpu
     public static Vector512<int> vgt(Vector512<int> a, Vector512<int> b)
         => CompareGreaterThan(a,b);
 
+    /// <summary>
+    /// __m512i _mm512_cmpgt_epu32 (__m512i a, __m512i b)
+    /// VPCMPUD k1 {k2}, zmm2, zmm3/m512/m32bcst, imm8(6)
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Gt]
     public static Vector512<uint> vgt(Vector512<uint> a, Vector512<uint> b)
         => CompareGreaterThan(a,b);
 
+    /// <summary>
+    /// __m512i _mm512_cmpgt_epi64 (__m512i a, __m512i b)
+    /// VPCMPGTQ k1 {k2}, zmm2, zmm3/m512/m64bcst
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
     [MethodImpl(Inline), Gt]
     public static Vector512<long> vgt(Vector512<long> a, Vector512<long> b)
         => CompareGreaterThan(a,b);
 
+    /// <summary>
+    ///  __m512i _mm512_cmpgt_epu64 (__m512i a, __m512i b)
+    ///  VPCMPUQ k1 {k2}, zmm2, zmm3/m512/m64bcst, imm8(6)
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Gt]
     public static Vector512<ulong> vgt(Vector512<ulong> a, Vector512<ulong> b)
         => CompareGreaterThan(a,b);
