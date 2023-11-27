@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using System.Collections;
 using System.Linq;
 
 using static sys;
+
 /// <summary>
 /// Captures a random stream along with the generator classification
 /// </summary>

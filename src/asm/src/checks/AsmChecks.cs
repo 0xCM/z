@@ -40,6 +40,7 @@ class AsmChecks : WfAppCmd<AsmChecks>
         iter(events, e => Channel.Raise(e));            
     }
 
+    
 
     [CmdOp("asm/check/all")]
     void CheckAll()

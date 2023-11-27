@@ -17,7 +17,6 @@ public class Lcg
     public static Lcg64 create(N64 n, ulong mul, ulong inc, ulong mod, ulong seed, ulong min, ulong max)
         => new (mul,inc,mod,seed,min,max);
 
-
     [MethodImpl(Inline), Op, Closures(UInt64k)]
     public static Lcg<T> create<T>(T mul, T inc, T mod, T seed)
         where T : unmanaged

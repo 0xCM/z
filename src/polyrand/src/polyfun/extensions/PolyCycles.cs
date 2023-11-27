@@ -9,12 +9,12 @@ public static class PolyCycles
     const NumericKind Closure = AllNumeric;
 
     [MethodImpl(Inline), Op, Closures(Closure)]
-    public static ValueCycle<T> valuecycle<T>(Index<T> src)
+    public static ValueCycle<T> valuecycle<T>(Seq<T> src)
         where T : unmanaged
             => new (src);
 
     [MethodImpl(Inline)]
-    public static CellCycle<T> cellcycle<T>(Index<T> src)
+    public static CellCycle<T> cellcycle<T>(Seq<T> src)
         where T : unmanaged, IDataCell<T>
             => new (src);
 

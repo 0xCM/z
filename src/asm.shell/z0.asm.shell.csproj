@@ -2,8 +2,6 @@
   <Import Project="$(ProjectProps)\usings.props"/>
   <ItemGroup>
     <ProjectReference Include="../asm/z0.asm.csproj" />
-    <ProjectReference Include="../env/z0.env.csproj" />
-    <ProjectReference Include="../intel.svc/z0.intel.svc.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>

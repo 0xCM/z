@@ -7,12 +7,12 @@ namespace Z0;
 public struct ValueCycle<T> : ISource<ValueCycle<T>,T>
     where T : unmanaged
 {
-    readonly Index<T> Data;
+    readonly Seq<T> Data;
 
     uint Position;
 
     [MethodImpl(Inline)]
-    public ValueCycle(Index<T> src)
+    public ValueCycle(Seq<T> src)
     {
         Data = src;
         Position = 0;

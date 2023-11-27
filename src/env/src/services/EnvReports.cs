@@ -156,10 +156,13 @@ namespace Z0
             var csv = text.emitter();
             foreach(var tool in catalog)
             {               
-                list.AppendLine(string.Format("{0,-36} {1}", tool.Name, (FileUri)tool.Path));
-                var row = string.Format("{0:D5} | {1,-48} | {2}", tool.Seq, tool.Name, (FileUri)tool.Path);
-                csv.AppendLine(row);
-                channel.Row(row);
+                if(tool.Path.IsNonEmpty)                    
+                {
+                    list.AppendLine(string.Format("{0,-36} {1}", tool.Name, (FileUri)tool.Path));
+                    var row = string.Format("{0:D5} | {1,-48} | {2}", tool.Seq, tool.Name, (FileUri)tool.Path);
+                    csv.AppendLine(row);
+                    channel.Row(row);
+                }
             }
 
             channel.FileEmit(list.Emit(), GetToolListPath(dst, name, kind));

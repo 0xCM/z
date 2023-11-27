@@ -10,13 +10,12 @@ public readonly struct Distributions
     [MethodImpl(Inline)]
     public static GammaSpec<T> gamma<T>(T alpha, T dx, T beta)
         where T : unmanaged
-            => new GammaSpec<T>(alpha : alpha, dx : gmath.recip(beta), beta : beta);
+            => new (alpha : alpha, dx : gmath.recip(beta), beta : beta);
 
     [MethodImpl(Inline), Op, Closures(AllNumeric)]
     public static BinomialSpec<T> binomial<T>(T n, double p)
         where T : unmanaged
-            => new BinomialSpec<T>(n,p);
-
+            => new (n,p);
 
     /// <summary>
     /// Specifies a Bernoulli distribution predicated on the probability of trial success
@@ -26,7 +25,7 @@ public readonly struct Distributions
     [MethodImpl(Inline), Op, Closures(AllNumeric)]
     public static BernoulliSpec<T> bernoulli<T>(double p)
         where T : unmanaged
-            => new BernoulliSpec<T>(p);
+            => new (p);
 
     /// <summary>
     /// Defines a uniform distribution bound between lower and upper bounds
@@ -37,7 +36,7 @@ public readonly struct Distributions
     [MethodImpl(Inline), Op, Closures(AllNumeric)]
     public static UniformSpec<T> uniform<T>(T min, T max)
         where T : unmanaged
-            => new UniformSpec<T>(min,max);
+            => new (min,max);
 
     /// <summary>
     /// Defines a uniform distribution bound to an interval domain
@@ -47,7 +46,7 @@ public readonly struct Distributions
     [MethodImpl(Inline), Op, Closures(AllNumeric)]
     public static UniformSpec<T> uniform<T>(in Interval<T> domain)
         where T : unmanaged
-            => new UniformSpec<T>(domain);
+            => new (domain);
 
     /// <summary>
     /// Defines a Gaussian distribution with specified mean and standard deviation

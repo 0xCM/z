@@ -12,7 +12,7 @@ namespace Z0.Asm;
 /// </example>
 [StructLayout(LayoutKind.Sequential, Pack=1)]
 public readonly record struct JmpRip64<T>
-    where T : unmanaged,  IDisplacement
+    where T : unmanaged, IDisplacement
 {
     public static byte InsructionSize => (byte)sys.size<JmpRip64<T>>();
 
@@ -44,6 +44,12 @@ public readonly record struct JmpRip64<T>
         [MethodImpl(Inline)]
         get => OpCode != 0;
     }
+
+    public string Format()
+        => $"jmp qword ptr [rip + {Disp.Format()}]";
+
+    public override string ToString()
+        => Format();
 
     public static JmpRip64<T> Empty => default;
 }
