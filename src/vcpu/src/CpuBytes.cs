@@ -443,4 +443,72 @@ public readonly struct CpuBytes
 
     public static ReadOnlySpan<byte> ClearAlt256x16u
         => new byte[32]{0x00,0x00,0xff,0xff,0x02,0x00,0xff,0xff,0x04,0x00,0xff,0xff,0x06,0x00,0xff,0xff,0x00,0x00,0xff,0xff,0x02,0x00,0xff,0xff,0x04,0x00,0xff,0xff,0x06,0x00,0xff,0xff};
+
+
+    /// <summary>
+    /// Shuffle pattern that, when applied, rotates 128 bits of content leftward by 8 bits
+    /// </summary>
+    public static ReadOnlySpan<byte> RotL8_128x8u
+    {
+        [MethodImpl(Inline)]
+        get => RotL_128x8u.Slice(0*16, 16);
+    }
+
+    public static ReadOnlySpan<byte> RotL_128x8u
+        => new byte[16*7]
+        {
+            F,0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,  //8
+            14,F,0,1,2,3,4,5,6,7,8,9,A,B,C,D, //16
+            D,E,F,0,1,2,3,4,5,6,7,8,9,A,B,C,  //24
+            C,D,E,F,0,1,2,3,4,5,6,7,8,9,A,B,  //32
+            B,C,D,E,F,0,1,2,3,4,5,6,7,8,9,A,  //40
+            A,B,C,D,E,F,0,1,2,3,4,5,6,7,8,9,  //48
+            9,A,B,C,D,E,F,0,1,2,3,4,5,6,7,8,  //56
+        };
+
+
+    /// <summary>
+    /// Shuffle pattern that, when applied, rotates 128 bits of content leftward by 16 bits
+    /// </summary>
+    public static ReadOnlySpan<byte> RotL16_128x8u
+    {
+        [MethodImpl(Inline)]
+        get => RotL_128x8u.Slice(1*16, 16);
+    }
+
+    /// <summary>
+    /// Shuffle pattern that, when applied, rotates 128 bits of content leftward by 24 bits
+    /// </summary>
+    public static ReadOnlySpan<byte> RotL24_128x8u
+    {
+        [MethodImpl(Inline)]
+        get => RotL_128x8u.Slice(2*16, 16);
+    }
+
+    /// <summary>
+    /// Shuffle pattern that, when applied, rotates 128 bits of content leftward by 32 bits
+    /// </summary>
+    public static ReadOnlySpan<byte> RotL32_128x8u
+    {
+        [MethodImpl(Inline)]
+        get => RotL_128x8u.Slice(3*16, 16);
+    }
+
+    /// <summary>
+    /// Shuffle pattern that, when applied, rotates 128 bits of content leftward by 40 bits
+    /// </summary>
+    public static ReadOnlySpan<byte> RotL40_128x8u
+    {
+        [MethodImpl(Inline)]
+        get => RotL_128x8u.Slice(4*16, 16);
+    }
+
+    /// <summary>
+    /// Shuffle pattern that, when applied, rotates 128 bits of content leftward by 40 bits
+    /// </summary>
+    public static ReadOnlySpan<byte> RotL48_128x8u
+    {
+        [MethodImpl(Inline)]
+        get => RotL_128x8u.Slice(5*16, 16);
+    }
 }

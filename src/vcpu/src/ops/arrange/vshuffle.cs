@@ -7,6 +7,62 @@ namespace Z0;
 partial class vcpu
 {
     /// <summary>
+    /// __m128i _mm_shuffle_epi8 (__m128i a, __m128i b)
+    /// PSHUFB xmm, xmm/m128
+    /// For each component of the shuffle spec:
+    /// testbit(spec[i],7) == 1 => dst[i] = 0
+    /// testbit(spec[i],7) == 0 => dst[i] = src[i]
+    /// spec[i] = j := 0 | 1 | ... | 15 => dst[j] = src[i]
+    /// </summary>
+    /// <param name="src">The content vector</param>
+    /// <param name="spec">The shuffle spec</param>
+    [MethodImpl(Inline), Op]
+    public static Vector128<byte> vshuffle(Vector128<byte> src, Vector128<byte> spec)
+        => Shuffle(src, spec);
+
+    /// <summary>
+    /// __m128i _mm_shuffle_epi8 (__m128i a, __m128i b)
+    /// PSHUFB xmm, xmm/m128
+    ///</summary>
+    [MethodImpl(Inline), Op]
+    public static Vector128<sbyte> vshuffle(Vector128<sbyte> src, Vector128<sbyte> spec)
+        => Shuffle(src, spec);
+
+    ///<summary>
+    /// __m256i _mm256_shuffle_epi8 (__m256i a, __m256i b)
+    /// VPSHUFB ymm, ymm, ymm/m256
+    ///</summary>
+    [MethodImpl(Inline), Op]
+    public static Vector256<byte> vshuffle(Vector256<byte> src, Vector256<byte> spec)
+        => Shuffle(src, spec);
+
+    ///<summary>
+    /// __m256i _mm256_shuffle_epi8 (__m256i a, __m256i b)
+    /// VPSHUFB ymm, ymm, ymm/m256
+    ///</summary>
+    [MethodImpl(Inline), Op]
+    public static Vector256<sbyte> vshuffle(Vector256<sbyte> src, Vector256<sbyte> spec)
+        => Shuffle(src, spec);
+
+    /// <summary>
+    /// __m512i _mm512_shuffle_epi8 (__m512i a, __m512i b)
+    /// VPSHUFB zmm1 {k1}{z}, zmm2, zmm3/m512
+    /// Shuffle packed 8-bit integers in a according to shuffle control mask in the corresponding 8-bit element of b, and store the results in dst
+    /// </summary>
+    [MethodImpl(Inline), Op]
+    public static Vector512<byte> vshuffle(Vector512<byte> src, Vector512<byte> spec)
+        => Shuffle(src, spec);
+
+    /// <summary>
+    /// __m512i _mm512_shuffle_epi8 (__m512i a, __m512i b)
+    ///  VPSHUFB zmm1 {k1}{z}, zmm2, zmm3/m512
+    ///  Shuffle packed 8-bit integers in a according to shuffle control mask in the corresponding 8-bit element of b, and store the results in dst
+    /// </summary>
+    [MethodImpl(Inline), Op]
+    public static Vector512<sbyte> vshuffle(Vector512<sbyte> src, Vector512<sbyte> spec)
+        => Shuffle(src, spec);
+
+    /// <summary>
     /// __m128i _mm_shuffle_epi32 (__m128i a, int immediate) PSHUFD xmm, xmm/m128, imm8
     /// </summary>
     /// <param name="src">The source vector</param>
@@ -76,17 +132,13 @@ partial class vcpu
         => Shuffle(src, (byte)spec);
 
     /// <summary>
-    /// __m128i _mm_shuffle_epi8 (__m128i a, __m128i b)
-    /// PSHUFB xmm, xmm/m128
-    /// For each component of the shuffle spec:
-    /// testbit(spec[i],7) == 1 => dst[i] = 0
-    /// testbit(spec[i],7) == 0 => dst[i] = src[i]
-    /// spec[i] = j := 0 | 1 | ... | 15 => dst[j] = src[i]
+    /// __m256i _mm256_shuffle_epi32 (__m256i a, const int imm8)
+    /// VPSHUFD ymm, ymm/m256, imm8
     /// </summary>
-    /// <param name="src">The content vector</param>
+    /// <param name="src">The source vector</param>
     /// <param name="spec">The shuffle spec</param>
     [MethodImpl(Inline), Op]
-    public static Vector128<byte> vshuffle(Vector128<byte> src, Vector128<byte> spec)
+    public static Vector256<int> vshuffle(Vector256<int> src, [Imm] byte spec)
         => Shuffle(src, spec);
 
     ///<summary>
@@ -98,57 +150,6 @@ partial class vcpu
     [MethodImpl(Inline), Op]
     public static Vector256<uint> vshuffle(Vector256<uint> src, [Imm] byte spec)
         => Shuffle(src, (byte)spec);
-
-    /// <summary>
-    /// __m256i _mm256_shuffle_epi32 (__m256i a, const int imm8)VPSHUFD ymm, ymm/m256, imm8
-    /// </summary>
-    /// <param name="src">The source vector</param>
-    /// <param name="spec">The shuffle spec</param>
-    [MethodImpl(Inline), Op]
-    public static Vector256<int> vshuffle(Vector256<int> src, [Imm] byte spec)
-        => Shuffle(src, spec);
-
-    /// <summary>
-    /// __m128i _mm_shuffle_epi8 (__m128i a, __m128i b)
-    /// PSHUFB xmm, xmm/m128
-    ///</summary>
-    [MethodImpl(Inline), Op]
-    public static Vector128<sbyte> vshuffle(Vector128<sbyte> src, Vector128<sbyte> spec)
-        => Shuffle(src, spec);
-
-    ///<summary>
-    /// __m256i _mm256_shuffle_epi8 (__m256i a, __m256i b)
-    /// VPSHUFB ymm, ymm, ymm/m256
-    ///</summary>
-    [MethodImpl(Inline), Op]
-    public static Vector256<byte> vshuffle(Vector256<byte> src, Vector256<byte> spec)
-        => Shuffle(src, spec);
-
-    ///<summary>
-    /// __m256i _mm256_shuffle_epi8 (__m256i a, __m256i b)
-    /// VPSHUFB ymm, ymm, ymm/m256
-    ///</summary>
-    [MethodImpl(Inline), Op]
-    public static Vector256<sbyte> vshuffle(Vector256<sbyte> src, Vector256<sbyte> spec)
-        => Shuffle(src, spec);
-
-    /// <summary>
-    /// __m512i _mm512_shuffle_epi8 (__m512i a, __m512i b)
-    /// VPSHUFB zmm1 {k1}{z}, zmm2, zmm3/m512
-    /// Shuffle packed 8-bit integers in a according to shuffle control mask in the corresponding 8-bit element of b, and store the results in dst
-    /// </summary>
-    [MethodImpl(Inline), Op]
-    public static Vector512<byte> vshuffle(Vector512<byte> src, Vector512<byte> spec)
-        => Shuffle(src, spec);
-
-    /// <summary>
-    /// __m512i _mm512_shuffle_epi8 (__m512i a, __m512i b)
-    ///  VPSHUFB zmm1 {k1}{z}, zmm2, zmm3/m512
-    ///  Shuffle packed 8-bit integers in a according to shuffle control mask in the corresponding 8-bit element of b, and store the results in dst
-    /// </summary>
-    [MethodImpl(Inline), Op]
-    public static Vector512<sbyte> vshuffle(Vector512<sbyte> src, Vector512<sbyte> spec)
-        => Shuffle(src, spec);
 
     /// <summary>
     /// __m512i _mm512_shuffle_epi32 (__m512i a, const int imm8)

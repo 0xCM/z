@@ -25,6 +25,4 @@ partial class vcpu
     [MethodImpl(Inline), Op]
     public static ulong vlo64u(Vector128<ulong> src)
         => ConvertToUInt64(src);
-
-
 }

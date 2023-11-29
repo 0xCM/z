@@ -10,27 +10,27 @@ partial class vcpu
     /// __m256i _mm256_permutex2var_epi16 (__m256i a, __m256i idx, __m256i b)
     /// VPERMI2W ymm1 {k1}{z}, ymm2, ymm3/m256
     /// VPERMT2W ymm1 {k1}{z}, ymm2, ymm3/m256
-    /// Shuffle 16-bit integers in a and b across lanes using the corresponding selector and index in idx, and store the results in dst.
+    /// Shuffle 16-bit integers in lo and hi across lanes using the corresponding selector and index in ix, and store the results in dst.
     /// </summary>
-    /// <param name="lower"></param>
-    /// <param name="indices"></param>
-    /// <param name="upper"></param>
+    /// <param name="lo"></param>
+    /// <param name="ix"></param>
+    /// <param name="hi"></param>
     /// <returns></returns>
     [MethodImpl(Inline), Op]
-    public static Vector256<short> vperm16x16x2(Vector256<short> lower, Vector256<short> indices, Vector256<short> upper)
-        => PermuteVar16x16x2(lower, indices, upper);
+    public static Vector256<short> vperm16x16x2(Vector256<short> lo, Vector256<short> ix, Vector256<short> hi)
+        => PermuteVar16x16x2(lo, ix, hi);
 
     /// <summary>
     /// __m256i _mm256_permutex2var_epi16 (__m256i a, __m256i idx, __m256i b)
     /// VPERMI2W ymm1 {k1}{z}, ymm2, ymm3/m256
     /// VPERMT2W ymm1 {k1}{z}, ymm2, ymm3/m256
-    /// Shuffle 16-bit integers in a and b across lanes using the corresponding selector and index in idx, and store the results in dst.
+    /// Shuffle 16-bit integers in lo and hi across lanes using the corresponding selector and index in ix, and store the results in dst.
     /// </summary>
-    /// <param name="a"></param>
-    /// <param name="idx"></param>
-    /// <param name="b"></param>
+    /// <param name="lo"></param>
+    /// <param name="ix"></param>
+    /// <param name="hi"></param>
     /// <returns></returns>
     [MethodImpl(Inline), Op]
-    public static Vector256<ushort> vperm16x16x2(Vector256<ushort> a, Vector256<ushort> idx, Vector256<ushort> b)
-        => PermuteVar16x16x2(a, idx, b);        
+    public static Vector256<ushort> vperm16x16x2(Vector256<ushort> lo, Vector256<ushort> ix, Vector256<ushort> hi)
+        => PermuteVar16x16x2(lo, ix, hi);        
 }

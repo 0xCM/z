@@ -7,8 +7,8 @@ namespace Z0;
 partial class vcpu
 {
     /// <summary>
-    /// Compares the source operands for equality. For equal components, the corresponding
-    /// component in the result vector has all bits enabled; otherwise all bits are disabled
+    /// __m128i _mm_cmpne_epi8 (__m128i a, __m128i b)
+    /// VPCMPB k1 {k2}, xmm2, xmm3/m128, imm8(4)
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -17,8 +17,8 @@ partial class vcpu
         => CompareNotEqual(x,y);
 
     /// <summary>
-    /// Compares the source operands for equality. For equal components, the corresponding
-    /// component in the result vector has all bits enabled; otherwise all bits are disabled
+    /// __m128i _mm_cmpne_epu8 (__m128i a, __m128i b)
+    /// VPCMPUB k1 {k2}, xmm2, xmm3/m128, imm8(4)
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -27,8 +27,6 @@ partial class vcpu
         => CompareNotEqual(x,y);
 
     /// <summary>
-    /// Compares the source operands for equality. For equal components, the corresponding
-    /// component in the result vector has all bits enabled; otherwise all bits are disabled
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -37,8 +35,6 @@ partial class vcpu
         => CompareNotEqual(x,y);
 
     /// <summary>
-    /// Compares the source operands for equality. For equal components, the corresponding
-    /// component in the result vector has all bits enabled; otherwise all bits are disabled
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -48,8 +44,6 @@ partial class vcpu
 
     /// <summary>
     /// </summary>
-    /// Compares the source operands for equality. For equal components, the corresponding
-    /// component in the result vector has all bits enabled; otherwise all bits are disabled
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
     [MethodImpl(Inline), Eq]
@@ -107,8 +101,6 @@ partial class vcpu
         => CompareNotEqual(x,y);
 
     /// <summary>
-    /// Compares the source operands for equality. For equal components, the corresponding
-    /// component in the result vector has all bits enabled; otherwise all bits are disabled
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -117,8 +109,8 @@ partial class vcpu
         => CompareNotEqual(x,y);
 
     /// <summary>
-    /// Compares the source operands for equality. For equal components, the corresponding
-    /// component in the result vector has all bits enabled; otherwise all bits are disabled
+    /// __m256i _mm256_cmpne_epu16 (__m256i a, __m256i b)
+    /// VPCMPUW k1 {k2}, ymm2, ymm3/m256, imm8(4)
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -127,8 +119,8 @@ partial class vcpu
         => CompareNotEqual(x,y);
 
     /// <summary>
-    /// Compares the source operands for equality. For equal components, the corresponding
-    /// component in the result vector has all bits enabled; otherwise all bits are disabled
+    /// __m256i _mm256_cmpne_epi32 (__m256i a, __m256i b)
+    /// VPCMPD k1 {k2}, ymm2, ymm3/m256/m32bcst, imm8(4)
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -137,8 +129,8 @@ partial class vcpu
         => CompareNotEqual(x,y);
 
     /// <summary>
-    /// Compares the source operands for equality. For equal components, the corresponding
-    /// component in the result vector has all bits enabled; otherwise all bits are disabled
+    /// __m256i _mm256_cmpne_epu32 (__m256i a, __m256i b)
+    /// VPCMPUD k1 {k2}, ymm2, ymm3/m256/m32bcst, imm8(4)
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -147,8 +139,8 @@ partial class vcpu
         => CompareNotEqual(x,y);
 
     /// <summary>
-    /// Compares the source operands for equality. For equal components, the corresponding
-    /// component in the result vector has all bits enabled; otherwise all bits are disabled
+    /// __m256i _mm256_cmpne_epi64 (__m256i a, __m256i b)
+    /// VPCMPQ k1 {k2}, ymm2, ymm3/m256/m64bcst, imm8(4)
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -157,8 +149,8 @@ partial class vcpu
         => CompareNotEqual(x,y);
 
     /// <summary>
-    /// Compares the source operands for equality. For equal components, the corresponding
-    /// component in the result vector has all bits enabled; otherwise all bits are disabled
+    /// __m256i _mm256_cmpne_epu64 (__m256i a, __m256i b)
+    /// VPCMPUQ k1 {k2}, ymm2, ymm3/m256/m64bcst, imm8(4)
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -166,18 +158,46 @@ partial class vcpu
     public static Vector256<ulong> vne(Vector256<ulong> x, Vector256<ulong> y)
         => CompareNotEqual(x,y);
 
+    /// <summary>
+    /// __m512i _mm512_cmpne_epi8 (__m512i a, __m512i b)
+    /// VPCMPB k1 {k2}, zmm2, zmm3/m512, imm8(4)
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Gt]
     public static Vector512<sbyte> vne(Vector512<sbyte> a, Vector512<sbyte> b)
         => CompareNotEqual(a,b);
 
+    /// <summary>
+    /// __m512i _mm512_cmpne_epu8 (__m512i a, __m512i b)
+    /// VPCMPUB k1 {k2}, zmm2, zmm3/m512, imm8(4)
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Gt]
     public static Vector512<byte> vne(Vector512<byte> a, Vector512<byte> b)
         => CompareNotEqual(a,b);
 
+    /// <summary>
+    /// __m512i _mm512_cmpne_epi16 (__m512i a, __m512i b)
+    /// VPCMPW k1 {k2}, zmm2, zmm3/m512, imm8(4)
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Gt]
     public static Vector512<short> vne(Vector512<short> a, Vector512<short> b)
         => CompareNotEqual(a,b);
 
+    /// <summary>
+    /// __m512i _mm512_cmpne_epu16 (__m512i a, __m512i b)
+    /// VPCMPUW k1 {k2}, zmm2, zmm3/m512, imm8(4)
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Gt]
     public static Vector512<ushort> vne(Vector512<ushort> a, Vector512<ushort> b)
         => CompareNotEqual(a,b);

@@ -97,7 +97,7 @@ partial class vcpu
     [MethodImpl(Inline)]
     public static Vector512<T> vconcat<T>(Vector256<T> lo, Vector256<T> hi)
         where T : unmanaged
-            => Vector512.Create(lo,hi);    
+            => vparts(w512, lo,hi);    
 
     /// <summary>
     /// Creates a 512-bit vector by concatenating four 128-bit source vectors

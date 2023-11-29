@@ -152,7 +152,8 @@ partial class vcpu
 
 
     /// <summary>
-    /// Computes a <= b
+    /// __m512i _mm512_cmple_epu8 (__m512i a, __m512i b)
+    /// VPCMPUB k1 {k2}, zmm2, zmm3/m512, imm8(2)
     /// </summary>
     /// <param name="a">The left vector</param>
     /// <param name="b">The right vector</param>
@@ -161,7 +162,8 @@ partial class vcpu
         => CompareLessThanOrEqual(a,b);
 
     /// <summary>
-    /// Computes a <= b
+    ///  __m512i _mm512_cmple_epi8 (__m512i a, __m512i b)
+    ///  VPCMPB k1 {k2}, zmm2, zmm3/m512, imm8(2)
     /// </summary>
     /// <param name="a">The left vector</param>
     /// <param name="b">The right vector</param>

@@ -77,4 +77,40 @@ partial class vcpu
     [MethodImpl(Inline), Rotr]
     public static Vector256<ulong> vrotr(Vector256<ulong> src, [Imm] byte count)
         => vor(vsrl(src, count), vsll(src, (byte)(64 - count)));
+
+    /// <summary>
+    /// Rotates each component the source vector rightwards by the corresponding component in the shift spec
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="counts">The variable shift spec</param>
+    [MethodImpl(Inline), Rotrv]
+    public static Vector128<uint> vrotr(Vector128<uint> src, Vector128<uint> counts)
+        => vor(vsrlv(src, counts), vsllv(src, vsub(Vector128u32, counts)));
+
+    /// <summary>
+    /// Rotates each component the source vector rightwards by the corresponding component in the shift spec
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="counts">The variable shift spec</param>
+    [MethodImpl(Inline), Rotrv]
+    public static Vector128<ulong> vrotr(Vector128<ulong> src, Vector128<ulong> counts)
+        => vor(vsrlv(src, counts), vsllv(src, vsub(Vector128u64, counts)));
+
+    /// <summary>
+    /// Rotates each component the source vector rightwards by the corresponding component in the shift spec
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="counts">The variable shift spec</param>
+    [MethodImpl(Inline), Rotrv]
+    public static Vector256<uint> vrotr(Vector256<uint> src, Vector256<uint> counts)
+        => vor(vsrlv(src, counts), vsllv(src, vsub(Vector256u32, counts)));
+
+    /// <summary>
+    /// Rotates each component the source vector rightwards by the corresponding component in the shift spec
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="counts">The variable shift spec</param>
+    [MethodImpl(Inline), Rotrv]
+    public static Vector256<ulong> vrotr(Vector256<ulong> src, Vector256<ulong> counts)
+        => vor(vsrlv(src, counts), vsllv(src, vsub(Vector256u64, counts)));
 }

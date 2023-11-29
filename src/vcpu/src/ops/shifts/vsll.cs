@@ -412,7 +412,6 @@ partial class vcpu
     public static Vector256<ulong> vsll(Vector256<ulong> src, Vector128<ulong> count)
         => ShiftLeftLogical(src, count);
 
-
     [MethodImpl(Inline), Op]
     static byte msb8f(byte density)
         => (byte)(byte.MaxValue << (8 - density));

@@ -34,7 +34,8 @@ partial class vcpu
         => (uint)MoveMask(src);
 
     /// <summary>
-    /// int _mm256_movemask_epi8 (__m256i a) VPMOVMSKB reg, ymm
+    /// int _mm256_movemask_epi8 (__m256i a)
+    /// VPMOVMSKB reg, ymm
     /// Constructs an integer from the most significant bit of each 8-bit source vector segment
     /// </summary>
     /// <param name="src">The source vector</param>

@@ -7,26 +7,24 @@ namespace Z0;
 partial class vcpu
 {
     /// <summary>
-    /// __m256i _mm256_permutevar16x16_epi16 (__m256i a, __m256i b)
-    /// VPERMW ymm1 {k1}{z}, ymm2, ymm3/m256
+    /// __m512i _mm512_permutevar16x32_epi32 (__m512i a, __m512i b)
+    /// VPERMD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
     /// </summary>
     /// <param name="src"></param>
     /// <param name="spec"></param>
     /// <returns></returns>
     [MethodImpl(Inline), Op]
-    public static Vector256<short> vperm16x16(Vector256<short> src, Vector256<short> spec)
-        => PermuteVar16x16(src, spec);
+    public static Vector512<int> vperm16x32(Vector512<int> src, Vector512<int> spec)
+        => PermuteVar16x32(src, spec);
 
     /// <summary>
-    /// __m256i _mm256_permutevar16x16_epi16 (__m256i a, __m256i b)
-    /// VPERMW ymm1 {k1}{z}, ymm2, ymm3/m256
+    /// __m512i _mm512_permutevar16x32_epi32 (__m512i a, __m512i b)
+    /// VPERMD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
     /// </summary>
     /// <param name="src"></param>
     /// <param name="spec"></param>
     /// <returns></returns>
     [MethodImpl(Inline), Op]
-    public static Vector256<ushort> vperm16x16(Vector256<ushort> src, Vector256<ushort> spec)
-        => PermuteVar16x16(src, spec);
-
-
+    public static Vector512<uint> vperm16x32(Vector512<uint> src, Vector512<uint> spec)
+        => PermuteVar16x32(src, spec);
 }

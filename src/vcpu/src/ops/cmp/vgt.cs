@@ -202,6 +202,13 @@ partial class vcpu
     public static Vector256<ulong> vgt(Vector256<ulong> a, Vector256<ulong> b)
         => CompareGreaterThan(a,b);
 
+    /// <summary>
+    /// __m512i _mm512_cmpgt_epi8 (__m512i a, __m512i b)
+    /// VPCMPGTB k1 {k2}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Gt]
     public static Vector512<sbyte> vgt(Vector512<sbyte> a, Vector512<sbyte> b)
         => CompareGreaterThan(a,b);

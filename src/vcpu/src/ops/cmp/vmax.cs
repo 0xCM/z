@@ -7,6 +7,8 @@ namespace Z0;
 partial class vcpu
 {
     /// <summary>
+    /// __m128i _mm_max_epu8 (__m128i a, __m128i b)
+    /// PMAXUB xmm, xmm/m128
     /// </summary>
     /// <param name="x">The left operand</param>
     /// <param name="y">The right operand</param>
@@ -73,6 +75,8 @@ partial class vcpu
         => Max(x, y);
 
     /// <summary>
+    /// __m256i _mm256_max_epu8 (__m256i a, __m256i b)
+    /// VPMAXUB ymm, ymm, ymm/m256
     /// </summary>
     /// <param name="x">The left operand</param>
     /// <param name="y">The right operand</param>
@@ -105,6 +109,8 @@ partial class vcpu
         => Max(x, y);
 
     /// <summary>
+    /// __m256i _mm256_max_epi32 (__m256i a, __m256i b)
+    /// VPMAXSD ymm, ymm, ymm/m256
     /// </summary>
     /// <param name="x">The left operand</param>
     /// <param name="y">The right operand</param>
@@ -113,6 +119,8 @@ partial class vcpu
         => Max(x, y);
 
     /// <summary>
+    /// __m256i _mm256_max_epu32 (__m256i a, __m256i b)
+    /// VPMAXUD ymm, ymm, ymm/m256
     /// </summary>
     /// <param name="x">The left operand</param>
     /// <param name="y">The right operand</param>
@@ -137,7 +145,6 @@ partial class vcpu
     [MethodImpl(Inline), Max]
     public static Vector256<long> vmax(Vector256<long> x, Vector256<long> y)
         => Max(x, y);
-
 
     /// <summary>
     /// __m512i _mm512_max_epu8 (__m512i a, __m512i b)
@@ -184,6 +191,8 @@ partial class vcpu
         => Max(x, y);
 
     /// <summary>
+    /// __m512i _mm512_max_epu32 (__m512i a, __m512i b)
+    /// VPMAXUD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
     /// </summary>
     /// <param name="x">The left operand</param>
     /// <param name="y">The right operand</param>

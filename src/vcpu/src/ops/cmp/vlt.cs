@@ -79,7 +79,8 @@ partial class vcpu
         => CompareLessThan(a,b);
 
     /// <summary>
-    ///  
+    ///  __m256i _mm256_cmplt_epi8 (__m256i a, __m256i b)
+    ///  VPCMPB k1 {k2}, ymm2, ymm3/m256, imm8(1)
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -88,7 +89,8 @@ partial class vcpu
         => CompareLessThan(a,b);
 
     /// <summary>
-    ///  
+    ///  __m256i _mm256_cmplt_epu8 (__m256i a, __m256i b)
+    ///  VPCMPUB k1 {k2}, ymm2, ymm3/m256, imm8(1)
     /// </summary>
     /// <param name="a">The left vector</param>
     /// <param name="b">The right vector</param>
@@ -97,7 +99,8 @@ partial class vcpu
         => CompareLessThan(a,b);
 
     /// <summary>
-    /// 
+    /// __m256i _mm256_cmplt_epi16 (__m256i a, __m256i b)
+    /// VPCMPW k1 {k2}, ymm2, ymm3/m256, imm8(1)
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -106,7 +109,8 @@ partial class vcpu
         => CompareLessThan(y,x);
 
     /// <summary>
-    /// 
+    /// __m256i _mm256_cmplt_epu16 (__m256i a, __m256i b)
+    /// VPCMPUW k1 {k2}, ymm2, ymm3/m256, imm8(1)
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -115,7 +119,8 @@ partial class vcpu
         => CompareLessThan(a,b);
 
     /// <summary>
-    /// 
+    /// __m256i _mm256_cmplt_epi32 (__m256i a, __m256i b)
+    /// VPCMPD k1 {k2}, ymm2, ymm3/m256/m32bcst, imm8(1)
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -124,7 +129,8 @@ partial class vcpu
         => CompareLessThan(a,b);
 
     /// <summary>
-    /// 
+    /// __m256i _mm256_cmplt_epu32 (__m256i a, __m256i b)
+    /// VPCMPUD k1 {k2}, ymm2, ymm3/m256/m32bcst, imm8(1)
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -133,7 +139,8 @@ partial class vcpu
         => CompareLessThan(a,b);
 
     /// <summary>
-    /// 
+    /// __m256i _mm256_cmplt_epi64 (__m256i a, __m256i b)
+    /// VPCMPQ k1 {k2}, ymm2, ymm3/m256/m64bcst, imm8(1)
     /// </summary>
     /// <param name="a">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -142,7 +149,8 @@ partial class vcpu
         => CompareLessThan(a,b);
 
     /// <summary>
-    /// __m256i _mm256_cmpgt_epi64 (__m256i a, __m256i b) VPCMPGTQ ymm, ymm, ymm/m256
+    /// __m256i _mm256_cmpgt_epi64 (__m256i a, __m256i b)
+    /// VPCMPGTQ ymm, ymm, ymm/m256
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -150,26 +158,68 @@ partial class vcpu
     public static Vector256<ulong> vlt(Vector256<ulong> a, Vector256<ulong> b)
         => CompareLessThan(a,b);
 
+    /// <summary>
+    /// __m512i _mm512_cmplt_epi8 (__m512i a, __m512i b)
+    /// VPCMPB k1 {k2}, zmm2, zmm3/m512, imm8(1)
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Lt]
     public static Vector512<sbyte> vlt(Vector512<sbyte> a, Vector512<sbyte> b)
         => CompareLessThan(a,b);
 
+    /// <summary>
+    /// __m512i _mm512_cmplt_epu8 (__m512i a, __m512i b)
+    /// VPCMPUB k1 {k2}, zmm2, zmm3/m512, imm8(1)
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Lt]
     public static Vector512<byte> vlt(Vector512<byte> a, Vector512<byte> b)
         => CompareLessThan(a,b);
 
+    /// <summary>
+    /// __m512i _mm512_cmplt_epi16 (__m512i a, __m512i b)
+    /// VPCMPW k1 {k2}, zmm2, zmm3/m512, imm8(1)
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Lt]
     public static Vector512<short> vlt(Vector512<short> a, Vector512<short> b)
         => CompareLessThan(a,b);
 
+    /// <summary>
+    /// __m512i _mm512_cmplt_epu16 (__m512i a, __m512i b)
+    /// VPCMPUW k1 {k2}, zmm2, zmm3/m512, imm8(1)
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Lt]
     public static Vector512<ushort> vlt(Vector512<ushort> a, Vector512<ushort> b)
         => CompareLessThan(a,b);
 
+    /// <summary>
+    /// __m512i _mm512_cmplt_epi32 (__m512i a, __m512i b)
+    /// VPCMPD k1 {k2}, zmm2, zmm3/m512/m32bcst, imm8(1)
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Lt]
     public static Vector512<int> vlt(Vector512<int> a, Vector512<int> b)
         => CompareLessThan(a,b);
 
+    /// <summary>
+    /// __m512i _mm512_cmplt_epu32 (__m512i a, __m512i b)
+    /// VPCMPUD k1 {k2}, zmm2, zmm3/m512/m32bcst, imm8(1)
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Lt]
     public static Vector512<uint> vlt(Vector512<uint> a, Vector512<uint> b)
         => CompareLessThan(a,b);
@@ -178,6 +228,13 @@ partial class vcpu
     public static Vector512<long> vlt(Vector512<long> a, Vector512<long> b)
         => CompareLessThan(a,b);
 
+    /// <summary>
+    /// __m512i _mm512_cmplt_epu64 (__m512i a, __m512i b)
+    /// VPCMPUQ k1 {k2}, zmm2, zmm3/m512/m64bcst, imm8(1)
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Lt]
     public static Vector512<ulong> vlt(Vector512<ulong> a, Vector512<ulong> b)
         => CompareLessThan(a,b);

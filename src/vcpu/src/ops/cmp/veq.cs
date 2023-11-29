@@ -107,8 +107,8 @@ partial class vcpu
         => CompareEqual(x,y);
 
     /// <summary>
-    /// Compares the source operands for equality. For equal components, the corresponding
-    /// component in the result vector has all bits enabled; otherwise all bits are disabled
+    /// __m256i _mm256_cmpeq_epi16 (__m256i a, __m256i b)
+    /// VPCMPEQW ymm, ymm, ymm/m256
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -117,8 +117,8 @@ partial class vcpu
         => CompareEqual(x,y);
 
     /// <summary>
-    /// Compares the source operands for equality. For equal components, the corresponding
-    /// component in the result vector has all bits enabled; otherwise all bits are disabled
+    /// __m256i _mm256_cmpeq_epi16 (__m256i a, __m256i b)
+    /// VPCMPEQW ymm, ymm, ymm/m256
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -147,6 +147,8 @@ partial class vcpu
         => CompareEqual(x,y);
 
     /// <summary>
+    /// __m256i _mm256_cmpeq_epi64 (__m256i a, __m256i b)
+    /// VPCMPEQQ ymm, ymm, ymm/m256
     /// Compares the source operands for equality. For equal components, the corresponding
     /// component in the result vector has all bits enabled; otherwise all bits are disabled
     /// </summary>
@@ -157,8 +159,8 @@ partial class vcpu
         => CompareEqual(x,y);
 
     /// <summary>
-    /// Compares the source operands for equality. For equal components, the corresponding
-    /// component in the result vector has all bits enabled; otherwise all bits are disabled
+    /// __m256i _mm256_cmpeq_epi64 (__m256i a, __m256i b)
+    /// VPCMPEQQ ymm, ymm, ymm/m256
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -166,14 +168,35 @@ partial class vcpu
     public static Vector256<ulong> veq(Vector256<ulong> x, Vector256<ulong> y)
         => CompareEqual(x,y);
 
+    /// <summary>
+    /// __m512i _mm512_cmpeq_epi8 (__m512i a, __m512i b)
+    /// VPCMPEQB k1 {k2}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Gt]
     public static Vector512<sbyte> veq(Vector512<sbyte> a, Vector512<sbyte> b)
         => CompareEqual(a,b);
 
+    /// <summary>
+    /// __m512i _mm512_cmpeq_epu8 (__m512i a, __m512i b)
+    /// VPCMPEQB k1 {k2}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Gt]
     public static Vector512<byte> veq(Vector512<byte> a, Vector512<byte> b)
         => CompareEqual(a,b);
 
+    /// <summary>
+    /// __m512i _mm512_cmpeq_epi16 (__m512i a, __m512i b)
+    /// VPCMPEQW k1 {k2}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     [MethodImpl(Inline), Gt]
     public static Vector512<short> veq(Vector512<short> a, Vector512<short> b)
         => CompareEqual(a,b);

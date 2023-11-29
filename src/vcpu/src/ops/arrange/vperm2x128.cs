@@ -7,7 +7,8 @@ namespace Z0;
 partial class vcpu
 {
     /// <summary>
-    /// __m256i _mm256_permute2x128_si256 (__m256i a, __m256i b, const int imm8) VPERM2I128 ymm, ymm, ymm/m256, imm8
+    /// __m256i _mm256_permute2x128_si256 (__m256i a, __m256i b, const int imm8)
+    /// VPERM2I128 ymm, ymm, ymm/m256, imm8
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -17,7 +18,8 @@ partial class vcpu
         => Permute2x128(x, y, (byte)spec);
 
     /// <summary>
-    /// __m256i _mm256_permute2x128_si256 (__m256i a, __m256i b, const int imm8) VPERM2I128 ymm, ymm, ymm/m256, imm8
+    /// __m256i _mm256_permute2x128_si256 (__m256i a, __m256i b, const int imm8)
+    /// VPERM2I128 ymm, ymm, ymm/m256, imm8
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -57,7 +59,8 @@ partial class vcpu
         => Permute2x128(x, y, (byte)spec);
 
     /// <summary>
-    /// __m256i _mm256_permute2x128_si256 (__m256i a, __m256i b, const int imm8) VPERM2I128 ymm, ymm, ymm/m256, imm8
+    /// __m256i _mm256_permute2x128_si256 (__m256i a, __m256i b, const int imm8)
+    /// VPERM2I128 ymm, ymm, ymm/m256, imm8
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -67,7 +70,8 @@ partial class vcpu
         => Permute2x128(x, y, (byte)spec);
 
     /// <summary>
-    /// __m256i _mm256_permute2x128_si256 (__m256i a, __m256i b, const int imm8) VPERM2I128 ymm, ymm, ymm/m256, imm8
+    /// __m256i _mm256_permute2x128_si256 (__m256i a, __m256i b, const int imm8)
+    /// VPERM2I128 ymm, ymm, ymm/m256, imm8
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
@@ -77,7 +81,8 @@ partial class vcpu
         => Permute2x128(x, y, (byte)spec);
 
     /// <summary>
-    /// __m256i _mm256_permute2x128_si256 (__m256i a, __m256i b, const int imm8) VPERM2I128 ymm, ymm, ymm/m256, imm8
+    /// __m256i _mm256_permute2x128_si256 (__m256i a, __m256i b, const int imm8)
+    /// VPERM2I128 ymm, ymm, ymm/m256, imm8
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>

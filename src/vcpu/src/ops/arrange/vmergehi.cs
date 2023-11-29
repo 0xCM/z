@@ -79,15 +79,6 @@ partial class vcpu
         => UnpackHigh(x, y);
 
     /// <summary>
-    /// __m256i _mm256_unpackhi_epi8 (__m256i a, __m256i b) VPUNPCKHBW ymm, ymm, ymm/m256
-    /// </summary>
-    /// <param name="x">The left source vector</param>
-    /// <param name="y">The right source vector</param>
-    [MethodImpl(Inline), Op]
-    public static Vector256<sbyte> vmergehi(Vector256<sbyte> x, Vector256<sbyte> y)
-        => UnpackHigh(vperm4x64(x, Perm4L.ACBD), vperm4x64(y, Perm4L.ACBD));
-
-    /// <summary>
     /// __m256i _mm256_unpackhi_epi8 (__m256i a, __m256i b)
     /// VPUNPCKHBW ymm, ymm, ymm/m256
     /// </summary>
@@ -95,7 +86,7 @@ partial class vcpu
     /// <param name="y">The right source vector</param>
     [MethodImpl(Inline), Op]
     public static Vector256<byte> vmergehi(Vector256<byte> x, Vector256<byte> y)
-        => UnpackHigh(vperm4x64(x, Perm4L.ACBD), vperm4x64(y, Perm4L.ACBD));
+        => UnpackHigh(x, y);
 
     /// <summary>
     /// __m256i _mm256_unpackhi_epi16 (__m256i a, __m256i b) VPUNPCKHWD ymm, ymm, ymm/m256
@@ -104,16 +95,7 @@ partial class vcpu
     /// <param name="y">The right source vector</param>
     [MethodImpl(Inline), Op]
     public static Vector256<short> vmergehi(Vector256<short> x, Vector256<short> y)
-        => UnpackHigh(vperm4x64(x, Perm4L.ACBD), vperm4x64(y, Perm4L.ACBD));
-
-    /// <summary>
-    /// __m256i _mm256_unpackhi_epi16 (__m256i a, __m256i b) VPUNPCKHWD ymm, ymm, ymm/m256
-    /// </summary>
-    /// <param name="x">The left source vector</param>
-    /// <param name="y">The right source vector</param>
-    [MethodImpl(Inline), Op]
-    public static Vector256<ushort> vmergehi(Vector256<ushort> x, Vector256<ushort> y)
-        => UnpackHigh(vperm4x64(x, Perm4L.ACBD), vperm4x64(y, Perm4L.ACBD));
+        => UnpackHigh(x, y);
 
     /// <summary>
     /// __m256i _mm256_unpackhi_epi32 (__m256i a, __m256i b) VPUNPCKHDQ ymm, ymm, ymm/m256
@@ -122,7 +104,7 @@ partial class vcpu
     /// <param name="y">The right source vector</param>
     [MethodImpl(Inline), Op]
     public static Vector256<int> vmergehi(Vector256<int> x, Vector256<int> y)
-        => UnpackHigh(vperm4x64(x, Perm4L.ACBD), vperm4x64(y, Perm4L.ACBD));
+        => UnpackHigh(x, y);
 
     /// <summary>
     /// __m256i _mm256_unpackhi_epi32 (__m256i a, __m256i b) VPUNPCKHDQ ymm, ymm, ymm/m256
@@ -131,7 +113,7 @@ partial class vcpu
     /// <param name="y">The right source vector</param>
     [MethodImpl(Inline), Op]
     public static Vector256<uint> vmergehi(Vector256<uint> x, Vector256<uint> y)
-        => UnpackHigh(vperm4x64(x, Perm4L.ACBD), vperm4x64(y, Perm4L.ACBD));
+        => UnpackHigh(x, y);
 
     /// <summary>
     /// __m256i _mm256_unpackhi_epi64 (__m256i a, __m256i b) VPUNPCKHQDQ ymm, ymm, ymm/m256
@@ -140,14 +122,104 @@ partial class vcpu
     /// <param name="y">The right source vector</param>
     [MethodImpl(Inline), Op]
     public static Vector256<ulong> vmergehi(Vector256<ulong> x, Vector256<ulong> y)
-        => UnpackHigh(vperm4x64(x, Perm4L.ACBD), vperm4x64(y, Perm4L.ACBD));
+        => UnpackHigh(x, y);
 
     /// <summary>
-    /// __m256i _mm256_unpackhi_epi64 (__m256i a, __m256i b) VPUNPCKHQDQ ymm, ymm, ymm/m256
+    /// __m256i _mm256_unpackhi_epi64 (__m256i a, __m256i b)
+    /// VPUNPCKHQDQ ymm, ymm, ymm/m256
     /// </summary>
     /// <param name="x">The left source vector</param>
     /// <param name="y">The right source vector</param>
     [MethodImpl(Inline), Op]
     public static Vector256<long> vmergehi(Vector256<long> x, Vector256<long> y)
-        => UnpackHigh(vperm4x64(x, Perm4L.ACBD), vperm4x64(y, Perm4L.ACBD));   
+        => UnpackHigh(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_unpackhi_epi8 (__m512i a, __m512i b)
+    /// VPUNPCKHBW zmm1 {k1}{z}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<sbyte> vmergehi(Vector512<sbyte> x, Vector512<sbyte> y)
+        => UnpackHigh(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_unpackhi_epi8 (__m512i a, __m512i b)
+    /// VPUNPCKHBW zmm1 {k1}{z}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<byte> vmergehi(Vector512<byte> x, Vector512<byte> y)
+        => UnpackHigh(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_unpackhi_epi16 (__m512i a, __m512i b)
+    /// VPUNPCKHWD zmm1 {k1}{z}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<short> vmergehi(Vector512<short> x, Vector512<short> y)
+        => UnpackHigh(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_unpackhi_epi16 (__m512i a, __m512i b)
+    /// VPUNPCKHWD zmm1 {k1}{z}, zmm2, zmm3/m512
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<ushort> vmergehi(Vector512<ushort> x, Vector512<ushort> y)
+        => UnpackHigh(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_unpackhi_epi32 (__m512i a, __m512i b)
+    /// VPUNPCKHDQ zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<int> vmergehi(Vector512<int> x, Vector512<int> y)
+        => UnpackHigh(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_unpackhi_epi32 (__m512i a, __m512i b)
+    /// VPUNPCKHDQ zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<uint> vmergehi(Vector512<uint> x, Vector512<uint> y)
+        => UnpackHigh(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_unpackhi_epi64 (__m512i a, __m512i b)
+    /// VPUNPCKHQDQ zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<long> vmergehi(Vector512<long> x, Vector512<long> y)
+        => UnpackHigh(x, y);
+
+    /// <summary>
+    /// __m512i _mm512_unpackhi_epi64 (__m512i a, __m512i b)
+    /// VPUNPCKHQDQ zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<ulong> vmergehi(Vector512<ulong> x, Vector512<ulong> y)
+        => UnpackHigh(x, y);
+
 }

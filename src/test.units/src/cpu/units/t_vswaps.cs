@@ -57,7 +57,7 @@ namespace Z0
 
         public static Vector256<int> vswap_ref(Vector256<int> src, byte i, byte j)
         {
-            Span<uint> spec = stackalloc uint[Vector256<uint>.Count];
+            Span<int> spec = stackalloc int[Vector256<int>.Count];
             for(byte k=0; k<spec.Length; k++)
             {
                 if(k == i)

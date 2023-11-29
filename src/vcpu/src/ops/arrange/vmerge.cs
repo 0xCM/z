@@ -50,7 +50,7 @@ partial class vcpu
         var b = UnpackHigh(x,y);
         var c = vperm2x128(a,b, Perm2x4.AC);
         var d = vperm2x128(a,b, Perm2x4.BD);
-        return Vector512.Create(c,d);
+        return vparts(w512, c,d);
     }
 
     /// <summary>
@@ -65,7 +65,7 @@ partial class vcpu
         var b = UnpackHigh(x,y);
         var c = vperm2x128(a,b, Perm2x4.AC);
         var d = vperm2x128(a,b, Perm2x4.BD);
-        return Vector512.Create(c,d);
+        return vparts(w512, c,d);
     }
 
     /// <summary>
@@ -80,7 +80,7 @@ partial class vcpu
         var b = UnpackHigh(x,y);
         var c = vperm2x128(a,b, Perm2x4.AC);
         var d = vperm2x128(a,b, Perm2x4.BD);
-        return Vector512.Create(c,d);
+        return vparts(w512, c,d);
     }
 
     /// <summary>
@@ -95,7 +95,7 @@ partial class vcpu
         var b = UnpackHigh(x,y);
         var c = vperm2x128(a,b, Perm2x4.AC);
         var d = vperm2x128(a,b, Perm2x4.BD);
-        return Vector512.Create(c,d);
+        return vparts(w512, c,d);
     }
 
     /// <summary>
@@ -110,7 +110,7 @@ partial class vcpu
         var b = UnpackHigh(x,y);
         var c = vperm2x128(a,b, Perm2x4.AC);
         var d = vperm2x128(a,b, Perm2x4.BD);
-        return Vector512.Create(c,d);
+        return vparts(w512, c,d);
     }
 
     /// <summary>
@@ -125,7 +125,7 @@ partial class vcpu
         var b = UnpackHigh(x,y);
         var c = vperm2x128(a,b, Perm2x4.AC);
         var d = vperm2x128(a,b, Perm2x4.BD);
-        return Vector512.Create(c,d);
+        return vparts(w512, c,d);
     }
 
     /// <summary>
@@ -140,7 +140,7 @@ partial class vcpu
         var b = UnpackHigh(x,y);
         var c = vperm2x128(a,b, Perm2x4.AC);
         var d = vperm2x128(a,b, Perm2x4.BD);
-        return Vector512.Create(c,d);
+        return vparts(w512, c,d);
     }
 
     /// <summary>
@@ -155,6 +155,6 @@ partial class vcpu
         var b = UnpackHigh(x,y);
         var c = vperm2x128(a,b, Perm2x4.AC);
         var d = vperm2x128(a,b, Perm2x4.BD);
-        return Vector512.Create(c,d);
+        return vparts(w512, c,d);
     }
 }

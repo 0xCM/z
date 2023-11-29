@@ -61,28 +61,10 @@ namespace Z0
 
         public void vmerge_hi()
         {
-            var w = n256;
-            var t = z8;
-            var x = gcpu.vinc(w,t);
-            var y = gcpu.vinc(w, (byte)(x.LastCell() + 1));
-            var _z = cpu.vmergehi(x,y);
-            Notify($"vmerge_hi");
-            Notify(x.Format());
-            Notify(y.Format());
-            Notify(_z.Format());
         }
 
         public void vmerge_hilo()
         {
-            var x = gcpu.vinc<byte>(n128);
-            var y = cpu.vadd(x, cpu.vbroadcast(n128, (byte)16));
-
-            var hi = gcpu.vmergehi(x,y);
-
-            Notify($"vmerge_hilo");
-            Notify(x.Format());
-            Notify(y.Format());
-            Notify(hi.Format());
         }
     }
 }

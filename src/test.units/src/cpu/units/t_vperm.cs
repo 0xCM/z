@@ -28,9 +28,9 @@ namespace Z0
             var pformat_actual = PermSymbolic.bitmap(p);
             Claim.eq(pformat_epect, pformat_actual);
 
-            var vIn = cpu.vparts(w128, 0,1,2,3);
-            var vExpect = cpu.vparts(w128, 3,2,1,0);
-            var vActual = cpu.vshuffle(vIn,p);
+            var vIn = vparts(w128, 0,1,2,3);
+            var vExpect = vparts(w128, 3,2,1,0);
+            var vActual = vshuffle(vIn,p);
             Claim.veq(vExpect, vActual);
         }
 
@@ -159,19 +159,19 @@ namespace Z0
             var n = n256;
             var x = cpu.vparts(n,0,1,2,3);
 
-            Claim.veq(cpu.vparts(n,0,1,2,3), cpu.vperm4x64(x, Perm4L.ABCD));
-            Claim.veq(cpu.vparts(n,0,1,3,2), cpu.vperm4x64(x, Perm4L.ABDC));
-            Claim.veq(cpu.vparts(n,0,2,1,3), cpu.vperm4x64(x, Perm4L.ACBD));
-            Claim.veq(cpu.vparts(n,0,2,3,1), cpu.vperm4x64(x, Perm4L.ACDB));
-            Claim.veq(cpu.vparts(n,0,3,1,2), cpu.vperm4x64(x, Perm4L.ADBC));
-            Claim.veq(cpu.vparts(n,0,3,2,1), cpu.vperm4x64(x, Perm4L.ADCB));
+            Claim.veq(vparts(n,0,1,2,3), vperm4x64(x, Perm4L.ABCD));
+            Claim.veq(vparts(n,0,1,3,2), vperm4x64(x, Perm4L.ABDC));
+            Claim.veq(vparts(n,0,2,1,3), vperm4x64(x, Perm4L.ACBD));
+            Claim.veq(vparts(n,0,2,3,1), vperm4x64(x, Perm4L.ACDB));
+            Claim.veq(vparts(n,0,3,1,2), vperm4x64(x, Perm4L.ADBC));
+            Claim.veq(vparts(n,0,3,2,1), vperm4x64(x, Perm4L.ADCB));
 
-            Claim.veq(cpu.vparts(n,1,0,2,3), cpu.vperm4x64(x, Perm4L.BACD));
-            Claim.veq(cpu.vparts(n,1,0,3,2), cpu.vperm4x64(x, Perm4L.BADC));
-            Claim.veq(cpu.vparts(n,1,2,0,3), cpu.vperm4x64(x, Perm4L.BCAD));
-            Claim.veq(cpu.vparts(n,1,2,3,0), cpu.vperm4x64(x, Perm4L.BCDA));
-            Claim.veq(cpu.vparts(n,1,3,0,2), cpu.vperm4x64(x, Perm4L.BDAC));
-            Claim.veq(cpu.vparts(n,1,3,2,0), cpu.vperm4x64(x, Perm4L.BDCA));
+            Claim.veq(vparts(n,1,0,2,3), vperm4x64(x, Perm4L.BACD));
+            Claim.veq(vparts(n,1,0,3,2), vperm4x64(x, Perm4L.BADC));
+            Claim.veq(vparts(n,1,2,0,3), vperm4x64(x, Perm4L.BCAD));
+            Claim.veq(vparts(n,1,2,3,0), vperm4x64(x, Perm4L.BCDA));
+            Claim.veq(vparts(n,1,3,0,2), vperm4x64(x, Perm4L.BDAC));
+            Claim.veq(vparts(n,1,3,2,0), vperm4x64(x, Perm4L.BDCA));
         }
 
         public void perm4_symbols()
@@ -241,20 +241,20 @@ namespace Z0
         public void vperm_2x128_outline()
         {
             var n = n256;
-            var x = cpu.vparts(n, 0, 1, 2, 3);
-            var y = cpu.vparts(n, 4, 5, 6, 7);
+            var x = vparts(n, 0, 1, 2, 3);
+            var y = vparts(n, 4, 5, 6, 7);
 
-            Claim.veq(cpu.vparts(n, 0, 1, 4, 5), gcpu.vperm2x128(x,y, Perm2x4.AC));
-            Claim.veq(cpu.vparts(n, 4, 5, 0, 1), gcpu.vperm2x128(x,y, Perm2x4.CA));
+            Claim.veq(vparts(n, 0, 1, 4, 5), gcpu.vperm2x128(x,y, Perm2x4.AC));
+            Claim.veq(vparts(n, 4, 5, 0, 1), gcpu.vperm2x128(x,y, Perm2x4.CA));
 
-            Claim.veq(cpu.vparts(n, 0, 1, 6, 7), gcpu.vperm2x128(x,y, Perm2x4.AD));
-            Claim.veq(cpu.vparts(n, 6, 7, 0, 1), gcpu.vperm2x128(x,y, Perm2x4.DA));
+            Claim.veq(vparts(n, 0, 1, 6, 7), gcpu.vperm2x128(x,y, Perm2x4.AD));
+            Claim.veq(vparts(n, 6, 7, 0, 1), gcpu.vperm2x128(x,y, Perm2x4.DA));
 
-            Claim.veq(cpu.vparts(n, 2, 3, 4, 5), gcpu.vperm2x128(x,y, Perm2x4.BC));
-            Claim.veq(cpu.vparts(n, 4, 5, 2, 3), gcpu.vperm2x128(x,y, Perm2x4.CB));
+            Claim.veq(vparts(n, 2, 3, 4, 5), gcpu.vperm2x128(x,y, Perm2x4.BC));
+            Claim.veq(vparts(n, 4, 5, 2, 3), gcpu.vperm2x128(x,y, Perm2x4.CB));
 
-            Claim.veq(cpu.vparts(n, 2, 3, 6, 7), gcpu.vperm2x128(x,y, Perm2x4.BD));
-            Claim.veq(cpu.vparts(n, 6, 7, 2, 3), gcpu.vperm2x128(x,y, Perm2x4.DB));
+            Claim.veq(vparts(n, 2, 3, 6, 7), gcpu.vperm2x128(x,y, Perm2x4.BD));
+            Claim.veq(vparts(n, 6, 7, 2, 3), gcpu.vperm2x128(x,y, Perm2x4.DB));
         }
 
         /// <summary>
