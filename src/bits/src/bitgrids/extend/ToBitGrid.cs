@@ -347,9 +347,8 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static BitGrid16<T> ToBitGrid<T>(this BitString bs, W16 w)
-            where T : unmanaged
-                => BitGrid.parse<T>(bs, w);
+        public static BitGrid16 ToBitGrid(this BitString bs, W16 w)
+            => BitGrid.parse(bs, w);
 
         /// <summary>
         /// Hydrates a bitgrid from a bitstring
@@ -361,9 +360,8 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static BitGrid32<T> ToBitGrid<T>(this BitString bs, N32 w, int rows, int cols, T t = default)
-            where T : unmanaged
-                => BitGrid.parse<T>(bs, w, rows, cols);
+        public static BitGrid32 ToBitGrid(this BitString bs, N32 w, int rows, int cols)
+            => BitGrid.parse(bs, w, rows, cols);
 
         /// <summary>
         /// Hydrates a bitgrid from a bitstring
@@ -375,9 +373,8 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
-        public static BitGrid64<T> ToBitGrid<T>(this BitString bs, N64 w, int rows, int cols,  T t = default)
-            where T : unmanaged
-                => BitGrid.parse(bs,w,rows,cols,t);
+        public static BitGrid64 ToBitGrid(this BitString bs, N64 w, int rows, int cols)
+            => BitGrid.parse(bs,w,rows,cols);
 
         /// <summary>
         /// Hydrates a bitgrid from a bitstring

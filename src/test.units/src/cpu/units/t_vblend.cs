@@ -132,10 +132,10 @@ public class t_vblend : t_inx<t_vblend>
         var w = w32;
         var left =  cpu.vparts(n,0,1,2,3);
         var right = cpu.vparts(n,4,5,6,7);
-        Claim.veq(cpu.vparts(n,0,5,2,7), cpu.vblend4x32(left,right,Blend4x32.LRLR));
-        Claim.veq(cpu.vparts(n,4,1,6,3), cpu.vblend4x32(left,right,Blend4x32.RLRL));
-        Claim.veq(cpu.vparts(n,0,1,6,7), cpu.vblend4x32(left,right,Blend4x32.LLRR));
-        Claim.veq(cpu.vparts(n,4,5,2,3), cpu.vblend4x32(left,right,Blend4x32.RRLL));
+        Claim.veq(cpu.vparts(n,0,5,2,7), cpu.vblend(left,right,Blend4x32.LRLR));
+        Claim.veq(cpu.vparts(n,4,1,6,3), cpu.vblend(left,right,Blend4x32.RLRL));
+        Claim.veq(cpu.vparts(n,0,1,6,7), cpu.vblend(left,right,Blend4x32.LLRR));
+        Claim.veq(cpu.vparts(n,4,5,2,3), cpu.vblend(left,right,Blend4x32.RRLL));
     }
 
     public void vblend_8x32_basecases()

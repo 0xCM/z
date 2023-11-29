@@ -28,7 +28,7 @@ partial class vgcpu
     /// <param name="w">The bitness selector</param>
     /// <param name="src">The source value</param>
     /// <typeparam name="T">The vector component type</typeparam>
-    [MethodImpl(Inline), Op, Closures(AllNumeric)]
+    [MethodImpl(Inline), Op, Closures(Integers)]
     public static Vector128<T> vbroadcast<T>(W128 w, T src)
         where T : unmanaged
             => vbroadcast_u(w, src);
@@ -39,8 +39,19 @@ partial class vgcpu
     /// <param name="w">The bitness selector</param>
     /// <param name="src">The source value</param>
     /// <typeparam name="T">The vector component type</typeparam>
-    [MethodImpl(Inline), Op, Closures(AllNumeric)]
+    [MethodImpl(Inline), Op, Closures(Integers)]
     public static Vector256<T> vbroadcast<T>(W256 w, T src)
+        where T : unmanaged
+            => vbroadcast_u(w, src);
+
+    /// <summary>
+    /// Projects a scalar value onto each component of a 512-bit vector
+    /// </summary>
+    /// <param name="w">The bitness selector</param>
+    /// <param name="src">The source value</param>
+    /// <typeparam name="T">The vector component type</typeparam>
+    [MethodImpl(Inline), Op, Closures(Integers)]
+    public static Vector512<T> vbroadcast<T>(W512 w, T src)
         where T : unmanaged
             => vbroadcast_u(w, src);
 
@@ -107,4 +118,37 @@ partial class vgcpu
         else
             throw no<T>();
     }
+
+    [MethodImpl(Inline)]
+    static Vector512<T> vbroadcast_u<T>(W512 w, T src)
+        where T : unmanaged
+    {
+        if(typeof(T) == typeof(byte))
+            return generic<T>(vcpu.vbroadcast(w, uint8(src)));
+        else if(typeof(T) == typeof(ushort))
+            return generic<T>(vcpu.vbroadcast(w, uint16(src)));
+        else if(typeof(T) == typeof(uint))
+            return generic<T>(vcpu.vbroadcast(w, uint32(src)));
+        else if(typeof(T) == typeof(ulong))
+            return generic<T>(vcpu.vbroadcast(w, uint64(src)));
+        else
+            return vbroadcast_i(w,src);
+    }
+
+    [MethodImpl(Inline)]
+    static Vector512<T> vbroadcast_i<T>(W512 w, T src)
+        where T : unmanaged
+    {
+            if(typeof(T) == typeof(sbyte))
+            return generic<T>(vcpu.vbroadcast(w, int8(src)));
+        else if(typeof(T) == typeof(short))
+            return generic<T>(vcpu.vbroadcast(w, int16(src)));
+        else if(typeof(T) == typeof(int))
+            return generic<T>(vcpu.vbroadcast(w, int32(src)));
+        else if(typeof(T) == typeof(long))
+            return generic<T>(vcpu.vbroadcast(w, int64(src)));
+        else
+            throw no<T>();
+    }
+
 }

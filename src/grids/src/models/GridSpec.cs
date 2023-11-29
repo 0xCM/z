@@ -13,12 +13,12 @@ public readonly struct GridSpec
     /// <summary>
     /// The number of grid rows
     /// </summary>
-    public readonly ushort RowCount;
+    public readonly uint RowCount;
 
     /// <summary>
     /// The number of grid columns
     /// </summary>
-    public readonly ushort ColCount;
+    public readonly uint ColCount;
 
     /// <summary>
     /// The number of bits in a storage cell
@@ -41,7 +41,7 @@ public readonly struct GridSpec
     public readonly uint StoreSize;
 
     [MethodImpl(Inline)]
-    public GridSpec(ushort rows, ushort cols, ushort wCell, uint zStore, uint wStore, uint cells)
+    public GridSpec(uint rows, uint cols, ushort wCell, uint zStore, uint wStore, uint cells)
     {
         RowCount = rows;
         ColCount = cols;

@@ -14,9 +14,8 @@ partial class BitGrid
     /// <param name="t">The cell type representative</param>
     /// <typeparam name="T">The cell type</typeparam>
     [MethodImpl(Inline), Parse, Closures(UInt8x16k)]
-    public static BitGrid16<T> parse<T>(BitString bs, W16 w)
-        where T : unmanaged
-            => init16<T>(bs.TakeUInt16());
+    public static BitGrid16 parse(BitString bs, W16 w)
+        => new(bs.TakeUInt16());
 
     /// <summary>
     /// Hydrates a fixed-width 32-bit dimensionless grid from a bitstring
@@ -26,9 +25,8 @@ partial class BitGrid
     /// <param name="t">The cell type representative</param>
     /// <typeparam name="T">The cell type</typeparam>
     [MethodImpl(Inline), Parse, Closures(UInt8x16x32k)]
-    public static BitGrid32<T> parse<T>(BitString bs, N32 n, int rows, int cols, T t = default)
-        where T : unmanaged
-            => init32<T>(bs.TakeUInt32());
+    public static BitGrid32 parse(BitString bs, N32 n, int rows, int cols)
+        => new(bs.TakeUInt32());
 
     /// <summary>
     /// Hydrates a fixed-width 64-bit dimensionless grid from a bitstring
@@ -38,9 +36,8 @@ partial class BitGrid
     /// <param name="t">The cell type representative</param>
     /// <typeparam name="T">The cell type</typeparam>
     [MethodImpl(Inline), Parse, Closures(UnsignedInts)]
-    public static BitGrid64<T> parse<T>(BitString bs, N64 n, int rows, int cols, T t = default)
-        where T : unmanaged
-            => init64<T>(bs.TakeUInt64());
+    public static BitGrid64 parse(BitString bs, N64 n, int rows, int cols)
+        => new(bs.TakeUInt64());
 
     /// <summary>
     /// Hydrates a fixed-width natural bitgrid from a bitstring

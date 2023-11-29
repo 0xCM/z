@@ -30,7 +30,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static void decode(N16 n, ReadOnlySpan<byte> src, Span<char> dst)
-            => vstore(vpack.vpmovzxbw(w256, vcpu.vload(w128,src)), ref @as<ushort>(sys.first(dst)));
+            => vstore(vpmovzxbw(vload(w128,src)), ref @as<ushort>(sys.first(dst)));
 
         [MethodImpl(Inline), Op]
         public static void decode(N32 n, ReadOnlySpan<byte> src, Span<char> dst)
@@ -43,11 +43,11 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static Vector128<ushort> decode(ulong src)
-            => vlo(vpack.vpmovzxbw(w256, v8u(vscalar(src))));
+            => vlo(vpmovzxbw(v8u(vscalar(src))));
 
         [MethodImpl(Inline), Op]
         public static Vector256<ushort> decode(Vector128<byte> src)
-            => vpack.vpmovzxbw(w256, src);
+            => vpmovzxbw(src);
 
         [MethodImpl(Inline), Op]
         public static Vector512<ushort> decode(Vector256<byte> src)

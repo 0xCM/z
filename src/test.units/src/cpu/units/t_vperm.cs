@@ -30,7 +30,7 @@ namespace Z0
 
             var vIn = cpu.vparts(w128, 0,1,2,3);
             var vExpect = cpu.vparts(w128, 3,2,1,0);
-            var vActual = cpu.vperm4x32(vIn,p);
+            var vActual = cpu.vshuffle(vIn,p);
             Claim.veq(vExpect, vActual);
         }
 
@@ -74,16 +74,16 @@ namespace Z0
             var xs = x.ToSpan();
             Claim.veq(Vector128.Create(xs[A], xs[B], xs[C], xs[D], xs[A + 4], xs[B + 4], xs[C + 4], xs[D + 4]), x);
 
-            var xABCD = cpu.vpermlo4x16(x, Perm4L.ABCD);
+            var xABCD = cpu.vshuflo(x, Perm4L.ABCD);
             Claim.veq(xABCD, Vector128.Create(xs[A], xs[B], xs[C], xs[D], xs[A + 4], xs[B + 4], xs[C + 4], xs[D + 4]));
 
-            var xDCBA = cpu.vpermlo4x16(x, Perm4L.DCBA);
+            var xDCBA = cpu.vshuflo(x, Perm4L.DCBA);
             Claim.veq(xDCBA, Vector128.Create(xs[D], xs[C], xs[B], xs[A], xs[A + 4], xs[B + 4], xs[C + 4], xs[D + 4]));
 
-            var xACBD = cpu.vpermlo4x16(x, Perm4L.ACBD);
+            var xACBD = cpu.vshuflo(x, Perm4L.ACBD);
             Claim.veq(xACBD, Vector128.Create(xs[A], xs[C], xs[B], xs[D], xs[A + 4], xs[B + 4], xs[C + 4], xs[D + 4]));
 
-            Claim.veq(cpu.vpermlo4x16(cpu.vparts(w128, 0,1,2,3,6,7,8,9), Perm4L.ADCB), cpu.vparts(w128, 0,3,2,1,6,7,8,9));
+            Claim.veq(cpu.vshuflo(cpu.vparts(w128, 0,1,2,3,6,7,8,9), Perm4L.ADCB), cpu.vparts(w128, 0,3,2,1,6,7,8,9));
         }
 
         public void vpermhi_4x16_outline()
@@ -97,16 +97,16 @@ namespace Z0
             var xs = x.ToSpan();
             Claim.veq(Vector128.Create(xs[A], xs[B], xs[C], xs[D], xs[A+4], xs[B+ 4], xs[C + 4], xs[D + 4]), x);
 
-            var xABCD = cpu.vpermhi4x16(x, Perm4L.ABCD);
+            var xABCD = cpu.vshufhi(x, Perm4L.ABCD);
             Claim.veq(xABCD, Vector128.Create(xs[A], xs[B], xs[C], xs[D], xs[A + 4], xs[B + 4], xs[C + 4], xs[D + 4]));
 
-            var xDCBA = cpu.vpermhi4x16(x, Perm4L.DCBA);
+            var xDCBA = cpu.vshufhi(x, Perm4L.DCBA);
             Claim.veq(xDCBA, Vector128.Create(xs[A], xs[B], xs[C], xs[D], xs[D + 4], xs[C + 4], xs[B + 4], xs[A + 4]));
 
-            var xACBD = cpu.vpermhi4x16(x, Perm4L.ACBD);
+            var xACBD = cpu.vshufhi(x, Perm4L.ACBD);
             Claim.veq(xACBD, Vector128.Create(xs[A], xs[B], xs[C], xs[D], xs[A + 4], xs[C + 4], xs[B + 4], xs[D + 4]));
 
-            Claim.veq(cpu.vpermhi4x16(cpu.vparts(w128, 0,1,2,3,6,7,8,9), Perm4L.ADCB), cpu.vparts(n128,0,1,2,3,6,9,8,7));
+            Claim.veq(cpu.vshufhi(cpu.vparts(w128, 0,1,2,3,6,7,8,9), Perm4L.ADCB), cpu.vparts(n128,0,1,2,3,6,9,8,7));
         }
 
         public void vperm4x32_128x32u_outline()
@@ -119,8 +119,8 @@ namespace Z0
             var v = gcpu.vdec<uint>(n);
             Claim.veq(cpu.vparts(n,3,2,1,0),v);
 
-            Claim.veq(v, cpu.vperm4x32(u, Perm4L.DCBA));
-            Claim.veq(u, cpu.vperm4x32(v, Perm4L.DCBA));
+            Claim.veq(v, cpu.vshuffle(u, Perm4L.DCBA));
+            Claim.veq(u, cpu.vshuffle(v, Perm4L.DCBA));
         }
 
         public void vperm_4x16_outline()
@@ -128,11 +128,11 @@ namespace Z0
             var w = W128.W;
             var x = cpu.vparts(w,0,1,2,3,4,5,6,7);
 
-            var a0 = cpu.vpermlo4x16(x, Perm4L.DCBA);
+            var a0 = cpu.vshuflo(x, Perm4L.DCBA);
             var a1 = cpu.vparts(w,3,2,1,0,4,5,6,7);
             Claim.veq(a0,a1);
 
-            var b0 = cpu.vpermhi4x16(x, Perm4L.DCBA);
+            var b0 = cpu.vshufhi(x, Perm4L.DCBA);
             var b1 = cpu.vparts(w,0,1,2,3,7,6,5,4);
             Claim.veq(b0,b1);
 
@@ -140,11 +140,11 @@ namespace Z0
             var c1 = cpu.vparts(w,3,2,1,0,7,6,5,4);
             Claim.veq(c0,c1);
 
-            var d0 = cpu.vpermlo4x16(x, Perm4L.BADC);
+            var d0 = cpu.vshuflo(x, Perm4L.BADC);
             var d1 = cpu.vparts(w,1,0,3,2,4,5,6,7);
             Claim.veq(d0,d1);
 
-            var e0 = cpu.vpermhi4x16(x, Perm4L.BADC);
+            var e0 = cpu.vshufhi(x, Perm4L.BADC);
             var e1 = cpu.vparts(w,0,1,2,3,5,4,7,6);
             Claim.veq(e0,e1);
 
@@ -332,7 +332,7 @@ namespace Z0
                 Claim.eq(p,q);
 
                 // Permute vector via api
-                var v2 = vperm4x32(v1,p);
+                var v2 = vshuffle(v1,p);
 
                 // Permute vector manually
                 var v3 = vparts(w128, v1s[p0],v1s[p1],v1s[p2],v1s[p3]);
@@ -355,21 +355,21 @@ namespace Z0
             var src = vparts(w128, 1,2,3,4);
             var spec = Perm4L.ABCD;
             var y = vparts(w128, 4,3,2,1);
-            var x = vperm4x32(src, Perm4L.ABCD);
+            var x = vshuffle(src, Perm4L.ABCD);
             VClaims.veq(x, src);
 
             y = vparts(w128,4,3,2,1);
             spec = Perm4L.DCBA;
-            x = vperm4x32(src,spec);
+            x = vshuffle(src,spec);
             VClaims.veq(x, y);
 
             y = vparts(w128,4u,3u,2u,1u);
             spec = Perm4L.DCBA;
-            x = vperm4x32(src,spec);
+            x = vshuffle(src,spec);
             VClaims.veq(x, y);
 
-            VClaims.veq(vperm4x32(vparts(w128, 0,1,2,3), Perm4L.ADCB), vparts(w128, 0,3,2,1));
-            VClaims.veq(vperm4x32(vparts(w128, 0,1,2,3), Perm4L.DBCA), vparts(w128, 3,1,2,0));
+            VClaims.veq(vshuffle(vparts(w128, 0,1,2,3), Perm4L.ADCB), vparts(w128, 0,3,2,1));
+            VClaims.veq(vshuffle(vparts(w128, 0,1,2,3), Perm4L.DBCA), vparts(w128, 3,1,2,0));
         }
 
         void perm4_symbol_check(Perm4L perm, params Perm4L[] expect)

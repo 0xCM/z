@@ -31,7 +31,7 @@ namespace Z0
         {
             var bytes = (uint)gridsize(rows, cols);
             var bits = bytes*8;
-            var segs = grids.gridcells(rows, cols, segwidth);
+            var segs = grids.cellcount(rows, cols, segwidth);
             return new GridSpec(rows, cols, segwidth, bytes, bits, segs);
         }
 

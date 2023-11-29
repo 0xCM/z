@@ -1,50 +1,49 @@
-//-----------------------------------------------------------------------------
-// Copyright   :  (c) Chris Moore, 2020
-// License     :  MIT
-//-----------------------------------------------------------------------------
-namespace Z0.Expr
-{
-    using static sys;
+// //-----------------------------------------------------------------------------
+// // Copyright   :  (c) Chris Moore, 2020
+// // License     :  MIT
+// //-----------------------------------------------------------------------------
+// namespace Z0.Expr;
 
-    public struct vector<N,T> : IVector<T>
-        where T : unmanaged
-        where N : unmanaged, ITypeNat
-    {
-        public static ByteSize SZ => size<T>()*Typed.nat32u<N>();
+//     using static sys;
 
-        readonly Index<T> Data;
+//     public struct vector<N,T> : IVector<T>
+//         where T : unmanaged
+//         where N : unmanaged, ITypeNat
+//     {
+//         public static ByteSize SZ => size<T>()*Typed.nat32u<N>();
 
-        [MethodImpl(Inline)]
-        internal vector(T[] src)
-        {
-            Data = src;
-        }
+//         readonly Index<T> Data;
 
-        public Span<T> Cells
-        {
-            [MethodImpl(Inline)]
-            get => Data.Edit;
-        }
+//         [MethodImpl(Inline)]
+//         internal vector(T[] src)
+//         {
+//             Data = src;
+//         }
 
-        [MethodImpl(Inline)]
-        public ref T Cell(uint index)
-            => ref Data[index];
+//         public Span<T> Cells
+//         {
+//             [MethodImpl(Inline)]
+//             get => Data.Edit;
+//         }
 
-        public ref T this[uint index]
-        {
-            [MethodImpl(Inline)]
-            get => ref Cell(index);
-        }
+//         [MethodImpl(Inline)]
+//         public ref T Cell(uint index)
+//             => ref Data[index];
 
-        public string Format()
-            => format(this);
+//         public ref T this[uint index]
+//         {
+//             [MethodImpl(Inline)]
+//             get => ref Cell(index);
+//         }
 
-        public override string ToString()
-            => Format();
+//         public string Format()
+//             => format(this);
 
-        uint IVector.N
-            => Typed.nat32u<N>();
+//         public override string ToString()
+//             => Format();
 
-        public static vector<N,T> Empty => default;
-    }
-}
+//         uint IVector.N
+//             => Typed.nat32u<N>();
+
+//         public static vector<N,T> Empty => default;
+//     }

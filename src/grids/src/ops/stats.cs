@@ -8,7 +8,7 @@ partial struct grids
 {
     [MethodImpl(Inline), Op]
     public static GridStats stats(in GridMetrics src)
-        => new GridStats(
+        => new (
             RowCount : src.RowCount,
             ColCount : src.ColCount,
             SegWidth : src.CellWidth,
@@ -21,7 +21,6 @@ partial struct grids
             Vec256Count : coverage(src, W256.W),
             Vec256Remainder : remainder(src, W256.W)
         );
-
 
     /// <summary>
     /// Calculates memory block statistics for specified function and type parameters

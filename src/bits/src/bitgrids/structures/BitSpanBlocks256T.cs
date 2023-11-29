@@ -50,7 +50,7 @@ namespace Z0
         public int CellCount
         {
             [MethodImpl(Inline)]
-            get => (int)(grids.gridcells<T>((uint)RowCount, (uint)ColCount));
+            get => (int)(grids.cellcount<T>((uint)RowCount, (uint)ColCount));
         }
 
         /// <summary>

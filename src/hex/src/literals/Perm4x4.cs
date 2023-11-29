@@ -92,7 +92,11 @@ public enum Perm4x4 : byte
 
     ADAA = 0x30, ADAB = 0x31, ADAC = 0x32,
 
-    ADAD = 0x33, ADBA = 0x34, ADBB = 0x35,
+    ADAD = 0x33,
+    
+    ADBA = 0x34,
+    
+    ADBB = 0x35,
 
     ADBC = 0x36, ADBD = 0x37, ADCA = 0x38,
 
@@ -118,11 +122,21 @@ public enum Perm4x4 : byte
 
     BBBD = 0x57, BBCA = 0x58, BBCB = 0x59,
 
-    BBCC = 0x5A, BBCD = 0x5B, BBDA = 0x5C,
+    BBCC = 0x5A,
+    
+    BBCD = 0x5B,
+    
+    BBDA = 0x5C,
 
-    BBDB = 0x5D, BBDC = 0x5E, BBDD = 0x5F,
+    BBDB = 0x5D,
+    
+    BBDC = 0x5E,
+    
+    BBDD = 0x5F,
 
-    BCAA = 0x60, BCAB = 0x61, BCAC = 0x62,
+    BCAA = 0x60,
+    
+    BCAB = 0x61, BCAC = 0x62,
 
     BCAD = 0x63, BCBA = 0x64, BCBB = 0x65,
 

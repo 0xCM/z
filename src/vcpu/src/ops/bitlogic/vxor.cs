@@ -327,6 +327,4 @@ partial class vcpu
     [MethodImpl(Inline), Xor]
     public static Vector512<ulong> vxor(Vector512<ulong> x, Vector512<ulong> y)
         => Xor(x, y);
-
-
 }

@@ -608,7 +608,7 @@ public class SpanPack
     /// <param name="src">The target</param>
     [MethodImpl(Inline), Op]
     public static void unpack16x16(Cell128 src, Span<ushort> dst)
-        => vgcpu.vstore(vpack.vpmovzxbw(w256, src), dst);
+        => vgcpu.vstore(vcpu.vpmovzxbw(src), dst);
 
     /// <summary>
     /// Unpacks 8 source bits over 8 32-bit target segments

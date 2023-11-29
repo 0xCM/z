@@ -41,4 +41,27 @@ partial class vcpu
      [MethodImpl(Inline), Asm(ApiAsmClass.VPAVGW)]
      public static Vector256<ushort> vavg(Vector256<ushort> a, Vector256<ushort> b)
           => Average(a,b);
+
+     /// <summary>
+     /// _m512i _mm512_avg_epu8 (__m512i a, __m512i b)
+     /// VPAVGB zmm1 {k1}{z}, zmm2, zmm3/m512
+     /// </summary>
+     /// <param name="a"></param>
+     /// <param name="b"></param>
+     /// <returns></returns>
+     [MethodImpl(Inline), Asm(ApiAsmClass.VPAVGW)]
+     public static Vector512<byte> vavg(Vector512<byte> a, Vector512<byte> b)
+          => Average(a,b);
+
+     /// <summary>
+     /// __m512i _mm512_avg_epu16 (__m512i a, __m512i b)
+     /// VPAVGW zmm1 {k1}{z}, zmm2, zmm3/m512
+     /// </summary>
+     /// <param name="a"></param>
+     /// <param name="b"></param>
+     /// <returns></returns>
+     [MethodImpl(Inline), Asm(ApiAsmClass.VPAVGW)]
+     public static Vector512<ushort> vavg(Vector512<ushort> a, Vector512<ushort> b)
+          => Average(a,b);
+
 }

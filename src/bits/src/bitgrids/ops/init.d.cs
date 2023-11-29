@@ -49,7 +49,7 @@ namespace Z0
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged
-                => new BitGrid16<M,N,T>(gcpu.broadcast<T,ushort>(d));
+                => new (gcpu.broadcast<T,ushort>(d));
 
         /// <summary>
         /// Initializes a 32-bit grid of natural dimensions
@@ -65,7 +65,7 @@ namespace Z0
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged
-                => new BitGrid32<M,N,T>(gcpu.broadcast<T,uint>(d));
+                => new (gcpu.broadcast<T,uint>(d));
 
         /// <summary>
         /// Initializes a 64-bit grid of natural dimensions
@@ -81,7 +81,7 @@ namespace Z0
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged
-                => new BitGrid64<M,N,T>(gcpu.broadcast<T,ulong>(d));
+                => new (gcpu.broadcast<T,ulong>(d));
 
         /// <summary>
         /// Initializes a 128-bit grid of natural dimensions
@@ -97,7 +97,7 @@ namespace Z0
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged
-                => new BitGrid128<M,N,T>(gcpu.vbroadcast(n128, d));
+                => new (gcpu.vbroadcast(n128, d));
 
         /// <summary>
         /// Initializes a 256-bit grid of natural dimensions
@@ -113,6 +113,6 @@ namespace Z0
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
             where T : unmanaged
-                => new BitGrid256<M,N,T>(gcpu.vbroadcast(n256, d));
+                => new (gcpu.vbroadcast(n256, d));
     }
 }

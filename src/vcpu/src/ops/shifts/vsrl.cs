@@ -30,7 +30,7 @@ partial class vcpu
     [MethodImpl(Inline), Srl]
     public static Vector128<sbyte> vsrl(Vector128<sbyte> src, [Imm] byte count)
     {
-        var x = v16u(ShiftRightLogical(vpack.vpmovsxbw(w256, src),count));
+        var x = v16u(ShiftRightLogical(vpmovsxbw(src),count));
         var y = vand(x, v16u(vbroadcast(w256, byte.MaxValue)));
         return v8i(vpack.vpack128x8u(y));
     }
@@ -224,8 +224,8 @@ partial class vcpu
     [MethodImpl(Inline), Srl]
     public static Vector256<sbyte> vsrl(Vector256<sbyte> src, [Imm] byte count)
     {
-        var x = v16u(ShiftRightLogical(vpack.vpmovsxbw(w256, vlo(src)),count));
-        var y = v16u(ShiftRightLogical(vpack.vpmovsxbw(w256, vhi(src)),count));
+        var x = v16u(ShiftRightLogical(vpmovsxbw(vlo(src)),count));
+        var y = v16u(ShiftRightLogical(vpmovsxbw(vhi(src)),count));
         var m = v16u(vbroadcast(w256, byte.MaxValue));
         return v8i(vpack.vpack256x8u(vand(x,m), vand(y,m)));
     }
@@ -312,7 +312,7 @@ partial class vcpu
     public static Vector128<byte> vsrl(Vector128<byte> src, Vector128<byte> count)
     {
         var y = v16u(count);
-        var dst = vsrl(vpack.vpmovzxbw(w256,  src),y);
+        var dst = vsrl(vpmovzxbw(src),y);
         return vpack.vpack128x8u(dst);
     }
 
@@ -325,7 +325,7 @@ partial class vcpu
     public static Vector128<sbyte> vsrl(Vector128<sbyte> src, Vector128<sbyte> count)
     {
         var y = v16i(count);
-        var dst = vsrl(vpack.vpmovsxbw(w256, src),y);
+        var dst = vsrl(vpmovsxbw(src),y);
         return vpack.vpack128x8i(dst);
     }
 
@@ -397,8 +397,8 @@ partial class vcpu
     public static Vector256<sbyte> vsrl(Vector256<sbyte> src, Vector128<sbyte> count)
     {
         var y = v16i(count);
-        var lo = vsrl(vpack.vpmovsxbw(w256, vlo(src)), y);
-        var hi = vsrl(vpack.vpmovsxbw(w256, vhi(src)),y);
+        var lo = vsrl(vpmovsxbw(vlo(src)), y);
+        var hi = vsrl(vpmovsxbw(vhi(src)),y);
         return vpack.vpack256x8i(lo, hi);
     }
 
@@ -411,8 +411,8 @@ partial class vcpu
     public static Vector256<byte> vsrl(Vector256<byte> src, Vector128<byte> count)
     {
         var y = v16u(count);
-        var lo = vsrl(vpack.vpmovzxbw(w256, vlo(src)),y);
-        var hi = vsrl(vpack.vpmovzxbw(w256, vhi(src)),y);
+        var lo = vsrl(vpmovzxbw(vlo(src)),y);
+        var hi = vsrl(vpmovzxbw(vhi(src)),y);
         return vpack.vpack256x8u(lo, hi);
     }
 

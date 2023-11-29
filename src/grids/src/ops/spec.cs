@@ -24,7 +24,7 @@ partial struct grids
     {
         var bytes = (uint)size(rows, cols);
         var bits = bytes*8;
-        var segs = gridcells(rows, cols, segwidth);
+        var segs = cellcount(rows, cols, segwidth);
         return new GridSpec(rows, cols, segwidth, bytes, bits, segs);
     }        
 }

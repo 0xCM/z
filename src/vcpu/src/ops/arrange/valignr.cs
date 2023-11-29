@@ -165,4 +165,29 @@ partial class vcpu
     [MethodImpl(Inline), Op]
     public static Vector256<ulong> valignr(Vector256<ulong> x, Vector256<ulong> y, [Imm] byte offset)
         => AlignRight(x, y, offset);
+
+    /// <summary>
+    /// __m512i _mm512_alignr_epi8 (__m512i a, __m512i b, const int count)
+    /// VPALIGNR zmm1 {k1}{z}, zmm2, zmm3/m512, imm8
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <param name="offset"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<sbyte> valignr(Vector512<sbyte> a, Vector512<sbyte> b, [Imm] byte offset)
+        => AlignRight(a, b, offset);
+
+    /// <summary>
+    /// __m512i _mm512_alignr_epi8 (__m512i a, __m512i b, const int count)
+    /// VPALIGNR zmm1 {k1}{z}, zmm2, zmm3/m512, imm8
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <param name="offset"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<byte> valignr(Vector512<byte> a, Vector512<byte> b, [Imm] byte offset)
+        => AlignRight(a, b, offset);
+
 }

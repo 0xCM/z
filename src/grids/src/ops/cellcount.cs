@@ -15,7 +15,7 @@ partial struct grids
     /// <param name="cols">The grid col count</param>
     /// <param name="cellwidth">The storage cell width</param>
     [MethodImpl(Inline), Op]
-    public static uint gridcells(uint rows, uint cols, uint cellwidth)
+    public static uint cellcount(uint rows, uint cols, uint cellwidth)
     {
         var sz = (uint)grids.size(rows, cols);
         var size = cellwidth/8u;
@@ -30,9 +30,9 @@ partial struct grids
     /// <param name="cols">The number of columns in the grid</param>
     /// <typeparam name="T">The storage cell type</typeparam>
     [MethodImpl(Inline), Op, Closures(Closure)]
-    public static uint gridcells<T>(uint rows, uint cols)
+    public static uint cellcount<T>(uint rows, uint cols)
         where T : unmanaged
-            => gridcells(rows, cols, width<T>());
+            => cellcount(rows, cols, width<T>());
 
     /// <summary>
     /// Computes the number of segments required cover a grid as characterized by parametric type information
@@ -44,9 +44,9 @@ partial struct grids
     /// <typeparam name="N">The col type</typeparam>
     /// <typeparam name="T">The storage segment type</typeparam>
     [MethodImpl(Inline)]
-    public static uint gridcells<M,N,T>(M m = default, N n = default, T t = default)
+    public static uint cellcount<M,N,T>(M m = default, N n = default, T t = default)
         where M : unmanaged, ITypeNat
         where N : unmanaged, ITypeNat
         where T : unmanaged
-            => gridcells((uint)nat64u(m), (uint)nat64u(n), width<T>());
+            => cellcount((uint)nat64u(m), (uint)nat64u(n), width<T>());
 }

@@ -2,12 +2,11 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class XTend
 {
-    partial class XTend
-    {
-        public static Span<T> Increments<T>(this Interval<T> src)
-            where T : unmanaged, IEquatable<T>
-                => Partitions.increments(src.ToClosed());
-    }
+    public static Span<T> Increments<T>(this Interval<T> src)
+        where T : unmanaged, IEquatable<T>
+            => Partitions.increments(src.ToClosed());
 }

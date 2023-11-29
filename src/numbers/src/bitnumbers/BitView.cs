@@ -14,12 +14,12 @@ namespace Z0
     {
         [MethodImpl(Inline)]
         public static BitView create(in ulong src)
-            => new BitView(bytes(src));
+            => new (bytes(src));
 
         [MethodImpl(Inline), Closures(UnsignedInts)]
         public static BitView create<T>(in T src)
             where T : unmanaged
-                => new BitView(bytes(src));
+                => new (bytes(src));
 
         /// <summary>
         /// The data over which the view is constructed

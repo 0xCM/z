@@ -170,7 +170,7 @@ partial class vcpu
     /// <param name="vidx">The index vector</param>
     [MethodImpl(Inline), Op]
     public static unsafe Vector128<ushort> vgather(N128 w, in ushort src, Vector128<ushort> vidx)
-        => vpack.vpack128x16u(GatherVector256(p32u(src), v32i(vpack.vpmovzxwd(w256, vidx)), 2));
+        => vpack.vpack128x16u(GatherVector256(p32u(src), v32i(vpmovzxwd(vidx)), 2));
 
     /// <summary>
     /// Loads a 128x16i vector from index-identified source cells
@@ -180,7 +180,7 @@ partial class vcpu
     /// <param name="vidx">The index vector</param>
     [MethodImpl(Inline), Op]
     public static unsafe Vector128<short> vgather(N128 w, in short src, Vector128<short> vidx)
-        => v16i(vpack.vpack128x16u(GatherVector256(p32u(src), v32i(vpack.vpmovzxwd(w256, v16u(vidx))),2)));
+        => v16i(vpack.vpack128x16u(GatherVector256(p32u(src), v32i(vpmovzxwd(v16u(vidx))),2)));
 
     /// <summary>
     /// Loads a 128x8u vector from index-identified source cells
@@ -191,7 +191,7 @@ partial class vcpu
     [MethodImpl(Inline), Op]
     public static unsafe Vector128<sbyte> vgather(N128 w, in sbyte src, Vector128<sbyte> vidx)
     {
-        var x = vpack.vpmovzxbd(w512, v8u(vidx));
+        var x = vpmovzxbd(v8u(vidx));
         var v0 = vgcpu.vlo(x);
         var v1 = vgcpu.vhi(x);
         var x0 = GatherVector256(p32u(src), v32i(v0),1);
@@ -208,10 +208,9 @@ partial class vcpu
     [MethodImpl(Inline), Op]
     public static unsafe Vector128<byte> vgather(N128 w, in byte src, Vector128<byte> vidx)
     {
-        var x = vpack.vpmovzxbd(w512, vidx);
+        var x = vpmovzxbd(vidx);
         var v0 = vgcpu.vlo(x);
         var v1 = vgcpu.vhi(x);
-        //(var v0, var v1) = vpack.vinflate512x32u(vidx);
         var x0 = GatherVector256(p32u(src), v32i(v0), 1);
         var x1 = GatherVector256(p32u(src), v32i(v1), 1);
         return vpack.vpack128x8u(x0, x1);

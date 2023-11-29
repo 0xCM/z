@@ -242,5 +242,4 @@ partial class vcpu
     [MethodImpl(Inline), Sub]
     public static Vector512<ulong> vsub(Vector512<ulong> x, Vector512<ulong> y)
         => Subtract(x, y);
-
 }

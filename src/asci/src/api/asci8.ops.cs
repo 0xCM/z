@@ -118,7 +118,7 @@ partial struct Asci
     [MethodImpl(Inline), Op]
     public static void decode(in asci8 src, ref char dst)
     {
-        var decoded = vpack.vpmovzxbw(w256, vcpu.vbytes(w128, src.Storage));
+        var decoded = vcpu.vpmovzxbw(vcpu.vbytes(w128, src.Storage));
         vcpu.vstore(decoded.GetLower(), ref @as<char,ushort>(dst));
     }
 
@@ -142,11 +142,11 @@ partial struct Asci
 
     [MethodImpl(Inline), Op]
     public static string decode(in asci8 src)
-        => sys.@string(slice(recover<char>(sys.bytes(vcpu.vlo(vpack.vpmovzxbw(w256, vcpu.vbytes(w128, src.Storage))))), 0, src.Length));
+        => sys.@string(slice(recover<char>(sys.bytes(vcpu.vlo(vcpu.vpmovzxbw(vcpu.vbytes(w128, src.Storage))))), 0, src.Length));
 
     [MethodImpl(Inline), Op]
     public static void decode(N8 n, ReadOnlySpan<byte> src, Span<char> dst)
-        => vcpu.vstore(vpack.vpmovzxbw(w256, vcpu.v8u(vcpu.vscalar(w128, @as<ulong>(sys.first(src))))), ref @as<ushort>(sys.first(dst)));
+        => vcpu.vstore(vcpu.vpmovzxbw(vcpu.v8u(vcpu.vscalar(w128, @as<ulong>(sys.first(src))))), ref @as<ushort>(sys.first(dst)));
 
     /// <summary>
     /// Presents the source content as a bytespan

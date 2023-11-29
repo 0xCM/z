@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-
 partial class vcpu
 {
     /// <summary>
@@ -162,7 +161,6 @@ partial class vcpu
     public static Vector256<ulong> vunpackhi(Vector256<ulong> x, Vector256<ulong> y)
         => UnpackHigh(x,y);
 
-
     /// <summary>
     /// __m512i _mm512_unpackhi_epi8 (__m512i a, __m512i b)
     /// VPUNPCKHBW zmm1 {k1}{z}, zmm2, zmm3/m512
@@ -234,6 +232,8 @@ partial class vcpu
         => UnpackHigh(x,y);
 
     /// <summary>
+    /// __m512i _mm512_unpackhi_epi64 (__m512i a, __m512i b)
+    /// VPUNPCKHQDQ zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
     /// </summary>
     /// <param name="x"></param>
     /// <param name="y"></param>

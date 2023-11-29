@@ -248,7 +248,7 @@ partial class vcpu
     public static Vector128<byte> vsll(Vector128<byte> src, Vector128<byte> count)
     {
         var y = v16u(count);
-        var dst = vsll(vpack.vpmovzxbw(w256, src), y);
+        var dst = vsll(vpmovzxbw(src), y);
         return vpack.vpack128x8u(dst);
     }
 
@@ -261,7 +261,7 @@ partial class vcpu
     public static Vector128<sbyte> vsll(Vector128<sbyte> src, Vector128<sbyte> count)
     {
         var y = v16i(count);
-        var dst = vsll(vpack.vpmovsxbw(w256, src), y);
+        var dst = vsll(vpmovsxbw(src), y);
         return vpack.vpack128x8i(dst);
     }
 
@@ -333,8 +333,8 @@ partial class vcpu
     public static Vector256<sbyte> vsll(Vector256<sbyte> src, Vector128<sbyte> count)
     {
         var y = v16i(count);
-        var lo = vsll(vpack.vpmovsxbw(w256, vlo(src)), y);
-        var hi = vsll(vpack.vpmovsxbw(w256, vhi(src)), y);
+        var lo = vsll(vpmovsxbw(vlo(src)), y);
+        var hi = vsll(vpmovsxbw(vhi(src)), y);
         return vpack.vpack256x8i(lo,hi);
     }
 
@@ -347,8 +347,8 @@ partial class vcpu
     public static Vector256<byte> vsll(Vector256<byte> src, Vector128<byte> count)
     {
         var y = v16u(count);
-        var lo = vsll(vpack.vpmovzxbw(w256, vlo(src)), y);
-        var hi = vsll(vpack.vpmovzxbw(w256, vhi(src)), y);
+        var lo = vsll(vpmovzxbw(vlo(src)), y);
+        var hi = vsll(vpmovzxbw(vhi(src)), y);
         return vpack.vpack256x8u(lo, hi);
     }
 

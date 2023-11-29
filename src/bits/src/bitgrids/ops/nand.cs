@@ -24,9 +24,8 @@ namespace Z0
         /// <param name="y">The right grid</param>
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline), Nand, Closures(UInt8x16x32k)]
-        public static BitGrid32<T> nand<T>(BitGrid32<T> x, BitGrid32<T> y)
-            where T : unmanaged
-                => init32<T>(math.nand(x,y));
+        public static BitGrid32 nand(BitGrid32 x, BitGrid32 y)
+            => new(math.nand(x,y));
 
         /// <summary>
         /// Computes the bitwise nand between generic bitgrids

@@ -102,7 +102,7 @@ public class t_vconvert : t_inx<t_vconvert>
     public void v128x8u_v128x16u()
     {
         var x = vparts(w128,0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F);
-        var y = vpack.vlo128x16u(x);
+        var y = vcpu.pmovzxbw(x);
         var z = vparts(w128,0,1,2,3,4,5,6,7);
         Claim.eq(y,z);
     }
@@ -133,7 +133,7 @@ public class t_vconvert : t_inx<t_vconvert>
         for(var sample = 0; sample < RepCount; sample++)
         {
             var sv = Random.CpuVector<byte>(sw);
-            var tv = vpack.vpmovzxbw(w256, sv);
+            var tv = vcpu.vpmovzxbw(sv);
 
             sv.StoreTo(sb);
             tv.StoreTo(tb);
@@ -165,7 +165,7 @@ public class t_vconvert : t_inx<t_vconvert>
         for(var sample = 0; sample < RepCount; sample++)
         {
             var sv = Random.CpuVector<byte>(sw);
-            var tv = vpack.vpmovzxbw(w256, sv);
+            var tv = vcpu.vpmovzxbw(sv);
             var tvLo = cpu.vlo(tv);
             var tvHi = cpu.vhi(tv);
 

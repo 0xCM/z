@@ -44,7 +44,7 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     [MethodImpl(Inline), Op]
     public static Vector128<int> vreverse(Vector128<int> src)
-        => vperm4x32(src, Perm4L.DCBA);
+        => vshuffle(src, Perm4L.DCBA);
 
     /// <summary>
     /// Reverses the source vector components
@@ -52,7 +52,7 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     [MethodImpl(Inline), Op]
     public static Vector128<uint> vreverse(Vector128<uint> src)
-        => vperm4x32(src, Perm4L.DCBA);
+        => vshuffle(src, Perm4L.DCBA);
 
     [MethodImpl(Inline), Op]
     public static Vector128<long> vreverse(Vector128<long> src)

@@ -9,14 +9,13 @@ using static vcpu;
 partial struct vpack
 {
     /// <summary>
-    /// __m128i _mm_cvtepu32_epi64 (__m128i a)
-    /// PMOVZXDQ xmm, xmm/m64
-    /// 2x32u -> 2x64u
-    /// src[i] -> dst[i], i = 0, 2
+    /// __m256i _mm256_cvtepi32_epi64 (__m128i a)
+    /// VPMOVSXDQ ymm, xmm/m128
+    /// 4x32i -> 4x64i
     /// </summary>
     /// <param name="src">The source vector</param>
     /// <param name="dst">The target vector</param>
     [MethodImpl(Inline), Op]
-    public static Vector128<ulong> vlo128x64u(Vector128<uint> src)
-        => v64u(ConvertToVector128Int64(src));
+    public static Vector256<long> vlo256x64i(Vector256<int> src)
+        => ConvertToVector256Int64(vlo(src));        
 }

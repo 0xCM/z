@@ -195,7 +195,8 @@ partial class vcpu
         => BroadcastScalarToVector256(&src);
 
     /// <summary>
-    ///  __m256i _mm256_broadcastq_epi64 (__m128i a) VPBROADCASTQ ymm, m64
+    ///  __m256i _mm256_broadcastq_epi64
+    ///  (__m128i a) VPBROADCASTQ ymm, m64
     /// Creates a target vector where each component is initialized with the same value
     /// </summary>
     /// <param name="w">The target vector width</param>
@@ -203,6 +204,7 @@ partial class vcpu
     [MethodImpl(Inline), Broadcast]
     public static unsafe Vector256<ulong> vbroadcast(W256 w, ulong src)
         => BroadcastScalarToVector256(&src);
+
 
     /// <summary>
     /// Creates a 256-bit vector where the lower 128-bit lane is filled with replicas of the lo value
@@ -247,4 +249,174 @@ partial class vcpu
     [MethodImpl(Inline), Broadcast]
     public static Vector256<ulong> vbroadcast(W256 w, ulong lo, ulong hi)
         => vconcat(vbroadcast(w128, lo), vbroadcast(w128, hi));
+
+    /// <summary>
+    /// __m512i _mm512_broadcastb_epi8 (__m128i a)
+    /// VPBROADCASTB zmm1 {k1}{z}, xmm2/m8
+    /// </summary>
+    /// <param name="w"></param>
+    /// <param name="src"></param>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector512<sbyte> vbroadcast(W512 w, Vector128<sbyte> src)
+        => BroadcastScalarToVector512(src);
+
+    /// <summary>
+    /// __m512i _mm512_broadcastb_epi8 (__m128i a)
+    /// VPBROADCASTB zmm1 {k1}{z}, xmm2/m8
+    /// </summary>
+    /// <param name="w"></param>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector512<sbyte> vbroadcast(W512 w, sbyte src)
+        => BroadcastScalarToVector512(vbroadcast(w128, src));
+        
+    /// <summary>
+    /// __m512i _mm512_broadcastb_epi8 (__m128i a)
+    /// VPBROADCASTB zmm1 {k1}{z}, xmm2/m8
+    /// </summary>
+    /// <param name="w"></param>
+    /// <param name="src"></param>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector512<byte> vbroadcast(W512 w, Vector128<byte> src)
+        => BroadcastScalarToVector512(src);
+
+    /// <summary>
+    /// __m512i _mm512_broadcastb_epi8 (__m128i a)
+    /// VPBROADCASTB zmm1 {k1}{z}, xmm2/m8
+    /// </summary>
+    /// <param name="w"></param>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector512<byte> vbroadcast(W512 w, byte src)
+        => BroadcastScalarToVector512(vbroadcast(w128, src));
+
+    /// <summary>
+    /// __m512i _mm512_broadcastw_epi16 (__m128i a)
+    /// VPBROADCASTW zmm1 {k1}{z}, xmm2/m16
+    /// </summary>
+    /// <param name="w"></param>
+    /// <param name="src"></param>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector512<short> vbroadcast(W512 w, Vector128<short> src)
+        => BroadcastScalarToVector512(src);
+
+    /// <summary>
+    /// __m512i _mm512_broadcastw_epi16 (__m128i a)
+    /// VPBROADCASTW zmm1 {k1}{z}, xmm2/m16
+    /// </summary>
+    /// <param name="w"></param>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector512<short> vbroadcast(W512 w, short src)
+        => BroadcastScalarToVector512(vbroadcast(w128, src));
+
+    /// <summary>
+    /// __m512i _mm512_broadcastw_epi16 (__m128i a)
+    /// VPBROADCASTW zmm1 {k1}{z}, xmm2/m16
+    /// </summary>
+    /// <param name="w"></param>
+    /// <param name="src"></param>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector512<ushort> vbroadcast(W512 w, Vector128<ushort> src)
+        => BroadcastScalarToVector512(src);
+
+    /// <summary>
+    /// __m512i _mm512_broadcastw_epi16 (__m128i a)
+    /// VPBROADCASTW zmm1 {k1}{z}, xmm2/m16
+    /// </summary>
+    /// <param name="w"></param>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector512<ushort> vbroadcast(W512 w, ushort src)
+        => BroadcastScalarToVector512(vbroadcast(w128, src));
+
+    /// <summary>
+    /// __m512i _mm512_broadcastd_epi32 (__m128i a)
+    /// VPBROADCASTD zmm1 {k1}{z}, xmm2/m32
+    /// </summary>
+    /// <param name="w"></param>
+    /// <param name="src"></param>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector512<int> vbroadcast(W512 w, Vector128<int> src)
+        => BroadcastScalarToVector512(src);
+
+    /// <summary>
+    /// __m512i _mm512_broadcastd_epi32 (__m128i a)
+    /// VPBROADCASTD zmm1 {k1}{z}, xmm2/m32
+    /// </summary>
+    /// <param name="w"></param>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector512<int> vbroadcast(W512 w, int src)
+        => BroadcastScalarToVector512(vbroadcast(w128, src));
+
+    /// <summary>
+    /// __m512i _mm512_broadcastd_epi32 (__m128i a)
+    /// VPBROADCASTD zmm1 {k1}{z}, xmm2/m32
+    /// </summary>
+    /// <param name="w"></param>
+    /// <param name="src"></param>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector512<uint> vbroadcast(W512 w, Vector128<uint> src)
+        => BroadcastScalarToVector512(src);
+
+    /// <summary>
+    /// __m512i _mm512_broadcastd_epi32 (__m128i a)
+    /// VPBROADCASTD zmm1 {k1}{z}, xmm2/m32
+    /// </summary>
+    /// <param name="w"></param>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector512<uint> vbroadcast(W512 w, uint src)
+        => BroadcastScalarToVector512(vbroadcast(w128, src));
+
+    /// <summary>
+    /// __m512i _mm512_broadcastq_epi64 (__m128i a)
+    /// VPBROADCASTQ zmm1 {k1}{z}, xmm2/m64
+    /// Broadcast the low packed 64-bit integer from a to all elements of dst.
+    /// </summary>
+    /// <param name="w"></param>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector512<long> vbroadcast(W512 w, Vector128<long> src)
+        => BroadcastScalarToVector512(src);
+
+    /// <summary>
+    /// Broadcast the source value to all target elements
+    /// </summary>
+    /// <param name="w"></param>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector512<long> vbroadcast(W512 w, long src)
+        => BroadcastScalarToVector512(vbroadcast(w128,src));
+
+    /// <summary>
+    /// __m512i _mm512_broadcastq_epi64 (__m128i a)
+    /// VPBROADCASTQ zmm1 {k1}{z}, xmm2/m64
+    /// Broadcast the low packed 64-bit integer from a to all elements of dst.
+    /// </summary>
+    /// <param name="w"></param>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector512<ulong> vbroadcast(W512 w, Vector128<ulong> src)
+        => BroadcastScalarToVector512(src);
+
+    /// <summary>
+    /// Broadcast the source value to all target elements
+    /// </summary>
+    /// <param name="w"></param>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Broadcast]
+    public static unsafe Vector512<ulong> vbroadcast(W512 w, ulong src)
+        => BroadcastScalarToVector512(vbroadcast(w128,src));
 }

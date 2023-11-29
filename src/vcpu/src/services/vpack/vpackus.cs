@@ -106,8 +106,6 @@ partial struct vpack
     /// <param name="y">The right vector</param>
     [MethodImpl(Inline), Op]
     public static Vector256<ushort> vpackus(Vector256<uint> a, Vector256<uint> b)
-        //=> PackUnsignedSaturate(v32i(a),v32i(b));
-
     {
         var mask = vgcpu.vbroadcast<uint>(n256, (uint)(ushort.MaxValue));
         var z0 = v32i(vand(a,mask));

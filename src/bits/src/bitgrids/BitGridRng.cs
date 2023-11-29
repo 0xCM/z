@@ -85,7 +85,7 @@ namespace Z0
             where T : unmanaged
         {
             var grid = BG.alloc(m,n,t);
-            var segments = grids.gridcells(m,n,t);
+            var segments = grids.cellcount(m,n,t);
             random.Fill((int)segments, ref grid.Head);
             return grid;
         }
@@ -588,7 +588,7 @@ namespace Z0
         public static BitBlock<N,T> BitBlock<N,T>(this ISource random)
             where T : unmanaged
             where N : unmanaged, ITypeNat
-                => BS.load<N,T>(random.Stream<T>().ToSpan((int)grids.gridcells<N,N1,T>()));
+                => BS.load<N,T>(random.Stream<T>().ToSpan((int)grids.cellcount<N,N1,T>()));
 
         /// <summary>
         /// Produces a bitblock over a specified number of bits

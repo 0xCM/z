@@ -20,9 +20,9 @@ partial struct vpack
         
     [MethodImpl(Inline), Op]
     public static Vector256<ushort> vinflatelo256x16u(Vector256<byte> src)
-        => vpmovzxbw(w256, vlo(src));
+        => vcpu.vpmovzxbw(vlo(src));
 
     [MethodImpl(Inline), Op]
     public static Vector256<ushort> vinflatehi256x16u(Vector256<byte> src)
-        => vpmovzxbw(w256, vhi(src));
+        => vcpu.vpmovzxbw(vhi(src));
 }

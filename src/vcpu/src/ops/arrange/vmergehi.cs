@@ -140,7 +140,7 @@ partial class vcpu
     /// <param name="y">The right source vector</param>
     [MethodImpl(Inline), Op]
     public static Vector256<ulong> vmergehi(Vector256<ulong> x, Vector256<ulong> y)
-            => UnpackHigh(vperm4x64(x, Perm4L.ACBD), vperm4x64(y, Perm4L.ACBD));
+        => UnpackHigh(vperm4x64(x, Perm4L.ACBD), vperm4x64(y, Perm4L.ACBD));
 
     /// <summary>
     /// __m256i _mm256_unpackhi_epi64 (__m256i a, __m256i b) VPUNPCKHQDQ ymm, ymm, ymm/m256
@@ -149,5 +149,5 @@ partial class vcpu
     /// <param name="y">The right source vector</param>
     [MethodImpl(Inline), Op]
     public static Vector256<long> vmergehi(Vector256<long> x, Vector256<long> y)
-        => UnpackHigh(vperm4x64(x, Perm4L.ACBD), vperm4x64(y, Perm4L.ACBD));
+        => UnpackHigh(vperm4x64(x, Perm4L.ACBD), vperm4x64(y, Perm4L.ACBD));   
 }
