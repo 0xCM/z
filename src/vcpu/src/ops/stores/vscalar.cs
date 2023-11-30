@@ -71,22 +71,6 @@ partial class vcpu
         => Vector128.CreateScalarUnsafe(a);
 
     /// <summary>
-    /// Loads a scalar into the first component of a 256-bit vector
-    /// </summary>
-    /// <param name="a">The source value</param>
-    [MethodImpl(Inline), Op]
-    public static Vector128<float> vscalar(W128 w, float a)
-        => Vector128.CreateScalarUnsafe(a);
-
-    /// <summary>
-    /// Loads a scalar into the first component of a 256-bit vector
-    /// </summary>
-    /// <param name="a">The source value</param>
-    [MethodImpl(Inline), Op]
-    public static Vector128<double> vscalar(W128 w, double a)
-        => Vector128.CreateScalarUnsafe(a);
-
-    /// <summary>
     /// Loads a scalar into the first component of a 128-bit vector
     /// </summary>
     /// <param name="a">The scalar to load</param>
@@ -150,27 +134,68 @@ partial class vcpu
     public static Vector256<ulong> vscalar(W256 w, ulong a)
         => Vector256.CreateScalarUnsafe(a);
 
+
     /// <summary>
-    /// Loads a scalar into the first component of a 256-bit vector
+    /// Loads a scalar into the first component of a 128-bit vector
+    /// </summary>
+    /// <param name="a">The scalar to load</param>
+    [MethodImpl(Inline), Op]
+    public static Vector512<sbyte> vscalar(W512 w, sbyte a)
+        => Vector512.CreateScalarUnsafe(a);
+
+    /// <summary>
+    /// Loads a scalar into the first component of a 512-bit vector
+    /// </summary>
+    /// <param name="a">The scalar to load</param>
+    [MethodImpl(Inline), Op]
+    public static Vector512<byte> vscalar(W512 w, byte a)
+        => Vector512.CreateScalarUnsafe(a);
+
+    /// <summary>
+    /// Loads a scalar into the first component of a 512-bit vector
+    /// </summary>
+    /// <param name="a">The scalar to load</param>
+    [MethodImpl(Inline), Op]
+    public static Vector512<short> vscalar(W512 w, short a)
+        => Vector512.CreateScalarUnsafe(a);
+
+    /// <summary>
+    /// Loads a scalar into the first component of a 512-bit vector
+    /// </summary>
+    /// <param name="a">The scalar to load</param>
+    [MethodImpl(Inline), Op]
+    public static Vector512<ushort> vscalar(W512 w, ushort a)
+        => Vector512.CreateScalarUnsafe(a);
+
+    /// <summary>
+    /// Loads a scalar into the first component of a 512-bit vector
     /// </summary>
     /// <param name="a">The source value</param>
     [MethodImpl(Inline), Op]
-    public static Vector256<float> vscalar(W256 w, float a)
-        => Vector256.CreateScalarUnsafe(a);
+    public static Vector512<int> vscalar(W512 w, int a)
+        => Vector512.CreateScalarUnsafe(a);
 
     /// <summary>
-    /// Loads a scalar into the first component of a 256-bit vector
+    /// Loads a scalar into the first component of a 512-bit vector
     /// </summary>
     /// <param name="a">The source value</param>
     [MethodImpl(Inline), Op]
-    public static Vector256<double> vscalar(W256 w, double a)
-        => Vector256.CreateScalarUnsafe(a);
+    public static Vector512<uint> vscalar(W512 w, uint a)
+        => Vector512.CreateScalarUnsafe(a);
 
+    /// <summary>
+    /// Loads a scalar into the first component of a 512-bit vector
+    /// </summary>
+    /// <param name="a">The source value</param>
     [MethodImpl(Inline), Op]
-    public static unsafe Vector128<float> vscalar(float src)
-        => LoadScalarVector128(&src);
+    public static Vector512<long> vscalar(W512 w, long a)
+        => Vector512.CreateScalarUnsafe(a);
 
+    /// <summary>
+    /// Loads a scalar into the first component of a 512-bit vector
+    /// </summary>
+    /// <param name="a">The source value</param>
     [MethodImpl(Inline), Op]
-    public static unsafe Vector128<double> vscalar(double src)
-        => LoadScalarVector128(&src);
+    public static Vector512<ulong> vscalar(W512 w, ulong a)
+        => Vector512.CreateScalarUnsafe(a);
 }

@@ -47,6 +47,7 @@ public class t_vpack : t_inx<t_vpack>
             }
         }
     }
+
     public void vpack_128x16x2_128x8()
     {
         var w = w128;

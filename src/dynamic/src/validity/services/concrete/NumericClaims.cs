@@ -7,7 +7,6 @@ namespace Z0;
 using static ErrorMsg;
 using static ClaimValidator;
 
-
 public readonly struct NumericClaims : ICheckNumeric
 {
     public static ICheckNumeric Checker => default(NumericClaims);

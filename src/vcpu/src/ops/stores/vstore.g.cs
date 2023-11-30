@@ -391,7 +391,7 @@ partial class vgcpu
         else if(typeof(T) == typeof(ulong))
             vcpu.vstore(v64u(src), (ulong*)pDst);
         else
-                vstore_i(src, pDst);
+            vstore_i(src, pDst);
     }
 
     [MethodImpl(Inline)]

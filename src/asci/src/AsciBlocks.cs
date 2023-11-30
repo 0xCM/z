@@ -24,11 +24,11 @@ namespace Z0
             return new string(slice(dst,0,count));        
         }
 
-        internal static string format(AsciBlock32 src)
-        {
-            var dst = CharBlock32.Empty;
-            return new string(decode(src, ref dst));
-        }
+        // internal static string format(AsciBlock32 src)
+        // {
+        //     var dst = CharBlock32.Empty;
+        //     return new string(decode(src, ref dst));
+        // }
 
         public static string format<N>(AsciBlock<N> src)
             where N : unmanaged, ITypeNat
@@ -109,9 +109,9 @@ namespace Z0
         public static AsciBlock16 encode(string src, out AsciBlock16 dst)
             => encode(span(src), out dst);
 
-        [MethodImpl(Inline), Op]
-        public static AsciBlock32 encode(string src, out AsciBlock32 dst)
-            => encode(span(src), out dst);
+        // [MethodImpl(Inline), Op]
+        // public static AsciBlock32 encode(string src, out AsciBlock32 dst)
+        //     => encode(span(src), out dst);
 
         [MethodImpl(Inline), Op]
         public static AsciBlock64 encode(string src, out AsciBlock64 dst)
@@ -153,14 +153,14 @@ namespace Z0
             return dst;
         }
 
-        [MethodImpl(Inline), Op]
-        public static AsciBlock32 encode(ReadOnlySpan<char> src, out AsciBlock32 dst)
-        {
-            dst = AsciBlock32.Empty;
-            var count = min(ByteBlock32.N, src.Length);
-            encode(src, slice(dst.Bytes,0,count));
-            return dst;
-        }
+        // [MethodImpl(Inline), Op]
+        // public static AsciBlock32 encode(ReadOnlySpan<char> src, out AsciBlock32 dst)
+        // {
+        //     dst = AsciBlock32.Empty;
+        //     var count = min(ByteBlock32.N, src.Length);
+        //     encode(src, slice(dst.Bytes,0,count));
+        //     return dst;
+        // }
 
         [MethodImpl(Inline), Op]
         public static AsciBlock64 encode(ReadOnlySpan<char> src, out AsciBlock64 dst)
@@ -189,23 +189,23 @@ namespace Z0
                 return slice(dst.Data, 0, length);
         }
 
-        [MethodImpl(Inline), Op]
-        public static void decode(AsciBlock32 src, ref char dst)
-        {
-            decode(src.Lo, ref dst);
-            decode(src.Hi, ref sys.seek(dst, 16));
-        }
+        // [MethodImpl(Inline), Op]
+        // public static void decode(AsciBlock32 src, ref char dst)
+        // {
+        //     decode(src.Lo, ref dst);
+        //     decode(src.Hi, ref sys.seek(dst, 16));
+        // }
 
-        [MethodImpl(Inline), Op]
-        public static ReadOnlySpan<char> decode(AsciBlock32 src, ref CharBlock32 dst)
-        {
-            decode(src, ref dst.First);
-            var length = text.index(dst.Data, '\0');
-            if(length == NotFound)
-                return dst.Data;
-            else
-                return slice(dst.Data, 0, length);
-        }
+        // [MethodImpl(Inline), Op]
+        // public static ReadOnlySpan<char> decode(AsciBlock32 src, ref CharBlock32 dst)
+        // {
+        //     decode(src, ref dst.First);
+        //     var length = text.index(dst.Data, '\0');
+        //     if(length == NotFound)
+        //         return dst.Data;
+        //     else
+        //         return slice(dst.Data, 0, length);
+        // }
 
         [MethodImpl(Inline), Op]
         public static string decode(AsciBlock64 src)

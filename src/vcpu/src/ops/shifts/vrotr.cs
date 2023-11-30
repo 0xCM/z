@@ -113,4 +113,49 @@ partial class vcpu
     [MethodImpl(Inline), Rotrv]
     public static Vector256<ulong> vrotr(Vector256<ulong> src, Vector256<ulong> counts)
         => vor(vsrlv(src, counts), vsllv(src, vsub(Vector256u64, counts)));
+
+    /// <summary>
+    /// __m512i _mm512_rol_epi32 (__m512i a, int imm8)
+    /// VPROLD zmm1 {k1}{z}, zmm2/m512/m32bcst, imm8
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Rotlv]
+    public static Vector512<uint> vrotr(Vector512<uint> src, byte count)
+        => RotateRight(src,count);
+
+    /// <summary>
+    /// __m512i _mm512_ror_epi32 (__m512i a, int imm8)
+    /// VPRORD zmm1 {k1}{z}, zmm2/m512/m32bcst, imm8
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Rotlv]
+    public static Vector512<int> vrotr(Vector512<int> src, byte count)
+        => RotateRight(src,count);
+
+    /// <summary>
+    /// __m512i _mm512_ror_epi64 (__m512i a, int imm8)
+    /// VPRORQ zmm1 {k1}{z}, zmm2/m512/m64bcst, imm8
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Rotlv]
+    public static Vector512<long> vrotr(Vector512<long> src, byte count)
+        => RotateRight(src,count);
+
+    /// <summary>
+    /// __m512i _mm512_ror_epi64 (__m512i a, int imm8)
+    /// VPRORQ zmm1 {k1}{z}, zmm2/m512/m64bcst, imm8
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Rotlv]
+    public static Vector512<ulong> vrotr(Vector512<ulong> src, byte count)        
+        => RotateRight(src,count);
+
 }

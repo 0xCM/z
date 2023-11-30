@@ -101,7 +101,7 @@ public readonly record struct MemRef<T> : IComparable<MemRef<T>>
 
     [MethodImpl(Inline)]
     public static implicit operator MemRef<T>(MemoryRange src)
-        => new (src.Min, src.ByteCount);
+        => new (src.Min, src.Size);
 
     [MethodImpl(Inline)]
     public static implicit operator MemorySegment<T>(MemRef<T> src)

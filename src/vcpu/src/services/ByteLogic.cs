@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static System.Runtime.Intrinsics.X86.Sse41;
-using static System.Runtime.Intrinsics.X86.Avx;
 using static sys;
 
 using L = math;
@@ -21,8 +19,8 @@ public readonly struct ByteLogic
     [MethodImpl(Inline), Op]
     static unsafe ref byte store(ulong src, ref byte dst)
     {
-            *(gptr<ulong>(dst)) = src;
-            return ref dst;
+        *(gptr<ulong>(dst)) = src;
+        return ref dst;
     }
 
     [MethodImpl(Inline), Not]

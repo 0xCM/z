@@ -3,7 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="$(Bits)" />
     <ProjectReference Include="$(Circuits)" />
-    <ProjectReference Include="$(Polyrand)" />
+    <ProjectReference Include="../polyrand/z0.polyrand.csproj" />
     <ProjectReference Include="$(Wf)" />
     <ProjectReference Include="$(Native)" />
   </ItemGroup>

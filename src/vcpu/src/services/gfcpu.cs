@@ -248,9 +248,9 @@ public readonly struct gfcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(float))
-            return generic<T>(vcpu.vor(v32f(x), v32f(y)));
+            return generic<T>(fcpu.vor(v32f(x), v32f(y)));
         else if(typeof(T) == typeof(double))
-            return generic<T>(vcpu.vor(v64f(x), v64f(y)));
+            return generic<T>(fcpu.vor(v64f(x), v64f(y)));
         else
             throw no<T>();
     }
@@ -260,9 +260,9 @@ public readonly struct gfcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(float))
-            return generic<T>(vcpu.vor(v32f(x), v32f(y)));
+            return generic<T>(fcpu.vor(v32f(x), v32f(y)));
         else if(typeof(T) == typeof(double))
-            return generic<T>(vcpu.vor(v64f(x), v64f(y)));
+            return generic<T>(fcpu.vor(v64f(x), v64f(y)));
         else
             throw no<T>();
     }
@@ -272,9 +272,9 @@ public readonly struct gfcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(float))
-            return generic<T>(vcpu.vxor(v32f(x), v32f(y)));
+            return generic<T>(fcpu.vxor(v32f(x), v32f(y)));
         else if(typeof(T) == typeof(double))
-            return generic<T>(vcpu.vxor(v64f(x), v64f(y)));
+            return generic<T>(fcpu.vxor(v64f(x), v64f(y)));
         else
             throw no<T>();
     }
@@ -284,9 +284,9 @@ public readonly struct gfcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(float))
-            return generic<T>(vcpu.vxor(v32f(x), v32f(y)));
+            return generic<T>(fcpu.vxor(v32f(x), v32f(y)));
         else if(typeof(T) == typeof(double))
-            return generic<T>(vcpu.vxor(v64f(x), v64f(y)));
+            return generic<T>(fcpu.vxor(v64f(x), v64f(y)));
         else
             throw no<T>();
     }

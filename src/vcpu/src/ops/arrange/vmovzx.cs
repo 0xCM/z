@@ -209,7 +209,6 @@ partial class vcpu
     public static unsafe Vector256<ulong> vpmovzxbq(byte* pSrc)
         => v64u(ConvertToVector256Int64(pSrc));
 
-
     /// <summary>
     /// __m512i _mm512_cvtepu8_epi16 (__m128i a)
     /// VPMOVZXBW zmm1 {k1}{z}, ymm2/m256

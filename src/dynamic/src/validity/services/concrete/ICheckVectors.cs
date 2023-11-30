@@ -6,7 +6,6 @@ namespace Z0;
 
 using static ErrorMsg;
 
-
 public interface ICheckVectors : IChecking, ICheckPrimalSeq, ICheckNumeric, ICheckSets, ICheckSpanBlocks
 {
     /// <summary>

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(ProjectProps)\usings.props"/>
   <ItemGroup>
-    <ProjectReference Include="$(TestUnits)" />
+    <ProjectReference Include="../test.units/z0.test.units.csproj" />
     <ProjectReference Include="$(TestChecks)" />
     <ProjectReference Include="$(Bits)" />
     <ProjectReference Include="../intel.svc/z0.intel.svc.csproj" />

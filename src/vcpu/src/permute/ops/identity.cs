@@ -64,7 +64,7 @@ partial class Permute
     /// <param name="n">The permutation length</param>
     [MethodImpl(Inline), Op]
     public static Perm identity(uint n)
-        => new Perm(gcalc.stream((int)n, (int)n-1));
+        => new (gcalc.stream((int)n, (int)n-1));
 
     /// <summary>
     /// Defines an identity permutation on n symbols

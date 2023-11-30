@@ -177,20 +177,6 @@ namespace Z0
             return dst;
         }
 
-        // [Op]
-        // public static ReadOnlySeq<ProcessModuleInfo> modules(ProcessAdapter src)
-        // {
-        //     var modules = src.Modules;
-        //     var count = modules.Count;
-        //     var buffer = Seq.create<ProcessModuleInfo>(count);
-        //     for(var i=0u; i<count; i++)
-        //     {
-        //         ref readonly var module = ref modules[i];
-        //         buffer[i] = describe(module);
-        //     }
-        //     return buffer.Sort().Resequence();
-        // }
-
         [Op]
         public static ReadOnlySeq<ProcessMemoryRegion> regions(Process src)
             => regions(MemoryNode.snapshot(src.Id).Describe());
@@ -246,8 +232,6 @@ namespace Z0
             return ref dst;
         }
 
-        static _FileUri Nul => FolderPath.Empty +  FS.file("dev",FS.ext("null"));
-
         static ProcessMemoryRegion fill(in MemoryRangeInfo src, uint index, out ProcessMemoryRegion dst)
         {
             var owner = src.Owner;
@@ -263,7 +247,7 @@ namespace Z0
             else
             {
                 dst.ImageName = "unknown";
-                dst.ImagePath = Nul;
+                dst.ImagePath = FileUri.Empty;
             }
 
             dst.BaseAddress = src.StartAddress;

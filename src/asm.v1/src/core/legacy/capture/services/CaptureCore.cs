@@ -204,7 +204,7 @@ namespace Z0.Asm
         {
             var outcome = CaptureOutcome.create(tc, start, end, delta);
             var raw = src.Slice(0, (int)(end - start)).ToArray();
-            var trimmed = src.Slice(0, outcome.ByteCount).ToArray();
+            var trimmed = src.Slice(0, outcome.Size).ToArray();
             return ApiCaptureResult.create(id, outcome.TermCode, outcome.Range, CodeBlockPair.create((MemoryAddress)start, raw, trimmed));
         }
 

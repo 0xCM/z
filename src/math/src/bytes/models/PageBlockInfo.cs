@@ -17,7 +17,7 @@ namespace Z0
         public ByteSize Size
         {
             [MethodImpl(Inline)]
-            get => Range.ByteCount;
+            get => Range.Size;
         }
 
         public readonly uint PageCount;
@@ -26,7 +26,7 @@ namespace Z0
         public PageBlockInfo(MemoryRange range)
         {
             Range = range;
-            PageCount = range.ByteCount/PageBlocks.PageSize;
+            PageCount = range.Size/PageBlocks.PageSize;
         }
 
         public string Format()

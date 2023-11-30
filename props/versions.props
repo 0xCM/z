@@ -1,10 +1,10 @@
 <Project>
   <PropertyGroup>
-    <ZSysVer>0.0.196</ZSysVer>
-    <ZVer>0.0.701</ZVer>
+    <ZSysVer>0.0.198</ZSysVer>
+    <ZVer>0.0.703</ZVer>
     <ZFxVer>0.0.1048</ZFxVer>
 
-    <ClrRuntimeVersion>8.0.0-dev</ClrRuntimeVersion>
+    <ClrRuntimeVersion>8.0.0</ClrRuntimeVersion>
 
     <AsmResolverVersion>5.4.0</AsmResolverVersion>
     <ClangSharpVersion>16.0.1-rc1</ClangSharpVersion>

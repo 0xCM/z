@@ -29,7 +29,7 @@ namespace Z0
         public void vclear_check<T>(W256 w, T t = default)
             where T : unmanaged
         {
-            for(var i=0; i< RepCount; i++)
+            for(var i=0; i<RepCount; i++)
             {
                 byte start = Random.Next<byte>(0, (byte)width<T>());
                 byte length = (byte)(width<T>() - start);

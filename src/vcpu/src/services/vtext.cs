@@ -43,7 +43,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op]
         public static Vector128<ushort> decode(ulong src)
-            => vlo(vpmovzxbw(v8u(vscalar(src))));
+            => vlo(vpmovzxbw(v8u(fcpu.vscalar(src))));
 
         [MethodImpl(Inline), Op]
         public static Vector256<ushort> decode(Vector128<byte> src)

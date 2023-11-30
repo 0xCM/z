@@ -15,7 +15,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector128<T> Invoke(Vector128<T> x, byte count)
-                => vgcpu.vbsll(x,count);
+                => vgcpu.vsll128(x,count);
         }
 
         [Closures(Integers), Bsll]
@@ -24,7 +24,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector256<T> Invoke(Vector256<T> x, byte count)
-                => vgcpu.vbsll(x,count);
+                => vgcpu.vsll2x128(x,count);
         }
 
         [Closures(Integers), Bsll]

@@ -15,7 +15,7 @@ partial class Permute
     [MethodImpl(Inline)]
     public static NatPerm<N> natural<N>(N n, params NatSwap<N>[] swaps)
         where N : unmanaged, ITypeNat
-            => new NatPerm<N>(swaps);
+            => new (swaps);
 
     /// <summary>
     /// Defines an identity permutation of natural length and applies a specified sequence of transpostions
@@ -26,7 +26,7 @@ partial class Permute
     [MethodImpl(Inline)]
     public static NatPerm<N> natural<N>(params NatSwap<N>[] swaps)
         where N : unmanaged, ITypeNat
-            => new NatPerm<N>(swaps);
+            => new (swaps);
 
     /// <summary>
     /// Defines a permutation of natural length
@@ -36,7 +36,7 @@ partial class Permute
     /// <typeparam name="N">The length type</typeparam>
     public static NatPerm<N> natural<N>(N n, ReadOnlySpan<int> terms)
         where N : unmanaged, ITypeNat
-            => new NatPerm<N>(terms.ToArray());
+            => new (terms.ToArray());
 
     /// <summary>
     /// Defines a permutation of natural length
@@ -48,7 +48,7 @@ partial class Permute
     [MethodImpl(Inline)]
     public static NatPerm<N> natural<N>(N n, params int[] terms)
         where N : unmanaged, ITypeNat
-            => new NatPerm<N>(terms);
+            => new (terms);
 
     /// <summary>
     /// Reifies a permutation of length 8 from its canonical scalar specification

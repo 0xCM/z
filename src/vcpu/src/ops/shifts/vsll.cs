@@ -58,7 +58,7 @@ partial class vcpu
     /// <param name="count">The number of bits to count</param>
     [MethodImpl(Inline), Sll]
     public static Vector128<int> vsll(Vector128<int> src, [Imm] byte count)
-        => ShiftLeftLogical(src, (byte)count);
+        => ShiftLeftLogical(src, count);
 
     /// <summary>
     /// __m128i _mm_slli_epi32 (__m128i a, int immediate) PSLLD xmm, imm8
@@ -68,7 +68,7 @@ partial class vcpu
     /// <param name="count">The number of bits to count</param>
     [MethodImpl(Inline), Sll]
     public static Vector128<uint> vsll(Vector128<uint> src, [Imm] byte count)
-        => ShiftLeftLogical(src, (byte)count);
+        => ShiftLeftLogical(src, count);
 
     /// <summary>
     /// __m128i _mm_slli_epi64 (__m128i a, int immediate) PSLLQ xmm, imm8
@@ -88,7 +88,7 @@ partial class vcpu
     /// <param name="count">The number of bits to count</param>
     [MethodImpl(Inline), Sll]
     public static Vector128<ulong> vsll(Vector128<ulong> src, [Imm] byte count)
-        => ShiftLeftLogical(src, (byte)count);
+        => ShiftLeftLogical(src, count);
 
     /// <summary>
     /// Shifts each component in the source vector leftwards by a specified number of bits

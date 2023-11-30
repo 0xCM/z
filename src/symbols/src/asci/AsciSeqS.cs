@@ -24,10 +24,10 @@ namespace Z0
             get => Format();
         }
 
-        public ByteSize ByteCount
+        public ByteSize Size
         {
             [MethodImpl(Inline)]
-            get => Content.ByteCount;
+            get => Content.Size;
         }
 
         public BitWidth BitWidth

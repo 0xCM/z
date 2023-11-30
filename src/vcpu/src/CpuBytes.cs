@@ -121,7 +121,6 @@ public readonly struct CpuBytes
             2,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0
             };
 
-
     /// <summary>
     /// Defines a mask for an even 256x8-bit blend
     /// </summary>

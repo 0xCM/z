@@ -14,7 +14,7 @@ namespace Z0
         const byte Bpl = 40;
 
         public static void emit(MemoryRange src, StreamWriter dst, byte bpl)
-            => HexDataFormatter.create(src.Min, bpl).FormatLines(cover<byte>(src.Min, src.ByteCount), line => dst.WriteLine(line));
+            => HexDataFormatter.create(src.Min, bpl).FormatLines(cover<byte>(src.Min, src.Size), line => dst.WriteLine(line));
 
         public static void emit(MemoryRange src, FilePath dst, byte bpl)
         {
@@ -119,7 +119,7 @@ namespace Z0
         {
             memory.liberate(src);
             var buffer = span<byte>(PageSize);
-            var pages = (uint)(src.ByteCount/PageSize);
+            var pages = (uint)(src.Size/PageSize);
             var reader = MemoryReader.create<byte>(src);
             var offset = 0ul;
             var @base = src.Min;
@@ -136,7 +136,7 @@ namespace Z0
 
                 offset += PageSize;
 
-                if(size < PageSize || offset >= src.ByteCount)
+                if(size < PageSize || offset >= src.Size)
                     break;
             }
         }

@@ -30,12 +30,6 @@ namespace Z0
         public void vhi_128x64u()
             => vhi_check<ulong>(n128);
 
-        public void vhi_128x32f()
-            => vhi_check<float>(n128);
-
-        public void vhi_128x64f()
-            => vhi_check<double>(n128);
-
         public void vhi_256x8u()
             => vhi_check<byte>(n256);
 
@@ -59,12 +53,6 @@ namespace Z0
 
         public void vhi_256x64u()
             => vhi_check<ulong>(n256);
-
-        public void vhi_256x32f()
-            => vhi_check<float>(n256);
-
-        public void vhi_256x64f()
-            => vhi_check<double>(n256);
 
         protected void vhi_check<T>(N128 w, T t = default)
             where T : unmanaged

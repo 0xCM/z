@@ -146,7 +146,8 @@ partial class vcpu
 
     /// <summary>
     /// Computes the converse nonimplication z := x & (~y) for operands x and y
-    /// __m256i _mm256_andnot_si256 (__m256i a, __m256i b) VPANDN ymm, ymm, ymm/m256
+    /// __m256i _mm256_andnot_si256 (__m256i a, __m256i b)
+    /// VPANDN ymm, ymm, ymm/m256
     /// </summary>
     /// <param name="x">The left operand</param>
     /// <param name="y">The right operand</param>
@@ -156,7 +157,8 @@ partial class vcpu
 
     /// <summary>
     /// Computes the converse nonimplication z := x & (~y) for operands x and y
-    /// __m256i _mm256_andnot_si256 (__m256i a, __m256i b) VPANDN ymm, ymm, ymm/m256
+    /// __m256i _mm256_andnot_si256 (__m256i a, __m256i b)
+    /// VPANDN ymm, ymm, ymm/m256
     /// </summary>
     /// <param name="x">The left operand</param>
     /// <param name="y">The right operand</param>
@@ -165,6 +167,8 @@ partial class vcpu
         => AndNot(y, x);
 
     /// <summary>
+    /// __m512i _mm512_andnot_si512 (__m512i a, __m512i b)
+    /// VPANDND zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
     /// Computes the converse nonimplication z := x & (~y) for operands x and y
     /// </summary>
     /// <param name="x">The left operand</param>
@@ -174,6 +178,8 @@ partial class vcpu
         => AndNot(y, x);
 
     /// <summary>
+    /// __m512i _mm512_andnot_si512 (__m512i a, __m512i b)
+    /// VPANDND zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
     /// Computes the converse nonimplication z := x & (~y) for operands x and y
     /// </summary>
     /// <param name="x">The left operand</param>
@@ -183,6 +189,8 @@ partial class vcpu
         => AndNot(y, x);
 
     /// <summary>
+    /// __m512i _mm512_andnot_si512 (__m512i a, __m512i b)
+    /// VPANDND zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
     /// Computes the converse nonimplication z := x & (~y) for operands x and y
     /// </summary>
     /// <param name="x">The left operand</param>
@@ -192,6 +200,8 @@ partial class vcpu
         => AndNot(y, x);
 
     /// <summary>
+    /// __m512i _mm512_andnot_si512 (__m512i a, __m512i b)
+    /// VPANDND zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
     /// Computes the converse nonimplication z := x & (~y) for operands x and y
     /// </summary>
     /// <param name="x">The left operand</param>
@@ -201,6 +211,8 @@ partial class vcpu
         => AndNot(y, x);
 
     /// <summary>
+    /// __m512i _mm512_andnot_epi32 (__m512i a, __m512i b)
+    /// VPANDND zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
     /// Computes the converse nonimplication z := x & (~y) for operands x and y
     /// </summary>
     /// <param name="x">The left operand</param>
@@ -210,6 +222,8 @@ partial class vcpu
         => AndNot(y, x);
 
     /// <summary>
+    /// __m512i _mm512_andnot_epi32 (__m512i a, __m512i b)
+    /// VPANDND zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
     /// Computes the converse nonimplication z := x & (~y) for operands x and y
     /// </summary>
     /// <param name="x">The left operand</param>
@@ -219,6 +233,8 @@ partial class vcpu
         => AndNot(y, x);
 
     /// <summary>
+    ///  __m512i _mm512_andnot_epi64 (__m512i a, __m512i b)
+    ///  VPANDNQ zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
     /// Computes the converse nonimplication z := x & (~y) for operands x and y
     /// </summary>
     /// <param name="x">The left operand</param>
@@ -228,6 +244,8 @@ partial class vcpu
         => AndNot(y, x);
 
     /// <summary>
+    ///  __m512i _mm512_andnot_epi64 (__m512i a, __m512i b)
+    ///  VPANDNQ zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
     /// Computes the converse nonimplication z := x & (~y) for operands x and y
     /// </summary>
     /// <param name="x">The left operand</param>

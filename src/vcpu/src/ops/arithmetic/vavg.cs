@@ -63,5 +63,4 @@ partial class vcpu
      [MethodImpl(Inline), Asm(ApiAsmClass.VPAVGW)]
      public static Vector512<ushort> vavg(Vector512<ushort> a, Vector512<ushort> b)
           => Average(a,b);
-
 }

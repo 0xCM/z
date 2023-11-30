@@ -42,10 +42,10 @@ namespace Z0
             get => Range.Max;
         }
 
-        public int ByteCount
+        public int Size
         {
             [MethodImpl(Inline)]
-            get => (int)Range.ByteCount;
+            get => (int)Range.Size;
         }
 
         public bool IsEmpty
@@ -55,6 +55,6 @@ namespace Z0
         }
 
         public static CaptureOutcome Empty
-            => new CaptureOutcome(MemoryRange.Empty, 0);
+            => new (MemoryRange.Empty, 0);
     }
 }

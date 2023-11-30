@@ -88,13 +88,13 @@ partial class vgcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(byte))
-            return generic<T>(vcpu.vblendv(v8u(x), v8u(y), spec));
+            return generic<T>(vcpu.vblend(v8u(x), v8u(y), spec));
         else if(typeof(T) == typeof(ushort))
-            return generic<T>(vcpu.vblendv(v16u(x), v16u(y), spec));
+            return generic<T>(vcpu.vblend(v16u(x), v16u(y), spec));
         else if(typeof(T) == typeof(uint))
-            return generic<T>(vcpu.vblendv(v32u(x), v32u(y), spec));
+            return generic<T>(vcpu.vblend(v32u(x), v32u(y), spec));
         else if(typeof(T) == typeof(ulong))
-            return generic<T>(vcpu.vblendv(v64u(x), v64u(y), spec));
+            return generic<T>(vcpu.vblend(v64u(x), v64u(y), spec));
         else
             return vblend_i(x,y,spec);
     }
@@ -104,13 +104,13 @@ partial class vgcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(sbyte))
-            return generic<T>(vcpu.vblendv(v8i(x), v8i(y), spec));
+            return generic<T>(vcpu.vblend(v8i(x), v8i(y), spec));
         else if(typeof(T) == typeof(short))
-            return generic<T>(vcpu.vblendv(v16i(x), v16i(y), spec));
+            return generic<T>(vcpu.vblend(v16i(x), v16i(y), spec));
         else if(typeof(T) == typeof(int))
-            return generic<T>(vcpu.vblendv(v32i(x), v32i(y), spec));
+            return generic<T>(vcpu.vblend(v32i(x), v32i(y), spec));
         else if(typeof(T) == typeof(long))
-            return generic<T>(vcpu.vblendv(v64i(x), v64i(y), spec));
+            return generic<T>(vcpu.vblend(v64i(x), v64i(y), spec));
         else
             throw no<T>();
     }
@@ -120,13 +120,13 @@ partial class vgcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(byte))
-            return generic<T>(vcpu.vblendv(v8u(x), v8u(y), spec));
+            return generic<T>(vcpu.vblend(v8u(x), v8u(y), spec));
         else if(typeof(T) == typeof(ushort))
-            return generic<T>(vcpu.vblendv(v16u(x), v16u(y), spec));
+            return generic<T>(vcpu.vblend(v16u(x), v16u(y), spec));
         else if(typeof(T) == typeof(uint))
-            return generic<T>(vcpu.vblendv(v32u(x), v32u(y), spec));
+            return generic<T>(vcpu.vblend(v32u(x), v32u(y), spec));
         else if(typeof(T) == typeof(ulong))
-            return generic<T>(vcpu.vblendv(v64u(x), v64u(y), spec));
+            return generic<T>(vcpu.vblend(v64u(x), v64u(y), spec));
         else
             return vblend_i(x,y,spec);
     }
@@ -136,13 +136,13 @@ partial class vgcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(sbyte))
-            return generic<T>(vcpu.vblendv(v8i(x), v8i(y), spec));
+            return generic<T>(vcpu.vblend(v8i(x), v8i(y), spec));
         else if(typeof(T) == typeof(short))
-            return generic<T>(vcpu.vblendv(v16i(x), v16i(y), spec));
+            return generic<T>(vcpu.vblend(v16i(x), v16i(y), spec));
         else if(typeof(T) == typeof(int))
-            return generic<T>(vcpu.vblendv(v32i(x), v32i(y), spec));
+            return generic<T>(vcpu.vblend(v32i(x), v32i(y), spec));
         else if(typeof(T) == typeof(long))
-            return generic<T>(vcpu.vblendv(v64i(x), v64i(y), spec));
+            return generic<T>(vcpu.vblend(v64i(x), v64i(y), spec));
         else
             throw no<T>();
     }
@@ -153,13 +153,13 @@ partial class vgcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(byte))
-            return generic<T>(vcpu.vblendv(v8u(x), v8u(y), v8u(spec)));
+            return generic<T>(vcpu.vblend(v8u(x), v8u(y), v8u(spec)));
         else if(typeof(T) == typeof(ushort))
-            return generic<T>(vcpu.vblendv(v16u(x), v16u(y), v16u(spec)));
+            return generic<T>(vcpu.vblend(v16u(x), v16u(y), v16u(spec)));
         else if(typeof(T) == typeof(uint))
-            return generic<T>(vcpu.vblendv(v32u(x), v32u(y), v32u(spec)));
+            return generic<T>(vcpu.vblend(v32u(x), v32u(y), v32u(spec)));
         else if(typeof(T) == typeof(ulong))
-            return generic<T>(vcpu.vblendv(v64u(x), v64u(y), v64u(spec)));
+            return generic<T>(vcpu.vblend(v64u(x), v64u(y), v64u(spec)));
         else
             return vblend_i(x,y,spec);
     }
@@ -169,13 +169,13 @@ partial class vgcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(sbyte))
-            return generic<T>(vcpu.vblendv(v8i(x), v8i(y), v8i(spec)));
+            return generic<T>(vcpu.vblend(v8i(x), v8i(y), v8i(spec)));
         else if(typeof(T) == typeof(short))
-            return generic<T>(vcpu.vblendv(v16i(x), v16i(y), v16i(spec)));
+            return generic<T>(vcpu.vblend(v16i(x), v16i(y), v16i(spec)));
         else if(typeof(T) == typeof(int))
-            return generic<T>(vcpu.vblendv(v32i(x), v32i(y), v32i(spec)));
+            return generic<T>(vcpu.vblend(v32i(x), v32i(y), v32i(spec)));
         else if(typeof(T) == typeof(long))
-            return generic<T>(vcpu.vblendv(v64i(x), v64i(y), v64i(spec)));
+            return generic<T>(vcpu.vblend(v64i(x), v64i(y), v64i(spec)));
         else
             throw no<T>();
     }
@@ -185,13 +185,13 @@ partial class vgcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(byte))
-            return generic<T>(vcpu.vblendv(v8u(x), v8u(y), v8u(spec)));
+            return generic<T>(vcpu.vblend(v8u(x), v8u(y), v8u(spec)));
         else if(typeof(T) == typeof(ushort))
-            return generic<T>(vcpu.vblendv(v16u(x), v16u(y), v16u(spec)));
+            return generic<T>(vcpu.vblend(v16u(x), v16u(y), v16u(spec)));
         else if(typeof(T) == typeof(uint))
-            return generic<T>(vcpu.vblendv(v32u(x), v32u(y), v32u(spec)));
+            return generic<T>(vcpu.vblend(v32u(x), v32u(y), v32u(spec)));
         else if(typeof(T) == typeof(ulong))
-            return generic<T>(vcpu.vblendv(v64u(x), v64u(y), v64u(spec)));
+            return generic<T>(vcpu.vblend(v64u(x), v64u(y), v64u(spec)));
         else
             return vblend_i(x,y,spec);
     }
@@ -201,13 +201,13 @@ partial class vgcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(sbyte))
-            return generic<T>(vcpu.vblendv(v8i(x), v8i(y), v8i(spec)));
+            return generic<T>(vcpu.vblend(v8i(x), v8i(y), v8i(spec)));
         else if(typeof(T) == typeof(short))
-            return generic<T>(vcpu.vblendv(v16i(x), v16i(y), v16i(spec)));
+            return generic<T>(vcpu.vblend(v16i(x), v16i(y), v16i(spec)));
         else if(typeof(T) == typeof(int))
-            return generic<T>(vcpu.vblendv(v32i(x), v32i(y), v32i(spec)));
+            return generic<T>(vcpu.vblend(v32i(x), v32i(y), v32i(spec)));
         else if(typeof(T) == typeof(long))
-            return generic<T>(vcpu.vblendv(v64i(x), v64i(y), v64i(spec)));
+            return generic<T>(vcpu.vblend(v64i(x), v64i(y), v64i(spec)));
         else
             throw no<T>();
     }
@@ -217,13 +217,13 @@ partial class vgcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(byte))
-            return generic<T>(vcpu.vblendv(v8u(x), v8u(y), v8u(spec)));
+            return generic<T>(vcpu.vblend(v8u(x), v8u(y), v8u(spec)));
         else if(typeof(T) == typeof(ushort))
-            return generic<T>(vcpu.vblendv(v16u(x), v16u(y), v16u(spec)));
+            return generic<T>(vcpu.vblend(v16u(x), v16u(y), v16u(spec)));
         else if(typeof(T) == typeof(uint))
-            return generic<T>(vcpu.vblendv(v32u(x), v32u(y), v32u(spec)));
+            return generic<T>(vcpu.vblend(v32u(x), v32u(y), v32u(spec)));
         else if(typeof(T) == typeof(ulong))
-            return generic<T>(vcpu.vblendv(v64u(x), v64u(y), v64u(spec)));
+            return generic<T>(vcpu.vblend(v64u(x), v64u(y), v64u(spec)));
         else
             return vblend_i(x,y,spec);
     }
@@ -233,13 +233,13 @@ partial class vgcpu
         where T : unmanaged
     {
         if(typeof(T) == typeof(sbyte))
-            return generic<T>(vcpu.vblendv(v8i(x), v8i(y), v8i(spec)));
+            return generic<T>(vcpu.vblend(v8i(x), v8i(y), v8i(spec)));
         else if(typeof(T) == typeof(short))
-            return generic<T>(vcpu.vblendv(v16i(x), v16i(y), v16i(spec)));
+            return generic<T>(vcpu.vblend(v16i(x), v16i(y), v16i(spec)));
         else if(typeof(T) == typeof(int))
-            return generic<T>(vcpu.vblendv(v32i(x), v32i(y), v32i(spec)));
+            return generic<T>(vcpu.vblend(v32i(x), v32i(y), v32i(spec)));
         else if(typeof(T) == typeof(long))
-            return generic<T>(vcpu.vblendv(v64i(x), v64i(y), v64i(spec)));
+            return generic<T>(vcpu.vblend(v64i(x), v64i(y), v64i(spec)));
         else
             throw no<T>();
     }

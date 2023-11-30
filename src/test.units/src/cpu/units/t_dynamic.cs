@@ -29,7 +29,7 @@ namespace Z0
             {
                 var x = Random.CpuVector<uint>(w128);
                 var y = vbsll(x);
-                var z = gcpu.vbsll(x,imm8);
+                var z = gcpu.vsll128(x,imm8);
                 Claim.veq(z,y);
             }
         }

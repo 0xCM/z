@@ -16,9 +16,9 @@ partial class vcpu
     public static Vector128<ulong> vsrlx(Vector128<ulong> src, [Imm] byte count)
     {
         if(count >= 64)
-            return vsrl(vbsrl(src, 8), (byte)(count - 64));
+            return vsrl(vsrl128(src, 8), (byte)(count - 64));
         else
-            return vor(vsrl(src, count), vsll(vbsrl(src, 8), (byte)(64 - count)));
+            return vor(vsrl(src, count), vsll(vsrl128(src, 8), (byte)(64 - count)));
     }
 
     [MethodImpl(Inline), Srlx]
@@ -43,9 +43,9 @@ partial class vcpu
     public static Vector256<ulong> vsrlx(Vector256<ulong> src, [Imm] byte count)
     {
         if(count >= 64)
-            return vsrl(vbsrl(src, 8), (byte)(count - 64));
+            return vsrl(vsrl2x128(src, 8), (byte)(count - 64));
         else
-            return vor(vsrl(src, count), vsll(vbsrl(src, 8), (byte)(64 - count)));
+            return vor(vsrl(src, count), vsll(vsrl2x128(src, 8), (byte)(64 - count)));
     }
 
     [MethodImpl(Inline), Srlx]
