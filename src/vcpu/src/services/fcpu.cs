@@ -2513,6 +2513,24 @@ public unsafe class fcpu
     public static unsafe Vector128<double> vscalar(double src)
         => LoadScalarVector128(&src);
 
+    /// <summary>
+    /// Extracts the value of an identified source vector component
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="pos">The zero-based index of the source component to extract</param>
+    [MethodImpl(Inline), Op]
+    public static float vxscalar(Vector128<float> src, byte pos)
+        => Extract(src,pos);
+
+    /// <summary>
+    /// Extracts the value of an identified source vector component
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    /// <param name="pos">The zero-based index of the source component to extract</param>
+    [MethodImpl(Inline), Op]
+    public static double vxscalar(Vector128<double> src, byte pos)
+        => src.GetElement(pos);
+
     static Vector256<int> MRev256f32
     {
         [MethodImpl(Inline), Op]

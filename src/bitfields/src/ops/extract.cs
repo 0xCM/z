@@ -8,6 +8,7 @@ using static sys;
 
 partial struct Bitfields
 {
+    [MethodImpl(Inline), Op]
     public static ulong extract<E>(BfInterval<E> field, ulong src)
         where E : unmanaged, Enum
             => bits.extract(src, (byte)field.MinPos, field.MaxPos);

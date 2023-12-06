@@ -2,76 +2,75 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
-{
-    using static sys;
+namespace Z0;
 
-    using api = Settings;
+using static sys;
 
-    [Record(TableId)]
-    public readonly record struct Setting : ISetting, IDataType<Setting>
-    {        
-        const string TableId = "settings";
+using api = Settings;
 
-        [Render(32)]
-        public readonly @string Name;
+[Record(TableId)]
+public readonly record struct Setting : ISetting, IDataType<Setting>
+{        
+    const string TableId = "settings";
 
-        [Render(1)]
-        public readonly object Value;
+    [Render(32)]
+    public readonly @string Name;
 
+    [Render(1)]
+    public readonly object Value;
+
+    [MethodImpl(Inline)]
+    public Setting(@string name, object value)
+    {
+        Name = name;
+        Value = value;
+    }
+
+    public string ValueText
+        => Value?.ToString() ?? EmptyString;
+
+    public bool IsEmpty
+    {
         [MethodImpl(Inline)]
-        public Setting(@string name, object value)
-        {
-            Name = name;
-            Value = value;
-        }
+        get => Name.IsEmpty || Value is null;
+    }
 
-        public string ValueText
-            => Value?.ToString() ?? EmptyString;
+    public Hash32 Hash
+    {
+        [MethodImpl(Inline)]
+        get => hash(Name) | (Hash32)(Value?.GetHashCode() ?? 0);
+    }
 
-        public bool IsEmpty
-        {
-            [MethodImpl(Inline)]
-            get => Name.IsEmpty || Value is null;
-        }
+    @string INamed.Name
+        => Name;
 
-        public Hash32 Hash
-        {
-            [MethodImpl(Inline)]
-            get => hash(Name) | (Hash32)(Value?.GetHashCode() ?? 0);
-        }
+    string ISetting.Value
+        => ValueText;
 
-        @string INamed.Name
-            => Name;
+    public override int GetHashCode()
+        => Hash;
 
-        string ISetting.Value
-            => ValueText;
+    public bool Equals(Setting src)
+        => Value == src.Value && Name == src.Name;
 
-        public override int GetHashCode()
-            => Hash;
+    public string Format()
+        => Format(Chars.Eq);
 
-        public bool Equals(Setting src)
-            => Value == src.Value && Name == src.Name;
+    public override string ToString()
+        => Format();
 
-        public string Format()
-            => Format(Chars.Eq);
+    public string Json()
+        => api.json(this);
 
-        public override string ToString()
-            => Format();
+    public string Format(char sep)
+        => $"{Name}{sep}{ValueText}";
 
-        public string Json()
-            => api.json(this);
+    public int CompareTo(Setting src)
+        => Name.CompareTo(src.Name);
 
-        public string Format(char sep)
-            => $"{Name}{sep}{ValueText}";
-
-        public int CompareTo(Setting src)
-            => Name.CompareTo(src.Name);
-
-        public static Setting Empty
-        {
-            [MethodImpl(Inline)]
-            get => new (EmptyString, EmptyString);
-        }
+    public static Setting Empty
+    {
+        [MethodImpl(Inline)]
+        get => new (EmptyString, EmptyString);
     }
 }

@@ -121,7 +121,7 @@ partial class vcpu
     /// <param name="src"></param>
     /// <param name="count"></param>
     /// <returns></returns>
-    [MethodImpl(Inline), Rotlv]
+    [MethodImpl(Inline), Op]
     public static Vector512<uint> vrotr(Vector512<uint> src, byte count)
         => RotateRight(src,count);
 
@@ -132,7 +132,7 @@ partial class vcpu
     /// <param name="src"></param>
     /// <param name="count"></param>
     /// <returns></returns>
-    [MethodImpl(Inline), Rotlv]
+    [MethodImpl(Inline), Op]
     public static Vector512<int> vrotr(Vector512<int> src, byte count)
         => RotateRight(src,count);
 
@@ -143,7 +143,7 @@ partial class vcpu
     /// <param name="src"></param>
     /// <param name="count"></param>
     /// <returns></returns>
-    [MethodImpl(Inline), Rotlv]
+    [MethodImpl(Inline), Op]
     public static Vector512<long> vrotr(Vector512<long> src, byte count)
         => RotateRight(src,count);
 
@@ -154,8 +154,51 @@ partial class vcpu
     /// <param name="src"></param>
     /// <param name="count"></param>
     /// <returns></returns>
-    [MethodImpl(Inline), Rotlv]
+    [MethodImpl(Inline), Op]
     public static Vector512<ulong> vrotr(Vector512<ulong> src, byte count)        
         => RotateRight(src,count);
 
+    /// <summary>
+    /// __m512i _mm512_rorv_epi32 (__m512i a, __m512i b)
+    /// VPRORDV zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="counts"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<int> vrotr(Vector512<int> src, Vector512<int> counts)
+        => RotateRightVariable(src, v32u(counts));
+
+    /// <summary>
+    /// __m512i _mm512_rorv_epi32 (__m512i a, __m512i b)
+    /// VPRORDV zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="counts"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<uint> vrotr(Vector512<uint> src, Vector512<uint> counts)
+        => RotateRightVariable(src, counts);
+
+    /// <summary>
+    /// __m512i _mm512_rorv_epi64 (__m512i a, __m512i b)
+    /// VPRORQV zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="counts"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<long> vrotr(Vector512<long> src, Vector512<long> counts)
+        => RotateRightVariable(src, v64u(counts));
+
+    /// <summary>
+    /// __m512i _mm512_rorv_epi64 (__m512i a, __m512i b)
+    /// VPRORQV zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="counts"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<ulong> vrotr(Vector512<ulong> src, Vector512<ulong> counts)
+        => RotateRightVariable(src, counts);
 }

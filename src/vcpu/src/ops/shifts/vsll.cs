@@ -363,7 +363,8 @@ partial class vcpu
         => ShiftLeftLogical(src, count);
 
     /// <summary>
-    /// __m256i _mm256_sll_epi16 (__m256i a, __m128i count) VPSRLW ymm, ymm, xmm/m128
+    /// __m256i _mm256_sll_epi16 (__m256i a, __m128i count)
+    /// VPSRLW ymm, ymm, xmm/m128
     /// Shifts each source vector component leftwards by an amount specified in the first component of the offset vector
     /// </summary>
     /// <param name="src">The source vector</param>
@@ -373,7 +374,8 @@ partial class vcpu
         => ShiftLeftLogical(src, count);
 
     /// <summary>
-    ///  __m256i _mm256_sll_epi32 (__m256i a, __m128i count) VPSRLD ymm, ymm, xmm/m128
+    ///  __m256i _mm256_sll_epi32 (__m256i a, __m128i count)
+    ///  VPSRLD ymm, ymm, xmm/m128
     /// Shifts each source vector component leftwards by an amount specified in the first component of the offset vector
     /// </summary>
     /// <param name="src">The source vector</param>
@@ -383,7 +385,8 @@ partial class vcpu
         => ShiftLeftLogical(src, count);
 
     /// <summary>
-    ///  __m256i _mm256_sll_epi32 (__m256i a, __m128i count) VPSRLD ymm, ymm, xmm/m128
+    ///  __m256i _mm256_sll_epi32 (__m256i a, __m128i count)
+    ///  VPSRLD ymm, ymm, xmm/m128
     /// Shifts each source vector component leftwards by an amount specified in the first component of the offset vector
     /// </summary>
     /// <param name="src">The source vector</param>
@@ -393,7 +396,8 @@ partial class vcpu
         => ShiftLeftLogical(src, count);
 
     /// <summary>
-    /// __m256i _mm256_sll_epi64 (__m256i a, __m128i count) VPSRLQ ymm, ymm, xmm/m128
+    /// __m256i _mm256_sll_epi64 (__m256i a, __m128i count)
+    /// VPSRLQ ymm, ymm, xmm/m128
     /// Shifts each source vector component leftwards by an amount specified in the first component of the offset vector
     /// </summary>
     /// <param name="src">The source vector</param>

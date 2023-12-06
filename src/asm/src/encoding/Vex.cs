@@ -58,12 +58,12 @@ public class Vex
             ref readonly var b = ref skip(src,i);
             if(b == (byte)K.xC4)
             {
-                seg = BitfieldSeg.define(K.xC4, i, 8);
+                seg = Bitfields.segment(K.xC4, i, 8);
                 break;
             }
             if(b == (byte)K.xC5)
             {
-                seg = BitfieldSeg.define(K.xC5, i, 8);
+                seg = Bitfields.segment(K.xC5, i, 8);
                 break;
             }
         }

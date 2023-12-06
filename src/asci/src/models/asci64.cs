@@ -131,22 +131,6 @@ namespace Z0
         public Vector256<byte> EncodedVector(N1 n)
             => Storage.Hi;
 
-        // [MethodImpl(Inline)]
-        // public Vector128<byte> EncodedVector(N0 n, W128 w)
-        //     => Storage[n];
-
-        // [MethodImpl(Inline)]
-        // public Vector128<byte> EncodedVector(N1 n, W128 w)
-        //     => Storage[n];
-
-        // [MethodImpl(Inline)]
-        // public Vector128<byte> EncodedVector(N2 n, W128 w)
-        //     => Storage[n];
-
-        // [MethodImpl(Inline)]
-        // public Vector128<byte> EncodedVector(N3 n, W128 w)
-        //     => Storage[n];
-
         [MethodImpl(Inline)]
         public void CopyTo(Span<byte> dst)
             => api.copy(this,dst);

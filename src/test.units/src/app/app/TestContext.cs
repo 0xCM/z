@@ -126,7 +126,7 @@ public abstract class TestContext<U> : ITestContext<U>
         => false;
 
     protected IChecks Claim
-        => Checks.Checker;
+        => Checks.Claim;
 
     protected ICheckPrimal ClaimPrimal
         => Claim;

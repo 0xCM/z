@@ -7,7 +7,7 @@ namespace Z0
     [Free]
     public interface IOperation
     {
-        NameOld OpName {get;}
+        Identifier OpName {get;}
     }
 
     public interface IOperation<S> : IOperation

@@ -40,14 +40,14 @@ partial struct Asci
     public static C code(in asci16 src, Hex4Kind index)
         => (C)skip(bytes(src), (byte)index);
 
-    [MethodImpl(Inline), Op]
-    public static C code(in asci16 src, N4 index)
-        => code<N4>(src, index);
+    // [MethodImpl(Inline), Op]
+    // public static C code(in asci16 src, N4 index)
+    //     => code<N4>(src, index);
 
-    [MethodImpl(Inline)]
-    public static C code<N>(in asci16 src, N index = default)
-        where N : unmanaged, ITypeNat
-            => (C)vcpu.vextract(src.Storage, index);
+    // [MethodImpl(Inline)]
+    // public static C code<N>(in asci16 src, N index = default)
+    //     where N : unmanaged, ITypeNat
+    //         => (C)vcpu.vextract(src.Storage, index);
 
     /// <summary>
     /// Populates a 16-code asci block from the leading cells of a character span

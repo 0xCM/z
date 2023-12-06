@@ -128,9 +128,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                return Tuples.generic<T>(fmath.RefOps.divmod(float32(a), float32(b)));
+                return Tuples.generic<T>(fmath.divmod(float32(a), float32(b)));
             else if(typeof(T) == typeof(float))
-                return Tuples.generic<T>(fmath.RefOps.divmod(float64(a), float64(b)));
+                return Tuples.generic<T>(fmath.divmod(float64(a), float64(b)));
             else
                 throw no<T>();
         }
@@ -231,9 +231,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                return generic<T>(math.square(float32(src)));
+                return generic<T>(fmath.square(float32(src)));
             else if(typeof(T) == typeof(double))
-                return generic<T>(math.square(float64(src)));
+                return generic<T>(fmath.square(float64(src)));
             else
                 throw no<T>();
         }
@@ -243,9 +243,9 @@ namespace Z0
             where T : unmanaged
         {
             if(typeof(T) == typeof(float))
-                return generic<T>(math.round(float32(src), scale));
+                return generic<T>(fmath.round(float32(src), scale));
             else if(typeof(T) == typeof(double))
-                return generic<T>(math.round(float64(src), scale));
+                return generic<T>(fmath.round(float64(src), scale));
             else
                 return src;
         }

@@ -44,11 +44,11 @@ partial struct Asci
 
     [MethodImpl(Inline), Op]
     public static asci32 init(N32 n, AsciCode fill = AsciCode.Space)
-        => new asci32(vcpu.vbroadcast(w256, (byte)fill));
+        => new (vcpu.vbroadcast(w256, (byte)fill));
 
     [MethodImpl(Inline), Op]
     public static asci32 init(N32 n, ReadOnlySpan<AsciCode> src)
-        => new asci32(recover<AsciCode,byte>(src));
+        => new (recover<AsciCode,byte>(src));
 
     /// <summary>
     /// Populates an asci target with a specified number of source characters
@@ -64,7 +64,6 @@ partial struct Asci
         AsciSymbols.codes(src, (byte)count, ref storage);
         return dst;
     }
-
 
     /// <summary>
     /// Populates a 32-code asci block from the leading cells of a character span

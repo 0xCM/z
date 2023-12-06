@@ -1,20 +1,12 @@
 <Project>
   <Import Project="packages.asmresolver.props"/>
-  <Import Project="packages.clangsharp.props"/>
   <Import Project="packages.codeanalysis.props" />
-  <Import Project="packages.debugging.props"/>
   <Import Project="packages.diagnostics.props"/>
-  <Import Project="packages.etw.props"/>  
-  <Import Project="packages.interop.props"/>
   <Import Project="packages.messaging.props"/>  
   <Import Project="packages.metadata.props" />
   <Import Project="packages.microsoft.extensions.props"/>  
-  <Import Project="packages.netcore.props" />
   <Import Project="packages.msbuild.props" />
-  <Import Project="packages.netframework.refs.props"/>
   <Import Project="packages.nuget.props" />
   <Import Project="packages.symbolic.props" />
   <Import Project="packages.test.props"/>
-  <Import Project="packages.system.props" />
-  <Import Project="packages.sql.props"/>
 </Project>

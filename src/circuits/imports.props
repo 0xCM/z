@@ -1,6 +1,0 @@
-<Project>
-  <ItemGroup>
-    <ProjectReference Include="$(BitVectors)"/>
-    <ProjectReference Include="$(VCpu)"/>
-  </ItemGroup>
-</Project>

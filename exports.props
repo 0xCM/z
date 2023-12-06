@@ -13,8 +13,6 @@
 
    <Import Project="$(MsBuildThisFileDirectory)src/calcs/exports.props"/>
 
-   <Import Project="$(MsBuildThisFileDirectory)src/circuits/exports.props"/>
-
    <Import Project="$(MsBuildThisFileDirectory)src/clr.query/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/clr.cil/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/clr.ecma/exports.props"/>

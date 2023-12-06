@@ -96,7 +96,7 @@ partial struct Asci
         
     [MethodImpl(Inline), Op]
     public static asci64 init(N64 n, ReadOnlySpan<AsciCode> src)
-        => new asci64(recover<AsciCode,byte>(src));
+        => new (recover<AsciCode,byte>(src));
 
     [MethodImpl(Inline), Op]
     public static bool contains(in asci64 src, char match)

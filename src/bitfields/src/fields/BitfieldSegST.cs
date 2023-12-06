@@ -10,7 +10,6 @@ namespace Z0
         where S : unmanaged
         where T : unmanaged
     {
-
         [MethodImpl(Inline)]
         public static X extract<X>(X src, byte min, byte max)
             where X : unmanaged

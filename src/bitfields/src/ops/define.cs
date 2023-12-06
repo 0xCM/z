@@ -4,8 +4,6 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-using static sys;
-
 partial struct Bitfields
 {
     public static BfDef define(Seq<BfSegDef> segs, DataSize size)

@@ -4,32 +4,24 @@
 //-----------------------------------------------------------------------------
 namespace Z0;
 
-public readonly struct BitfieldSeg
-{
-    [MethodImpl(Inline)]
-    public static BitfieldSeg<T> define<T>(T src, byte offset, byte width)
-        where T : unmanaged
-            => new (src, offset, width);
-}
-
 [StructLayout(LayoutKind.Sequential,Pack=1)]
-public struct BitfieldSeg<T>
+public readonly record struct BitfieldSeg<T>
     where T : unmanaged
 {
     /// <summary>
     /// The segment value
     /// </summary>
-    public T Value;
+    public readonly T Value;
 
     /// <summary>
     /// The index of the first bit in the segment
     /// </summary>
-    public byte Offset;
+    public readonly byte Offset;
 
     /// <summary>
     /// The segment width
     /// </summary>
-    public byte Width;
+    public readonly byte Width;
 
     [MethodImpl(Inline)]
     public BitfieldSeg(T value, byte offset, byte width)

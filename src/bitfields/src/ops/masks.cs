@@ -133,7 +133,9 @@ partial struct Bitfields
         return dst;
     }
 
-
+    public static ReadOnlySeq<BitMaskInfo> ApiBitMasks()
+        => masks(typeof(BitMaskLiterals));
+        
     public static Index<BitMaskInfo> masks(Type src)
     {
         var fields = span(src.LiteralFields());

@@ -421,7 +421,7 @@ c5 f8 99 c8";
             var offset = (byte)(i*segwidth);
             if(cell != 0)
             {
-                var seg = BitfieldSeg.define(cell, offset, segwidth);
+                var seg = Bitfields.segment(cell, offset, segwidth);
                 Channel.Write(seg.Format());
             }
         }            

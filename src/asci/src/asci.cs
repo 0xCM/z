@@ -11,48 +11,6 @@ namespace Z0
     [ApiHost]
     public readonly partial struct Asci
     {        
-        // [MethodImpl(Inline), Op]
-        // public static ReadOnlySpan<char> inflate16u(in ByteBlock8 src)
-        //     => recover<char>(sys.bytes(vcpu.vlo(vpack.vinflate256x16u(vcpu.vbytes(w128, u64(src))))));
-
-        // [MethodImpl(Inline), Op]
-        // public static ReadOnlySpan<char> inflate16u(in ByteBlock16 src)
-        //     => recover<char>(sys.bytes(vcpu.vlo(vpack.vinflate256x16u(vcpu.vbytes(w128, u64(src))))));
-
-        // [MethodImpl(Inline), Op]
-        // public static ReadOnlySpan<char> inflate16u(in ByteBlock32 src)
-        // {
-        //     var v = vcpu.vload(w256, src.Bytes);
-        //     var lo = vpack.vinflatelo256x16u(v);
-        //     var hi = vpack.vinflatehi256x16u(v);
-        //     return recover<char>(sys.bytes(new V256x2(lo,hi)));
-        // }
-
-        // public static unsafe void decode(MemoryFile src, Action<CharBlock32> receiver)
-        // {
-        //     var size = src.FileSize;
-        //     var blocks = (uint)size/32;
-        //     var remainder = (uint)size%32;
-        //     decode(src, blocks, remainder, receiver);
-        // }
-
-        // public static unsafe void decode(MemoryFile src, uint blocks, uint remainder, Action<CharBlock32> receiver)
-        // {
-        //     const uint BlockSize = 32;
-        //     var counter = 0u;
-        //     var seg = src.Segment();
-        //     var offset = src.BaseAddress;
-        //     var dst = CharBlock32.Null;
-        //     for(var i=0u; i<blocks; i++)
-        //     {
-        //         vtext.decode(offset, BlockSize, out dst);
-        //         receiver(dst);
-        //         offset = offset + BlockSize;
-        //     }
-        //     vtext.decode(offset, remainder, out dst);
-        //     receiver(dst);
-        // }
-         
         [MethodImpl(Inline), Op]
         public static unsafe void copy<A>(ReadOnlySpan<A> src, Span<byte> dst)
             where A : unmanaged, IByteSeq

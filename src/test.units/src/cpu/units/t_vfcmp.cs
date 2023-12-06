@@ -117,7 +117,7 @@ public class t_vfcmp : t_inx<t_vfcmp>
 
             rhs.StoreTo(rDst);
 
-            var expect = fmath.fcmp(lDst, rDst, mode);
+            var expect = fmath.cmp(lDst, rDst, mode);
             var actual = vcmpf(lhs, rhs, mode);
             Claim.eq(expect, actual);
         }
@@ -140,7 +140,7 @@ public class t_vfcmp : t_inx<t_vfcmp>
 
             y.StoreTo(yDst);
 
-            var expect = fmath.fcmp(xDst, yDst, mode);
+            var expect = fmath.cmp(xDst, yDst, mode);
             var actual = cmpf(x, y, mode);
             Claim.eq(expect, actual);
         }
@@ -162,7 +162,7 @@ public class t_vfcmp : t_inx<t_vfcmp>
 
             y.StoreTo(ref first(yDst));
 
-            var expect = fmath.fcmp(xDst, yDst, mode);
+            var expect = fmath.cmp(xDst, yDst, mode);
             var actual = cmpf(x, y, mode);
             Claim.eq(expect, actual);
         }

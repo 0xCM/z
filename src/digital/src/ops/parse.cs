@@ -23,25 +23,6 @@ namespace Z0
             return NumericParser.parse(@base, buffer, out dst);
         }
 
-        // [Op]
-        // public static bool parse(Base10 @base, ReadOnlySpan<C> src, ref uint i, out ushort dst)
-        // {
-        //     dst = default;
-        //     var result = Outcome.Success;
-        //     var input = slice(src,i);
-        //     var length = input.Length;
-        //     var dig = digits(n16, base10, input);
-        //     if(dig.Length == 0)
-        //         result = (false,"No digits found");
-        //     else
-        //     {
-        //         result = parse(@base, dig, out dst);
-        //         if(result.Ok)
-        //             i += (uint)dig.Length;
-        //     }
-        //     return result;
-        // }
-
         public static bool parse(string src, out BinaryDigit dst)
         {
             var chars = span((src ?? EmptyString).Trim());

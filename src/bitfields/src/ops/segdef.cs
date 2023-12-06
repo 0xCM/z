@@ -6,6 +6,11 @@ namespace Z0;
 
 partial struct Bitfields
 {
+    [MethodImpl(Inline)]
+    public static BitfieldSeg<T> segment<T>(T src, byte offset, byte width)
+        where T : unmanaged
+            => new (src, offset, width);
+
     [MethodImpl(Inline), Op]
     public static BfSegDef segdef(string name, byte min, byte max, BitMask mask)
         => new (name, min, max, mask);

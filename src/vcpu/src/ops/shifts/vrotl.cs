@@ -158,5 +158,47 @@ partial class vcpu
     public static Vector512<ulong> vrotl(Vector512<ulong> src, byte count)        
         => RotateLeft(src,count);
 
+    /// <summary>
+    /// __m512i _mm512_rolv_epi32 (__m512i a, __m512i b)
+    /// VPROLDV zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="counts"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<int> vrotl(Vector512<int> src, Vector512<int> counts)
+        => RotateLeftVariable(src, v32u(counts));
 
+    /// <summary>
+    /// __m512i _mm512_rolv_epi32 (__m512i a, __m512i b)
+    /// VPROLDV zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="counts"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<uint> vrotl(Vector512<uint> src, Vector512<uint> counts)
+        => RotateLeftVariable(src, counts);
+
+    /// <summary>
+    /// __m512i _mm512_rolv_epi64 (__m512i a, __m512i b)
+    /// VPROLQV zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="counts"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<long> vrotl(Vector512<long> src, Vector512<long> counts)
+        => RotateLeftVariable(src, v64u(counts));
+
+    /// <summary>
+    /// __m512i _mm512_rolv_epi64 (__m512i a, __m512i b)
+    /// VPROLQV zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
+    /// </summary>
+    /// <param name="src"></param>
+    /// <param name="counts"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<ulong> vrotl(Vector512<ulong> src, Vector512<ulong> counts)
+        => RotateLeftVariable(src, counts);
 }

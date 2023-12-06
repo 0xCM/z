@@ -51,7 +51,6 @@ partial struct Bitfields
         return new string(slice(buffer, 0, count));
     }
 
-
     [Op]
     public static string format(Bitfield16 src)
     {
@@ -103,7 +102,6 @@ partial struct Bitfields
         var formatter = BitRender.formatter<T>(config);
         return string.Concat(name, Chars.Colon, formatter.Format(data));
     }
-
 
     public static string format(ReadOnlySpan<BfInterval> src)
     {
