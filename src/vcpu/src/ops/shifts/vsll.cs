@@ -248,7 +248,7 @@ partial class vcpu
     public static Vector128<byte> vsll(Vector128<byte> src, Vector128<byte> count)
     {
         var y = v16u(count);
-        var dst = vsll(vpmovzxbw(src), y);
+        var dst = vsll(vmovzxbw(w256, src), y);
         return vpack.vpack128x8u(dst);
     }
 
@@ -347,8 +347,8 @@ partial class vcpu
     public static Vector256<byte> vsll(Vector256<byte> src, Vector128<byte> count)
     {
         var y = v16u(count);
-        var lo = vsll(vpmovzxbw(vlo(src)), y);
-        var hi = vsll(vpmovzxbw(vhi(src)), y);
+        var lo = vsll(vmovzxbw(w256, vlo(src)), y);
+        var hi = vsll(vmovzxbw(w256, vhi(src)), y);
         return vpack.vpack256x8u(lo, hi);
     }
 

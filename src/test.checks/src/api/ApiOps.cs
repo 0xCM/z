@@ -204,13 +204,6 @@ partial class ApiOps : Checker<ApiOps>
         Log(fmt);
     }
 
-    void Run(N25 n)
-    {
-        LogHeader(MethodInfo.GetCurrentMethod(), n);
-        Fsm.example1();
-        PrimalStates.example2();
-    }
-
     void Run(N28 n)
     {
         LogHeader(MethodInfo.GetCurrentMethod(), n);
@@ -247,7 +240,6 @@ partial class ApiOps : Checker<ApiOps>
         Run(n9);
         Run(n15);
         Run(n18);
-        Run(n25);
         Run(n28);
         Run(n30);
         EmitBitMasks();
@@ -276,9 +268,6 @@ partial class ApiOps : Checker<ApiOps>
                 break;
                 case 18:
                     Run(n18);
-                break;
-                case 25:
-                    Run(n25);
                 break;
                 case 28:
                     Run(n28);

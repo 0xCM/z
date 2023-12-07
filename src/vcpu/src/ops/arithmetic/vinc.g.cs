@@ -72,6 +72,7 @@ partial class vgcpu
         else
             throw no<T>();
     }
+    
     /// <summary>
     /// Increments each component by unit value
     /// </summary>

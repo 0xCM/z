@@ -42,7 +42,6 @@
    <Import Project="$(MsBuildThisFileDirectory)src/linq/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/math/exports.props"/>
-   <Import Project="$(MsBuildThisFileDirectory)src/machines/exports.props"/>
    <Import Project="$(MsBuildThisFileDirectory)src/monitor/exports.props"/>
 
    <Import Project="$(MsBuildThisFileDirectory)src/native/exports.props"/>

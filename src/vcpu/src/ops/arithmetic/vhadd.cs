@@ -27,8 +27,8 @@ partial class vcpu
     [MethodImpl(Inline), AddH]
     public static Vector128<byte> vhadd(Vector128<byte> a, Vector128<byte> b)
     {
-        var c = vpmovzxbw(a);
-        var d = vpmovzxbw(b);
+        var c = vmovzxbw(w256, a);
+        var d = vmovzxbw(w256, b);
         return vpack.vpack128x8u(vhadd(v16i(c),v16i(d)));
     }
 

@@ -18,4 +18,23 @@ partial class ApiOps
             Channel.Write(mask.Text);
         }
     }
+
+    [CmdOp("vshuffle/check")]
+    void PermCheck()
+    {
+        var w = w512;
+        var src = vgcpu.vinc<ushort>(w);
+        Span<ushort> spec = stackalloc ushort[32];
+        
+        var j = 31;
+        for(var i=0; i<32; i++)
+        {
+            spec[i] = (ushort)j--;
+        }        
+
+        var vspec = vgcpu.vload(w512, spec);
+        var a = vcpu.vpermw(src,vspec);
+        Channel.Row(a.ToString());
+        
+    }
 }

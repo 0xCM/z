@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <Machines>$(MsBuildThisFileDirectory)z0.machines.csproj</Machines>
-  </PropertyGroup>
-</Project>

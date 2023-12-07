@@ -10,51 +10,51 @@ using static CpuBytes;
 partial class vcpu
 {
     [MethodImpl(Inline), Op]
-    public static Vector128<byte> vrotl(W128 n, N8 offset)
+    public static Vector128<byte> vrotl(W128 n, N8 count)
         => vload<byte>(n, RotL8_128x8u);
 
     [MethodImpl(Inline), Op]
-    public static Vector128<byte> vrotl(W128 n, N16 offset)
+    public static Vector128<byte> vrotl(W128 n, N16 count)
         => vload<byte>(n,RotL16_128x8u);
 
     [MethodImpl(Inline), Op]
-    public static Vector128<byte> vrotl(W128 n, N24 offset)
+    public static Vector128<byte> vrotl(W128 n, N24 count)
         => vload<byte>(n,RotL24_128x8u);
 
     [MethodImpl(Inline), Op]
-    public static Vector128<byte> vrotl(W128 n, N32 offset)
+    public static Vector128<byte> vrotl(W128 n, N32 count)
         => vload<byte>(n,RotL32_128x8u);
 
     [MethodImpl(Inline), Op]
-    public static Vector128<byte> vrotl(W128 n, N40 offset)
+    public static Vector128<byte> vrotl(W128 n, N40 count)
         => vload<byte>(n,RotL40_128x8u);
 
     [MethodImpl(Inline), Op]
-    public static Vector128<byte> vrotl(W128 n, N48 offset)
+    public static Vector128<byte> vrotl(W128 n, N48 count)
         => vload<byte>(n,RotL48_128x8u);
 
     [MethodImpl(Inline), Op]
-    public static Vector128<byte> vrotr(W128 n, N8 offset)
+    public static Vector128<byte> vrotr(W128 n, N8 count)
         => vload<byte>(n,RotR8_128x8u);
 
     [MethodImpl(Inline), Op]
-    public static Vector128<byte> vrotr(W128 n, N16 offset)
+    public static Vector128<byte> vrotr(W128 n, N16 count)
         => vload<byte>(n,RotR16_128x8u);
 
     [MethodImpl(Inline), Op]
-    public static Vector128<byte> vrotr(W128 n, N24 offset)
+    public static Vector128<byte> vrotr(W128 n, N24 count)
         => vload(n,RotR24_128x8u);
 
     [MethodImpl(Inline), Op]
-    public static Vector128<byte> vrotr(W128 n, N32 offset)
+    public static Vector128<byte> vrotr(W128 n, N32 count)
         => vload(n, RotR32_128x8u);
 
     [MethodImpl(Inline), Op]
-    public static Vector128<byte> vrotr(N128 n, N40 offset)
+    public static Vector128<byte> vrotr(N128 n, N40 count)
         => vload(n,RotR40_128x8u);
 
     [MethodImpl(Inline), Op]
-    public static Vector128<byte> vrotr(W128 n, N48 offset)
+    public static Vector128<byte> vrotr(W128 n, N48 count)
         => vload(n,RotR48_128x8u);
 
 }

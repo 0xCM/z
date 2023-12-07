@@ -8,6 +8,14 @@ using static vcpu;
 
 partial struct vpack
 {
+    [MethodImpl(Inline), Asm(ApiAsmClass.VPERMQ)]
+    static Vector256<sbyte> vperm4x64(Vector256<sbyte> x, [Imm] Perm4L spec)
+        => v8i(Permute4x64(v64i(x), (byte)spec));
+
+    [MethodImpl(Inline), Asm(ApiAsmClass.VPERMQ)]
+    static Vector256<byte> vperm4x64(Vector256<byte> x, [Imm] Perm4L spec)
+        => v8u(Permute4x64(v64u(x), (byte)spec));
+
     /// <summary>
     /// (16x16i,16x16i) -> 32x8i
     /// </summary>

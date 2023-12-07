@@ -40,40 +40,4 @@ partial class vcpu
     [MethodImpl(Inline), Op]
     public static ushort vmove(Vector128<ushort> src, W16 w, N1 i, N0 j)
         => vlo16u(vshuflo(src,Perm4L.BCDA));
-
-    /// <summary>
-    /// src[0..31] -> dst[0..64]
-    /// __m128d _mm_cvtss_sd (__m128d a, __m128 b) CVTSS2SD xmm, xmm/m32
-    /// Overwrites the lower half of the target vector with the value obtained by converting the
-    /// least component of the source vector to a 64-bit integer
-    /// </summary>
-    /// <param name="src">The source vector</param>
-    /// <param name="dst">The target vector</param>
-    [MethodImpl(Inline), Op]
-    public static Vector128<ulong> vmove(Vector128<uint> src, Vector128<ulong> dst)
-        => v64u(ConvertScalarToVector128Double(v64f(dst),v32f(src)));
-
-    /// <summary>
-    /// src[0..31] -> dst[0..64]
-    /// __m128d _mm_cvtss_sd (__m128d a, __m128 b) CVTSS2SD xmm, xmm/m32
-    /// Overwrites the lower half of the target vector with the value obtained by converting the least component of the source vector to a 64-bit integer
-    /// </summary>
-    /// <param name="src">The source vector</param>
-    /// <param name="dst">The target vector</param>
-    [MethodImpl(Inline), Op]
-    public static Vector128<long> vmove(Vector128<int> src, Vector128<long> dst)
-        => v64i(ConvertScalarToVector128Double(v64f(dst),v32f(src)));
-
-    /// <summary>
-    /// VPMOVZXWD ymm, m128
-    /// 16x16u ->16x32u
-    /// Projects 16 unsigned 16-bit integers onto 16 unsigned 32-bit integers
-    /// </summary>
-    /// <param name="src">The input component source</param>
-    /// <param name="n">The source component count</param>
-    /// <param name="w">The target component width</param>
-    [MethodImpl(Inline), Op]
-    public static unsafe Vector512<uint> vmove16x32u(in ushort src)
-        => Vector512.Create(v32u(ConvertToVector256Int32(gptr(src))),
-            v32u(ConvertToVector256Int32(gptr(src, 8))));
 }

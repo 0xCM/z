@@ -74,16 +74,16 @@ namespace Z0
             var xs = x.ToSpan();
             Claim.veq(Vector128.Create(xs[A], xs[B], xs[C], xs[D], xs[A + 4], xs[B + 4], xs[C + 4], xs[D + 4]), x);
 
-            var xABCD = cpu.vshuflo(x, Perm4L.ABCD);
+            var xABCD = vshuflo(x, Perm4L.ABCD);
             Claim.veq(xABCD, Vector128.Create(xs[A], xs[B], xs[C], xs[D], xs[A + 4], xs[B + 4], xs[C + 4], xs[D + 4]));
 
-            var xDCBA = cpu.vshuflo(x, Perm4L.DCBA);
+            var xDCBA = vshuflo(x, Perm4L.DCBA);
             Claim.veq(xDCBA, Vector128.Create(xs[D], xs[C], xs[B], xs[A], xs[A + 4], xs[B + 4], xs[C + 4], xs[D + 4]));
 
-            var xACBD = cpu.vshuflo(x, Perm4L.ACBD);
+            var xACBD = vshuflo(x, Perm4L.ACBD);
             Claim.veq(xACBD, Vector128.Create(xs[A], xs[C], xs[B], xs[D], xs[A + 4], xs[B + 4], xs[C + 4], xs[D + 4]));
 
-            Claim.veq(cpu.vshuflo(cpu.vparts(w128, 0,1,2,3,6,7,8,9), Perm4L.ADCB), cpu.vparts(w128, 0,3,2,1,6,7,8,9));
+            Claim.veq(vshuflo(vparts(w128, 0,1,2,3,6,7,8,9), Perm4L.ADCB), cpu.vparts(w128, 0,3,2,1,6,7,8,9));
         }
 
         public void vpermhi_4x16_outline()
@@ -159,19 +159,19 @@ namespace Z0
             var n = n256;
             var x = cpu.vparts(n,0,1,2,3);
 
-            Claim.veq(vparts(n,0,1,2,3), vperm4x64(x, Perm4L.ABCD));
-            Claim.veq(vparts(n,0,1,3,2), vperm4x64(x, Perm4L.ABDC));
-            Claim.veq(vparts(n,0,2,1,3), vperm4x64(x, Perm4L.ACBD));
-            Claim.veq(vparts(n,0,2,3,1), vperm4x64(x, Perm4L.ACDB));
-            Claim.veq(vparts(n,0,3,1,2), vperm4x64(x, Perm4L.ADBC));
-            Claim.veq(vparts(n,0,3,2,1), vperm4x64(x, Perm4L.ADCB));
+            Claim.veq(vparts(n,0,1,2,3), vpermq(x, Perm4L.ABCD));
+            Claim.veq(vparts(n,0,1,3,2), vpermq(x, Perm4L.ABDC));
+            Claim.veq(vparts(n,0,2,1,3), vpermq(x, Perm4L.ACBD));
+            Claim.veq(vparts(n,0,2,3,1), vpermq(x, Perm4L.ACDB));
+            Claim.veq(vparts(n,0,3,1,2), vpermq(x, Perm4L.ADBC));
+            Claim.veq(vparts(n,0,3,2,1), vpermq(x, Perm4L.ADCB));
 
-            Claim.veq(vparts(n,1,0,2,3), vperm4x64(x, Perm4L.BACD));
-            Claim.veq(vparts(n,1,0,3,2), vperm4x64(x, Perm4L.BADC));
-            Claim.veq(vparts(n,1,2,0,3), vperm4x64(x, Perm4L.BCAD));
-            Claim.veq(vparts(n,1,2,3,0), vperm4x64(x, Perm4L.BCDA));
-            Claim.veq(vparts(n,1,3,0,2), vperm4x64(x, Perm4L.BDAC));
-            Claim.veq(vparts(n,1,3,2,0), vperm4x64(x, Perm4L.BDCA));
+            Claim.veq(vparts(n,1,0,2,3), vpermq(x, Perm4L.BACD));
+            Claim.veq(vparts(n,1,0,3,2), vpermq(x, Perm4L.BADC));
+            Claim.veq(vparts(n,1,2,0,3), vpermq(x, Perm4L.BCAD));
+            Claim.veq(vparts(n,1,2,3,0), vpermq(x, Perm4L.BCDA));
+            Claim.veq(vparts(n,1,3,0,2), vpermq(x, Perm4L.BDAC));
+            Claim.veq(vparts(n,1,3,2,0), vpermq(x, Perm4L.BDCA));
         }
 
         public void perm4_symbols()
@@ -286,7 +286,7 @@ namespace Z0
             for(var i=0; i<RepCount; i++)
             {
                 var src = gcpu.vinc<ulong>(n256);
-                var x = cpu.vperm4x64(src, Perm4L.BADC);
+                var x = cpu.vpermq(src, Perm4L.BADC);
                 var srcs = src.ToSpan();
                 var y = Vector256.Create(srcs[1], srcs[0], srcs[3], srcs[2]);
                 Claim.veq(x,y);

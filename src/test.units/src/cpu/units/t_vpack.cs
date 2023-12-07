@@ -38,7 +38,7 @@ public class t_vpack : t_inx<t_vpack>
         for(var i=0; i<RepCount; i++)
         {
             var a = Random.CpuVector<byte>(w128);
-            var b = vcpu.vpmovzxbd(a);
+            var b = vcpu.vmovzxbd(w512, a);
             vstore(a,expect);
             vstore(b,actual);
             for(var j=z8; j<16; j++)

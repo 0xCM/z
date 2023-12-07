@@ -133,4 +133,69 @@ partial class vcpu
     [MethodImpl(Inline), Inc]
     public static Vector256<ulong> vinc(Vector256<ulong> src)
         => vadd(src, vunits<ulong>(w256));
+
+
+    /// <summary>
+    /// Increments each component by 1
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Inc]
+    public static Vector512<sbyte> vinc(Vector512<sbyte> src)
+        => vadd(src, vunits<sbyte>(w512));
+
+    /// <summary>
+    /// Increments each component by 1
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Inc]
+    public static Vector512<byte> vinc(Vector512<byte> src)
+        => vadd(src, vunits<byte>(w512));
+
+    /// <summary>
+    /// Increments each component by 1
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Inc]
+    public static Vector512<short> vinc(Vector512<short> src)
+        => vadd(src, vunits<short>(w512));
+
+    /// <summary>
+    /// Increments each component by 1
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Inc]
+    public static Vector512<ushort> vinc(Vector512<ushort> src)
+        => vadd(src, vunits<ushort>(w512));
+
+    /// <summary>
+    /// Increments each component by 1
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Inc]
+    public static Vector512<int> vinc(Vector512<int> src)
+        => vadd(src, vunits<int>(w512));
+
+    /// <summary>
+    /// Increments each component by 1
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Inc]
+    public static Vector512<uint> vinc(Vector512<uint> src)
+        => vadd(src, vunits<uint>(w512));
+
+    /// <summary>
+    /// Increments each component by 1
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Inc]
+    public static Vector512<long> vinc(Vector512<long> src)
+        => vadd(src, vunits<long>(w512));
+
+    /// <summary>
+    /// Increments each component by 1
+    /// </summary>
+    /// <param name="src">The source vector</param>
+    [MethodImpl(Inline), Inc]
+    public static Vector512<ulong> vinc(Vector512<ulong> src)
+        => vadd(src, vunits<ulong>(w512));
 }

@@ -104,7 +104,7 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     [MethodImpl(Inline), Op]
     public static Vector256<int> vreverse(Vector256<int> src)
-        => vperm8x32(src, v32i(MRev256u32));
+        => vpermd(src, v32i(MRev256u32));
 
     /// <summary>
     /// Reverses the source vector components
@@ -112,7 +112,7 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     [MethodImpl(Inline), Op]
     public static Vector256<uint> vreverse(Vector256<uint> src)
-        => vperm8x32(src, MRev256u32);
+        => vpermd(src, MRev256u32);
 
     /// <summary>
     /// Reverses the source vector components
@@ -120,7 +120,7 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     [MethodImpl(Inline), Op]
     public static Vector256<long> vreverse(Vector256<long> src)
-        => vperm4x64(src,Perm4L.DCBA);
+        => vpermq(src,Perm4L.DCBA);
 
     /// <summary>
     /// Reverses the source vector components
@@ -128,7 +128,7 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     [MethodImpl(Inline), Op]
     public static Vector256<ulong> vreverse(Vector256<ulong> src)
-        => vperm4x64(src,Perm4L.DCBA);
+        => vpermq(src, Perm4L.DCBA);
 
     static Vector256<uint> MRev256u32
     {

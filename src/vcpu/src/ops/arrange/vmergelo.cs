@@ -204,5 +204,4 @@ partial class vcpu
     [MethodImpl(Inline), Op]
     public static Vector512<ulong> vmergelo(Vector512<ulong> x, Vector512<ulong> y)
         => UnpackLow(x, y);
-
 }

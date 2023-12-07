@@ -67,7 +67,7 @@ namespace Z0
                 else
                     spec[k] = k;
             }
-            return cpu.vperm8x32(src, cpu.vload(n256, first(spec)));
+            return vcpu.vpermd(src, cpu.vload(n256, first(spec)));
         }
 
         public void swap_256_i32()

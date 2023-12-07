@@ -85,7 +85,8 @@ partial class vcpu
         => Blend(x, y, (byte)spec);
 
     /// <summary>
-    /// __m256i _mm256_blend_epi16 (__m256i a, __m256i b, const int imm8) VPBLENDW ymm, ymm, ymm/m256, imm8
+    /// __m256i _mm256_blend_epi16 (__m256i a, __m256i b, const int imm8)
+    /// VPBLENDW ymm, ymm, ymm/m256, imm8
     /// Combines components from left/right vectors within 128-bit lanes per the blend spec
     /// </summary>
     /// <param name="x">The left vector</param>

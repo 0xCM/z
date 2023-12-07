@@ -33,7 +33,7 @@ partial class vcpu
     /// <param name="lo">The lo mask</param>
     /// <param name="hi">The hi mask</param>
     [MethodImpl(Inline), Op]
-    public static Vector256<short> vshuf4x16(Vector256<short> src, [Imm] Arrange4L lo, [Imm] Arrange4L hi)
+    public static Vector256<short> vshuffle4x16(Vector256<short> src, [Imm] Arrange4L lo, [Imm] Arrange4L hi)
         => vshufhi(vshuflo(src,lo), hi);
 
     /// <summary>
@@ -43,6 +43,6 @@ partial class vcpu
     /// <param name="lo">The lo mask</param>
     /// <param name="hi">The hi mask</param>
     [MethodImpl(Inline), Op]
-    public static Vector256<ushort> vshuf4x16(Vector256<ushort> src, [Imm] Arrange4L lo, [Imm] Arrange4L hi)
+    public static Vector256<ushort> vshuffle4x16(Vector256<ushort> src, [Imm] Arrange4L lo, [Imm] Arrange4L hi)
         => vshufhi(vhuflo(src,lo), hi);
 }

@@ -14,8 +14,4 @@ public class VLut
     [MethodImpl(Inline), Init]
     public static VLut32 init(Vector256<byte> src)
         => new (src);
-
-    [MethodImpl(Inline), Init]
-    public static VLut64 init(Vector512<byte> src)
-        => new (src);
 }

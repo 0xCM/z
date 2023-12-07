@@ -12,15 +12,15 @@ partial struct Asci
 {
     [MethodImpl(Inline), Op]
     public static void decode(asci16 src, ref char dst)
-        => vcpu.vstore(vcpu.vpmovzxbw(src.Storage), ref @as<char,ushort>(dst));
+        => vcpu.vstore(vcpu.vmovzxbw(w256, src.Storage), ref @as<char,ushort>(dst));
 
     [MethodImpl(Inline), Op]
     public static void decode(N16 n, ReadOnlySpan<byte> src, Span<char> dst)
-        => vcpu.vstore(vcpu.vpmovzxbw(vcpu.vload(w128,src)), ref @as<ushort>(sys.first(dst)));
+        => vcpu.vstore(vcpu.vmovzxbw(w256, vcpu.vload(w128,src)), ref @as<ushort>(sys.first(dst)));
 
     [MethodImpl(Inline), Op]
     public static string decode(asci16 src)
-        => sys.@string(slice(recover<char>(sys.bytes(vcpu.vpmovzxbw(src.Storage))),0, src.Length));
+        => sys.@string(slice(recover<char>(sys.bytes(vcpu.vmovzxbw(w256, src.Storage))),0, src.Length));
 
     [MethodImpl(Inline)]
     public static ref readonly asci16 cast<A>(N16 n, in A src)

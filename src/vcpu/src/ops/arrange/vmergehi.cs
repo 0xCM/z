@@ -221,5 +221,4 @@ partial class vcpu
     [MethodImpl(Inline), Op]
     public static Vector512<ulong> vmergehi(Vector512<ulong> x, Vector512<ulong> y)
         => UnpackHigh(x, y);
-
 }

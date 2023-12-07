@@ -157,7 +157,7 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     /// <param name="dst">The target vector</param>
     [MethodImpl(Inline), Op]
-    public static Vector256<long> vpmovsxdq(Vector128<int> src)
+    public static Vector256<long> vmovsxdq(W256 w, Vector128<int> src)
         => ConvertToVector256Int64(src);                
 
     /// <summary>
@@ -168,7 +168,7 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     /// <param name="dst">The target vector</param>
     [MethodImpl(Inline), Op]
-    public static Vector256<long> vpmovsxdq(Vector128<short> src)
+    public static Vector256<long> vmovsxdq(W128 w, Vector128<short> src)
         => ConvertToVector256Int64(src);
 
     /// <summary>
@@ -178,6 +178,6 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     /// <param name="dst">The target vector</param>
     [MethodImpl(Inline), Op]
-    public static Vector128<int> pmovsxwd(Vector128<short> src)
+    public static Vector128<int> vmovsxwd(W128 w, Vector128<short> src)
         => ConvertToVector128Int32(src);
 }
