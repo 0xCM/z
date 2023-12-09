@@ -83,8 +83,8 @@ partial class VLogix
         {
             case BSK.Sll: return vsll(a,count);
             case BSK.Srl: return vsrl(a,count);
-            case BSK.Rotl: return vrotl(a,count);
-            case BSK.Rotr: return vrotr(a,count);
+            case BSK.Rotl: return vrol(a,count);
+            case BSK.Rotr: return vror(a,count);
             default: throw Unsupported.value(sig<T>(kind));
         }
     }

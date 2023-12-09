@@ -28,7 +28,7 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     [MethodImpl(Inline), Op]
     public static Vector128<short> vreverse(Vector128<short> src)
-        => vswaphl(vshuf4x16(src, Arrange4L.DCBA, Arrange4L.DCBA));
+        => vswaphl(vshuffle4x16(src, Arrange4L.DCBA, Arrange4L.DCBA));
 
     /// <summary>
     /// Reverses the source vector components
@@ -36,7 +36,7 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     [MethodImpl(Inline), Op]
     public static Vector128<ushort> vreverse(Vector128<ushort> src)
-        => vswaphl(vshuf4x16(src, Arrange4L.DCBA, Arrange4L.DCBA));
+        => vswaphl(vshuffle4x16(src, Arrange4L.DCBA, Arrange4L.DCBA));
 
     /// <summary>
     /// Reverses the source vector components
@@ -72,7 +72,7 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     [MethodImpl(Inline), Op]
     public static Vector256<byte> vreverse(Vector256<byte> src)
-        => vshuf32x8(src, vdec<byte>(n256));
+        => vshuffle32x8(src, vdec<byte>(n256));
 
     /// <summary>
     /// Reverses the source vector components

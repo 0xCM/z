@@ -43,7 +43,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static Arrow<K> operator +(in ValueNode<K,T> src, in ValueNode<K,T> dst)
-            => new Arrow<K>(src.Index, dst.Index);
+            => new (src.Index, dst.Index);
 
         /// <summary>
         /// Sheds the associated data to form a payload-free vertex
@@ -51,6 +51,6 @@ namespace Z0
         /// <param name="src">The source vertex</param>
         [MethodImpl(Inline)]
         public static implicit operator ValueNode<T>(in ValueNode<K,T> src)
-            => new ValueNode<T>(sys.bw32(src.Index), src.Value);
+            => new (sys.bw32(src.Index), src.Value);
     }
 }

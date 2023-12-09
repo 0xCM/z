@@ -32,29 +32,6 @@ namespace Z0
                 => gmath.sll(a,count);
         }
 
-        public readonly struct VSllr128<T> : IBinaryOp128D<T>
-            where T : unmanaged
-        {
-            [MethodImpl(Inline)]
-            public Vector128<T> Invoke(Vector128<T> x, Vector128<T> offsets)
-                => vgcpu.vsll(x,offsets);
-
-            [MethodImpl(Inline)]
-            public T Invoke(T a, T offset)
-                => gmath.sll(a, Numeric.force<T,byte>(offset));
-        }
-
-        public readonly struct VSllr256<T> : IBinaryOp256D<T>
-            where T : unmanaged
-        {
-            [MethodImpl(Inline)]
-            public Vector256<T> Invoke(Vector256<T> x, Vector256<T> offset)
-                => vgcpu.vsll(x,offset);
-
-            [MethodImpl(Inline)]
-            public T Invoke(T a, T offset)
-                => gmath.sll(a, Numeric.force<T,byte>(offset));
-        }
 
         [Closures(Integers), Sll]
         public readonly struct Sll<T> : IUnaryImm8Op<T>, ISpanShift<T>
@@ -67,15 +44,6 @@ namespace Z0
             [MethodImpl(Inline)]
             public Span<T> Invoke(ReadOnlySpan<T> src, byte count, Span<T> dst)
                 => Calcs.sll(src,count,dst);
-        }
-
-        [Closures(Integers), Sllv]
-        public readonly struct Sllv<T> : IVarSpanShift<T>
-            where T : unmanaged
-        {
-            [MethodImpl(Inline)]
-            public Span<T> Invoke(ReadOnlySpan<T> src, ReadOnlySpan<byte> counts, Span<T> dst)
-                => Calcs.sllv(src,counts,dst);
         }
 
         [Closures(Integers), Sll]

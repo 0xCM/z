@@ -9,6 +9,38 @@ using static vcpu;
 
 partial class vgcpu
 {
+    [MethodImpl(Inline), Op, Closures(Integers)]
+    public static Vector128<T> vblend<T>(Vector128<T> x, Vector128<T> y, [Imm] byte spec)
+        where T : unmanaged
+            => vblend_u(x,y,spec);
+
+    [MethodImpl(Inline), Op, Closures(Integers)]
+    public static Vector128<T> vblend<T>(Vector128<T> x, Vector128<T> y, Blend4x32 spec)
+        where T : unmanaged
+            => vblend(x,y,(byte)spec);
+
+    /// <summary>
+    /// Forms a vector z[i] := testbit(spec,i) ? x[i] : y[i], i = 0,...7
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The blend specification</param>
+    [MethodImpl(Inline), Op, Closures(Integers)]
+    public static Vector256<T> vblend<T>(Vector256<T> x, Vector256<T> y, [Imm] byte spec)
+        where T : unmanaged
+            => vblend_u(x,y,spec);
+
+    /// <summary>
+    /// Forms a vector z[i] := testbit(spec,i) ? x[i] : y[i], i = 0,...7
+    /// </summary>
+    /// <param name="x">The left vector</param>
+    /// <param name="y">The right vector</param>
+    /// <param name="spec">The blend specification</param>
+    [MethodImpl(Inline), Op, Closures(Integers)]
+    public static Vector256<T> vblend<T>(Vector256<T> x, Vector256<T> y, Blend8x32 spec)
+        where T : unmanaged
+            => vblend(x,y,(byte)spec);
+    
     /// <summary>
     /// </summary>
     /// <param name="x">The left vector</param>
@@ -244,4 +276,68 @@ partial class vgcpu
             throw no<T>();
     }
 
+    [MethodImpl(Inline)]
+    static Vector128<T> vblend_u<T>(Vector128<T> x, Vector128<T> y, byte spec)
+        where T : unmanaged
+    {
+        if(typeof(T) == typeof(byte))
+            return generic<T>(v8u(vcpu.vblend(v32u(x), v32u(y), spec)));
+        else if(typeof(T) == typeof(ushort))
+            return generic<T>(v16u(vcpu.vblend(v32u(x), v32u(y), spec)));
+        else if(typeof(T) == typeof(uint))
+            return generic<T>(vcpu.vblend(v32u(x), v32u(y), spec));
+        else if(typeof(T) == typeof(ulong))
+            return generic<T>(v64u(vcpu.vblend(v32u(x), v32u(y), spec)));
+        else
+            return vblend_i(x, y, spec);
+    }
+
+    [MethodImpl(Inline)]
+    static Vector128<T> vblend_i<T>(Vector128<T> x, Vector128<T> y, byte spec)
+        where T : unmanaged
+    {
+        if(typeof(T) == typeof(sbyte))
+            return generic<T>(v8i(vcpu.vblend(v32u(x), v32u(y), spec)));
+        else if(typeof(T) == typeof(short))
+            return generic<T>(v16i(vcpu.vblend(v32u(x), v32u(y), spec)));
+        else if(typeof(T) == typeof(int))
+            return generic<T>(vcpu.vblend(v32i(x), v32i(y), spec));
+        else if(typeof(T) == typeof(long))
+            return generic<T>(v64i(vcpu.vblend(v32u(x), v32u(y), spec)));
+        else
+            throw no<T>();
+    }
+
+    [MethodImpl(Inline)]
+    static Vector256<T> vblend_u<T>(Vector256<T> x, Vector256<T> y, byte spec)
+        where T : unmanaged
+    {
+        if(typeof(T) == typeof(byte))
+            return generic<T>(v8u(vcpu.vblend(v32u(x), v32u(y), spec)));
+        else if(typeof(T) == typeof(ushort))
+            return generic<T>(v16u(vcpu.vblend(v32u(x), v32u(y), spec)));
+        else if(typeof(T) == typeof(uint))
+            return generic<T>(vcpu.vblend(v32u(x), v32u(y), spec));
+        else if(typeof(T) == typeof(ulong))
+            return generic<T>(v64u(vcpu.vblend(v32u(x), v32u(y), spec)));
+        else
+            return vblend_i(x, y, spec);
+    }
+
+    [MethodImpl(Inline)]
+    static Vector256<T> vblend_i<T>(Vector256<T> x, Vector256<T> y, byte spec)
+        where T : unmanaged
+    {
+        if(typeof(T) == typeof(sbyte))
+            return generic<T>(v8i(vcpu.vblend(v32u(x), v32u(y), spec)));
+        else if(typeof(T) == typeof(short))
+            return generic<T>(v16i(vcpu.vblend(v32u(x), v32u(y), spec)));
+        else if(typeof(T) == typeof(int))
+            return generic<T>(vcpu.vblend(v32i(x), v32i(y), spec));
+        else if(typeof(T) == typeof(long))
+            return generic<T>(v64i(vcpu.vblend(v32u(x), v32u(y), spec)));
+        else
+            throw no<T>();
+    }
+    
 }

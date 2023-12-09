@@ -209,6 +209,116 @@ public readonly struct CpuBytes
             0,0,0,0,0,0,0,0,
         };
 
+    public static ReadOnlySpan<byte> BlendSpec_Even_512x8
+        => new byte[64]{
+            0,FF,0,FF,0,FF,0,FF,
+            0,FF,0,FF,0,FF,0,FF,
+            0,FF,0,FF,0,FF,0,FF,
+            0,FF,0,FF,0,FF,0,FF,
+            0,FF,0,FF,0,FF,0,FF,
+            0,FF,0,FF,0,FF,0,FF,
+            0,FF,0,FF,0,FF,0,FF,
+            0,FF,0,FF,0,FF,0,FF,
+        };
+
+    /// <summary>
+    /// Defines a mask for an even 256x8-bit blend
+    /// </summary>
+    public static ReadOnlySpan<byte> BlendSpec_Odd_512x8
+        => new byte[64]{
+            FF,0,FF,0,FF,0,FF,0,
+            FF,0,FF,0,FF,0,FF,0,
+            FF,0,FF,0,FF,0,FF,0,
+            FF,0,FF,0,FF,0,FF,0,
+            FF,0,FF,0,FF,0,FF,0,
+            FF,0,FF,0,FF,0,FF,0,
+            FF,0,FF,0,FF,0,FF,0,
+            FF,0,FF,0,FF,0,FF,0,
+        };
+
+    /// <summary>
+    /// Defines a mask for an even 256x8-bit blend
+    /// </summary>
+    public static ReadOnlySpan<byte> BlendSpec_Even_512x16
+        => new byte[64]{
+            0,0,FF,FF,0,0,FF,FF,
+            0,0,FF,FF,0,0,FF,FF,
+            0,0,FF,FF,0,0,FF,FF,
+            0,0,FF,FF,0,0,FF,FF,
+            0,0,FF,FF,0,0,FF,FF,
+            0,0,FF,FF,0,0,FF,FF,
+            0,0,FF,FF,0,0,FF,FF,
+            0,0,FF,FF,0,0,FF,FF,
+        };
+
+    /// <summary>
+    /// Defines a mask for an odd 256x32-bit blend
+    /// </summary>
+    public static ReadOnlySpan<byte> BlendSpec_Odd_512x16
+        => new byte[64]{
+            FF,FF,0,0,FF,FF,0,0,
+            FF,FF,0,0,FF,FF,0,0,
+            FF,FF,0,0,FF,FF,0,0,
+            FF,FF,0,0,FF,FF,0,0,
+            FF,FF,0,0,FF,FF,0,0,
+            FF,FF,0,0,FF,FF,0,0,
+            FF,FF,0,0,FF,FF,0,0,
+            FF,FF,0,0,FF,FF,0,0,
+        };
+
+    public static ReadOnlySpan<byte> BlendSpec_Even_512x32
+        => new byte[64]{
+            0,0,0,0, FF,FF,FF,FF,
+            0,0,0,0, FF,FF,FF,FF,
+            0,0,0,0, FF,FF,FF,FF,
+            0,0,0,0, FF,FF,FF,FF,
+            0,0,0,0, FF,FF,FF,FF,
+            0,0,0,0, FF,FF,FF,FF,
+            0,0,0,0, FF,FF,FF,FF,
+            0,0,0,0, FF,FF,FF,FF,
+        };
+
+    /// <summary>
+    /// Defines a mask for an odd 256x32-bit blend
+    /// </summary>
+    public static ReadOnlySpan<byte> BlendSpec_Odd_512x32
+        => new byte[64]{
+            FF,FF,FF,FF,0,0,0,0,
+            FF,FF,FF,FF,0,0,0,0,
+            FF,FF,FF,FF,0,0,0,0,
+            FF,FF,FF,FF,0,0,0,0,
+            FF,FF,FF,FF,0,0,0,0,
+            FF,FF,FF,FF,0,0,0,0,
+            FF,FF,FF,FF,0,0,0,0,
+            FF,FF,FF,FF,0,0,0,0,
+        };
+
+    public static ReadOnlySpan<byte> BlendSpec_Even_512x64
+        => new byte[64]{
+            0,0,0,0,0,0,0,0,
+            FF,FF,FF,FF,FF,FF,FF,FF,
+            0,0,0,0,0,0,0,0,
+            FF,FF,FF,FF,FF,FF,FF,FF,
+            0,0,0,0,0,0,0,0,
+            FF,FF,FF,FF,FF,FF,FF,FF,
+            0,0,0,0,0,0,0,0,
+            FF,FF,FF,FF,FF,FF,FF,FF,
+        };
+
+    /// <summary>
+    /// Defines a mask for an odd 256x64-bit blend
+    /// </summary>
+    public static ReadOnlySpan<byte> BlendSpec_Odd_512x64
+        => new byte[64]{
+            FF,FF,FF,FF,FF,FF,FF,FF,
+            0,0,0,0,0,0,0,0,
+            FF,FF,FF,FF,FF,FF,FF,FF,
+            0,0,0,0,0,0,0,0,
+            FF,FF,FF,FF,FF,FF,FF,FF,
+            0,0,0,0,0,0,0,0,
+            FF,FF,FF,FF,FF,FF,FF,FF,
+            0,0,0,0,0,0,0,0,
+        };
 
     /// <summary>
     /// Shuffle pattern that, when applied, swaps the byte-level representation of 16-bit unsigned integers

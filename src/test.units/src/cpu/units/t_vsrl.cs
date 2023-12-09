@@ -12,28 +12,6 @@ public class t_vsrl : t_inx<t_vsrl>
         vsrl_check(n256);
     }
 
-    public void vsrl_bench()
-    {
-        vsrl_bench(w128);
-        vsrl_bench(w256);
-    }
-
-    void vsrl_bench(N256 w)
-    {
-        vshift_bench(w,Calcs.vsrl<byte>(w), z8);
-        vshift_bench(w,Calcs.vsrl<ushort>(w), z16);
-        vshift_bench(w,Calcs.vsrl<uint>(w), z32);
-        vshift_bench(w,Calcs.vsrl<ulong>(w), z64);
-    }
-
-    void vsrl_bench(W128 w)
-    {
-        vshift_bench(w,Calcs.vsrl<byte>(w), z8);
-        vshift_bench(w,Calcs.vsrl<ushort>(w), z16);
-        vshift_bench(w,Calcs.vsrl<uint>(w), z32);
-        vshift_bench(w,Calcs.vsrl<ulong>(w), z64);
-    }
-
     void vsrl_check(N128 w)
     {
         vsrl_check(w, z8);

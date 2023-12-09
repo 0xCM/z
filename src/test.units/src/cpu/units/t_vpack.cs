@@ -59,7 +59,7 @@ public class t_vpack : t_inx<t_vpack>
 
         var x = vsub(vsmax, gcpu.vinc(w, z16));
         var y = vsub(vsmax, gcpu.vinc(w, (ushort)8));
-        var actual = vpack.vpack128x8u(x, y);
+        var actual = vpack.vpackus(x, y);
 
         Claim.veq(expect,actual);
     }
@@ -91,7 +91,7 @@ public class t_vpack : t_inx<t_vpack>
 
         var x = cpu.vsub(vsmax, gcpu.vinc(w, 0u));
         var y = cpu.vsub(vsmax, gcpu.vinc(w, 4u));
-        var actual = vpack.vpack128x16u(x,y);
+        var actual = vpack.vpackus(x,y);
 
         Claim.veq(expect,actual);
     }

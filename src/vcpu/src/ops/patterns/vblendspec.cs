@@ -54,6 +54,22 @@ partial class vcpu
     }
 
     [MethodImpl(Inline)]
+    public static Vector512<byte> vblendspec<N>(W512 w, bool odd, N n = default)
+        where N : unmanaged, ITypeNat
+    {
+        if(typeof(N) == typeof(N8))
+            return blend(w, w8, odd);
+        else if(typeof(N) == typeof(N16))
+            return blend(w, w16, odd);
+        else if(typeof(N) == typeof(N32))
+            return blend(w, w32, odd);
+        else if(typeof(N) == typeof(N64))
+            return blend(w, w64, odd);
+        else
+            throw no<N>();
+    }
+
+    [MethodImpl(Inline)]
     static Vector256<byte> blend(W256 w, W8 n, bool odd)
         => vload<byte>(w,odd ? BlendSpec_Odd_256x8 : BlendSpec_Even_256x8);
 
@@ -66,6 +82,24 @@ partial class vcpu
         => vload<byte>(w,odd ? BlendSpec_Odd_256x32 : BlendSpec_Even_256x32);
 
     [MethodImpl(Inline)]
-    static Vector256<byte> blend(N256 w, N64 n, bool odd)
+    static Vector256<byte> blend(N256 w, W64 n, bool odd)
         => vload<byte>(w, odd ? BlendSpec_Odd_256x64 : BlendSpec_Even_256x64);
+
+
+    [MethodImpl(Inline)]
+    static Vector512<byte> blend(W512 w, W8 n, bool odd)
+        => vload<byte>(w,odd ? BlendSpec_Odd_512x8 : BlendSpec_Even_512x8);
+
+    [MethodImpl(Inline)]
+    static Vector512<byte> blend(W512 w, W16 n, bool odd)
+        => vload<byte>(w,odd ? BlendSpec_Odd_512x16 : BlendSpec_Even_512x16);
+
+    [MethodImpl(Inline)]
+    static Vector512<byte> blend(W512 w, W32 n, bool odd)
+        => vload<byte>(w,odd ? BlendSpec_Odd_512x32 : BlendSpec_Even_512x32);
+
+    [MethodImpl(Inline)]
+    static Vector512<byte> blend(W512 w, W64 n, bool odd)
+        => vload<byte>(w, odd ? BlendSpec_Odd_512x64 : BlendSpec_Even_512x64);
+
 }

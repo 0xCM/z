@@ -16,7 +16,7 @@ namespace Z0
             var v128x16u_b = vhi(v256x16u);
             var v128x16u_a_expect = gcpu.vinc<ushort>(w128,0);
             var v128x16u_b_expect = gcpu.vinc<ushort>(w128,8);
-            var v128x8u_output = vpack.vpack128x8u(v128x16u_a, v128x16u_b);
+            var v128x8u_output = vpack.vpackus(v128x16u_a, v128x16u_b);
 
             Claim.veq(v128x16u_a_expect, v128x16u_a);
             Claim.veq(v128x16u_b_expect, v128x16u_b);

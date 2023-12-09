@@ -12,7 +12,7 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     /// <param name="count">The number of bits to rotate</param>
     [MethodImpl(Inline), Op]
-    public static Vector128<ulong> vrotlx(Vector128<ulong> src, [Imm] byte count)
+    public static Vector128<ulong> vrolx(Vector128<ulong> src, [Imm] byte count)
         => vor(vsllx(src, count), vsrlx(src, (byte)(128 - count)));
 
     /// <summary>
@@ -21,7 +21,7 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     /// <param name="count">The number of bits to rotate</param>
     [MethodImpl(Inline), Op]
-    public static Vector256<ulong> vrotlx(Vector256<ulong> src, [Imm] byte count)
+    public static Vector256<ulong> vrolx(Vector256<ulong> src, [Imm] byte count)
         => vor(vsllx(src, count), vsrlx(src, (byte)(128 - count)));
 
     /// <summary>
@@ -30,8 +30,8 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     /// <param name="count">The count selector</param>
     [MethodImpl(Inline), Rotrx]
-    public static Vector128<byte> vrotlx(Vector128<byte> src, N8 count)
-        => vshuffle(src, vrotl(w128, count));
+    public static Vector128<byte> vrolx(Vector128<byte> src, N8 count)
+        => vshuffle(src, vrol(w128, count));
 
     /// <summary>
     /// Rotates the full 128-bit vector content leftward by 16 bits
@@ -39,8 +39,8 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     /// <param name="count">The count selector</param>
     [MethodImpl(Inline), Rotrx]
-    public static Vector128<byte> vrotlx(Vector128<byte> src, N16 count)
-        => vshuffle(src, vrotl(w128, count));
+    public static Vector128<byte> vrolx(Vector128<byte> src, N16 count)
+        => vshuffle(src, vrol(w128, count));
 
     /// <summary>
     /// Rotates the full 128-bit vector content leftward by 24 bits
@@ -48,8 +48,8 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     /// <param name="count">The count selector</param>
     [MethodImpl(Inline), Rotrx]
-    public static Vector128<byte> vrotlx(Vector128<byte> src, N24 count)
-        => vshuffle(src, vrotl(w128, count));
+    public static Vector128<byte> vrolx(Vector128<byte> src, N24 count)
+        => vshuffle(src, vrol(w128, count));
 
     /// <summary>
     /// Rotates the full 128-bit vector content leftward by 32 bits
@@ -57,6 +57,6 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     /// <param name="count">The count selector</param>
     [MethodImpl(Inline), Rotrx]
-    public static Vector128<byte> vrotlx(Vector128<byte> src, N32 count)
-        => vshuffle(src, vrotl(w128, count));
+    public static Vector128<byte> vrolx(Vector128<byte> src, N32 count)
+        => vshuffle(src, vrol(w128, count));
 }

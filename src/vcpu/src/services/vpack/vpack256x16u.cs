@@ -20,5 +20,5 @@ partial struct vpack
     /// </remarks>
     [MethodImpl(Inline), Op]
     public static Vector256<ushort> vpack256x16u(Vector256<uint> x, Vector256<uint> y)
-        => vpermq(vpackus(x,y), Perm4L.ACBD);
+        => v16u(Permute4x64(v64u(vpackus(x,y)), (byte)Perm4L.ACBD));
 }

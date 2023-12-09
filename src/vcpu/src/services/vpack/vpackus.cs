@@ -49,7 +49,8 @@ partial struct vpack
         => PackUnsignedSaturate(x,y);
 
     /// <summary>
-    ///  __m128i _mm_packus_epi16 (__m128i a, __m128i b) PACKUSWB xmm, xmm/m128
+    ///  __m128i _mm_packus_epi16 (__m128i a, __m128i b)
+    ///  PACKUSWB xmm, xmm/m128
     /// (8x16w,8x16w) -> 16x8w
     /// </summary>
     /// <param name="x">The left vector</param>
@@ -73,7 +74,6 @@ partial struct vpack
     /// <remarks>See https://stackoverflow.com/questions/12118910/converting-float-vector-to-16-bit-int-without-saturating</remarks>
     [MethodImpl(Inline), Op]
     public static Vector128<ushort> vpackus(Vector128<uint> a, Vector128<uint> b)
-        //=> PackUnsignedSaturate(v32i(a),v32i(b));
     {
         var mask = vcpu.vbroadcast(n128, (uint)(ushort.MaxValue));
         var z0 = v32i(vand(a,mask));
@@ -82,16 +82,16 @@ partial struct vpack
     }
 
     /// <summary>
-    /// __m256i _mm256_packus_epi16 (__m256i a, __m256i b) VPACKUSWB ymm, ymm, ymm/m256
+    /// __m256i _mm256_packus_epi16 (__m256i a, __m256i b)
+    /// VPACKUSWB ymm, ymm, ymm/m256
     /// (16x8w,16x8w) -> 32x8w
     /// </summary>
     /// <param name="x">The left vector</param>
     /// <param name="y">The right vector</param>
     [MethodImpl(Inline), Op]
     public static Vector256<byte> vpackus(Vector256<ushort> a, Vector256<ushort> b)
-        //=> PackUnsignedSaturate(v16i(a),v16i(b));
     {
-        var mask = vcpu.vbroadcast(n256, (ushort)(byte.MaxValue));
+        var mask = vcpu.vbroadcast(w256, (ushort)(byte.MaxValue));
         var v1 = v16i(vand(a,mask));
         var v2 = v16i(vand(b,mask));
         return PackUnsignedSaturate(v1,v2);
@@ -111,6 +111,15 @@ partial struct vpack
         var z0 = v32i(vand(a,mask));
         var z1 = v32i(vand(b,mask));
         return PackUnsignedSaturate(z0, z1);
+    }
+
+    [MethodImpl(Inline), Op]
+    public static Vector512<byte> vpackus(Vector512<ushort> a, Vector512<ushort> b)
+    {
+        var mask = vbroadcast(w512, (ushort)(byte.MaxValue));
+        var v1 = v16i(vand(a,mask));
+        var v2 = v16i(vand(b,mask));
+        return PackUnsignedSaturate(v1,v2);
     }
 
     [MethodImpl(Inline), Op]

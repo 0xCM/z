@@ -29,26 +29,6 @@ namespace Z0
             where T : unmanaged
                 => default(VSllx256<T>);
 
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static VSllr128<T> vsllr<T>(W128 w, T t = default)
-            where T : unmanaged
-                => default(VSllr128<T>);
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static VSllr256<T> vsllr<T>(W256 w, T t = default)
-            where T : unmanaged
-                => default(VSllr256<T>);
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static VSrlr128<T> vsrlr<T>(W128 w, T t = default)
-            where T : unmanaged
-                => default(VSrlr128<T>);
-
-        [MethodImpl(Inline), Op, Closures(Closure)]
-        public static VSrlr256<T> vsrlr<T>(W256 w, T t = default)
-            where T : unmanaged
-                => default(VSrlr256<T>);
-
         [MethodImpl(Inline), Factory(Bsrl), Closures(Closure)]
         public static VBsrl128<T> vbsrl<T>(W128 w, T t = default)
             where T : unmanaged

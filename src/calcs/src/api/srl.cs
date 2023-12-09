@@ -24,14 +24,5 @@ namespace Z0
             where T : unmanaged
                 => default(VSrl256<T>);
 
-        [MethodImpl(Inline), Factory(Srl), Closures(Closure)]
-        public static Srl128<T> srl<T>(W128 w)
-            where T : unmanaged
-                => default(Srl128<T>);
-
-        [MethodImpl(Inline), Factory(Srl), Closures(Closure)]
-        public static Srl256<T> srl<T>(W256 w)
-            where T : unmanaged
-                => default(Srl256<T>);
     }
 }

@@ -13,10 +13,10 @@ public class t_vrotx : t_inx<t_vrotx>
         for(var i=0; i<RepCount; i++)
         {
             var x = vunits<byte>(w128);
-            Claim.veq(gcpu.vrotrx(x,8), vrotrx(x, n8));
-            Claim.veq(gcpu.vrotrx(x,16), vrotrx(x, n16));
-            Claim.veq(gcpu.vrotrx(x,24), vrotrx(x, n24));
-            Claim.veq(gcpu.vrotrx(x,32), vrotrx(x, n32));
+            Claim.veq(gcpu.vrorx(x,8), vrorx(x, n8));
+            Claim.veq(gcpu.vrorx(x,16), vrorx(x, n16));
+            Claim.veq(gcpu.vrorx(x,24), vrorx(x, n24));
+            Claim.veq(gcpu.vrorx(x,32), vrorx(x, n32));
         }
     }
 
@@ -25,10 +25,10 @@ public class t_vrotx : t_inx<t_vrotx>
         for(var i=0; i<RepCount; i++)
         {
             var x = vunits<byte>(w128);
-            Claim.veq(gcpu.vrotlx(x,8), vrotlx(x, n8));
-            Claim.veq(gcpu.vrotlx(x,16), vrotlx(x, n16));
-            Claim.veq(gcpu.vrotlx(x,24), vrotlx(x, n24));
-            Claim.veq(gcpu.vrotlx(x,32), vrotlx(x, n32));
+            Claim.veq(gcpu.vrolx(x,8), vrolx(x, n8));
+            Claim.veq(gcpu.vrolx(x,16), vrolx(x, n16));
+            Claim.veq(gcpu.vrolx(x,24), vrolx(x, n24));
+            Claim.veq(gcpu.vrolx(x,32), vrolx(x, n32));
         }
     }
 }

@@ -6,29 +6,9 @@ namespace Z0;
 
 partial class vcpu
 {
-
     /// <summary>
-    /// __m256i _mm256_permute4x64_epi64 (__m256i a, const int imm8) VPERMQ ymm, ymm/m256, imm8
-    /// Permutes vector content across lanes at 64-bit granularity
-    /// </summary>
-    /// <param name="x">The source vector</param>
-    /// <param name="spec">The perm spec</param>
-    [MethodImpl(Inline), Asm(ApiAsmClass.VPERMQ)]
-    public static Vector256<short> vpermq(Vector256<short> x, [Imm] Perm4L spec)
-        => v16i(Permute4x64(v64i(x), (byte)spec).AsInt16());
-
-    /// <summary>
-    /// __m256i _mm256_permute4x64_epi64 (__m256i a, const int imm8) VPERMQ ymm, ymm/m256, imm8
-    /// Permutes vector content across lanes at 64-bit granularity
-    /// </summary>
-    /// <param name="x">The source vector</param>
-    /// <param name="spec">The perm spec</param>
-    [MethodImpl(Inline), Asm(ApiAsmClass.VPERMQ)]
-    public static Vector256<ushort> vpermq(Vector256<ushort> x, [Imm] Perm4L spec)
-        => v16u(Permute4x64(v64u(x), (byte)spec));
-
-    /// <summary>
-    /// __m256i _mm256_permute4x64_epi64 (__m256i a, const int imm8) VPERMQ ymm, ymm/m256, imm8
+    /// __m256i _mm256_permute4x64_epi64 (__m256i a, const int imm8)
+    /// VPERMQ ymm, ymm/m256, imm8
     /// Permutes vector content across lanes at 64-bit granularity
     /// </summary>
     /// <param name="x">The source vector</param>
@@ -38,7 +18,8 @@ partial class vcpu
         => Permute4x64(x, (byte)spec);
 
     /// <summary>
-    /// __m256i _mm256_permute4x64_epi64 (__m256i a, const int imm8) VPERMQ ymm, ymm/m256, imm8
+    /// __m256i _mm256_permute4x64_epi64 (__m256i a, const int imm8)
+    /// VPERMQ ymm, ymm/m256, imm8
     /// Permutes vector content across lanes at 64-bit granularity
     /// </summary>
     /// <param name="x">The source vector</param>
@@ -47,6 +28,28 @@ partial class vcpu
     public static Vector256<long> vpermq(Vector256<long> x, [Imm] Perm4L spec)
         => Permute4x64(x, (byte)spec);
 
+    /// <summary>
+    /// __m512i _mm512_permute4x64_epi64 (__m512i a, const int imm8)
+    /// VPERMQ zmm1 {k1}{z}, zmm2/m512/m64bcst, imm8
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="spec"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<long> vpermq(Vector512<long> x, [Imm] Perm4L spec)
+        => Permute4x64(x, (byte)spec);
+
+    /// <summary>
+    /// __m512i _mm512_permute4x64_epi64 (__m512i a, const int imm8)
+    /// VPERMQ zmm1 {k1}{z}, zmm2/m512/m64bcst, imm8
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="spec"></param>
+    /// <returns></returns>
+    [MethodImpl(Inline), Op]
+    public static Vector512<ulong> vpermq(Vector512<ulong> x, [Imm] Perm4L spec)
+        => Permute4x64(x, (byte)spec);
+     
     /// <summary>
     /// __m256i _mm256_permute4x64_epi64 (__m256i a, __m256i b)
     /// VPERMQ ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst

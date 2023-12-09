@@ -157,15 +157,6 @@ partial class vcpu
         => ConvertToVector256Int16(src).AsUInt16();
 
     /// <summary>
-    /// __m512i _mm512_cvtepu16_epi32 (__m128i a)
-    /// VPMOVZXWD zmm1 {k1}{z}, ymm2/m256
-    /// </summary>
-    /// <param name="src"></param>
-    /// <returns></returns>
-    public static Vector512<uint> vmovzxwd(W512 w, Vector256<ushort> src)
-        => v32u(ConvertToVector512Int32(src));
-
-    /// <summary>
     /// __m512i _mm512_cvtepu8_epi16 (__m128i a)
     /// VPMOVZXBW zmm1 {k1}{z}, ymm2/m256
     /// </summary>
@@ -175,6 +166,15 @@ partial class vcpu
     [MethodImpl(Inline), Op]
     public static unsafe Vector512<ushort> vmovzxbw(W512 w, Vector256<byte> src)
         => v16u(ConvertToVector512Int16(src));        
+
+    /// <summary>
+    /// __m512i _mm512_cvtepu16_epi32 (__m128i a)
+    /// VPMOVZXWD zmm1 {k1}{z}, ymm2/m256
+    /// </summary>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    public static Vector512<uint> vmovzxwd(W512 w, Vector256<ushort> src)
+        => v32u(ConvertToVector512Int32(src));
 
     /// <summary>
     /// __m512i _mm512_cvtepu8_epi64 (__m128i a)

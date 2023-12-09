@@ -14,8 +14,8 @@ partial class vcpu
     [MethodImpl(Inline), Sllv]
     public static Vector128<sbyte> vsllv(Vector128<sbyte> src, Vector128<sbyte> counts)
     {
-        var x = vpmovsxbw(src);
-        var y = vpmovsxbw(counts);
+        var x = vmovsxbw(w256, src);
+        var y = vmovsxbw(w256, counts);
         return vpack.vpack128x8i(vsllv(x,y));
     }
 
@@ -40,8 +40,8 @@ partial class vcpu
     [MethodImpl(Inline), Sllv]
     public static Vector128<short> vsllv(Vector128<short> src, Vector128<short> counts)
     {
-        var a = vpmovsxwd(src);
-        var b = v32u(vpmovsxwd(counts));
+        var a = vmovsxwd(w256, src);
+        var b = v32u(vmovsxwd(w256, counts));
         var x = ShiftLeftLogicalVariable(a,b);
         return vpack.vpack128x16i(x);
     }
@@ -142,8 +142,8 @@ partial class vcpu
     [MethodImpl(Inline), Sllv]
     public static Vector256<short> vsllv(Vector256<short> src, Vector256<short> counts)
     {
-        var x = vpmovsxwd(src);
-        var s = vpmovsxwd(counts);
+        var x = vpmovsxwd(w512, src);
+        var s = vpmovsxwd(w512, counts);
         var x0 = vgcpu.vlo(x);
         var x1 = vgcpu.vhi(x);
         var s0 = vgcpu.vlo(s);

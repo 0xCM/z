@@ -15,7 +15,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector128<T> Invoke(Vector128<T> x, byte offset)
-                => vgcpu.vrotr(x,offset);
+                => vgcpu.vror(x,offset);
 
             [MethodImpl(Inline)]
             public T Invoke(T a, byte offset)
@@ -28,7 +28,7 @@ namespace Z0
         {
             [MethodImpl(Inline)]
             public Vector256<T> Invoke(Vector256<T> x, byte count)
-                => vgcpu.vrotr(x,count);
+                => vgcpu.vror(x,count);
 
             [MethodImpl(Inline)]
             public T Invoke(T a, byte count)

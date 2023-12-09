@@ -24,18 +24,18 @@ public class t_vshuffle : t_inx<t_vshuffle>
         VClaim.veq(x1Spec,x1Dst);
 
         var x2 = gcpu.vinc<byte>(w);
-        var x2Spec = vrotl(n128, n8);
+        var x2Spec = vrol(n128, n8);
         var x2Dst = vshuffle(x2,x2Spec);
         VClaim.veq(x2Spec,x2Dst);
 
         var x3 = gcpu.vinc<byte>(w);
-        var x3Spec = vrotr(n128, n8);
+        var x3Spec = vror(n128, n8);
         var x3Dst = vshuffle(x3,x3Spec);
         VClaim.veq(x3Spec,x3Dst);
 
         var x4 = gcpu.vinc<byte>(w);
-        var x4Spec1 = vrotl(n128, n8);
-        var x4Spec2 = vrotr(n128, n8);
+        var x4Spec1 = vrol(n128, n8);
+        var x4Spec2 = vror(n128, n8);
         var x4Dst = vshuffle(cpu.vshuffle(x4,x4Spec1), x4Spec2);
         VClaim.veq(x4,x4Dst);
 
@@ -121,7 +121,7 @@ public class t_vshuffle : t_inx<t_vshuffle>
 
     [MethodImpl(Inline), Op]
     public static Vector256<ushort> vshuf16x16(Vector256<ushort> a, Vector256<ushort> spec)
-        => v16u(cpu.vshuf32x8(v8u(a), vshuffle_spec_1(spec)));
+        => v16u(cpu.vshuffle32x8(v8u(a), vshuffle_spec_1(spec)));
 
     public void vshuf16x16()
     {

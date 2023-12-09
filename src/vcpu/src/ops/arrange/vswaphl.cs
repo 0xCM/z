@@ -70,7 +70,6 @@ partial class vcpu
     public static Vector256<ulong> vswaphl(Vector256<ulong> x)
         => vperm2x128(x,x, Perm2x4.DA);
 
-
     /// <summary>
     /// Swaps 64-bit hi/lo segments of the source vector
     /// </summary>

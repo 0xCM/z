@@ -66,16 +66,6 @@ namespace Z0
             where T : unmanaged
                 => Calcs.bvor<T>().Invoke(x,y);
 
-        [MethodImpl(Inline), Srl, Closures(Closure)]
-        public static SpanBlock128<T> srl<T>(SpanBlock128<T> a, [Imm] byte count, SpanBlock128<T> dst)
-            where T : unmanaged
-                => Calcs.srl<T>(w128).Invoke(a, count, dst);
-
-        [MethodImpl(Inline), Srl, Closures(Closure)]
-        public static SpanBlock256<T> srl<T>(SpanBlock256<T> a, [Imm] byte count, SpanBlock256<T> dst)
-            where T : unmanaged
-                => Calcs.srl<T>(w256).Invoke(a, count, dst);
-
         [MethodImpl(Inline), Op, Closures(Closure)]
         public ScalarBits<T> sub<T>(ScalarBits<T> x, ScalarBits<T> y)
             where T : unmanaged

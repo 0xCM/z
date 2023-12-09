@@ -14,6 +14,6 @@ namespace Z0
         /// <typeparam name="V">The vertex index type</typeparam>
         [MethodImpl(Inline)]
         public static ValueGraph<V> graph<V>(ValueNode<V>[] nodes, Arrow<ValueNode<V>>[] edges)
-            => new ValueGraph<V>(nodes, edges);
+            => new (nodes, edges);
     }
 }

@@ -9,10 +9,10 @@ namespace Z0
         [MethodImpl(Inline)]
         public static Forest<V> forest<V>(params TreeConnector<V>[] src)
             where V : IDataType<V>, IExpr, ITree<V>
-                => new Forest<V>(src);
+                => new (src);
 
         [MethodImpl(Inline)]
         public static Forest forest(params TreeConnector[] edges)
-            => new Forest(edges);
+            => new (edges);
     }
 }

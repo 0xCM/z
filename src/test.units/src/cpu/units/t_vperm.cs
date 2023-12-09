@@ -74,16 +74,16 @@ namespace Z0
             var xs = x.ToSpan();
             Claim.veq(Vector128.Create(xs[A], xs[B], xs[C], xs[D], xs[A + 4], xs[B + 4], xs[C + 4], xs[D + 4]), x);
 
-            var xABCD = vshuflo(x, Perm4L.ABCD);
+            var xABCD = vshufflelo(x, Perm4L.ABCD);
             Claim.veq(xABCD, Vector128.Create(xs[A], xs[B], xs[C], xs[D], xs[A + 4], xs[B + 4], xs[C + 4], xs[D + 4]));
 
-            var xDCBA = vshuflo(x, Perm4L.DCBA);
+            var xDCBA = vshufflelo(x, Perm4L.DCBA);
             Claim.veq(xDCBA, Vector128.Create(xs[D], xs[C], xs[B], xs[A], xs[A + 4], xs[B + 4], xs[C + 4], xs[D + 4]));
 
-            var xACBD = vshuflo(x, Perm4L.ACBD);
+            var xACBD = vshufflelo(x, Perm4L.ACBD);
             Claim.veq(xACBD, Vector128.Create(xs[A], xs[C], xs[B], xs[D], xs[A + 4], xs[B + 4], xs[C + 4], xs[D + 4]));
 
-            Claim.veq(vshuflo(vparts(w128, 0,1,2,3,6,7,8,9), Perm4L.ADCB), cpu.vparts(w128, 0,3,2,1,6,7,8,9));
+            Claim.veq(vshufflelo(vparts(w128, 0,1,2,3,6,7,8,9), Perm4L.ADCB), cpu.vparts(w128, 0,3,2,1,6,7,8,9));
         }
 
         public void vpermhi_4x16_outline()
@@ -97,16 +97,16 @@ namespace Z0
             var xs = x.ToSpan();
             Claim.veq(Vector128.Create(xs[A], xs[B], xs[C], xs[D], xs[A+4], xs[B+ 4], xs[C + 4], xs[D + 4]), x);
 
-            var xABCD = cpu.vshufhi(x, Perm4L.ABCD);
+            var xABCD = cpu.vshufflehi(x, Perm4L.ABCD);
             Claim.veq(xABCD, Vector128.Create(xs[A], xs[B], xs[C], xs[D], xs[A + 4], xs[B + 4], xs[C + 4], xs[D + 4]));
 
-            var xDCBA = cpu.vshufhi(x, Perm4L.DCBA);
+            var xDCBA = cpu.vshufflehi(x, Perm4L.DCBA);
             Claim.veq(xDCBA, Vector128.Create(xs[A], xs[B], xs[C], xs[D], xs[D + 4], xs[C + 4], xs[B + 4], xs[A + 4]));
 
-            var xACBD = cpu.vshufhi(x, Perm4L.ACBD);
+            var xACBD = cpu.vshufflehi(x, Perm4L.ACBD);
             Claim.veq(xACBD, Vector128.Create(xs[A], xs[B], xs[C], xs[D], xs[A + 4], xs[C + 4], xs[B + 4], xs[D + 4]));
 
-            Claim.veq(cpu.vshufhi(cpu.vparts(w128, 0,1,2,3,6,7,8,9), Perm4L.ADCB), cpu.vparts(n128,0,1,2,3,6,9,8,7));
+            Claim.veq(cpu.vshufflehi(cpu.vparts(w128, 0,1,2,3,6,7,8,9), Perm4L.ADCB), cpu.vparts(n128,0,1,2,3,6,9,8,7));
         }
 
         public void vperm4x32_128x32u_outline()
@@ -128,11 +128,11 @@ namespace Z0
             var w = W128.W;
             var x = cpu.vparts(w,0,1,2,3,4,5,6,7);
 
-            var a0 = cpu.vshuflo(x, Perm4L.DCBA);
+            var a0 = cpu.vshufflelo(x, Perm4L.DCBA);
             var a1 = cpu.vparts(w,3,2,1,0,4,5,6,7);
             Claim.veq(a0,a1);
 
-            var b0 = cpu.vshufhi(x, Perm4L.DCBA);
+            var b0 = cpu.vshufflehi(x, Perm4L.DCBA);
             var b1 = cpu.vparts(w,0,1,2,3,7,6,5,4);
             Claim.veq(b0,b1);
 
@@ -140,11 +140,11 @@ namespace Z0
             var c1 = cpu.vparts(w,3,2,1,0,7,6,5,4);
             Claim.veq(c0,c1);
 
-            var d0 = cpu.vshuflo(x, Perm4L.BADC);
+            var d0 = cpu.vshufflelo(x, Perm4L.BADC);
             var d1 = cpu.vparts(w,1,0,3,2,4,5,6,7);
             Claim.veq(d0,d1);
 
-            var e0 = cpu.vshufhi(x, Perm4L.BADC);
+            var e0 = cpu.vshufflehi(x, Perm4L.BADC);
             var e1 = cpu.vparts(w,0,1,2,3,5,4,7,6);
             Claim.veq(e0,e1);
 
@@ -297,7 +297,7 @@ namespace Z0
         {
             var a = gcpu.vinc<byte>(n256);
             var b = gcpu.vdec<byte>(n256);
-            var c = cpu.vreverse(cpu.vshuf32x8(a,b));
+            var c = cpu.vreverse(cpu.vshuffle32x8(a,b));
             Claim.veq(a,c);
         }
 

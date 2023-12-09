@@ -14,7 +14,7 @@ partial class vcpu
     /// <param name="hi">The hi spec</param>
     [MethodImpl(Inline), Op]
     public static Vector128<short> vperm4x16(Vector128<short> src, [Imm] Perm4L lo, [Imm] Perm4L hi)
-        => vshufhi(vshuflo(src,lo),hi);
+        => vshufflehi(vshuflelo(src,lo),hi);
 
     /// <summary>
     /// Shuffles the first four elements of the source vector with the lo mask and the last four elements with the hi mask
@@ -24,5 +24,5 @@ partial class vcpu
     /// <param name="hi">The hi mask</param>
     [MethodImpl(Inline), Op]
     public static Vector128<ushort> vperm4x16(Vector128<ushort> src, [Imm] Perm4L lo, [Imm] Perm4L hi)
-        => vshufhi(vshuflo(src,lo),hi);
+        => vshufflehi(vshufflelo(src,lo),hi);
 }

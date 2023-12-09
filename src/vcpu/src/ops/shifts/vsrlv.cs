@@ -53,7 +53,7 @@ partial class vcpu
     /// <param name="counts">The offset vector</param>
     [MethodImpl(Inline), Srlv]
     public static Vector128<sbyte> vsrlv(Vector128<sbyte> src, Vector128<sbyte> counts)
-        => vpack.vpack128x8i(vsrlv(vpmovsxbw(src), vpmovsxbw(counts)));
+        => vpack.vpack128x8i(vsrlv(vmovsxbw(w256, src), vmovsxbw(w256, counts)));
 
     /// <summary>
     /// Computes z[i] := x[i] >> s[i] for i = 0..15
@@ -76,8 +76,8 @@ partial class vcpu
     [MethodImpl(Inline), Srlv]
     public static Vector128<short> vsrlv(Vector128<short> src, Vector128<short> counts)
     {
-        var x = vpmovsxwd(src);
-        var y = v32u(vpmovsxwd(counts));
+        var x = vmovsxwd(w256, src);
+        var y = v32u(vmovsxwd(w256, counts));
         return vpack.vpack128x16i(ShiftRightLogicalVariable(x,y));
     }
 
@@ -144,11 +144,7 @@ partial class vcpu
     {
         var x = vpack.vinflate512x16i(src);
         var s = vpack.vinflate512x16i(counts);
-        var x0 = vgcpu.vlo(x);
-        var x1 = vgcpu.vhi(x);
-        var s0 = vgcpu.vlo(s);
-        var s1 = vgcpu.vhi(s);
-        return vpack.vpack256x8i(vsrlv(x0,s0), vsrlv(x1,s1));
+        return vpack.vpack256x8i(vsrlv(vlo(x),vlo(s)), vsrlv(vhi(x),vhi(s)));
     }
 
     /// <summary>
@@ -173,11 +169,11 @@ partial class vcpu
     /// </summary>
     /// <param name="src">The source vector</param>
     /// <param name="counts">The offset vector</param>
-    [MethodImpl(Inline), Srlv]
+    [MethodImpl(Inline), Op]
     public static Vector256<short> vsrlv(Vector256<short> src, Vector256<short> counts)
     {
-        var x = vpmovsxwd(src);
-        var s = vpmovsxwd(counts);
+        var x = vpmovsxwd(w512, src);
+        var s = vpmovsxwd(w512, counts);
         var x0 = vgcpu.vlo(x);
         var x1 = vgcpu.vhi(x);
         var s0 = vgcpu.vlo(s);
@@ -190,7 +186,7 @@ partial class vcpu
     /// </summary>
     /// <param name="src">The source vector</param>
     /// <param name="counts">The offset vector</param>
-    [MethodImpl(Inline), Srlv]
+    [MethodImpl(Inline), Op]
     public static Vector256<ushort> vsrlv(Vector256<ushort> src, Vector256<ushort> counts)
     {
         var x = vmovzxwd(w512, src);
@@ -201,4 +197,10 @@ partial class vcpu
         var s1 = vgcpu.vhi(s);
         return vpack.vpack256x16u(vsrlv(x0,s0), vsrlv(x1,s1));
     }
+
+
+    [MethodImpl(Inline), Op]
+    public static Vector512<ushort> vsrlv(Vector512<ushort> src, Vector512<ushort> counts)
+        => ShiftRightLogicalVariable(src,counts);
+
 }

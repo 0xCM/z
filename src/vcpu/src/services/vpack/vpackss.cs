@@ -66,4 +66,5 @@ partial struct vpack
     [MethodImpl(Inline), Op]
     public static Vector512<short> vpackss(Vector512<int> x, Vector512<int> y)
         => PackSignedSaturate(x,y);
+
 }

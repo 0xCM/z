@@ -8,11 +8,7 @@ using static vcpu;
 
 partial struct vpack
 {
-    /// <summary>
-    /// 16x16i -> 16x8i
-    /// </summary>
-    /// <param name="src">The source vector</param>
     [MethodImpl(Inline), Op]
-    public static Vector128<sbyte> vpack128x8i(Vector256<short> src)
-        => vpackss(vlo(src), vhi(src));
+    public static Vector512<ushort> vpack512x16u(Vector512<uint> x, Vector512<uint> y)
+        => v16u(Permute4x64(v64u(vpackus(x,y)), (byte)Perm4L.ACBD));
 }

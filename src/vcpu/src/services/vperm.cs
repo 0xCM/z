@@ -23,7 +23,7 @@ public class vperm
     /// <param name="src">The perm spec</param>
     [MethodImpl(Inline), Op]
     public static Vector256<byte> vdigits(Perm32 spec)
-        => vcpu.vshuf32x8(vgcpu.vinc<byte>(w256), spec.Data);
+        => vcpu.vshuffle32x8(vgcpu.vinc<byte>(w256), spec.Data);
                 
     /// <summary>
     /// Creates a fixed 16-bit permutation over a generic permutation over 16 elements

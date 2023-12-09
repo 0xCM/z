@@ -13,7 +13,7 @@ partial class vcpu
     /// <param name="spec">The control vector that defines the permutation</param>
     /// <remarks>Approach follows https://stackoverflow.com/questions/30669556/shuffle-elements-of-m256i-vector/30669632#30669632</remarks>
     [MethodImpl(Inline), Op]
-    public static Vector256<byte> vshuf32x8(Vector256<byte> a, Vector256<byte> spec)
+    public static Vector256<byte> vshuffle32x8(Vector256<byte> a, Vector256<byte> spec)
     {
         var x = vshuffle(a, vadd(spec, K0V));
         var y = vshuffle(vswaphl(a), vadd(spec, K1V));

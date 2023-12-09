@@ -15,7 +15,7 @@ partial class BitVectors
     [MethodImpl(Inline)]
     public static BitVector128<T> rotr<T>(in BitVector128<T> src, byte count)
         where T : unmanaged
-            => vgcpu.vrotrx(src.State, count);
+            => vgcpu.vrorx(src.State, count);
 
     /// <summary>
     /// Rotates source bits rightward
@@ -26,5 +26,5 @@ partial class BitVectors
     [MethodImpl(Inline)]
     public static BitVector256<T> rotr<T>(in BitVector256<T> src, byte count)
         where T : unmanaged
-            => vgcpu.vrotrx(src.State, count);
+            => vgcpu.vrorx(src.State, count);
 }

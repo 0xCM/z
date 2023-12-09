@@ -12,7 +12,7 @@ partial class vcpu
     /// <param name="src">The content vector</param>
     /// <param name="spec">The shuffle spec</param>
     [MethodImpl(Inline), Op]
-    public static Vector128<ushort> vshufhi(Vector128<ushort> src, [Imm] byte spec)
+    public static Vector128<ushort> vshufflehi(Vector128<ushort> src, [Imm] byte spec)
         => ShuffleHigh(src, spec);
 
     /// <summary>
@@ -21,7 +21,7 @@ partial class vcpu
     /// <param name="src">The content vector</param>
     /// <param name="spec">The shuffle spec</param>
     [MethodImpl(Inline), Op]
-    public static Vector128<short> vshufhi(Vector128<short> src, [Imm] byte spec)
+    public static Vector128<short> vshufflehi(Vector128<short> src, [Imm] byte spec)
         => ShuffleHigh(src, spec);
 
     /// <summary>
@@ -30,8 +30,8 @@ partial class vcpu
     /// <param name="src">The content vector</param>
     /// <param name="spec">The shuffle spec</param>
     [MethodImpl(Inline), Op]
-    public static Vector128<short> vshufhi(Vector128<short> src, [Imm] Arrange4L spec)
-        => vshufhi(src,(byte)spec);
+    public static Vector128<short> vshufflehi(Vector128<short> src, [Imm] Arrange4L spec)
+        => vshufflehi(src,(byte)spec);
 
     ///<summary>
     /// __m128i _mm_shufflehi_epi16 (__m128i a, int immediate) PSHUFHW xmm, xmm/m128, imm8
@@ -39,7 +39,7 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     /// <param name="spec">The permutation spec</param>
     [MethodImpl(Inline), Op]
-    public static Vector128<short> vshufhi(Vector128<short> src, [Imm] Perm4L spec)
+    public static Vector128<short> vshufflehi(Vector128<short> src, [Imm] Perm4L spec)
         => ShuffleHigh(src, (byte)spec);
 
     /// <summary>
@@ -49,7 +49,7 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     /// <param name="spec">The permutation spec</param>
     [MethodImpl(Inline), Op]
-    public static Vector128<ushort> vshufhi(Vector128<ushort> src, [Imm] Perm4L spec)
+    public static Vector128<ushort> vshufflehi(Vector128<ushort> src, [Imm] Perm4L spec)
         => ShuffleHigh(src, (byte)spec);
 
     /// <summary>
@@ -58,7 +58,7 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     /// <param name="spec">The permutation spec</param>
     [MethodImpl(Inline), Op]
-    public static Vector256<short> vshufhi(Vector256<short> src, [Imm] Perm4L spec)
+    public static Vector256<short> vshufflehi(Vector256<short> src, [Imm] Perm4L spec)
         => ShuffleHigh(src, (byte)spec);
 
     /// <summary>
@@ -67,7 +67,7 @@ partial class vcpu
     /// <param name="src">The source vector</param>
     /// <param name="spec">The permutation spec</param>
     [MethodImpl(Inline), Op]
-    public static Vector256<ushort> vshufhi(Vector256<ushort> src, [Imm] Perm4L spec)
+    public static Vector256<ushort> vshufflehi(Vector256<ushort> src, [Imm] Perm4L spec)
         => ShuffleHigh(src, (byte)spec);
         
     /// <summary>
@@ -76,7 +76,7 @@ partial class vcpu
     /// <param name="src">The content vector</param>
     /// <param name="spec">The shuffle spec</param>
     [MethodImpl(Inline), Op]
-    public static Vector256<ushort> vshufhi(Vector256<ushort> src, [Imm] byte spec)
+    public static Vector256<ushort> vshufflehi(Vector256<ushort> src, [Imm] byte spec)
         => ShuffleHigh(src,spec);
 
     /// <summary>
@@ -85,7 +85,7 @@ partial class vcpu
     /// <param name="src">The content vector</param>
     /// <param name="spec">The shuffle spec</param>
     [MethodImpl(Inline), Op]
-    public static Vector256<short> vshufhi(Vector256<short> src, [Imm] byte spec)
+    public static Vector256<short> vshufflehi(Vector256<short> src, [Imm] byte spec)
         => ShuffleHigh(src,spec);
 
     /// <summary>
@@ -94,8 +94,8 @@ partial class vcpu
     /// <param name="src">The content vector</param>
     /// <param name="spec">The shuffle spec</param>
     [MethodImpl(Inline), Op]
-    public static Vector128<ushort> vshufhi(Vector128<ushort> src, [Imm] Arrange4L spec)
-        => vshufhi(src,(byte)spec);
+    public static Vector128<ushort> vshufflehi(Vector128<ushort> src, [Imm] Arrange4L spec)
+        => vshufflehi(src,(byte)spec);
 
     /// <summary>
     /// __m256i _mm256_shufflehi_epi16 (__m256i a, const int imm8)VPSHUFHW ymm, ymm/m256, imm8
@@ -105,8 +105,8 @@ partial class vcpu
     /// <param name="src">The content vector</param>
     /// <param name="spec">The shuffle spec</param>
     [MethodImpl(Inline), Op]
-    public static Vector256<ushort> vshufhi(Vector256<ushort> src, [Imm] Arrange4L spec)
-        => vshufhi(src,(byte)spec);
+    public static Vector256<ushort> vshufflehi(Vector256<ushort> src, [Imm] Arrange4L spec)
+        => vshufflehi(src,(byte)spec);
 
     /// <summary>
     /// __m256i _mm256_shufflehi_epi16 (__m256i a, const int imm8)VPSHUFHW ymm, ymm/m256, imm8
@@ -116,8 +116,8 @@ partial class vcpu
     /// <param name="src">The content vector</param>
     /// <param name="spec">The shuffle spec</param>
     [MethodImpl(Inline), Op]
-    public static Vector256<short> vshufhi(Vector256<short> src, [Imm] Arrange4L spec)
-        => vshufhi(src,(byte)spec);
+    public static Vector256<short> vshufflehi(Vector256<short> src, [Imm] Arrange4L spec)
+        => vshufflehi(src,(byte)spec);
 
     /// <summary>
     /// __m512i _mm512_shufflehi_epi16 (__m512i a, const int imm8)
@@ -127,7 +127,7 @@ partial class vcpu
     /// <param name="a"></param>
     /// <param name="spec"></param>
     /// <returns></returns>
-    public static Vector512<short> vshufhi(Vector512<short> a, byte spec)    
+    public static Vector512<short> vshufflehi(Vector512<short> a, byte spec)    
         => ShuffleHigh(a, spec);
         
     /// <summary>
@@ -138,6 +138,6 @@ partial class vcpu
     /// <param name="a"></param>
     /// <param name="spec"></param>
     /// <returns></returns>
-    public static Vector512<ushort> vshufhi(Vector512<ushort> a, byte spec)    
+    public static Vector512<ushort> vshufflehi(Vector512<ushort> a, byte spec)    
         => ShuffleHigh(a, spec);        
 }
