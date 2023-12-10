@@ -24,13 +24,13 @@ namespace Z0
             RowCount = src.RowCount;
             ColCount = src.ColCount;
             Data = sys.alloc<T>(CellCount);
-            _Offsets = DbGrids.CalcColOffsets(new Dim2<uint>(src.RowCount,src.ColCount));
+            _Offsets = DbGrids.CalcColOffsets(new Dim<uint>(src.RowCount,src.ColCount));
             for(var j=0u; j<RowCount; j++)
                 for(var i=0u; i<ColCount; i++)
                     this[j,i] = src[i,j];
         }
 
-        public DbColGrid(Dim2<uint> shape)
+        public DbColGrid(Dim<uint> shape)
         {
             RowCount = shape.I;
             ColCount = shape.J;

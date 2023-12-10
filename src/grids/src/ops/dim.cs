@@ -7,17 +7,6 @@ namespace Z0;
 partial struct grids
 {
     /// <summary>
-    /// Constructs an natural dimension of order 2
-    /// </summary>
-    /// <typeparam name="M">The type of the first axis</typeparam>
-    /// <typeparam name="N">The type of the second axis</typeparam>
-    [MethodImpl(Inline)]
-    public static GridDim<M,N> dim<M,N>(M m = default, N n = default)
-        where M : unmanaged, ITypeNat
-        where N : unmanaged, ITypeNat
-            => default;
-
-    /// <summary>
     /// Computes dimension information for a blocked grid predicated on parametric types
     /// </summary>
     /// <param name="w">The block width representative</param>

@@ -2,12 +2,14 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class TypeNats
 {
     /// <summary>
-    /// Encodes a natural number k := k1*k2
+    /// Encodes a natural number k := k1 - k2
     /// </summary>
-    public readonly struct NatMul<K1,K2> : INatProduct<NatMul<K1,K2>, K1,K2>
+    public readonly struct Difference<K1,K2> : INatDifference<Difference<K1,K2>, K1,K2>
         where K1 : unmanaged, ITypeNat
         where K2 : unmanaged, ITypeNat
     {
@@ -15,13 +17,10 @@ namespace Z0
 
         static K2 k2 => default;
 
-        public static NatMul<K1,K2> Rep => default;
+        public static string Description => $"{k1} - {k2} = {Value}";
 
         public static ulong Value
-            => k1.NatValue * k2.NatValue;
-
-        static string description
-            => $"{k1} * {k2} = {Value}";
+            => NatCalc.sub(k1,k2);
 
         public static byte[] Digits
             => TypeNats.digits(Value);
@@ -29,32 +28,17 @@ namespace Z0
         public static INatSeq Seq
             => TypeNats.seq(Digits);
 
-        public ITypeNat rep
-            => Rep;
-
-        public INatSeq Sequence
-            => Seq;
-
-        public ulong NatValue
+        ulong ITypeNat.NatValue
             => Value;
 
-        public INatSeq natseq()
-            => Seq;
-
-        [MethodImpl(Inline)]
-        public bool Equals(NatMul<K1,K2> other)
+        public bool Equals(Pow<K1,K2> other)
             => Value == other.NatValue;
 
-        [MethodImpl(Inline)]
         public bool Equals(INatSeq other)
             => Value == other.NatValue;
 
-        [MethodImpl(Inline)]
-         public string format()
-            => description;
-
         public override string ToString()
-            => format();
+            => Description;
 
         public override int GetHashCode()
             => Value.GetHashCode();
@@ -62,4 +46,5 @@ namespace Z0
         public override bool Equals(object rhs)
             => Value.Equals(rhs);
     }
+    
 }

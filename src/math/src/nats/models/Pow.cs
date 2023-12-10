@@ -2,18 +2,21 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using System.Linq;
+
+partial class TypeNats
 {
-    using System.Linq;
 
     /// <summary>
     /// Encodes a natural number k := b^e
     /// </summary>
-    public readonly struct NatPow<B,E> : INatPow<NatPow<B,E>,B,E>
+    public readonly struct Pow<B,E> : INatPow<Pow<B,E>,B,E>
         where B : unmanaged, ITypeNat
         where E : unmanaged, ITypeNat
     {
-        public static NatPow<B,E> Rep => default;
+        public static Pow<B,E> Rep => default;
 
         public static  ITypeNat[] Operands => new ITypeNat[] {new B(), new E()};
 
@@ -57,9 +60,9 @@ namespace Z0
             => Seq;
 
         public E Exponent
-            => new E();
+            => new ();
 
-         public string format()
+        public string format()
             => Value.ToString();
 
         public override string ToString()
@@ -71,10 +74,10 @@ namespace Z0
         public override bool Equals(object rhs)
             => Value.Equals(rhs);
 
-        public bool Equals(NatPow<B, E> other)
+        public bool Equals(Pow<B, E> other)
             => Value == other.NatValue;
 
         public bool Equals(INatSeq other)
             => Value == other.NatValue;
-    }
+    }   
 }

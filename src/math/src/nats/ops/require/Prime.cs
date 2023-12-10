@@ -13,17 +13,17 @@ namespace Z0
         /// raises an error
         /// </summary>
         /// <typeparam name="K">The subject</typeparam>
-        public static NatPrime<K> prime<K>()
+        public static Prime<K> prime<K>()
             where K: unmanaged, ITypeNat
-                => new NatPrime<K>(natrep<K>());
+                => new Prime<K>(natrep<K>());
 
         /// <summary>
         /// If possible, constructs evidence that n:K => n prime; otherwise,
         /// raises an error
         /// </summary>
         /// <typeparam name="K">The subject</typeparam>
-        public static NatPrime<K> prime<K>(K k)
+        public static Prime<K> prime<K>(K k)
             where K: unmanaged, ITypeNat
-                => new NatPrime<K>(k);
+                => new Prime<K>(k);
     }
 }

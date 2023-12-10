@@ -2,16 +2,19 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+using static sys;
+
+partial class TypeNats
 {
-    using static sys;
     
     /// <summary>
     /// Captures evidence that k1 - 1 = k2
     /// </summary>
     /// <typeparam name="K1">The first nat type</typeparam>
     /// <typeparam name="K2">The second nat type</typeparam>
-    public readonly struct NatPrior<K1,K2> : INatPrior<K1,K2>
+    public readonly struct Prior<K1,K2> : INatPrior<K1,K2>
         where K1: unmanaged, ITypeNat
         where K2: unmanaged, ITypeNat
     {
@@ -22,7 +25,7 @@ namespace Z0
         static string Description => $"{k1} - 1 = {k2}";
 
         [MethodImpl(Inline)]
-        public NatPrior(K1 n1, K2 n2)
+        public Prior(K1 n1, K2 n2)
         {
             valid = true;
             Require.invariant(n1.NatValue - 1 == n2.NatValue, () => Description);
@@ -35,4 +38,5 @@ namespace Z0
         public override string ToString()
             => Description;
     }
+    
 }

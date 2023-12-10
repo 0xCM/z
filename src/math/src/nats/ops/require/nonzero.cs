@@ -15,9 +15,9 @@ namespace Z0
         /// </summary>
         /// <typeparam name="K">A nonzero natural type</typeparam>
         [MethodImpl(Inline)]
-        public static NatNonzero<K> nonzero<K>()
+        public static Nonzero<K> nonzero<K>()
             where K: unmanaged, ITypeNat
-                => new NatNonzero<K>(natrep<K>());
+                => new Nonzero<K>(natrep<K>());
 
         /// <summary>
         /// Attempts to prove that k:K => k != 0
@@ -26,8 +26,8 @@ namespace Z0
         /// </summary>
         /// <typeparam name="K">A nonzero natural type</typeparam>
         [MethodImpl(Inline)]
-        public static NatNonzero<K> nonzero<K>(K k)
+        public static Nonzero<K> nonzero<K>(K k)
             where K: unmanaged, ITypeNat
-                => new NatNonzero<K>(k);
+                => new Nonzero<K>(k);
     }
 }

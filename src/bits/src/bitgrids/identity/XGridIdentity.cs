@@ -47,7 +47,7 @@ namespace Z0
              :  k.ToString();
 
         [Op]
-        public static NatKind GridClosures(this Type src)
+        public static GridIdentity GridClosures(this Type src)
         {
             var args = src.GridKind().MapValueOrDefault(k => src.SuppliedTypeArgs().ToArray(), array<Type>());
             if(args.Length == 1)
@@ -59,11 +59,11 @@ namespace Z0
         }
 
         [MethodImpl(Inline), Op]
-        public static bool IsSome(this NatKind src)
+        public static bool IsSome(this GridIdentity src)
             => !src.IsEmpty;
 
         [MethodImpl(Inline), Op]
-        public static int NonEmptyCount(this NatKind src)
+        public static int NonEmptyCount(this GridIdentity src)
             => (src.M != 0 ? 1 : 0) + (src.N != 0 ? 1 : 0)  + (src.T.IsSome() ? 1 : 0);
 
         [Op]
@@ -107,8 +107,8 @@ namespace Z0
                 return Option.none<ApiGridKind>();
         }
 
-        [MethodImpl(Inline), Op]
-        public static Option<CpuCellWidth> GridWidth(this Type src)
-            => src.GridKind().TryMap(k => k.Width());
+        // [MethodImpl(Inline), Op]
+        // public static Option<CpuCellWidth> GridWidth(this Type src)
+        //     => src.GridKind().TryMap(k => k.Width());
     }
 }

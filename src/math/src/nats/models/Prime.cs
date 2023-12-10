@@ -2,12 +2,14 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class TypeNats
 {
    /// <summary>
    // Captures evidence that k:K => k is prime
    // </summary>
-   public readonly struct NatPrime<K> : INatPrime<K>
+   public readonly struct Prime<K> : INatPrime<K>
         where K : unmanaged, ITypeNat
     {
         static readonly K k = default;
@@ -15,7 +17,7 @@ namespace Z0
         public static string Description => $"{k} is prime";
 
         [MethodImpl(Inline)]
-        public NatPrime(K n)
+        public Prime(K n)
             => Require.invariant(NatPrime.test(n.NatValue), () => Description);
 
         public ulong NatValue
@@ -27,4 +29,5 @@ namespace Z0
         public override string ToString()
             => Description;
     }
+    
 }

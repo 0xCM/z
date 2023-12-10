@@ -2,7 +2,9 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class TypeNats
 {
     /// <summary>
     /// When closed over a natural K, encodes a natural number k:K such that k1:K1 & k2:K2 => k = k1 + 1
@@ -82,4 +84,5 @@ namespace Z0
         public override string ToString()
             => Description;
     }
+    
 }

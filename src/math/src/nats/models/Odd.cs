@@ -2,22 +2,24 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class TypeNats
 {
     /// <summary>
-    /// Captures evidence that k % 2 == 0
+    /// Captures evidence that k % 2 != 0
     /// </summary>
-    /// <typeparam name="K">An even natural type</typeparam>
-    public readonly struct NatEven<K> : INatEven<K>
+    /// <typeparam name="K">An odd natural type</typeparam>
+    public readonly struct Odd<K> : INatOdd<K>
         where K: unmanaged, ITypeNat
     {
         static K k => default;
 
-        public static string Description => $"{k} % {2} = {0}";
+        public static string Description => $"{k} % {2} != {0}";
 
         [MethodImpl(Inline)]
-        public NatEven(K k)
-            => Require.invariant(NatCalc.even(k), () => Description);
+        public Odd(K k)
+            => Require.invariant(NatCalc.odd(k), () => Description);
 
         public ulong NatValue
             => k.NatValue;
@@ -25,5 +27,5 @@ namespace Z0
         public override string ToString()
             => Description;
     }
-
+    
 }

@@ -9,7 +9,7 @@ namespace Z0
     public class DbGrids
     {
         [MethodImpl(Inline)]
-        public static void CalcRowOffsets<S,T>(Dim2<S> shape, Index<T> dst)
+        public static void CalcRowOffsets<S,T>(Dim<S> shape, Index<T> dst)
             where S : unmanaged
             where T : unmanaged
         {
@@ -20,7 +20,7 @@ namespace Z0
         }
 
         [MethodImpl(Inline)]
-        public static void CalcColOffsets<S,T>(Dim2<S> shape, Index<T> dst)
+        public static void CalcColOffsets<S,T>(Dim<S> shape, Index<T> dst)
             where S : unmanaged
             where T : unmanaged
         {
@@ -30,7 +30,7 @@ namespace Z0
                 dst[i] = @as<T>(i*m);
         }
 
-        public static Index<T> CalcRowOffsets<S,T>(Dim2<S> shape, T t = default)
+        public static Index<T> CalcRowOffsets<S,T>(Dim<S> shape, T t = default)
             where S : unmanaged
             where T : unmanaged
         {
@@ -39,7 +39,7 @@ namespace Z0
             return dst;
         }
 
-        public static Index<T> CalcRowOffsets<T>(Dim2<T> shape)
+        public static Index<T> CalcRowOffsets<T>(Dim<T> shape)
             where T : unmanaged
         {
             var dst = sys.alloc<T>(bw64(shape.I));
@@ -47,7 +47,7 @@ namespace Z0
             return dst;
         }
 
-        public static Index<T> CalcColOffsets<S,T>(Dim2<S> shape, T t = default)
+        public static Index<T> CalcColOffsets<S,T>(Dim<S> shape, T t = default)
             where S : unmanaged
             where T : unmanaged
         {
@@ -56,7 +56,7 @@ namespace Z0
             return dst;
         }
 
-        public static Index<T> CalcColOffsets<T>(Dim2<T> shape)
+        public static Index<T> CalcColOffsets<T>(Dim<T> shape)
             where T : unmanaged
         {
             var dst = sys.alloc<T>(bw64(shape.I));

@@ -2,13 +2,15 @@
 // Copyright   :  (c) Chris Moore, 2020
 // License     :  MIT
 //-----------------------------------------------------------------------------
-namespace Z0
+namespace Z0;
+
+partial class TypeNats
 {
     /// <summary>
     /// Captures evidence that k != 0
     /// </summary>
     /// <typeparam name="K">A nonzero natural type</typeparam>
-    public readonly struct NatNonzero<K> : INonZeroNat<K>
+    public readonly struct Nonzero<K> : INonZeroNat<K>
         where K: unmanaged, ITypeNat
     {
         static K k => default;
@@ -18,10 +20,11 @@ namespace Z0
         public ulong NatValue => TypeNats.value(k);
 
         [MethodImpl(Inline)]
-        public NatNonzero(K n)
+        public Nonzero(K n)
             => Require.invariant(n.NatValue != 0, () => Description);
 
         public override string ToString()
             => Description;
     }
+    
 }

@@ -18,7 +18,7 @@ namespace Z0
 
         public readonly uint ColCount;
 
-        public DbRowGrid(Dim2<uint> shape)
+        public DbRowGrid(Dim<uint> shape)
         {
             RowCount = shape.I;
             ColCount = shape.J;

@@ -28,9 +28,9 @@ namespace Z0
         /// <typeparam name="K1">The source type</typeparam>
         /// <typeparam name="K2">The successor type</typeparam>
         [MethodImpl(Inline)]
-        public static NatPrior<K1,K2> prior<K1,K2>(K1 k1 = default, K2 k2 = default)
+        public static Prior<K1,K2> prior<K1,K2>(K1 k1 = default, K2 k2 = default)
             where K1: unmanaged, ITypeNat
             where K2: unmanaged, ITypeNat
-                => new NatPrior<K1,K2>(k1,k2);
+                => new Prior<K1,K2>(k1,k2);
     }
 }

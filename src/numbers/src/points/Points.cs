@@ -24,7 +24,7 @@ public class Points
         where C : unmanaged
             => new (a,b,c);
 
-    public static MultiLinear<T> multilinear<T>(Dim2<T> shape)
+    public static MultiLinear<T> multilinear<T>(Dim<T> shape)
         where T : unmanaged
     {
         var m = bw64(shape.I);
@@ -41,7 +41,7 @@ public class Points
         return dst;
     }
 
-    public static LinearIndex<T> linearize<T>(Dim2<T> shape)
+    public static LinearIndex<T> linearize<T>(Dim<T> shape)
         where T : unmanaged
     {
         var m = bw64(shape.I);
