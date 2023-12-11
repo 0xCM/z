@@ -129,7 +129,6 @@ namespace Z0
             var token = ExecToken.Empty;
             if(vars.IsNonEmpty)
             {
-                vars.Iter(v => channel.Write(v.Format()));
                 token = emit(channel, name, kind, vars, dst.Root);
             }
             return token;
@@ -159,9 +158,7 @@ namespace Z0
                 if(tool.Path.IsNonEmpty)                    
                 {
                     list.AppendLine(string.Format("{0,-36} {1}", tool.Name, (FileUri)tool.Path));
-                    var row = string.Format("{0:D5} | {1,-48} | {2}", tool.Seq, tool.Name, (FileUri)tool.Path);
-                    csv.AppendLine(row);
-                    channel.Row(row);
+                    csv.AppendLine(string.Format("{0:D5} | {1,-48} | {2}", tool.Seq, tool.Name, (FileUri)tool.Path));
                 }
             }
 
