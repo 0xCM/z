@@ -27,7 +27,7 @@ namespace Z0
             => vclear_check(w256,z16);
 
         public void vclear_check<T>(W256 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             for(var i=0; i<RepCount; i++)
             {
@@ -42,7 +42,7 @@ namespace Z0
         }
 
         protected void vclear_check<T>(W128 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             for(var i=0; i< RepCount; i++)
             {

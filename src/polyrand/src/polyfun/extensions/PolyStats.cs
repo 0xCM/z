@@ -16,7 +16,7 @@ public static class PolyStats
     /// <param name="count">The number of sample points to use</param>
     /// <typeparam name="T">The distribution point type</typeparam>
     public static Ratio<double> SamplesWithin<T>(IBoundSource source, Interval<T> domain, int count)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var src = source.Stream(domain).Take((uint)count);
         var counter = 0;

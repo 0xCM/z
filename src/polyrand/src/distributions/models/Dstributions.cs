@@ -35,7 +35,7 @@ public readonly struct Distributions
     /// <typeparam name="T">The sample element type</typeparam>
     [MethodImpl(Inline), Op, Closures(AllNumeric)]
     public static UniformSpec<T> uniform<T>(T min, T max)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => new (min,max);
 
     /// <summary>
@@ -45,7 +45,7 @@ public readonly struct Distributions
     /// <typeparam name="T">The sample element type</typeparam>
     [MethodImpl(Inline), Op, Closures(AllNumeric)]
     public static UniformSpec<T> uniform<T>(in Interval<T> domain)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => new (domain);
 
     /// <summary>

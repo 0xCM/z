@@ -37,10 +37,10 @@ public class t_vgt : t_inx<t_vgt>
     }
 
     void v_check<T>(N128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckBinaryOp(Calcs.vgt<T>(w), w, t);
 
     void v_check<T>(N256 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckBinaryOp(Calcs.vgt<T>(w), w, t);
 }

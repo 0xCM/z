@@ -41,10 +41,10 @@ public class t_vnegate : t_inx<t_vnegate>
     }
 
     void vnegate_check<T>(N128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckUnaryOp(Calcs.vnegate(w,t), w, t);
 
     void vnegate_check<T>(N256 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckUnaryOp(Calcs.vnegate(w,t), w, t);
 }

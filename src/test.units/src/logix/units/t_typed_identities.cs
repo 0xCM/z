@@ -54,7 +54,7 @@ namespace Z0
         }
 
         void check_identity<T>(ComparisonExpr<T> identity)
-            where T :unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var @true = NumericLogixOps.@true<T>();
             for(var i=0; i<RepCount; i++)
@@ -68,7 +68,7 @@ namespace Z0
         }
 
         void check_identity<T>(W128 w, ComparisonExpr<Vector128<T>> identity)
-            where T :unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var @true = gcpu.vtrue<T>(w);
             for(var i=0; i<RepCount; i++)
@@ -83,7 +83,7 @@ namespace Z0
         }
 
         void check_identity<T>(W256 w, ComparisonExpr<Vector256<T>> equality)
-            where T :unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var @true = gcpu.vtrue<T>(w);
             for(var i=0; i<RepCount; i++)

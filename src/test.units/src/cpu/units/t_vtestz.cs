@@ -55,7 +55,7 @@ namespace Z0
             => vtestz_check<ulong>(n256);
 
         protected void vtestz_check<T>(N128 w = default, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
 
             for(var i=0; i< RepCount; i++)
@@ -72,7 +72,7 @@ namespace Z0
         }
 
         protected void vtestz_check<T>(N256 w = default, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
 
             for(var i=0; i< RepCount; i++)

@@ -43,7 +43,7 @@ namespace Z0
         /// <param name="n">The maximum effective width of a cell</param>
         /// <typeparam name="T">The cell type</typeparam>
         protected void gbb_dot_check<T>(int n)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             for(var i=0; i<RepCount; i++)
             {

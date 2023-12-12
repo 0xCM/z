@@ -5,7 +5,7 @@
 namespace Z0
 {
     public readonly struct CheckSVF<T> : ICheckSVF<T>
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         public ITestContext Context {get;}
 

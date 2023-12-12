@@ -89,7 +89,7 @@ public abstract class t_logix<X> : UnitTest<X,CheckVectorBits,ICheckVectorBits>
     }
 
     protected void cpu_lt_op_check<T>(N128 n)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var x = Random.CpuVector<T>(n);
         var y = Random.CpuVector<T>(n);
@@ -108,7 +108,7 @@ public abstract class t_logix<X> : UnitTest<X,CheckVectorBits,ICheckVectorBits>
     }
 
     protected void cpu_lt_op_check<T>(N256 n)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var x = Random.CpuVector<T>(n);
         var y = Random.CpuVector<T>(n);
@@ -127,7 +127,7 @@ public abstract class t_logix<X> : UnitTest<X,CheckVectorBits,ICheckVectorBits>
     }
 
     protected void cpu_gt_op_check<T>(N128 n)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var x = Random.CpuVector<T>(n);
         var y = Random.CpuVector<T>(n);
@@ -146,7 +146,7 @@ public abstract class t_logix<X> : UnitTest<X,CheckVectorBits,ICheckVectorBits>
     }
 
     protected void cpu_gt_op_check<T>(N256 n)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var x = Random.CpuVector<T>(n);
         var y = Random.CpuVector<T>(n);

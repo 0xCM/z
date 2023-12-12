@@ -44,7 +44,7 @@ namespace Z0
             => vbitblend_check<ulong>(n256);
 
         void vbitblend_check<T>(N256 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var count = w/width<T>();
             for(var sample=0; sample<RepCount; sample++)
@@ -79,7 +79,7 @@ namespace Z0
         }
 
         void vbitblend_check<T>(N128 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var count = w/width<T>();
             for(var sample=0; sample<RepCount; sample++)

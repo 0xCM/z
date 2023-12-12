@@ -52,7 +52,7 @@ namespace Z0.Test
         void check_emission<M,N,T>(uint count, M m = default, N n = default, T t = default)
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             for(var i=0u; i< count; i++)
             {

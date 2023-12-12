@@ -5,7 +5,7 @@
 namespace Z0;
 
 public readonly struct VEmitter128<T> : IEmitter128<T>
-    where T : unmanaged
+        where T : unmanaged, IEquatable<T>
 {
     public const string Name = "vemitter";
 

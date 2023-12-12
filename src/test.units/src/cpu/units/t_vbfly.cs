@@ -120,7 +120,7 @@ namespace Z0
             => vbutterfly_check(n256, n1, z64);
 
         protected void vbutterfly_check<T>(N256 w, N1 b, T t = default)
-            where T : unmanaged
+             where T : unmanaged, IEquatable<T>
         {
             for(var i=0; i< RepCount; i++)
             {

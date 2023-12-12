@@ -37,11 +37,11 @@ namespace Z0
         }
 
         void vreverse_check<T>(N128 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => vreverse_check(Calcs.vreverse<T>(w),w,t);
 
         void vreverse_check<T>(N256 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => vreverse_check(Calcs.vreverse<T>(w),w,t);
 
         void check_invariant<T>(N128 w, T t = default)
@@ -81,7 +81,7 @@ namespace Z0
                 => dst.WithElement(index, src);
 
         void vreverse_check<F,T>(F f, N128 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
             where F : IUnaryOp128<T>
         {
             var n = cpu.vcount(w,t);
@@ -102,7 +102,7 @@ namespace Z0
         }
 
         void vreverse_check<F,T>(F f, N256 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
             where F : IUnaryOp256<T>
         {
             var n = cpu.vcount(w,t);

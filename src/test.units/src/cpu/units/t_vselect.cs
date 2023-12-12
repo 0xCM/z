@@ -29,11 +29,11 @@ public class t_vselect : t_inx<t_vselect>
     }
 
     void vselect_check<T>(N128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckTernaryOp(Calcs.vselect(w,t), w, t);
 
     void vselect_check<T>(N256 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckTernaryOp(Calcs.vselect(w,t), w, t);
 }
 

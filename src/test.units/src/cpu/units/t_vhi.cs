@@ -55,7 +55,7 @@ namespace Z0
             => vhi_check<ulong>(n256);
 
         protected void vhi_check<T>(N128 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var count = cpu.vcount(w,t);
             var f = Calcs.vhi<T>(w);
@@ -71,8 +71,8 @@ namespace Z0
         }
 
         protected void vhi_check<T>(N256 w, T t = default)
-            where T : unmanaged
-        {
+            where T : unmanaged, IEquatable<T>
+       {
             var f = Calcs.vhi<T>(w);
             var r = PolyVector.vemitter<T>(w,Random);
             for(var rep=0; rep <RepCount; rep++)

@@ -38,11 +38,11 @@ public class t_vor : t_inx<t_vor>
     }
 
     void vor_check<T>(N128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckBinaryOp(Calcs.vor<T>(w),w,t);
 
     void vor_check<T>(N256 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckBinaryOp(Calcs.vor<T>(w),w,t);
 
     public void vor_128x8i()
@@ -142,7 +142,7 @@ public class t_vor : t_inx<t_vor>
         => vor_blocks_check<ulong>(n256);
 
     protected void vor_blocks_check<T>(W128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var blocks = RepCount;
         var stats = grids.stats(blocks,w,t);
@@ -159,7 +159,7 @@ public class t_vor : t_inx<t_vor>
     }
 
     protected void vor_blocks_check<T>(W256 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var blocks = RepCount;
         var stats = grids.stats(blocks,w,t);

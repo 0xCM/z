@@ -13,11 +13,6 @@ public class Partitions
 {
     const NumericKind Closure = UnsignedInts;
 
-    [MethodImpl(Inline), Op, Closures(AllNumeric)]
-    public static T length<T>(Interval<T> src)
-        where T : unmanaged
-            => gmath.abs(gmath.sub(src.Right, src.Left));
-
     /// <summary>
     /// Computes the points that determine a partitioning predicated on partition width
     /// </summary>
@@ -25,7 +20,7 @@ public class Partitions
     /// <param name="width">The partition width</param>
     /// <typeparam name="T">The interval primal type</typeparam>
     public static Span<T> measured<T>(Interval<T> src, T width)
-        where T : unmanaged
+        where T : unmanaged,IEquatable<T>
             => NumericKinds.fractional<T>() ? floating<T>(src, width) : integral<T>(src,width);
 
     /// <summary>
@@ -35,7 +30,7 @@ public class Partitions
     /// <param name="count">The number of desired partitions</param>
     /// <typeparam name="T">The interval primal type</typeparam>
     public static Span<T> counted<T>(Interval<T> src, int count)
-        where T : unmanaged
+        where T : unmanaged,IEquatable<T>
             => measured(src,gmath.div(gmath.sub(src.Right, src.Left), Numeric.force<T>(count - 1)));
 
     /// <summary>
@@ -45,7 +40,7 @@ public class Partitions
     /// <param name="count">The number of partitions</param>
     /// <typeparam name="T">The interval primal type</typeparam>
     public static Span<Interval<T>> counted<S,T>(Interval<T> src, int count)
-        where T : unmanaged
+        where T : unmanaged,IEquatable<T>
             => width(src,gmath.div(gmath.sub(src.Right, src.Left), Numeric.force<T>(count)));
 
     /// <summary>
@@ -54,9 +49,9 @@ public class Partitions
     /// <param name="src">The source interval</param>
     /// <param name="width">The partition width</param>
     /// <typeparam name="T">The interval primal type</typeparam>
-    [Op, Closures(AllNumeric)]
+    [Op, Closures(Integers)]
     public static Span<Interval<T>> width<T>(Interval<T> src, T width)
-        where T : unmanaged
+        where T : unmanaged,IEquatable<T>
     {
         var points = measured(src,width);
         var dst = span<Interval<T>>(points.Length - 1);
@@ -175,9 +170,9 @@ public class Partitions
     /// <typeparam name="T">The interval primal type</typeparam>
     [Op, Closures(Integers)]
     static Span<T> integral<T>(Interval<T> src, T width)
-        where T : unmanaged
+        where T : unmanaged,IEquatable<T>
     {
-        var len =  Partitions.length(src);
+        var len =  Intervals.length(src);
         var count = Numeric.force<T,int>(gmath.div(len, width));
         var dst = span<T>(count + 1);
         var point = src.Left;
@@ -201,14 +196,13 @@ public class Partitions
 
     [Op, Closures(Floats)]
     static Span<T> floating<T>(Interval<T> src, T width)
-        where T : unmanaged
+        where T : unmanaged,IEquatable<T>
     {
         var scale = 4;
-        var len =  gfp.round(Partitions.length(src), scale);
+        var len =  gfp.round(Intervals.length(src), scale);
         var fcount = gfp.div(len, width);
         var count = Numeric.force<T,int>(gfp.ceil(fcount));
         var dst = sys.span<T>(count + 1);
-
         var point = src.Left;
         var lastix = dst.Length - 1;
         for(var i=0; i < dst.Length; i++)

@@ -21,7 +21,7 @@ namespace Z0
         }
 
         protected void vector_op128_bench<T>(bool lookup, N128 n = default, SystemCounter clock = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var opname = $"ops/vector128[{typeof(T).DisplayName()}]/lookup[{lookup}]";
 
@@ -62,8 +62,8 @@ namespace Z0
         }
 
         protected void vector_op256_bench<T>(bool lookup, N256 n = default, SystemCounter clock = default)
-            where T : unmanaged
-        {
+             where T : unmanaged, IEquatable<T>
+       {
             var opname = $"ops/vector256[{typeof(T).DisplayName()}]/lookup[{lookup}]";
 
             var x = Random.CpuVector<T>(n);

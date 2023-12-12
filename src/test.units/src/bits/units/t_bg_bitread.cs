@@ -51,7 +51,7 @@ namespace Z0
             => bg_bitwrite_bench<byte>(249,128);
 
         protected void bm_bitread_bench<T>(SystemCounter counter = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var last = Bit32.Off;
             int M = (int)width<T>();
@@ -78,7 +78,7 @@ namespace Z0
         /// <param name="cols">The number of grid columns</param>
         /// <typeparam name="T">The grid cell type</typeparam>
         void check_bitgrid_read<T>(uint rows, uint cols)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             for(var i = 0; i < RepCount; i++)
             {
@@ -104,7 +104,7 @@ namespace Z0
         }
 
         void bg_bitread_bench<T>(uint M, uint N, SystemCounter counter = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var last = Bit32.Off;
             for(var i = 0; i<CycleCount; i++)

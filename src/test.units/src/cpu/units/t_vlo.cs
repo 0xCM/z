@@ -67,7 +67,7 @@ namespace Z0
             => vlo_check<double>(n256);
 
         protected void vlo_check<T>(N128 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var count = vcpu.vcount(w,t);
             var f = Calcs.vlo(w,t);
@@ -83,8 +83,8 @@ namespace Z0
         }
 
         protected void vlo_check<T>(N256 w, T t = default)
-            where T : unmanaged
-        {
+             where T : unmanaged, IEquatable<T>
+       {
             var f = Calcs.vlo(w,t);
             var r = PolyVector.vemitter<T>(w,Random);
             for(var rep=0; rep < RepCount; rep++)

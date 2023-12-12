@@ -29,10 +29,10 @@ public class t_vabs : t_inx<t_vabs>
     }
 
     void vabs_check<T>(N128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckUnaryOp(Calcs.vabs<T>(w),w,t);
 
     void vabs_check<T>(N256 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckUnaryOp(Calcs.vabs<T>(w),w,t);
 }

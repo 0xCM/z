@@ -60,10 +60,10 @@ public class t_vsll : t_inx<t_vsll>
     }
 
     void vsll_check<T>(W128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckShiftOp(Calcs.vsll(w,t),w,t);
 
     void vsll_check<T>(W256 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckShiftOp(Calcs.vsll(w,t),w,t);
 }

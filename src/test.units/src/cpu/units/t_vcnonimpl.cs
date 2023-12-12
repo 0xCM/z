@@ -38,10 +38,10 @@ public class t_vcnonimpl : t_inx<t_vcnonimpl>
     }
 
     void vcnonimpl_check<T>(W128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckBinaryOp(Calcs.vcnonimpl<T>(w), w, t);
 
     void vcnonimpl_check<T>(W256 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckBinaryOp(Calcs.vcnonimpl<T>(w), w, t);
     }

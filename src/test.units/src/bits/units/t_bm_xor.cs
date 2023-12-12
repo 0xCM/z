@@ -52,7 +52,7 @@ namespace Z0
 
         protected void bm_xor_check<N,T>(N n = default, T t = default)
             where N : unmanaged, ITypeNat
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             for(var i=0; i<RepCount; i++)
             {
@@ -67,7 +67,7 @@ namespace Z0
         }
 
        protected void bm_xor_check<T>(T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var C = BitMatrix.alloc<T>();
             for(var i=0; i<RepCount; i++)

@@ -92,7 +92,7 @@ namespace Z0
         }
 
         void vpop_check<T>(N128 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var f = Calcs.vpop(w,t);
 
@@ -117,7 +117,7 @@ namespace Z0
         }
 
         void vpop_check<T>(N256 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var f = Calcs.vpop(w,t);
 

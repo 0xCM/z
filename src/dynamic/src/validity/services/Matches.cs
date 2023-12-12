@@ -21,7 +21,7 @@ namespace Z0
         /// <typeparam name="T">The domain type common to both functions</typeparam>
         /// <typeparam name="R">The range type common to both functions</typeparam>
         public static void points<F,G,T,R>(ITestContext context, F f, G g, bool nonz = false)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
             where R : unmanaged
             where F : IFunc<T,R>
             where G : IFunc<T,R>

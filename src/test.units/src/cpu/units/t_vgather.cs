@@ -18,7 +18,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         static Interval<T> bounds<T>(uint n)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => (zero<T>(), Numeric.force<T>(n));
 
         public void vgather_check()
@@ -52,7 +52,7 @@ namespace Z0
         }
 
         void vgather_check<T>(W128 w)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var cells = BufferSize/size<T>();
             var domain = bounds<T>(cells);
@@ -69,7 +69,7 @@ namespace Z0
         }
 
         void vgather_check<T>(W256 w)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var count = BufferSize/size<T>();
             var domain = bounds<T>(count);
@@ -86,11 +86,11 @@ namespace Z0
         }
 
         void vgather_check<T>(W128 w, T t)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => CheckAction(() => vgather_check<T>(w), CaseName("vgather", w, t));
 
         void vgather_check<T>(W256 w, T t)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => CheckAction(() => vgather_check<T>(w), CaseName("vgather", w, t));
 
         public void vgather_128()

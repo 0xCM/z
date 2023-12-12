@@ -39,7 +39,7 @@ namespace Z0
         }
 
         void vsllv_check<T>(W128 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var domain = Intervals.closed(zero<T>(), force<uint,T>(width<T>() - 1));
 
@@ -54,7 +54,7 @@ namespace Z0
         }
 
         void vsllv_check<T>(W256 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var domain = Intervals.closed(zero<T>(), force<uint,T>(width<T>() - 1));
 

@@ -56,7 +56,7 @@ public class t_bb_disable : t_bits<t_bb_disable>
     }
 
     void gbb_disable_check<T>(BitWidth n)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         for(var k=0; k<RepCount; k++)
         {
@@ -75,7 +75,7 @@ public class t_bb_disable : t_bits<t_bb_disable>
     }
 
     void nbb_disable_check<N,T>(N n = default, T rep = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
         where N : unmanaged, ITypeNat
     {
         for(var k=0; k<RepCount; k++)

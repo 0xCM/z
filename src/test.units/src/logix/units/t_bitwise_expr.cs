@@ -321,7 +321,7 @@ namespace Z0
         }
 
         void check_cpu_expr<T>(N128 n, UnaryBitLogicKind op)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var v1 = variable(1, default(Vector128<T>));
             var expr = unary(op,v1);
@@ -337,7 +337,7 @@ namespace Z0
         }
 
         void check_cpu_expr<T>(N256 n, UnaryBitLogicKind op)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var v1 = variable(1, default(Vector256<T>));
             var expr = unary(op,v1);
@@ -353,7 +353,7 @@ namespace Z0
         }
 
         void check_cpu_expr<T>(W128 w, BinaryBitLogicKind op)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var v1 = variable(1, default(Vector128<T>));
             var v2 = variable(2, default(Vector128<T>));
@@ -372,7 +372,7 @@ namespace Z0
         }
 
         void check_cpu_expr<T>(W256 w, BinaryBitLogicKind op)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var v1 = variable(1, default(Vector256<T>));
             var v2 = variable(2, default(Vector256<T>));

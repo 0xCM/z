@@ -10,14 +10,14 @@ using static CellDelegates;
 public interface ICheckDynamicVectors : ICheckAction, ITestDynamic, IBufferedChecker
 {
     TestCaseRecord Match<T>(BinaryOp<Vector128<T>> f, ApiCodeBlock bits)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var g = Dynamic.EmitFixedBinary(this[Main], w128, bits);
         return Match<T>(f, g, bits.OpUri.OpId);
     }
 
     TestCaseRecord Match<T>(BinaryOp<Vector256<T>> f, ApiCodeBlock bits)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var g = Dynamic.EmitFixedBinary(this[Main], w256, bits);
         return Match<T>(f, g, bits.OpUri.OpId);
@@ -31,7 +31,7 @@ public interface ICheckDynamicVectors : ICheckAction, ITestDynamic, IBufferedChe
     /// <param name="g">The second operator, considered as the operation under test</param>
     /// <param name="gId">The identity of the second operator</param>
     TestCaseRecord Match<T>(BinaryOp<Vector128<T>> f, BinaryOp128 g, OpIdentity name)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         void check()
         {
@@ -49,7 +49,7 @@ public interface ICheckDynamicVectors : ICheckAction, ITestDynamic, IBufferedChe
     }
 
     TestCaseRecord Match<T>(BinaryOp<Vector256<T>> f, BinaryOp256 g, OpIdentity name)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         void check()
         {
@@ -67,7 +67,7 @@ public interface ICheckDynamicVectors : ICheckAction, ITestDynamic, IBufferedChe
     }
 
     TestCaseRecord Match<T>(BinaryOp<Vector128<T>> f, OpIdentity fId, BinaryOp128 g, OpIdentity gId)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var w = w128;
         var t = default(T);
@@ -86,7 +86,7 @@ public interface ICheckDynamicVectors : ICheckAction, ITestDynamic, IBufferedChe
     }
 
     TestCaseRecord Match<T>(BinaryOp<Vector256<T>> f, OpIdentity fId, BinaryOp256 g, OpIdentity gId)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var w = w256;
         var t = default(T);

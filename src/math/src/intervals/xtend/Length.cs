@@ -14,7 +14,7 @@ namespace Z0
         /// <typeparam name="T">The primal numeric type over which the interval is defined</typeparam>
         [MethodImpl(Inline)]
         public static T Length<T>(this Interval<T> src)
-            where T : unmanaged
-                => Partitions.length(src);
+            where T : unmanaged, IEquatable<T>
+                => Intervals.length(src);
     }
 }

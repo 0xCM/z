@@ -165,7 +165,7 @@ public class Polyrand : IPolyrand
 
     [MethodImpl(Inline)]
     public T Next<T>(Interval<T> domain)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => domain.IsEmpty ? Next<T>() : Next(domain.Left, domain.Right);
 
     public IEnumerable<T> Take<T>(int count)

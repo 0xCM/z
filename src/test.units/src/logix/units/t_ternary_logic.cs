@@ -53,7 +53,7 @@ namespace Z0
         }
 
         void check_select<T>()
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             for(var i=0; i<RepCount; i++)
             {
@@ -68,7 +68,7 @@ namespace Z0
         }
 
         void check_select<T>(N128 n = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             for(var i=0; i<RepCount; i++)
             {
@@ -89,7 +89,7 @@ namespace Z0
 
 
         void check_select<T>(N256 n = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             for(var i=0; i<RepCount; i++)
             {

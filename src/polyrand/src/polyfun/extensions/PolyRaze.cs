@@ -45,7 +45,7 @@ public static class PolyRaze
     /// <typeparam name="T">The generated value type</typeparam>
     [Op, Closures(Closure)]
     public static T[] Array<T>(this IBoundSource src, int length, Interval<T> domain)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => src.Stream(domain).TakeArray(length);
 
     /// <summary>
@@ -59,7 +59,7 @@ public static class PolyRaze
     /// <typeparam name="T">The generated value type</typeparam>
     [Op, Closures(Closure)]
     public static T[] Array<T>(this IBoundSource src, int length, T min, T max, Func<T,bool> filter)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => src.Stream((min,max),filter).TakeArray(length);
 
     /// <summary>
@@ -73,6 +73,6 @@ public static class PolyRaze
     /// <typeparam name="T">The generated value type</typeparam>
     [Op, Closures(Closure)]
     public static T[] Array<T>(this IBoundSource src, int length, T min, T max)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => src.Array<T>(length, (min, max));
 }

@@ -5,6 +5,7 @@
 namespace Z0;
 
 using static sys;
+
 public static class PolyMarkov
 {
     /// <summary>

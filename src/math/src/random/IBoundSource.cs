@@ -57,7 +57,7 @@ public interface IBoundSource : ISource
     /// <param name="domain">The domain of the random variable</param>
     /// <typeparam name="T">The point type</typeparam>
     T Next<T>(Interval<T> domain)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => Next(domain.Left, domain.Right);
 
     /// <summary>

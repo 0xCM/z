@@ -41,11 +41,11 @@ namespace Z0
         }
 
         void vmin_check<T>(N128 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => CheckSVF.CheckBinaryOp(Calcs.vmin<T>(w), w, t);
 
         void vmin_check<T>(N256 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => CheckSVF.CheckBinaryOp(Calcs.vmin<T>(w), w, t);
     }
 }

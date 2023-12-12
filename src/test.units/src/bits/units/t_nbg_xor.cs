@@ -36,7 +36,7 @@ namespace Z0
         protected void nbg_xor_check<M,N,T>(M m = default, N n = default, T t = default)
             where M : unmanaged,ITypeNat
             where N : unmanaged,ITypeNat
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var gx = Random.BitGrid(m,n,t);
             var gy = Random.BitGrid(m,n,t);

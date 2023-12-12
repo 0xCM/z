@@ -7,7 +7,7 @@ namespace Z0
     public class t_bg_and : t_bits<t_bg_and>
     {
         void bg_and_check<T>(uint m, uint n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var gx = Random.BitGrid(m,n,t);
             var gy = Random.BitGrid(m,n,t);
@@ -24,7 +24,7 @@ namespace Z0
         }
 
         protected void bg_xor_check<T>(uint m, uint n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var gx = Random.BitGrid(m,n,t);
             var gy = Random.BitGrid(m,n,t);

@@ -65,7 +65,7 @@ public class t_veq : t_inx<t_veq>
     }
 
     void veq_basecase<T>(W128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var name = CaseName(SFxIdentity.identity(nameof(veq_basecase), w.VectorKind<T>()));
         var f = Calcs.veq<T>(w);
@@ -76,7 +76,7 @@ public class t_veq : t_inx<t_veq>
     }
 
     void veq_basecase<T>(W256 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
 
         var name = CaseName(SFxIdentity.identity(nameof(veq_basecase), w.VectorKind<T>()));
@@ -88,10 +88,10 @@ public class t_veq : t_inx<t_veq>
     }
 
     void veq_check<T>(N128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckBinaryOp(Calcs.veq<T>(w),w,t);
 
     void veq_check<T>(N256 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckBinaryOp(Calcs.veq<T>(w),w,t);
 }

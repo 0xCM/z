@@ -64,7 +64,7 @@ namespace Z0
         [MethodImpl(Inline), Ignore]
         protected void bitblock_dot_check<N,T>(N n = default, T zero = default)
             where N : unmanaged, ITypeNat
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             for(var i=0; i<RepCount; i++)
             {

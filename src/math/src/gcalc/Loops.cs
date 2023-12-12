@@ -52,7 +52,7 @@ namespace Z0
 
         [MethodImpl(Inline), Op, Closures(Closure)]
         public static RangeLoop<I> define<I>(Interval<I> bounds, I? step = null)
-            where I : unmanaged, IComparable<I>
+            where I : unmanaged, IEquatable<I>, IComparable<I>
        {
             var dst = new RangeLoop<I>();
             dst.LowerBound = bounds.Left;

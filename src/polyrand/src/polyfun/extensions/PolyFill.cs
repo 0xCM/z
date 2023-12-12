@@ -27,7 +27,7 @@ public static class PolyFill
     /// <param name="max">The exclusive upper bound</param>
     /// <typeparam name="T">The cell type</typeparam>
     public static Index<T> Fill<T>(this IBoundSource source, T min, T max, Index<T> dst, Func<T,bool> filter = null)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         source.Fill((min,max), dst.Length, ref dst.First, filter);
         return dst;
@@ -43,7 +43,7 @@ public static class PolyFill
     /// <param name="filter">If specified, values that do not satisfy the predicate are excluded from the stream</param>
     /// <typeparam name="T">The element type</typeparam>
     public static void Fill<T>(this IBoundSource src, Interval<T> domain, int count, ref T dst, Func<T,bool> filter = null)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var counter = 0;
         while(counter < count)
@@ -75,7 +75,7 @@ public static class PolyFill
     /// <param name="filter">If specified, values that do not satisfy the predicate are excluded from the stream</param>
     /// <typeparam name="T">The element type</typeparam>
     public static void Fill<T>(this IPolySource random, Interval<T> domain, int count, ref T dst, Func<T,bool> filter = null)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var points = @readonly(random.Stream<T>(domain, filter).Take(count).Array());
         for(var i=0; i<count; i++)
@@ -101,7 +101,7 @@ public static class PolyFill
     /// <param name="max">The exclusive upper bound</param>
     /// <typeparam name="T">The cell type</typeparam>
     public static Span<T> Fill<T>(this IBoundSource source, T min, T max, Span<T> dst, Func<T,bool> filter = null)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         source.Fill((min,max), dst.Length, ref first(dst), filter);
         return dst;
@@ -116,7 +116,7 @@ public static class PolyFill
     /// <param name="max">The exclusive upper bound</param>
     /// <typeparam name="T">The cell type</typeparam>
     public static Span<T> Fill<T>(this IBoundSource random, Interval<T> domain, Span<T> dst, Func<T,bool> filter = null)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         random.Fill(domain, dst.Length, ref first(dst), filter);
         return dst;

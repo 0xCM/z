@@ -39,7 +39,7 @@ public class t_vnonz : t_inx<t_vnonz>
     }
 
     protected void vnonz_check<T>(W128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var min = one<T>();
         var max = Limits.maxval(t);
@@ -53,7 +53,7 @@ public class t_vnonz : t_inx<t_vnonz>
     }
 
     protected void vnonz_check<T>(W256 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var min = one<T>();
         var max = Limits.maxval(t);

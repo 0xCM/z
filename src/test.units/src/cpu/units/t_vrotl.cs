@@ -51,10 +51,10 @@ public class t_vrotl : t_inx<t_vrotl>
     }
 
     void vrotl_check<T>(N128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckShiftOp(Calcs.vrotl(w,t), w,t);
 
     void vrotl_check<T>(N256 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckShiftOp(Calcs.vrotl(w,t), w,t);
 }

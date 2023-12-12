@@ -10,7 +10,7 @@ namespace Z0
     }
 
     public interface ITimeSeries<T> : ITimeSeries
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         SeriesTerm<T> Observed {get;}
 

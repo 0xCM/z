@@ -69,18 +69,18 @@ public class t_vpatterns : t_inx<t_vpatterns>
     }
 
     void vunits_check<T>(N128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckPattern(Calcs.vunits(w,t), gcpu.vbroadcast(w, one<T>()));
 
     void vunits_check<T>(N256 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckPattern(Calcs.vunits(w,t), gcpu.vbroadcast(w, one<T>()));
 
     void vones_check<T>(N128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckPattern(Calcs.vones(w,t), gcpu.vbroadcast(w, ones<T>()));
 
     void vones_check<T>(N256 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckPattern(Calcs.vones(w,t), gcpu.vbroadcast(w, ones<T>()));
 }

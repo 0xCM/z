@@ -41,10 +41,10 @@ public class t_vmax : t_inx<t_vmax>
     }
 
     void vmax_check<T>(N128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckBinaryOp(Calcs.vmax<T>(w), w, t);
 
     void vmax_check<T>(N256 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckBinaryOp(Calcs.vmax<T>(w), w, t);
 }

@@ -63,10 +63,10 @@ public class t_vbyteswap : t_inx<t_vbyteswap>
     }
 
     void vbyteswap_check<T>(N128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckUnaryOp(Calcs.vbyteswap<T>(w),w,t);
 
     void vbyteswap_check<T>(N256 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckSVF.CheckUnaryOp(Calcs.vbyteswap<T>(w),w,t);
 }

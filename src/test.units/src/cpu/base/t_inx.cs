@@ -29,7 +29,7 @@ public abstract class t_inx<X> : UnitTest<X, CheckVectorsHost, ICheckVectors>
 
     protected void vbinop_bench<F,T>(W128 w, F f, T t = default, SystemCounter clock = default)
         where F : IBinaryOp128<T>
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var last = gcpu.vzero<T>(w);
         var blocklen = Widths.div(w,t);
@@ -52,7 +52,7 @@ public abstract class t_inx<X> : UnitTest<X, CheckVectorsHost, ICheckVectors>
 
     protected void vbinop_bench<F,T>(W256 w, F f, T t = default, SystemCounter clock = default)
         where F : IBinaryOp256<T>
-        where T : unmanaged
+            where T : unmanaged, IEquatable<T>
     {
         var last = gcpu.vzero<T>(w);
         var blocklen = Widths.div(w,t);
@@ -75,7 +75,7 @@ public abstract class t_inx<X> : UnitTest<X, CheckVectorsHost, ICheckVectors>
 
     protected void vshift_bench<F,T>(W128 w, F f, T t = default, SystemCounter clock = default)
         where F : IUnaryImm8Op128<T>
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var last = gcpu.vzero(w,t);
         var blocklen = Widths.div(w,t);
@@ -99,7 +99,7 @@ public abstract class t_inx<X> : UnitTest<X, CheckVectorsHost, ICheckVectors>
 
     protected void vshift_bench<F,T>(W256 w, F f, T t = default, SystemCounter clock = default)
         where F : IUnaryImm8Op256<T>
-        where T : unmanaged
+            where T : unmanaged, IEquatable<T>
     {
         var last = gcpu.vzero(w,t);
         var blocklen = Widths.div(w,t);

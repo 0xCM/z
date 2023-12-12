@@ -9,7 +9,7 @@ using static sys;
 
 [Free]
 public interface ICheckSVF<T> : ICheckSF, ICheckBinarySVFD<W128,IBinaryOp128D<T>,T>
-    where T : unmanaged
+    where T : unmanaged, IEquatable<T>
 {
     /// <summary>
     /// Computes the vector component count for a given bit-width and component type

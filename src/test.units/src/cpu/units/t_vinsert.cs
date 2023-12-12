@@ -37,7 +37,7 @@ namespace Z0
             => vinsert_check<double>(w128);
 
         protected void vinsert_check<T>(W128 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             for(var i=0; i < RepCount; i++)
             {

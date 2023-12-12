@@ -73,7 +73,7 @@ namespace Z0
         void bm_transpose_check<M,N,T>(M m = default, N n = default, T t = default)
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             for(var sample = 0; sample <RepCount; sample++)
             {

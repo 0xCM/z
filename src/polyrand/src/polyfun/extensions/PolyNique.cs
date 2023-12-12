@@ -19,7 +19,7 @@ public static class PolyNique
         => source.Distinct(values.Length, count).Map(i => values[i]).ToHashSet();
 
     public static HashSet<T> Distinct<T>(this IBoundSource source, T pool, int count)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var src = source.DataStream(default, pool);
         var set = src.Take(count).ToHashSet();
@@ -29,7 +29,7 @@ public static class PolyNique
     }
 
     public static HashSet<T> Distinct<T>(this IBoundSource source, T pool, T count)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var src = source.DataStream(default, pool);
         var _count = Numeric.force<T,int>(count);

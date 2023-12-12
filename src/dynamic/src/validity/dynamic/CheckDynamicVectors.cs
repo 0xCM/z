@@ -34,21 +34,21 @@ public readonly struct CheckDynamicVectors
         => sys.size<T>()/Buffer.BufferSize;
 
     public TestCaseRecord Match<T>(BinaryOp<Vector128<T>> f, ApiCodeBlock bits)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var g = Dynamic.EmitFixedBinary(Buffer, w128, bits);
         return Match<T>(f, g, bits.OpUri.OpId);
     }
 
     public TestCaseRecord Match<T>(BinaryOp<Vector256<T>> f, ApiCodeBlock bits)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var g = Dynamic.EmitFixedBinary(Buffer, w256, bits);
         return Match<T>(f, g, bits.OpUri.OpId);
     }
 
     public TestCaseRecord Match<T>(BinaryOp<Vector128<T>> f, BinaryOp128 g, OpIdentity id)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var w = w128;
         var t = default(T);
@@ -67,7 +67,7 @@ public readonly struct CheckDynamicVectors
     }
 
     public TestCaseRecord Match<T>(BinaryOp<Vector256<T>> f, BinaryOp256 g, OpIdentity id)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var w = w256;
         var t = default(T);

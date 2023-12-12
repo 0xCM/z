@@ -33,7 +33,7 @@ public static class PolySpan
     /// <param name="domain">The interval domain to which values are constrained</param>
     /// <typeparam name="T">The primal random value type</typeparam>
     public static Span<T> Span<T>(this IBoundSource src, int length, T min, T max, Func<T,bool> filter = null)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => polyspan<T>(src, length, (min, max), filter);
 
     /// <summary>
@@ -45,7 +45,7 @@ public static class PolySpan
     /// <param name="filter">An optional filter that refines the domain</param>
     /// <typeparam name="T">The primal random value type</typeparam>
     public static Span<T> Span<T>(this IBoundSource src, int length, Interval<T> domain)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var dst = span<T>(length);
         src.Fill(domain, length, ref first(dst));
@@ -60,7 +60,7 @@ public static class PolySpan
     /// <param name="domain">The interval domain to which values are constrained</param>
     /// <typeparam name="T">The primal random value type</typeparam>
     public static Span<T> Span<T>(this IBoundSource src, int length, Interval<T> domain, Func<T,bool> filter)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var dst = span<T>(length);
         src.Fill(domain, length, ref first(dst), filter);
@@ -81,7 +81,7 @@ public static class PolySpan
     /// <param name="filter">An optional filter that refines the domain</param>
     /// <typeparam name="T">The primal random value type</typeparam>
     public static Span<T> NonZeroSpan<T>(this IBoundSource src, int length, Interval<T> domain)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => src.Span<T>(length, domain, x => nonzero(x));
 
     /// <summary>
@@ -98,7 +98,7 @@ public static class PolySpan
 
     [Op, Closures(Closure)]
     public static Span<T> polyspan<T>(IBoundSource src, int length, Interval<T> domain, Func<T,bool> filter = null)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var dst = span<T>(length);
         src.Fill(domain, length, ref first(dst), filter);

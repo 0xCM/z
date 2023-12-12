@@ -16,7 +16,7 @@ namespace Z0
         /// <typeparam name="T">The primal numeric type over which the interval is defined</typeparam>
         [MethodImpl(Inline), Op, Closures(Integers)]
         public static bit contains<T>(Interval<T> src, T point)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             switch(src.Kind)
             {

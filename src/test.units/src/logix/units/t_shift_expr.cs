@@ -147,7 +147,7 @@ namespace Z0.Logix
         }
 
         void check_op_256<T>(AK op)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var v1 = variable(1, default(Vector256<T>));
             byte offset = 6;
@@ -164,8 +164,8 @@ namespace Z0.Logix
         }
 
         protected void check_op_128<T>(AK op)
-            where T : unmanaged
-        {
+             where T : unmanaged, IEquatable<T>
+       {
             var v1 = variable(1, default(Vector128<T>));
             byte offset = 6;
             var expr = shift(op,v1,offset);

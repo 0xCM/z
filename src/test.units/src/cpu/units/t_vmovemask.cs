@@ -43,7 +43,7 @@ namespace Z0
         }
 
         void vmovemask_check<T>(N128 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             const int count = 16;
             var service = Calcs.vmovemask(w,t);
@@ -65,7 +65,7 @@ namespace Z0
         }
 
         void vmovemask_check<T>(N256 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             const int count = 32;
             var service = Calcs.vmovemask(w,t);

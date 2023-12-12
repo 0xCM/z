@@ -98,7 +98,7 @@ namespace Z0
         }
 
         protected void bm_xor_bench<T>(SystemCounter clock = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var opname = $"bm_xor_{TypeIdentity.numeric<T>()}";
 
@@ -128,7 +128,7 @@ namespace Z0
         }
 
         void bm_and_bench<T>(SystemCounter clock = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var opname = $"bm_and_{TypeIdentity.numeric<T>()}";
 
@@ -158,7 +158,7 @@ namespace Z0
         }
 
          protected void bm_and_check<N,T>(BinaryBitLogicKind op = And)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
             where N : unmanaged, ITypeNat
         {
             var A = Random.BitMatrix<T>();
@@ -182,7 +182,7 @@ namespace Z0
         }
 
         void bm_xor_check<N,T>(BinaryBitLogicKind op = Xor)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
             where N : unmanaged, ITypeNat
         {
             var A = Random.BitMatrix<T>();
@@ -206,7 +206,7 @@ namespace Z0
         }
 
         void bm_imply_check<N,T>(BinaryBitLogicKind op = Impl)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
             where N : unmanaged, ITypeNat
         {
             var A = Random.BitMatrix<T>();
@@ -230,7 +230,7 @@ namespace Z0
         }
 
         void bm_notimply_check<N,T>(BinaryBitLogicKind op = NonImpl)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
             where N : unmanaged, ITypeNat
         {
             var A = Random.BitMatrix<T>();
@@ -254,7 +254,7 @@ namespace Z0
         }
 
         void bm_xnor_check<N,T>(BinaryBitLogicKind op = Xnor)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
             where N : unmanaged, ITypeNat
         {
             var A = Random.BitMatrix<T>();
@@ -278,7 +278,7 @@ namespace Z0
         }
 
         protected void bm_not_check<N,T>(BinaryBitLogicKind op = LNot)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
             where N : unmanaged, ITypeNat
         {
             var A = Random.BitMatrix<T>();
@@ -302,7 +302,7 @@ namespace Z0
         }
 
          protected void bm_nand_check<N,T>(BinaryBitLogicKind op = Nand)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
             where N : unmanaged, ITypeNat
         {
             var A = Random.BitMatrix<T>();
@@ -327,7 +327,7 @@ namespace Z0
 
 
          protected void bm_or_check<N,T>(BinaryBitLogicKind op = Or)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
             where N : unmanaged, ITypeNat
         {
             var A = Random.BitMatrix<T>();
@@ -351,7 +351,7 @@ namespace Z0
         }
 
          protected void bm_nor_check<N,T>(BinaryBitLogicKind op = Nor)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
             where N : unmanaged, ITypeNat
         {
             var A = Random.BitMatrix<T>();
@@ -375,7 +375,7 @@ namespace Z0
         }
 
         void bm_api_bench<T>(BinaryBitLogicKind op, SystemCounter clock = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var opname = $"bm_{op.Format()}_{TypeIdentity.numeric<T>()}_api";
 
@@ -405,7 +405,7 @@ namespace Z0
         }
 
         void bm_delegate_bench<T>(BinaryBitLogicKind opkind, SystemCounter clock = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var opname = $"bm_{opkind.Format()}_{TypeIdentity.numeric<T>()}_delegate";
             var A = Random.BitMatrix<T>();

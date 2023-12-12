@@ -161,6 +161,6 @@ public static class XBvSrc
 
     [MethodImpl(Inline)]
     public static BitVector128<T> BitVector<T>(this ISource source, N128 w)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => source.CpuVector<T>(w128);
 }

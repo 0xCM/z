@@ -37,11 +37,11 @@ namespace Z0
         }
 
         void v_check<T>(N128 w, T t = default)
-            where T : unmanaged
-                => CheckSVF.CheckBinaryOp(Calcs.vlt<T>(w), w, t);
+             where T : unmanaged, IEquatable<T>
+               => CheckSVF.CheckBinaryOp(Calcs.vlt<T>(w), w, t);
 
         void v_check<T>(N256 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => CheckSVF.CheckBinaryOp(Calcs.vlt<T>(w), w, t);
     }
 }

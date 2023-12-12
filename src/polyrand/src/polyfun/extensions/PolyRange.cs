@@ -14,7 +14,7 @@ public static class PolyRange
     /// <param name="max">The exclusive maximum right endpoint value</param>
     /// <typeparam name="T">The primal numeric type over which the interval is defined</typeparam>
     public static Interval<T> Interval<T>(this IBoundSource src, T min, T max)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var cut = src.Next(min,max);
         return (src.Next(min, cut), src.Next(cut,max));
@@ -28,7 +28,7 @@ public static class PolyRange
     /// <param name="max">The exclusive maximum right endpoint value</param>
     /// <typeparam name="T">The primal numeric type over which the interval is defined</typeparam>
     public static IEnumerable<Interval<T>> Intervals<T>(this IBoundSource src, T min, T max)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         while(true)
             yield return src.Interval(min,max);

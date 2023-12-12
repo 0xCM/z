@@ -20,15 +20,15 @@ public class t_vconcat : t_inx<t_vconcat>
     }
 
     void vconcat_check<T>(W128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => CheckAction(() => vconcat_checker(w,t), CaseName(Calcs.vconcat(w,t)));
 
     Action<W128,T> vconcat_checker<T>(W128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => check<T>;
 
     void check<T>(W128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         for(var i=0; i<RepCount; i++)
         {

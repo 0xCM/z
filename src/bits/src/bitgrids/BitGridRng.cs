@@ -43,7 +43,7 @@ namespace Z0
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
         public static BitGrid16<T> BitGrid<T>(this ISource random, N16 w)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => BG.define<T>(w, random.Next<ushort>());
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Z0
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
         public static BitGrid32<T> BitGrid<T>(this ISource random, N32 w)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => BG.define<T>(w ,random.Next<uint>());
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Z0
         /// <typeparam name="T">The cell type</typeparam>
         [MethodImpl(Inline)]
         public static BitGrid64<T> BitGrid<T>(this ISource random, N64 w)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => BG.define<T>(w,random.Next<ulong>());
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Z0
         public static BitGrid<M,N,T> BitGrid<M,N,T>(this ISource random, M m = default, N n = default, T t = default)
             where M : unmanaged,ITypeNat
             where N : unmanaged,ITypeNat
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var grid = BG.alloc(m,n,t);
             var segments = grids.cellcount(m,n,t);
@@ -100,7 +100,7 @@ namespace Z0
         /// <typeparam name="T">The grid cell type</typeparam>
         [MethodImpl(Inline)]
         public static ref readonly BitGrid<M,N,T> Fill<M,N,T>(this ISource random, in BitGrid<M,N,T> dst)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
         {
@@ -116,7 +116,7 @@ namespace Z0
         /// <param name="n">The col count representative</param>
         [MethodImpl(Inline)]
         public static BitGrid16<N1,N16,T> BitGrid<T>(this ISource random, N1 m, N16 n)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Next<ushort>();
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Z0
         /// <param name="n">The col count representative</param>
         [MethodImpl(Inline)]
         public static BitGrid16<N16,N1,T> BitGrid<T>(this ISource random, N16 m, N1 n)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Next<ushort>();
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Z0
         /// <param name="n">The col count representative</param>
         [MethodImpl(Inline)]
         public static BitGrid16<N2,N8,T> BitGrid<T>(this ISource random, N2 m, N8 n)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Next<ushort>();
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace Z0
         /// <param name="n">The col count representative</param>
         [MethodImpl(Inline)]
         public static BitGrid16<N8,N12,T> BitGrid<T>(this ISource random, N8 m, N2 n)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Next<ushort>();
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Z0
         /// <param name="n">The col count representative</param>
         [MethodImpl(Inline)]
         public static BitGrid16<N4,N4,T> BitGrid<T>(this ISource random, N4 m, N4 n)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Next<ushort>();
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Z0
         /// <param name="n">The col count representative</param>
         [MethodImpl(Inline)]
         public static BitGrid32<N1,N32,T> BitGrid<T>(this ISource random, N1 m, N32 n)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Next<uint>();
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace Z0
         /// <param name="n">The col count representative</param>
         [MethodImpl(Inline)]
         public static BitGrid32<N32,N1,T> BitGrid<T>(this ISource random, N32 m, N1 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Next<uint>();
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid32<N2,N16,T> BitGrid<T>(this ISource random, N2 m, N16 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Next<uint>();
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid32<N16,N2,T> BitGrid<T>(this ISource random, N16 m, N2 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Next<uint>();
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid32<N8,N4,T> BitGrid<T>(this ISource random, N8 m, N4 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Next<uint>();
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid32<N4,N8,T> BitGrid<T>(this ISource random, N4 m, N8 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Next<uint>();
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid64<N1,N64,T> BitGrid<T>(this ISource random, N1 m, N64 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Next<ulong>();
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid64<N64,N1,T> BitGrid<T>(this ISource random, N64 m, N1 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Next<ulong>();
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid64<N32,N2,T> BitGrid<T>(this ISource random, N32 m, N2 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Next<ulong>();
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid64<N2,N32,T> BitGrid<T>(this ISource random, N2 m, N32 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Next<ulong>();
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid64<N16,N4,T> BitGrid<T>(this ISource random, N16 m, N4 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Next<ulong>();
 
         /// <summary>
@@ -302,7 +302,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid64<N4,N16,T> BitGrid<T>(this ISource random, N4 m, N16 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Next<ulong>();
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid64<N8,N8,T> BitGrid<T>(this ISource random, N8 m, N8 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Next<ulong>();
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid128<N1,N128,T> BitGrid<T>(this ISource random, N1 m, N128 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.CpuVector<T>(n128);
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid128<N128,N1,T> BitGrid<T>(this ISource random, N128 m, N1 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.CpuVector<T>(n128);
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid128<N2,N64,T> BitGrid<T>(this ISource random, N2 m, N64 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.CpuVector<T>(n128);
 
         /// <summary>
@@ -362,7 +362,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid128<N64,N2,T> BitGrid<T>(this ISource random, N64 m, N2 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.CpuVector<T>(n128);
 
         /// <summary>
@@ -373,7 +373,7 @@ namespace Z0
         /// <param name="n">The col count representative</param>
         [MethodImpl(Inline)]
         public static BitGrid128<N4,N32,T> BitGrid<T>(this ISource random, N4 m, N32 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.CpuVector<T>(n128);
 
         /// <summary>
@@ -385,7 +385,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid128<N32,N4,T> BitGrid<T>(this ISource random, N32 m, N4 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.CpuVector<T>(n128);
 
         /// <summary>
@@ -397,7 +397,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid128<N8,N16,T> BitGrid<T>(this ISource random, N8 m, N16 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.CpuVector<T>(n128);
 
         /// <summary>
@@ -409,7 +409,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid128<N16,N8,T> BitGrid<T>(this ISource random, N16 m, N8 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.CpuVector<T>(n128);
 
         /// <summary>
@@ -421,7 +421,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid256<N1,N256,T> BitGrid<T>(this ISource random, N1 m, N256 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.CpuVector<T>(n256);
 
         /// <summary>
@@ -433,7 +433,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid256<N256,N1,T> BitGrid<T>(this ISource random, N256 m, N1 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.CpuVector<T>(n256);
 
         /// <summary>
@@ -445,7 +445,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid256<N2,N128,T> BitGrid<T>(this ISource random, N2 m, N128 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.CpuVector<T>(n256);
 
         /// <summary>
@@ -457,7 +457,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid256<N128,N2,T> BitGrid<T>(this ISource random, N128 m, N2 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.CpuVector<T>(n256);
 
         /// <summary>
@@ -469,7 +469,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid256<N4,N64,T> BitGrid<T>(this ISource random, N4 m, N64 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.CpuVector<T>(n256);
 
         /// <summary>
@@ -481,7 +481,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid256<N64,N4,T> BitGrid<T>(this ISource random, N64 m, N4 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.CpuVector<T>(n256);
 
         /// <summary>
@@ -493,7 +493,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid256<N8,N32,T> BitGrid<T>(this ISource random, N8 m, N32 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.CpuVector<T>(n256);
 
         /// <summary>
@@ -505,7 +505,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid256<N32,N8,T> BitGrid<T>(this ISource random, N32 m, N8 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.CpuVector<T>(n256);
 
         /// <summary>
@@ -517,7 +517,7 @@ namespace Z0
         /// <param name="t">The cell type representative</param>
         [MethodImpl(Inline)]
         public static BitGrid256<N16,N16,T> BitGrid<T>(this ISource random, N16 m, N16 n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.CpuVector<T>(n256);
 
         /// <summary>
@@ -529,7 +529,7 @@ namespace Z0
         /// <typeparam name="T">The grid cell type</typeparam>
         [MethodImpl(Inline)]
         public static BitSpanBlocks256<T> BitGrid<T>(this ISource random, uint m, uint n, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => random.Fill(Z0.BitGrid.alloc<T>((int)m,(int)n));
 
         /// <summary>
@@ -541,7 +541,7 @@ namespace Z0
         /// <typeparam name="T">The grid cell type</typeparam>
         [MethodImpl(Inline)]
         public static BitSpanBlocks256<T> Fill<T>(this ISource random, BitSpanBlocks256<T> dst)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             random.Fill(dst.CellCount, ref dst.Head);
             return dst;
@@ -554,7 +554,7 @@ namespace Z0
         /// <param name="maxcells">The maximum number of cells</param>
         /// <typeparam name="T">The cell type</typeparam>
         public static IEnumerable<BitPos<T>> BitPositions<T>(this IBoundSource random, ushort mincells, ushort maxcells)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var s2 = random.Stream(Intervals.closed(mincells, maxcells)).GetEnumerator();
             var s3 = random.Stream<byte>(Intervals.closed((byte)0, (byte)width<T>())).GetEnumerator();
@@ -586,7 +586,7 @@ namespace Z0
         /// <typeparam name="T">The vector component type</typeparam>
         [MethodImpl(Inline)]
         public static BitBlock<N,T> BitBlock<N,T>(this ISource random)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
             where N : unmanaged, ITypeNat
                 => BS.load<N,T>(random.Stream<T>().ToSpan((int)grids.cellcount<N,N1,T>()));
 
@@ -598,7 +598,7 @@ namespace Z0
         /// <typeparam name="T">The primal component type</typeparam>
         [MethodImpl(Inline)]
         public static BitBlock<T> BitBlock<T>(this ISource random, int bitcount)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => BS.load<T>(random.Stream<T>().ToSpan(BS.cells<T>(bitcount)), bitcount);
 
         /// <summary>
@@ -609,7 +609,7 @@ namespace Z0
         /// <typeparam name="T">The primal component type</typeparam>
         [MethodImpl(Inline)]
         public static BitBlock<T> BitBlock<T>(this ISource random, uint bitcount)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => BS.load<T>(random.Stream<T>().ToSpan(BS.cells<T>((int)bitcount)), (int)bitcount);
 
         /// <summary>
@@ -619,7 +619,7 @@ namespace Z0
         /// <typeparam name="T">The defining primal type</typeparam>
         [MethodImpl(Inline)]
         public static BitMatrix<T> BitMatrix<T>(this ISource random)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var bytes = math.square(Z0.BitMatrix<T>.N) >> 3;
             var data = random.Span<byte>((int)bytes);
@@ -628,7 +628,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static ref BitMatrix<T> BitMatrix<T>(this ISource random, ref BitMatrix<T> dst)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             random.Fill((int)Z0.BitMatrix<T>.N, ref dst.Head);
             return ref dst;
@@ -726,7 +726,7 @@ namespace Z0
         public static BitMatrix<M,N,T> BitMatrix<M,N,T>(this ISource random, M m = default, N n = default, T t = default)
             where M : unmanaged, ITypeNat
             where N : unmanaged, ITypeNat
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => BM.load(m,n, random.Span<T>(BM.cellcount(m,n,t)));
 
         /// <summary>
@@ -739,7 +739,7 @@ namespace Z0
         [MethodImpl(Inline)]
         public static BitMatrix<N,T> BitMatrix<N,T>(this ISource random, N n = default, T t = default)
             where N : unmanaged, ITypeNat
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => BM.load(n,random.Span<T>(BM.cellcount(n,n,t)));
    }
 }

@@ -20,13 +20,13 @@ public static class TimeSeries
 
     [MethodImpl(Inline), Op, Closures(Closure)]
     public static SeriesEvolution<T> evolution<T>(ulong[] seed, Interval<T> domain, SeriesTerm<T> first, SeriesTerm<T> final, Duration time)
-        where T : unmanaged
-            => new SeriesEvolution<T>(seed, domain, first, final, time);
+        where T : unmanaged, IEquatable<T>
+            => new (seed, domain, first, final, time);
 
     [MethodImpl(Inline), Op, Closures(Closure)]
     public static SeriesTerm<T> term<T>(long index, T value)
-        where T : unmanaged
-            => new SeriesTerm<T>(index, value);
+        where T : unmanaged, IEquatable<T>
+            => new (index, value);
 
     static long LastSeriesId;
 
@@ -35,7 +35,7 @@ public static class TimeSeries
 
     [Op,Closures(Closure)]
     public static SeriesTerm<T> next<T>(TimeSeries<T> series)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         if(States.TryGetValue(series.Id, out IBoundSource source))
         {
@@ -49,7 +49,7 @@ public static class TimeSeries
 
     [Op,Closures(Closure)]
     internal static IEnumerable<SeriesTerm<T>> evolve<T>(TimeSeries<T> series)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         if(States.TryGetValue(series.Id, out IBoundSource source))
         {
@@ -64,7 +64,7 @@ public static class TimeSeries
 
     [Op,Closures(Closure)]
     public static TimeSeries<T> define<T>(Interval<T> domain, ulong[] seed)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var id = inc(ref LastSeriesId);
         var rng = Rng.xorShift1024(seed);
@@ -75,7 +75,7 @@ public static class TimeSeries
 
     [Op,Closures(Closure)]
     public static void evolve<T>(Interval<T> domain, ulong[] seed, int count, Action<TimeSeries<T>,Duration> complete)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var sw = Time.stopwatch();
         var series = define(domain, seed);
@@ -88,12 +88,12 @@ public static class TimeSeries
 
     [Op,Closures(Closure)]
     public static Task<SeriesEvolution<T>> evolve<T>(ulong[] seed, Interval<T> domain, int steps)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => Task.Factory.StartNew(() => run(seed, domain, steps));
 
     [Op,Closures(Closure)]
     public static async Task evolve<T>(Interval<T> domain, Action<SeriesEvolution<T>> receiver, int count = Pow2.T06, int steps = (int)Pow2.T19)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var sw = Time.stopwatch();
         var variations = from i in gcalc.stream(count)
@@ -107,7 +107,7 @@ public static class TimeSeries
 
     [Op,Closures(Closure)]
     static SeriesEvolution<T> run<T>(in ulong[] seed, in Interval<T> domain, int steps)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var sw = Time.stopwatch();
         var series = define(domain, seed);

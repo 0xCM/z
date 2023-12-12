@@ -41,11 +41,11 @@ namespace Z0
         }
 
         void vsub_check<T>(W128 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => CheckSVF.CheckBinaryOp(Calcs.vsub(w,t),w,t);
 
         void vsub_check<T>(W256 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => CheckSVF.CheckBinaryOp(Calcs.vsub(w,t), w,t);
     }
 }

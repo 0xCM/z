@@ -35,7 +35,7 @@ public class t_vsrlv : t_inx<t_vsrlv>
     }
 
     void vsrlv_check<T>(N128 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var domain = Intervals.closed(zero<T>(), Numeric.force<uint,T>((uint)width<T>() - 1));
 
@@ -50,7 +50,7 @@ public class t_vsrlv : t_inx<t_vsrlv>
     }
 
     void vsrlv_check<T>(N256 w, T t = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var domain = Intervals.closed(default(T), Numeric.force<uint,T>((uint)width<T>() - 1));
 

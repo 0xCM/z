@@ -37,11 +37,11 @@ namespace Z0
         }
 
         void vdec_check<T>(N128 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => CheckSVF.CheckUnaryOp(Calcs.vdec(w,t),w,t);
 
         void vdec_check<T>(N256 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => CheckSVF.CheckUnaryOp(Calcs.vdec(w,t),w,t);
 
     }

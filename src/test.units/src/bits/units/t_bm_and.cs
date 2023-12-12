@@ -109,7 +109,7 @@ namespace Z0
         }
 
         void bm_and_check<T>(T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             for(var i = 0; i< RepCount; i++)
             {
@@ -128,7 +128,7 @@ namespace Z0
 
         void bm_and_check<N,T>(N n = default, T t = default)
             where N : unmanaged, ITypeNat
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             for(var i=0; i<RepCount; i++)
             {
@@ -143,7 +143,7 @@ namespace Z0
         }
 
         void bm_and_bench<T>(T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var clock = counter();
             var a = BitMatrix.alloc<T>();

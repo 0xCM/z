@@ -61,7 +61,7 @@ namespace Z0
         }
 
         void vand_bench<T>(W128 w, T t)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => vbinop_bench(w, Calcs.vand<T>(w),t);
 
         void vand_bench(W256 w)
@@ -73,11 +73,11 @@ namespace Z0
         }
 
         void vand_bench<T>(W256 w, T t)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => vbinop_bench(w, Calcs.vand<T>(w),t);
 
         static bit vand<T>(Vector128<T> x, Vector128<T> y)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
         {
             var w = w128;
             var svc = Calcs.bitlogic<T>();
@@ -94,11 +94,11 @@ namespace Z0
         }
 
         void vand_check<T>(N128 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => CheckSVF.CheckBinaryOp(Calcs.vand<T>(w), w, t);
 
         void vand_check<T>(N256 w, T t = default)
-            where T : unmanaged
+            where T : unmanaged, IEquatable<T>
                 => CheckSVF.CheckBinaryOp(Calcs.vand<T>(w), w, t);
      }
 }

@@ -40,7 +40,7 @@ public static class PolyMatrix
     public static Matrix<M,N,T> Matrix<M,N,T>(this IBoundSource random, Interval<T> domain, M m = default, N n = default)
         where M : unmanaged, ITypeNat
         where N : unmanaged, ITypeNat
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => Z0.Matrix.load<M,N,T>(random.Array<T>(Z0.Matrix<M,N,T>.Cells, domain));
 
     /// <summary>
@@ -55,7 +55,7 @@ public static class PolyMatrix
     [MethodImpl(Inline)]
     public static Matrix<N,T> Matrix<N,T>(this IBoundSource random, N n, T min, T max)
         where N : unmanaged, ITypeNat
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => Z0.Matrix.load(n, random.Array<T>(Z0.Matrix<N,T>.Cells, (min,max)));
 
     /// <summary>
@@ -67,11 +67,11 @@ public static class PolyMatrix
     /// <typeparam name="M">The row type</typeparam>
     /// <typeparam name="N">The column Type</typeparam>
     /// <typeparam name="T">The element type</typeparam>
-        public static Matrix256<M,N,T> MatrixBlock<M,N,T>(this ISource random)
-        where M : unmanaged, ITypeNat
-        where N : unmanaged, ITypeNat
-        where T : unmanaged
-            => Z0.Matrix.blockload<M,N,T>(random.SpanBlocks<T>(n256, CellCalcs.blockcount<M,N,T>(n256)));
+    public static Matrix256<M,N,T> MatrixBlock<M,N,T>(this ISource random)
+    where M : unmanaged, ITypeNat
+    where N : unmanaged, ITypeNat
+    where T : unmanaged, IEquatable<T>
+        => Z0.Matrix.blockload<M,N,T>(random.SpanBlocks<T>(n256, CellCalcs.blockcount<M,N,T>(n256)));
 
     /// <summary>
     /// Samples a blocked matrix of natural dimensions where the entries are constrained to a specified domain
@@ -86,7 +86,7 @@ public static class PolyMatrix
     public static Matrix256<M,N,T> MatrixBlock<M,N,T>(this IBoundSource random, Interval<T> domain, M m = default, N n = default)
         where M : unmanaged, ITypeNat
         where N : unmanaged, ITypeNat
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => Z0.Matrix.blockload<M,N,T>(random.SpanBlocks(n256, domain, CellCalcs.blockcount<M,N,T>(n256)));
 
     /// <summary>
@@ -114,17 +114,17 @@ public static class PolyMatrix
         /// <typeparam name="S">The sample type</typeparam>
         /// <typeparam name="T">The matrix element type</typeparam>
         public static Matrix256<M,N,T> MatrixBlock<M,N,S,T>(this ISource random, M m = default, N n = default,  T rep = default)
-        where M : unmanaged, ITypeNat
-        where N : unmanaged, ITypeNat
-        where T : unmanaged
-        where S : unmanaged
-            => random.MatrixBlock<M,N,S>().Convert<T>();
+            where M : unmanaged, ITypeNat
+            where N : unmanaged, ITypeNat
+            where T : unmanaged, IEquatable<T>
+            where S : unmanaged, IEquatable<S>
+                => random.MatrixBlock<M,N,S>().Convert<T>();
 
         static Matrix256<N,T> MatrixBlock<N,S,T>(this IBoundSource random, Interval<S>? domain = null, N n = default,  T rep = default)
-        where N : unmanaged, ITypeNat
-        where T : unmanaged
-        where S : unmanaged, IEquatable<S>
-            => random.MatrixBlock<N,S>(domain).Convert<T>();
+            where N : unmanaged, ITypeNat
+            where T : unmanaged
+            where S : unmanaged, IEquatable<S>
+                => random.MatrixBlock<N,S>(domain).Convert<T>();
 
         /// <summary>
         /// Samples 32-bit integers that are converted to 32-bit floats to populate a square matrix

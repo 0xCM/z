@@ -21,7 +21,7 @@ public static class PolyVector
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline), Op, Closures(Closure)]
     public static VEmitter128<T> vemitter<T>(N128 w, ISource src)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => new (src);
 
     /// <summary>
@@ -33,7 +33,7 @@ public static class PolyVector
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline), Op, Closures(Closure)]
     public static VEmitter256<T> vemitter<T>(N256 w, ISource src)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => new (src);
 
     /// <summary>
@@ -45,7 +45,7 @@ public static class PolyVector
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline), Op, Closures(Closure)]
     public static VEmitter512<T> vemitter<T>(N512 w, ISource src)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => new (src);
 
     /// <summary>
@@ -55,7 +55,7 @@ public static class PolyVector
     /// <param name="domain">The domain of the random variable</param>
     /// <typeparam name="T">The vector component type</typeparam>
     public static RowVector256<T> VectorBlock<T>(this IPolyrand random, int len, Interval<T>? domain = null)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var dst = RowVectors.blockalloc<T>(len);
         if(domain != null)
@@ -76,7 +76,7 @@ public static class PolyVector
     /// <typeparam name="T">The target domain type</typeparam>
     [MethodImpl(Inline)]
     public static RowVector256<T> VectorBlock<S,T>(this IPolyrand random, int len, Interval<S>? domain = null)
-        where S: unmanaged
+        where S: unmanaged, IEquatable<S>
         where T : unmanaged
             => random.VectorBlock(len,domain).Convert<T>();
 
@@ -89,7 +89,7 @@ public static class PolyVector
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
     public static Block256<N,T> VectorBlock<N,T>(this IPolyrand random, Interval<T> domain, N n = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
         where N : unmanaged, ITypeNat
     {
         var dst = RowVectors.blockalloc<N, T>();
@@ -108,8 +108,8 @@ public static class PolyVector
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
     public static Block256<N,T> VectorBlock<N,S,T>(this IPolyrand random, Interval<S> domain, N n = default)
-        where T : unmanaged
-        where S: unmanaged
+        where T : unmanaged, IEquatable<T>
+        where S: unmanaged, IEquatable<S>
         where N : unmanaged, ITypeNat
             => random.VectorBlock<N,S>(domain).Convert<T>();
 
@@ -139,7 +139,7 @@ public static class PolyVector
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
     public static void Fill<N,T>(this IPolySource random, Interval<T> domain, ref Block256<N,T> vector, N n = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
         where N : unmanaged, ITypeNat
             => random.Fill<T>(domain, Typed.nat32i<N>(), ref vector.Unsized[0]);
 
@@ -164,7 +164,7 @@ public static class PolyVector
     /// <param name="domain">The domain of the random variable</param>
     /// <typeparam name="T">The vector component type</typeparam>
     public static RowVector<T> RowVector<T>(this IPolySource random, int len, Interval<T>? domain = null)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         var dst = Z0.RowVectors.alloc<T>(len);
         if(domain != null)
@@ -183,7 +183,7 @@ public static class PolyVector
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
     public static RowVector<N,T> RowVector<N,T>(this IPolySource random, Interval<T> domain, N n = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
         where N : unmanaged, ITypeNat
     {
         var dst = Z0.RowVectors.alloc<N,T>();
@@ -199,7 +199,7 @@ public static class PolyVector
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
     public static RowVector<N,T> RowVector<N,T>(this IPolySource random, T min, T max,  N n = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
         where N : unmanaged, ITypeNat
     {
         var dst = Z0.RowVectors.alloc<N,T>();
@@ -215,7 +215,7 @@ public static class PolyVector
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
     public static RowVector<N,T> RowVector<N,T>(this IPolySource random, N n = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
         where N : unmanaged, ITypeNat
     {
         var dst = Z0.RowVectors.alloc<N,T>();
@@ -235,7 +235,7 @@ public static class PolyVector
     [MethodImpl(Inline)]
     public static RowVector<N,T> RowVector<N,S,T>(this IPolySource random, Interval<S> domain, N n = default)
         where T : unmanaged
-        where S : unmanaged
+        where S : unmanaged, IEquatable<S>
         where N : unmanaged, ITypeNat
             => random.RowVector<N,S>(domain).Convert<T>();
 
@@ -250,7 +250,7 @@ public static class PolyVector
     /// <typeparam name="T">The target domain type</typeparam>
     [MethodImpl(Inline)]
     public static RowVector<T> RowVector<S,T>(this IPolySource random, int len, Interval<S>? domain = null)
-        where S: unmanaged
+        where S: unmanaged, IEquatable<S>
         where T : unmanaged
             => random.RowVector<S>(len,domain).Convert<T>();
 
@@ -264,7 +264,7 @@ public static class PolyVector
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
     public static void Fill<N,T>(this IPolySource random, Interval<T> domain, ref RowVector<N,T> vector, N n = default)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
         where N : unmanaged, ITypeNat
             => random.Fill<T>(domain, Typed.nat32i<N>(), ref vector.Storage[0]);
 
@@ -289,7 +289,7 @@ public static class PolyVector
     /// <param name="w">The width selector</param>
     /// <typeparam name="T">The vector component type</typeparam>
     public static Vector128<T> CpuVector<T>(this ISource src, N128 w)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => src.SpanBlocks<T>(w).LoadVector();
 
     /// <summary>
@@ -299,7 +299,7 @@ public static class PolyVector
     /// <param name="w">The vector width selector</param>
     /// <typeparam name="T">The vector component type</typeparam>
     public static Vector256<T> CpuVector<T>(this ISource src, N256 w)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => src.SpanBlocks<T>(w).LoadVector();
 
     /// <summary>
@@ -309,7 +309,7 @@ public static class PolyVector
     /// <param name="w">The vector width selector</param>
     /// <typeparam name="T">The vector component type</typeparam>
     public static Vector512<T> CpuVector<T>(this ISource src, N512 w)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => src.SpanBlocks<T>(w).LoadVector();
 
     /// <summary>
@@ -319,7 +319,7 @@ public static class PolyVector
     /// <param name="w">The width selector</param>
     /// <typeparam name="T">The vector component type</typeparam>
     public static Vector128<T> CpuVector<T>(this ISource source, Vec128Kind<T> k)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => source.SpanBlocks<T>(w128).LoadVector();
 
     /// <summary>
@@ -329,7 +329,7 @@ public static class PolyVector
     /// <param name="w">The vector width selector</param>
     /// <typeparam name="T">The vector component type</typeparam>
     public static Vector256<T> CpuVector<T>(this ISource src, Vec256Kind<T> k)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => src.SpanBlocks<T>(w256).LoadVector();
 
     /// <summary>
@@ -339,7 +339,7 @@ public static class PolyVector
     /// <param name="w">The vector width selector</param>
     /// <typeparam name="T">The vector component type</typeparam>
     public static Vector512<T> CpuVector<T>(this ISource src, Vec512Kind<T> k)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => src.SpanBlocks<T>(w512).LoadVector();
 
     /// <summary>
@@ -349,7 +349,7 @@ public static class PolyVector
     /// <param name="w">The width selector</param>
     /// <typeparam name="T">The vector component type</typeparam>
     public static IEnumerable<Vector128<T>> CpuVectors<T>(this ISource src, W128 w)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         while(true)
             yield return src.CpuVector<T>(w);
@@ -362,7 +362,7 @@ public static class PolyVector
     /// <param name="w">The width selector</param>
     /// <typeparam name="T">The vector component type</typeparam>
     public static IEnumerable<Vector256<T>> CpuVectors<T>(this ISource src, W256 w)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         while(true)
             yield return src.CpuVector<T>(w);
@@ -377,7 +377,7 @@ public static class PolyVector
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
     public static Vector128<T> CpuVector<T>(this IBoundSource src, W128 w, Interval<T> domain)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => src.SpanBlocks<T>(w,domain,1).LoadVector();
 
     /// <summary>
@@ -389,7 +389,7 @@ public static class PolyVector
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
     public static Vector256<T> CpuVector<T>(this IBoundSource src, W256 w, Interval<T> domain)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => src.SpanBlocks<T>(w, domain, 1).LoadVector();
 
     /// <summary>
@@ -401,7 +401,7 @@ public static class PolyVector
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
     public static Vector512<T> CpuVector<T>(this IBoundSource src, W512 w, Interval<T> domain)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => src.CpuVector(w,domain,null);
 
     /// <summary>
@@ -413,7 +413,7 @@ public static class PolyVector
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
     public static IEnumerable<Vector128<T>> CpuVectors<T>(this IBoundSource src, W128 w, Interval<T> domain)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         while(true)
             yield return src.CpuVector<T>(w, domain);
@@ -429,7 +429,7 @@ public static class PolyVector
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
     public static Vector128<T> CpuVector<T>(this IBoundSource src, W128 w, Interval<T> domain, Func<T,bool> filter)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => src.SpanBlocks<T>(w, domain, 1, filter).LoadVector();
 
     /// <summary>
@@ -441,7 +441,7 @@ public static class PolyVector
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
     public static IEnumerable<Vector256<T>> CpuVectors<T>(this IBoundSource source, W256 w, Interval<T> domain)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
     {
         while(true)
             yield return source.CpuVector<T>(w, domain);
@@ -457,7 +457,7 @@ public static class PolyVector
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
     public static Vector256<T> CpuVector<T>(this IBoundSource src, W256 w, Interval<T> domain, Func<T,bool> filter)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => src.SpanBlocks<T>(w, domain, 1, filter).LoadVector();
 
     /// <summary>
@@ -470,6 +470,6 @@ public static class PolyVector
     /// <typeparam name="T">The vector component type</typeparam>
     [MethodImpl(Inline)]
     public static Vector512<T> CpuVector<T>(this IBoundSource src, W512 w, Interval<T> domain, Func<T,bool> filter)
-        where T : unmanaged
+        where T : unmanaged, IEquatable<T>
             => src.SpanBlocks(w, domain, 1, filter).LoadVector();
 }
