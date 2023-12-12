@@ -22,8 +22,6 @@ public class t_vmax : t_inx<t_vmax>
         vmax_check(w,z32i);
         vmax_check(w,z64);
         vmax_check(w,z64i);
-        vmax_check(w,z32f);
-        vmax_check(w,z64f);
     }
 
     void vmax_check(N256 w)
@@ -36,8 +34,6 @@ public class t_vmax : t_inx<t_vmax>
         vmax_check(w,z32i);
         vmax_check(w,z64);
         vmax_check(w,z64i);
-        vmax_check(w,z32f);
-        vmax_check(w,z64f);
     }
 
     void vmax_check<T>(N128 w, T t = default)

@@ -43,5 +43,4 @@ public class t_vadd : t_inx<t_vadd>
     void vadd_check<T>(N256 w, T t = default)
         where T : unmanaged, IEquatable<T>
             => SVF.Checker<T>().CheckBinaryOp(w, Calcs.vadd<T>(w));
-
 }

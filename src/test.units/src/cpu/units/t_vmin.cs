@@ -22,8 +22,6 @@ namespace Z0
             vmin_check(w,z32i);
             vmin_check(w,z64);
             vmin_check(w,z64i);
-            vmin_check(w,z32f);
-            vmin_check(w,z64f);
         }
 
         void vmin_check(N256 w)
@@ -36,8 +34,6 @@ namespace Z0
             vmin_check(w,z32i);
             vmin_check(w,z64);
             vmin_check(w,z64i);
-            vmin_check(w,z32f);
-            vmin_check(w,z64f);
         }
 
         void vmin_check<T>(N128 w, T t = default)

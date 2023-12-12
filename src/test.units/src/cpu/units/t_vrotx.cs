@@ -13,10 +13,10 @@ public class t_vrotx : t_inx<t_vrotx>
         for(var i=0; i<RepCount; i++)
         {
             var x = vunits<byte>(w128);
-            Claim.veq(gcpu.vrorx(x,8), vrorx(x, n8));
-            Claim.veq(gcpu.vrorx(x,16), vrorx(x, n16));
-            Claim.veq(gcpu.vrorx(x,24), vrorx(x, n24));
-            Claim.veq(gcpu.vrorx(x,32), vrorx(x, n32));
+            Claim.veq(vgcpu.vrorx(x,8), vrorx(x, n8));
+            Claim.veq(vgcpu.vrorx(x,16), vrorx(x, n16));
+            Claim.veq(vgcpu.vrorx(x,24), vrorx(x, n24));
+            Claim.veq(vgcpu.vrorx(x,32), vrorx(x, n32));
         }
     }
 

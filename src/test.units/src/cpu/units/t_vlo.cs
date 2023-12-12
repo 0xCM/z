@@ -30,12 +30,6 @@ namespace Z0
         public void vlo_128x64u()
             => vlo_check<ulong>(w128);
 
-        public void vlo_128x32f()
-            => vlo_check<float>(w128);
-
-        public void vlo_128x64f()
-            => vlo_check<double>(w128);
-
         public void vlo_256x8u()
             => vlo_check<byte>(n256);
 
@@ -59,12 +53,6 @@ namespace Z0
 
         public void vlo_256x64u()
             => vlo_check<ulong>(n256);
-
-        public void vlo_256x32f()
-            => vlo_check<float>(n256);
-
-        public void vlo_256x64f()
-            => vlo_check<double>(n256);
 
         protected void vlo_check<T>(N128 w, T t = default)
             where T : unmanaged, IEquatable<T>

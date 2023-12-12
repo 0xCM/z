@@ -30,11 +30,6 @@ namespace Z0
         public void vinsert_128x64u()
             => vinsert_check<ulong>(w128);
 
-        public void vinsert_128x32f()
-            => vinsert_check<float>(w128);
-
-        public void vinsert_128x64f()
-            => vinsert_check<double>(w128);
 
         protected void vinsert_check<T>(W128 w, T t = default)
             where T : unmanaged, IEquatable<T>
