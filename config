@@ -7,6 +7,8 @@
 	ignorecase = true
 [remote "origin"]
 	url = https://github.com/0xCM/z.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+	pushurl = http://exabox:2048/Environment/root/_git/z0
 [branch "main"]
 	remote = origin
 	merge = refs/heads/main
