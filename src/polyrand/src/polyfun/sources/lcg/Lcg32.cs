@@ -6,13 +6,13 @@ namespace Z0;
 
 using static sys;
 
-using G = Lcg64;
+using G = Lcg32;
 
 [Rng(nameof(Lcg64)), ApiHost]
-public struct Lcg64 : IRng<ulong>
+public struct Lcg32 : IRng<uint>
 {
     [MethodImpl(Inline), Op]
-    public static void spin(ref G g, Func<ulong,bool> f)
+    public static void spin(ref G g, Func<uint,bool> f)
     {
         while(true)
         {
@@ -44,16 +44,24 @@ public struct Lcg64 : IRng<ulong>
         return ref g;
     }
 
-    readonly ulong Mul;
+    [MethodImpl(Inline), Op]
+    public static uint min(in G g)
+        => g.Inc == 0 ? 1u : 0u;
 
-    readonly ulong Inc;
+    [MethodImpl(Inline), Op]
+    public static uint max(in G g)
+        => g.Mod - 1;
 
-    readonly ulong Mod;
+    readonly uint Mul;
 
-    ulong State;
+    readonly uint Inc;
+
+    readonly uint Mod;
+
+    uint State;
 
     [MethodImpl(Inline)]
-    internal Lcg64(ulong mul, ulong inc, ulong mod, ulong seed)
+    internal Lcg32(uint mul, uint inc, uint mod, uint seed)
     {
         Mul = mul;
         Inc = inc;
@@ -62,12 +70,12 @@ public struct Lcg64 : IRng<ulong>
     }
 
     [MethodImpl(Inline)]
-    public ulong Next()
+    public uint Next()
         => advance(ref this).State;
 
-    public Label Name => nameof(Lcg64);
+    public Label Name => nameof(Lcg32);
 
-    public ByteSize Fill(Span<ulong> dst)
+    public ByteSize Fill(Span<uint> dst)
     {
         var size = 0u;
         for(var i=0; i<dst.Length; i++, size+=8)

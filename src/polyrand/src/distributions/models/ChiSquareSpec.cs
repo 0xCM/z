@@ -30,7 +30,7 @@ public readonly struct ChiSquareSpec<T> : IDistributionSpec<T>
 
     [MethodImpl(Inline)]
     public static implicit operator ChiSquareSpec<T>(int freedom)
-        => new ChiSquareSpec<T>(freedom);
+        => new (freedom);
 
     [MethodImpl(Inline)]
     public static implicit operator int(ChiSquareSpec<T> src)

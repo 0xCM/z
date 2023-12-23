@@ -6,10 +6,8 @@ namespace Z0;
 
 [Free]
 public interface IValueSource<T>
-
 {
     T Next();
-
 
     ByteSize Fill(Span<T> dst);
 }

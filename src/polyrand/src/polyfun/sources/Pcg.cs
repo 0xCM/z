@@ -1,13 +1,15 @@
 //-----------------------------------------------------------------------------
-// Copyright   :  (c) Chris Moore, 2020
+// Author       : Chris Moore, 2020
+// Source       : https://github.com/imneme/pcg-c
 // License     :  MIT
 //-----------------------------------------------------------------------------
 namespace Z0;
 
 using static sys;
 
-[ApiHost]
-public readonly struct Pcg
+// Adapted from https://github.com/imneme/pcg-c
+[ApiHost,Free]
+public class Pcg
 {
     /// <summary>
     /// Creates a pcg 64-bit rng
@@ -137,4 +139,57 @@ public readonly struct Pcg
         }
         return factor * state + increment;
     }
+
+    [MethodImpl(Inline), Op]
+    public static byte pcg_output_xsh_rs_16_8(ushort state)
+        => (byte)(((state >> 7) ^ state) >> ((state >> 14) + 3));
+
+    [MethodImpl(Inline), Op]
+    public static ushort pcg_output_xsh_rs_32_16(uint state)
+        => (ushort)(((state >> 11) ^ state) >> (int)((state >> 30) + 11));
+
+    [MethodImpl(Inline), Op]
+    public static uint pcg_output_xsh_rs_64_32(ulong state)
+        => (uint)(((state >> 22) ^ state) >> (int)((state >> 61) + 22u));
+
+    [MethodImpl(Inline), Op]
+    public static ulong pcg_output_xsh_rs_128_64(UInt128 state)
+        => (ulong)(((state >> 43) ^ state) >> (int)((state >> 124) + 45));
+
+    [MethodImpl(Inline), Op]
+    static byte pcg_rotr_8(byte src, int count)
+        => math.rotr(src, (byte)count);
+
+    [MethodImpl(Inline), Op]
+    static ushort pcg_rotr_16(ushort src, int count)
+        => math.rotr(src, (byte)count);
+
+    [MethodImpl(Inline), Op]
+    static uint pcg_rotr_32(uint src, int count)
+        => math.rotr(src, (byte)count);
+
+    [MethodImpl(Inline), Op]
+    static ulong pcg_rotr_64(ulong src, int count)
+        => math.rotr(src, (byte)count);
+
+    [MethodImpl(Inline), Op]
+    static UInt128 pcg_rotr_128(UInt128 src, int count)
+        => math.rotr(src, (byte)count);
+
+    [MethodImpl(Inline), Op]
+    public static byte pcg_output_xsh_rr_16_8(ushort state)
+        => pcg_rotr_8((byte)(((state >> 5) ^ state) >> 5), state >> 13);
+
+    [MethodImpl(Inline), Op]
+    public static ushort pcg_output_xsh_rr_32_16(uint state)
+        => pcg_rotr_16((ushort)(((state >> 10) ^ state) >> 12), (byte)(state >> 28));
+
+    [MethodImpl(Inline), Op]
+    public static uint pcg_output_xsh_rr_64_32(ulong state)
+        => pcg_rotr_32((uint)(((state >> 18) ^ state) >> 27), (byte)(state >> 59));
+
+    [MethodImpl(Inline), Op]
+    public static ulong pcg_output_xsh_rr_128_64(UInt128 state)
+        => pcg_rotr_64((ulong)(((state >> 35) ^ state) >> 58), (byte)(state >> 122));
+
 }

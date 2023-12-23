@@ -7,38 +7,47 @@ namespace Z0;
 partial class math
 {
     /// <summary>
-    /// Rotates the source bits leftward by a specified offset amount
+    /// Rotates the source bits leftward by a specified count amount
     /// </summary>
     /// <param name="src">The source value</param>
-    /// <param name="offset">The magnitude of the rotation</param>
+    /// <param name="count">The magnitude of the rotation</param>
     [MethodImpl(Inline), Rotl]
-    public static byte rotl(byte src, byte offset)
-        => (byte)((src << offset) | (src >> (8 - offset)));
+    public static byte rotl(byte src, byte count)
+        => (byte)((src << count) | (src >> (8 - count)));
 
     /// <summary>
-    /// Rotates the source bits leftward by a specified offset amount
+    /// Rotates the source bits leftward by a specified count amount
     /// </summary>
     /// <param name="src">The source value</param>
-    /// <param name="offset">The magnitude of the rotation</param>
+    /// <param name="count">The magnitude of the rotation</param>
     [MethodImpl(Inline), Rotl]
-    public static ushort rotl(ushort src, byte offset)
-        => (ushort)((src << offset) | (src >> (16 - offset)));
+    public static ushort rotl(ushort src, byte count)
+        => (ushort)((src << count) | (src >> (16 - count)));
 
     /// <summary>
-    /// Rotates the source bits leftward by a specified offset amount
+    /// Rotates the source bits leftward by a specified count amount
     /// </summary>
     /// <param name="src">The source value</param>
-    /// <param name="offset">The magnitude of the rotation</param>
+    /// <param name="count">The magnitude of the rotation</param>
     [MethodImpl(Inline), Rotl]
-    public static uint rotl(uint src, byte offset)
-        => (src << offset) | (src >> (32 - offset));
+    public static uint rotl(uint src, byte count)
+        => (src << count) | (src >> (32 - count));
 
     /// <summary>
-    /// Rotates the source bits leftward by a specified offset amount
+    /// Rotates the source bits leftward by a specified count amount
     /// </summary>
     /// <param name="src">The source value</param>
-    /// <param name="offset">The magnitude of the rotation</param>
+    /// <param name="count">The magnitude of the rotation</param>
     [MethodImpl(Inline), Rotl]
-    public static ulong rotl(ulong src, byte offset)
-        => (src << offset) | (src >> (64 - offset));
+    public static ulong rotl(ulong src, byte count)
+        => (src << count) | (src >> (64 - count));
+
+    /// <summary>
+    /// Rotates the source bits leftward by a specified count amount
+    /// </summary>
+    /// <param name="src">The source value</param>
+    /// <param name="count">The magnitude of the rotation</param>
+    [MethodImpl(Inline), Rotl]
+    public static UInt128 rotl(UInt128 src, byte count)
+        => (src << count) | (src >> (128 - count));
 }

@@ -20,10 +20,6 @@ public struct Lcg<T> : IRng<T>
 
     internal readonly T Seed;
 
-    internal readonly T Min;
-
-    internal readonly T Max;
-
     internal T State;
 
     [MethodImpl(Inline)]
@@ -35,8 +31,6 @@ public struct Lcg<T> : IRng<T>
         Mod = mod;
         Seed = seed;
         State = Seed;
-        Min = api.min(this);
-        Max = api.max(this);
     }
 
     public Label Name => "Lcg<{0}>";

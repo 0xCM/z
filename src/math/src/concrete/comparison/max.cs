@@ -37,4 +37,13 @@ partial class math
     [MethodImpl(Inline), Max]
     public static ulong max(ulong a, ulong b)
         => a > b ? a : b;
+
+    [MethodImpl(Inline), Max]
+    public static Int128 max(Int128 a, Int128 b)
+        => a > b ? a : b;
+
+    [MethodImpl(Inline), Max]
+    public static UInt128 max(UInt128 a, UInt128 b)
+        => a > b ? a : b;
+
 }

@@ -69,12 +69,6 @@ public struct Lcg8 : IRng<byte>
 
     readonly byte Mod;
 
-    readonly byte Seed;
-
-    readonly byte Min;
-
-    readonly byte Max;
-
     byte State;
 
     [MethodImpl(Inline)]
@@ -84,10 +78,7 @@ public struct Lcg8 : IRng<byte>
         Mul = mul;
         Inc = inc;
         Mod = mod;
-        Seed = seed;
-        State = Seed;
-        Min = min(this);
-        Max = max(this);
+        State = seed;
     }
 
     [MethodImpl(Inline)]

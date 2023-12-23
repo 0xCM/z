@@ -20,10 +20,10 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public UniformBitsSpec<uint> ToUInt32()
-            => new UniformBitsSpec<uint>();
+            => new ();
 
         [MethodImpl(Inline)]
         public UniformBitsSpec<ulong> ToUInt64()
-            => new UniformBitsSpec<ulong>();
+            => new ();
    }
 }

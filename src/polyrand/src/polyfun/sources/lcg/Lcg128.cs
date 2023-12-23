@@ -5,26 +5,22 @@
 namespace Z0;
 
 using static sys;
-
-using G = Lcg64;
+using u128 = UInt128;
+using G = Lcg128;
 
 [Rng(nameof(Lcg64)), ApiHost]
-public struct Lcg64 : IRng<ulong>
+public struct Lcg128 : IRng<u128>
 {
     [MethodImpl(Inline), Op]
-    public static void spin(ref G g, Func<ulong,bool> f)
+    public static void spin(ref G g, Func<u128,bool> f)
     {
-        while(true)
-        {
-            if(!f(advance(ref g).State))
-                break;
-        }
+        while(f(advance(ref g).State)){}
     }
 
     [MethodImpl(Inline), Op]
-    public static ref G skip(ref G g, uint n)
+    public static ref G skip(ref G g, u128 n)
     {
-        for(var i=0; i<n; i++)
+        for(u128 i=0; i<n; i++)
             advance(ref g);
         return ref g;
     }
@@ -37,23 +33,23 @@ public struct Lcg64 : IRng<ulong>
     }
 
     [MethodImpl(Inline), Op]
-    public static ref G advance(ref G g, uint count)
+    public static ref G advance(ref G g, u128 count)
     {
-        for(var i=0; i<count; i++)
+        for(u128 i=0; i<count; i++)
             advance(ref g);
         return ref g;
     }
 
-    readonly ulong Mul;
+    readonly u128 Mul;
 
-    readonly ulong Inc;
+    readonly u128 Inc;
 
-    readonly ulong Mod;
+    readonly u128 Mod;
 
-    ulong State;
+    u128 State;
 
     [MethodImpl(Inline)]
-    internal Lcg64(ulong mul, ulong inc, ulong mod, ulong seed)
+    internal Lcg128(u128 mul, u128 inc, u128 mod, u128 seed)
     {
         Mul = mul;
         Inc = inc;
@@ -62,12 +58,12 @@ public struct Lcg64 : IRng<ulong>
     }
 
     [MethodImpl(Inline)]
-    public ulong Next()
+    public u128 Next()
         => advance(ref this).State;
 
-    public Label Name => nameof(Lcg64);
+    public Label Name => nameof(Lcg128);
 
-    public ByteSize Fill(Span<ulong> dst)
+    public ByteSize Fill(Span<u128> dst)
     {
         var size = 0u;
         for(var i=0; i<dst.Length; i++, size+=8)

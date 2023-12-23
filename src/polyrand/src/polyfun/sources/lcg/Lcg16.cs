@@ -6,18 +6,37 @@ namespace Z0;
 
 using static sys;
 
-using G = Lcg64;
+using G = Lcg16;
 
-[Rng(nameof(Lcg64)), ApiHost]
-public struct Lcg64 : IRng<ulong>
+[Rng(nameof(Lcg8)), ApiHost]
+public struct Lcg16 : IRng<ushort>
 {
     [MethodImpl(Inline), Op]
-    public static void spin(ref G g, Func<ulong,bool> f)
+    public static void spin(ref G g, Func<ushort,bool> f)
     {
         while(true)
         {
             if(!f(advance(ref g).State))
                 break;
+        }
+    }
+
+    [MethodImpl(Inline), Op]
+    public static ushort min(in G g)
+        => g.Inc == 0 ? (ushort)1 : (ushort)0;
+
+    [MethodImpl(Inline), Op]
+    public static ushort max(in G g)
+        => (ushort)(g.Mod - 1);
+
+    [MethodImpl(Inline), Op]
+    public static void capture(ref G g, Span<ushort> dst)
+    {
+        var count = (uint)dst.Length;
+        for(var i=0u; i<count; i++)
+        {
+            advance(ref g);
+            seek(dst,i) = g.State;
         }
     }
 
@@ -32,7 +51,7 @@ public struct Lcg64 : IRng<ulong>
     [MethodImpl(Inline), Op]
     public static ref G advance(ref G g)
     {
-        g.State = (g.Mul*g.State + g.Inc) % g.Mod;
+        g.State = (ushort)((g.Mul*g.State + g.Inc) % g.Mod);
         return ref g;
     }
 
@@ -44,16 +63,17 @@ public struct Lcg64 : IRng<ulong>
         return ref g;
     }
 
-    readonly ulong Mul;
+    readonly ushort Mul;
 
-    readonly ulong Inc;
+    readonly ushort Inc;
 
-    readonly ulong Mod;
+    readonly ushort Mod;
 
-    ulong State;
+    ushort State;
 
     [MethodImpl(Inline)]
-    internal Lcg64(ulong mul, ulong inc, ulong mod, ulong seed)
+    internal Lcg16(ushort mul, ushort inc, ushort mod, ushort seed)
+        : this()
     {
         Mul = mul;
         Inc = inc;
@@ -62,16 +82,16 @@ public struct Lcg64 : IRng<ulong>
     }
 
     [MethodImpl(Inline)]
-    public ulong Next()
+    public ushort Next()
         => advance(ref this).State;
 
-    public Label Name => nameof(Lcg64);
-
-    public ByteSize Fill(Span<ulong> dst)
+    public ByteSize Fill(Span<ushort> dst)
     {
         var size = 0u;
         for(var i=0; i<dst.Length; i++, size+=8)
             seek(dst,i) = Next();
         return size;
     }
+
+    public Label Name => nameof(Lcg16);
 }

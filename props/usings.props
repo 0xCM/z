@@ -10,7 +10,6 @@
     <Using Include="System.Collections.Concurrent" />
     <Using Include="System.Globalization" />
     <Using Include="System.Reflection" />
-    <Using Include="System.Reflection.Emit" />
     <Using Include="System.Reflection.Metadata" />
     <Using Include="System.Reflection.Metadata.Ecma335" />
     <Using Include="System.Reflection.PortableExecutable" />

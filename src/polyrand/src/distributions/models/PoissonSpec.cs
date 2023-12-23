@@ -31,7 +31,7 @@ namespace Z0
 
         [MethodImpl(Inline)]
         public static implicit operator PoissonSpec<T>(double src)
-            => new PoissonSpec<T>(src);
+            => new (src);
 
         [MethodImpl(Inline)]
         public static implicit operator double(PoissonSpec<T> src)

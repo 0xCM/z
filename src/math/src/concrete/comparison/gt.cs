@@ -77,4 +77,22 @@ partial class math
     [MethodImpl(Inline), Gt]
     public static bit gt(ulong a, ulong b)
         => a > b;
+
+    /// <summary>
+    /// Defines the test gt:bit := a > b, succeeding if the left operand is larger than the right operand
+    /// </summary>
+    /// <param name="a">The first operand</param>
+    /// <param name="b">The second operand</param>
+    [MethodImpl(Inline), Gt]
+    public static bit gt(Int128 a, Int128 b)
+        => a > b;
+
+    /// <summary>
+    /// Defines the test gt:bit := a > b, succeeding if the left operand is larger than the right operand
+    /// </summary>
+    /// <param name="a">The first operand</param>
+    /// <param name="b">The second operand</param>
+    [MethodImpl(Inline), Gt]
+    public static bit gt(UInt128 a, UInt128 b)
+        => a > b;        
 }

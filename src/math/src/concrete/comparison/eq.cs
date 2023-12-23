@@ -77,4 +77,22 @@ partial class math
     [MethodImpl(Inline), Eq]
     public static bit eq(ulong a, ulong b)
         => a == b;
+
+    /// <summary>
+    /// Defines the test eq:bit := a == b, succeeding if the first operand is equal to the second
+    /// </summary>
+    /// <param name="a">The left operand</param>
+    /// <param name="b">The right operand</param>
+    [MethodImpl(Inline), Eq]
+    public static bit eq(Int128 a, Int128 b)
+        => a == b;
+
+    /// <summary>
+    /// Defines the test eq:bit := a == b, succeeding if the first operand is equal to the second
+    /// </summary>
+    /// <param name="a">The left operand</param>
+    /// <param name="b">The right operand</param>
+    [MethodImpl(Inline), Eq]
+    public static bit eq(UInt128 a, UInt128 b)
+        => a == b;
 }

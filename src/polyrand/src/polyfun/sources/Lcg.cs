@@ -6,6 +6,8 @@ namespace Z0;
 
 using static sys;
 
+using u128 = UInt128;
+
 [ApiHost]
 public class Lcg
 {
@@ -14,13 +16,25 @@ public class Lcg
         => new (mul, inc, mod, seed);
 
     [MethodImpl(Inline), Op]
-    public static Lcg64 create(N64 n, ulong mul, ulong inc, ulong mod, ulong seed, ulong min, ulong max)
-        => new (mul,inc,mod,seed,min,max);
+    public static Lcg16 create(N16 n, ushort mul, ushort inc, ushort mod, ushort seed)
+        => new (mul, inc, mod, seed);
+
+    [MethodImpl(Inline), Op]
+    public static Lcg32 create(N32 n, uint mul, uint inc, uint mod, uint seed)
+        => new (mul, inc, mod, seed);
+
+    [MethodImpl(Inline), Op]
+    public static Lcg64 create(N64 n, ulong mul, ulong inc, ulong mod, ulong seed)
+        => new (mul,inc,mod,seed);
+
+    [MethodImpl(Inline), Op]
+    public static Lcg128 create(N128 n, u128 mul, u128 inc, u128 mod, u128 seed)
+        => new (mul, inc, mod, seed);
 
     [MethodImpl(Inline), Op, Closures(UInt64k)]
     public static Lcg<T> create<T>(T mul, T inc, T mod, T seed)
         where T : unmanaged
-            => new Lcg<T>(mul, inc, mod, seed);
+            => new (mul, inc, mod, seed);
 
     [MethodImpl(Inline), Op, Closures(UInt64k)]
     public static void capture<T>(ref Lcg<T> g, Span<T> dst)
